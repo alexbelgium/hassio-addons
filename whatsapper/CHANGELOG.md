@@ -1,3 +1,9 @@
+## 1.2.0 (2026-02-03)
+- Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases/tag/1.2.0)
+
+## 1.1.2 (2026-01-31)
+- Now supports arch64 arch
+
 ## 1.1.1 (2026-01-01)
 - Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases/tag/1.1.1)
 

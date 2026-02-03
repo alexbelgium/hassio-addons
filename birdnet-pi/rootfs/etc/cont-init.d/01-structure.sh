@@ -35,8 +35,10 @@ if bashio::config.has_value "BIRDSONGS_FOLDER"; then
     BIRDSONGS_FOLDER_OPTION="$(bashio::config "BIRDSONGS_FOLDER")"
     echo "... BIRDSONGS_FOLDER set to $BIRDSONGS_FOLDER_OPTION"
     mkdir -p "$BIRDSONGS_FOLDER_OPTION" || bashio::log.fatal "...... folder couldn't be created"
-    chown -R pi:pi "$BIRDSONGS_FOLDER_OPTION" || bashio::log.fatal "...... folder couldn't be given permissions for 1000:1000"
-    if [ -d "$BIRDSONGS_FOLDER_OPTION" ] && [ "$(stat -c '%u:%g' "$BIRDSONGS_FOLDER_OPTION")" == "1000:1000" ]; then
+    if [ -d "$BIRDSONGS_FOLDER_OPTION" ]; then
+        if [ "$(stat -c '%u:%g' "$BIRDSONGS_FOLDER_OPTION")" != "$(id -u pi):$(id -g pi)" ]; then
+            chown -R pi:pi "$BIRDSONGS_FOLDER_OPTION" || bashio::log.fatal "...... folder couldn't be given permissions for $(id -u pi):$(id -g pi)"
+        fi
         BIRDSONGS_FOLDER="$BIRDSONGS_FOLDER_OPTION"
     else
         bashio::log.warning "BIRDSONGS_FOLDER reverted to /config/BirdSongs"

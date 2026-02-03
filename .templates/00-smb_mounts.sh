@@ -25,38 +25,49 @@ cleanup_cred() {
 test_mount() {
   MOUNTED=false
   ERROR_MOUNT=false
+  mountpoint="/mnt/$diskname"
 
-  if ! mountpoint -q "/mnt/$diskname"; then
+  # Not mounted → not an error for this function
+  if ! mountpoint -q "$mountpoint"; then
     return 0
   fi
 
-  [[ -e "/mnt/$diskname/testaze" ]] && rm -rf "/mnt/$diskname/testaze"
-  mkdir "/mnt/$diskname/testaze" \
-    && touch "/mnt/$diskname/testaze/testaze" \
-    && rm -rf "/mnt/$diskname/testaze" \
-    || ERROR_MOUNT=true
-
-  # CIFS-only: noserverino fallback
-  if [[ "$ERROR_MOUNT" == "true" && "$FSTYPE" == "cifs" ]]; then
-    if [[ "$MOUNTOPTIONS" == *"noserverino"* ]]; then
-      bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
+  # ---- Write test function ----
+  _test_write() {
+    local testfile="$mountpoint/.writetest_$$"
+    if : >"$testfile" 2>/dev/null; then
+      rm -f "$testfile"
       return 0
+    else
+      return 1
     fi
+  }
+
+  # First write test
+  if _test_write; then
+    MOUNTED=true
+    return 0
+  fi
+
+  # ---- CIFS fallback check ----
+  if [[ "$FSTYPE" == "cifs" && "$MOUNTOPTIONS" != *"noserverino"* ]]; then
+    echo "... retrying mount with noserverino"
     MOUNTOPTIONS="${MOUNTOPTIONS},noserverino"
-    echo "... testing with noserverino"
-    mount_drive "$MOUNTOPTIONS"
-    return 0
+
+    umount "$mountpoint" 2>/dev/null || true
+    if mount_drive "$MOUNTOPTIONS"; then
+      # retest with new options
+      if _test_write; then
+        MOUNTED=true
+        return 0
+      fi
+    fi
   fi
 
-  # IMPORTANT: do not claim success when mounted but not writable (all FS types)
-  if [[ "$ERROR_MOUNT" == "true" ]]; then
-    MOUNTED=false
-    bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check permissions/export options (rw), and UID/GID mapping."
-    return 0
-  fi
-
-  MOUNTED=true
-  return 0
+  # ---- Final: mounted but not writable ----
+  ERROR_MOUNT=true
+  bashio::log.fatal "Disk mounted, but cannot write. Check permissions/export options and UID/GID mapping."
+  return 1
 }
 
 mount_drive() {
@@ -102,43 +113,6 @@ retry_cifs_with_vers_ladder_on_einval() {
     fi
   done
 
-  # If still failing with EINVAL, simplify options that sometimes trip older servers/clients
-  if [[ "$MOUNTED" == "false" ]]; then
-    bashio::log.warning "...... still failing after vers ladder; retrying with reduced CIFS options."
-    base_opts="$MOUNTOPTIONS"
-    base_opts="$(echo "$base_opts" | sed -E 's/,vers=[^,]+//g; s/,sec=[^,]+//g')"
-    base_opts="${base_opts//,mfsymlinks/}"
-    base_opts="${base_opts//,nobrl/}"
-    base_opts="$(echo "$base_opts" | sed - differing='')"
-  fi
-}
-
-# Fix: previous line accidentally inserted? Remove.
-retry_cifs_with_vers_ladder_on_einval() {
-  [[ "${FSTYPE:-}" == "cifs" ]] || return 0
-  [[ "${MOUNTED:-false}" == "false" ]] || return 0
-
-  local err
-  err="$(cat "$ERRORCODE_FILE" 2>/dev/null || true)"
-
-  if ! echo "$err" | grep -q "mount error(22)"; then
-    return 0
-  fi
-
-  bashio::log.warning "...... EINVAL (22): trying SMB dialect ladder (3.x -> 2.x)."
-
-  local base_opts try_opts vers
-
-  base_opts="$MOUNTOPTIONS"
-  base_opts="$(echo "$base_opts" | sed -E 's/,vers=[^,]+//g; s/,sec=[^,]+//g')"
-
-  for vers in "3.1.1" "3.02" "3.0" "2.1" "2.0"; do
-    if [[ "$MOUNTED" == "false" ]]; then
-      try_opts="${base_opts},vers=${vers}"
-      mount_drive "$try_opts"
-    fi
-  done
-
   # Reduce option set if dialect ladder did not help (still EINVAL often)
   if [[ "$MOUNTED" == "false" ]]; then
     bashio::log.warning "...... still failing after vers ladder; retrying with reduced CIFS options."
@@ -173,11 +147,6 @@ retry_cifs_with_vers_ladder_on_einval() {
 ########################
 
 if bashio::config.has_value 'networkdisks'; then
-  if [[ "$(date +"%Y%m%d")" -lt "20240201" ]]; then
-    bashio::log.warning "------------------------"
-    bashio::log.warning "This is a new code, please report any issues on https://github.com/alexbelgium/hassio-addons"
-    bashio::log.warning "------------------------"
-  fi
 
   echo "Mounting network share(s)..."
 
@@ -189,10 +158,16 @@ if bashio::config.has_value 'networkdisks'; then
   SECVERS=""
   CHARSET=",iocharset=utf8"
 
-  # Clean data (keeps NFS entries intact)
-  MOREDISKS=${MOREDISKS// \/\//,\/\/}
-  MOREDISKS=${MOREDISKS//, /,}
-  MOREDISKS=${MOREDISKS// /"\040"}
+  # ----------------------------
+  # Normalize / clean networkdisks
+  # ----------------------------
+
+  # Normalize Windows CRLF and multiline entries (HA UI/YAML can introduce these)
+  MOREDISKS="${MOREDISKS//$'\r'/}"
+  MOREDISKS="${MOREDISKS//$'\n'/,}"
+
+  # Clean data (keeps NFS entries intact): normalize "comma with spaces" to plain commas
+  MOREDISKS="$(echo "$MOREDISKS" | sed -E 's/[[:space:]]*,[[:space:]]*/,/g; s/^[[:space:]]+//; s/[[:space:]]+$//')"
 
   # CIFS domain/workgroup
   DOMAINCLIENT=""
@@ -212,9 +187,17 @@ if bashio::config.has_value 'networkdisks'; then
     PGID=",gid=$(bashio::config 'PGID')"
   fi
 
-  for disk in ${MOREDISKS//,/ }; do
+  # Split strictly on commas (no word-splitting/globbing)
+  IFS=',' read -r -a DISK_LIST <<< "$MOREDISKS"
+
+  for disk in "${DISK_LIST[@]}"; do
     CRED_FILE=""
     cleanup_cred
+
+    # Per-item trim + safety cleanup
+    disk="${disk//$'\r'/}"
+    disk="$(echo "$disk" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')"
+    [[ -z "$disk" ]] && continue
 
     disk="$(echo "$disk" | sed 's,/$,,')"
     disk="${disk//"\040"/ }"

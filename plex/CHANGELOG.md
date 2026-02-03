@@ -1,4 +1,10 @@
 
+## 1.43.0.10467-2b1ba6e69-ls290 (2026-01-30)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
+## 1.42.2.10156-f737b826c-ls289-2 (28-01-2026)
+- PLEASE BACKUP
+- Add configurable data_location for Plex storage (default /share/plex) with migration support when the target folder is empty.
+
 ## 1.42.2.10156-f737b826c-ls289 (2026-01-21)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 

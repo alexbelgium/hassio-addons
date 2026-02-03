@@ -1,5 +1,6 @@
 arch:
   - amd64
+  - aarch64
 description: Whatsapper for Home Assistant
 image: ghcr.io/alexbelgium/whatsapper-{arch}
 map:
@@ -19,4 +20,4 @@ schema:
 slug: whatsapper
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/whatsapper
-version: 1.1.1
+version: 1.2.0

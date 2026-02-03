@@ -1,5 +1,6 @@
 {
   "build_from": {
-    "amd64": "ghcr.io/baldarn/whatsapper:latest"
+    "amd64": "ghcr.io/baldarn/whatsapper:latest",
+    "aarch64": "ghcr.io/baldarn/whatsapper:latest"
   }
 }

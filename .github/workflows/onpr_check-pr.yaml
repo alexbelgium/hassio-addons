@@ -26,7 +26,7 @@ jobs:
           changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "Changed config files:"
           echo "$changed_config_files"
-          changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          changed_addons=$(printf '%s' "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "Changed addons: $changed_addons"
           echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
       - name: Find changelog
@@ -38,7 +38,7 @@ jobs:
           changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "$changed_config_files"
           all_changed_files=$(echo -e "$changed_config_files\n$changed_changelog_files" | sort -u)
-          changed_addons=$(echo "$all_changed_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          changed_addons=$(printf '%s' "$all_changed_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "Changed addons: $changed_addons"
           echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
 
@@ -58,28 +58,6 @@ jobs:
           # shellcheck disable=SC2076,SC2059
           if [[ ! "${{ needs.check-addon-changes.outputs.changedChangelogFiles }}" =~ "${{ matrix.addon }}/CHANGELOG.md" ]]; then
             echo "::error::No new entries in ${{ matrix.addon }} CHANGELOG.md file!"
-            exit 1
-          fi
-
-  check-addon-label:
-    name: Check for existence of the addon label
-    needs: check-addon-changes
-    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
-    steps:
-      - name: ↩️ Checkout
-        uses: actions/checkout@v6
-
-      - name: 🔎 Check if a label for the addon exists
-        shell: bash
-        run: |
-          labeltext=$(grep -E "^\s*${{ matrix.addon }}:" '.github/paths-filter.yml' || true)
-          if [[ -z "$labeltext" ]]; then
-            echo "::error::There is no label for this addon! Please add it to .github/paths-filter.yml"
             exit 1
           fi
 

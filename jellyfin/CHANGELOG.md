@@ -1,3 +1,11 @@
+## 10.11.6-5 (03-02-2026)
+- Minor bugs fixed
+## 10.11.6-4 (02-02-2026)
+- Minor bugs fixed
+## 10.11.6-3 (02-02-2026)
+- Minor bugs fixed
+## 10.11.6-2 (01-02-2026)
+- Minor bugs fixed
 
 ## 10.11.6 (2026-01-21)
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
