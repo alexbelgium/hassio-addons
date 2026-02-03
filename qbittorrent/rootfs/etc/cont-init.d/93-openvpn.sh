@@ -42,28 +42,26 @@ fi
 echo -e "${openvpn_username}\n${openvpn_password}" > "${OPENVPN_STATE_DIR}/credentials.conf"
 chmod 600 "${OPENVPN_STATE_DIR}/credentials.conf"
 
-if bashio::config.has_value 'openvpn_config'; then
-    openvpn_config="$(bashio::config 'openvpn_config')"
-    openvpn_config="${openvpn_config##*/}"
-    if [[ -z "${openvpn_config}" ]]; then
-        bashio::log.info 'openvpn_config option left empty. Attempting automatic selection.'
-         mapfile -t configs < <(find /config/openvpn -maxdepth 1 \( -type f -name '*.conf' -o -name '*.ovpn' \) -print)
-        if [ "${#configs[@]}" -eq 0 ]; then
-            bashio::exit.nok 'OpenVPN is enabled but no .conf or .ovpn file was found in /config/openvpn.'
-        elif [ "${#configs[@]}" -eq 1 ]; then
-            openvpn_config="${configs[0]}"
-            bashio::log.info "OpenVPN configuration not specified. Using ${openvpn_config##*/}."
-        elif bashio::fs.file_exists '/config/openvpn/config.conf'; then
-            openvpn_config='/config/openvpn/config.conf'
-            bashio::log.info 'Using default OpenVPN configuration config.conf.'
-        else
-            bashio::exit.nok "Multiple OpenVPN configuration files detected. Please set the 'openvpn_config' option."
-        fi
-    elif bashio::fs.file_exists "/config/openvpn/${openvpn_config}"; then
-        openvpn_config="/config/openvpn/${openvpn_config}"
+openvpn_config="$(bashio::config 'openvpn_config')"
+openvpn_config="${openvpn_config##*/}"
+if [[ -z "${openvpn_config}" ]]; then
+    bashio::log.info 'openvpn_config option left empty. Attempting automatic selection.'
+        mapfile -t configs < <(find /config/openvpn -maxdepth 1 \( -type f -name '*.conf' -o -name '*.ovpn' \) -print)
+    if [ "${#configs[@]}" -eq 0 ]; then
+        bashio::exit.nok 'OpenVPN is enabled but no .conf or .ovpn file was found in /config/openvpn.'
+    elif [ "${#configs[@]}" -eq 1 ]; then
+        openvpn_config="${configs[0]}"
+        bashio::log.info "OpenVPN configuration not specified. Using ${openvpn_config##*/}."
+    elif bashio::fs.file_exists '/config/openvpn/config.conf'; then
+        openvpn_config='/config/openvpn/config.conf'
+        bashio::log.info 'Using default OpenVPN configuration config.conf.'
     else
-        bashio::exit.nok "OpenVPN configuration '/config/openvpn/${openvpn_config}' not found."
+        bashio::exit.nok "Multiple OpenVPN configuration files detected. Please set the 'openvpn_config' option."
     fi
+elif bashio::fs.file_exists "/config/openvpn/${openvpn_config}"; then
+    openvpn_config="/config/openvpn/${openvpn_config}"
+else
+    bashio::exit.nok "OpenVPN configuration '/config/openvpn/${openvpn_config}' not found."
 fi
 
 interface_name="$(sed -n "/^dev tun/p" "${openvpn_config}" | awk -F' ' '{print $2}')"
