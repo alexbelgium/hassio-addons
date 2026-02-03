@@ -6,7 +6,7 @@ backup_exclude:
   - "**/log/"
   - "**/transcode/"
 description:
-  A Free Software Media System that puts you in control of managing and
+  A free Software Media System that puts you in control of managing and
   streaming your media
 devices:
   - /dev/dri
