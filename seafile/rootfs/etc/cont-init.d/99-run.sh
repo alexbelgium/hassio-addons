@@ -17,6 +17,9 @@ JSONSOURCE="/data/options.json"
 mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 
 for KEYS in "${arr[@]}"; do
+    if [[ "${KEYS}" == "env_vars" ]]; then
+        continue
+    fi
     # export key
     VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
     line="${KEYS}='${VALUE//[\"\']/}'"
@@ -32,6 +35,32 @@ for KEYS in "${arr[@]}"; do
     sed -i "1a export $line" /home/seafile/*.sh 2> /dev/null
     find /opt/seafile -name '*.sh' -print0 | xargs -0 sed -i "1a export $line"
 done
+
+#######################################
+# Apply extra environment variables   #
+#######################################
+
+if jq -e '.env_vars? | length > 0' "${JSONSOURCE}" >/dev/null; then
+    bashio::log.info "Applying env_vars"
+    while IFS=$'\t' read -r ENV_NAME ENV_VALUE; do
+        if [[ -z "${ENV_NAME}" || "${ENV_NAME}" == "null" ]]; then
+            continue
+        fi
+
+        if bashio::config.false "verbose" || [[ "${ENV_NAME}" == *"PASS"* ]]; then
+            bashio::log.blue "${ENV_NAME}=******"
+        else
+            bashio::log.blue "${ENV_NAME}=${ENV_VALUE}"
+        fi
+
+        export "${ENV_NAME}=${ENV_VALUE}"
+
+        ENV_VALUE_ESCAPED=$(printf "%q" "${ENV_VALUE}")
+        ENV_LINE="export ${ENV_NAME}=${ENV_VALUE_ESCAPED}"
+        sed -i "1a ${ENV_LINE}" /home/seafile/*.sh 2>/dev/null
+        find /opt/seafile -name '*.sh' -print0 | xargs -0 sed -i "1a ${ENV_LINE}"
+    done < <(jq -r '.env_vars[] | [.name, .value] | @tsv' "${JSONSOURCE}")
+fi
 
 #################
 # DATA_LOCATION #

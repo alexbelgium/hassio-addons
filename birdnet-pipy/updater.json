@@ -1,0 +1,8 @@
+{
+  "last_update": "2026-01-30",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "birdnet-pipy",
+  "source": "github",
+  "upstream_repo": "Suncuss/BirdNET-PiPy",
+  "upstream_version": "0.3.2"
+}

@@ -1,4 +1,7 @@
 
+## 12.0.18 (2026-03-20)
+- Fix `env_vars` handling so extra environment variables are exported correctly.
+
 ## 12.0.17 (2026-03-12)
 - Ensure `SERVICE_URL` and `FILE_SERVER_ROOT` are written to the active Seafile config path.
 

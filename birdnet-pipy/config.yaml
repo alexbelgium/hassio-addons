@@ -1,0 +1,103 @@
+arch:
+  - aarch64
+  - amd64
+audio: true
+description: BirdNET-PiPy bird detection with a modern web dashboard
+devices:
+  - /dev/dri
+  - /dev/dri/card0
+  - /dev/dri/card1
+  - /dev/dri/renderD128
+  - /dev/vchiq
+  - /dev/video10
+  - /dev/video11
+  - /dev/video12
+  - /dev/video13
+  - /dev/video14
+  - /dev/video15
+  - /dev/video16
+  - /dev/ttyUSB0
+  - /dev/sda
+  - /dev/sdb
+  - /dev/sdc
+  - /dev/sdd
+  - /dev/sde
+  - /dev/sdf
+  - /dev/sdg
+  - /dev/nvme
+  - /dev/nvme0
+  - /dev/nvme0n1
+  - /dev/nvme0n1p1
+  - /dev/nvme0n1p2
+  - /dev/mmcblk
+  - /dev/fuse
+  - /dev/sda1
+  - /dev/sdb1
+  - /dev/sdc1
+  - /dev/sdd1
+  - /dev/sde1
+  - /dev/sdf1
+  - /dev/sdg1
+  - /dev/sda2
+  - /dev/sdb2
+  - /dev/sdc2
+  - /dev/sdd2
+  - /dev/sde2
+  - /dev/sdf2
+  - /dev/sdg2
+  - /dev/sda3
+  - /dev/sdb3
+  - /dev/sda4
+  - /dev/sdb4
+  - /dev/sda5
+  - /dev/sda6
+  - /dev/sda7
+  - /dev/sda8
+  - /dev/nvme0
+  - /dev/nvme1
+  - /dev/nvme2
+environment:
+  PGID: "0"
+  PUID: "0"
+image: ghcr.io/alexbelgium/birdnet-pipy-{arch}
+init: false
+map:
+  - addon_config:rw
+  - ssl:rw
+  - share:rw
+name: BirdNET-PiPy
+options:
+  env_vars: []
+  ICECAST_PASSWORD: ''
+  RECORDING_MODE: rtsp
+  RTSP_URL: ''
+  STREAM_BITRATE: 320k
+  TZ: Etc/UTC
+  data_location: /config/data
+panel_icon: mdi:bird
+ports:
+  80/tcp: 8011
+ports_description:
+  80/tcp: Web UI
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
+  ICECAST_PASSWORD: str?
+  RECORDING_MODE: list(pulseaudio|http_stream|rtsp)
+  RTSP_URL: str?
+  STREAM_BITRATE: str?
+  TZ: str?
+  certfile: str?
+  cifsdomain: str?
+  cifspassword: str?
+  cifsusername: str?
+  data_location: str
+  keyfile: str?
+  localdisks: str?
+  networkdisks: str?
+  ssl: bool?
+slug: birdnet-pipy
+url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pipy
+version: "0.3.2-6"
+webui: "[PROTO:ssl]://[HOST]:[PORT:80]"

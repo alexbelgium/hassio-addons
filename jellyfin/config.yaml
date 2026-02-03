@@ -6,7 +6,7 @@ backup_exclude:
   - "**/log/"
   - "**/transcode/"
 description:
-  A Free Software Media System that puts you in control of managing and
+  A free Software Media System that puts you in control of managing and
   streaming your media
 devices:
   - /dev/dri
@@ -124,5 +124,5 @@ schema:
 slug: jellyfin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "10.11.6"
+version: "10.11.6-5"
 video: true

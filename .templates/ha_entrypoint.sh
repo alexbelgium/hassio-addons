@@ -1,6 +1,5 @@
 #!/bin/bash
 # shellcheck shell=bash
-set -euo pipefail
 
 ##########################################
 # Detect if this is PID1 (main process)  #

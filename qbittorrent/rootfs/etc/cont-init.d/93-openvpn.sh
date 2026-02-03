@@ -91,7 +91,7 @@ sed -i '/^route/d' "${openvpn_runtime_config}"
 sed -i '/^auth-user-pass /d' "${openvpn_runtime_config}"
 sed -i '/^cd /d' "${openvpn_runtime_config}"
 sed -i '/^chroot /d' "${openvpn_runtime_config}"
-sed -i '\$q' "${openvpn_runtime_config}"
+sed -i '$q' "${openvpn_runtime_config}"
 
 bashio::log.info 'Prepared OpenVPN runtime configuration for initial connection attempt.'
 

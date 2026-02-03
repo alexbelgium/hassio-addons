@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -euo pipefail
+export PYTHONPATH=/app
+bashio::net.wait_for 5001 127.0.0.1 300
+cd /app
+exec python3 -m core.api

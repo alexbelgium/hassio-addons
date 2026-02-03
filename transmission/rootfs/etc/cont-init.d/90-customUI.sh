@@ -40,7 +40,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
             ;;
 
         "flood-for-transmission")
-            curl -o /tmp/flood-for-transmission.tar.gz -L "https://github.com/johman10/flood-for-transmission/releases/download/latest/flood-for-transmission.tar.gz"
+            curl -o /tmp/flood-for-transmission.tar.gz -L "https://github.com/johman10/flood-for-transmission/releases/latest/download/flood-for-transmission.tar.gz"
             tar xf /tmp/flood-for-transmission.tar.gz -C /
             ;;
 

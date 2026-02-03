@@ -1,3 +1,14 @@
+## 2.5.2-4 (2026-02-02)
+- Minor bugs fixed
+
+## 2.5.2-3 (31-01-2026)
+- Minor bugs fixed
+
+## 2.5.2-2 (2026-02-01)
+- Ensure docker mods (Redis) run by keeping the container in root mode.
+
+## 2.5.2 (2026-01-31)
+- Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 2.4.1 (2025-12-23)
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)

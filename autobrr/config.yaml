@@ -108,4 +108,4 @@ schema:
 slug: autobrr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/autobrr
-version: "1.71.0"
+version: "1.72.1"
