@@ -72,7 +72,7 @@ _is_ip_address() {
         return 1  # IPv4
     elif [ "$1" != "${1#*:[0-9a-fA-F]}" ]; then
         return 2  # IPv6
-    elif host "$1" >/dev/null 2>&1; then
+    elif getent ahosts "$1" >/dev/null 2>&1; then
         return 3  # resolvable hostname
     else
         return 0  # neither IP nor resolvable hostname
