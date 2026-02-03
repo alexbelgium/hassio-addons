@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-# --- WireGuard Specific Logic ---
+# --- Common Functions ---
 
 declare -A config
 config["MySelf"]="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
@@ -190,6 +190,8 @@ _routing_del() {
     while _cmd "ip -6 route del default dev ${config["Interface"]} table ${config["Table"]} 2>/dev/null"; do :; done
 }
 
+# --- WireGuard Specific Logic ---
+
 _wireguard_up() {
     bashio::log.warning "This script force Wireguard to ignore any routes and DNS settings."
     bashio::log.warning "Default route will be inserted into custom routing table: ${config["Table"]}"
@@ -333,6 +335,8 @@ wireguard() {
    bashio::exit.nok 'WireGuard start failed.'
 }
 
+# --- OpenVPN Specific Logic ---
+
 _openvpn_up() {
     bashio::log.warning "This script force OpenvPN to ignore any routes and DNS settings pushed by the server."
     bashio::log.warning "Default route will be inserted into custom routing table: ${config["Table"]}"
@@ -421,6 +425,7 @@ openvpn() {
     bashio::log.info "Starting OpenVPN with configuration file: ${config_file}"
 }
 
+# --- Entry Point ---
 
 if [ $# -ne 2 ]; then
     bashio::log.error "Invalid number of arguments. Usage: vpn.sh <wireguard|openvpn> <up|down>"
