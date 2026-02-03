@@ -32,7 +32,7 @@ _parse_dns() {
     local -a dns_backup_ipv4=("8.8.8.8" "1.1.1.1")
     local -a dns_backup_ipv6=("2001:4860:4860::8888" "2606:4700:4700::1111")
 
-    IFS=',' read -ra dns_conf <<< $(bashio::config 'DNS_server' | tr -d ' ')
+    mapfile -d ',' -t dns_conf < <(bashio::config 'DNS_server' | tr -d ' ')
     if [ ${config["IPv4Enabled"]} = "true" ]; then
         for dns_ip in "${dns_conf[@]}"; do
             _is_ip_address "${dns_ip}"
@@ -110,7 +110,9 @@ _resolvconf() {
 
 _resolve_hostname() {
     local hostname=$1
-    local ips=""
+    local -a ips=""
+    local -a ipv4_candidates=()
+    local -a ipv6_candidates=()
 
     # Resolve hostname to IPv6
     mapfile -t ipv6_candidates < <(getent ahostsv6 "${hostname}" | awk '{print $1}' | uniq)
@@ -120,15 +122,21 @@ _resolve_hostname() {
 
     if [ ${#ipv6_candidates[@]} -gt 0 ]; then
         bashio::log.debug "Resolved ${hostname} to ${ipv6_candidates[@]}"
-        ips=${ipv6_candidates[@]}
+        ips+=("${ipv6_candidates[@]}")
     fi
 
     if [ ${#ipv4_candidates[@]} -gt 0 ]; then
         bashio::log.debug "Resolved ${hostname} to ${ipv4_candidates[@]}"
-        ips="${ips} ${ipv4_candidates[@]}"
+        ips+=("${ipv4_candidates[@]}")
     fi
 
-    return $ips
+    echo "${ips[@]}"
+
+    if [ ${#ips[@]} -gt 0 ]; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 _routing_add() {
@@ -195,7 +203,9 @@ _wireguard_up() {
 
     _cmd "ip link add ${config["Interface"]} type wireguard" || return 1
     local allowed_ips=""
-    for local_ip in ${config["Address"]}; do
+    local -a local_ips=()
+    mapfile -d ',' -t local_ips < <(echo "${config["Address"]}" | tr -d ' ')
+    for local_ip in ${local_ips[@]}; do
         _is_ip_address "${local_ip}"
         local is_ip=$?
         if [ "${is_ip}" -eq 1 ]; then
@@ -277,7 +287,8 @@ wireguard() {
     if [ "${mode}" = "up" ]; then
         bashio::log.info "Starting WireGuard on interface ${config["Interface"]}..."
         if _is_ip_address ${config["EndpointHost"]}; then
-            local endpoint_ips=$(_resolve_hostname ${config["EndpointHost"]})
+            local -a endpoint_ips=()
+            mapfile -d ' ' -t endpoint_ips < <(_resolve_hostname ${config["EndpointHost"]})
             if [ ${#endpoint_ips[@]} -eq 0 ]; then
                 bashio::log.error "Failed to resolve WireGuard endpoint hostname: ${config["EndpointHost"]}"
                 bashio::exit.nok 'WireGuard start failed.'
