@@ -65,9 +65,10 @@ test_mount() {
   fi
 
   # ---- Final: mounted but not writable ----
-  ERROR_MOUNT=true
-  bashio::log.fatal "Disk mounted, but cannot write. Check permissions/export options and UID/GID mapping."
-  return 1
+  bashio::log.warning "Disk mounted but is read-only or not writable (permission denied). Continuing anyway."
+  MOUNTED=true
+  return 0
+
 }
 
 mount_drive() {
