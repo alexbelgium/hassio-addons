@@ -92,6 +92,7 @@ RUN \
 # Copy local files
 COPY rootfs/ /
 RUN find /etc -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -exec chmod +x {} +
+RUN chmod +x /usr/local/sbin/vpn
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005

@@ -42,8 +42,10 @@ fi
 echo -e "${openvpn_username}\n${openvpn_password}" > "${OPENVPN_STATE_DIR}/credentials.conf"
 chmod 600 "${OPENVPN_STATE_DIR}/credentials.conf"
 
-openvpn_config="$(bashio::config 'openvpn_config')"
-openvpn_config="${openvpn_config##*/}"
+if bashio::config.has_value "openvpn_config"; then
+    openvpn_config="$(bashio::config 'openvpn_config')"
+    openvpn_config="${openvpn_config##*/}"
+fi
 if [[ -z "${openvpn_config}" ]]; then
     bashio::log.info 'openvpn_config option left empty. Attempting automatic selection.'
         mapfile -t configs < <(find /config/openvpn -maxdepth 1 \( -type f -name '*.conf' -o -name '*.ovpn' \) -print)
