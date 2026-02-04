@@ -25,8 +25,10 @@ bashio::log.info "------------------------------"
 bashio::log.info "Wireguard enabled, configuring"
 bashio::log.info "------------------------------"
 
-wireguard_config="$(bashio::config 'wireguard_config')"
-wireguard_config="${wireguard_config##*/}"
+if bashio::config.has_value "wireguard_config"; then
+    wireguard_config="$(bashio::config 'wireguard_config')"
+    wireguard_config="${wireguard_config##*/}"
+fi
 if [[ -z "${wireguard_config}" ]]; then
     bashio::log.info 'wireguard_config option left empty. Attempting automatic selection.'
         mapfile -t configs < <(find /config/wireguard -maxdepth 1 -type f -name '*.conf' -print)
