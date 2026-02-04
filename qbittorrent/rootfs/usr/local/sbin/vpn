@@ -361,6 +361,16 @@ _openvpn_up() {
         --up-restart \
         --route-nopull \
         --route-noexec" || return 1
+
+    #wait for slow OpenVPN interface to come up
+    for i in {1..10}; do
+        if ip link show "${config["Interface"]}" > /dev/null 2>&1 ; then
+            return 0
+        fi
+        sleep 2
+    done
+    bashio::log.error "OpenVPN interface ${config["Interface"]} failed to come up."
+    return 1
 }
 
 _openvpn_down() {
