@@ -1,3 +1,5 @@
+## 2.57.0-3 (04-02-2026)
+- Minor bugs fixed
 ## 2.57.0-2 (04-02-2026)
 - Minor bugs fixed
 
