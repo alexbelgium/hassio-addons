@@ -144,14 +144,17 @@ if [[ "${vpn_openvpn}" == true && "${vpn_wireguard}" == true ]]; then
     exit 1
 fi
 
-if [[ "${vpn_openvpn}" == true ]] && ! bashio::config.true 'openvpn_alt_mode'; then
+if [[ "${vpn_openvpn}" == true ]]; then
     VPN_INTERFACE=$(cat "/var/run/openvpn/interface")
     bashio::log.info "VPN monitor set to query external IP through interface ${VPN_INTERFACE} (interface binding)."
 elif [[ "${vpn_wireguard}" == true ]]; then
     VPN_INTERFACE=$(cat "/var/run/wireguard/interface")
     bashio::log.info "VPN monitor set to query external IP through interface ${VPN_INTERFACE} (interface binding)."
-else
-    VPN_INTERFACE=""
+fi
+if [[ -z "${VPN_INTERFACE}" ]] || ! ip link show "${VPN_INTERFACE}" > /dev/null 2>&1 ; then
+    bashio::log.error "VPN interface not found."
+    bashio::addon.stop
+    exit 1
 fi
 
 REAL_IP="$(read_real_ip)"
