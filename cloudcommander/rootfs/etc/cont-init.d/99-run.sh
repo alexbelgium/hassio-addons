@@ -82,7 +82,17 @@ fi
 bashio::log.info "Starting..."
 
 cd /
-./usr/src/app/bin/cloudcmd.mjs '"'"$DROPBOX_TOKEN""$CUSTOMOPTIONS"'"' &
+if [ -f /usr/src/app/bin/cloudcmd.mjs ]; then
+    CLOUDCMD_BIN=/usr/src/app/bin/cloudcmd.mjs
+elif [ -f /usr/src/app/bin/cloudcmd.js ]; then
+    CLOUDCMD_BIN=/usr/src/app/bin/cloudcmd.js
+elif command -v cloudcmd >/dev/null 2>&1; then
+    CLOUDCMD_BIN=cloudcmd
+else
+    bashio::log.error "Cloud Commander binary not found in /usr/src/app/bin or PATH."
+    exit 1
+fi
+"$CLOUDCMD_BIN" '"'"$DROPBOX_TOKEN""$CUSTOMOPTIONS"'"' &
 bashio::net.wait_for 8000 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
