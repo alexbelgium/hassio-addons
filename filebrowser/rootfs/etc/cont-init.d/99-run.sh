@@ -42,8 +42,8 @@ declare ingress_interface
 declare ingress_port
 #declare keyfile
 
-FB_BASEURL=$(bashio::addon.ingress_entry)
-export FB_BASEURL
+FB_BASE_URL=$(bashio::addon.ingress_entry)
+export FB_BASE_URL
 
 declare ADDON_PROTOCOL=http
 # Generate Ingress configuration
@@ -57,7 +57,7 @@ ingress_interface=$(bashio::addon.ip_address)
 sed -i "s|%%protocol%%|${ADDON_PROTOCOL}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%port%%|${ingress_port}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf
-sed -i "s|%%subpath%%|${FB_BASEURL}/|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%subpath%%|${FB_BASE_URL}/|g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 ######################
@@ -100,7 +100,7 @@ fi
 
 # Disable thumbnails
 if bashio::config.true 'disable_thumbnails'; then
-    DISABLE_THUMBNAILS="--disable-thumbnails"
+    DISABLE_THUMBNAILS="--disableThumbnails"
 else
     DISABLE_THUMBNAILS=""
 fi
@@ -113,7 +113,7 @@ fi
 bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
-/./bin/filebrowser --disable-preview-resize --disable-type-detection-by-header --cache-dir="/cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/filebrowser.dB "$NOAUTH" "$DISABLE_THUMBNAILS" &
+/./bin/filebrowser --disablePreviewResize --disableTypeDetectionByHeader --cacheDir="/cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/filebrowser.dB "$NOAUTH" "$DISABLE_THUMBNAILS" &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 nginx || bashio::log.fatal "Nginx failed"
