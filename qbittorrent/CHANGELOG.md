@@ -1,3 +1,5 @@
+- Rewrite the openvpn and wireguard scripts in order to make them more robust, secure, and compatible with more suppliers @litinoveweedle
+
 ## 5.1.4-6 (03-02-2026)
 - Minor bugs fixed
 ## 5.1.4-5 (23-01-2026)
