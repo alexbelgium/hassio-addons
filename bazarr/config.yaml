@@ -106,5 +106,5 @@ schema:
 slug: bazarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/bazarr
-version: "1.5.5"
+version: "1.5.4-1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:6767]"
