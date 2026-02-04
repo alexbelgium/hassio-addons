@@ -1,5 +1,5 @@
 
-## 19.3.2 (2026-02-04)
+## 19.3.1-2 (2026-02-04)
 - Fix startup when cloudcmd.mjs is missing in upstream image
 
 ## 19.3.1 (2026-02-04)
