@@ -327,7 +327,7 @@ wireguard() {
         bashio::exit.nok 'WireGuard start failed.'
     fi
 
-   bashio::exit.nok 'WireGuard start failed.'
+    bashio::exit.nok 'WireGuard start failed.'
 }
 
 # --- OpenVPN Specific Logic ---
@@ -349,13 +349,15 @@ _openvpn_up() {
     # Start OpenVPN in the background
     _cmd "/usr/sbin/openvpn \
         --config "${config["ConfigFile"]}" \
-        --script-security 2 --daemon --log /dev/null \
+        --client \
+        --daemon \
+        --log /dev/null \
+        --script-security 2 \
         --auth-user-pass "${OPENVPN_STATE_DIR}/credentials.conf" \
         --auth-retry none \
         --up ${config["PostUpScript"]} \
-        --up_delay 5 \
         --down ${config["PostDownScript"]} \
-        --down-delay 5 \
+        --up-delay  \
         --up-restart \
         --route-nopull \
         --route-noexec" || return 1
@@ -401,6 +403,7 @@ openvpn() {
         # register up and down scripts
         bashio::log.info "Starting OpenVPN on interface ${config["Interface"]}..."
         if _openvpn_up; then
+            bashio::log.info "OpenVPN interface ${config["Interface"]} is up."
             bashio::exit.ok 'OpenVPN started.'
         fi
         bashio::log.error 'OpenVPN failed to establish connection.'
@@ -408,16 +411,20 @@ openvpn() {
     elif [ "${mode}" = "down" ]; then
         bashio::log.info "Stopping OpenVPN on interface ${config["Interface"]}..."
         _openvpn_down
+        bashio::log.info "OpenVPN on interface ${config["Interface"]} is down."
         bashio::exit.ok 'OpenVPN stopped.'
     elif [ "${mode}" = "postup" ]; then
         _routing_add
+        bashio::exit.ok 'OpenVPN routes added.'
     elif [ "${mode}" = "postdown" ]; then
         _routing_del
+        bashio::exit.ok 'OpenVPN routes deleted.'
     else
         bashio::log.error "Invalid OpenVPN mode specified. Use 'up', 'down', 'postup', or 'postdown'."
         bashio::exit.nok 'OpenVPN start failed.'
     fi
-    bashio::log.info "Starting OpenVPN with configuration file: ${config_file}"
+
+    bashio::exit.nok 'OpenVPN start failed.'
 }
 
 # --- Entry Point ---
