@@ -93,7 +93,6 @@ validate_shebang() {
   local exe="${cmd[0]}"
 
   if [ ! -x "$exe" ]; then
-    echo " - FAIL (not executable): #!$candidate" >&2
     return 1
   fi
 
@@ -105,28 +104,15 @@ validate_shebang() {
   chmod 700 "$tmp" 2>/dev/null || true
 
   set +e
-  out="$("$tmp" 2>"${EXEC_DIR%/}/shebang_probe_err.$$")"
+  out="$("$tmp" >/dev/null 2>&1)"
   rc=$?
   set -e
 
   rm -f "$tmp" 2>/dev/null || true
 
   if [ "$rc" -eq 0 ] && [ -n "${out:-}" ] && [ "$out" != "null" ]; then
-    rm -f "${EXEC_DIR%/}/shebang_probe_err.$$" 2>/dev/null || true
     return 0
   fi
-
-  {
-    echo " - FAIL: #!$candidate"
-    echo "   rc=$rc, stdout='${out:-}'"
-    if [ -s "${EXEC_DIR%/}/shebang_probe_err.$$" ]; then
-      echo "   stderr:"
-      sed -n '1,8p' "${EXEC_DIR%/}/shebang_probe_err.$$"
-    else
-      echo "   stderr: <empty>"
-    fi
-  } >&2
-  rm -f "${EXEC_DIR%/}/shebang_probe_err.$$" 2>/dev/null || true
   return 1
 }
 
