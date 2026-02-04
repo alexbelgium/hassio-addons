@@ -28,7 +28,7 @@ pick_exec_dir() {
     if [ -d "$d" ] && [ -w "$d" ]; then
       # Create a tiny test executable to confirm "exec" works
       local t="${d%/}/.exec_test_$$"
-      printf '#!/bin/sh\necho ok\n' > "$t" 2>/dev/null || { rm -f "$t" 2>/dev/null || true; continue; }
+      printf '#!/bin/sh\necho ok\n' >"$t" 2>/dev/null || { rm -f "$t" 2>/dev/null || true; continue; }
       chmod 700 "$t" 2>/dev/null || { rm -f "$t" 2>/dev/null || true; continue; }
       if "$t" >/dev/null 2>&1; then
         rm -f "$t" 2>/dev/null || true
@@ -63,6 +63,8 @@ candidate_shebangs=(
   "/bin/sh"
 )
 
+SHEBANG_ERRORS=()
+
 probe_script_content='
 set -e
 
@@ -87,32 +89,46 @@ bashio::addon.version
 validate_shebang() {
   local candidate="$1"
   local tmp out rc
+  local errfile msg
 
   # shellcheck disable=SC2206
   local cmd=( $candidate )
   local exe="${cmd[0]}"
 
   if [ ! -x "$exe" ]; then
+    SHEBANG_ERRORS+=(" - FAIL (not executable): #!$candidate")
     return 1
   fi
 
   tmp="${EXEC_DIR%/}/shebang_test.$$.$RANDOM"
+  errfile="${EXEC_DIR%/}/shebang_probe_err.$$"
   {
     printf '#!%s\n' "$candidate"
     printf '%s\n' "$probe_script_content"
-  } > "$tmp"
+  } >"$tmp"
   chmod 700 "$tmp" 2>/dev/null || true
 
   set +e
-  out="$("$tmp" >/dev/null 2>&1)"
+  out="$("$tmp" 2>"$errfile")"
   rc=$?
   set -e
 
   rm -f "$tmp" 2>/dev/null || true
 
   if [ "$rc" -eq 0 ] && [ -n "${out:-}" ] && [ "$out" != "null" ]; then
+    rm -f "$errfile" 2>/dev/null || true
     return 0
   fi
+
+  msg=$' - FAIL: #!'"$candidate"$'\n'"   rc=$rc, stdout='${out:-}'"$'\n'
+  if [ -s "$errfile" ]; then
+    msg+=$'   stderr:\n'
+    msg+="$(sed -n '1,8p' "$errfile")"$'\n'
+  else
+    msg+=$'   stderr: <empty>\n'
+  fi
+  SHEBANG_ERRORS+=("$msg")
+  rm -f "$errfile" 2>/dev/null || true
   return 1
 }
 
@@ -128,10 +144,12 @@ if [ -z "$shebang" ]; then
   echo "ERROR: No valid shebang found (unable to execute bashio::addon.version via candidates)." >&2
   echo "Tried:" >&2
   printf ' - %s\n' "${candidate_shebangs[@]}" >&2
+  if [ "${#SHEBANG_ERRORS[@]}" -gt 0 ]; then
+    echo "Probe failures:" >&2
+    printf '%s\n' "${SHEBANG_ERRORS[@]}" >&2
+  fi
   exit 1
 fi
-
-echo "Selected shebang: #!$shebang"
 
 ####################
 # Starting scripts #
