@@ -79,6 +79,7 @@ map:
   - ssl
 name: qBittorrent
 options:
+  log_level: info
   env_vars: []
   DNS_server: 8.8.8.8,1.1.1.1
   PGID: "0"
@@ -109,6 +110,7 @@ privileged:
   - DAC_READ_SEARCH
   - NET_ADMIN
 schema:
+  log_level: list(trace|debug|info|notice|warning|error|fatal)?
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
