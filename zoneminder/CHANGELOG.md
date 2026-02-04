@@ -1,4 +1,7 @@
 
+## 1.38.0 (2026-02-04)
+- Update to latest version from zoneminder-containers/zoneminder-base (changelog : https://github.com/zoneminder-containers/zoneminder-base/releases)
+
 ## 1.36.37-2 (2026-01-03)
 - Fix MariaDB addon defaults and migrate legacy database name when detected
 - Ensure MySQL data directory is created with correct ownership
