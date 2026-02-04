@@ -99,15 +99,10 @@ RUN chmod 744 /ha_autoapps.sh \
 ################
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
-
-# Entrypoint modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh
 
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
-RUN chmod 0644 /.bashio-standalone.sh /ha_entrypoint_modif.sh \
-    && /ha_entrypoint_modif.sh \
-    && rm /ha_entrypoint_modif.sh
+RUN chmod 0644 /.bashio-standalone.sh
 
 #WORKDIR /
 ENTRYPOINT [ "/usr/bin/env" ]
