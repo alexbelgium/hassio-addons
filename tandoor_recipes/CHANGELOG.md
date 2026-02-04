@@ -1,3 +1,5 @@
+## 2.4.2-2 (04-02-2026)
+- Minor bugs fixed
 
 ## 2.4.2 (2026-02-04)
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
