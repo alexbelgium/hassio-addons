@@ -9,6 +9,10 @@ config["MySelf"]="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BA
 declare -a dns_servers_ipv4=()
 declare -a dns_servers_ipv6=()
 
+log_level="$(bashio::config "log_level")"
+[[ "$log_level" == "debug" ]] && bashio::log.warning "--- Debug mode is active ---"
+[[ "$log_level" == "debug" ]] && set -x
+
 _parse_config() {
     local -n config_ref="$1"
     local config_file="$2"
@@ -348,12 +352,16 @@ _openvpn_up() {
     echo "${config["MySelf"]} openvpn postdown" >> ${config["PostDownScript"]}
     chmod 755 ${config["PostDownScript"]}
 
+    # Define logging
+    log_path="/dev/null"
+    [[ "$log_level" == "debug" ]] && log_path="/proc/1/fd/1"
+
     # Start OpenVPN in the background
     _cmd "/usr/sbin/openvpn \
         --config "${config["ConfigFile"]}" \
         --client \
         --daemon \
-        --log /dev/null \
+        --log "$log_path" \
         --script-security 2 \
         --auth-user-pass "${OPENVPN_STATE_DIR}/credentials.conf" \
         --auth-retry none \
