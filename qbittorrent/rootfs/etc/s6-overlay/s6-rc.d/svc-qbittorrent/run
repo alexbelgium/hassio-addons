@@ -10,125 +10,6 @@ if bashio::config.true 'silent'; then
     sed -i 's|/proc/1/fd/1 hassio;|off;|g' /etc/nginx/nginx.conf
 fi
 
-# --- WireGuard Specific Logic ---
-
-_setup_wireguard() {
-    local WIREGUARD_STATE_DIR="/var/run/wireguard"
-    local output=""
-    local status=0
-
-    if ! bashio::fs.file_exists "${WIREGUARD_STATE_DIR}/config"; then
-        bashio::exit.nok 'WireGuard runtime configuration not prepared. Please restart the add-on.'
-    fi
-
-    local wireguard_config
-    wireguard_config="$(cat "${WIREGUARD_STATE_DIR}/config")"
-    local wireguard_interface
-    wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2>/dev/null || echo 'wg0')"
-
-    if ip link show "${wireguard_interface}" >/dev/null 2>&1; then
-        bashio::log.warning "WireGuard interface ${wireguard_interface} already exists. Resetting."
-        wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
-    fi
-
-    bashio::log.info "Starting WireGuard interface ${wireguard_interface}..."
-
-    # Internal helper: fallback for iptables-legacy
-    _wg_prepare_legacy() {
-        local legacy_bin_dir="${WIREGUARD_STATE_DIR}/iptables-legacy-bin"
-        mkdir -p "${legacy_bin_dir}"
-        local cmd
-        for cmd in iptables iptables-save iptables-restore ip6tables ip6tables-save ip6tables-restore; do
-            if command -v "${cmd}-legacy" >/dev/null 2>&1; then
-                ln -sf "$(command -v "${cmd}-legacy")" "${legacy_bin_dir}/${cmd}"
-            fi
-        done
-        chmod 700 "${legacy_bin_dir}" 2>/dev/null || true
-        export PATH="${legacy_bin_dir}:${PATH}"
-        bashio::log.warning 'Retrying WireGuard using iptables-legacy wrappers.'
-    }
-
-    # Internal helper: Attempt connection
-    _wg_up_attempt() {
-        local config_path="$1"
-        output="$(wg-quick up "${config_path}" 2>&1)" || status=$?
-
-        if [ "${status}" -eq 0 ]; then return 0; fi
-
-        # Allow sysctl failures on read-only hosts while keeping the interface up
-        if echo "${output}" | grep -qi 'net\.ipv4\.conf\.all\.src_valid_mark=1'; then
-            if echo "${output}" | grep -qiE 'read-only file system|operation not permitted'; then
-                if ip link show "${wireguard_interface}" >/dev/null 2>&1; then
-                    bashio::log.warning 'WireGuard applied but sysctl net.ipv4.conf.all.src_valid_mark=1 could not be set (read-only). Continuing.'
-                    status=0
-                    return 0
-                fi
-            fi
-        fi
-
-        # Check for iptables errors and try legacy fallback
-        if echo "${output}" | grep -qiE 'iptables-restore|ip6tables-restore|xtables'; then
-            if command -v iptables-legacy >/dev/null 2>&1; then
-                wg-quick down "${config_path}" >/dev/null 2>&1 || true
-                _wg_prepare_legacy
-                output="$(wg-quick up "${config_path}" 2>&1)" || status=$?
-            else
-                bashio::log.warning 'iptables errors detected but iptables-legacy missing.'
-                status=1
-            fi
-        fi
-        return "${status}"
-    }
-
-    # 1. First Attempt
-    if ! _wg_up_attempt "${wireguard_config}"; then
-        bashio::log.warning 'Initial WireGuard connection failed. Trying IPv4-only endpoints.'
-        bashio::log.debug "Output: ${output}"
-
-        # 2. IPv4 Fallback Preparation
-        local ipv4_config="${WIREGUARD_STATE_DIR}/${wireguard_interface}-ipv4.conf"
-        : > "${ipv4_config}"
-        chmod 600 "${ipv4_config}" 2>/dev/null || true
-
-        local line endpoint endpoint_host endpoint_port
-        while IFS= read -r line || [ -n "$line" ]; do
-            if [[ "${line}" =~ ^Endpoint ]]; then
-                endpoint="${line#Endpoint = }"
-                endpoint_host="${endpoint%:*}"
-                endpoint_port="${endpoint##*:}"
-
-                # Resolve hostname to IPv4
-                mapfile -t ipv4_candidates < <(getent ahostsv4 "${endpoint_host}" | awk '{print $1}' | uniq)
-
-                if [ ${#ipv4_candidates[@]} -gt 0 ]; then
-                    bashio::log.debug "Resolved ${endpoint_host} to ${ipv4_candidates[0]}"
-                    echo "Endpoint = ${ipv4_candidates[0]}:${endpoint_port}" >> "${ipv4_config}"
-                else
-                    echo "${line}" >> "${ipv4_config}"
-                fi
-            else
-                echo "${line}" >> "${ipv4_config}"
-            fi
-        done < "${wireguard_config}"
-
-        wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
-
-        # 3. Second Attempt (IPv4 only)
-        if ! _wg_up_attempt "${ipv4_config}"; then
-            bashio::log.error 'WireGuard failed to establish connection.'
-            bashio::log.error "${output}"
-            bashio::exit.nok 'WireGuard start failed.'
-        fi
-    fi
-
-    bashio::log.info "WireGuard interface ${wireguard_interface} is up."
-
-    # DNS Refresh
-    if command -v resolvconf >/dev/null 2>&1; then
-        resolvconf -u >/dev/null 2>&1 || bashio::log.warning 'resolvconf -u failed.'
-    fi
-}
-
 # --- Main Execution ---
 
 openvpn_enabled=false
@@ -148,24 +29,9 @@ if [[ "${openvpn_enabled}" == true && "${wireguard_enabled}" == true ]]; then
 fi
 
 if [[ "${openvpn_enabled}" == true ]]; then
-
-    exec /usr/sbin/openvpn \
-        --config /config/openvpn/config.ovpn \
-        --script-security 2 \
-        --up /etc/openvpn/up.sh \
-        --down /etc/openvpn/down.sh \
-        --pull-filter ignore "route-ipv6" \
-        --pull-filter ignore "ifconfig-ipv6" \
-        --pull-filter ignore "tun-ipv6" \
-        --pull-filter ignore "redirect-gateway ipv6" \
-        --pull-filter ignore "dhcp-option DNS6" \
-    &
-
+    /usr/local/sbin/vpn openvpn up
 elif [[ "${wireguard_enabled}" == true ]]; then
-
-    # Run modularized WireGuard setup
-    _setup_wireguard
-
+    /usr/local/sbin/vpn wireguard up
 fi
 
 # --- Launch qBittorrent ---

@@ -79,6 +79,7 @@ map:
   - ssl
 name: qBittorrent
 options:
+  log_level: info
   env_vars: []
   DNS_server: 8.8.8.8,1.1.1.1
   PGID: "0"
@@ -88,10 +89,7 @@ options:
   certfile: fullchain.pem
   customUI: vuetorrent
   keyfile: privkey.pem
-  qbit_manage: false
   ssl: false
-  wireguard_enabled: false
-  wireguard_config: ""
   whitelist: localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16
 panel_admin: false
 panel_icon: mdi:progress-download
@@ -112,6 +110,7 @@ privileged:
   - DAC_READ_SEARCH
   - NET_ADMIN
 schema:
+  log_level: list(trace|debug|info|notice|warning|error|fatal)?
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
@@ -129,8 +128,7 @@ schema:
   keyfile: str
   localdisks: str?
   networkdisks: str?
-  openvpn_alt_mode: bool?
-  openvpn_config: str?
+  openvpn_config: match(^\w+\.(ovpn|conf)$)?
   openvpn_enabled: bool?
   openvpn_password: str?
   openvpn_username: str?
@@ -138,10 +136,10 @@ schema:
   run_duration: str?
   silent: bool?
   ssl: bool
-  wireguard_config: str?
+  wireguard_config: match(^\w+\.conf$)?
   wireguard_enabled: bool?
   whitelist: str?
 slug: qbittorrent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "5.1.4-6"
+version: "5.1.4-7"
