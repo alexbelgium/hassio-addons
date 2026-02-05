@@ -29,6 +29,10 @@ bashio::log.info "------------------------------"
 if bashio::config.has_value "wireguard_config"; then
     wireguard_config="$(bashio::config 'wireguard_config')"
     wireguard_config="${wireguard_config##*/}"
+    if [[ ! "${wireguard_config}" =~ ^[A-Za-z0-9._-]+\.conf$ ]]; then
+        bashio::log.fatal "Invalid wireguard_config filename '${wireguard_config}'. Allowed characters: letters, numbers, dot, underscore, dash. Extension must be .conf."
+        bashio::addon.stop
+    fi
 fi
 if [[ -z "${wireguard_config}" ]]; then
     bashio::log.info 'wireguard_config option left empty. Attempting automatic selection.'

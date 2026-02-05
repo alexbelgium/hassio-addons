@@ -1,3 +1,7 @@
+## 5.1.4-9 (05-02-2026)
+- Move OpenVPN/WireGuard config filename validation from schema to runtime scripts
+- Validate config name only when the related VPN mode is enabled
+
 ## 5.1.4-8 (05-02-2026)
 - Allow more complex vpn config names
 - Rewrite the openvpn and wireguard scripts in order to make them more robust, secure, and compatible with more suppliers @litinoveweedle
