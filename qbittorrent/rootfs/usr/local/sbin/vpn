@@ -11,6 +11,7 @@ declare -a dns_servers_ipv6=()
 
 log_level="$(bashio::config "log_level")"
 [[ "$log_level" == "debug" ]] && set -x
+[[ "$log_level" == "debug" ]] && bashio::log.warning "--- Debug mode is active ---"
 
 _parse_config() {
     local -n config_ref="$1"
@@ -351,11 +352,7 @@ _openvpn_up() {
 
     # Define logging
     log_path="/dev/null"
-    if [[ "$log_level" == "debug" ]]; then
-        bashio::log.warning "Starting openvpn in debug mode"
-        bashio::log.warning "------------------------------"
-        log_path="/proc/1/fd/1"
-    fi
+    [[ "$log_level" == "debug" ]] && log_path="/proc/1/fd/1"
 
     # Start OpenVPN in the background
     _cmd "/usr/sbin/openvpn \
