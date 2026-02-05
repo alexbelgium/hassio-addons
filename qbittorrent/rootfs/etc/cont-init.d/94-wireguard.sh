@@ -16,7 +16,8 @@ fi
 if ! bashio::config.true 'wireguard_enabled'; then
     bashio::exit.ok 'WireGuard is disabled.'
 elif bashio::config.true 'openvpn_enabled'; then
-    bashio::exit.nok 'OpenVPN and WireGuard cannot be enabled simultaneously. Disable one of them.'
+    bashio::log.fatal 'OpenVPN and WireGuard cannot be enabled simultaneously. Disable one of them.'
+    bashio::addon.stop
 fi
 
 mkdir -p "${WIREGUARD_STATE_DIR}"
@@ -33,7 +34,8 @@ if [[ -z "${wireguard_config}" ]]; then
     bashio::log.info 'wireguard_config option left empty. Attempting automatic selection.'
         mapfile -t configs < <(find /config/wireguard -maxdepth 1 -type f -name '*.conf' -print)
     if [ "${#configs[@]}" -eq 0 ]; then
-        bashio::exit.nok 'WireGuard is enabled but no .conf file was found in /config/wireguard.'
+        bashio::log.fatal 'WireGuard is enabled but no .conf file was found in /config/wireguard.'
+        bashio::addon.stop
     elif [ "${#configs[@]}" -eq 1 ]; then
         wireguard_config="${configs[0]}"
         bashio::log.info "WireGuard configuration not specified. Using ${wireguard_config##*/}."
@@ -41,12 +43,14 @@ if [[ -z "${wireguard_config}" ]]; then
         wireguard_config='/config/wireguard/config.conf'
         bashio::log.info 'Using default WireGuard configuration config.conf.'
     else
-        bashio::exit.nok "Multiple WireGuard configuration files detected. Please set the 'wireguard_config' option."
+        bashio::log.fatal "Multiple WireGuard configuration files detected. Please set the 'wireguard_config' option."
+        bashio::addon.stop
     fi
 elif bashio::fs.file_exists "/config/wireguard/${wireguard_config}"; then
     wireguard_config="/config/wireguard/${wireguard_config}"
 else
-    bashio::exit.nok "WireGuard configuration '/config/wireguard/${wireguard_config}' not found."
+    bashio::log.fatal "WireGuard configuration '/config/wireguard/${wireguard_config}' not found."
+    bashio::addon.stop
 fi
 
 interface_name="$(basename "${wireguard_config}" .conf)"
