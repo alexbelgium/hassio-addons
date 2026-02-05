@@ -8,7 +8,9 @@ config["MySelf"]="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BA
 
 declare -a dns_servers_ipv4=()
 declare -a dns_servers_ipv6=()
+
 log_level="$(bashio::config "log_level")"
+[[ "$log_level" == "debug" ]] && set -x
 
 _parse_config() {
     local -n config_ref="$1"
