@@ -10,8 +10,8 @@ declare -a dns_servers_ipv4=()
 declare -a dns_servers_ipv6=()
 
 log_level="$(bashio::config "log_level")"
-[[ "$log_level" == "debug" ]] && set -x
 [[ "$log_level" == "debug" ]] && bashio::log.warning "--- Debug mode is active ---"
+[[ "$log_level" == "debug" ]] && set -x
 
 _parse_config() {
     local -n config_ref="$1"
