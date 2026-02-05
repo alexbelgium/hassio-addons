@@ -48,6 +48,10 @@ chmod 600 "${OPENVPN_STATE_DIR}/credentials.conf"
 if bashio::config.has_value "openvpn_config"; then
     openvpn_config="$(bashio::config 'openvpn_config')"
     openvpn_config="${openvpn_config##*/}"
+    if [[ ! "${openvpn_config}" =~ ^[A-Za-z0-9._-]+\.(conf|ovpn)$ ]]; then
+        bashio::log.fatal "Invalid openvpn_config filename '${openvpn_config}'. Allowed characters: letters, numbers, dot, underscore, dash. Extension must be .conf or .ovpn."
+        bashio::addon.stop
+    fi
 fi
 if [[ -z "${openvpn_config}" ]]; then
     bashio::log.info 'openvpn_config option left empty. Attempting automatic selection.'
