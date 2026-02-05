@@ -68,6 +68,8 @@ devices:
   - /dev/nvme2
 environment:
   WEBUI_PORT: "8080"
+  PUID: "0"
+  PGID: "0"
 image: ghcr.io/alexbelgium/qbittorrent-{arch}
 ingress: true
 init: false
@@ -79,11 +81,8 @@ map:
   - ssl
 name: qBittorrent
 options:
-  log_level: info
   env_vars: []
   DNS_server: 8.8.8.8,1.1.1.1
-  PGID: "0"
-  PUID: "0"
   SavePath: /share/qBittorrent
   Username: admin
   certfile: fullchain.pem
@@ -91,6 +90,7 @@ options:
   keyfile: privkey.pem
   ssl: false
   whitelist: localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16
+  log_level: info
 panel_admin: false
 panel_icon: mdi:progress-download
 ports:
@@ -110,7 +110,6 @@ privileged:
   - DAC_READ_SEARCH
   - NET_ADMIN
 schema:
-  log_level: list(trace|debug|info|notice|warning|error|fatal)?
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
@@ -139,7 +138,8 @@ schema:
   wireguard_config: str?
   wireguard_enabled: bool?
   whitelist: str?
+  log_level: list(trace|debug|info|notice|warning|error|fatal)?
 slug: qbittorrent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "5.1.4-9"
+version: "5.1.4-10"
