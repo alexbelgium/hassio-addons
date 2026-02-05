@@ -1,3 +1,5 @@
+## 5.1.4-8 (05-02-2026)
+- Minor bugs fixed
 ## 5.1.4-7 (05-02-2026)
 - Rewrite the openvpn and wireguard scripts in order to make them more robust, secure, and compatible with more suppliers @litinoveweedle
 
