@@ -36,7 +36,7 @@ test_mount() {
   _test_write() {
     local testfile="$mountpoint/.writetest_$$"
     if : >"$testfile" 2>/dev/null; then
-      rm -f "$testfile"
+      rm -f "$testfile" || true
       return 0
     else
       return 1
@@ -49,14 +49,27 @@ test_mount() {
     return 0
   fi
 
-  # ---- CIFS fallback check ----
+  # ---- CIFS fallback: retry with noserverino ----
   if [[ "$FSTYPE" == "cifs" && "$MOUNTOPTIONS" != *"noserverino"* ]]; then
     echo "... retrying mount with noserverino"
     MOUNTOPTIONS="${MOUNTOPTIONS},noserverino"
 
     umount "$mountpoint" 2>/dev/null || true
     if mount_drive "$MOUNTOPTIONS"; then
-      # retest with new options
+      if _test_write; then
+        MOUNTED=true
+        return 0
+      fi
+    fi
+  fi
+
+  # ---- CIFS fallback: retry with noperm (common Samba permission quirk) ----
+  if [[ "$FSTYPE" == "cifs" && "$MOUNTOPTIONS" != *"noperm"* ]]; then
+    echo "... retrying mount with noperm"
+    MOUNTOPTIONS="${MOUNTOPTIONS},noperm"
+
+    umount "$mountpoint" 2>/dev/null || true
+    if mount_drive "$MOUNTOPTIONS"; then
       if _test_write; then
         MOUNTED=true
         return 0
@@ -65,10 +78,9 @@ test_mount() {
   fi
 
   # ---- Final: mounted but not writable ----
-  bashio::log.warning "Disk mounted but is read-only or not writable (permission denied). Continuing anyway."
-  MOUNTED=true
+  bashio::log.warning "Disk mounted but is not writable (permission denied). Marking as read-only."
+  MOUNTED="readonly"
   return 0
-
 }
 
 mount_drive() {
@@ -403,6 +415,13 @@ if bashio::config.has_value 'networkdisks'; then
       fi
 
       cleanup_cred
+
+    elif [[ "$MOUNTED" == "readonly" ]]; then
+      bashio::log.warning "...... $disk mounted to /mnt/$diskname but is READ-ONLY or not writable by UID/GID ${PUID#,uid=}:${PGID#,gid=}."
+      bashio::log.warning "...... Check Samba share permissions, or try setting PUID/PGID to 0/0 (root), or adjust server ACLs."
+      rm -f "$ERRORCODE_FILE" 2>/dev/null || true
+      cleanup_cred
+
     else
       if [[ "$FSTYPE" == "cifs" ]]; then
         bashio::log.fatal "Error, unable to mount $disk to /mnt/$diskname with username $USERNAME. Please check share path, username/password/domain; try UID/GID 0."
