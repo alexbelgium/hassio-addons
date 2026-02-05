@@ -152,9 +152,11 @@ _routing_add() {
     done
     for ipv6 in ${local_ipv6}; do
         config["IPv6Enabled"]="true"
-        _cmd "ip -6 route add default dev ${config["Interface"]} table ${config["Table"]}" || return 1
         _cmd "ip -6 rule add priority 1 from ${ipv6} table ${config["Table"]}" || return 1
     done
+    if [ "${config["IPv6Enabled"]}" = "true" ]; then
+        _cmd "ip -6 route add default dev ${config["Interface"]} table ${config["Table"]}" || true
+    fi
 
     # get valid DNS servers
     _parse_dns
