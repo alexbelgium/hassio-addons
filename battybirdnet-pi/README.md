@@ -74,10 +74,8 @@ cifsdomain: "domain" # optional, allow setting the domain for the smb share
 ```
 
 - Config.yaml
-Additional variables can be configured using the config.yaml file found in /config/db21ed7f_battybirdnet-pi/config.yaml using the Filebrowser addon
+Additional variables can be configured in `/config/db21ed7f_battybirdnet-pi/config.yaml` using the File Browser add-on.
 
-- Config_env.yaml
-Additional environment variables can be configured there
 
 ### Mounting Drives
 
@@ -169,13 +167,18 @@ Should be avoided as the model uses the whole 0-15khz range
 
 ## Common issues
 
-Not yet available
+### Unifi Cameras RTSP
+
+Unifi Cameras default issue RTSPS links.These must be updated to be standard RTSP format. `rstp://<CAMERA_IP>:7447/<TOKEN>`.
+
+### UDP Update
+
+If a newly added camera does not report healthy, set the transport configuration in `config.yaml` to `udp`, then restart the add-on.
 
 ## Support
 
 Create an issue on github
 
 ---
-
 
 
