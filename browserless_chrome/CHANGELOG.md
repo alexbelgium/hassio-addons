@@ -1,3 +1,5 @@
+## 2.39.0-2 (05-02-2026)
+- Minor bugs fixed
 
 ## 2.39.0 (2026-02-04)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
