@@ -9,10 +9,8 @@
     "amd64"
   ],
   "startup": "services",
-  "boot": "auto",
   "init": false,
   "hassio_api": true,
-  "host_network": false,
   "map": [
     "share:rw",
     "ssl:ro"
@@ -79,12 +77,5 @@
         "value": "str?"
       }
     ]
-  },
-  "_comments": {
-    "data_path": "Persistent data directory inside the add-on container (mapped to /data by Home Assistant).",
-    "domain": "Public hostname used for NetBird URLs (change to your FQDN).",
-    "auth_*": "OIDC settings used by the management server and dashboard.",
-    "ssl_cert": "Optional TLS certificate (e.g. /ssl/fullchain.pem).",
-    "ssl_key": "Optional TLS key (e.g. /ssl/privkey.pem)."
   }
 }
