@@ -12,12 +12,19 @@ The Dashboard container requires the `NETBIRD_MGMT_API_ENDPOINT` environment var
 
 1. Install the add-on.
 2. Start the add-on and verify all services are running in the log output.
-3. Stop the add-on, edit the generated `management.json` to configure your Identity Provider (IdP), then start the add-on again.
-4. Access the dashboard at `http://<HA_HOST>:8080`.
+3. Stop the add-on, edit the generated `management.json` to configure your Identity Provider (IdP).
+4. Update `/config/netbird/dashboard/env` with the `NETBIRD_MGMT_API_ENDPOINT` and `AUTH_*` values for the dashboard.
+5. Start the add-on again and access the dashboard at `http://<HA_HOST>:8080`.
 
 ## Configuration
 
 This add-on starts with zero configuration options. It writes default configs into `/config/netbird` and runs on the standard NetBird ports.
+
+### Dashboard environment overrides
+Edit `/config/netbird/dashboard/env` to configure the dashboard UI:
+
+- `NETBIRD_MGMT_API_ENDPOINT`: Public URL of the management API (for example, `https://netbird.example.com`).
+- `AUTH_AUTHORITY`, `AUTH_CLIENT_ID`, `AUTH_CLIENT_SECRET`, `AUTH_AUDIENCE`, `AUTH_SUPPORTED_SCOPES`, `USE_AUTH0`: OIDC settings for the dashboard UI.
 
 ### Generated configuration
 On first start, the add-on creates:

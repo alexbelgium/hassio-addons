@@ -210,3 +210,21 @@ sed "s/__DASHBOARD_PORT__/${DASHBOARD_PORT}/g" \
 
 mkdir -p /run/nginx
 chmod +x /usr/local/bin/init_react_envs.sh
+
+# Generate dashboard env file if missing
+DASHBOARD_ENV_FILE="$DATA_DIR/dashboard/env"
+if [[ ! -f "$DASHBOARD_ENV_FILE" ]]; then
+  bashio::log.info "Generating dashboard env file at ${DASHBOARD_ENV_FILE}."
+  cat <<'ENV' > "$DASHBOARD_ENV_FILE"
+# NetBird dashboard environment overrides.
+# Example: NETBIRD_MGMT_API_ENDPOINT="https://netbird.example.com"
+NETBIRD_MGMT_API_ENDPOINT=""
+AUTH_AUTHORITY=""
+AUTH_CLIENT_ID=""
+AUTH_CLIENT_SECRET=""
+AUTH_AUDIENCE=""
+AUTH_SUPPORTED_SCOPES="openid profile email api offline_access email_verified"
+USE_AUTH0="false"
+ENV
+  chmod 600 "$DASHBOARD_ENV_FILE"
+fi

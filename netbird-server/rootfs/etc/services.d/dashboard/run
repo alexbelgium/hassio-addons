@@ -16,10 +16,21 @@ AUTH_CLIENT_SECRET=""
 AUTH_AUDIENCE=""
 AUTH_SUPPORTED_SCOPES="openid profile email api offline_access email_verified"
 USE_AUTH0="false"
+NETBIRD_MGMT_API_ENDPOINT=""
 
 MANAGEMENT_PORT="${MANAGEMENT_LISTEN##*:}"
 
-if [[ -n "$EXTERNAL_BASE_URL" ]]; then
+ENV_FILE="/config/netbird/dashboard/env"
+if [[ -f "$ENV_FILE" ]]; then
+  set -a
+  # shellcheck disable=SC1090
+  . "$ENV_FILE"
+  set +a
+fi
+
+if [[ -n "$NETBIRD_MGMT_API_ENDPOINT" ]]; then
+  NETBIRD_MGMT_API_ENDPOINT="$NETBIRD_MGMT_API_ENDPOINT"
+elif [[ -n "$EXTERNAL_BASE_URL" ]]; then
   NETBIRD_MGMT_API_ENDPOINT="$EXTERNAL_BASE_URL"
 elif [[ -n "$DOMAIN" ]]; then
   NETBIRD_MGMT_API_ENDPOINT="http://${DOMAIN}:${MANAGEMENT_PORT}"
