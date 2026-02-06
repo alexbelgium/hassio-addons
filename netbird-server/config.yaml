@@ -41,7 +41,6 @@ options:
   enable_relay: false
   relay_exposed_address: ""
   relay_auth_secret: ""
-  allow_legacy_ports: false
 schema:
   data_dir: str
   domain: str?
@@ -75,7 +74,6 @@ schema:
   enable_relay: bool
   relay_exposed_address: str?
   relay_auth_secret: str?
-  allow_legacy_ports: bool
 slug: netbird-server
 ports:
   33073/tcp: 33073

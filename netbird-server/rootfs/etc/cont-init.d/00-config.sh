@@ -187,14 +187,15 @@ else
   bashio::log.info "Using existing management config at ${MANAGEMENT_CONFIG}."
 fi
 
-# Generate Coturn config
+# Generate Coturn config if missing
 TURN_CONFIG="$DATA_DIR/turn/turnserver.conf"
-TURN_EXTERNAL_IP_LINE=""
-if [[ -n "$TURN_EXTERNAL_IP" ]]; then
-  TURN_EXTERNAL_IP_LINE="external-ip=${TURN_EXTERNAL_IP}"
-fi
+if [[ ! -f "$TURN_CONFIG" ]]; then
+  TURN_EXTERNAL_IP_LINE=""
+  if [[ -n "$TURN_EXTERNAL_IP" ]]; then
+    TURN_EXTERNAL_IP_LINE="external-ip=${TURN_EXTERNAL_IP}"
+  fi
 
-cat <<CONFIG > "$TURN_CONFIG"
+  cat <<CONFIG > "$TURN_CONFIG"
 listening-port=${TURN_LISTEN_PORT}
 realm=${TURN_REALM}
 fingerprint
@@ -204,6 +205,9 @@ ${TURN_EXTERNAL_IP_LINE}
 min-port=${TURN_MIN_PORT}
 max-port=${TURN_MAX_PORT}
 CONFIG
+else
+  bashio::log.info "Using existing Coturn config at ${TURN_CONFIG}."
+fi
 
 # Generate dashboard nginx config
 sed "s/__DASHBOARD_PORT__/${DASHBOARD_PORT}/g" \

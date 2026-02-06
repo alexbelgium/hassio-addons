@@ -27,7 +27,6 @@ The Dashboard container requires the `NETBIRD_MGMT_API_ENDPOINT` environment var
 - `disable_dashboard`: Disable the dashboard service entirely.
 - `enable_relay`: Enable the NetBird relay service (requires `relay_exposed_address` and `relay_auth_secret`).
 - `turn_external_ip`: Public IP to advertise when Coturn is behind NAT.
-- `allow_legacy_ports`: Keep legacy port exposure for pre-v0.29 agents (see NetBird docs).
 
 ### Generated configuration
 On first start, the add-on creates:
