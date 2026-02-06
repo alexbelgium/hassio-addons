@@ -7,8 +7,8 @@ set -euo pipefail
 # Runs the NetBird Signal service
 # ==============================================================================
 
-SIGNAL_LISTEN=$(bashio::config 'signal_listen')
-LOG_LEVEL=$(bashio::config 'log_level')
+SIGNAL_LISTEN="0.0.0.0:10000"
+LOG_LEVEL="info"
 SIGNAL_PORT="${SIGNAL_LISTEN##*:}"
 
 bashio::log.info "Starting NetBird Signal on port ${SIGNAL_PORT}..."

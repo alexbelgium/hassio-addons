@@ -7,7 +7,7 @@ set -euo pipefail
 # Runs Coturn
 # ==============================================================================
 
-DATA_DIR=$(bashio::config 'data_dir')
+DATA_DIR="/config/netbird"
 TURN_CONFIG="$DATA_DIR/turn/turnserver.conf"
 
 if [[ ! -f "$TURN_CONFIG" ]]; then

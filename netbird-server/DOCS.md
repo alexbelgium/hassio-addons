@@ -1,6 +1,6 @@
 # NetBird Server (monolithic)
 
-This add-on runs the NetBird self-hosted server stack in a single container (Management + Signal + Dashboard + Coturn; Relay optional). It does **not** use Home Assistant ingress. Access the Dashboard directly via the configured port.
+This add-on runs the NetBird self-hosted server stack in a single container (Management + Signal + Dashboard + Coturn). It does **not** use Home Assistant ingress. Access the Dashboard directly via the configured port.
 
 NetBird relies on gRPC. If you place the Management/Signal endpoints behind a reverse proxy, it **must** support HTTP/2 + gRPC proxying. See the NetBird reverse-proxy guide for supported configurations: <https://docs.netbird.io/selfhosted/reverse-proxy>.
 
@@ -11,22 +11,20 @@ The Dashboard container requires the `NETBIRD_MGMT_API_ENDPOINT` environment var
 ## Quick start
 
 1. Install the add-on.
-2. Configure your Identity Provider (IdP) and set the required `auth_*` options (or edit the generated `management.json`).
-3. Start the add-on and verify all services are running in the log output.
-4. Access the dashboard at `http://<HA_HOST>:<dashboard_port>`.
-
-> **Tip:** If you are using your own reverse proxy, set `external_base_url` to the public URL and keep TLS termination in your proxy.
+2. Start the add-on and verify all services are running in the log output.
+3. Stop the add-on, edit the generated `management.json` to configure your Identity Provider (IdP).
+4. Update `/config/netbird/dashboard/env` with the `NETBIRD_MGMT_API_ENDPOINT` and `AUTH_*` values for the dashboard.
+5. Start the add-on again and access the dashboard at `http://<HA_HOST>:8080`.
 
 ## Configuration
 
-### Required options
-- `data_dir`: Where NetBird stores persistent data. Default: `/config/netbird`.
-- `auth_authority`, `auth_client_id`, `auth_audience`, `auth_jwt_certs`, `auth_oidc_configuration_endpoint`: OIDC values used by the Management service and Dashboard.
+This add-on starts with zero configuration options. It writes default configs into `/config/netbird` and runs on the standard NetBird ports.
 
-### Optional options
-- `disable_dashboard`: Disable the dashboard service entirely.
-- `enable_relay`: Enable the NetBird relay service (requires `relay_exposed_address` and `relay_auth_secret`).
-- `turn_external_ip`: Public IP to advertise when Coturn is behind NAT.
+### Dashboard environment overrides
+Edit `/config/netbird/dashboard/env` to configure the dashboard UI:
+
+- `NETBIRD_MGMT_API_ENDPOINT`: Public URL of the management API (for example, `https://netbird.example.com`).
+- `AUTH_AUTHORITY`, `AUTH_CLIENT_ID`, `AUTH_CLIENT_SECRET`, `AUTH_AUDIENCE`, `AUTH_SUPPORTED_SCOPES`, `USE_AUTH0`: OIDC settings for the dashboard UI.
 
 ### Generated configuration
 On first start, the add-on creates:
@@ -43,13 +41,8 @@ Default ports exposed by this add-on:
 - `10000/tcp`: Signal gRPC
 - `8080/tcp`: Dashboard
 - `3478/udp`: Coturn STUN/TURN
-- `33080/tcp`: Relay (optional)
 
 If you have legacy (< v0.29) clients, review the legacy port notes in the NetBird self-hosted guide and ensure your firewall/forwarding rules are compatible.
-
-## Logs
-
-Use `log_level: debug` for more verbose logging.
 
 ## Notes
 

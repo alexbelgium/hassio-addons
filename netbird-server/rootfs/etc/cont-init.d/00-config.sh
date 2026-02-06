@@ -33,45 +33,39 @@ extract_port() {
   echo "${address##*:}"
 }
 
-DATA_DIR=$(bashio::config 'data_dir')
-DOMAIN=$(bashio::config 'domain')
-EXTERNAL_BASE_URL=$(bashio::config 'external_base_url')
-MANAGEMENT_LISTEN=$(bashio::config 'management_listen')
-SIGNAL_LISTEN=$(bashio::config 'signal_listen')
-DASHBOARD_LISTEN=$(bashio::config 'dashboard_listen')
-TURN_LISTEN_PORT=$(bashio::config 'turn_listen_port')
-TURN_REALM=$(bashio::config 'turn_realm')
-TURN_EXTERNAL_IP=$(bashio::config 'turn_external_ip')
-TURN_MIN_PORT=$(bashio::config 'turn_min_port')
-TURN_MAX_PORT=$(bashio::config 'turn_max_port')
-TURN_USER=$(bashio::config 'turn_user')
-TURN_PASSWORD=$(bashio::config 'turn_password')
-IDP_MANAGER_TYPE=$(bashio::config 'idp_manager_type')
-AUTH_AUTHORITY=$(bashio::config 'auth_authority')
-AUTH_AUDIENCE=$(bashio::config 'auth_audience')
-AUTH_JWT_CERTS=$(bashio::config 'auth_jwt_certs')
-AUTH_USER_ID_CLAIM=$(bashio::config 'auth_user_id_claim')
-AUTH_OIDC_CONFIGURATION_ENDPOINT=$(bashio::config 'auth_oidc_configuration_endpoint')
-AUTH_TOKEN_ENDPOINT=$(bashio::config 'auth_token_endpoint')
-IDP_CLIENT_ID=$(bashio::config 'idp_client_id')
-IDP_CLIENT_SECRET=$(bashio::config 'idp_client_secret')
-DISABLE_DEFAULT_POLICY=$(bashio::config 'disable_default_policy')
-DISABLE_DASHBOARD=$(bashio::config 'disable_dashboard')
-ENABLE_RELAY=$(bashio::config 'enable_relay')
-RELAY_EXPOSED_ADDRESS=$(bashio::config 'relay_exposed_address')
-RELAY_AUTH_SECRET=$(bashio::config 'relay_auth_secret')
+DATA_DIR="/config/netbird"
+DOMAIN="localhost"
+MANAGEMENT_LISTEN="0.0.0.0:33073"
+SIGNAL_LISTEN="0.0.0.0:10000"
+DASHBOARD_LISTEN="0.0.0.0:8080"
+TURN_LISTEN_PORT=3478
+TURN_REALM="netbird"
+TURN_EXTERNAL_IP=""
+TURN_MIN_PORT=49152
+TURN_MAX_PORT=65535
+TURN_USER="netbird"
+TURN_PASSWORD=""
+IDP_MANAGER_TYPE="none"
+AUTH_AUTHORITY=""
+AUTH_AUDIENCE=""
+AUTH_JWT_CERTS=""
+AUTH_USER_ID_CLAIM="sub"
+AUTH_OIDC_CONFIGURATION_ENDPOINT=""
+AUTH_TOKEN_ENDPOINT=""
+IDP_CLIENT_ID=""
+IDP_CLIENT_SECRET=""
+DISABLE_DEFAULT_POLICY=false
+DISABLE_DASHBOARD=false
+ENABLE_RELAY=false
+RELAY_EXPOSED_ADDRESS=""
+RELAY_AUTH_SECRET=""
 
 MANAGEMENT_PORT=$(extract_port "$MANAGEMENT_LISTEN")
 SIGNAL_PORT=$(extract_port "$SIGNAL_LISTEN")
 DASHBOARD_PORT=$(extract_port "$DASHBOARD_LISTEN")
 
-if [[ -z "$DOMAIN" ]]; then
-  DOMAIN="localhost"
-  bashio::log.warning "domain is empty; defaulting to localhost in generated configs."
-fi
-
 if [[ -z "$AUTH_AUTHORITY" || -z "$AUTH_AUDIENCE" || -z "$AUTH_JWT_CERTS" ]]; then
-  bashio::log.warning "OIDC configuration is incomplete. Update auth_* options or edit ${DATA_DIR}/management/management.json."
+  bashio::log.warning "OIDC configuration is incomplete. Edit ${DATA_DIR}/management/management.json to finish setup."
 fi
 
 mkdir -p "$DATA_DIR" \
@@ -216,3 +210,21 @@ sed "s/__DASHBOARD_PORT__/${DASHBOARD_PORT}/g" \
 
 mkdir -p /run/nginx
 chmod +x /usr/local/bin/init_react_envs.sh
+
+# Generate dashboard env file if missing
+DASHBOARD_ENV_FILE="$DATA_DIR/dashboard/env"
+if [[ ! -f "$DASHBOARD_ENV_FILE" ]]; then
+  bashio::log.info "Generating dashboard env file at ${DASHBOARD_ENV_FILE}."
+  cat <<'ENV' > "$DASHBOARD_ENV_FILE"
+# NetBird dashboard environment overrides.
+# Example: NETBIRD_MGMT_API_ENDPOINT="https://netbird.example.com"
+NETBIRD_MGMT_API_ENDPOINT=""
+AUTH_AUTHORITY=""
+AUTH_CLIENT_ID=""
+AUTH_CLIENT_SECRET=""
+AUTH_AUDIENCE=""
+AUTH_SUPPORTED_SCOPES="openid profile email api offline_access email_verified"
+USE_AUTH0="false"
+ENV
+  chmod 600 "$DASHBOARD_ENV_FILE"
+fi
