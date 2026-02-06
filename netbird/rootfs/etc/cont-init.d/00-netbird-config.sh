@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-set -e
+#set -e
 
 bashio::log.info "Configuring NetBird add-on"
 
