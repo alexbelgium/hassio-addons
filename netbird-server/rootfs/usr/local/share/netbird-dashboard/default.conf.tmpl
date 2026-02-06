@@ -1,0 +1,27 @@
+server {
+    listen __DASHBOARD_PORT__ default_server;
+    listen [::]:__DASHBOARD_PORT__ default_server;
+
+    root /usr/share/nginx/html;
+    location = /netbird.wasm {
+        root /usr/share/nginx/html;
+        default_type application/wasm;
+    }
+    location = /ironrdp-pkg/ironrdp_web_bg.wasm {
+        root /usr/share/nginx/html;
+        default_type application/wasm;
+    }
+
+    location / {
+        try_files $uri $uri.html $uri/ =404;
+        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
+        expires off;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
+        expires off;
+    }
+}

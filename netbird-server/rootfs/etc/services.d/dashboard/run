@@ -1,0 +1,43 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -euo pipefail
+
+# ==============================================================================
+# Home Assistant Add-on: NetBird Server
+# Runs the NetBird Dashboard
+# ==============================================================================
+
+DOMAIN=$(bashio::config 'domain')
+EXTERNAL_BASE_URL=$(bashio::config 'external_base_url')
+MANAGEMENT_LISTEN=$(bashio::config 'management_listen')
+AUTH_AUTHORITY=$(bashio::config 'auth_authority')
+AUTH_CLIENT_ID=$(bashio::config 'auth_client_id')
+AUTH_CLIENT_SECRET=$(bashio::config 'auth_client_secret')
+AUTH_AUDIENCE=$(bashio::config 'auth_audience')
+AUTH_SUPPORTED_SCOPES=$(bashio::config 'auth_supported_scopes')
+USE_AUTH0=$(bashio::config 'use_auth0')
+
+MANAGEMENT_PORT="${MANAGEMENT_LISTEN##*:}"
+
+if [[ -n "$EXTERNAL_BASE_URL" ]]; then
+  NETBIRD_MGMT_API_ENDPOINT="$EXTERNAL_BASE_URL"
+elif [[ -n "$DOMAIN" ]]; then
+  NETBIRD_MGMT_API_ENDPOINT="http://${DOMAIN}:${MANAGEMENT_PORT}"
+else
+  bashio::log.warning "external_base_url and domain are empty; defaulting NETBIRD_MGMT_API_ENDPOINT to localhost."
+  NETBIRD_MGMT_API_ENDPOINT="http://127.0.0.1:${MANAGEMENT_PORT}"
+fi
+
+export AUTH_AUTHORITY
+export AUTH_CLIENT_ID
+export AUTH_CLIENT_SECRET
+export AUTH_AUDIENCE
+export AUTH_SUPPORTED_SCOPES
+export USE_AUTH0
+export NETBIRD_MGMT_API_ENDPOINT
+
+bashio::log.info "Preparing NetBird Dashboard assets..."
+/usr/local/bin/init_react_envs.sh
+
+bashio::log.info "Starting NetBird Dashboard..."
+exec nginx -g "daemon off;"

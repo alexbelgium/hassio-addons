@@ -1,0 +1,23 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -euo pipefail
+
+# ==============================================================================
+# Home Assistant Add-on: NetBird Server
+# Runs the NetBird Management service
+# ==============================================================================
+
+DATA_DIR=$(bashio::config 'data_dir')
+LOG_LEVEL=$(bashio::config 'log_level')
+MANAGEMENT_CONFIG="$DATA_DIR/management/management.json"
+
+if [[ ! -f "$MANAGEMENT_CONFIG" ]]; then
+  bashio::log.error "Missing management configuration at ${MANAGEMENT_CONFIG}."
+  bashio::exit.nok
+fi
+
+bashio::log.info "Starting NetBird Management..."
+exec /usr/local/bin/netbird-mgmt management \
+  --config "$MANAGEMENT_CONFIG" \
+  --log-level "$LOG_LEVEL" \
+  --log-file console

@@ -1,0 +1,93 @@
+arch:
+  - aarch64
+  - amd64
+description: "\U0001F426 NetBird self-hosted server stack (management, signal, dashboard, coturn)"
+image: ghcr.io/alexbelgium/netbird-server-{arch}
+init: false
+ingress: false
+map:
+  - addon_config:rw
+name: NetBird Server
+options:
+  data_dir: /config/netbird
+  domain: ""
+  external_base_url: ""
+  management_listen: "0.0.0.0:33073"
+  signal_listen: "0.0.0.0:10000"
+  dashboard_listen: "0.0.0.0:8080"
+  turn_listen_port: 3478
+  turn_realm: "netbird"
+  turn_external_ip: ""
+  turn_min_port: 49152
+  turn_max_port: 65535
+  turn_user: "netbird"
+  turn_password: ""
+  idp_manager_type: "none"
+  auth_authority: ""
+  auth_client_id: ""
+  auth_client_secret: ""
+  auth_audience: ""
+  auth_supported_scopes: "openid profile email api offline_access email_verified"
+  auth_jwt_certs: ""
+  auth_user_id_claim: "sub"
+  auth_oidc_configuration_endpoint: ""
+  auth_token_endpoint: ""
+  use_auth0: false
+  idp_client_id: ""
+  idp_client_secret: ""
+  disable_default_policy: false
+  log_level: info
+  disable_dashboard: false
+  enable_relay: false
+  relay_exposed_address: ""
+  relay_auth_secret: ""
+  allow_legacy_ports: false
+schema:
+  data_dir: str
+  domain: str?
+  external_base_url: str?
+  management_listen: str
+  signal_listen: str
+  dashboard_listen: str
+  turn_listen_port: port
+  turn_realm: str
+  turn_external_ip: str?
+  turn_min_port: port
+  turn_max_port: port
+  turn_user: str
+  turn_password: str?
+  idp_manager_type: str
+  auth_authority: str?
+  auth_client_id: str?
+  auth_client_secret: str?
+  auth_audience: str?
+  auth_supported_scopes: str?
+  auth_jwt_certs: str?
+  auth_user_id_claim: str
+  auth_oidc_configuration_endpoint: str?
+  auth_token_endpoint: str?
+  use_auth0: bool
+  idp_client_id: str?
+  idp_client_secret: str?
+  disable_default_policy: bool
+  log_level: list(info|debug)
+  disable_dashboard: bool
+  enable_relay: bool
+  relay_exposed_address: str?
+  relay_auth_secret: str?
+  allow_legacy_ports: bool
+slug: netbird-server
+ports:
+  33073/tcp: 33073
+  10000/tcp: 10000
+  8080/tcp: 8080
+  3478/udp: 3478
+  33080/tcp: 33080
+ports_description:
+  33073/tcp: Management API (HTTP/gRPC)
+  10000/tcp: Signal gRPC
+  8080/tcp: NetBird Dashboard (HTTP)
+  3478/udp: Coturn STUN/TURN
+  33080/tcp: Relay (WebSocket/QUIC)
+url: https://github.com/alexbelgium/hassio-addons
+version: 0.64.5-1
