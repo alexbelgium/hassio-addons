@@ -4,7 +4,6 @@ arch:
 description: "\U0001F426 NetBird self-hosted server stack (management, signal, dashboard, coturn)"
 image: ghcr.io/alexbelgium/netbird-server-{arch}
 init: false
-ingress: false
 map:
   - addon_config:rw
 name: NetBird Server
