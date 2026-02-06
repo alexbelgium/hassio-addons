@@ -36,15 +36,16 @@ test_mount() {
   _test_write() {
     local testfile="$mountpoint/.writetest_$$"
     if : >"$testfile" 2>/dev/null; then
-      rm -f "$testfile" || true
+      rm -f "$testfile" 2>/dev/null || true
       return 0
     else
+      rm -f "$testfile" 2>/dev/null || true
       return 1
     fi
   }
 
   # First write test
-  if _test_write; then
+  if _test_write 2>/dev/null; then
     MOUNTED=true
     return 0
   fi
@@ -56,7 +57,7 @@ test_mount() {
 
     umount "$mountpoint" 2>/dev/null || true
     if mount_drive "$MOUNTOPTIONS"; then
-      if _test_write; then
+      if _test_write 2>/dev/null; then
         MOUNTED=true
         return 0
       fi
@@ -70,7 +71,7 @@ test_mount() {
 
     umount "$mountpoint" 2>/dev/null || true
     if mount_drive "$MOUNTOPTIONS"; then
-      if _test_write; then
+      if _test_write 2>/dev/null; then
         MOUNTED=true
         return 0
       fi
@@ -78,7 +79,6 @@ test_mount() {
   fi
 
   # ---- Final: mounted but not writable ----
-  bashio::log.warning "Disk mounted but is not writable (permission denied). Marking as read-only."
   MOUNTED="readonly"
   return 0
 }
