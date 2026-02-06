@@ -1,0 +1,18 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -euo pipefail
+
+# ==============================================================================
+# Home Assistant Add-on: NetBird Server
+# Runs the NetBird Signal service
+# ==============================================================================
+
+SIGNAL_LISTEN=$(bashio::config 'signal_listen')
+LOG_LEVEL=$(bashio::config 'log_level')
+SIGNAL_PORT="${SIGNAL_LISTEN##*:}"
+
+bashio::log.info "Starting NetBird Signal on port ${SIGNAL_PORT}..."
+exec /usr/local/bin/netbird-signal run \
+  --port "$SIGNAL_PORT" \
+  --log-level "$LOG_LEVEL" \
+  --log-file console
