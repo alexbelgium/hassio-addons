@@ -7,9 +7,9 @@ set -euo pipefail
 # Runs the NetBird Relay (optional)
 # ==============================================================================
 
-LOG_LEVEL=$(bashio::config 'log_level')
-RELAY_EXPOSED_ADDRESS=$(bashio::config 'relay_exposed_address')
-RELAY_AUTH_SECRET=$(bashio::config 'relay_auth_secret')
+LOG_LEVEL="info"
+RELAY_EXPOSED_ADDRESS=""
+RELAY_AUTH_SECRET=""
 
 bashio::log.info "Starting NetBird Relay..."
 exec /usr/local/bin/netbird-relay \

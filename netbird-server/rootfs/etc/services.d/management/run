@@ -7,8 +7,8 @@ set -euo pipefail
 # Runs the NetBird Management service
 # ==============================================================================
 
-DATA_DIR=$(bashio::config 'data_dir')
-LOG_LEVEL=$(bashio::config 'log_level')
+DATA_DIR="/config/netbird"
+LOG_LEVEL="info"
 MANAGEMENT_CONFIG="$DATA_DIR/management/management.json"
 
 if [[ ! -f "$MANAGEMENT_CONFIG" ]]; then
