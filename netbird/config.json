@@ -1,7 +1,7 @@
 {
-  "name": "NetBird Server 2",
-  "version": "0.1.1",
-  "slug": "netbird2",
+  "name": "NetBird Server",
+  "version": "0.1.2",
+  "slug": "netbird",
   "description": "Secure, WireGuard-based overlay network server (NetBird management + signal + optional dashboard).",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "arch": [
