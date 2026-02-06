@@ -1,5 +1,6 @@
 {
   "last_update": "2026-02-04",
+  "paused": "true",
   "repository": "alexbelgium/hassio-addons",
   "slug": "netalertx_fa",
   "source": "github",
