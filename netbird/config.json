@@ -1,0 +1,90 @@
+{
+  "name": "NetBird Server",
+  "version": "0.1.2",
+  "slug": "netbird",
+  "description": "Secure, WireGuard-based overlay network server (NetBird management + signal + optional dashboard).",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "startup": "services",
+  "boot": "auto",
+  "init": false,
+  "hassio_api": true,
+  "host_network": false,
+  "map": [
+    "share:rw",
+    "ssl:ro"
+  ],
+  "ports": {
+    "33073/tcp": 33073,
+    "10000/tcp": 10000,
+    "33080/tcp": 33080
+  },
+  "ports_description": {
+    "33073/tcp": "NetBird management API",
+    "10000/tcp": "NetBird signal",
+    "33080/tcp": "NetBird dashboard (optional)"
+  },
+  "options": {
+    "data_path": "/data/netbird",
+    "domain": "netbird.local",
+    "log_level": "info",
+    "management_port": 33073,
+    "signal_port": 10000,
+    "dashboard_port": 33080,
+    "enable_dashboard": false,
+    "management_dns_domain": "netbird.local",
+    "single_account_domain": "",
+    "disable_anonymous_metrics": false,
+    "disable_default_policy": false,
+    "auth_issuer": "https://issuer.example.com/",
+    "auth_audience": "netbird",
+    "auth_jwt_certs": "https://issuer.example.com/jwks.json",
+    "auth_user_id_claim": "sub",
+    "auth_oidc_configuration_endpoint": "https://issuer.example.com/.well-known/openid-configuration",
+    "auth_client_id": "",
+    "auth_client_secret": "",
+    "auth_supported_scopes": "openid profile email",
+    "ssl_cert": "",
+    "ssl_key": "",
+    "env_vars": []
+  },
+  "schema": {
+    "data_path": "str",
+    "domain": "str",
+    "log_level": "list(debug|info|warn|error)",
+    "management_port": "port",
+    "signal_port": "port",
+    "dashboard_port": "port",
+    "enable_dashboard": "bool",
+    "management_dns_domain": "str",
+    "single_account_domain": "str?",
+    "disable_anonymous_metrics": "bool",
+    "disable_default_policy": "bool",
+    "auth_issuer": "str",
+    "auth_audience": "str",
+    "auth_jwt_certs": "str",
+    "auth_user_id_claim": "str",
+    "auth_oidc_configuration_endpoint": "str",
+    "auth_client_id": "str?",
+    "auth_client_secret": "str?",
+    "auth_supported_scopes": "str",
+    "ssl_cert": "str?",
+    "ssl_key": "str?",
+    "env_vars": [
+      {
+        "name": "match(^[A-Za-z_][A-Za-z0-9_]*$)",
+        "value": "str?"
+      }
+    ]
+  },
+  "_comments": {
+    "data_path": "Persistent data directory inside the add-on container (mapped to /data by Home Assistant).",
+    "domain": "Public hostname used for NetBird URLs (change to your FQDN).",
+    "auth_*": "OIDC settings used by the management server and dashboard.",
+    "ssl_cert": "Optional TLS certificate (e.g. /ssl/fullchain.pem).",
+    "ssl_key": "Optional TLS key (e.g. /ssl/privkey.pem)."
+  }
+}
