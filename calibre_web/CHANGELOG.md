@@ -1,3 +1,6 @@
+
+## 0.6.26 (2026-02-07)
+- Update to latest version from linuxserver/docker-calibre-web (changelog : https://github.com/linuxserver/docker-calibre-web/releases)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 0.6.25 (2025-08-30)
