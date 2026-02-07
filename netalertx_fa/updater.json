@@ -1,10 +1,9 @@
 {
-  "last_update": "2026-02-04",
-  "paused": "true",
+  "last_update": "2026-02-07",
+  "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "netalertx_fa",
   "source": "github",
-  "paused": false,
   "upstream_repo": "jokob-sk/NetAlertX",
-  "upstream_version": "26.2.4"
+  "upstream_version": "26.2.6"
 }
