@@ -1,3 +1,5 @@
+## 1.38.0 (07-02-2026)
+- Minor bugs fixed
 
 ## 1.36.37-2 (2026-01-03)
 - Fix MariaDB addon defaults and migrate legacy database name when detected
