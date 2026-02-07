@@ -1,4 +1,7 @@
 
+## 19.3.4 (2026-02-07)
+- Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
+
 ## 19.3.1-2 (2026-02-04)
 - Fix startup when cloudcmd.mjs is missing in upstream image
 

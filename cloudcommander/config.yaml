@@ -104,4 +104,4 @@ schema:
 slug: cloudcommander
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander
-version: "19.3.1-2"
+version: "19.3.4"
