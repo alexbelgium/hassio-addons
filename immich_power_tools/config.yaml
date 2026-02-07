@@ -30,5 +30,5 @@ schema:
   IMMICH_URL: str
 slug: immich_power_tools
 url: https://github.com/alexbelgium/hassio-addons
-version: "0.19.0"
+version: "0.19.1"
 webui: http://[HOST]:[PORT:3000]
