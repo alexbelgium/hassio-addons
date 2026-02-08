@@ -43,22 +43,45 @@ Features :
 
 ## Configuration
 
-Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
-
----
-
-Webui can be found at <http://homeassistant:8080>, or through Ingress.
+Webui can be found at <http://homeassistant:8080> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 It automatically mounts all local drives.
 
-Enable full access only if you are encountering issues. SMART access should work without full access in all other scenarios.
+**Note**: Enable full access only if encountering issues. SMART access should work without full access in all scenarios.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `Updates` | list | `Hourly` | Update schedule (Quarterly/Hourly/Daily/Weekly/Custom) |
+| `Updates_custom_time` | str | | Custom update interval (e.g., "5m", "2h", "1w", "2mo") |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `Mode` | list | | Operating mode (Collector+WebUI or Collector only) |
+| `COLLECTOR_API_ENDPOINT` | str | | Collector API endpoint URL |
+| `COLLECTOR_HOST_ID` | str | | Host identifier for collector |
+| `SMARTCTL_COMMAND_DEVICE_TYPE` | list | | Device type for SMARTCTL commands |
+| `SMARTCTL_MEGARAID_DISK_NUM` | int | | MegaRAID disk number |
+| `expose_collector` | bool | | Expose collector port externally |
+
+### Example Configuration
 
 ```yaml
-env_vars: [] # Required field, leave empty if unused
-Updates: Hourly, Daily, Weekly
-Updates_custom_time : if you select "Custom" as "Updates" variable, you can define specific updates in natural language in the "Updates_custom_time" field. Example : select "Custom" as "Updates", then type a custom intervals like "5m", "2h", "1w", or "2mo" to have an update every 5 minutes, or every 2 hours, or evey week, or every 2 months
-TZ: timezone
-Mode: Collector+WebUI or Collector only
+Updates: "Daily"
+Updates_custom_time: "12h"
+TZ: "Europe/London"
+Mode: "Collector+WebUI"
+COLLECTOR_API_ENDPOINT: "http://localhost:8080"
+COLLECTOR_HOST_ID: "home_assistant"
+SMARTCTL_COMMAND_DEVICE_TYPE: "auto"
+expose_collector: false
 ```
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## Installation
 
@@ -80,12 +103,15 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Integration with HA can be done with the [rest platform](https://www.home-assistant.io/integrations/rest) in configuration.yaml.
 
-Two types of api endpoints are available:
+The API is available on Home Assistant's internal network even when the port is not exposed. Use the add-on's internal
+domain name (`http://db21ed7f-scrutiny:8080`) to query it from Home Assistant or other add-ons. If you need to reach the API from your local network, expose the port in the add-on options and replace the domain with your Home Assistant IP address.
 
-- Summary data : http://YOURIP:ADDONPORT/api/summary
-- Detailed data : http://YOURIP:ADDONPORT/api/device/WWN/details
+Two types of API endpoints are available:
 
-For the detailed data, wmn can be found for each hdd within the scrutiny app. For example: http://192.168.178.23:8086/api/device/0x50014ee606c14537/details
+- Summary data: <http://db21ed7f-scrutiny-fa:8080/api/summary>
+- Detailed data: <http://db21ed7f-scrutiny-fa:8080/api/device/WWN/details>
+
+For the detailed data, wwn can be found for each HDD within the Scrutiny app. For example: <http://db21ed7f-scrutiny-fa:8080/api/device/0x50014ee606c14537/details>
 
 Example to get data from the first hdd.
 
@@ -93,7 +119,7 @@ Example to get data from the first hdd.
 rest:
   - verify_ssl: false
     scan_interval: 60
-    resource: http://192.168.178.4:8080/api/device/0x57c35481f82a7a9c/details
+    resource: http://db21ed7f-scrutiny-fa:8080/api/device/0x57c35481f82a7a9c/details
     sensor:
       - name: "HDD - WWN"
         value_template: "{{ value_json.data.smart_results[0].device_wwn }}"
@@ -135,8 +161,6 @@ rest:
 
 Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-scrutiny-smart-dashboard/295747)
 
-https://github.com/alexbelgium/hassio-addons
+<https://github.com/alexbelgium/hassio-addons>
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
-
