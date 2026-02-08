@@ -1,3 +1,4 @@
+## 2.20.3-2 (08-02-2026)
 - Bindings of npm dependencies need to be rebuilt for the system updates @eburi
 - Add I2C device mappings @eburi
 
