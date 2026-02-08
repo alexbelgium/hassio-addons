@@ -85,10 +85,6 @@ elif [[ ${interface_name} = "tun" ]]; then
 elif [[ ${interface_name} = "tap" ]]; then
     interface_name='tap0'
 fi
-if [[ ${#interface_name} -gt 15 ]]; then
-    bashio::log.warning "OpenVPN interface name '${interface_name}' exceeds 15 characters; truncating to '${interface_name:0:15}'."
-    interface_name="${interface_name:0:15}"
-fi
 
 openvpn_runtime_config="${OPENVPN_STATE_DIR}/${interface_name}.conf"
 
