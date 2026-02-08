@@ -1,3 +1,5 @@
+- Bindings of npm dependencies need to be rebuilt for the system updates @eburi
+- Add I2C device mappings @eburi
 
 ## 2.20.3 (2026-02-01)
 - Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
