@@ -61,6 +61,10 @@ interface_name="$(basename "${wireguard_config}" .conf)"
 if [[ -z "${interface_name}" ]]; then
     interface_name='wg0'
 fi
+if [[ ${#interface_name} -gt 15 ]]; then
+    bashio::log.warning "WireGuard interface name '${interface_name}' exceeds 15 characters; truncating to '${interface_name:0:15}'."
+    interface_name="${interface_name:0:15}"
+fi
 
 wireguard_runtime_config="${WIREGUARD_STATE_DIR}/${interface_name}.conf"
 
