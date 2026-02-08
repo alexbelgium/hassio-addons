@@ -230,10 +230,14 @@ _wireguard_up() {
     fi
 
     _cmd "wg set ${config["Interface"]} listen-port ${config["ListenPort"]} private-key ${config["PrivateKey"]}" || return 1
+    local endpoint="${config["EndpointIP"]}:${config["EndpointPort"]}"
+    if [[ "${config["EndpointIP"]}" == *:* ]]; then
+      endpoint="[${config["EndpointIP"]}]:${config["EndpointPort"]}"
+    fi
     if [ -v config["PersistentKeepalive"] ] && [ -n "${config["PersistentKeepalive"]}" ]; then
-        _cmd "wg set ${config["Interface"]} peer ${config["PublicKey"]} endpoint ${config["EndpointIP"]}:${config["EndpointPort"]} allowed-ips ${allowed_ips} persistent-keepalive ${config["PersistentKeepalive"]}" || return 1
+        _cmd "wg set ${config["Interface"]} peer ${config["PublicKey"]} endpoint ${endpoint} allowed-ips ${allowed_ips} persistent-keepalive ${config["PersistentKeepalive"]}" || return 1
     else
-        _cmd "wg set ${config["Interface"]} peer ${config["PublicKey"]} endpoint ${config["EndpointIP"]}:${config["EndpointPort"]} allowed-ips ${allowed_ips}" || return 1
+        _cmd "wg set ${config["Interface"]} peer ${config["PublicKey"]} endpoint ${endpoint} allowed-ips ${allowed_ips}" || return 1
     fi
 
     if [ -v config["MTU"] ] && [ -n "${config["MTU"]}" ]; then
