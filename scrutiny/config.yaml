@@ -112,5 +112,5 @@ schema:
   expose_collector: bool?
 slug: scrutiny
 udev: true
-url: https://github.com/AnalogJ/scrutiny
-version: v0.8.1-12
+url: https://github.com/Starosdev/scrutiny
+version: v1.23.2-1
