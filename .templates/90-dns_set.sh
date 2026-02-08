@@ -9,7 +9,7 @@ set -e
 # Avoid usage of local dns such as adguard home or pihole\n"
 
 if bashio::config.has_value 'DNS_server'; then
-    if  ! bashio::config.is_true "openvpn_enabled" && ! bashio::config.is_true "wireguard_enabled"; then
+    if  ! bashio::config.true "openvpn_enabled" && ! bashio::config.true "wireguard_enabled"; then
         # Define variables
         DNSSERVER=$(bashio::config 'DNS_server')
         DNS=""
