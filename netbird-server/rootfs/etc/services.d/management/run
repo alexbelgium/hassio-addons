@@ -10,6 +10,7 @@ set -euo pipefail
 DATA_DIR="/config/netbird"
 LOG_LEVEL="info"
 MANAGEMENT_CONFIG="$DATA_DIR/management/management.json"
+MANAGEMENT_PORT=8081
 
 if [[ ! -f "$MANAGEMENT_CONFIG" ]]; then
   bashio::log.error "Missing management configuration at ${MANAGEMENT_CONFIG}."
@@ -19,5 +20,10 @@ fi
 bashio::log.info "Starting NetBird Management..."
 exec /usr/local/bin/netbird-mgmt management \
   --config "$MANAGEMENT_CONFIG" \
+  --port "$MANAGEMENT_PORT" \
   --log-level "$LOG_LEVEL" \
-  --log-file console
+  --log-file console \
+  --disable-anonymous-metrics=false \
+  --single-account-mode-domain=netbird.selfhosted \
+  --dns-domain=netbird.selfhosted \
+  --idp-sign-key-refresh-enabled

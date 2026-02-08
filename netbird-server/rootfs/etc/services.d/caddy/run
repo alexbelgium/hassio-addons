@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -euo pipefail
+
+# ==============================================================================
+# Home Assistant Add-on: NetBird Server
+# Runs Caddy reverse proxy
+# ==============================================================================
+
+DATA_DIR="/config/netbird"
+CADDYFILE="${DATA_DIR}/Caddyfile"
+
+if [[ ! -f "$CADDYFILE" ]]; then
+  bashio::log.error "Missing Caddyfile at ${CADDYFILE}."
+  bashio::exit.nok
+fi
+
+export XDG_DATA_HOME="${DATA_DIR}/caddy/data"
+export XDG_CONFIG_HOME="${DATA_DIR}/caddy/config"
+
+mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME"
+
+bashio::log.info "Starting Caddy..."
+exec caddy run --config "$CADDYFILE" --adapter caddyfile

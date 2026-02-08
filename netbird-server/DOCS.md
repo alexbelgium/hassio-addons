@@ -1,35 +1,36 @@
-# NetBird Server (monolithic)
+# NetBird Server (quickstart)
 
-This add-on runs the NetBird self-hosted server stack in a single container (Management + Signal + Dashboard + Coturn). It does **not** use Home Assistant ingress. Access the Dashboard directly via the configured port.
+This add-on runs the NetBird self-hosted server stack in a single container (Management + Signal + Relay/STUN + Dashboard) and ships a built-in Caddy reverse proxy, matching the official NetBird self-hosted quickstart flow. It does **not** use Home Assistant ingress.
 
-NetBird relies on gRPC. If you place the Management/Signal endpoints behind a reverse proxy, it **must** support HTTP/2 + gRPC proxying. See the NetBird reverse-proxy guide for supported configurations: <https://docs.netbird.io/selfhosted/reverse-proxy>.
-
-The NetBird self-hosted guide includes up-to-date port requirements and legacy port notes: <https://docs.netbird.io/selfhosted/selfhosted-guide>.
-
-The Dashboard container requires the `NETBIRD_MGMT_API_ENDPOINT` environment variable (the add-on injects this automatically) as described in the NetBird dashboard README: <https://github.com/netbirdio/dashboard#readme>.
+NetBird relies on gRPC. The built-in Caddy configuration is pre-wired to proxy both HTTP and gRPC endpoints as recommended in the quickstart guide: <https://docs.netbird.io/selfhosted/selfhosted-quickstart>.
 
 ## Quick start
 
 1. Install the add-on.
-2. Start the add-on and verify all services are running in the log output.
-3. Stop the add-on, edit the generated `management.json` to configure your Identity Provider (IdP).
-4. Update `/config/netbird/dashboard/env` with the `NETBIRD_MGMT_API_ENDPOINT` and `AUTH_*` values for the dashboard.
-5. Start the add-on again and access the dashboard at `http://<HA_HOST>:8080`.
+2. Set the `domain` option to your public NetBird domain (e.g., `netbird.example.com`).
+3. Start the add-on and verify all services are running in the log output.
+4. Access the dashboard at `https://<your-domain>` and complete the onboarding flow.
 
 ## Configuration
 
-This add-on starts with zero configuration options. It writes default configs into `/config/netbird` and runs on the standard NetBird ports.
+This add-on generates the standard quickstart configuration files in `/config/netbird` and reuses them on subsequent starts.
+
+### Required options
+- `domain`: Public domain that resolves to your Home Assistant host (e.g., `netbird.example.com`).
 
 ### Dashboard environment overrides
 Edit `/config/netbird/dashboard/env` to configure the dashboard UI:
 
 - `NETBIRD_MGMT_API_ENDPOINT`: Public URL of the management API (for example, `https://netbird.example.com`).
-- `AUTH_AUTHORITY`, `AUTH_CLIENT_ID`, `AUTH_CLIENT_SECRET`, `AUTH_AUDIENCE`, `AUTH_SUPPORTED_SCOPES`, `USE_AUTH0`: OIDC settings for the dashboard UI.
+- `NETBIRD_MGMT_GRPC_API_ENDPOINT`: Public URL for the gRPC API (typically the same as above).
+- `AUTH_*`: OIDC settings for the dashboard UI (pre-filled for the embedded IdP).
 
 ### Generated configuration
 On first start, the add-on creates:
-- `management.json` in `$data_dir/management/`
-- `turnserver.conf` in `$data_dir/turn/`
+- `management.json` in `/config/netbird/management/`
+- `relay.env` in `/config/netbird/relay/`
+- `dashboard.env` in `/config/netbird/dashboard/`
+- `Caddyfile` in `/config/netbird/`
 
 If you need advanced settings, stop the add-on and edit these files. The add-on will keep your edits on restart.
 
@@ -37,14 +38,12 @@ If you need advanced settings, stop the add-on and edit these files. The add-on 
 
 Default ports exposed by this add-on:
 
-- `33073/tcp`: Management API (HTTP/gRPC)
-- `10000/tcp`: Signal gRPC
-- `8080/tcp`: Dashboard
-- `3478/udp`: Coturn STUN/TURN
-
-If you have legacy (< v0.29) clients, review the legacy port notes in the NetBird self-hosted guide and ensure your firewall/forwarding rules are compatible.
+- `80/tcp`: Caddy HTTP (ACME HTTP-01)
+- `443/tcp`: Caddy HTTPS (Dashboard + APIs)
+- `443/udp`: Caddy HTTP/3 (optional)
+- `3478/udp`: Relay STUN
 
 ## Notes
 
-- This add-on does **not** handle TLS certificates. Place it behind your existing reverse proxy if you need HTTPS.
-- Coturn requires a UDP relay port range (defaults to `49152-65535`). Ensure this range is allowed in your firewall when using TURN relaying.
+- This add-on uses NetBird's embedded IdP (Dex) and matches the official quickstart layout.
+- If you already run your own reverse proxy, you can disable Caddy by editing the generated `Caddyfile` or by terminating TLS upstream and forwarding requests to port 80.
