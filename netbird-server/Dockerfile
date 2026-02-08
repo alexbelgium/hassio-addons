@@ -17,11 +17,6 @@
 ARG NETBIRD_VERSION=0.64.5
 ARG DASHBOARD_VERSION=2.31.0
 
-FROM netbirdio/management:${NETBIRD_VERSION} AS netbird-management
-FROM netbirdio/signal:${NETBIRD_VERSION} AS netbird-signal
-FROM netbirdio/relay:${NETBIRD_VERSION} AS netbird-relay
-FROM netbirdio/dashboard:${DASHBOARD_VERSION} AS netbird-dashboard
-
 #################
 # 2 Base Image  #
 #################
@@ -74,6 +69,11 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 #############################
 # 5 Copy NetBird components #
 #############################
+
+FROM netbirdio/management:${NETBIRD_VERSION} AS netbird-management
+FROM netbirdio/signal:${NETBIRD_VERSION} AS netbird-signal
+FROM netbirdio/relay:${NETBIRD_VERSION} AS netbird-relay
+FROM netbirdio/dashboard:${DASHBOARD_VERSION} AS netbird-dashboard
 
 COPY --from=netbird-management /go/bin/netbird-mgmt /usr/local/bin/netbird-mgmt
 COPY --from=netbird-signal /go/bin/netbird-signal /usr/local/bin/netbird-signal
