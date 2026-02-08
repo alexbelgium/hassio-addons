@@ -16,13 +16,11 @@
 
 ARG NETBIRD_VERSION=0.64.5
 ARG DASHBOARD_VERSION=2.31.0
-ARG COTURN_VERSION=4.6.2
 
 FROM netbirdio/management:${NETBIRD_VERSION} AS netbird-management
 FROM netbirdio/signal:${NETBIRD_VERSION} AS netbird-signal
 FROM netbirdio/relay:${NETBIRD_VERSION} AS netbird-relay
 FROM netbirdio/dashboard:${DASHBOARD_VERSION} AS netbird-dashboard
-FROM coturn/coturn:${COTURN_VERSION} AS netbird-coturn
 
 #################
 # 2 Base Image  #
@@ -67,7 +65,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="nginx gettext ca-certificates"
+ENV PACKAGES="nginx gettext ca-certificates caddy openssl"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
@@ -80,8 +78,6 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 COPY --from=netbird-management /go/bin/netbird-mgmt /usr/local/bin/netbird-mgmt
 COPY --from=netbird-signal /go/bin/netbird-signal /usr/local/bin/netbird-signal
 COPY --from=netbird-relay /go/bin/netbird-relay /usr/local/bin/netbird-relay
-COPY --from=netbird-coturn /usr/bin/turnserver /usr/local/bin/turnserver
-
 COPY --from=netbird-dashboard /usr/share/nginx/html /usr/share/nginx/html
 COPY --from=netbird-dashboard /usr/local/init_react_envs.sh /usr/local/bin/init_react_envs.sh
 

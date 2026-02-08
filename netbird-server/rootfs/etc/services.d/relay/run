@@ -4,17 +4,20 @@ set -euo pipefail
 
 # ==============================================================================
 # Home Assistant Add-on: NetBird Server
-# Runs the NetBird Relay (optional)
+# Runs the NetBird Relay (includes embedded STUN)
 # ==============================================================================
 
-LOG_LEVEL="info"
-RELAY_EXPOSED_ADDRESS=""
-RELAY_AUTH_SECRET=""
+RELAY_ENV_FILE="/config/netbird/relay/relay.env"
+
+if [[ -f "$RELAY_ENV_FILE" ]]; then
+  set -a
+  # shellcheck disable=SC1090
+  . "$RELAY_ENV_FILE"
+  set +a
+else
+  bashio::log.error "Missing relay env file at ${RELAY_ENV_FILE}."
+  bashio::exit.nok
+fi
 
 bashio::log.info "Starting NetBird Relay..."
-exec /usr/local/bin/netbird-relay \
-  --listen-address ":33080" \
-  --exposed-address "$RELAY_EXPOSED_ADDRESS" \
-  --auth-secret "$RELAY_AUTH_SECRET" \
-  --log-level "$LOG_LEVEL" \
-  --log-file console
+exec /usr/local/bin/netbird-relay

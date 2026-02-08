@@ -7,45 +7,16 @@ set -euo pipefail
 # Runs the NetBird Dashboard
 # ==============================================================================
 
-DOMAIN="localhost"
-EXTERNAL_BASE_URL=""
-MANAGEMENT_LISTEN="0.0.0.0:33073"
-AUTH_AUTHORITY=""
-AUTH_CLIENT_ID=""
-AUTH_CLIENT_SECRET=""
-AUTH_AUDIENCE=""
-AUTH_SUPPORTED_SCOPES="openid profile email api offline_access email_verified"
-USE_AUTH0="false"
-NETBIRD_MGMT_API_ENDPOINT=""
-
-MANAGEMENT_PORT="${MANAGEMENT_LISTEN##*:}"
-
 ENV_FILE="/config/netbird/dashboard/env"
 if [[ -f "$ENV_FILE" ]]; then
   set -a
   # shellcheck disable=SC1090
   . "$ENV_FILE"
   set +a
-fi
-
-if [[ -n "$NETBIRD_MGMT_API_ENDPOINT" ]]; then
-  NETBIRD_MGMT_API_ENDPOINT="$NETBIRD_MGMT_API_ENDPOINT"
-elif [[ -n "$EXTERNAL_BASE_URL" ]]; then
-  NETBIRD_MGMT_API_ENDPOINT="$EXTERNAL_BASE_URL"
-elif [[ -n "$DOMAIN" ]]; then
-  NETBIRD_MGMT_API_ENDPOINT="http://${DOMAIN}:${MANAGEMENT_PORT}"
 else
-  bashio::log.warning "external_base_url and domain are empty; defaulting NETBIRD_MGMT_API_ENDPOINT to localhost."
-  NETBIRD_MGMT_API_ENDPOINT="http://127.0.0.1:${MANAGEMENT_PORT}"
+  bashio::log.error "Missing dashboard env file at ${ENV_FILE}."
+  bashio::exit.nok
 fi
-
-export AUTH_AUTHORITY
-export AUTH_CLIENT_ID
-export AUTH_CLIENT_SECRET
-export AUTH_AUDIENCE
-export AUTH_SUPPORTED_SCOPES
-export USE_AUTH0
-export NETBIRD_MGMT_API_ENDPOINT
 
 bashio::log.info "Preparing NetBird Dashboard assets..."
 /usr/local/bin/init_react_envs.sh
