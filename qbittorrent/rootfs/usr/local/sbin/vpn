@@ -197,24 +197,17 @@ _wg_wait_handshake() {
     local timeout="${1:-20}"
     local iface="${config["Interface"]}"
     local peer_pk="${config["PublicKey"]}"
-    local deadline ts dns_ip
+    local deadline ts
 
     deadline=$(( $(date +%s) + timeout ))
 
     while [ "$(date +%s)" -lt "${deadline}" ]; do
-        # Trigger handshake using DNS servers from /etc/resolv.conf
-        dns_ip="$(awk '/^nameserver[[:space:]]+/ {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
-        if [ -n "${dns_ip}" ]; then
-            timeout 2 nslookup example.com "${dns_ip}" >/dev/null 2>&1 || true
-        else
-            getent ahosts example.com >/dev/null 2>&1 || true
-        fi
+        ping -I "${iface}" -c1 -W1 1.1.1.1 >/dev/null 2>&1 || true
 
         ts="$(wg show "${iface}" latest-handshakes 2>/dev/null | awk -v pk="${peer_pk}" '$1==pk{print $2; exit}')"
         if [ -n "${ts}" ] && [ "${ts}" -gt 0 ] 2>/dev/null; then
             return 0
         fi
-
         sleep 1
     done
 
