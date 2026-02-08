@@ -1,5 +1,6 @@
 - Prefer ipv4 to resolve over ipv6
 - Fix ipv6 resolve address on some wireguard configurations
+- Fix issues with interfaces names longer than 15 characters
 
 ## 5.1.4-9 (05-02-2026)
 - Move OpenVPN/WireGuard config filename validation from schema to runtime scripts
