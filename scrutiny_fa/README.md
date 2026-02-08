@@ -93,7 +93,7 @@ Example to get data from the first hdd.
 rest:
   - verify_ssl: false
     scan_interval: 60
-    resource: http://192.168.178.4:8086/api/device/0x57c35481f82a7a9c/details
+    resource: http://192.168.178.4:8080/api/device/0x57c35481f82a7a9c/details
     sensor:
       - name: "HDD - WWN"
         value_template: "{{ value_json.data.smart_results[0].device_wwn }}"
