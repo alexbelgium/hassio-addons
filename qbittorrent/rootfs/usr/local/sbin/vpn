@@ -125,7 +125,7 @@ _resolvconf() {
 
 _resolve_hostname() {
     local hostname=$1
-    local -a ips=""
+    local -a ips=()
     local -a ipv4_candidates=()
     local -a ipv6_candidates=()
 
