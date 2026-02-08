@@ -1,3 +1,5 @@
+- Support preshared keys (airvpn for example)
+
 ## 5.1.4-12 (08-02-2026)
 - Prefer ipv4 to resolve over ipv6
 - Fix ipv6 resolve address on some wireguard configurations
