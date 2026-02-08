@@ -26,7 +26,15 @@ _parse_config() {
         if [[ "$line" =~ ^[[:space:]]*([^=[:space:]]+)[=[:space:]]+(.*)[[:space:]]* ]]; then
             local key="${BASH_REMATCH[1]}"
             local value="${BASH_REMATCH[2]}"
-            config_ref["$key"]="$value"
+            if [[ "$key" == "Address" ]]; then
+                if [[ -n "${config_ref["Address"]:-}" ]]; then
+                    config_ref["Address"]+=",${value}"
+                else
+                    config_ref["Address"]="${value}"
+                fi
+            else
+                config_ref["$key"]="$value"
+            fi
         fi
     done < "$config_file"
 }
