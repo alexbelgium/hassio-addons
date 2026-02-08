@@ -121,20 +121,20 @@ _resolve_hostname() {
     local -a ipv4_candidates=()
     local -a ipv6_candidates=()
 
-    # Resolve hostname to IPv6
-    mapfile -t ipv6_candidates < <(getent ahostsv6 "${hostname}" | awk '{print $1}' | uniq)
-
     # Resolve hostname to IPv4
     mapfile -t ipv4_candidates < <(getent ahostsv4 "${hostname}" | awk '{print $1}' | uniq)
 
-    if [ ${#ipv6_candidates[@]} -gt 0 ]; then
-        bashio::log.debug "Resolved ${hostname} to ${ipv6_candidates[@]}"
-        ips+=("${ipv6_candidates[@]}")
-    fi
+    # Resolve hostname to IPv6
+    mapfile -t ipv6_candidates < <(getent ahostsv6 "${hostname}" | awk '{print $1}' | uniq)
 
     if [ ${#ipv4_candidates[@]} -gt 0 ]; then
         bashio::log.debug "Resolved ${hostname} to ${ipv4_candidates[@]}"
         ips+=("${ipv4_candidates[@]}")
+    fi
+
+    if [ ${#ipv6_candidates[@]} -gt 0 ]; then
+        bashio::log.debug "Resolved ${hostname} to ${ipv6_candidates[@]}"
+        ips+=("${ipv6_candidates[@]}")
     fi
 
     echo "${ips[@]}"
