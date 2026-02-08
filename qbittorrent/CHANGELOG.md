@@ -1,4 +1,5 @@
 - Support preshared keys (airvpn for example)
+- Implement handshake test
 
 ## 5.1.4-12 (08-02-2026)
 - Prefer ipv4 to resolve over ipv6
