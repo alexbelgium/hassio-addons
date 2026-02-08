@@ -1,7 +1,6 @@
-## 5.1.4-11 (05-02-2026)
-- Minor bugs fixed
-## 5.1.4-10 (05-02-2026)
-- Minor bugs fixed
+- Prefer ipv4 to resolve over ipv6
+- Fix ipv6 resolve address on some wireguard configurations
+
 ## 5.1.4-9 (05-02-2026)
 - Move OpenVPN/WireGuard config filename validation from schema to runtime scripts
 - Validate config name only when the related VPN mode is enabled
