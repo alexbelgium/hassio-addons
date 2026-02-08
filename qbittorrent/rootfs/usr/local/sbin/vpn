@@ -234,11 +234,14 @@ _wireguard_up() {
     if [[ "${config["EndpointIP"]}" == *:* ]]; then
       endpoint="[${config["EndpointIP"]}]:${config["EndpointPort"]}"
     fi
-    if [ -v config["PersistentKeepalive"] ] && [ -n "${config["PersistentKeepalive"]}" ]; then
-        _cmd "wg set ${config["Interface"]} peer ${config["PublicKey"]} endpoint ${endpoint} allowed-ips ${allowed_ips} persistent-keepalive ${config["PersistentKeepalive"]}" || return 1
-    else
-        _cmd "wg set ${config["Interface"]} peer ${config["PublicKey"]} endpoint ${endpoint} allowed-ips ${allowed_ips}" || return 1
+    local peer_cmd="wg set ${config["Interface"]} peer ${config["PublicKey"]} endpoint ${endpoint} allowed-ips ${allowed_ips}"
+    if [ -n "${config["PresharedKey"]:-}" ]; then
+      peer_cmd="${peer_cmd} preshared-key ${config["PresharedKey"]}"
     fi
+    if [ -n "${config["PersistentKeepalive"]:-}" ]; then
+      peer_cmd="${peer_cmd} persistent-keepalive ${config["PersistentKeepalive"]}"
+    fi
+    _cmd "${peer_cmd}" || return 1
 
     if [ -v config["MTU"] ] && [ -n "${config["MTU"]}" ]; then
         _cmd "ip link set ${config["Interface"]} mtu ${config["MTU"]}" || return 1
@@ -290,13 +293,20 @@ wireguard() {
         bashio::log.debug "${key}: ${config[$key]}"
     done
 
-    echo ${config["PrivateKey"]} > ${WIREGUARD_STATE_DIR}/privatekey
+    printf '%s\n' "${config["PrivateKey"]}" > "${WIREGUARD_STATE_DIR}/privatekey"
+    chmod 600 "${WIREGUARD_STATE_DIR}/privatekey" || true
     config["PrivateKey"]="${WIREGUARD_STATE_DIR}/privatekey"
+    
+    if [ -n "${config["PresharedKey"]:-}" ]; then
+      printf '%s\n' "${config["PresharedKey"]}" > "${WIREGUARD_STATE_DIR}/presharedkey"
+      chmod 600 "${WIREGUARD_STATE_DIR}/presharedkey" || true
+      config["PresharedKey"]="${WIREGUARD_STATE_DIR}/presharedkey"
+    fi
 
     if [ "${mode}" = "up" ]; then
         bashio::log.info "Starting WireGuard on interface ${config["Interface"]}..."
         local result=0
-        _check_host ${config["EndpointHost"]} || result=$?
+        _check_host "${config["EndpointHost"]}" || result=$?
         if [ "${result}" -eq 0 ]; then
             bashio::log.error "WireGuard endpoint ${config["EndpointHost"]} is neither a valid IP address nor a resolvable hostname."
             bashio::exit.nok 'WireGuard start failed.'
