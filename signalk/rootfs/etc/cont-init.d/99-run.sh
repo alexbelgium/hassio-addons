@@ -27,5 +27,19 @@ for file in ssl-key.pem ssl-cert.pem security.json; do
     fi
 done
 
+# Rebuild npm dependency bindings on version change
+current_version="$(bashio::addon.version)"
+if [[ ! -f /data/version || "$current_version" != "$(cat /data/version)" ]]; then
+    if [[ -f /config/package.json ]]; then
+        bashio::log.info "Update detected, rebuilding native node deps"
+        cd /config
+        npm rebuild
+        echo "$current_version" > /data/version
+    else
+        bashio::log.warning "Update detected, but /config/package.json is missing; skipping npm rebuild"
+    fi
+fi
+
+
 bashio::log.info "Starting application"
 sudo -u "$USER" -s /bin/sh -c "/home/node/signalk/startup.sh"
