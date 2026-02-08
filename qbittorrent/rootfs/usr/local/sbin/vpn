@@ -193,6 +193,36 @@ _routing_del() {
 
 # --- WireGuard Specific Logic ---
 
+_wg_wait_handshake() {
+    local timeout="${1:-20}"
+    local iface="${config["Interface"]}"
+    local peer_pk="${config["PublicKey"]}"
+    local deadline ts dns_ip
+
+    deadline=$(( $(date +%s) + timeout ))
+
+    while [ "$(date +%s)" -lt "${deadline}" ]; do
+        # Trigger handshake using DNS servers from /etc/resolv.conf
+        dns_ip="$(awk '/^nameserver[[:space:]]+/ {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
+        if [ -n "${dns_ip}" ]; then
+            timeout 2 nslookup example.com "${dns_ip}" >/dev/null 2>&1 || true
+        else
+            getent ahosts example.com >/dev/null 2>&1 || true
+        fi
+
+        ts="$(wg show "${iface}" latest-handshakes 2>/dev/null | awk -v pk="${peer_pk}" '$1==pk{print $2; exit}')"
+        if [ -n "${ts}" ] && [ "${ts}" -gt 0 ] 2>/dev/null; then
+            return 0
+        fi
+
+        sleep 1
+    done
+
+    bashio::log.error "WireGuard handshake not established after ${timeout}s (latest-handshake=${ts:-0})."
+    wg show "${iface}" 2>&1 | while IFS= read -r l; do bashio::log.error "${l}"; done
+    return 1
+}
+
 _wireguard_up() {
     bashio::log.warning "This script force Wireguard to ignore any routes and DNS settings."
     bashio::log.warning "Default route will be inserted into custom routing table: ${config["Table"]}"
@@ -249,6 +279,7 @@ _wireguard_up() {
 
     _cmd "ip link set ${config["Interface"]} up" || return 1
     _routing_add
+    _wg_wait_handshake 10 || return 1
 }
 
 _wireguard_down() {
