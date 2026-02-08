@@ -27,7 +27,7 @@ FROM netbirdio/dashboard:${DASHBOARD_VERSION} AS netbird-dashboard
 #################
 
 ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM ghcr.io/hassio-addons/base/amd64:stable
 ENV BASHIO_VERSION=0.14.3
 
 ##################
