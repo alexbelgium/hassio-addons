@@ -4,14 +4,11 @@ arch:
 description: "\U0001F426 NetBird self-hosted server stack (management, signal, relay, dashboard, Caddy)"
 image: ghcr.io/alexbelgium/netbird-server-{arch}
 init: false
-ingress: false
 map:
   - addon_config:rw
 name: NetBird Server
 options:
   domain: netbird.example.com
-schema:
-  domain: str
 slug: netbird-server
 ports:
   80/tcp: 80
@@ -23,5 +20,8 @@ ports_description:
   443/tcp: Caddy HTTPS (dashboard + APIs)
   443/udp: Caddy HTTP/3 (optional)
   3478/udp: NetBird Relay STUN
-url: https://github.com/alexbelgium/hassio-addons
+schema:
+  domain: str
+url: https://github.com/alexbelgium/hassio-addons/tree/master/netbird-server
 version: 0.64.5-2
+webui: "[PROTO:ssl]://[HOST]:[PORT:443]"
