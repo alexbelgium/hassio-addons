@@ -23,5 +23,5 @@ ports_description:
 schema:
   domain: str
 url: https://github.com/alexbelgium/hassio-addons/tree/master/netbird-server
-version: 0.64.5-5
+version: 0.64.5-6
 webui: "[PROTO:ssl]://[HOST]:[PORT:443]"
