@@ -16,7 +16,7 @@ NetBird relies on gRPC. The built-in Caddy configuration is pre-wired to proxy b
 This add-on generates the standard quickstart configuration files in `/config/netbird` and reuses them on subsequent starts.
 
 ### Required options
-- `domain`: Public domain that resolves to your Home Assistant host (e.g., `netbird.example.com`).
+- `domain`: Public domain that resolves to your Home Assistant host (e.g., `netbird.example.com`). If left at the default placeholder, the add-on will try to use the host from Home Assistant's `external_url` or `internal_url` instead.
 
 ### Dashboard environment overrides
 Edit `/config/netbird/dashboard/env` to configure the dashboard UI:
