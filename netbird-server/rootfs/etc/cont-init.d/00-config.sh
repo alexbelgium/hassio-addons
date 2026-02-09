@@ -33,8 +33,20 @@ SIGNAL_GRPC_PORT=10000
 RELAY_PORT=8084
 
 if [[ -z "$DOMAIN" || "$DOMAIN" == "netbird.example.com" ]]; then
-  bashio::log.error "Set a valid domain in the add-on configuration (domain cannot be empty or netbird.example.com)."
-  bashio::exit.nok
+  result=$(bashio::api.supervisor GET /core/api/config true || true)
+  external_host="$(bashio::jq "$result" '.external_url' | cut -d'/' -f3 | cut -d':' -f1)"
+  internal_host="$(bashio::jq "$result" '.internal_url' | cut -d'/' -f3 | cut -d':' -f1)"
+
+  if [[ -n "$external_host" && "$external_host" != "null" ]]; then
+    DOMAIN="$external_host"
+    bashio::log.warning "Domain not set; using Home Assistant external_url host: ${DOMAIN}"
+  elif [[ -n "$internal_host" && "$internal_host" != "null" ]]; then
+    DOMAIN="$internal_host"
+    bashio::log.warning "Domain not set; using Home Assistant internal_url host: ${DOMAIN}"
+  else
+    bashio::log.error "Set a valid domain in the add-on configuration (domain cannot be empty or netbird.example.com)."
+    bashio::exit.nok
+  fi
 fi
 
 NETBIRD_PORT=443
