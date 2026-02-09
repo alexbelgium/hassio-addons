@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 123
+- In the repository : 122
 - Installed : 69115
 
 ### Top 3
@@ -604,7 +604,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![mqtt][mqtt-badge]
 ![full_access][full_access-badge]
 
-&#10003;  [NetBird Server](netbird-server/) : 🐦 NetBird self-hosted server stack (management, signal, dashboard, coturn)
+&#10003;  [NetBird Server](netbird-server/) : 🐦 NetBird self-hosted server stack (management, signal, relay, dashboard, Caddy)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnetbird-server%2Fconfig.yaml)
 ![aarch64][aarch64-badge]
