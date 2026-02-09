@@ -22,8 +22,13 @@ ARG DASHBOARD_VERSION=2.31.0
 #################
 
 ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM ${BUILD_FROM} as base
 ENV BASHIO_VERSION=0.14.3
+
+FROM netbirdio/management:${NETBIRD_VERSION} AS netbird-management
+FROM netbirdio/signal:${NETBIRD_VERSION} AS netbird-signal
+FROM netbirdio/relay:${NETBIRD_VERSION} AS netbird-relay
+FROM netbirdio/dashboard:${DASHBOARD_VERSION} AS netbird-dashboard
 
 ##################
 # 3 Modify Image #
@@ -70,10 +75,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 # 5 Copy NetBird components #
 #############################
 
-FROM netbirdio/management:${NETBIRD_VERSION} AS netbird-management
-FROM netbirdio/signal:${NETBIRD_VERSION} AS netbird-signal
-FROM netbirdio/relay:${NETBIRD_VERSION} AS netbird-relay
-FROM netbirdio/dashboard:${DASHBOARD_VERSION} AS netbird-dashboard
+FROM base
 
 COPY --from=netbird-management /go/bin/netbird-mgmt /usr/local/bin/netbird-mgmt
 COPY --from=netbird-signal /go/bin/netbird-signal /usr/local/bin/netbird-signal
