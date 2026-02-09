@@ -20,12 +20,12 @@
 
 ARG BUILD_FROM
 FROM ${BUILD_FROM} as base
-ENV BASHIO_VERSION=0.14.3
-
 FROM netbirdio/management:latest AS netbird-management
 FROM netbirdio/signal:latest AS netbird-signal
 FROM netbirdio/relay:latest AS netbird-relay
 FROM netbirdio/dashboard:latest AS netbird-dashboard
+
+ENV BASHIO_VERSION=0.14.3
 
 ##################
 # 3 Modify Image #
@@ -41,11 +41,23 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
+#############################
+# 4 Copy NetBird components #
+#############################
+
+FROM base
+
+COPY --from=netbird-management /go/bin/netbird-mgmt /usr/local/bin/netbird-mgmt
+COPY --from=netbird-signal /go/bin/netbird-signal /usr/local/bin/netbird-signal
+COPY --from=netbird-relay /go/bin/netbird-relay /usr/local/bin/netbird-relay
+COPY --from=netbird-dashboard /usr/share/nginx/html /usr/share/nginx/html
+COPY --from=netbird-dashboard /usr/local/init_react_envs.sh /usr/local/bin/init_react_envs.sh
+
 ##################
-# 4 Install apps #
+# 5 Install apps #
 ##################
 
-# Copy local files
+# Add rootfs
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
 
@@ -55,7 +67,7 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 90-disable_ingress.sh 00-local_mounts.sh 00-smb_mounts.sh 00-deprecated.sh"
+ARG MODULES=""
 
 # Automatic modules download
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
@@ -67,18 +79,6 @@ ENV PACKAGES="nginx gettext ca-certificates caddy openssl"
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
-
-#############################
-# 5 Copy NetBird components #
-#############################
-
-FROM base
-
-COPY --from=netbird-management /go/bin/netbird-mgmt /usr/local/bin/netbird-mgmt
-COPY --from=netbird-signal /go/bin/netbird-signal /usr/local/bin/netbird-signal
-COPY --from=netbird-relay /go/bin/netbird-relay /usr/local/bin/netbird-relay
-COPY --from=netbird-dashboard /usr/share/nginx/html /usr/share/nginx/html
-COPY --from=netbird-dashboard /usr/local/init_react_envs.sh /usr/local/bin/init_react_envs.sh
 
 ################
 # 6 Entrypoint #
@@ -93,7 +93,6 @@ RUN chmod 777 /ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/usr/local/lib/bashio-standalone.sh"
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
-# Entrypoint
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 
