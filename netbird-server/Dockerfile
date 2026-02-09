@@ -14,9 +14,6 @@
 # 1 NetBird components #
 ########################
 
-ARG NETBIRD_VERSION=0.64.5
-ARG DASHBOARD_VERSION=2.31.0
-
 #################
 # 2 Base Image  #
 #################
@@ -25,10 +22,10 @@ ARG BUILD_FROM
 FROM ${BUILD_FROM} as base
 ENV BASHIO_VERSION=0.14.3
 
-FROM netbirdio/management:${NETBIRD_VERSION} AS netbird-management
-FROM netbirdio/signal:${NETBIRD_VERSION} AS netbird-signal
-FROM netbirdio/relay:${NETBIRD_VERSION} AS netbird-relay
-FROM netbirdio/dashboard:${DASHBOARD_VERSION} AS netbird-dashboard
+FROM netbirdio/management:latest AS netbird-management
+FROM netbirdio/signal:latest AS netbird-signal
+FROM netbirdio/relay:latest AS netbird-relay
+FROM netbirdio/dashboard:latest AS netbird-dashboard
 
 ##################
 # 3 Modify Image #
