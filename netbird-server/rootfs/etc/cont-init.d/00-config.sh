@@ -147,8 +147,8 @@ if [[ ! -f "$CADDYFILE" ]]; then
   bashio::log.info "Generating Caddyfile at ${CADDYFILE}."
   cat <<CONFIG > "$CADDYFILE"
 {
-  servers {
-    protocols h1 h2 h2c
+  servers :80,:443 {
+    protocols h1 h2c h2 h3
   }
 }
 
