@@ -43,15 +43,12 @@ bashio::log.blue '-----------------------------------------------------------'
 bashio::log.green ' Provided by: https://github.com/alexbelgium/hassio-addons '
 bashio::log.blue '-----------------------------------------------------------'
 
-# ======================================================================
-# UID/GID logic stays unchanged
-# ======================================================================
-
-if bashio::config.has_value "PUID" && bashio::config.has_value "PGID" && id abc &>/dev/null; then
-    PUID="$(bashio::config "PUID")"
-    PGID="$(bashio::config "PGID")"
-    usermod -o -u "$PUID" abc
-    groupmod -o -g "$PGID" abc
+# Adapt user abc
+if command -v id &>/dev/null && id abc &>/dev/null; then
+    if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
+        PUID="$(bashio::config "PUID")"
+        PGID="$(bashio::config "PGID")"
+        usermod -o -u "${PUID:-0}" abc
+        groupmod -o -g "${PGID:-0}" abc
+    fi
 fi
-
-[ -f ~/.bashrc ] && : > ~/.bashrc
