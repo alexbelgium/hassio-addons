@@ -98,20 +98,23 @@ mount_drive() {
   fi
 }
 
-# Retry ladder: SMB3 -> SMB2 when mount returns EINVAL (22)
-retry_cifs_with_vers_ladder_on_einval() {
+# Retry ladder: SMB3 -> SMB2 when mount fails due to dialect/negotiation issues
+retry_cifs_with_vers_ladder_on_dialect_failure() {
   [[ "${FSTYPE:-}" == "cifs" ]] || return 0
   [[ "${MOUNTED:-false}" == "false" ]] || return 0
 
   local err
   err="$(cat "$ERRORCODE_FILE" 2>/dev/null || true)"
 
-  # Only step down dialects on EINVAL
-  if ! echo "$err" | grep -q "mount error(22)"; then
+  # Trigger ladder on common dialect/negotiation failures:
+  # - EINVAL (22) invalid argument
+  # - Host is down (112) often returned by mount.cifs on negotiation disconnects
+  # - protocol negotiation / abrupt close / NT_STATUS_CONNECTION_DISCONNECTED
+  if ! echo "$err" | grep -Eq 'mount error\(22\)|mount error\(112\)|Server abruptly closed the connection|Protocol negotiation|NT_STATUS_CONNECTION_DISCONNECTED'; then
     return 0
   fi
 
-  bashio::log.warning "...... EINVAL (22): trying SMB dialect ladder (3.x -> 2.x)."
+  bashio::log.warning "...... CIFS negotiation/dialect failure: trying SMB dialect ladder (3.x -> 2.x)."
 
   local base_opts try_opts vers
 
@@ -277,11 +280,11 @@ if bashio::config.has_value 'networkdisks'; then
       } >"$CRED_FILE"
     fi
 
-    # First mount attempt (no vers pinned yet; we will correct on EINVAL via ladder)
+    # First mount attempt (no vers pinned yet; we will correct on negotiation/dialect failures via ladder)
     if [[ "$FSTYPE" == "cifs" ]]; then
       mount_drive "rw,file_mode=0775,dir_mode=0775,credentials=${CRED_FILE},nobrl,mfsymlinks${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}"
       if [[ "$MOUNTED" == "false" ]]; then
-        retry_cifs_with_vers_ladder_on_einval
+        retry_cifs_with_vers_ladder_on_dialect_failure
       fi
     else
       mount_drive "rw,nfsvers=4.2,proto=tcp,hard,timeo=600,retrans=2"
@@ -361,7 +364,7 @@ if bashio::config.has_value 'networkdisks'; then
           SMBVERS=",vers=1.0"
         else
           # IMPORTANT: deterministic fallback (so we don't depend on kernel defaults)
-          echo "...... SMB version : couldn't detect, falling back to SMB3->SMB2 ladder on EINVAL"
+          echo "...... SMB version : couldn't detect, falling back to SMB3->SMB2 ladder on negotiation/dialect failure"
           SMBVERS=",vers=3.1.1"
         fi
 
@@ -379,9 +382,9 @@ if bashio::config.has_value 'networkdisks'; then
           fi
         done
 
-        # If still EINVAL, step down SMB3 -> SMB2
+        # If still negotiation/dialect failure, step down SMB3 -> SMB2
         if [[ "$MOUNTED" == "false" ]]; then
-          retry_cifs_with_vers_ladder_on_einval
+          retry_cifs_with_vers_ladder_on_dialect_failure
         fi
 
       else
@@ -435,7 +438,7 @@ if bashio::config.has_value 'networkdisks'; then
         # last-ditch: minimal CIFS options (still uses credentials file)
         mount_drive "rw,credentials=${CRED_FILE}${PUID}${PGID}"
         if [[ "$MOUNTED" == "false" ]]; then
-          retry_cifs_with_vers_ladder_on_einval
+          retry_cifs_with_vers_ladder_on_dialect_failure
         fi
       else
         bashio::log.fatal "Error, unable to mount NFS share $disk to /mnt/$diskname. Please check export path and allowlist for this client."
