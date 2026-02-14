@@ -27,12 +27,10 @@ test_mount() {
   ERROR_MOUNT=false
   mountpoint="/mnt/$diskname"
 
-  # Not mounted → not an error for this function
   if ! mountpoint -q "$mountpoint"; then
     return 0
   fi
 
-  # ---- Write test function ----
   _test_write() {
     local testfile="$mountpoint/.writetest_$$"
     if : >"$testfile" 2>/dev/null; then
@@ -44,13 +42,11 @@ test_mount() {
     fi
   }
 
-  # First write test
   if _test_write 2>/dev/null; then
     MOUNTED=true
     return 0
   fi
 
-  # ---- CIFS fallback: retry with noserverino ----
   if [[ "$FSTYPE" == "cifs" && "$MOUNTOPTIONS" != *"noserverino"* ]]; then
     echo "... retrying mount with noserverino"
     MOUNTOPTIONS="${MOUNTOPTIONS},noserverino"
@@ -64,7 +60,6 @@ test_mount() {
     fi
   fi
 
-  # ---- CIFS fallback: retry with noperm (common Samba permission quirk) ----
   if [[ "$FSTYPE" == "cifs" && "$MOUNTOPTIONS" != *"noperm"* ]]; then
     echo "... retrying mount with noperm"
     MOUNTOPTIONS="${MOUNTOPTIONS},noperm"
@@ -78,7 +73,6 @@ test_mount() {
     fi
   fi
 
-  # ---- Final: mounted but not writable ----
   MOUNTED="readonly"
   return 0
 }
@@ -102,6 +96,7 @@ mount_drive() {
 retry_cifs_with_vers_ladder_on_dialect_failure() {
   [[ "${FSTYPE:-}" == "cifs" ]] || return 0
   [[ "${MOUNTED:-false}" == "false" ]] || return 0
+  [[ "${CIFS_LADDER_ATTEMPTED:-false}" == "false" ]] || return 0
 
   local err mountpoint
   mountpoint="/mnt/$diskname"
@@ -115,17 +110,20 @@ retry_cifs_with_vers_ladder_on_dialect_failure() {
     return 0
   fi
 
+  CIFS_LADDER_ATTEMPTED=true
   bashio::log.warning "...... CIFS negotiation/dialect failure: trying SMB dialect ladder (3.x -> 2.x)."
 
   local base_opts try_opts vers vopt sectry
+
   base_opts="$MOUNTOPTIONS"
   base_opts="$(echo "$base_opts" | sed -E 's/,vers=[^,]+//g; s/,sec=[^,]+//g')"
 
   local -a opt_variants=("" ",nounix" ",noserverino" ",nounix,noserverino")
   local -a sec_variants=("" ",sec=ntlmssp" ",sec=ntlmv2")
+  local -a vers_variants=("3.1.1" "3.02" "3.0" "2.1" "2.0")
 
   for vopt in "${opt_variants[@]}"; do
-    for vers in "3.1.1" "3.02" "3.0" "2.1" "2.0"; do
+    for vers in "${vers_variants[@]}"; do
       for sectry in "${sec_variants[@]}"; do
         [[ "$MOUNTED" == "false" ]] || break
         umount "$mountpoint" 2>/dev/null || true
@@ -145,8 +143,9 @@ retry_cifs_with_vers_ladder_on_dialect_failure() {
     base_opts="${base_opts//,nobrl/}"
     base_opts="$(echo "$base_opts" | sed -E 's/,iocharset=[^,]+//g')"
 
+    local -a vers_variants2=("2.1" "2.0")
     for vopt in "${opt_variants[@]}"; do
-      for vers in "2.1" "2.0"; do
+      for vers in "${vers_variants2[@]}"; do
         for sectry in "${sec_variants[@]}"; do
           [[ "$MOUNTED" == "false" ]] || break
           umount "$mountpoint" 2>/dev/null || true
@@ -157,6 +156,18 @@ retry_cifs_with_vers_ladder_on_dialect_failure() {
       done
       [[ "$MOUNTED" == "false" ]] || break
     done
+
+    if [[ "$MOUNTED" == "false" ]]; then
+      for vopt in "${opt_variants[@]}"; do
+        for vers in "${vers_variants2[@]}"; do
+          [[ "$MOUNTED" == "false" ]] || break
+          umount "$mountpoint" 2>/dev/null || true
+          try_opts="${base_opts}${vopt},vers=${vers},sec=ntlmssp"
+          mount_drive "$try_opts"
+        done
+        [[ "$MOUNTED" == "false" ]] || break
+      done
+    fi
   fi
 
   return 0
@@ -178,18 +189,10 @@ if bashio::config.has_value 'networkdisks'; then
   SECVERS=""
   CHARSET=",iocharset=utf8"
 
-  # ----------------------------
-  # Normalize / clean networkdisks
-  # ----------------------------
-
-  # Normalize Windows CRLF and multiline entries (HA UI/YAML can introduce these)
   MOREDISKS="${MOREDISKS//$'\r'/}"
   MOREDISKS="${MOREDISKS//$'\n'/,}"
-
-  # Clean data (keeps NFS entries intact): normalize "comma with spaces" to plain commas
   MOREDISKS="$(echo "$MOREDISKS" | sed -E 's/[[:space:]]*,[[:space:]]*/,/g; s/^[[:space:]]+//; s/[[:space:]]+$//')"
 
-  # CIFS domain/workgroup
   DOMAINCLIENT=""
   CIFSDOMAIN=""
   if bashio::config.has_value 'cifsdomain'; then
@@ -198,7 +201,6 @@ if bashio::config.has_value 'networkdisks'; then
     DOMAINCLIENT="--workgroup=$CIFSDOMAIN"
   fi
 
-  # UID/GID for CIFS mapping
   PUID=",uid=$(id -u)"
   PGID=",gid=$(id -g)"
   if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
@@ -207,14 +209,12 @@ if bashio::config.has_value 'networkdisks'; then
     PGID=",gid=$(bashio::config 'PGID')"
   fi
 
-  # Split strictly on commas (no word-splitting/globbing)
   IFS=',' read -r -a DISK_LIST <<< "$MOREDISKS"
 
   for disk in "${DISK_LIST[@]}"; do
     CRED_FILE=""
     cleanup_cred
 
-    # Per-item trim + safety cleanup
     disk="${disk//$'\r'/}"
     disk="$(echo "$disk" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')"
     [[ -z "$disk" ]] && continue
@@ -222,7 +222,6 @@ if bashio::config.has_value 'networkdisks'; then
     disk="$(echo "$disk" | sed 's,/$,,')"
     disk="${disk//"\040"/ }"
 
-    # Detect FS type
     FSTYPE="cifs"
     if [[ "$disk" =~ ^nfs:// ]]; then
       FSTYPE="nfs"
@@ -231,7 +230,6 @@ if bashio::config.has_value 'networkdisks'; then
       FSTYPE="nfs"
     fi
 
-    # Server for reachability checks
     if [[ "$FSTYPE" == "cifs" ]]; then
       server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" | head -n 1)"
     else
@@ -246,6 +244,7 @@ if bashio::config.has_value 'networkdisks'; then
     : >"$ERRORCODE_FILE" || true
 
     MOUNTED=false
+    CIFS_LADDER_ATTEMPTED=false
     SMBVERS_FORCE=""
     SECVERS_FORCE=""
     SMBVERS=""
@@ -253,7 +252,6 @@ if bashio::config.has_value 'networkdisks'; then
 
     echo "... mounting ($FSTYPE) $disk"
 
-    # Validation
     if [[ "$FSTYPE" == "cifs" ]]; then
       if [[ ! "$disk" =~ ^//[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/.+ ]]; then
         bashio::log.fatal "...... invalid CIFS path \"$disk\". Use //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2"
@@ -271,7 +269,6 @@ if bashio::config.has_value 'networkdisks'; then
     mkdir -p "/mnt/$diskname"
     chown root:root "/mnt/$diskname"
 
-    # CIFS: credentials file (avoids commas/special chars in password)
     if [[ "$FSTYPE" == "cifs" ]]; then
       CRED_FILE="$(mktemp /tmp/cifs-cred.XXXXXX)"
       chmod 600 "$CRED_FILE"
@@ -284,7 +281,6 @@ if bashio::config.has_value 'networkdisks'; then
       } >"$CRED_FILE"
     fi
 
-    # First mount attempt (no vers pinned yet; we will correct on negotiation/dialect failures via ladder)
     if [[ "$FSTYPE" == "cifs" ]]; then
       mount_drive "rw,file_mode=0775,dir_mode=0775,credentials=${CRED_FILE},nobrl,mfsymlinks${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}"
       if [[ "$MOUNTED" == "false" ]]; then
@@ -294,10 +290,8 @@ if bashio::config.has_value 'networkdisks'; then
       mount_drive "rw,nfsvers=4.2,proto=tcp,hard,timeo=600,retrans=2"
     fi
 
-    # Deeper analysis if failed
     if [[ "$MOUNTED" == "false" ]]; then
       if [[ "$FSTYPE" == "cifs" ]]; then
-        # SMB port check
         if command -v nmap >/dev/null 2>&1; then
           output="$(nmap -F "$server" -T5 -oG - 2>/dev/null || true)"
           if ! echo "$output" | grep -q "445/open"; then
@@ -315,7 +309,6 @@ if bashio::config.has_value 'networkdisks'; then
           bashio::log.warning "...... nmap not available; skipping SMB port reachability test"
         fi
 
-        # Credentials test (use SERVER, not share path)
         if command -v smbclient >/dev/null 2>&1; then
           OUTPUT="$(smbclient -t 2 -L "$server" -U "$USERNAME%$PASSWORD" -c "exit" $DOMAINCLIENT 2>&1 || true)"
 
@@ -338,7 +331,6 @@ if bashio::config.has_value 'networkdisks'; then
           bashio::log.warning "...... smbclient not available; skipping SMB credential test"
         fi
 
-        # SMB version detect (best effort)
         SMBRAW=""
         if command -v nmap >/dev/null 2>&1; then
           SMBRAW="$(
@@ -367,18 +359,15 @@ if bashio::config.has_value 'networkdisks'; then
           SECVERS=",sec=ntlm"
           SMBVERS=",vers=1.0"
         else
-          # IMPORTANT: deterministic fallback (so we don't depend on kernel defaults)
           echo "...... SMB version : couldn't detect, falling back to SMB3->SMB2 ladder on negotiation/dialect failure"
           SMBVERS=",vers=3.1.1"
         fi
 
-        # Apply forced SMBv1 if needed
         if [[ -n "$SMBVERS_FORCE" ]]; then
           [[ -z "$SMBVERS" ]] && SMBVERS="$SMBVERS_FORCE"
           [[ -z "$SECVERS" ]] && SECVERS="$SECVERS_FORCE"
         fi
 
-        # Try security modes (keeping detected/forced SMBVERS)
         SECVERS_BASE="$SECVERS"
         for SECTRY in "$SECVERS_BASE" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
           if [[ "$MOUNTED" == "false" ]]; then
@@ -386,13 +375,11 @@ if bashio::config.has_value 'networkdisks'; then
           fi
         done
 
-        # If still negotiation/dialect failure, step down SMB3 -> SMB2
         if [[ "$MOUNTED" == "false" ]]; then
           retry_cifs_with_vers_ladder_on_dialect_failure
         fi
 
       else
-        # NFS ports check and fallback versions
         if command -v nmap >/dev/null 2>&1; then
           output="$(nmap -F "$server" -T5 -oG - 2>/dev/null || true)"
           if ! echo "$output" | grep -Eq '(2049|111)/open'; then
@@ -410,7 +397,6 @@ if bashio::config.has_value 'networkdisks'; then
       fi
     fi
 
-    # Finalization / messages
     if [[ "$MOUNTED" == "true" ]]; then
       bashio::log.info "...... $disk successfully mounted to /mnt/$diskname with options ${MOUNTOPTIONS/$PASSWORD/XXXXXXXXXX}"
       rm -f "$ERRORCODE_FILE" 2>/dev/null || true
@@ -439,7 +425,6 @@ if bashio::config.has_value 'networkdisks'; then
           bashio::log.warning "smbclient not available; cannot print SMB debugging info"
         fi
 
-        # last-ditch: minimal CIFS options (still uses credentials file)
         mount_drive "rw,credentials=${CRED_FILE}${PUID}${PGID}"
         if [[ "$MOUNTED" == "false" ]]; then
           retry_cifs_with_vers_ladder_on_dialect_failure
