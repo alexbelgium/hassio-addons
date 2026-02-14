@@ -103,33 +103,40 @@ retry_cifs_with_vers_ladder_on_dialect_failure() {
   [[ "${FSTYPE:-}" == "cifs" ]] || return 0
   [[ "${MOUNTED:-false}" == "false" ]] || return 0
 
-  local err
+  local err mountpoint
+  mountpoint="/mnt/$diskname"
   err="$(cat "$ERRORCODE_FILE" 2>/dev/null || true)"
 
-  # Trigger ladder on common dialect/negotiation failures:
-  # - EINVAL (22) invalid argument
-  # - Host is down (112) often returned by mount.cifs on negotiation disconnects
-  # - protocol negotiation / abrupt close / NT_STATUS_CONNECTION_DISCONNECTED
-  if ! echo "$err" | grep -Eq 'mount error\(22\)|mount error\(112\)|Server abruptly closed the connection|Protocol negotiation|NT_STATUS_CONNECTION_DISCONNECTED'; then
+  if echo "$err" | grep -Eq 'mount error\(13\)|Permission denied|NT_STATUS_(LOGON_FAILURE|ACCESS_DENIED)|STATUS_(LOGON_FAILURE|ACCESS_DENIED)'; then
+    return 0
+  fi
+
+  if ! echo "$err" | grep -Eq 'mount error\(22\)|mount error\(95\)|mount error\(112\)|Server abruptly closed the connection|does not support the SMB version|Protocol negotiation|NT_STATUS_CONNECTION_DISCONNECTED'; then
     return 0
   fi
 
   bashio::log.warning "...... CIFS negotiation/dialect failure: trying SMB dialect ladder (3.x -> 2.x)."
 
-  local base_opts try_opts vers
-
-  # Start from current options but remove any existing vers=/sec= (avoid stacking)
+  local base_opts try_opts vers vopt sectry
   base_opts="$MOUNTOPTIONS"
   base_opts="$(echo "$base_opts" | sed -E 's/,vers=[^,]+//g; s/,sec=[^,]+//g')"
 
-  for vers in "3.1.1" "3.02" "3.0" "2.1" "2.0"; do
-    if [[ "$MOUNTED" == "false" ]]; then
-      try_opts="${base_opts},vers=${vers}"
-      mount_drive "$try_opts"
-    fi
+  local -a opt_variants=("" ",nounix" ",noserverino" ",nounix,noserverino")
+  local -a sec_variants=("" ",sec=ntlmssp" ",sec=ntlmv2")
+
+  for vopt in "${opt_variants[@]}"; do
+    for vers in "3.1.1" "3.02" "3.0" "2.1" "2.0"; do
+      for sectry in "${sec_variants[@]}"; do
+        [[ "$MOUNTED" == "false" ]] || break
+        umount "$mountpoint" 2>/dev/null || true
+        try_opts="${base_opts}${vopt},vers=${vers}${sectry}"
+        mount_drive "$try_opts"
+      done
+      [[ "$MOUNTED" == "false" ]] || break
+    done
+    [[ "$MOUNTED" == "false" ]] || break
   done
 
-  # Reduce option set if dialect ladder did not help (still EINVAL often)
   if [[ "$MOUNTED" == "false" ]]; then
     bashio::log.warning "...... still failing after vers ladder; retrying with reduced CIFS options."
     base_opts="$MOUNTOPTIONS"
@@ -138,21 +145,18 @@ retry_cifs_with_vers_ladder_on_dialect_failure() {
     base_opts="${base_opts//,nobrl/}"
     base_opts="$(echo "$base_opts" | sed -E 's/,iocharset=[^,]+//g')"
 
-    for vers in "2.1" "2.0"; do
-      if [[ "$MOUNTED" == "false" ]]; then
-        try_opts="${base_opts},vers=${vers}"
-        mount_drive "$try_opts"
-      fi
-    done
-
-    if [[ "$MOUNTED" == "false" ]]; then
+    for vopt in "${opt_variants[@]}"; do
       for vers in "2.1" "2.0"; do
-        if [[ "$MOUNTED" == "false" ]]; then
-          try_opts="${base_opts},vers=${vers},sec=ntlmssp"
+        for sectry in "${sec_variants[@]}"; do
+          [[ "$MOUNTED" == "false" ]] || break
+          umount "$mountpoint" 2>/dev/null || true
+          try_opts="${base_opts}${vopt},vers=${vers}${sectry}"
           mount_drive "$try_opts"
-        fi
+        done
+        [[ "$MOUNTED" == "false" ]] || break
       done
-    fi
+      [[ "$MOUNTED" == "false" ]] || break
+    done
   fi
 
   return 0
