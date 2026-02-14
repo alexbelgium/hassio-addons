@@ -86,5 +86,5 @@ schema:
 slug: ombi
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/ombi
-version: "4.54.1"
+version: "4.55.2"
 webui: "[PROTO:ssl]://[HOST]:[PORT:3579]"
