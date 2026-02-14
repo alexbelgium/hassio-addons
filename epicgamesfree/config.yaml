@@ -88,5 +88,5 @@ schema:
 slug: epicgamesfree
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "debian-2026-01-09"
+version: "debian-2026-02-12"
 webui: "[PROTO:ssl]://[HOST]:[PORT:3000]"
