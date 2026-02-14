@@ -101,6 +101,7 @@ options:
   DISABLE_MACHINE_LEARNING: false
   JWT_SECRET: jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=
   TZ: Europe/Paris
+  VIPS_NOVECTOR: false
   data_location: /share/immich
 panel_admin: false
 panel_icon: mdi:file-search
@@ -126,6 +127,7 @@ schema:
   MACHINE_LEARNING_WORKERS: int?
   MACHINE_LEARNING_WORKER_TIMEOUT: int?
   TZ: str?
+  VIPS_NOVECTOR: bool?
   cifsdomain: str?
   cifspassword: str?
   cifsusername: str?
@@ -140,6 +142,6 @@ slug: immich_noml
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "2.5.6"
+version: "2.5.6-2"
 video: true
 webui: http://[HOST]:[PORT:8080]
