@@ -1,1 +1,6 @@
-../scrutiny/build.json
+{
+  "build_from": {
+    "aarch64": "ghcr.io/starosdev/scrutiny:latest-omnibus",
+    "amd64": "ghcr.io/starosdev/scrutiny:latest-omnibus"
+  }
+}
