@@ -1,4 +1,7 @@
 
+## 0.5.0-2 (2026-02-14)
+- Skip ingress nginx configuration when ingress is not active (empty/invalid ingress port)
+
 ## 0.5.0 (2026-02-14)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 
