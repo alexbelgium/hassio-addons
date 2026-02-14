@@ -151,5 +151,5 @@ slug: nextcloud_ocr
 uart: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud
-version: "32.0.5-2"
+version: "32.0.6"
 webui: https://[HOST]:[PORT:443]
