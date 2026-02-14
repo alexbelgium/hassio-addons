@@ -184,6 +184,10 @@ export DB_PORT="$(bashio::config 'DB_PORT')"
 export JWT_SECRET="$(bashio::config 'JWT_SECRET')"
 export DB_HOSTNAME="$(bashio::config 'DB_HOSTNAME')"
 
+if bashio::config.true 'VIPS_NOVECTOR'; then
+    export VIPS_NOVECTOR="1"
+fi
+
 check_db_hostname
 migrate_database
 export_db_env

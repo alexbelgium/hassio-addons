@@ -1,4 +1,7 @@
 
+## 2.5.6-2 (2026-02-14)
+- Add `VIPS_NOVECTOR` add-on option to set `VIPS_NOVECTOR=1` for thumbnail generation workaround on aarch64 (issue #2460)
+
 ## 2.5.6 (2026-02-14)
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
