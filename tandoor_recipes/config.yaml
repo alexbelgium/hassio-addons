@@ -112,5 +112,5 @@ services:
 slug: tandoor_recipes
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.4.2-2"
+version: "2.5.1"
 webui: http://[HOST]:[PORT:80]
