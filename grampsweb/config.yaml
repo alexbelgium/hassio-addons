@@ -114,5 +114,5 @@ services:
 slug: grampsweb
 tmpfs: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/grampsweb
-version: "26.1.1"
+version: "26.2.0"
 webui: "[PROTO:ssl]://[HOST]:[PORT:5001]"
