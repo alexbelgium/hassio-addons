@@ -1,3 +1,6 @@
+
+## v1.23.3 (2026-02-14)
+- Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
 ## v1.23.2-2 (08-02-2026)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
