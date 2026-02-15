@@ -13,18 +13,16 @@ ingress_port="$(bashio::addon.ingress_port)"
 ingress_interface="$(bashio::addon.ip_address)"
 ingress_entry="$(bashio::addon.ingress_entry)"
 
+sed -i \
+    -e "s|proxy_pass http://api|proxy_pass http://127.0.0.1|g" \
+    -e "s|proxy_pass http://icecast|proxy_pass http://127.0.0.1|g" \
+    /etc/nginx/servers/nginx.conf
+
 if ! [[ "${ingress_port}" =~ ^[0-9]+$ ]] || [[ "${ingress_port}" -le 0 ]]; then
     bashio::log.info "Ingress not active, disabling nginx service"
     touch /run/nginx-disabled
     exit 0
 fi
-
-rm -f /run/nginx-disabled
-
-sed -i \
-    -e "s|proxy_pass http://api|proxy_pass http://127.0.0.1|g" \
-    -e "s|proxy_pass http://icecast|proxy_pass http://127.0.0.1|g" \
-    /etc/nginx/servers/nginx.conf
 
 cp /etc/nginx/servers/nginx.conf /etc/nginx/servers/ingress.conf
 sed -i \
