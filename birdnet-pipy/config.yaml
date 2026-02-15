@@ -69,9 +69,6 @@ name: BirdNET-PiPy
 options:
   env_vars: []
   ICECAST_PASSWORD: ''
-  RECORDING_MODE: rtsp
-  RTSP_URL: ''
-  STREAM_BITRATE: 320k
   TZ: Etc/UTC
   data_location: /config/data
 panel_icon: mdi:bird
@@ -84,9 +81,6 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
   ICECAST_PASSWORD: str?
-  RECORDING_MODE: list(pulseaudio|http_stream|rtsp)
-  RTSP_URL: str?
-  STREAM_BITRATE: str?
   TZ: str?
   certfile: str?
   cifsdomain: str?
@@ -99,5 +93,5 @@ schema:
   ssl: bool?
 slug: birdnet-pipy
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pipy
-version: "0.5.0-5"
+version: "0.5.0-6"
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
