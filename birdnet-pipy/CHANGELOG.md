@@ -1,3 +1,5 @@
+## 0.5.0-5 (15-02-2026)
+- Minor bugs fixed
 ## 0.5.0-4 (2026-02-15)
 - Disable nginx service when ingress is not active
 
