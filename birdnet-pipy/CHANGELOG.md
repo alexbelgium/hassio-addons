@@ -1,3 +1,8 @@
+## 0.5.0-4 (2026-02-15)
+- Disable nginx service when ingress is not active
+
+## 0.5.0-3 (2026-02-15)
+- Fix nginx startup without ingress by removing templated resolver dependency
 
 ## 0.5.0-2 (2026-02-14)
 - Skip ingress nginx configuration when ingress is not active (empty/invalid ingress port)

@@ -14,9 +14,12 @@ ingress_interface="$(bashio::addon.ip_address)"
 ingress_entry="$(bashio::addon.ingress_entry)"
 
 if ! [[ "${ingress_port}" =~ ^[0-9]+$ ]] || [[ "${ingress_port}" -le 0 ]]; then
-    bashio::log.info "Ingress not active, skipping ingress nginx configuration"
+    bashio::log.info "Ingress not active, disabling nginx service"
+    touch /run/nginx-disabled
     exit 0
 fi
+
+rm -f /run/nginx-disabled
 
 sed -i \
     -e "s|proxy_pass http://api|proxy_pass http://127.0.0.1|g" \
@@ -31,6 +34,3 @@ sed -i \
     /etc/nginx/servers/ingress.conf
 
 sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/nginx/includes/ingress_params.conf
-
-# Set DNS resolver for internal requests
-sed -i "s/%%dns_host%%/127.0.0.11/g" /etc/nginx/includes/resolver.conf
