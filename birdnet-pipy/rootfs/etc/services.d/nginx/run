@@ -1,4 +1,10 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 set -euo pipefail
+
+if [ -f /run/nginx-disabled ]; then
+  bashio::log.info "Nginx disabled because ingress is not active"
+  exec sleep infinity
+fi
+
 nginx
