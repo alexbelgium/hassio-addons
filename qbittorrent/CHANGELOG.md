@@ -1,3 +1,6 @@
+## 5.1.4-16 (16-02-2026)
+- Fix interface binding when VPN is disabled, so qBittorrent can use all available interfaces instead of staying on a previous VPN interface
+
 ## 5.1.4-15 (08-02-2026)
 - Support preshared keys (airvpn for example)
 - Support multiple address fields

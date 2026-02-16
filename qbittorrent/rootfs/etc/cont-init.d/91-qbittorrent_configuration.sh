@@ -89,6 +89,15 @@ sed -i -e "/CSRFProtection/d" \
 # sed -i "$LINE i\Connection\\\PortRangeMin=6881" qBittorrent.conf
 sed -i "s|6881|59595|g" qBittorrent.conf # Correction if required
 
+#########################
+# Interface binding mode #
+#########################
+
+if ! bashio::config.true 'openvpn_enabled' && ! bashio::config.true 'wireguard_enabled'; then
+    sed -i '/Interface/d' qBittorrent.conf
+    bashio::log.info "No VPN selected: qBittorrent interface binding removed (all interfaces allowed)"
+fi
+
 ################
 # SSL CONFIG   #
 ################
