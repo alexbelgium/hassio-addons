@@ -1,3 +1,5 @@
+## 5.1.4-17 (17-02-2026)
+- Minor bugs fixed
 ## 5.1.4-16 (16-02-2026)
 - Fix interface binding when VPN is disabled, so qBittorrent can use all available interfaces instead of staying on a previous VPN interface
 
