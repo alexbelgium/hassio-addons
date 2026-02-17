@@ -11,6 +11,11 @@ declare ingress_port
 declare ingress_entry
 
 echo "Adapting for ingress"
+
+# Remove backend api url to use the base path
+sed -i "s|'/server'|''|g" /app/back/app.conf
+
+# Adapt nginx configuration
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 ingress_entry=$(bashio::addon.ingress_entry)
