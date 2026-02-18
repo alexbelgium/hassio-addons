@@ -50,4 +50,4 @@ slug: netalertx
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "26.2.6-3"
+version: "26.2.6-4"
