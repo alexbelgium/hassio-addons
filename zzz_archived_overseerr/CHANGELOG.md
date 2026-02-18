@@ -1,3 +1,10 @@
+## 1.34.0-archived (2026-02-17)
+
+- Mark add-on as deprecated in favor of the new Seer add-on.
+- Move add-on folder to `zzz_archived_overseerr`.
+- Pause automated upstream updates.
+- Enable deprecated startup warning module in Dockerfile.
+
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 1.34.0 (2025-03-29)
@@ -35,3 +42,4 @@
 
 - Update to latest version from linuxserver/docker-overseerr
 - Initial release
+- Remove bundled binary image assets from the archived add-on directory.

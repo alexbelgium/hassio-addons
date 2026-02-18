@@ -1,0 +1,6 @@
+{
+  "build_from": {
+    "aarch64": "seerr/seerr:latest",
+    "amd64": "seerr/seerr:latest"
+  }
+}

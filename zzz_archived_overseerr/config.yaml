@@ -3,7 +3,7 @@ arch:
   - amd64
 description:
   Request management and media discovery tool built to work with your existing
-  Plex ecosystem
+  Plex ecosystem (deprecated, migrate to Seer add-on)
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -71,7 +71,7 @@ image: ghcr.io/alexbelgium/overseerr-{arch}
 init: false
 map:
   - config:rw
-name: Overseerr
+name: Overseerr (deprecated)
 options:
   env_vars: []
   CONFIG_LOCATION: /config/addons_config/overseerr
@@ -91,7 +91,8 @@ schema:
   PUID: int
   TZ: str?
 slug: overseerr
+stage: deprecated
 udev: true
-url: https://github.com/alexbelgium/hassio-addons/tree/master/overseerr
+url: https://github.com/alexbelgium/hassio-addons/tree/master/zzz_archived_overseerr
 version: 1.34.0
 webui: "[PROTO:ssl]://[HOST]:[PORT:5055]"
