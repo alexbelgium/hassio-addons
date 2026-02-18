@@ -1,4 +1,4 @@
-# Home Assistant add-on: Seer
+# Home Assistant add-on: Seerr
 
 ## About
 
@@ -13,13 +13,13 @@ Upstream repositories reviewed:
 ## Installation
 
 1. Add this repository to Home Assistant.
-2. Install **Seer**.
+2. Install **Seerr**.
 3. Configure options, then start the add-on.
 4. Open the Web UI on port `5055`.
 
 ## Configuration
 
-Use `env_vars` to pass extra environment variables when needed. Seer configuration is stored in `/config`.
+Use `env_vars` to pass extra environment variables when needed. Seerr configuration is stored in `/config`.
 
 ### Options
 
