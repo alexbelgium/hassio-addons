@@ -1,7 +1,9 @@
 arch:
   - aarch64
   - amd64
-description: Self-hosted Plex Request and user management system
+description:
+  Self-hosted Plex Request and user management system (obsolete, migrate to the
+  Seerr add-on)
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -68,7 +70,7 @@ image: ghcr.io/alexbelgium/ombi-{arch}
 init: false
 map:
   - config:rw
-name: Ombi
+name: "Ombi (obsolete)"
 options:
   env_vars: []
   PGID: 0
@@ -84,7 +86,8 @@ schema:
   PGID: int
   PUID: int
 slug: ombi
+stage: deprecated
 udev: true
-url: https://github.com/alexbelgium/hassio-addons/tree/master/ombi
+url: https://github.com/alexbelgium/hassio-addons/tree/master/zzz_archived_ombi
 version: "4.55.2"
 webui: "[PROTO:ssl]://[HOST]:[PORT:3579]"

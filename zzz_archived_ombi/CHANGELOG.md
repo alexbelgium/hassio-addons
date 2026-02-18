@@ -1,4 +1,12 @@
 
+## 4.55.2-archived (2026-02-18)
+
+- Mark add-on as obsolete in favor of the Seerr add-on.
+- Move add-on folder to `zzz_archived_ombi`.
+- Pause automated upstream updates.
+- Enable deprecated startup warning module in Dockerfile.
+- Remove bundled binary image assets from the archived add-on directory.
+
 ## 4.55.2 (2026-02-14)
 - Update to latest version from linuxserver/docker-ombi (changelog : https://github.com/linuxserver/docker-ombi/releases)
 
