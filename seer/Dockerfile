@@ -77,8 +77,8 @@ RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
 #
 #WORKDIR /
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/ha_entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
