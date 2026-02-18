@@ -20,3 +20,7 @@ if [ -d /config/addons_config ]; then
 fi
 
 chown -R "$PUID:$PGID" /config || true
+
+cd /config || true
+
+npm start
