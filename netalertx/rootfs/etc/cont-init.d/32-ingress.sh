@@ -14,6 +14,7 @@ echo "Adapting for ingress"
 
 # Remove backend api url to use the base path
 sed -i "s|'/server'|''|g" /app/back/app.conf
+sed -i "s|(\$is_trusted != \"TRUSTED\")|(\$is_trusted = \"AAA\")|g" /services/config/nginx/netalertx.conf.template
 
 # Adapt nginx configuration
 ingress_port=$(bashio::addon.ingress_port)
