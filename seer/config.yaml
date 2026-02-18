@@ -90,5 +90,5 @@ schema:
 slug: seer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/seer
-version: "v3.0.1"
+version: "3.0.1-2"
 webui: "[PROTO:ssl]://[HOST]:[PORT:5055]"
