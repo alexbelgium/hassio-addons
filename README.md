@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 122
+- In the repository : 123
 - Installed : 82287
 
 ### Top 3
@@ -672,10 +672,10 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003;  [Overseerr](overseerr/) : Request management and media discovery tool built to work with your existing Plex ecosystem
+&#10003;  [Overseerr (deprecated)](zzz_archived_overseerr/) : Request management and media discovery tool built to work with your existing Plex ecosystem (deprecated, migrate to Seer add-on)
 
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Foverseerr%2Fconfig.yaml)
-![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Foverseerr%2Fupdater.json)
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_overseerr%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_overseerr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
@@ -826,6 +826,13 @@ If you want to do add the repository manually, please follow the procedure highl
 ![MariaDB][mariadb-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003;  [Seerr](seerr/) : Open-source media request and discovery manager for Jellyfin, Plex, and Emby
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fseerr%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fseerr%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
 
 &#10003;  [Signalk Server](signalk/) : An implementation of a Signal K central server for boats
 
