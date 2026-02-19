@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+cd /app || exit 1
+
+bashio::log.info "Starting Seerr..."
+exec npm start
