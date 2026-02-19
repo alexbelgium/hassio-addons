@@ -1,7 +1,8 @@
 arch:
   - aarch64
   - amd64
-description: Fork of overseerr for jellyfin support
+description:
+  Fork of overseerr for jellyfin support (deprecated, migrate to Seerr add-on)
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -70,7 +71,7 @@ image: ghcr.io/alexbelgium/jellyseerr-{arch}
 init: false
 map:
   - config:rw
-name: Jellyseerr
+name: Jellyseerr (deprecated)
 options:
   env_vars: []
   TYPE: emby
@@ -87,7 +88,8 @@ schema:
   TYPE: list(emby|jellyfin)
   TZ: str?
 slug: jellyseerr
+stage: deprecated
 udev: true
-url: https://github.com/alexbelgium/hassio-addons/tree/master/jellyseerr
+url: https://github.com/alexbelgium/hassio-addons/tree/master/zzz_archived_jellyseerr
 version: v2.7.3
 webui: "[PROTO:ssl]://[HOST]:[PORT:5055]"

@@ -25,11 +25,13 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/jellyseerr/stats.png)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_archived_jellyseerr/stats.png)
 
 ## About
 
 ---
+
+> ⚠️ **Deprecated:** this add-on is deprecated. Please migrate to the `Seerr` add-on.
 
 [Jellyseerr](https://hub.docker.com/r/fallenbagel/jellyseerr) is a request management and media discovery tool built to work with your existing Plex ecosystem
 This addon is based on the docker image [https://github.com/linuxserver/docker-jellyseerr](https://github.com/Fallenbagel/jellyseerr)

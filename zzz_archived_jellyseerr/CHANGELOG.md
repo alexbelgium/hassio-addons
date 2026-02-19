@@ -1,3 +1,10 @@
+## v2.7.3-archived (2026-02-19)
+
+- Mark add-on as deprecated in favor of the new Seerr add-on.
+- Move add-on folder to `zzz_archived_jellyseerr`.
+- Pause automated upstream updates.
+- Enable deprecated startup warning module in Dockerfile.
+
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## v2.7.3 (2025-08-16)
