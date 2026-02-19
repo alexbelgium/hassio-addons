@@ -480,10 +480,10 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003;  [Jellyseerr](jellyseerr/) : Fork of overseerr for jellyfin support
+&#10003;  [Jellyseerr](zzz_archived_jellyseerr/) : Fork of overseerr for jellyfin support (deprecated, use Seerr instead)
 
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyseerr%2Fconfig.yaml)
-![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyseerr%2Fupdater.json)
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_jellyseerr%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_jellyseerr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
