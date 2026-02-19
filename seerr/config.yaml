@@ -67,6 +67,9 @@ devices:
   - /dev/nvme2
 environment: {}
 image: ghcr.io/alexbelgium/seerr-{arch}
+ingress: true
+ingress_port: 0
+ingress_stream: true
 webui: "[PROTO:ssl]://[HOST]:[PORT:5055]"
 init: false
 map:
