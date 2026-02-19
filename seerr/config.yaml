@@ -68,6 +68,7 @@ devices:
 environment: {}
 image: ghcr.io/alexbelgium/seerr-{arch}
 ingress: true
+ingress_entry: seerr
 init: false
 map:
   - addon_config:rw
