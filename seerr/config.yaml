@@ -68,7 +68,6 @@ devices:
 environment: {}
 image: ghcr.io/alexbelgium/seerr-{arch}
 ingress: true
-ingress_entry: seerr
 ingress_port: 0
 ingress_stream: true
 webui: "[PROTO:ssl]://[HOST]:[PORT:5055]"
