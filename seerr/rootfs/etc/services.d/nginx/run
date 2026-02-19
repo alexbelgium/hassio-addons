@@ -6,9 +6,26 @@ set -e
 # Set variables
 slug=seerr
 port=5055
+CONFIG_LOCATION=/config/settings.json
 
 # Wait for seerr to become available
 bashio::net.wait_for "$port" localhost 900
+
+# Set UrlBase
+if [ -f "$CONFIG_LOCATION" ]; then
+    urlbase=$(node -e "try{var s=JSON.parse(require('fs').readFileSync('$CONFIG_LOCATION','utf8'));console.log((s.main&&s.main.urlBase)||'')}catch(e){console.log('')}" 2>/dev/null || echo "")
+    if [ "$urlbase" != "$slug" ]; then
+        bashio::log.warning "UrlBase not set properly, restarting"
+        node -e "
+          var fs = require('fs');
+          var s = JSON.parse(fs.readFileSync('$CONFIG_LOCATION', 'utf8'));
+          if (!s.main) s.main = {};
+          s.main.urlBase = '$slug';
+          fs.writeFileSync('$CONFIG_LOCATION', JSON.stringify(s, null, 2));
+        "
+        bashio::addon.restart
+    fi
+fi
 
 bashio::log.info "Starting NGINX..."
 exec nginx
