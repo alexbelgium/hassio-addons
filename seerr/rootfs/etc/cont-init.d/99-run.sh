@@ -13,4 +13,4 @@ bashio::log.info "Starting NGinx..."
 nginx &
 
 bashio::log.info "Starting app"
-exec npm start
+npm start
