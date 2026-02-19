@@ -10,5 +10,5 @@ port=5055
 # Wait for seerr to become available
 bashio::net.wait_for "$port" localhost 900
 
-bashio::log.info "Starting NGinx..."
+bashio::log.info "Starting NGINX..."
 exec nginx
