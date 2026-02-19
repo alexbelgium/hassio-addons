@@ -2,11 +2,13 @@
 # shellcheck shell=bash
 set -e
 
-rm -r /app/config
+# Setup config directory
+if [ -d /app/config ]; then
+    rm -r /app/config
+fi
 ln -sf /config /app/config
 
+# Set permissions
 chown -R "$PUID:$PGID" /config || true
 
-cd /app || true
-
-npm start
+bashio::log.info "Seerr initialization complete"
