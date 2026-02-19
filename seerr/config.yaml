@@ -92,4 +92,4 @@ schema:
 slug: seerr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/seerr
-version: "3.0.1-4"
+version: "3.0.1-5"
