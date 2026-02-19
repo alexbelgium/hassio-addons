@@ -4,7 +4,7 @@
 
 This add-on packages [Seerr](https://seerr.dev/), an open-source media request and discovery manager for Jellyfin, Plex, and Emby.
 
-This add-on is based on the existing Overseerr add-on structure, adapted for the Seerr upstream project and container image.
+This add-on is based on the existing Overseerr add-on structure, adapted for the Seerr upstream project and container image. It supports Home Assistant Ingress via an internal NGINX reverse proxy.
 
 Upstream repositories reviewed:
 - Overseerr: https://github.com/sct/overseerr
@@ -15,7 +15,7 @@ Upstream repositories reviewed:
 1. Add this repository to Home Assistant.
 2. Install **Seerr**.
 3. Configure options, then start the add-on.
-4. Open the Web UI on port `5055`.
+4. Open the Web UI on port `5055` or via Home Assistant Ingress.
 
 ## Configuration
 

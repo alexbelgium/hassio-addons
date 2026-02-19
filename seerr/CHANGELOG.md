@@ -1,4 +1,8 @@
 
+## v3.0.2 (2026-02-19)
+- Added Home Assistant Ingress support for Seerr with an internal NGINX reverse proxy and ingress-aware response rewriting.
+- Enabled ingress in the add-on manifest and updated startup flow to launch NGINX before Seerr.
+
 ## v3.0.1 (2026-02-17)
 - Initial release based on the Overseerr add-on, updated to the Seerr upstream image and naming.
 - Switched base image to `seerr/seerr:latest` and updated metadata/options for the new slug.
