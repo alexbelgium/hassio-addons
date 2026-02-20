@@ -77,6 +77,7 @@ options:
   env_vars: []
   PGID: "0"
   PUID: "0"
+panel_icon: mdi:movie-search
 ports:
   5055/tcp: 5055
 ports_description:
