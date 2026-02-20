@@ -45,16 +45,10 @@ TZ: Europe/London
 Seerr is compatible with Overseerr's data format. To migrate your existing configuration:
 
 1. Stop the **Overseerr** add-on.
-2. Install and start the **Seerr** add-on once to initialize its config directory, then stop it.
-3. Copy the Overseerr config files to the Seerr config directory using the SSH & Web Terminal add-on or a similar tool:
-
-   ```bash
-   cp -r /homeassistant/addons_config/overseerr/. /addon_configs/db21ed7f_seerr/
-   ```
-
-   > **Note:** If you customised the `CONFIG_LOCATION` option in the Overseerr add-on, replace `/homeassistant/addons_config/overseerr` with the path you set.
-
-4. Start the **Seerr** add-on. Your existing settings, users, and requests will be preserved.
+2. Install and start the **Seerr** add-on once to create its config directory (`/addon_configs/db21ed7f_seerr/`), then stop it.
+3. Open the **[Filebrowser](https://github.com/alexbelgium/hassio-addons/tree/master/filebrowser)** add-on (or any file manager with access to `/addon_configs/`).
+4. Navigate to `/addon_configs/db21ed7f_overseerr/` and copy all files into `/addon_configs/db21ed7f_seerr/`.
+5. Start the **Seerr** add-on. Your existing settings, users, and requests will be preserved.
 
 ---
 
@@ -63,14 +57,10 @@ Seerr is compatible with Overseerr's data format. To migrate your existing confi
 Seerr is compatible with Jellyseerr's data format. To migrate your existing configuration:
 
 1. Stop the **Jellyseerr** add-on.
-2. Install and start the **Seerr** add-on once to initialize its config directory, then stop it.
-3. Copy the Jellyseerr config files to the Seerr config directory using the SSH & Web Terminal add-on or a similar tool:
-
-   ```bash
-   cp -r /homeassistant/addons_config/jellyseerr/. /addon_configs/db21ed7f_seerr/
-   ```
-
-4. Start the **Seerr** add-on. Your existing settings, users, and requests will be preserved.
+2. Install and start the **Seerr** add-on once to create its config directory (`/addon_configs/db21ed7f_seerr/`), then stop it.
+3. Open the **[Filebrowser](https://github.com/alexbelgium/hassio-addons/tree/master/filebrowser)** add-on (or any file manager with access to `/addon_configs/`).
+4. Navigate to `/addon_configs/db21ed7f_jellyseerr/` and copy all files into `/addon_configs/db21ed7f_seerr/`.
+5. Start the **Seerr** add-on. Your existing settings, users, and requests will be preserved.
 
 ---
 
