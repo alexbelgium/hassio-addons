@@ -38,6 +38,43 @@ PUID: 0
 TZ: Europe/London
 ```
 
+## Migration
+
+### From Overseerr
+
+Seerr is compatible with Overseerr's data format. To migrate your existing configuration:
+
+1. Stop the **Overseerr** add-on.
+2. Install and start the **Seerr** add-on once to create its config directory (`/addon_configs/db21ed7f_seerr/`), then stop it.
+3. Open the **[Filebrowser](https://github.com/alexbelgium/hassio-addons/tree/master/filebrowser)** add-on (or any file manager with access to `/addon_configs/`).
+4. Navigate to `/addon_configs/db21ed7f_overseerr/` and copy all files into `/addon_configs/db21ed7f_seerr/`.
+5. Start the **Seerr** add-on. Your existing settings, users, and requests will be preserved.
+
+---
+
+### From Jellyseerr
+
+Seerr is compatible with Jellyseerr's data format. To migrate your existing configuration:
+
+1. Stop the **Jellyseerr** add-on.
+2. Install and start the **Seerr** add-on once to create its config directory (`/addon_configs/db21ed7f_seerr/`), then stop it.
+3. Open the **[Filebrowser](https://github.com/alexbelgium/hassio-addons/tree/master/filebrowser)** add-on (or any file manager with access to `/addon_configs/`).
+4. Navigate to `/addon_configs/db21ed7f_jellyseerr/` and copy all files into `/addon_configs/db21ed7f_seerr/`.
+5. Start the **Seerr** add-on. Your existing settings, users, and requests will be preserved.
+
+---
+
+### From Ombi
+
+Ombi uses a different data format and there is no automated migration path to Seerr. You will need to configure Seerr from scratch:
+
+1. Note down your Ombi configuration (media servers, users, notification settings, etc.).
+2. Stop the **Ombi** add-on.
+3. Install and start the **Seerr** add-on.
+4. Use the Seerr web UI to reconnect your media server(s) and reconfigure your preferences.
+
+---
+
 ## Support
 
 If you find a bug, open an issue in this repository.
