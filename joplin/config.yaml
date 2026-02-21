@@ -104,5 +104,5 @@ schema:
 slug: joplin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 3.5.2-2
+version: 3.5.2-3
 webui: "[PROTO:ssl]://[HOST]:[PORT:22300]"
