@@ -1,3 +1,6 @@
+
+## v3.0.1 (2026-02-21)
+- Update to latest version from Fallenbagel/jellyseerr (changelog : https://github.com/Fallenbagel/jellyseerr/releases)
 ## v2.7.3-archived (2026-02-19)
 
 - Mark add-on as deprecated in favor of the new Seerr add-on.

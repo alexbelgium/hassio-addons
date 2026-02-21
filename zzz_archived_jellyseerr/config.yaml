@@ -91,5 +91,5 @@ slug: jellyseerr
 stage: deprecated
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/zzz_archived_jellyseerr
-version: v2.7.3
+version: "v3.0.1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:5055]"
