@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 123
+- In the repository : 124
 - Installed : 102680
 
 ### Top 3
@@ -530,6 +530,12 @@ If you want to do add the repository manually, please follow the procedure highl
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Flinkwarden%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Flinkwarden%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+
+&#10003;  [Manyfold](manyfold/) : Manyfold 3D model manager as a Home Assistant add-on, using the upstream image with configurable library/index paths.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmanyfold%2Fconfig.yaml)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
