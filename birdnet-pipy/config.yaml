@@ -93,5 +93,5 @@ schema:
   ssl: bool?
 slug: birdnet-pipy
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pipy
-version: "0.5.0-6"
+version: "0.5.4"
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
