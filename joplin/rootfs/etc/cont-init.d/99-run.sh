@@ -110,6 +110,10 @@ if bashio::config.has_value 'POSTGRES_DATABASE'; then
     bashio::log.info "Using postgres"
 
     bashio::config.has_value 'DB_CLIENT' && export DB_CLIENT="$(bashio::config 'DB_CLIENT')"
+    if [[ "${DB_CLIENT:-}" != "pg" ]]; then
+        bashio::log.warning "DB_CLIENT is '${DB_CLIENT:-}' but only 'pg' (PostgreSQL) is supported. Overriding to 'pg'."
+        export DB_CLIENT="pg"
+    fi
     bashio::config.has_value 'POSTGRES_PASSWORD' && export POSTGRES_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
     bashio::config.has_value 'POSTGRES_DATABASE' && export POSTGRES_DATABASE="$(bashio::config 'POSTGRES_DATABASE')"
     bashio::config.has_value 'POSTGRES_USER' && export POSTGRES_USER="$(bashio::config 'POSTGRES_USER')"
