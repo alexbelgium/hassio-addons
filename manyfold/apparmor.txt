@@ -1,0 +1,18 @@
+#include <tunables/global>
+
+profile hassio-addons/manyfold flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/bash>
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+
+  # Baseline profile for Manyfold in HAOS. Keep broad compatibility while
+  # denying known high-risk kernel interfaces.
+  file,
+  network,
+  capability,
+
+  deny /proc/kcore rwklx,
+  deny /proc/sysrq-trigger rwklx,
+  deny /sys/firmware/** rwklx,
+}

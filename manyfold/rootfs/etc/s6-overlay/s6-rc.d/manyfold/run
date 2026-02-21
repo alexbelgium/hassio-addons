@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+exec /run.sh
