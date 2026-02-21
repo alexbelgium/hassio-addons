@@ -46,7 +46,7 @@ Webui can be found at `<your-ip>:22300`.
 |--------|------|---------|-------------|
 | `APP_BASE_URL` | str | `http://your_domain:port` | Base public URL where the service will be running |
 | `data_location` | str | `/config/addons_config/joplin` | Path where Joplin data is stored |
-| `DB_CLIENT` | str | | Database client type (e.g., `pg` for PostgreSQL) |
+| `DB_CLIENT` | str | | Database client type. Only `pg` (PostgreSQL) is supported. MariaDB/MySQL is NOT supported. |
 | `POSTGRES_HOST` | str | | PostgreSQL server hostname |
 | `POSTGRES_PORT` | int | | PostgreSQL server port |
 | `POSTGRES_DATABASE` | str | | PostgreSQL database name |
@@ -67,8 +67,8 @@ Webui can be found at `<your-ip>:22300`.
 APP_BASE_URL: "http://192.168.1.100:22300"
 data_location: "/config/addons_config/joplin"
 DB_CLIENT: "pg"
-POSTGRES_HOST: "core-mariadb"
-POSTGRES_PORT: 3306
+POSTGRES_HOST: "your-postgres-host"
+POSTGRES_PORT: 5432
 POSTGRES_DATABASE: "joplin"
 POSTGRES_USER: "joplin"
 POSTGRES_PASSWORD: "secure_password"
@@ -84,11 +84,13 @@ MAILER_NOREPLY_EMAIL: "noreply@yourdomain.com"
 
 ### Database Setup
 
-Joplin Server uses SQLite by default, but for production use, PostgreSQL is recommended:
+Joplin Server uses SQLite by default, but for production use, PostgreSQL is recommended.
 
-1. Install and configure a PostgreSQL addon (e.g., MariaDB addon)
-2. Create a database and user for Joplin
-3. Configure the PostgreSQL options in the Joplin addon
+> **Important:** Joplin Server only supports **PostgreSQL** as an external database. MariaDB/MySQL is **not** supported. You must install a PostgreSQL addon (not the MariaDB addon) and set `DB_CLIENT` to `pg`.
+
+1. Install and configure a PostgreSQL addon
+2. Create a database and user for Joplin in PostgreSQL
+3. Configure the PostgreSQL options in the Joplin addon (use port `5432`, not `3306`)
 4. Restart the addon
 
 Make sure the provided database and user exist as the server will not create them automatically.
