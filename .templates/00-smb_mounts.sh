@@ -237,7 +237,7 @@ if bashio::config.has_value 'networkdisks'; then
     fi
 
     if [[ "$FSTYPE" == "cifs" ]]; then
-      server="$(echo "$disk" | sed -E 's|^//([^/]+)/.*|\1|')"
+      server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" | head -n 1)"
     else
       server="${disk%%:*}"
     fi
@@ -264,8 +264,8 @@ if bashio::config.has_value 'networkdisks'; then
     echo "... mounting ($FSTYPE) $disk"
 
     if [[ "$FSTYPE" == "cifs" ]]; then
-      if [[ ! "$disk" =~ ^//[^/]+/.+ ]]; then
-        bashio::log.fatal "...... invalid CIFS path \"$disk\". Use //server/sharedfolder or //123.12.12.12/sharedfolder"
+      if [[ ! "$disk" =~ ^//[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/.+ ]]; then
+        bashio::log.fatal "...... invalid CIFS path \"$disk\". Use //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2"
         echo "Invalid CIFS path structure: $disk" >"$ERRORCODE_FILE" || true
         continue
       fi
