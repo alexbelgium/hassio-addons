@@ -199,8 +199,15 @@ if $PID1; then
     echo "Starting: $runfile"
     sed -i "1s|^.*|#!$shebang|" "$runfile"
     chmod +x "$runfile"
-    (exec "$runfile") &
-    true
+    (
+      restart_count=0
+      while true; do
+        "$runfile" || true
+        restart_count=$((restart_count + 1))
+        echo -e "\e[38;5;214m$(date) WARNING: $runfile exited, restarting (#${restart_count}) in 5s...\e[0m"
+        sleep 5
+      done
+    ) &
   done
   shopt -u nullglob
 fi
@@ -214,6 +221,7 @@ if $PID1; then
   echo -e "\033[0;32mEverything started!\033[0m"
 
   terminate() {
+    local local_pid
     echo "Termination signal received, forwarding to subprocesses..."
     if command -v pgrep >/dev/null 2>&1; then
       while read -r pid; do
