@@ -232,7 +232,7 @@ if bashio::config.has_value 'networkdisks'; then
     if [[ "$disk" =~ ^nfs:// ]]; then
       FSTYPE="nfs"
       disk="${disk#nfs://}"
-    elif [[ "$disk" =~ ^[^/][^:]*:/.+ ]]; then
+    elif [[ "$disk" =~ ^[^/:]+:/.+ ]]; then
       FSTYPE="nfs"
     fi
 
@@ -246,8 +246,8 @@ if bashio::config.has_value 'networkdisks'; then
     diskname="${diskname//\\//}"
     diskname="${diskname##*/}"
 
-    if [[ -d "/mnt/$diskname" ]]; then
-      bashio::log.warning "...... mount point /mnt/$diskname already exists (name collision for $disk). Skipping this share."
+    if mountpoint -q "/mnt/$diskname" 2>/dev/null; then
+      bashio::log.warning "...... mount point /mnt/$diskname already in use (name collision for $disk). Skipping this share."
       continue
     fi
 
@@ -270,7 +270,7 @@ if bashio::config.has_value 'networkdisks'; then
         continue
       fi
     else
-      if [[ ! "$disk" =~ ^[^:]+:/.+ ]]; then
+      if [[ ! "$disk" =~ ^[^/:]+:/.+ ]]; then
         bashio::log.fatal "...... invalid NFS path \"$disk\". Use server:/export/path or 123.12.12.12:/export/path"
         echo "Invalid NFS path structure: $disk" >"$ERRORCODE_FILE" || true
         continue
