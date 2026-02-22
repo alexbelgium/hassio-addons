@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -euo pipefail
 export PYTHONPATH=/app
-export PULSE_SERVER=unix:/run/pulse/native
+export PULSE_SERVER="${PULSE_SERVER:-unix:/run/pulse/native}"
 bashio::net.wait_for 5002 127.0.0.1 300
 cd /app
 exec python3 -m core.main
