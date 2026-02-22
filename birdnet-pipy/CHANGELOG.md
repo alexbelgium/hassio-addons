@@ -1,4 +1,7 @@
 
+## 0.5.5 (2026-02-22)
+- Fix Icecast service failing to connect to PulseAudio on HAOS by respecting PULSE_SERVER env var and setting up socket symlink and auth cookie for icecast2 user
+
 ## 0.5.4 (2026-02-21)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 ## 0.5.0-6 (15-02-2026)
