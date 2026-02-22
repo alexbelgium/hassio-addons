@@ -47,9 +47,11 @@ test_mount() {
     return 0
   fi
 
-  if [[ "$FSTYPE" == "cifs" && "$MOUNTOPTIONS" != *"noserverino"* ]]; then
+  local orig_mountoptions="$MOUNTOPTIONS"
+
+  if [[ "$FSTYPE" == "cifs" && "$orig_mountoptions" != *"noserverino"* ]]; then
     echo "... retrying mount with noserverino"
-    MOUNTOPTIONS="${MOUNTOPTIONS},noserverino"
+    MOUNTOPTIONS="${orig_mountoptions},noserverino"
 
     umount "$mountpoint" 2>/dev/null || true
     if mount_drive "$MOUNTOPTIONS"; then
@@ -60,9 +62,9 @@ test_mount() {
     fi
   fi
 
-  if [[ "$FSTYPE" == "cifs" && "$MOUNTOPTIONS" != *"noperm"* ]]; then
+  if [[ "$FSTYPE" == "cifs" && "$orig_mountoptions" != *"noperm"* ]]; then
     echo "... retrying mount with noperm"
-    MOUNTOPTIONS="${MOUNTOPTIONS},noperm"
+    MOUNTOPTIONS="${orig_mountoptions},noperm"
 
     umount "$mountpoint" 2>/dev/null || true
     if mount_drive "$MOUNTOPTIONS"; then
@@ -73,7 +75,11 @@ test_mount() {
     fi
   fi
 
-  MOUNTED="readonly"
+  if mountpoint -q "$mountpoint"; then
+    MOUNTED="readonly"
+  else
+    MOUNTED=false
+  fi
   return 0
 }
 
@@ -226,7 +232,7 @@ if bashio::config.has_value 'networkdisks'; then
     if [[ "$disk" =~ ^nfs:// ]]; then
       FSTYPE="nfs"
       disk="${disk#nfs://}"
-    elif [[ "$disk" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:/.+ ]]; then
+    elif [[ "$disk" =~ ^[^/:]+:/.+ ]]; then
       FSTYPE="nfs"
     fi
 
@@ -239,6 +245,11 @@ if bashio::config.has_value 'networkdisks'; then
     diskname="$disk"
     diskname="${diskname//\\//}"
     diskname="${diskname##*/}"
+
+    if mountpoint -q "/mnt/$diskname" 2>/dev/null; then
+      bashio::log.warning "...... mount point /mnt/$diskname already in use (name collision for $disk). Skipping this share."
+      continue
+    fi
 
     ERRORCODE_FILE="/tmp/mount_error_${diskname//[^a-zA-Z0-9._-]/_}.log"
     : >"$ERRORCODE_FILE" || true
@@ -259,8 +270,8 @@ if bashio::config.has_value 'networkdisks'; then
         continue
       fi
     else
-      if [[ ! "$disk" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:/.+ ]]; then
-        bashio::log.fatal "...... invalid NFS path \"$disk\". Use 123.12.12.12:/export/path"
+      if [[ ! "$disk" =~ ^[^/:]+:/.+ ]]; then
+        bashio::log.fatal "...... invalid NFS path \"$disk\". Use server:/export/path or 123.12.12.12:/export/path"
         echo "Invalid NFS path structure: $disk" >"$ERRORCODE_FILE" || true
         continue
       fi
