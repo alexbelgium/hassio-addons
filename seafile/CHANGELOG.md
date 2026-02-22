@@ -1,4 +1,7 @@
 
+## 12.0.18-2 (2026-02-22)
+- Fix download URLs containing incorrect `/seafhttp` prefix on first run by re-applying URL configuration after upstream init scripts complete.
+
 ## 12.0.18 (2026-03-20)
 - Fix `env_vars` handling so extra environment variables are exported correctly.
 

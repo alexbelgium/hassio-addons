@@ -155,6 +155,27 @@ done
 bashio::log.info "SERVICE_URL set to ${SERVICE_URL_VALUE}"
 bashio::log.info "FILE_SERVER_ROOT set to ${FILE_SERVER_ROOT_VALUE}"
 
+# The upstream write_config.sh hardcodes /seafhttp in FILE_SERVER_ROOT and
+# overwrites our settings on first run.  Create a helper that re-applies the
+# addon's URL configuration right before Seafile services start, so it always
+# takes effect regardless of what the upstream init/setup scripts wrote.
+cat > /home/seafile/apply_addon_urls.sh << URLEOF
+#!/bin/bash
+for _CONF in "${DATA_LOCATION}/conf/seahub_settings.py" "${DATA_LOCATION}/seafile/conf/seahub_settings.py"; do
+    if [ -f "\$_CONF" ]; then
+        sed -i '/^SERVICE_URL *=/d' "\$_CONF"
+        sed -i '/^FILE_SERVER_ROOT *=/d' "\$_CONF"
+        echo 'SERVICE_URL = "${SERVICE_URL_VALUE}"' >> "\$_CONF"
+        echo 'FILE_SERVER_ROOT = "${FILE_SERVER_ROOT_VALUE}"' >> "\$_CONF"
+    fi
+done
+URLEOF
+chmod +x /home/seafile/apply_addon_urls.sh
+sed -i '/print "Launching seafile"/i /home/seafile/apply_addon_urls.sh' /home/seafile/launch.sh
+if ! grep -q 'apply_addon_urls.sh' /home/seafile/launch.sh 2>/dev/null; then
+    bashio::log.warning "Could not inject URL configuration into launch.sh; URLs may use upstream defaults"
+fi
+
 ###################
 # Define database #
 ###################
