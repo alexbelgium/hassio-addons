@@ -111,7 +111,7 @@ retry_cifs_with_vers_ladder_on_dialect_failure() {
   fi
 
   CIFS_LADDER_ATTEMPTED=true
-  bashio::log.warning "...... CIFS negotiation/dialect failure: trying SMB dialect ladder (3.x -> 2.x)."
+  bashio::log.warning "...... CIFS negotiation/dialect failure: trying SMB dialect ladder (3.x -> 2.x -> 1.0)."
 
   local base_opts try_opts vers vopt sectry
 
@@ -119,8 +119,8 @@ retry_cifs_with_vers_ladder_on_dialect_failure() {
   base_opts="$(echo "$base_opts" | sed -E 's/,vers=[^,]+//g; s/,sec=[^,]+//g')"
 
   local -a opt_variants=("" ",nounix" ",noserverino" ",nounix,noserverino")
-  local -a sec_variants=("" ",sec=ntlmssp" ",sec=ntlmv2")
-  local -a vers_variants=("3.1.1" "3.02" "3.0" "2.1" "2.0")
+  local -a sec_variants=("" ",sec=ntlmssp" ",sec=ntlmv2" ",sec=ntlm")
+  local -a vers_variants=("3.1.1" "3.02" "3.0" "2.1" "2.0" "1.0")
 
   for vopt in "${opt_variants[@]}"; do
     for vers in "${vers_variants[@]}"; do
@@ -143,7 +143,7 @@ retry_cifs_with_vers_ladder_on_dialect_failure() {
     base_opts="${base_opts//,nobrl/}"
     base_opts="$(echo "$base_opts" | sed -E 's/,iocharset=[^,]+//g')"
 
-    local -a vers_variants2=("2.1" "2.0")
+    local -a vers_variants2=("2.1" "2.0" "1.0")
     for vopt in "${opt_variants[@]}"; do
       for vers in "${vers_variants2[@]}"; do
         for sectry in "${sec_variants[@]}"; do
@@ -332,14 +332,19 @@ if bashio::config.has_value 'networkdisks'; then
         fi
 
         SMBRAW=""
+        SMB1_DETECTED=false
         if command -v nmap >/dev/null 2>&1; then
+          NMAP_OUTPUT="$(nmap --script smb-protocols -p 445 "$server" 2>/dev/null || true)"
           SMBRAW="$(
-            nmap --script smb-protocols -p 445 "$server" 2>/dev/null \
+            echo "$NMAP_OUTPUT" \
               | awk '/SMB2_DIALECT_/ {print $NF}' \
               | sed 's/SMB2_DIALECT_//' \
               | tr -d '_' \
               | sort -V | tail -n 1 || true
           )"
+          if [[ -z "$SMBRAW" ]] && echo "$NMAP_OUTPUT" | grep -Eiq 'NT LM 0\.12|SMBv1|NT1'; then
+            SMB1_DETECTED=true
+          fi
         fi
 
         SMBVERS=""
@@ -352,19 +357,28 @@ if bashio::config.has_value 'networkdisks'; then
           *) SMBVERS="" ;;
         esac
 
+        if [[ -z "$SMBVERS" && "$SMB1_DETECTED" == "true" ]]; then
+          echo "...... SMB version detected via nmap : SMBv1 (NT LM 0.12)"
+          SMBVERS=",vers=1.0"
+          SECVERS=",sec=ntlm"
+        fi
+
         if [[ -n "$SMBVERS" ]]; then
           echo "...... SMB version detected : ${SMBVERS#,vers=}"
-        elif command -v smbclient >/dev/null 2>&1 && smbclient -t 2 -L "$server" -m NT1 -N $DOMAINCLIENT -c "exit" &>/dev/null; then
+        elif command -v smbclient >/dev/null 2>&1 && smbclient -t 2 -L "$server" -m NT1 -U "$USERNAME%$PASSWORD" $DOMAINCLIENT -c "exit" &>/dev/null; then
           echo "...... SMB version : only SMBv1 is supported, this can lead to issues"
           SECVERS=",sec=ntlm"
           SMBVERS=",vers=1.0"
         else
-          echo "...... SMB version : couldn't detect, falling back to SMB3->SMB2 ladder on negotiation/dialect failure"
+          echo "...... SMB version : couldn't detect, falling back to SMB3->SMB2->SMB1 ladder on negotiation/dialect failure"
           SMBVERS=",vers=3.1.1"
         fi
 
         if [[ -n "$SMBVERS_FORCE" ]]; then
-          [[ -z "$SMBVERS" ]] && SMBVERS="$SMBVERS_FORCE"
+          if [[ -n "$SMBVERS" && "$SMBVERS" != "$SMBVERS_FORCE" ]]; then
+            bashio::log.warning "...... overriding detected SMB version ${SMBVERS#,vers=} with forced ${SMBVERS_FORCE#,vers=} (server requires legacy protocol)"
+          fi
+          SMBVERS="$SMBVERS_FORCE"
           [[ -z "$SECVERS" ]] && SECVERS="$SECVERS_FORCE"
         fi
 
