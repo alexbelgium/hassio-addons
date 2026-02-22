@@ -1,4 +1,7 @@
 
+## 2.5.6-3 (2026-02-22)
+- Increment add-on revision.
+
 ## 2.5.6-2 (2026-02-14)
 - Add `VIPS_NOVECTOR` add-on option to set `VIPS_NOVECTOR=1` for thumbnail generation workaround on aarch64 (issue #2460)
 
