@@ -155,6 +155,9 @@ fi
 # Starting scripts #
 ####################
 
+# Make s6 contenv if needed
+mkdir -p /run/s6/container_environment
+
 run_one_script() {
   local script="$1"
 
