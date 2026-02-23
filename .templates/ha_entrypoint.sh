@@ -201,7 +201,7 @@ if $PID1; then
     chmod +x "$runfile"
     (
       restart_count=0
-      max_restarts=10
+      max_restarts=5
       while true; do
         "$runfile"
         rc=$?
