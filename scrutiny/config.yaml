@@ -113,4 +113,4 @@ schema:
 slug: scrutiny
 udev: true
 url: https://github.com/Starosdev/scrutiny
-version: "v1.28.0"
+version: "v1.30.1"
