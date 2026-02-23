@@ -1,5 +1,8 @@
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
+## 4.16-r0-ls95-5 (2026-02-23)
+- Fix ingress: replace CWS port placeholder with 8082 and SUBFOLDER with /
+
 ## 4.16-r0-ls95-4 (2025-06-01)
 - Minor bugs fixed
 ## 4.16-r0-ls94-4 (2025-05-28)
