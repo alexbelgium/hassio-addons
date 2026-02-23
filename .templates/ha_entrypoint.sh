@@ -201,10 +201,20 @@ if $PID1; then
     chmod +x "$runfile"
     (
       restart_count=0
+      max_restarts=5
       while true; do
-        "$runfile" || true
+        "$runfile"
+        rc=$?
+        if [ "$rc" -eq 0 ]; then
+          echo "$runfile exited cleanly (exit 0), not restarting."
+          break
+        fi
         restart_count=$((restart_count + 1))
-        echo -e "\e[38;5;214m$(date) WARNING: $runfile exited, restarting (#${restart_count}) in 5s...\e[0m"
+        if [ "$restart_count" -ge "$max_restarts" ]; then
+          echo -e "\033[0;31mERROR: $runfile has crashed $restart_count times (last exit code: $rc), giving up.\033[0m"
+          break
+        fi
+        echo -e "\e[38;5;214m$(date) WARNING: $runfile exited (code $rc), restarting (#${restart_count}/${max_restarts}) in 5s...\e[0m"
         sleep 5
       done
     ) &
