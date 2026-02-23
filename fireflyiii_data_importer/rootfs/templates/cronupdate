@@ -2,6 +2,10 @@
 # shellcheck shell=bash
 set -e
 
+# Source environment variables for cron context
+# shellcheck disable=SC1091
+if [ -f /etc/environment ]; then set -a; . /etc/environment; set +a; fi
+
 CONFIGSOURCE="$(bashio::config "CONFIG_LOCATION")"
 
 (

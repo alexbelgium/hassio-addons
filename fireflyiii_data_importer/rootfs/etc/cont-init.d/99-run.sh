@@ -25,6 +25,17 @@ export CAN_POST_FILES="$(bashio::config "CAN_POST_FILES")"
 # shellcheck disable=SC2155
 export CAN_POST_AUTOIMPORT="$(bashio::config "CAN_POST_AUTOIMPORT")"
 
+# Persist variables to /etc/environment for cron jobs
+{
+    [ -n "$JSON_CONFIGURATION_DIR" ] && echo "JSON_CONFIGURATION_DIR=\"$JSON_CONFIGURATION_DIR\""
+    echo "IMPORT_DIR_ALLOWLIST=\"$IMPORT_DIR_ALLOWLIST\""
+    echo "IMPORT_DIR_WHITELIST=\"$IMPORT_DIR_WHITELIST\""
+    echo "AUTO_IMPORT_SECRET=\"$AUTO_IMPORT_SECRET\""
+    echo "CAN_POST_FILES=\"$CAN_POST_FILES\""
+    echo "CAN_POST_AUTOIMPORT=\"$CAN_POST_AUTOIMPORT\""
+} >> /etc/environment
+chmod 600 /etc/environment
+
 ################
 # CRON OPTIONS #
 ################
