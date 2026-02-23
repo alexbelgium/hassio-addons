@@ -168,7 +168,7 @@ RUN \
     \
     # Handle Nginx configuration
     if [ -f /etc/nginx/nginx.conf ]; then \
-        awk '/http \{/{print; print "map $http_user_agent $dontlog {\n  default 0;\n  \"~*HealthCheck\" 1;\n}\naccess_log /var/log/nginx/access.log combined if=$dontlog;"; next}1' /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.new && \
+        awk '/http \{/{print; print "map $http_user_agent $loggable {\n  default 1;\n  \"~*HealthCheck\" 0;\n}\naccess_log /var/log/nginx/access.log combined if=$loggable;"; next}1' /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.new && \
         mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf; \
     fi
 
