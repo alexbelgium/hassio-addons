@@ -110,4 +110,4 @@ schema:
 slug: filebrowser_quantum
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.1.2"
+version: "1.1.3"
