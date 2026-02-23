@@ -21,16 +21,16 @@ Documentation: [manyfold.app/get-started](https://manyfold.app/get-started/)
 
 ## Installation
 
-1. In Home Assistant OS Add-on Store, open menu (`...`) -> `Repositories`.
-2. Add the Git repository URL for this add-on repository root (the repo includes `repository.yaml` and `manyfold/`).
-3. Refresh Add-on Store and install **Manyfold**.
-4. Configure options (defaults are safe for first run):
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+2. Refresh Add-on Store and install **Manyfold**.
+3. Configure options (defaults are safe for first run):
    - `library_path`: `/share/manyfold/models`
    - `secret_key_base`: leave blank to auto-generate
    - `puid` / `pgid`: set to a non-root UID/GID (see "Fix root warning (PUID/PGID)" below)
    - optionally tune worker/thread and upload limits in "Small server tuning" below
-5. Start the add-on.
-6. Open `http://<HA_IP>:3214`.
+4. Start the add-on.
+5. Open `http://<HA_IP>:3214`.
 
 Before first start, ensure your library folder exists on the host:
 
