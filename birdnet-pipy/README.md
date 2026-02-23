@@ -7,6 +7,14 @@ BirdNET-PiPy is a self-hosted system that uses the BirdNET deep-learning model t
 - Upstream project: https://github.com/Suncuss/BirdNET-PiPy
 - This add-on runs the BirdNET-PiPy backend services, Icecast audio stream, and Vue.js frontend in a single container.
 
+## Installation
+
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+1. Install this add-on.
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+
 ## Configuration
 
 Install, then start the add-on a first time. Open the Web UI from Home Assistant (Ingress) or directly at `http://<host>:8011` (or the port you configure).

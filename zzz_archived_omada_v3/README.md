@@ -27,6 +27,14 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_archived_omada_v3/stats.png)
 
+## Installation
+
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+1. Install this add-on.
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+
 ## ⚠️ Obsolete Addon Notice
 
 **This legacy addon (v3) is obsolete and no longer actively maintained.**
