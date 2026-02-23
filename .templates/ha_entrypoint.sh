@@ -151,6 +151,9 @@ if [ -z "$shebang" ]; then
   exit 1
 fi
 
+# Make s6 contenv if needed
+mkdir -p /run/s6/container_environment
+
 ####################
 # Starting scripts #
 ####################
