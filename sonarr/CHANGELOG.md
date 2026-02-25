@@ -1,4 +1,7 @@
 
+## 4.0.16.2946-3 (2026-02-25)
+- Symlink system ffprobe to /app/sonarr/bin/ where Sonarr expects it (fixes https://github.com/alexbelgium/hassio-addons/issues/2451)
+
 ## 4.0.16.2946-2 (2026-02-06)
 - Add ffmpeg to provide ffprobe for runtime detection (fixes https://github.com/alexbelgium/hassio-addons/issues/2451)
 
