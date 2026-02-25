@@ -83,7 +83,21 @@ if ! command -v bashio::addon.version >/dev/null 2>&1; then
   done
 fi
 
-bashio::addon.version
+# Try regular bashio, fallback to standalone if unavailable or fails
+set +e
+_bv="$(bashio::addon.version 2>/dev/null)"
+_rc=$?
+set -e
+
+if [ "$_rc" -ne 0 ] || [ -z "$_bv" ] || [ "$_bv" = "null" ]; then
+  if [ -f /usr/local/lib/bashio-standalone.sh ]; then
+    # shellcheck disable=SC1091
+    . /usr/local/lib/bashio-standalone.sh
+    _bv="$(bashio::addon.version)"
+  fi
+fi
+
+echo "$_bv"
 '
 
 validate_shebang() {
