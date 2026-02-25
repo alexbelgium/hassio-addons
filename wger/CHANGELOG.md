@@ -1,3 +1,5 @@
+## 2.5-dev-2 (25-02-2026)
+- Minor bugs fixed
 
 ## 2.5-dev (2026-01-21)
 - Update to latest version from wger/server
