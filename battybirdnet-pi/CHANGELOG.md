@@ -1,3 +1,5 @@
+## 2026.02.25-2 (25-02-2026)
+- Minor bugs fixed
 ## 2026.02.25 (25-02-2026)
 - Fix FLAC for birdweather
 - Implement max species to save disk space
