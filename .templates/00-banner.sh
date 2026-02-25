@@ -7,12 +7,15 @@ set -e
 # ======================================================================
 
 if ! bashio::supervisor.ping 2>/dev/null; then
+    # Source standalone bashio first to provide function definitions
+    if [ -f /usr/local/lib/bashio-standalone.sh ]; then
+        source /usr/local/lib/bashio-standalone.sh
+    fi
     bashio::log.blue '-----------------------------------------------------------'
     bashio::log.blue "Starting addon in standalone mode (no Supervisor)"
     bashio::log.blue "Version : ${BUILD_VERSION:-1.0}"
     bashio::log.blue "Config source: ENV + /data/options.json"
     bashio::log.blue '-----------------------------------------------------------'
-    source /usr/local/lib/bashio-standalone.sh
     cp -rf /usr/local/lib/bashio-standalone.sh /usr/bin/bashio
     grep -rlZ "^#!.*bashio" /etc |
     while IFS= read -r -d '' f; do

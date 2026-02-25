@@ -64,7 +64,20 @@ if ! command -v bashio::addon.version >/dev/null 2>&1; then
   done
 fi
 
-bashio::addon.version
+# Try regular bashio, fallback to standalone if unavailable or fails
+set +e
+_bv="$(bashio::addon.version 2>/dev/null)"
+_rc=$?
+set -e
+
+if [ "$_rc" -ne 0 ] || [ -z "$_bv" ] || [ "$_bv" = "null" ]; then
+  if [ -f /usr/local/lib/bashio-standalone.sh ]; then
+    . /usr/local/lib/bashio-standalone.sh
+    _bv="$(bashio::addon.version)"
+  fi
+fi
+
+echo "$_bv"
 '
 
 validate_shebang() {
@@ -133,7 +146,7 @@ fi
 sed -i "1s|^.*|#!$shebang|" "$0"
 
 if ! command -v bashio::addon.version >/dev/null 2>&1; then
-  for f in /usr/lib/bashio/bashio.sh /usr/lib/bashio/lib.sh /usr/src/bashio/bashio.sh /usr/local/lib/bashio/bashio.sh; do
+  for f in /usr/lib/bashio/bashio.sh /usr/lib/bashio/lib.sh /usr/src/bashio/bashio.sh /usr/local/lib/bashio/bashio.sh /usr/local/lib/bashio-standalone.sh; do
     if [ -f "$f" ]; then
       # shellcheck disable=SC1090
       . "$f"
