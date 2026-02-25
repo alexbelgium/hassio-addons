@@ -67,6 +67,10 @@ ENV PACKAGES="sudo nginx"
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" || true && rm /ha_autoapps.sh
 
+# Ensure sudoers entry exists after sudo package installation
+# (installing sudo may overwrite /etc/sudoers with its default conffile)
+RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
 ################
 # 4 Entrypoint #
 ################
