@@ -1,3 +1,5 @@
+## 5.0.0b5-2 (26-02-2026)
+- Minor bugs fixed
 
 ## 5.0.0b5 (2025-12-27)
 - Update to latest version from monicahq/monica (changelog : https://github.com/monicahq/monica/releases)
