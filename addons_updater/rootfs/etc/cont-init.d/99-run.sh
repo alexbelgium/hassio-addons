@@ -319,6 +319,12 @@ for f in */; do
         LASTVERSION2=${LASTVERSION//+/-}
         CURRENT2=${CURRENT//+/-}
 
+        # Skip if current or last version is empty (would corrupt files by replacing all "" occurrences)
+        if [ "${CURRENT}" = '""' ] || [ "${LASTVERSION}" = '""' ]; then
+            bashio::log.warning "... $SLUG : skipping update due to empty version string (current=${CURRENT}, latest=${LASTVERSION})"
+            continue
+        fi
+
         # Update if needed
         if [ "${CURRENT2}" != "${LASTVERSION2}" ]; then
             LOGINFO="... $SLUG : update from ${CURRENT} to ${LASTVERSION}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
