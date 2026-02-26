@@ -15,9 +15,11 @@ ln -sf /config "/home/node/.signalk"
 chown -R "$USER:$USER" /config
 
 # Set permissions
+# Use sed instead of usermod/groupmod to avoid hangs in container environments
+# (usermod can block indefinitely due to lock contention, NSS, or PAM issues)
 echo "... setting permissions for node user"
-usermod -o -u 0 node
-groupmod -o -g 0 node
+sed -i 's/^\(node:[^:]*:\)[0-9]*:[0-9]*/\10:0/' /etc/passwd
+sed -i 's/^\(node:[^:]*:\)[0-9]*/\10/' /etc/group
 
 # Ensure 600 for SSL files
 echo "... specifying security files permissions"
