@@ -131,5 +131,5 @@ services:
 slug: photoprism
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "ubuntu-2025-11-30-3"
+version: "ubuntu-2025-11-30-4"
 video: true
