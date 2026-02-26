@@ -60,6 +60,9 @@ environment:
   PGID: "0"
   PUID: "0"
 image: ghcr.io/alexbelgium/birdnet-pipy-{arch}
+ingress: true
+ingress_port: 0
+ingress_stream: true
 init: false
 map:
   - addon_config:rw
