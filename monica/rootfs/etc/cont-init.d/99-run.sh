@@ -62,7 +62,7 @@ case "$database" in
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
         # Create database
-        mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
+        mysql --skip-ssl --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
 
         ;;
 
@@ -86,7 +86,7 @@ case "$database" in
         fi
 
         # Create database
-        mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
+        mysql --skip-ssl --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
 
         ;;
 
