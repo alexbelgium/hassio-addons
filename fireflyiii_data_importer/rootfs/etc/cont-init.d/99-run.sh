@@ -8,6 +8,7 @@ CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 # CONFIG IMPORT #
 #################
 
+JSON_CONFIGURATION_DIR=""
 if [ "$(ls -A "$CONFIGSOURCE/configurations")" ]; then
     bashio::log.info "Configurations were found in $CONFIGSOURCE/configurations, they will be loaded."
     JSON_CONFIGURATION_DIR="$CONFIGSOURCE/configurations"
