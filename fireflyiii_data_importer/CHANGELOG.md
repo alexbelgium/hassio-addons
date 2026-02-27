@@ -1,4 +1,7 @@
 
+## 2.1.1-3 (2026-02-27)
+- Fix boot failure due to unbound JSON_CONFIGURATION_DIR variable (https://github.com/alexbelgium/hassio-addons/issues/1852)
+
 ## 2.1.1-2 (2026-02-23)
 - Fix cron auto-import no longer triggering after env changes (https://github.com/alexbelgium/hassio-addons/issues/1839)
 - Fix health check log spam in nginx
