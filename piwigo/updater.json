@@ -1,8 +1,8 @@
 {
-  "last_update": "03-01-2026",
+  "last_update": "2026-02-28",
   "repository": "alexbelgium/hassio-addons",
   "slug": "piwigo",
   "source": "github",
   "upstream_repo": "linuxserver/docker-piwigo",
-  "upstream_version": "16.2.0"
+  "upstream_version": "16.3.0"
 }
