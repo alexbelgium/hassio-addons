@@ -1,4 +1,7 @@
 
+## v3.1.0 (2026-02-28)
+- Update to latest version from Fallenbagel/jellyseerr (changelog : https://github.com/Fallenbagel/jellyseerr/releases)
+
 ## v3.0.1 (2026-02-21)
 - Update to latest version from Fallenbagel/jellyseerr (changelog : https://github.com/Fallenbagel/jellyseerr/releases)
 ## v2.7.3-archived (2026-02-19)
