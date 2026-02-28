@@ -34,4 +34,4 @@ schema:
 slug: changedetection.io
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/changedetection.io
-version: "0.53.7"
+version: "0.54.2"
