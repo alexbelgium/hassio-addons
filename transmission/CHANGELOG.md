@@ -1,3 +1,6 @@
+
+## 4.1.1 (2026-02-28)
+- Update to latest version from linuxserver/docker-transmission (changelog : https://github.com/linuxserver/docker-transmission/releases)
 ## 4.1.0-2 (31-01-2026)
 - Minor bugs fixed
 
