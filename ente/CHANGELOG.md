@@ -1,4 +1,7 @@
 
+## 1.3.16 (2026-02-28)
+- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
+
 ## 1.3.15 (2026-02-23)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
 
