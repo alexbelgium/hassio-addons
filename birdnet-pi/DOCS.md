@@ -275,19 +275,15 @@ sudo nano /boot/firmware/config.txt
 Paste in:
 
 ```ini
-# Enable audio and USB optimizations
 dtparam=audio=off          # Disable the default onboard audio to prevent conflicts
 dtoverlay=disable-bt        # Disable onboard Bluetooth to reduce USB bandwidth usage
 dtoverlay=disable-wifi      # Disable onboard wifi
-# Limit Ethernet to 100 Mbps (disable Gigabit Ethernet)
-dtparam=eth_max_speed=100
-# USB optimizations
-dwc_otg.fiq_fix_enable=1    # Enable FIQ (Fast Interrupt) handling for improved USB performance
-max_usb_current=1           # Increase the available USB current (required if Scarlett is powered over USB)
-# Additional audio settings (for low-latency operation)
-avoid_pwm_pll=1             # Use a more stable PLL for the audio clock
-# Optional: HDMI and other settings can be turned off if not needed
-hdmi_blanking=1             # Disable HDMI (save power and reduce interference)
+
+start_x=0
+gpu_mem=16
+camera_auto_detect=0
+display_auto_detect=0
+hdmi_blanking=2             # Disable HDMI (save power and reduce interference)
 ```
 
 - **Disable useless services**
