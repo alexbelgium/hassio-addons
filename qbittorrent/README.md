@@ -73,12 +73,12 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `cifspassword` | str | | SMB password for network shares |
 | `cifsdomain` | str | | SMB domain for network shares |
 | `openvpn_enabled` | bool | `false` | Enable OpenVPN connection |
-| `openvpn_config` | str | | OpenVPN config file name (in `/config/openvpn/`) |
+| `openvpn_config` | str | | OpenVPN config file name (in `/addon_configs/db21ed7f_qbittorrent/openvpn/`) |
 | `openvpn_username` | str | | OpenVPN username |
 | `openvpn_password` | str | | OpenVPN password |
 | `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
 | `wireguard_enabled` | bool | `false` | Enable WireGuard tunnel |
-| `wireguard_config` | str | _(empty)_ | WireGuard config file name only (for example `ABC.conf`, stored in `/config/wireguard/` inside the add-on) |
+| `wireguard_config` | str | _(empty)_ | WireGuard config file name only (for example `ABC.conf`, stored in `/addon_configs/db21ed7f_qbittorrent/wireguard/` inside the add-on) |
 | `qbit_manage` | bool | `false` | Enable qBit Manage integration |
 | `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
 | `silent` | bool | `false` | Suppress debug messages |
