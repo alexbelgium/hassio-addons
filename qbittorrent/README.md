@@ -78,14 +78,15 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `openvpn_password` | str | | OpenVPN password |
 | `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
 | `wireguard_enabled` | bool | `false` | Enable WireGuard tunnel |
-| `wireguard_config` | str | _(empty)_ | WireGuard config file name (in `/config/wireguard/`) |
+| `wireguard_config` | str | _(empty)_ | WireGuard config file name only (for example `ABC.conf`, stored in `/config/wireguard/` inside the add-on) |
 | `qbit_manage` | bool | `false` | Enable qBit Manage integration |
 | `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
 | `silent` | bool | `false` | Suppress debug messages |
 
 ### WireGuard Setup
 
-WireGuard configuration files must be stored in `/config/wireguard`. If several `.conf` files are present, set `wireguard_config` to the file name you want to use (for example `wg0.conf`). Expose UDP port `51820` in the add-on options and forward it from your router only when your tunnel expects inbound peers (for example, site-to-site setups). Outbound-only commercial VPN providers usually do not require a mapped port. The runtime configuration now preserves both IPv4 and IPv6 entries, so you can use dual-stack WireGuard peers when your endpoint supports them.
+WireGuard configuration files must be stored in `/config/wireguard` **inside the add-on container** (on Home Assistant OS this is the add-on config share, usually `/addon_configs/<addon_slug>/wireguard/`, for example `/addon_configs/db21ed7f_qbittorrent/wireguard/`).
+Set `wireguard_config` to the **file name only** (for example `ABC.conf`, not a full path). If several `.conf` files are present, set `wireguard_config` to the file name you want to use (for example `wg0.conf`). Expose UDP port `51820` in the add-on options and forward it from your router only when your tunnel expects inbound peers (for example, site-to-site setups). Outbound-only commercial VPN providers usually do not require a mapped port. The runtime configuration now preserves both IPv4 and IPv6 entries, so you can use dual-stack WireGuard peers when your endpoint supports them.
 
 ### Example Configuration
 
@@ -185,7 +186,7 @@ Delete your nova3 folder in /config and restart qbittorrent
   <summary>### WireGuard connection fails</summary>
 
 - If your deployment expects inbound peers, verify that the UDP port exposed in the add-on options maps 51820/udp and is forwarded by your router. Skip this step for outbound-only commercial VPN providers.
-- Confirm that the selected configuration file in `/config/wireguard` matches the `wireguard_config` option (or that only one `.conf` file is present).
+- Confirm that the selected configuration file in `/config/wireguard` matches the `wireguard_config` option (filename only, for example `ABC.conf`, or leave empty when only one `.conf` file is present).
 - Check the add-on logs for the detailed `wg-quick` error message printed by the startup routine.
 - Hosts missing the iptables `comment` kernel module are automatically retried without comment matches and, when available, using the legacy iptables backend. Inspect the log for messages about these fallbacks if you see iptables-restore errors.
 - Dual-stack WireGuard peers are supported. If you see ip6tables-restore errors, confirm that your host provides IPv6 firewall support or adjust your configuration to match your environment.
@@ -268,5 +269,4 @@ Create an issue on github, or ask on the [home assistant thread](https://communi
 ---
 
 ![illustration](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/qbittorrent/illustration.png)
-
 
