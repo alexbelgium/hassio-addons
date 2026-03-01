@@ -102,7 +102,8 @@ schema:
   GRAMPSWEB_BASE_URL: str?
   GRAMPSWEB_EMAIL_HOST: str?
   GRAMPSWEB_EMAIL_PORT: int?
-  GRAMPSWEB_EMAIL_USE_TLS: bool?
+  GRAMPSWEB_EMAIL_USE_SSL: bool?
+  GRAMPSWEB_EMAIL_USE_STARTTLS: bool?
   GRAMPSWEB_EMAIL_HOST_USER: str?
   GRAMPSWEB_EMAIL_HOST_PASSWORD: password?
   GRAMPSWEB_DEFAULT_FROM_EMAIL: email?
@@ -114,5 +115,5 @@ services:
 slug: grampsweb
 tmpfs: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/grampsweb
-version: "26.2.0"
+version: "26.2.0-1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:5001]"

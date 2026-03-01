@@ -68,7 +68,8 @@ Webui can be found at <http://homeassistant:5000>.
 |--------|------|-------------|
 | `GRAMPSWEB_EMAIL_HOST` | str | SMTP server hostname |
 | `GRAMPSWEB_EMAIL_PORT` | int | SMTP server port |
-| `GRAMPSWEB_EMAIL_USE_TLS` | bool | Use TLS encryption |
+| `GRAMPSWEB_EMAIL_USE_SSL` | bool | Use SSL encryption (for port 465) |
+| `GRAMPSWEB_EMAIL_USE_STARTTLS` | bool | Use STARTTLS encryption (for port 587) |
 | `GRAMPSWEB_EMAIL_HOST_USER` | str | SMTP username |
 | `GRAMPSWEB_EMAIL_HOST_PASSWORD` | str | SMTP password |
 | `GRAMPSWEB_DEFAULT_FROM_EMAIL` | str | Default sender email address |
@@ -85,7 +86,7 @@ certfile: "fullchain.pem"
 keyfile: "privkey.pem"
 GRAMPSWEB_EMAIL_HOST: "smtp.gmail.com"
 GRAMPSWEB_EMAIL_PORT: 587
-GRAMPSWEB_EMAIL_USE_TLS: true
+GRAMPSWEB_EMAIL_USE_STARTTLS: true
 GRAMPSWEB_EMAIL_HOST_USER: "your-email@gmail.com"
 GRAMPSWEB_EMAIL_HOST_PASSWORD: "your-app-password"
 GRAMPSWEB_DEFAULT_FROM_EMAIL: "gramps@example.com"
