@@ -1,4 +1,7 @@
 
+## "26.2.0-1" (2026-03-01)
+- Replace deprecated GRAMPSWEB_EMAIL_USE_TLS with GRAMPSWEB_EMAIL_USE_SSL and GRAMPSWEB_EMAIL_USE_STARTTLS
+
 ## 26.2.0 (2026-02-14)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
 
