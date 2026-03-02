@@ -1,3 +1,6 @@
+
+## 2.59.03 (2026-03-02)
+- Update to latest version from haveagitgat/tdarr
 ## 2.58.02-2 (26-02-2026)
 - Minor bugs fixed
 
