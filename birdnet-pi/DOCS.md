@@ -286,6 +286,18 @@ display_auto_detect=0
 hdmi_blanking=2             # Disable HDMI (save power and reduce interference)
 ```
 
+- **Optimize cmdline.txt**
+
+```bash
+sudo nano /boot/firmware/cmdline.txt
+```
+
+Paste in:
+
+```ini
+console=serial0,115200 console=tty1 root=PARTUUID=2f0ecb16-02 rootfstype=ext4 fsck.repair=yes rootwait cfg80211.ieee80211_regdom=FI dwc_otg.fiq_enable=0 dwc_otg.fiq_split_enable=0 dwc_otg.fiq_fsm_enable=0 dwc_otg.speed=1 dwc_otg.lpm_enable=0
+```
+
 - **Disable useless services**
 
 ```bash
