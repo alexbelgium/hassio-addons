@@ -275,14 +275,22 @@ sudo nano /boot/firmware/config.txt
 Paste in:
 
 ```ini
-dtparam=audio=off          # Disable the default onboard audio to prevent conflicts
-dtoverlay=disable-bt        # Disable onboard Bluetooth to reduce USB bandwidth usage
-dtoverlay=disable-wifi      # Disable onboard wifi
+# ── Audio ──────────────────────────────────────────────────────
+dtparam=audio=off
 
-start_x=0
+# ── Disable radios (RF + background jitter) ─────────────────────
+dtoverlay=disable-wifi
+dtoverlay=disable-bt
+
+# ── Headless / minimal firmware probing ─────────────────────────
 gpu_mem=16
+start_x=0
 camera_auto_detect=0
 display_auto_detect=0
+disable_splash=1
+
+# ── Optional: only effective on newer Pi4B revs / Pi 400 ────────
+arm_boost=1
 hdmi_blanking=2             # Disable HDMI (save power and reduce interference)
 ```
 
@@ -295,7 +303,7 @@ sudo nano /boot/firmware/cmdline.txt
 Paste in:
 
 ```ini
-console=serial0,115200 console=tty1 root=PARTUUID=2f0ecb16-02 rootfstype=ext4 fsck.repair=yes rootwait cfg80211.ieee80211_regdom=FI dwc_otg.fiq_enable=0 dwc_otg.fiq_split_enable=0 dwc_otg.fiq_fsm_enable=0 dwc_otg.lpm_enable=0
+console=serial0,115200 console=tty1 root=PARTUUID=2f0ecb16-02 rootfstype=ext4 fsck.repair=yes rootwait cfg80211.ieee80211_regdom=FI dwc_otg.fiq_enable=0 dwc_otg.fiq_split_enable=0 dwc_otg.fiq_fsm_enable=0 dwc_otg.lpm_enable=0 usbcore.autosuspend=-1 snd_usb_audio.nrpacks=1 threadirqs
 ```
 
 - **Disable useless services**
