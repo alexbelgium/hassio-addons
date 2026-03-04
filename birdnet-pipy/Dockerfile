@@ -18,11 +18,17 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM node:20-alpine AS frontend-builder
 
+ARG BUILD_VERSION
+ARG BIRDNET_PIPY_REPOSITORY=Suncuss/BirdNET-PiPy
 ARG BIRDNET_PIPY_VERSION=main
 
 RUN apk add --no-cache curl tar
-RUN mkdir -p /src \
-    && curl -fsSL "https://codeload.github.com/Suncuss/BirdNET-PiPy/tar.gz/refs/heads/${BIRDNET_PIPY_VERSION}" \
+# Resolve branch to commit SHA for traceability, then download source
+RUN COMMIT=$(curl -fsSL -H "Accept: application/vnd.github.sha" \
+        "https://api.github.com/repos/${BIRDNET_PIPY_REPOSITORY}/commits/${BIRDNET_PIPY_VERSION}") \
+    && echo "${COMMIT}" > /tmp/birdnet_pipy_source_commit.txt \
+    && mkdir -p /src \
+    && curl -fsSL "https://codeload.github.com/${BIRDNET_PIPY_REPOSITORY}/tar.gz/${COMMIT}" \
         | tar -xz -C /src --strip-components=1
 
 WORKDIR /src/frontend
@@ -80,6 +86,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 
 RUN mkdir -p /app
 COPY --from=frontend-builder /src/backend/ /app/
+COPY --from=frontend-builder /tmp/birdnet_pipy_source_commit.txt /app/birdnet_pipy_source_commit.txt
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv "${VIRTUAL_ENV}"
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
