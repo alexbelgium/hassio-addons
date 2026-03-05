@@ -2,6 +2,11 @@
 - Minor bugs fixed
 # Changelog
 
+## 0.133.1
+
+- Update to upstream Manyfold 0.133.1.
+- Restore `image` tag in config.yaml.
+
 ## 1.0.3
 
 - Added the add-on to this repository under the official add-on folder/slug name `manyfold`.
