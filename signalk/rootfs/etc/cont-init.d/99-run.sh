@@ -16,8 +16,24 @@ chown -R "$USER:$USER" /config
 
 # Set permissions
 echo "... setting permissions for node user"
-usermod -o -u 0 node
-groupmod -o -g 0 node
+if id "$USER" &>/dev/null; then
+    current_uid="$(id -u "$USER")"
+    current_gid="$(id -g "$USER")"
+
+    if [[ "$current_uid" != "0" ]]; then
+        if ! usermod -o -u 0 "$USER"; then
+            bashio::log.warning "Failed to set UID 0 for $USER; continuing with UID $current_uid"
+        fi
+    fi
+
+    if [[ "$current_gid" != "0" ]]; then
+        if ! groupmod -o -g 0 "$USER"; then
+            bashio::log.warning "Failed to set GID 0 for $USER; continuing with GID $current_gid"
+        fi
+    fi
+else
+    bashio::log.warning "User $USER does not exist; continuing without UID/GID remap"
+fi
 
 # Ensure 600 for SSL files
 echo "... specifying security files permissions"

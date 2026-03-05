@@ -1,3 +1,6 @@
+## 2.22.1-1 (2026-02-25)
+- Fix startup hang by handling node UID/GID remap failures gracefully in init script
+
 
 ## 2.22.1 (2026-02-21)
 - Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
