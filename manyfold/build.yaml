@@ -1,4 +1,4 @@
 ---
 build_from:
-  aarch64: ghcr.io/manyfold3d/manyfold-solo:latest
-  amd64: ghcr.io/manyfold3d/manyfold-solo:latest
+  aarch64: ghcr.io/manyfold3d/manyfold-solo:0.133.1
+  amd64: ghcr.io/manyfold3d/manyfold-solo:0.133.1

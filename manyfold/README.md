@@ -52,7 +52,7 @@ Local development alternative on the HA host:
 
 ## Options
 
-- `secret_key_base`: App secret. Auto-generated and persisted at `/config/secret_key_base` when empty.
+- `secret_key_base`: App secret used by Rails to sign/encrypt sessions and tokens. See [Secret Key Base](#secret-key-base) below.
 - `puid` / `pgid`: Ownership applied to writable mapped directories (`/config` paths).
 - `multiuser`: Toggle Manyfold multiuser mode.
 - `library_path`: Scanned/indexed path.
@@ -125,6 +125,40 @@ After changing values:
 - Startup fails if `library_path` or `thumbnails_path` resolve outside mapped storage roots.
 - `thumbnails_path` must resolve under `/config` to guarantee persistence.
 - Startup fails if `library_path` is not readable.
+
+## Secret Key Base
+
+`secret_key_base` is a required Rails secret used to sign and encrypt user sessions and tokens. Changing it will invalidate all active sessions and log everyone out.
+
+**How it works:**
+
+| Scenario | Behaviour |
+|----------|-----------|
+| **New install**, option left blank | A random secret is auto-generated and saved to `/config/secret_key_base` |
+| **Addon update**, option still blank | The previously saved `/config/secret_key_base` is reused — no data loss |
+| **Option manually set** | The value from the addon options is used and saved to `/config/secret_key_base` |
+| **Option was set, then cleared on update** | A new secret is generated — **sessions will be invalidated** |
+
+**Recommendation:** Leave `secret_key_base` blank on first install and never change it afterwards. The auto-generated value persists across updates in `/config/secret_key_base`, which is included in Home Assistant backups.
+
+## Migrating from a previous installation
+
+If you are reinstalling this addon or moving from another Manyfold addon (e.g. a different slug/repository), your data is stored in the previous addon's config directory on the HA host. To migrate without losing data:
+
+1. SSH into your Home Assistant host.
+2. Copy the database and secret to the new addon config directory:
+
+```bash
+cp /addon_configs/<old_slug>/manyfold.sqlite3 /addon_configs/<new_slug>/manyfold.sqlite3
+cp /addon_configs/<old_slug>/secret_key_base /addon_configs/<new_slug>/secret_key_base
+chown 1000:1000 /addon_configs/<new_slug>/manyfold.sqlite3 /addon_configs/<new_slug>/secret_key_base
+chown 1000:1000 /addon_configs/<new_slug>/
+chmod 600 /addon_configs/<new_slug>/secret_key_base
+```
+
+Replace `<old_slug>` and `<new_slug>` with the actual directory names (e.g. `db21ed7f_manyfold` and `088d77ac_manyfold_solo`). List them with `ls /addon_configs/`.
+
+3. Start the new addon — it will pick up the existing database and secret automatically.
 
 ## Notes
 
