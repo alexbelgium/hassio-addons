@@ -1,0 +1,6 @@
+{
+    "build_from": {
+        "aarch64": "ghcr.io/maintainerr/maintainerr:latest",
+        "amd64": "ghcr.io/maintainerr/maintainerr:latest"
+    }
+}
