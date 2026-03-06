@@ -3,10 +3,11 @@ name: Issue add-on submitter ping
 
 on:
   issues:
-    types: [opened, edited, reopened]
+    types: [opened, reopened]
 
 permissions:
   issues: write
+  contents: read
 
 jobs:
   ping_submitter:
