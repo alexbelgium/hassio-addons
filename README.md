@@ -32,6 +32,8 @@ _Thanks to all contributors !_
 
 [![contributors](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/graphs/contributors)
 
+Community-submitted add-ons (and who to ping when related issues are opened): [COMMUNITY_SUBMITTED_ADDONS.md](COMMUNITY_SUBMITTED_ADDONS.md)
+
 Stargazers locations :
 
 ![map](https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/.github/stargazer_map.png)
