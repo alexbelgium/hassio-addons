@@ -8,8 +8,18 @@ When an issue mentions one of these add-ons (in the title or body), a GitHub Act
 
 | Add-on folder | Initial submitter |
 | --- | --- |
-| `whatsapper` | [@baldarn](https://github.com/baldarn) |
+| `emby` | [@petersendev](https://github.com/petersendev) |
+| `gitea` | [@baldarn](https://github.com/baldarn) |
+| `kometa` | [@akrigator](https://github.com/akrigator) |
+| `librespeed` | [@el](https://github.com/el) |
+| `manyfold` | [@ToledoEM](https://github.com/ToledoEM) |
+| `navidrome` | [@baldarn](https://github.com/baldarn) |
+| `netalertx` | [@jokob-sk](https://github.com/jokob-sk) |
+| `openproject` | [@baldarn](https://github.com/baldarn) |
+| `resiliosync` | [@tyjtyj](https://github.com/tyjtyj) |
 | `spotweb` | [@woutercoppens](https://github.com/woutercoppens) |
+| `tor` | [@akrigator](https://github.com/akrigator) |
+| `whatsapper` | [@baldarn](https://github.com/baldarn) |
 
 ## How to update this list
 
