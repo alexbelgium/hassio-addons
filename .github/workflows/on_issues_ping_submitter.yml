@@ -34,7 +34,9 @@ jobs:
 
             if [[ "$TEXT_LOWER" == *"$addon"* ]]; then
               user="$(jq -r --arg addon "$addon" '.[$addon]' .github/addon_submitters.json)"
-              [ -z "$user" ] && continue
+              if [ -z "$user" ] || [ "$user" = "null" ]; then
+                continue
+              fi
 
               marker="<!-- addon-submitter-ping:${addon} -->"
               comments_url="https://api.github.com/repos/${REPO}/issues/${ISSUE_NUMBER}/comments"
