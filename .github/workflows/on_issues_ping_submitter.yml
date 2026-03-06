@@ -1,0 +1,52 @@
+---
+name: Issue add-on submitter ping
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  issues: write
+
+jobs:
+  ping_submitter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Ping mapped submitter when add-on is mentioned
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          TEXT="${ISSUE_TITLE} ${ISSUE_BODY}"
+          TEXT_LOWER="$(printf '%s' "$TEXT" | tr '[:upper:]' '[:lower:]')"
+
+          while IFS= read -r addon; do
+            [ -z "$addon" ] && continue
+
+            if [[ "$TEXT_LOWER" == *"$addon"* ]]; then
+              user="$(jq -r --arg addon "$addon" '.[$addon]' .github/addon_submitters.json)"
+              [ -z "$user" ] && continue
+
+              marker="<!-- addon-submitter-ping:${addon} -->"
+              comments_url="https://api.github.com/repos/${REPO}/issues/${ISSUE_NUMBER}/comments"
+
+              existing="$(curl -sS -H "Authorization: Bearer ${GITHUB_TOKEN}" -H 'Accept: application/vnd.github+json' "$comments_url" | jq -r --arg marker "$marker" '[ .[] | select(.body | contains($marker)) ] | length')"
+
+              if [ "$existing" -eq 0 ]; then
+                body=$(jq -cn --arg marker "$marker" --arg addon "$addon" --arg user "$user" '{body: ($marker + "\nHeads up @" + $user + ": this issue appears to mention `" + $addon + "`.")}')
+                curl -sS -X POST \
+                  -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+                  -H 'Accept: application/vnd.github+json' \
+                  "$comments_url" \
+                  -d "$body" > /dev/null
+              fi
+            fi
+          done < <(jq -r 'keys[]' .github/addon_submitters.json)
