@@ -1,18 +1,13 @@
 {
   "emby": "petersendev",
   "gitea": "baldarn",
-  "jackett": "petersendev",
-  "jellyfin": "petersendev",
   "kometa": "akrigator",
   "librespeed": "el",
   "manyfold": "ToledoEM",
   "navidrome": "baldarn",
   "netalertx": "jokob-sk",
-  "nzbget": "petersendev",
   "openproject": "baldarn",
-  "radarr": "petersendev",
   "resiliosync": "tyjtyj",
-  "sonarr": "petersendev",
   "spotweb": "woutercoppens",
   "tor": "akrigator",
   "whatsapper": "baldarn"
