@@ -71,7 +71,7 @@ ingress_stream: true
 init: false
 panel_icon: mdi:movie-search
 map:
-  - config:rw
+  - addon_config:rw
 name: Maintainerr
 options:
   env_vars: []
