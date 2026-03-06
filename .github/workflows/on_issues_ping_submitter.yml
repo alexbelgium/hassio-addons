@@ -41,7 +41,8 @@ jobs:
               marker="<!-- addon-submitter-ping:${addon} -->"
               comments_url="https://api.github.com/repos/${REPO}/issues/${ISSUE_NUMBER}/comments"
 
-              existing="$(curl -sS -H "Authorization: Bearer ${GITHUB_TOKEN}" -H 'Accept: application/vnd.github+json' "$comments_url" | jq -r --arg marker "$marker" '[ .[] | select(.body | contains($marker)) ] | length')"
+              export GH_TOKEN="${GITHUB_TOKEN}"
+              existing="$(gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json comments --jq '[.comments[] | select(.body | contains($marker))] | length')"
 
               if [ "$existing" -eq 0 ]; then
                 body=$(jq -cn --arg marker "$marker" --arg addon "$addon" --arg user "$user" '{body: ($marker + "\nHeads up @" + $user + ": this issue appears to mention `" + $addon + "`.")}')
