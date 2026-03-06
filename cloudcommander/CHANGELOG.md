@@ -1,3 +1,5 @@
+## 19.6.8-3 (06-03-2026)
+- Minor bugs fixed
 
 ## 19.6.8 (2026-02-28)
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
