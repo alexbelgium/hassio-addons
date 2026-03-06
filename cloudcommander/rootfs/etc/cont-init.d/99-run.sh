@@ -92,7 +92,8 @@ else
     bashio::log.error "Cloud Commander binary not found in /usr/src/app/bin or PATH."
     exit 1
 fi
-"$CLOUDCMD_BIN" '"'"$DROPBOX_TOKEN""$CUSTOMOPTIONS"'"' &
+# shellcheck disable=SC2086
+"$CLOUDCMD_BIN" $DROPBOX_TOKEN $CUSTOMOPTIONS &
 bashio::net.wait_for 8000 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
