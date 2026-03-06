@@ -85,6 +85,9 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 # 4 Entrypoint #
 ################
 
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+RUN chmod 777 /ha_entrypoint.sh
+
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/usr/local/lib/bashio-standalone.sh"
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
