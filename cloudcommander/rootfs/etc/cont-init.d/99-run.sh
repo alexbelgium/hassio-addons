@@ -18,7 +18,10 @@ fi
 
 # Clean symlinks
 find /config -maxdepth 1 -type l -delete
-find /homeassistant/addons_config -maxdepth 1 -type l -delete || true
+if [ -d /homeassistant/addons_config ]; then
+    find /homeassistant/addons_config -maxdepth 1 -type l -delete
+fi
+
 # Remove erroneous folders
 if [ -d /homeassistant ]; then
     if [ -d /config/addons_config ]; then
@@ -29,10 +32,14 @@ if [ -d /homeassistant ]; then
     fi
 fi
 
-# Create symlinks
-find /addon_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*cloudcommander*" -exec ln -s {} /config/addons_config/ \;
-ln -s /homeassistant/addons_config /config || true
-ln -s /homeassistant/addons_autoscripts /config || true
+# Create symlinks with legacy folders
+if [ -d /homeassistant/addons_config ]; then
+    ln -s /homeassistant/addons_config /config
+    find /addon_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*cloudcommander*" -exec ln -s {} /config/addons_config/ \;
+fi
+if [ -d /homeassistant/addons_autoscripts ]; then
+    ln -s /homeassistant/addons_autoscripts /config
+fi
 
 #################
 # NGINX SETTING #
