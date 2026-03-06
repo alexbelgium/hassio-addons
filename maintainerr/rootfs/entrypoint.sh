@@ -26,10 +26,14 @@ fi
 # ─── Setup persistent data directory ─────────────────────────────────────────
 # /opt/data is a Docker VOLUME in the upstream image and cannot be removed.
 # Maintainerr supports the DATA_DIR env var to redirect data storage.
-DATA_DIR="/addon_configs/maintainerr"
+DATA_DIR="/config"
 echo "[Maintainerr] Setting up data directory: $DATA_DIR"
 mkdir -p "$DATA_DIR"
-chown -R node:node "$DATA_DIR"
+# Only chown on first run to avoid slow startup on large directories
+if [ ! -f "$DATA_DIR/.initialized" ]; then
+    chown -R node:node "$DATA_DIR"
+    touch "$DATA_DIR/.initialized"
+fi
 export DATA_DIR
 
 # ─── Start Maintainerr as unprivileged node user ─────────────────────────────

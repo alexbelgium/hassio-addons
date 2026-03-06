@@ -63,7 +63,8 @@ COPY --from=ha_tools /out/ /
 
 # Add rootfs
 COPY rootfs/ /
-RUN find /. -type f \( -name "*.sh" \) -print -exec chmod +x {} \;
+RUN chmod +x /entrypoint.sh \
+    && find /etc/cont-init.d /etc/cont-finish.d -type f -name "*.sh" -exec chmod +x {} \; 2>/dev/null || true
 
 # Install bashio standalone
 RUN BASHIO_VERSION="0.14.3" && \
