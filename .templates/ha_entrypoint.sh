@@ -217,12 +217,16 @@ run_one_script() {
     "$script" || _run_rc=$?
     if [ "$_run_rc" -eq 126 ] && [ -n "${BASHIO_LIB:-}" ]; then
       echo "Direct exec failed (rc=126, likely E2BIG), retrying via source in subshell..."
+      _run_rc=0
       (
         # shellcheck disable=SC1090
         . "$BASHIO_LIB" 2>/dev/null || true
         # shellcheck disable=SC1090
         . "$script"
-      ) || echo -e "\033[0;31mError\033[0m : $script exiting $?"
+      ) || _run_rc=$?
+      if [ "$_run_rc" -ne 0 ]; then
+        echo -e "\033[0;31mError\033[0m : $script exiting $_run_rc"
+      fi
     elif [ "$_run_rc" -ne 0 ]; then
       echo -e "\033[0;31mError\033[0m : $script exiting $_run_rc"
     fi
