@@ -71,13 +71,16 @@ _rc=$?
 set -e
 
 if [ "$_rc" -ne 0 ] || [ -z "$_bv" ] || [ "$_bv" = "null" ]; then
-  if [ -f /usr/local/lib/bashio-standalone.sh ]; then
-    . /usr/local/lib/bashio-standalone.sh
-    _bv="$(bashio::addon.version)"
-  fi
+  for _sf in /usr/local/lib/bashio-standalone.sh /.bashio-standalone.sh; do
+    if [ -f "$_sf" ]; then
+      . "$_sf"
+      _bv="$(bashio::addon.version 2>/dev/null || true)"
+      break
+    fi
+  done
 fi
 
-echo "$_bv"
+echo "${_bv:-PROBE_OK}"
 '
 
 validate_shebang() {
