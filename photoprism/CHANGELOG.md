@@ -1,3 +1,6 @@
+
+## ubuntu-2026-03-05 (2026-03-05)
+- Update to latest version from photoprism/photoprism
 ## ubuntu-2025-11-30-4 (26-02-2026)
 - Minor bugs fixed
 ## ubuntu-2025-11-30-3 (2026-01-10)
