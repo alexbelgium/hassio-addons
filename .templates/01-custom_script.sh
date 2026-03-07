@@ -58,13 +58,13 @@ if ! command -v bashio::addon.version >/dev/null 2>&1; then
     /usr/local/lib/bashio/bashio.sh
   do
     if [ -f "$f" ]; then
+      # shellcheck disable=SC1090
       . "$f"
       break
     fi
   done
 fi
 
-# Try regular bashio, fallback to standalone if unavailable or fails
 set +e
 _bv="$(bashio::addon.version 2>/dev/null)"
 _rc=$?
@@ -73,6 +73,7 @@ set -e
 if [ "$_rc" -ne 0 ] || [ -z "$_bv" ] || [ "$_bv" = "null" ]; then
   for _sf in /usr/local/lib/bashio-standalone.sh /.bashio-standalone.sh; do
     if [ -f "$_sf" ]; then
+      # shellcheck disable=SC1090
       . "$_sf"
       _bv="$(bashio::addon.version 2>/dev/null || true)"
       break
@@ -146,8 +147,6 @@ if [ -z "$shebang" ]; then
   exit 1
 fi
 
-sed -i "1s|^.*|#!$shebang|" "$0"
-
 if ! command -v bashio::addon.version >/dev/null 2>&1; then
   for f in /usr/lib/bashio/bashio.sh /usr/lib/bashio/lib.sh /usr/src/bashio/bashio.sh /usr/local/lib/bashio/bashio.sh /usr/local/lib/bashio-standalone.sh; do
     if [ -f "$f" ]; then
@@ -163,9 +162,9 @@ fi
 ##################
 
 # Exit if /config is not mounted or HA not used
-if [ ! -d /config ] || ! bashio::supervisor.ping 2> /dev/null; then
-    echo "..."
-    exit 0
+if [ ! -d /config ] || ! bashio::supervisor.ping 2>/dev/null; then
+  echo "..."
+  exit 0
 fi
 
 # Define slug
@@ -174,13 +173,11 @@ slug="${slug#*_}"
 
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
-    # New config location
-    CONFIGLOCATION="/config"
-    CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/$slug.sh"
+  CONFIGLOCATION="/config"
+  CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/$slug.sh"
 else
-    # Legacy config location
-    CONFIGLOCATION="/config/addons_autoscripts"
-    CONFIGFILEBROWSER="/homeassistant/addons_autoscripts/$slug.sh"
+  CONFIGLOCATION="/config/addons_autoscripts"
+  CONFIGFILEBROWSER="/homeassistant/addons_autoscripts/$slug.sh"
 fi
 
 # Default location
@@ -192,26 +189,28 @@ bashio::log.green "Execute $CONFIGFILEBROWSER if existing"
 
 # Download template if no script found and exit
 if [ ! -f "$CONFIGSOURCE" ]; then
-    TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/script.template"
-    curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE" || true
-    exit 0
+  TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/script.template"
+  curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE" || true
+  exit 0
 fi
 
 # Convert scripts to linux
-dos2unix "$CONFIGSOURCE" &> /dev/null || true
+dos2unix "$CONFIGSOURCE" >/dev/null 2>&1 || true
 chmod +x "$CONFIGSOURCE"
 
-sed -i "1s|^.*|#!$shebang|" "$CONFIGSOURCE"
+if grep -q 'bashio' "$CONFIGSOURCE"; then
+  sed -i "1s|^.*|#!$shebang|" "$CONFIGSOURCE"
+else
+  sed -i '1s|^.*|#!/bin/bash|' "$CONFIGSOURCE"
+fi
 
 # Check if there is actual commands
 while IFS= read -r line; do
-    # Remove leading and trailing whitespaces
-    line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+  line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 
-    # Check if line is not empty and does not start with #
-    if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
-        bashio::log.green "... script found, executing"
-        /."$CONFIGSOURCE"
-        break
-    fi
+  if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
+    bashio::log.green "... script found, executing"
+    "$CONFIGSOURCE"
+    break
+  fi
 done < "$CONFIGSOURCE"
