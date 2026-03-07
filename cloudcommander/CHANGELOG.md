@@ -1,4 +1,7 @@
 
+## 19.6.8-2 (2026-03-07)
+- Fix argument quoting in cloudcmd launch command
+
 ## 19.6.8 (2026-02-28)
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
