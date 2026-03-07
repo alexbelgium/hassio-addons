@@ -90,14 +90,17 @@ _rc=$?
 set -e
 
 if [ "$_rc" -ne 0 ] || [ -z "$_bv" ] || [ "$_bv" = "null" ]; then
-  if [ -f /usr/local/lib/bashio-standalone.sh ]; then
-    # shellcheck disable=SC1091
-    . /usr/local/lib/bashio-standalone.sh
-    _bv="$(bashio::addon.version)"
-  fi
+  for _sf in /usr/local/lib/bashio-standalone.sh /.bashio-standalone.sh; do
+    if [ -f "$_sf" ]; then
+      # shellcheck disable=SC1090
+      . "$_sf"
+      _bv="$(bashio::addon.version 2>/dev/null || true)"
+      break
+    fi
+  done
 fi
 
-echo "$_bv"
+echo "${_bv:-PROBE_OK}"
 '
 
 validate_shebang() {
@@ -165,6 +168,26 @@ if [ -z "$shebang" ]; then
   exit 1
 fi
 
+####################################
+# Bashio library for source fallback
+####################################
+
+BASHIO_LIB=""
+for f in /usr/lib/bashio/bashio.sh /usr/lib/bashio/lib.sh /usr/src/bashio/bashio.sh /usr/local/lib/bashio/bashio.sh; do
+  if [ -f "$f" ]; then
+    BASHIO_LIB="$f"
+    break
+  fi
+done
+if [ -z "$BASHIO_LIB" ]; then
+  for f in /usr/local/lib/bashio-standalone.sh /.bashio-standalone.sh; do
+    if [ -f "$f" ]; then
+      BASHIO_LIB="$f"
+      break
+    fi
+  done
+fi
+
 ####################
 # Starting scripts #
 ####################
@@ -193,7 +216,23 @@ run_one_script() {
     # shellcheck disable=SC1090
     source "$script" || echo -e "\033[0;31mError\033[0m : $script exiting $?"
   else
-    "$script" || echo -e "\033[0;31mError\033[0m : $script exiting $?"
+    _run_rc=0
+    "$script" || _run_rc=$?
+    if [ "$_run_rc" -eq 126 ] && [ -n "${BASHIO_LIB:-}" ]; then
+      echo "Direct exec failed (rc=126, likely E2BIG), retrying via source in subshell..."
+      _run_rc=0
+      (
+        # shellcheck disable=SC1090
+        . "$BASHIO_LIB" 2>/dev/null || true
+        # shellcheck disable=SC1090
+        . "$script"
+      ) || _run_rc=$?
+      if [ "$_run_rc" -ne 0 ]; then
+        echo -e "\033[0;31mError\033[0m : $script exiting $_run_rc"
+      fi
+    elif [ "$_run_rc" -ne 0 ]; then
+      echo -e "\033[0;31mError\033[0m : $script exiting $_run_rc"
+    fi
   fi
 
   sed -i '1a exit 0' "$script"
@@ -217,8 +256,19 @@ if $PID1; then
       restart_count=0
       max_restarts=5
       while true; do
-        "$runfile"
-        rc=$?
+        _svc_rc=0
+        "$runfile" || _svc_rc=$?
+        if [ "$_svc_rc" -eq 126 ] && [ -n "${BASHIO_LIB:-}" ]; then
+          echo "Direct exec of $runfile failed (rc=126, likely E2BIG), retrying via source..."
+          _svc_rc=0
+          (
+            # shellcheck disable=SC1090
+            . "$BASHIO_LIB" 2>/dev/null || true
+            # shellcheck disable=SC1090
+            . "$runfile"
+          ) || _svc_rc=$?
+        fi
+        rc=$_svc_rc
         if [ "$rc" -eq 0 ]; then
           echo "$runfile exited cleanly (exit 0), not restarting."
           break
