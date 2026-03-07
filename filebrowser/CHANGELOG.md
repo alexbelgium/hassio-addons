@@ -1,4 +1,7 @@
 
+## 2.61.2 (2026-03-07)
+- Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
+
 ## 2.61.0 (2026-02-28)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
 
