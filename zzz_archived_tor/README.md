@@ -1,4 +1,5 @@
-## &#9888; Open Request : [✨ [REQUEST] qBittorrent Gluetun (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1661) by [@xtian47](https://github.com/xtian47)
+## &#9888; Open Issue : [🐛 [CloudCommander] cloudcmd.mjs: No such file or directory (opened 2026-02-04)](https://github.com/alexbelgium/hassio-addons/issues/2444) by [@axlFThn](https://github.com/axlFThn)
+## &#9888; Open Issue : [🐛 [qBittorrent] Addon doesnt start after last update (5.1.4-8) (opened 2026-02-05)](https://github.com/alexbelgium/hassio-addons/issues/2449) by [@NecrumBlack](https://github.com/NecrumBlack)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
