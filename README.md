@@ -914,12 +914,6 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003;  [Tor with bridges](tor/) : Protect your privacy and access Home Assistant via Tor
-
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftor%2Fconfig.yaml)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-
 &#10003; ![image](https://api.iconify.design/mdi/transmission-tower.svg) [Transmission](transmission/) : Bittorrent client based on linuxserver image
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission%2Fconfig.yaml)
@@ -1072,6 +1066,12 @@ If you want to do add the repository manually, please follow the procedure highl
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_plex_meta_manager%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_plex_meta_manager%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+
+&#10003;  [zzz_archived - Tor with bridges](zzz_archived_tor/) : Protect your privacy and access Home Assistant via Tor
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_tor%2Fconfig.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
