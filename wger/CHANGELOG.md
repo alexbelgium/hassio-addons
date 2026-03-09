@@ -1,3 +1,6 @@
+## 2.5-dev-3 (09-03-2026)
+- Fix startup script database path rewrite by scanning `/home` for matching `settings.py` files and patching all matches.
+
 ## 2.5-dev-2 (25-02-2026)
 - Minor bugs fixed
 
