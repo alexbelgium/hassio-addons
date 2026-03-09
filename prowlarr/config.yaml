@@ -80,6 +80,7 @@ map:
   - media:rw
   - ssl
 name: Prowlarr NAS
+panel_icon: mdi:magnify
 options:
   env_vars: []
   PGID: 0
