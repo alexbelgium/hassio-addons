@@ -4,7 +4,15 @@
 # Change database location #
 ############################
 echo "... set database path"
-sed -i "s|/home/wger/db/database.sqlite|/data/database.sqlite|g" /home/wger/src/settings.py
+mapfile -t SETTINGS_FILES < <(grep -rl --include='settings.py' '/home/wger/db/database.sqlite' /home 2> /dev/null || true)
+
+if [ "${#SETTINGS_FILES[@]}" -gt 0 ]; then
+    for settings_file in "${SETTINGS_FILES[@]}"; do
+        sed -i "s|/home/wger/db/database.sqlite|/data/database.sqlite|g" "$settings_file"
+    done
+else
+    bashio::log.warning "Unable to find settings.py containing database path under /home, skipping rewrite"
+fi
 
 #####################
 # Adapt directories #
