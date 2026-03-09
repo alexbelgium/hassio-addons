@@ -761,7 +761,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003;  [Prowlarr NAS](prowlarr/) : Torrent Trackers and Usenet indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
+&#10003; ![image](https://api.iconify.design/mdi/magnify.svg) [Prowlarr NAS](prowlarr/) : Torrent Trackers and Usenet indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fprowlarr%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fprowlarr%2Fupdater.json)
