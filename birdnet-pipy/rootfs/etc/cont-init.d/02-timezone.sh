@@ -17,6 +17,7 @@ fi
 ln -sf "/usr/share/zoneinfo/${TZ_VALUE}" /etc/localtime
 echo "${TZ_VALUE}" > /etc/timezone
 export TZ="${TZ_VALUE}"
+sed -i "1a TZ=\"${TZ_VALUE}\"" /etc/services.d/*
 
 # Update s6 container environment so child processes inherit the timezone
 if [ -d /var/run/s6/container_environment ]; then
