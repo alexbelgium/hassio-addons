@@ -15,7 +15,7 @@
 ## Options
 
 ```yaml
-TZ: Etc/UTC # Timezone, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+TZ: Europe/Paris # Timezone, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 ICECAST_PASSWORD: "" # Optional: set a persistent password for the audio stream
 STREAM_BITRATE: 320k # Bitrate for the mp3 stream
 RECORDING_MODE: rtsp # pulseaudio | http_stream | rtsp
