@@ -1,10 +1,10 @@
 {
   "github_fulltag": "true",
-  "last_update": "2026-03-07",
+  "last_update": "2026-03-14",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "scrutiny",
   "source": "github",
   "upstream_repo": "Starosdev/scrutiny",
-  "upstream_version": "v1.41.0"
+  "upstream_version": "v1.46.2"
 }
