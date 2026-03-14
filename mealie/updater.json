@@ -1,11 +1,11 @@
 {
   "github_beta": "true",
   "github_fulltag": "true",
-  "last_update": "2026-02-21",
+  "last_update": "2026-03-14",
   "paused": "false",
   "repository": "alexbelgium/hassio-addons",
   "slug": "mealie",
   "source": "github",
   "upstream_repo": "mealie-recipes/mealie",
-  "upstream_version": "v3.11.0"
+  "upstream_version": "v3.12.0"
 }
