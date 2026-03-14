@@ -1,4 +1,7 @@
 
+## 0.5.7 (2026-03-14)
+- Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
+
 ## 0.5.6-2 (2026-03-11)
 - Add container timezone management: TZ option now properly configures the container timezone (symlinks /etc/localtime, writes /etc/timezone, exports to s6 environment)
 - Change default timezone from Etc/UTC to Europe/Paris
