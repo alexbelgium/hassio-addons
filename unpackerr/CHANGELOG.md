@@ -1,4 +1,7 @@
 
+## v0.15.2 (2026-03-14)
+- Update to latest version from Unpackerr/unpackerr (changelog : https://github.com/Unpackerr/unpackerr/releases)
+
 ## v0.15.0 (2026-03-07)
 - Update to latest version from Unpackerr/unpackerr (changelog : https://github.com/Unpackerr/unpackerr/releases)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
