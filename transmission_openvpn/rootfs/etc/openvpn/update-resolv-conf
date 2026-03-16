@@ -1,0 +1,57 @@
+#!/bin/bash
+# OpenVPN update-resolv-conf replacement for containerized environments
+# The default script from the base image uses systemd-resolved via D-Bus,
+# which is unavailable in Home Assistant add-on containers.
+# This script directly updates /etc/resolv.conf instead.
+
+[ "$script_type" ] || exit 0
+
+case "$script_type" in
+    up)
+        # Backup original resolv.conf
+        if [ ! -f /etc/resolv.conf.ovpn-bak ]; then
+            cp /etc/resolv.conf /etc/resolv.conf.ovpn-bak 2>/dev/null || true
+        fi
+
+        dns_servers=""
+        dns_domain=""
+        dns_search=""
+
+        # Parse foreign_option_* environment variables set by OpenVPN
+        for optionname in ${!foreign_option_*}; do
+            option="${!optionname}"
+            case "$option" in
+                dhcp-option\ DNS\ *)
+                    dns_servers="${dns_servers} ${option#dhcp-option DNS }"
+                    ;;
+                dhcp-option\ DOMAIN\ *)
+                    dns_domain="${option#dhcp-option DOMAIN }"
+                    ;;
+                dhcp-option\ DOMAIN-SEARCH\ *)
+                    dns_search="${dns_search} ${option#dhcp-option DOMAIN-SEARCH }"
+                    ;;
+            esac
+        done
+
+        # Write new resolv.conf with VPN DNS servers
+        if [ -n "$dns_servers" ]; then
+            {
+                for server in $dns_servers; do
+                    echo "nameserver $server"
+                done
+                [ -n "$dns_domain" ] && echo "domain $dns_domain"
+                [ -n "$dns_search" ] && echo "search${dns_search}"
+            } > /etc/resolv.conf
+        fi
+        ;;
+
+    down)
+        # Restore original resolv.conf
+        if [ -f /etc/resolv.conf.ovpn-bak ]; then
+            cp /etc/resolv.conf.ovpn-bak /etc/resolv.conf
+            rm -f /etc/resolv.conf.ovpn-bak
+        fi
+        ;;
+esac
+
+exit 0

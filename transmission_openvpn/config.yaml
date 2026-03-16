@@ -138,4 +138,4 @@ schema:
 slug: transmission_openvpn
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "v5.4.0"
+version: "v5.4.0-2"

@@ -1,4 +1,8 @@
 
+## v5.4.0-2 (2026-03-16)
+
+- Fix: Replace update-resolv-conf script that uses systemd-resolved (unavailable in containers) with one that directly updates /etc/resolv.conf
+
 ## v5.4.0 (2026-03-14)
 - Update to latest version from haugene/docker-transmission-openvpn (changelog : https://github.com/haugene/docker-transmission-openvpn/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
