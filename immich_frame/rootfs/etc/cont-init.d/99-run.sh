@@ -3,6 +3,17 @@
 bashio::log.info "Starting Immich Frame"
 
 mkdir -p /config/Config
+
+# Handle legacy installs where /config/Config was a symlink to /app/Config
+if [ -L /config/Config ]; then
+    bashio::log.info "Migrating legacy /config/Config symlink to real directory"
+    mkdir -p /config/Config.migrate
+    # Copy contents from the symlink target into the new real directory
+    cp -a /config/Config/. /config/Config.migrate/ 2>/dev/null || true
+    rm -f /config/Config
+    mv /config/Config.migrate /config/Config
+fi
+
 if [ -d /app/Config ] && [ ! -L /app/Config ]; then
     cp -n /app/Config/* /config/Config/ 2>/dev/null || true
     rm -rf /app/Config
