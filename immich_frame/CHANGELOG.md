@@ -1,3 +1,5 @@
+## 1.0.32.0-3 (16-03-2026)
+- Minor bugs fixed
 
 ## 1.0.32.0-2 (2026-03-16)
 - Added multi-account support: configure multiple Immich accounts via the `Accounts` option in the addon configuration
