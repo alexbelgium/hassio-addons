@@ -1,4 +1,9 @@
 
+## 1.0.32.0-2 (2026-03-16)
+- Added multi-account support: configure multiple Immich accounts via the `Accounts` option in the addon configuration
+- `ApiKey` and `ImmichServerUrl` are now optional when using the `Accounts` list
+- Settings.yaml is now auto-generated from addon options for reliable multi-account configuration
+
 ## 1.0.32.0 (2026-03-07)
 - Update to latest version from immichFrame/ImmichFrame (changelog : https://github.com/immichFrame/ImmichFrame/releases)
 

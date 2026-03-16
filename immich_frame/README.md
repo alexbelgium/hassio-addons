@@ -41,17 +41,35 @@ Webui can be found at `<your-ip>:8171`.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `ImmichServerUrl` | str | **Required** | URL of your Immich server (e.g., `http://homeassistant:3001`) |
-| `ApiKey` | str | **Required** | Immich API key for authentication |
+| `ImmichServerUrl` | str | | URL of your Immich server (e.g., `http://homeassistant:3001`). Used for single-account setup. |
+| `ApiKey` | str | | Immich API key for authentication. Used for single-account setup. |
+| `Accounts` | list | `[]` | List of Immich accounts for multi-account support. Each entry requires `ImmichServerUrl` and `ApiKey`. |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 
-### Example Configuration
+### Single Account Example
 
 ```yaml
 ImmichServerUrl: "http://homeassistant:3001"
 ApiKey: "your-immich-api-key-here"
 TZ: "Europe/London"
 ```
+
+### Multi-Account Example
+
+To display photos from multiple Immich accounts (e.g., you and your partner), use the `Accounts` list:
+
+```yaml
+Accounts:
+  - ImmichServerUrl: "http://homeassistant:3001"
+    ApiKey: "api-key-for-user-1"
+  - ImmichServerUrl: "http://homeassistant:3001"
+    ApiKey: "api-key-for-user-2"
+TZ: "Europe/London"
+```
+
+When using the `Accounts` list, the `ApiKey` and `ImmichServerUrl` top-level options are not needed. Images will be drawn from each account proportionally based on the total number of images present in each account.
+
+For more configuration options, see the [ImmichFrame documentation](https://immichframe.dev/docs/getting-started/configuration).
 
 ### Getting Your Immich API Key
 
