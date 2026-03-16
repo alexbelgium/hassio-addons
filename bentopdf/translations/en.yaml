@@ -1,0 +1,7 @@
+configuration:
+  log_level:
+    name: Log level
+    description: Controls the verbosity of add-on logging.
+
+network:
+  8080/tcp: Web UI port (direct access, not used for Ingress)

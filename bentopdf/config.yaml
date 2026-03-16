@@ -1,0 +1,31 @@
+name: "BentoPDF"
+slug: bentopdf
+image: ghcr.io/alexbelgium/bentopdf-{arch}
+description: "Privacy-first PDF toolkit. 50+ tools, all processing client-side in the browser. Files never leave your device."
+version: "2.5.0"
+url: "https://github.com/alexbelgium/hassio-addons/tree/master/bentopdf"
+arch:
+  - amd64
+  - aarch64
+startup: application
+init: false
+stage: stable
+
+ports:
+  8080/tcp: 8080
+  8443/tcp: 8443
+ports_description:
+  8080/tcp: "BentoPDF HTTP (watchdog / redirect to HTTPS)"
+  8443/tcp: "BentoPDF HTTPS Web UI"
+
+webui: "https://[HOST]:[PORT:8443]"
+watchdog: "http://[HOST]:[PORT:8080]/"
+
+panel_icon: mdi:file-pdf-box
+panel_title: BentoPDF
+
+options:
+  log_level: "info"
+
+schema:
+  log_level: list(info|debug|warn|error)
