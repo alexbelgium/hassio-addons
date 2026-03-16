@@ -67,7 +67,7 @@ devices:
 environment:
   GUACAMOLE_HOME: /config
   PGDATA: /config/postgres
-  PROXY_ALLOWED_IPS_REGEX: "*"
+  PROXY_ALLOWED_IPS_REGEX: ".*"
   PROXY_BY_HEADER: X-Forwarded-By
   PROXY_IP_HEADER: X-Forwarded-For
   PROXY_PROTOCOL_HEADER: X-Forwarded-Proto
@@ -102,5 +102,5 @@ schema:
 slug: guacamole
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.6.0-bullseye-2"
+version: "1.6.0-bullseye-3"
 video: true
