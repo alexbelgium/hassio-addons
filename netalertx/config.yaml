@@ -1,48 +1,34 @@
 arch:
   - aarch64
   - amd64
-description: "\U0001F5A7\U0001F50D WIFI / LAN scanner, intruder, and presence detector"
-environment:
-  PGID: "20211"
-  PORT: "20211"
-  PUID: "20211"
-  TZ: Europe/Berlin
-  NETALERTX_DATA: /config
-  NETALERTX_CONFIG: /config/config
-  NETALERTX_DB: /config/db
-  TMP_DIR: /tmp/tmp
-  NETALERTX_CONFIG_FILE: /config/config/app.conf
-  NETALERTX_DB_FILE: /config/db/app.db
+description: "\U0001F5A7\U0001F50D Centralized network visibility and continuous asset discovery."
 hassio_api: true
 host_network: true
 image: ghcr.io/alexbelgium/netalertx-{arch}
 ingress: true
-ingress_port: 0
+ingress_port: 20211
 ingress_stream: true
 init: false
 map:
-  - addon_config:rw
-  - media:rw
-  - share:rw
-  - ssl
+  - config:rw
 name: NetAlertX
-options:
-  env_vars: []
 panel_icon: mdi:wifi-check
 ports:
   20211/tcp: 20211
   20212/tcp: 20212
 ports_description:
-  20211/tcp: WebUI port
-  20212/tcp: GraphQL port
+  20211/tcp: NetAlertX WebUI port
+  20212/tcp: GraphQL & MCP port
 privileged:
   - NET_ADMIN
   - NET_RAW
+environment:
+  PUID: "20211"
+  PGID: "20211"
+  TZ: Atlantic/Reykjavik
+  # Home assistant grants excessive priviliges and does not support application integrity
+  SKIP_STARTUP_CHECKS: excessive capabilities.sh,appliance integrity.sh
 schema:
-  env_vars:
-    - name: match(^[A-Za-z0-9_]+$)
-      value: str?
-  APP_CONF_OVERRIDE: str?
   TZ: str?
 services:
   - mqtt:want
@@ -50,4 +36,4 @@ slug: netalertx
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "26.2.6-4"
+version: "26.3.16-1"

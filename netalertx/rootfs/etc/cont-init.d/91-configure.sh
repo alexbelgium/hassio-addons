@@ -6,12 +6,11 @@ set -e
 # Update structure #
 ####################
 
-APP_UID=20211
 
 # 1. Fix the directories
-for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$TMP_DIR" "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
+for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "${TMP_DIR:-/tmp}" "${NETALERTX_DATA:-/data}" "${NETALERTX_DB:-/data/db}" "${NETALERTX_CONFIG:-/data/config}"; do
     mkdir -p "$folder"
-    chown -R $APP_UID:$APP_UID "$folder"
+    chown -R ${PUID}:${PGID} "$folder"
     chmod -R 755 "$folder"
 done
 
@@ -22,13 +21,17 @@ chmod 666 /dev/stdout /dev/stderr
 
 # 3. Pre-create and chown log files
 touch /tmp/log/app.php_errors.log /tmp/log/cron.log /tmp/log/stdout.log /tmp/log/stderr.log
-chown $APP_UID:$APP_UID /tmp/log/*.log
+chown ${PUID}:${PGID} /tmp/log/*.log
 
 # 4. Create Symlinks
 for item in db config; do
+    # ADD THESE TWO LINES: Ensure the target exists and is owned by 20211
+    mkdir -p "/config/$item"
+    chown -R ${PUID}:${PGID} "/config/$item"
+
     rm -rf "/data/$item"
     ln -sf "/config/$item" "/data/$item"
-    chown -R $APP_UID:$APP_UID "/data/$item"
+    chown -R ${PUID}:${PGID} "/data/$item"
     chmod -R 755 "/data/$item"
 done
 
