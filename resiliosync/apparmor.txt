@@ -3,7 +3,14 @@
 profile resiliosync_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
-  capability,
+  capability chown,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability net_admin,
+  capability setgid,
+  capability setuid,
+  capability sys_admin,
   file,
   signal,
   mount,
@@ -18,12 +25,6 @@ profile resiliosync_addon flags=(attach_disconnected,mediate_deleted) {
   network netlink raw,
   network unix dgram,
 
-  capability setgid,
-  capability setuid,
-  capability sys_admin,
-  capability dac_read_search,
-  # capability dac_override,
-  # capability sys_rawio,
 
 # S6-Overlay
   /init ix,

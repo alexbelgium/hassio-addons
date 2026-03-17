@@ -3,7 +3,13 @@
 profile netalertx_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
-  capability,
+  capability chown,
+  capability dac_override,
+  capability fowner,
+  capability net_admin,
+  capability net_raw,
+  capability setgid,
+  capability setuid,
   file,
   signal,
   mount,
