@@ -10,7 +10,7 @@ ingress_port: 20211
 ingress_stream: true
 init: false
 map:
-  - config:rw
+  - addon_config:rw
 name: NetAlertX
 panel_icon: mdi:wifi-check
 ports:
