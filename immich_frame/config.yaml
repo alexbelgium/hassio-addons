@@ -19,13 +19,56 @@ schema:
   Accounts:
     - ImmichServerUrl: str
       ApiKey: str
+      Albums: str?
+      ExcludedAlbums: str?
+      People: str?
+      Tags: str?
+      ShowFavorites: bool?
+      ShowMemories: bool?
+      ShowArchived: bool?
+      ShowVideos: bool?
+      ImagesFromDays: int?
+      ImagesFromDate: str?
+      ImagesUntilDate: str?
+      Rating: int?
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
   ApiKey: str?
   ImmichServerUrl: str?
   TZ: str?
+  Interval: int?
+  TransitionDuration: float?
+  ShowClock: bool?
+  ClockFormat: str?
+  ClockDateFormat: str?
+  ShowProgressBar: bool?
+  ShowPhotoDate: bool?
+  PhotoDateFormat: str?
+  ShowImageDesc: bool?
+  ShowPeopleDesc: bool?
+  ShowTagsDesc: bool?
+  ShowAlbumName: bool?
+  ShowImageLocation: bool?
+  ShowWeatherDescription: bool?
+  ImageZoom: bool?
+  ImagePan: bool?
+  ImageFill: bool?
+  PlayAudio: bool?
+  PrimaryColor: str?
+  SecondaryColor: str?
+  Style: str?
+  Layout: str?
+  BaseFontSize: str?
+  Language: str?
+  WeatherApiKey: str?
+  UnitSystem: str?
+  WeatherLatLong: str?
+  ImageLocationFormat: str?
+  DownloadImages: bool?
+  RenewImagesDuration: int?
+  RefreshAlbumPeopleInterval: int?
 slug: immich_frame
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.0.32.0-3"
+version: "1.0.32.0-4"
 webui: http://[HOST]:[PORT:8080]
