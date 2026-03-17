@@ -1,3 +1,10 @@
+## 1.0.32.0-4 (17-03-2026)
+- Fix: env_vars now properly written to Settings.yaml instead of only environment variables
+- Added General config options to addon UI (Interval, ShowClock, PhotoDateFormat, Style, Layout, etc.)
+- Added per-Account config options to addon UI (Albums, People, ShowFavorites, ShowMemories, etc.)
+- env_vars are automatically classified as General or Account settings in Settings.yaml
+- Full backward compatibility: existing env_vars configurations continue to work
+
 ## 1.0.32.0-3 (16-03-2026)
 - Minor bugs fixed
 
