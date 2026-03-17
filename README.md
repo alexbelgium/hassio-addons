@@ -608,7 +608,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/wifi-check.svg) [NetAlertX](netalertx/) : 🖧🔍 WIFI / LAN scanner, intruder, and presence detector
+&#10003; ![image](https://api.iconify.design/mdi/wifi-check.svg) [NetAlertX](netalertx/) : 🖧🔍 Centralized network visibility and continuous asset discovery.
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnetalertx%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnetalertx%2Fupdater.json)
