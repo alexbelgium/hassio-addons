@@ -198,7 +198,7 @@ bashio::log.info "Settings.yaml generated at ${SETTINGS_FILE}"
 
 # Log contents (mask sensitive values)
 bashio::log.info "--- Generated Settings.yaml ---"
-sed -E 's/(ApiKey:).*/\1 *****/;s/(AuthenticationSecret:).*/\1 *****/' "${SETTINGS_FILE}" | while IFS= read -r line; do
+sed -E 's/(ApiKey:).*/\1 *****/;s/(AuthenticationSecret:).*/\1 *****/;s/(WeatherApiKey:).*/\1 *****/' "${SETTINGS_FILE}" | while IFS= read -r line; do
     bashio::log.info "$line"
 done
 bashio::log.info "-------------------------------"
