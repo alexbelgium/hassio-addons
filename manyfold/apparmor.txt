@@ -10,7 +10,11 @@ profile hassio-addons/manyfold flags=(attach_disconnected,mediate_deleted) {
   # denying known high-risk kernel interfaces.
   file,
   network,
-  capability,
+  capability chown,
+  capability dac_override,
+  capability fowner,
+  capability setgid,
+  capability setuid,
 
   deny /proc/kcore rwklx,
   deny /proc/sysrq-trigger rwklx,
