@@ -13,6 +13,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 ## Features
 
 ### Organize & Edit
+
 | Tool | Tool | Tool |
 |------|------|------|
 | Merge PDF | Split PDF | Organize PDF |
@@ -23,6 +24,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 | PDF Merge & Split | Fix Page Size | |
 
 ### Convert TO PDF
+
 | Tool | Tool | Tool |
 |------|------|------|
 | Word to PDF | Excel to PDF | PowerPoint to PDF |
@@ -38,6 +40,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 | WPS to PDF | WPD to PDF | Pages to PDF |
 
 ### Convert FROM PDF
+
 | Tool | Tool | Tool |
 |------|------|------|
 | PDF to DOCX | PDF to Excel | PDF to JPG |
@@ -47,6 +50,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 | PDF to PDF/A | PDF to ZIP | PDF to Greyscale |
 
 ### Security & Metadata
+
 | Tool | Tool | Tool |
 |------|------|------|
 | Encrypt PDF | Decrypt PDF | Change Permissions |
@@ -56,6 +60,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 | Remove Annotations | Repair PDF | |
 
 ### Enhance & Process
+
 | Tool | Tool | Tool |
 |------|------|------|
 | Compress PDF | OCR PDF | Deskew PDF |
@@ -67,6 +72,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 | PDF Layers | Compare PDFs | Prepare for AI |
 
 ### Forms & More
+
 | Tool | Tool | Tool |
 |------|------|------|
 | Form Creator | Form Filler | Table of Contents |
