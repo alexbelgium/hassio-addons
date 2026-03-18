@@ -1,10 +1,12 @@
-# BentoPDF for Home Assistant
+# Home assistant add-on: BentoPDF
 
-<div align="left">
-  <img src="logo.png" alt="BentoPDF" width="100" height="100"/>
-</div>
+![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbentopdf%2Fconfig.yaml)
+![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbentopdf%2Fconfig.yaml)
+![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbentopdf%2Fconfig.yaml)
 
-
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
+[![GitHub Super-Linter](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/weekly-supelinter.yaml?label=Lint%20code%20base)](https://github.com/alexbelgium/hassio-addons/actions/workflows/weekly-supelinter.yaml)
+[![Builder](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/onpush_builder.yaml?label=Builder)](https://github.com/alexbelgium/hassio-addons/actions/workflows/onpush_builder.yaml)
 
 A privacy-first PDF toolkit running entirely in your browser — no uploads, no cloud, no tracking. All processing happens locally via WebAssembly. This add-on serves the BentoPDF web app from your Home Assistant instance so you can access it from anywhere on your network.
 
@@ -84,11 +86,13 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 
 ## Installation
 
-1. Go to **Settings → Add-ons → Add-on Store** in Home Assistant.
-2. Open the menu (`···`) → **Repositories**.
-3. Add: `https://github.com/ToledoEM/BentoPDF_HA_app`
-4. Find **BentoPDF** in the store and install it.
-5. Start the add-on — the web UI is available at `http://<your-HA-IP>:8080`.
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+1. Install this add-on.
+1. Click the `Save` button to store your configuration.
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+1. Open the webUI at `https://<your-HA-IP>:8443`.
 
 ---
 
@@ -113,5 +117,6 @@ No other configuration is needed. Drop your files in and go.
 
 ## Support
 
-- Add-on issues → [github.com/ToledoEM/BentoPDF_HA_app](https://github.com/ToledoEM/BentoPDF_HA_app/issues)
+Create an issue on [github](https://github.com/alexbelgium/hassio-addons/issues) and tag @ToledoEM
+
 - BentoPDF upstream → [github.com/alam00000/bentopdf](https://github.com/alam00000/bentopdf)
