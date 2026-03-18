@@ -26,11 +26,12 @@ environment:
   PUID: "20211"
   PGID: "20211"
   TZ: Europe/Berlin
+  NETALERTX_DATA: /config
   NETALERTX_CONFIG: /config/config
-  NETALERTX_DB: /config/db
-  TMP_DIR: /tmp/tmp
   NETALERTX_CONFIG_FILE: /config/config/app.conf
+  NETALERTX_DB: /config/db
   NETALERTX_DB_FILE: /config/db/app.db
+  TMP_DIR: /tmp/tmp
   SKIP_STARTUP_CHECKS: excessive capabilities.sh,appliance integrity.sh
 schema:
   TZ: str?
@@ -40,4 +41,4 @@ slug: netalertx
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "26.3.16-2"
+version: "26.3.16-3"
