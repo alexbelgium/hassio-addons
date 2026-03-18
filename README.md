@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 126
+- In the repository : 127
 - Installed : 116609
 
 ### Top 3
@@ -121,6 +121,12 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/file-pdf-box.svg) [BentoPDF](bentopdf/) : Privacy-first PDF toolkit. 50+ tools, all processing client-side in the browser. Files never leave your device.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbentopdf%2Fconfig.yaml)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/bitcoin.svg) [Binance Trading Bot](binance-trading-bot/) : Automated Binance trading bot - Trade multiple cryptocurrencies. Buy low/sell high with Grid Trading. Integrated with TradingView technical analysis
 
