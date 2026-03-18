@@ -1,0 +1,42 @@
+#include <tunables/global>
+
+profile bentopdf flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  # Capabilities
+  file,
+  signal (send) set=(kill,term,int,hup,cont),
+
+  # S6-Overlay
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /run/{,**} rwk,
+  /dev/tty rw,
+
+  # Bashio
+  /usr/lib/bashio/** ix,
+  /tmp/** rwk,
+
+  # App data
+  /data/** rw,
+
+  # nginx
+  /usr/sbin/nginx ix,
+  /etc/nginx/** r,
+  /usr/share/nginx/** r,
+  /var/lib/nginx/** rw,
+  /var/log/nginx/** rw,
+  /run/nginx/** rw,
+
+  # Deny dangerous kernel interfaces
+  deny /proc/kcore rwklx,
+  deny /proc/sysrq-trigger rwklx,
+  deny /sys/firmware/** rwklx,
+}
