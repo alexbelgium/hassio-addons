@@ -3,7 +3,11 @@
 profile grampsweb_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
-  capability,
+  capability chown,
+  capability dac_override,
+  capability fowner,
+  capability setgid,
+  capability setuid,
   file,
   signal,
   mount,
@@ -18,12 +22,6 @@ profile grampsweb_addon flags=(attach_disconnected,mediate_deleted) {
   network netlink raw,
   network unix dgram,
 
-  capability setgid,
-  capability setuid,
-  capability sys_admin,
-  capability dac_read_search,
-  # capability dac_override,
-  # capability sys_rawio,
 
 # S6-Overlay
   /init ix,

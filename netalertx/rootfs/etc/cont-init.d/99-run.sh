@@ -3,4 +3,4 @@
 set -e
 
 bashio::log.info "Starting upstream app"
-gosu netalertx /entrypoint.sh
+/root-entrypoint.sh
