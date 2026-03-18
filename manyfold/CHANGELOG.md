@@ -1,11 +1,8 @@
-## 0.133.1 (05-03-2026)
-- Minor bugs fixed
 # Changelog
 
-## 0.133.1
+## 0.135.0
 
-- Update to upstream Manyfold 0.133.1.
-- Restore `image` tag in config.yaml.
+- Update to upstream Manyfold 0.135.0.
 
 ## 1.0.3
 
