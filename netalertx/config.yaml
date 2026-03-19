@@ -6,7 +6,8 @@ hassio_api: true
 host_network: true
 image: ghcr.io/alexbelgium/netalertx-{arch}
 ingress: true
-ingress_port: 20211
+ingress_entry: devices.php
+ingress_port: 0
 ingress_stream: true
 init: false
 map:
@@ -41,4 +42,4 @@ slug: netalertx
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "26.3.16-3"
+version: "26.3.16-4"
