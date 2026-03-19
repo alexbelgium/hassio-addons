@@ -1,5 +1,6 @@
 ## &#9888; Open Issue : [🐛 [CloudCommander] cloudcmd.mjs: No such file or directory (opened 2026-02-04)](https://github.com/alexbelgium/hassio-addons/issues/2444) by [@axlFThn](https://github.com/axlFThn)
 ## &#9888; Open Issue : [🐛 [qBittorrent] Addon doesnt start after last update (5.1.4-8) (opened 2026-02-05)](https://github.com/alexbelgium/hassio-addons/issues/2449) by [@NecrumBlack](https://github.com/NecrumBlack)
+## &#9888; Open Issue : [🐛 Cloudcommander New Directory (opened 2026-03-19)](https://github.com/alexbelgium/hassio-addons/issues/2594) by [@pgitsov](https://github.com/pgitsov)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
