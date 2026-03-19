@@ -39,7 +39,7 @@ schema:
   TZ: str?
 services:
   - mqtt:want
-slug: netalertx
+slug: netalertx_fa
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
