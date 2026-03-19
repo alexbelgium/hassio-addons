@@ -14,6 +14,7 @@ echo "Adapting for ingress"
 
 # Remove backend api url to use the base path
 sed -i "s|'/server'|''|g" /app/back/app.conf
+sed -i "s|gzip on|gzip off|g" /services/config/nginx/netalertx.conf.template
 sed -i "s|(\$is_trusted != \"TRUSTED\")|(\$is_trusted = \"AAA\")|g" /services/config/nginx/netalertx.conf.template
 
 # Adapt nginx configuration
