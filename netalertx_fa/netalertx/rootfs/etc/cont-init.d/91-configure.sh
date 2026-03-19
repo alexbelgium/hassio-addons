@@ -2,10 +2,17 @@
 # shellcheck shell=bash
 set -e
 
+# Fix ingress
+
+sed -i "s|'/server'|''|g" /app/back/app.conf
+sed -i "s|gzip on|gzip off|g" /services/config/nginx/netalertx.conf.template
+sed -i "/add_header X-Forwarded-Prefix/a sub_filter '\"/server' '\"$(bashio::addon.ingress_entry)/server';" /services/config/nginx/netalertx.conf.template
+sed -i "/add_header X-Forwarded-Prefix/a sub_filter_types *;" /services/config/nginx/netalertx.conf.template
+sed -i "/add_header X-Forwarded-Prefix/a sub_filter_once off;" /services/config/nginx/netalertx.conf.template
+
 ####################
 # Update structure #
 ####################
-
 
 # 1. Fix the directories
 for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "${TMP_DIR:-/tmp}" "${NETALERTX_DATA:-/data}" "${NETALERTX_DB:-/data/db}" "${NETALERTX_CONFIG:-/data/config}"; do
