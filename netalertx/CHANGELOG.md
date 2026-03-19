@@ -1,9 +1,5 @@
-## 26.3.16-4 (19-03-2026)
-- Minor bugs fixed
-## 26.3.16-3 (18-03-2026)
-- Minor bugs fixed
-## 26.3.16-2 (17-03-2026)
-- Minor bugs fixed
+- Use embedded ingress system
+
 ## 26.3.16-1 (17-03-2026)
 - Minor bugs fixed
 ## 26.3.7-3 (07-03-2026)
