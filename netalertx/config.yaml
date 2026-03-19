@@ -7,7 +7,7 @@ host_network: true
 image: ghcr.io/alexbelgium/netalertx-{arch}
 ingress: true
 ingress_entry: devices.php
-ingress_port: 0
+ingress_port: 20211
 ingress_stream: true
 init: false
 map:
