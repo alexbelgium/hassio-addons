@@ -87,7 +87,7 @@ jobs:
             IFS='|' read -r CONFIG TYPE <<<"$(get_config "$f")"
             if [ -n "$CONFIG" ]; then
               NAME="$(get_raw '.name' "$TYPE" "$CONFIG")"
-              if [ -n "${NAME:-}" ] && [ "$f" != "$NAME" ]; then
+              if [ -n "${NAME:-}" ] && [ "$f" != "$NAME" ] && [ ! -e "$NAME" ]; then
                 echo "$f" > "$f/oldname"
                 mv "$f" "$NAME"
               fi
