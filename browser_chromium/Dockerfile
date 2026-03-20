@@ -47,6 +47,8 @@ RUN \
 # Modify commands
 RUN sed -i '/no-first-run/a\  --remote-debugging-address=0.0.0.0 --remote-debugging-port=9221 \\' /usr/bin/wrapped-*
 
+ENV GLOBAL_VAR_FILES="/etc/usr/bin/wrapped-chromium"
+
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
