@@ -13,7 +13,7 @@ init: false
 full_access: true
 map:
   - addon_config:rw
-name: NetAlertX
+name: NetAlertX Full Access
 panel_icon: mdi:wifi-check
 ports:
   20211/tcp: 20211
