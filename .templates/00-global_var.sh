@@ -234,7 +234,7 @@ cp "$ENV_FILE" "$ETC_ENV_FILE"
 ################################################################################
 # Inject into scripts and shells (best-effort)
 ################################################################################
-for f in /etc/services.d/*/run /etc/cont-init.d/*.sh /entrypoint.sh /etc/bash.bashrc; do
+for f in /etc/services.d/*/run /etc/cont-init.d/*.sh /entrypoint.sh /etc/bash.bashrc "${GLOBAL_VAR_FILES:-}"; do
     [[ -f "$f" ]] && inject_block "$f"
 done
 
