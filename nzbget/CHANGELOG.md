@@ -1,4 +1,7 @@
 
+## v26.0-ls234 (2026-03-21)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
+
 ## v26.0-ls233 (2026-03-07)
 - Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
 
