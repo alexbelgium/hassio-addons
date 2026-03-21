@@ -178,7 +178,7 @@ read -r VPN_IP VPN_COUNTRY <<< "${VPN_INFO_OUT}"
 bashio::log.info "VPN external IP: ${VPN_IP} (${VPN_COUNTRY})"
 
 while true; do
-    sleep "${VPN_CHECK_INTERVAL}"
+    sleep "${VPN_CHECK_INTERVAL}" & wait $!
 
     if ! current_out="$(get_ip_info)"; then
         bashio::log.warning "Failed to refresh external IP; keeping previous assumptions."

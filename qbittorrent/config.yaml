@@ -131,6 +131,7 @@ schema:
   openvpn_enabled: bool?
   openvpn_password: str?
   openvpn_username: str?
+  vpn_upnp_enabled: bool?
   qbit_manage: bool?
   run_duration: str?
   silent: bool?
