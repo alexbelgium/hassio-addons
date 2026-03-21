@@ -1,4 +1,7 @@
 
+## 2.6.1 (2026-03-21)
+- Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
+
 ## 2.5.6-3 (2026-02-22)
 - Increment add-on revision.
 
