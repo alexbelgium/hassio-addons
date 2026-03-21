@@ -1,4 +1,7 @@
 
+## 4.0.17.2952 (2026-03-21)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
+
 ## 4.0.16.2946-3 (2026-02-25)
 - Symlink system ffprobe to /app/sonarr/bin/ where Sonarr expects it (fixes https://github.com/alexbelgium/hassio-addons/issues/2451)
 
