@@ -71,5 +71,5 @@ slug: chromium
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "version-59f04866-2"
+version: "version-baf94ebf"
 video: true
