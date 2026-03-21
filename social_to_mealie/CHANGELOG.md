@@ -1,4 +1,7 @@
 
+## 1.6.1 (2026-03-21)
+- Update to latest version from GerardPolloRebozado/social-to-mealie (changelog : https://github.com/GerardPolloRebozado/social-to-mealie/releases)
+
 ## 1.6.0 (2026-03-07)
 - Update to latest version from GerardPolloRebozado/social-to-mealie (changelog : https://github.com/GerardPolloRebozado/social-to-mealie/releases)
 
