@@ -4,5 +4,11 @@ set -e
 
 cd /app || exit 1
 
+# Set default Node.js memory limit to prevent OOM kills
+# Users can override this via the addon's env_vars option (NODE_OPTIONS)
+if [[ "${NODE_OPTIONS:-}" != *"max-old-space-size"* ]] && [[ "${NODE_OPTIONS:-}" != *"max_old_space_size"* ]]; then
+    export NODE_OPTIONS="${NODE_OPTIONS:+${NODE_OPTIONS} }--max-old-space-size=512"
+fi
+
 bashio::log.info "Starting Seerr..."
 exec npm start
