@@ -4,10 +4,11 @@ set -e
 
 cd /app || exit 1
 
-# Set default Node.js memory limit to prevent OOM kills
-# Users can override this via the addon's env_vars option (NODE_OPTIONS)
+# Set Node.js memory limit from addon option to prevent OOM kills
+# NODE_MEMORY_LIMIT is exported as env var by 00-global_var.sh from config.yaml
+MEMORY_LIMIT="${NODE_MEMORY_LIMIT:-512}"
 if [[ "${NODE_OPTIONS:-}" != *"max-old-space-size"* ]] && [[ "${NODE_OPTIONS:-}" != *"max_old_space_size"* ]]; then
-    export NODE_OPTIONS="${NODE_OPTIONS:+${NODE_OPTIONS} }--max-old-space-size=512"
+    export NODE_OPTIONS="${NODE_OPTIONS:+${NODE_OPTIONS} }--max-old-space-size=${MEMORY_LIMIT}"
 fi
 
 bashio::log.info "Starting Seerr..."
