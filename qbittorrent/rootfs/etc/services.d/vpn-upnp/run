@@ -1,0 +1,265 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -euo pipefail
+
+export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
+
+VPN_UPNP_INTERVAL="${VPN_UPNP_INTERVAL:-90}"
+
+# -------------------------------
+# Helpers
+# -------------------------------
+
+declare -A config
+config["MySelf"]="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
+
+_parse_config() {
+    local config_file="$1"
+    local -A config_keys=(
+        ["UseHttps"]="HTTPS\\\\Enabled"
+        ["Server"]="WebUI\\\\Address"
+        ["Port"]="WebUI\\\\Port"
+        ["User"]="WebUI\\\\Username"
+        ["Pass"]="WebUI\\\\Password"
+        ["Interface"]="Connection\\\\Interface"
+        ["UPnP"]="Connection\\\\UPnP"
+        ["TorrentPort"]="Session\\\\Port"
+    )
+
+    config["UseHttps"]="false"
+    config["Schema"]="http"
+    config["Server"]="127.0.0.1"
+    config["Port"]="8080"
+    config["User"]="admin"
+    config["Pass"]="adminadmin"
+    config["Interface"]=""
+    config["UPnP"]="false"
+    config["SID"]=""
+    config["UPnPPort"]="0"
+    config["IPv4Gateway"]=""
+    config["IPv4Enabled"]="false"
+    config["IPv6Enabled"]="false"
+    config["TorrentPort"]=$(shuf -i 49152-65535 -n 1)
+
+    for key in "${!config_keys[@]}"; do
+        if ! grep -qP "^\s*${config_keys[$key]}\s*=\s*\S+" "${config_file}"; then
+            continue
+        fi
+        config["${key}"]=$(grep -oP "^\s*${config_keys[$key]}\s*=\s*\K\S+" "${config_file}")
+    done
+
+    if [ "${config["UseHttps"]}" = "true" ]; then
+        config["Schema"]="https"
+    else
+        config["Schema"]="http"
+    fi
+
+    if [ "${config["Server"]}" = "*" ]; then
+        config["Server"]="127.0.0.1"
+    fi
+
+    if [ "${config["TorrentPort"]}" = "6881" ]; then
+        bashio::log.debug 'Torrent Port is default (6881), selecting a random port.'
+        config["TorrentPort"]=$(shuf -i 49152-65535 -n 1)
+    fi
+
+    for key in "${!config[@]}"; do
+        bashio::log.debug "Config key: $key, value: ${config[$key]}"
+    done
+
+    if [ -z "${config["Server"]}" ] || [ -z "${config["Port"]}" ] || [ -z "${config["User"]}" ] || [ -z "${config["Pass"]}" ] || [ -z "${config["Interface"]}" ]; then
+        bashio::exit.nok 'qBittorrent WebUI configuration not found or incomplete. Please check your qBittorrent.conf.'
+    fi
+}
+
+_cmd() {
+    cmd="$1"
+    bashio::log.debug "Executing command: ${cmd}"
+    eval "${cmd}"
+}
+
+_pnat_get_gw() {
+    local vpn_if_hex_addr=''
+    local ipv4
+    local vpn_if_hex_addr=$(grep ${config["Interface"]} /proc/net/route | awk '$2 == "00000000" { print $3 }')
+    local local_ipv4=$(ip addr show ${config["Interface"]} | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1)
+    local local_ipv6=$(ip addr show ${config["Interface"]} | grep 'inet6 ' | awk '{print $2}' | cut -d'/' -f1)
+    if [ -n "${local_ipv4}" ]; then
+        config["IPv4Enabled"]="true"
+    fi
+    if [ -n "${local_ipv6}" ]; then
+        config["IPv6Enabled"]="true"
+    fi
+
+    if [ -n "${vpn_if_hex_addr}" ]; then
+        #shellcheck disable=SC2046
+        config["IPv4Gateway"]=$(printf "%d." $(echo "${vpn_if_hex_addr}" | sed 's/../0x& /g' | tr ' ' '\n' | tac) | sed 's/\.$/\n/')
+        return 0
+    elif [ -n "${local_ipv4}" ]; then
+        for ipv4 in ${local_ipv4}; do
+            for n in {1..254}; do
+                local try_ip="$(echo "${ipv4}" | cut -d'.' -f1-3).${n}"
+                if [ "${try_ip}" != "${ipv4}" ]; then
+                    if nc -4 -vw1 "${try_ip}" 1 &>/dev/null 2>&1; then
+                        config["IPv4Gateway"]=${try_ip}
+                        return 0
+                    fi
+                fi
+            done
+        done
+    fi
+
+    return 1
+}
+
+_pnat_get_port() {
+    if [ "${config["IPv4Enabled"]}" = "true" ]; then
+        bashio::log.debug "Attempting to set uPNP port mapping for IPv4 via NAT-PMP"
+        # shellcheck disable=SC2086
+        _cmd "timeout 10s natpmpc -g ${config["IPv4Gateway"]} -a 1 0 udp ${config["Interval"]} >/dev/null 2>&1" || return 1
+        # shellcheck disable=SC2086
+        if [ "${config["UPnPPort"]}" = "0" ]; then
+            config["TorrentPort"]="0"
+        fi
+        config["UPnPPort"]=$(_cmd "timeout 10s natpmpc -g ${config["IPv4Gateway"]} -a 1 0 tcp ${config["Interval"]} | grep -oP '(?<=Mapped public port.).*(?=.protocol.*)'")
+        return $?
+    elif [ "${config["IPv6Enabled"]}" = "true" ]; then
+        if [ "${config["UPnPPort"]}" = "0" ]; then
+            config["UPnPPort"]=${config["TorrentPort"]}
+            config["TorrentPort"]="0"
+        else
+            config["UPnPPort"]=${config["TorrentPort"]}
+        fi
+        return 0
+    else
+        return 1
+    fi
+}
+
+_pnat_set_firewall() {
+    if [ "${config["IPv4Enabled"]}" = "true" ]; then
+        _cmd "iptables -F pnat 2>/dev/null" || true
+        _cmd "iptables -A pnat -p tcp --dport ${config["UPnPPort"]} -j ACCEPT" || return 1
+        _cmd "iptables -A pnat -p udp --dport ${config["UPnPPort"]} -j ACCEPT" || return 1
+    fi
+    if [ "${config["IPv6Enabled"]}" = "true" ]; then
+        _cmd "ip6tables -F pnat 2>/dev/null" || true
+        _cmd "ip6tables -A pnat -p tcp --dport ${config["UPnPPort"]} -j ACCEPT" || return 1
+        _cmd "ip6tables -A pnat -p udp --dport ${config["UPnPPort"]} -j ACCEPT" || return 1
+    fi
+}
+
+# --- qBittorrent Specific Logic ---
+
+_qbt_login() {
+    config["SID"]=$(_cmd "curl -s -k -i --header \"Referer: ${config["Schema"]}://${config["Server"]}:${config["Port"]}\" --data \"username=${config["User"]}\" --data-urlencode \"password=${config["Pass"]}\" \"${config["Schema"]}://${config["Server"]}:${config["Port"]}/api/v2/auth/login\" | grep -oP '(?!set-cookie:.)SID=.*(?=\;.HttpOnly\;)'")
+    return $?
+}
+
+_qbt_set_port() {
+    _cmd "curl -s -k -i --header \"Referer: ${config["Schema"]}://${config["Server"]}:${config["Port"]}\" --cookie \"${config["SID"]}\" --data-urlencode \"json={\\\"listen_port\\\":${config["UPnPPort"]},\\\"random_port\\\":false,\\\"upnp\\\":false}\" \"${config["Schema"]}://${config["Server"]}:${config["Port"]}/api/v2/app/setPreferences\" >/dev/null 2>&1"
+    return $?
+}
+
+_qbt_get_port() {
+    config["TorrentPort"]=$(_cmd "curl -s -k -i --header \"Referer: ${config["Schema"]}://${config["Server"]}:${config["Port"]}\" --cookie \"${config["SID"]}\" \"${config["Schema"]}://${config["Server"]}:${config["Port"]}/api/v2/app/preferences\" | grep -oP '(?<=\"listen_port\"\\:)(\\d{1,5})'")
+    return $?
+}
+
+_qbt_check_sid() {
+    if _cmd "curl -s -k --header \"Referer: ${config["Schema"]}://${config["Server"]}:${config["Port"]}\" --cookie \"${config["SID"]}\" \"${config["Schema"]}://${config["Server"]}:${config["Port"]}/api/v2/app/version\" | grep -qi forbidden"; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+_qbt_isreachable(){
+    _cmd "nc -4 -vw 5 ${config["Server"]} ${config["Port"]} &>/dev/null 2>&1"
+    return $?
+}
+
+# --- Main Logic ---
+
+pnat_set() {
+    if [ -z "${config["SID"]}" ]; then
+        bashio::log.info "qBittorrent SessionID not set, getting new SessionID"
+        if ! _qbt_login; then
+            bashio::log.error "Failed getting new SessionID from qBittorrent"
+            return 1
+        fi
+    else
+        if ! _qbt_check_sid; then
+            bashio::log.info "qBittorrent Cookie invalid, getting new SessionID"
+            if ! _qbt_login; then
+                bashio::log.error "Failed getting new SessionID from qBittorrent"
+                return 1
+            fi
+        else
+            bashio::log.debug "qBittorrent SessionID Ok!"
+        fi
+    fi
+    if _qbt_get_port; then
+        bashio::log.debug "Configured Torrent Port: ${config["TorrentPort"]}"
+    else
+        bashio::log.error "Failed to get current Torrent Port configuration"
+        return 1
+    fi
+
+    if [ -z "${config["IPv4Gateway"]}" ]; then
+        bashio::log.info "VPN Gateway not know, will try to detect it."
+        if ! _pnat_get_gw; then
+            bashio::log.error "Failed to determine VPN gateway IP address. Cannot perform NAT-PMP/UPnP port mapping."
+            return 1
+        else
+            bashio::log.info "VPN Gateway detected: ${config["IPv4Gateway"]}"
+        fi
+    fi
+    if _pnat_get_port; then
+        bashio::log.debug "Active uPNP Port: ${config["UPnPPort"]}"
+    else
+        bashio::log.error "Failed to get current uPNP port mapping"
+        return 1
+    fi
+
+    if [ "${config["TorrentPort"]}" != "${config["UPnPPort"]}" ]; then
+        bashio::log.info "Changing Torrent port"
+        if _qbt_set_port; then
+            if _pnat_set_firewall; then
+                bashio::log.info "IPTables rule added for Torrent port ${config["UPnPPort"]}"
+            else
+                bashio::log.error "Failed to set firewall rules for Torrent port ${config["UPnPPort"]}"
+                return 1
+            fi
+            bashio::log.info "Torrent Port Changed to: ${config["UPnPPort"]}"
+        else
+            bashio::log.error "Torrent Port Change failed."
+            return 1
+        fi
+    else
+        bashio::log.debug "Torrent Port OK (Act: ${config["UPnPPort"]} Cfg: ${config["TorrentPort"]})"
+    fi
+
+    return 0
+}
+
+# -------------------------------
+# Main logic
+# -------------------------------
+
+_parse_config "/config/qBittorrent/qBittorrent.conf"
+
+config["Interval"]=$(( ${VPN_UPNP_INTERVAL} + (${VPN_UPNP_INTERVAL} / 2) ))
+
+bashio::log.info "VPN UPnP enabled, starting NAT-PMP/UPnP monitor with an interval of ${VPN_UPNP_INTERVAL} seconds (UPnP lease interval: ${config["Interval"]} seconds)."
+
+while true;
+do
+    sleep ${VPN_UPNP_INTERVAL} & wait $!
+
+    if pnat_set; then
+        bashio::log.info "NAT-PMP/UPnP Ok!"
+    else
+        bashio::log.error "NAT-PMP/UPnP Failed"
+    fi
+done

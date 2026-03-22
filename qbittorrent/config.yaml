@@ -131,6 +131,7 @@ schema:
   openvpn_enabled: bool?
   openvpn_password: str?
   openvpn_username: str?
+  vpn_upnp_enabled: bool?
   qbit_manage: bool?
   run_duration: str?
   silent: bool?
@@ -142,4 +143,4 @@ schema:
 slug: qbittorrent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "5.1.4-17"
+version: "5.1.4-18"
