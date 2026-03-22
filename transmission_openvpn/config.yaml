@@ -127,7 +127,7 @@ schema:
   TRANSMISSION_HOME: str
   TRANSMISSION_INCOMPLETE_DIR: str
   TRANSMISSION_WATCH_DIR: str
-  TRANSMISSION_WEB_UI: list(standard|combustion|kettu|transmission-web-control|flood-for-transmission|shift)
+  TRANSMISSION_WEB_UI: list(standard|combustion|flood-for-transmission|kettu|shift|transmissionic|transmission-web-control)
   WEBPROXY_ENABLED: bool
   auto_restart: bool?
   cifsdomain: str?
