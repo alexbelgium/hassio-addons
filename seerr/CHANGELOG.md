@@ -1,8 +1,6 @@
 
-## 3.1.0-2 (22-03-2026)
+## 3.1.0 (22-03-2026)
 - Set default Node.js memory limit (512MB) to prevent OOM kills that caused the addon to stop responding
-
-## 3.1.0 (2026-02-28)
 - Update to latest version from seerr-team/seerr (changelog : https://github.com/seerr-team/seerr/releases)
 
 ## 3.0.1 (2026-02-21)
