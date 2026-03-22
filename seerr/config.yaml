@@ -74,6 +74,7 @@ map:
   - addon_config:rw
 name: Seerr
 options:
+  NODE_MEMORY_LIMIT: 512
   env_vars: []
   PGID: "0"
   PUID: "0"
@@ -87,10 +88,11 @@ schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
+  NODE_MEMORY_LIMIT: int
   PGID: int
   PUID: int
   TZ: str?
 slug: seerr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/seerr
-version: "3.1.0"
+version: "3.1.0-2"
