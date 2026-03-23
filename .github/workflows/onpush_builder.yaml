@@ -178,7 +178,7 @@ jobs:
                 build_from=$(jq -r ".build_from.\"$ARCH\" // \"\"" "build.$ext")
                 build_archs=$(jq -c '.build_from | keys' "build.$ext")
               else
-                build_from=$(sed -n "/^build_from:/,/^[^ ]/p" "build.$ext" | grep "^ *${ARCH}:" | sed "s/^ *${ARCH}:[[:space:]]*//" | tr -d "\"'")
+                build_from=$(sed -n "/^build_from:/,/^[^ ]/p" "build.$ext" | grep -E "^[[:space:]]+${ARCH}:" | sed "s/^[[:space:]]*${ARCH}:[[:space:]]*//" | tr -d "\"'")
                 build_archs=$(sed -n '/^build_from:/,/^[^ ]/p' "build.$ext" | grep '^ ' | sed 's/:.*//' | tr -d ' ' | jq -R -s -c 'split("\n") | map(select(length > 0))')
               fi
               break
