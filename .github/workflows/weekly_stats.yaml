@@ -109,7 +109,7 @@ jobs:
           #TOTAL3="$(awk '{SUM+=$2}END{print SUM}' Stats)"
 
       - name: Commit if needed
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           default_author: github_actions
           message : "Github bot : stats updated"

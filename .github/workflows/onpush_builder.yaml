@@ -81,7 +81,7 @@ jobs:
       # 4. Commit any changes we made
       # ────────────────────────────────────────────────────────────────
       - name: Commit if needed
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           commit: -u
           message: "GitHub bot: sanitize (spaces + LF endings) & chmod"
@@ -223,7 +223,7 @@ jobs:
             sed -i "1i\## $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
           fi
       - name: Commit if needed
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           commit: -u
           message: "GitHub bot: changelog"

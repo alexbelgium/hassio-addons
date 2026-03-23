@@ -59,7 +59,7 @@ jobs:
         # Remove issues list
         rm issueslist
     - name: Commit if needed
-      uses: EndBug/add-and-commit@v9
+      uses: EndBug/add-and-commit@v10
       with:
         message: "Github bot : issues linked to readme"
         default_author: github_actions
