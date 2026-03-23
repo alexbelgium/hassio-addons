@@ -11,9 +11,6 @@ on:
     paths:
       - "**/config.*"
 
-env:
-  BUILD_ARGS: ""
-
 jobs:
   # 1. Detect which add-on folders changed (by config.json|yaml|yml modification)
   detect-changed-addons:
@@ -106,16 +103,26 @@ jobs:
           path: "./${{ matrix.addon }}"
 
   # 4. Build images for changed addons/arches
+  # Uses composable actions from home-assistant/builder (2026.03.2+)
+  # which replaced the deprecated home-assistant/builder action.
   build:
     if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, lint_config]
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     environment: CR_PAT
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
+    permissions:
+      contents: read
+      packages: write
     strategy:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
         arch: ["aarch64", "amd64"]
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: aarch64
+            runner: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v6
       - name: Resolve Symlinks (in repo)
@@ -134,11 +141,70 @@ jobs:
               cp "$target" "$link"
             fi
           done
-      - name: Get information
+      - name: Get addon info
         id: info
-        uses: home-assistant/actions/helpers/info@master
-        with:
-          path: "./${{ matrix.addon }}"
+        env:
+          ADDON: ${{ matrix.addon }}
+          ARCH: ${{ matrix.arch }}
+        run: |
+          cd "./$ADDON"
+
+          # --- Read config file (json/yaml/yml) ---
+          version="" image="" name="" description="" arch_list="[]"
+          for ext in json yaml yml; do
+            if [ -f "config.$ext" ]; then
+              if [ "$ext" = "json" ]; then
+                version=$(jq -r '.version // ""' "config.$ext")
+                image=$(jq -r '.image // ""' "config.$ext")
+                name=$(jq -r '.name // ""' "config.$ext")
+                description=$(jq -r '.description // ""' "config.$ext")
+                arch_list=$(jq -c '.arch // []' "config.$ext")
+              else
+                version=$(grep -m1 '^version:' "config.$ext" | sed 's/^version:[[:space:]]*//' | tr -d "\"'")
+                image=$(grep -m1 '^image:' "config.$ext" | sed 's/^image:[[:space:]]*//' | tr -d "\"'")
+                name=$(grep -m1 '^name:' "config.$ext" | sed 's/^name:[[:space:]]*//' | tr -d "\"'")
+                description=$(grep -m1 '^description:' "config.$ext" | sed 's/^description:[[:space:]]*//' | tr -d "\"'")
+                arch_list=$(sed -n '/^arch:/,/^[^ -]/p' "config.$ext" | grep '^ *-' | sed 's/^ *- *//' | tr -d "\"'" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+              fi
+              break
+            fi
+          done
+
+          # --- Read build config for build_from (json/yaml/yml) ---
+          build_from="" build_archs=""
+          for ext in json yaml yml; do
+            if [ -f "build.$ext" ]; then
+              if [ "$ext" = "json" ]; then
+                build_from=$(jq -r ".build_from.\"$ARCH\" // \"\"" "build.$ext")
+                build_archs=$(jq -c '.build_from | keys' "build.$ext")
+              else
+                build_from=$(sed -n "/^build_from:/,/^[^ ]/p" "build.$ext" | grep "^ *${ARCH}:" | sed "s/^ *${ARCH}:[[:space:]]*//" | tr -d "\"'")
+                build_archs=$(sed -n '/^build_from:/,/^[^ ]/p' "build.$ext" | grep '^ ' | sed 's/:.*//' | tr -d ' ' | jq -R -s -c 'split("\n") | map(select(length > 0))')
+              fi
+              break
+            fi
+          done
+
+          # Use build config architectures if available (overrides config arch list)
+          if [ -n "$build_archs" ] && [ "$build_archs" != "[]" ]; then
+            arch_list="$build_archs"
+          fi
+
+          # Resolve {arch} placeholder in image name
+          resolved_image="${image//\{arch\}/$ARCH}"
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "image=$resolved_image" >> "$GITHUB_OUTPUT"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "description=$description" >> "$GITHUB_OUTPUT"
+          echo "architectures=$arch_list" >> "$GITHUB_OUTPUT"
+          echo "build_from=$build_from" >> "$GITHUB_OUTPUT"
+
+          echo "Addon: $ADDON, Arch: $ARCH"
+          echo "  Version: $version"
+          echo "  Image: $resolved_image"
+          echo "  Build from: $build_from"
+          echo "  Architectures: $arch_list"
       - name: Check if Dockerfile exists
         id: dockerfile_check
         run: |
@@ -150,40 +216,33 @@ jobs:
           fi
       - name: Check if add-on should be built for arch
         id: check
-        env:
-          HEAD: "${{ github.head_ref }}"
         run: |
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
              echo "build_arch=true" >> "$GITHUB_OUTPUT";
-             echo "image=$(echo "${{ steps.info.outputs.image }}" | cut -d'/' -f3)" >> "$GITHUB_OUTPUT";
-             if [[ -z "$HEAD" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
-                 echo "BUILD_ARGS=" >> "$GITHUB_ENV";
-             fi
           else
              echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
              echo "build_arch=false" >> "$GITHUB_OUTPUT";
           fi
-      - name: Login to GitHub Container Registry
-        if: env.BUILD_ARGS != '--test'
-        uses: docker/login-action@v4.0.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }} 
-      - name: Build ${{ matrix.addon }} add-on (attempt 1)
-        id: builderstep1
+      - name: Build ${{ matrix.addon }} add-on
         if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true'
-        uses: home-assistant/builder@2026.02.1
-        env:
-          CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
+        uses: home-assistant/builder/actions/build-image@2026.03.2
         with:
-          args: |
-            ${{ env.BUILD_ARGS }} \
-            --${{ matrix.arch }} \
-            --target "/data/${{ matrix.addon }}" \
-            --image "${{ steps.check.outputs.image }}" \
-            --docker-hub "ghcr.io/${{ github.repository_owner }}" \
-            --addon
+          arch: ${{ matrix.arch }}
+          context: "./${{ matrix.addon }}"
+          image: ${{ steps.info.outputs.image }}
+          image-tags: |
+            ${{ steps.info.outputs.version }}
+            latest
+          version: ${{ steps.info.outputs.version }}
+          push: "true"
+          cosign: "false"
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          build-args: |
+            BUILD_FROM=${{ steps.info.outputs.build_from }}
+            BUILD_DESCRIPTION=${{ steps.info.outputs.description }}
+            BUILD_NAME=${{ steps.info.outputs.name }}
+            BUILD_REF=${{ github.sha }}
+            BUILD_REPOSITORY=${{ github.repository }}
 
   # 5. Update changelog if needed (for each changed add-on)
   make-changelog:
