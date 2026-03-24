@@ -347,8 +347,10 @@ _wireguard_up() {
 
     # Add routing rules for VPN interface and DNS servers
     _routing_add || return 1
-    # Add firewall rules for VPN interface
-    _firewall_add || return 1
+    # Add firewall rules for VPN interface (only when UPnP port mapping is enabled)
+    if bashio::config.true 'vpn_upnp_enabled'; then
+        _firewall_add || bashio::log.warning "Firewall rules could not be applied (non-fatal)."
+    fi
     # Update resolv.conf with VPN DNS servers
     _resolvconf "update" || return 1
     # Wait for handshake to be established before returning success
@@ -360,8 +362,10 @@ _wireguard_down() {
     _resolvconf "reset" || true
     # Remove routing rules for VPN interface and DNS servers
     _routing_del || true
-    # Remove firewall rules for VPN interface
-    _firewall_del || true
+    # Remove firewall rules for VPN interface (only when UPnP port mapping is enabled)
+    if bashio::config.true 'vpn_upnp_enabled'; then
+        _firewall_del || true
+    fi
 
     _cmd "ip link set ${config["Interface"]} down" 2>/dev/null || true
     _cmd "ip link del ${config["Interface"]}" 2>/dev/null || true
@@ -521,13 +525,17 @@ _openvpn_up() {
 _openvpn_down() {
     # Terminate OpenVPN process
     pkill -f "openvpn --config ${config["ConfigFile"]}" || true
+    # Safety-net cleanup in case the --down callback was never invoked
+    _routing_del || true
 }
 
 _openpvn_postup() {
     # Add routing rules for VPN interface and DNS servers
     _routing_add || return 1
-    # Add firewall rules for VPN interface
-    _firewall_add || return 1
+    # Add firewall rules for VPN interface (only when UPnP port mapping is enabled)
+    if bashio::config.true 'vpn_upnp_enabled'; then
+        _firewall_add || bashio::log.warning "Firewall rules could not be applied (non-fatal)."
+    fi
     # Update resolv.conf with VPN DNS servers
     _resolvconf "update" || return 1
 }
@@ -537,8 +545,10 @@ _openpvn_postdown() {
     _resolvconf "reset" || true
     # Remove routing rules for VPN interface and DNS servers
     _routing_del || true
-    # Remove firewall rules for VPN interface
-    _firewall_del || true
+    # Remove firewall rules for VPN interface (only when UPnP port mapping is enabled)
+    if bashio::config.true 'vpn_upnp_enabled'; then
+        _firewall_del || true
+    fi
 }
 
 openvpn() {
