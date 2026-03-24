@@ -1,3 +1,6 @@
+## 5.1.4-19 (24-03-2026)
+- Fix OpenVPN not connecting: restore missing openvpn package in Dockerfile
+
 ## 5.1.4-18 (22-03-2026)
 - Minor bugs fixed
 ## 5.1.4-17 (17-02-2026)
