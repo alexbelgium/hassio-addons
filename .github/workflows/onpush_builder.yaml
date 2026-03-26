@@ -3,7 +3,6 @@
 name: Builder
 
 on:
-  workflow_call:
   push:
     branches:
       - master
