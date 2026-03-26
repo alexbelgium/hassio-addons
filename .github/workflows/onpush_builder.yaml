@@ -3,6 +3,7 @@
 name: Builder
 
 on:
+  workflow_call:
   push:
     branches:
       - master
@@ -165,6 +166,7 @@ jobs:
           ADDON: ${{ matrix.addon }}
           ARCH: ${{ matrix.arch }}
           REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA_VALUE: ${{ github.sha }}
         run: |
           set -euo pipefail
 
@@ -173,43 +175,44 @@ jobs:
           import os
           from datetime import datetime, timezone
           from pathlib import Path
-          
+
           import yaml
-          
+
           addon = os.environ["ADDON"]
           arch = os.environ["ARCH"]
           repository = os.environ["REPOSITORY"]
+          github_sha = os.environ["GITHUB_SHA_VALUE"]
           addon_dir = Path(addon)
           output_path = Path(os.environ["GITHUB_OUTPUT"])
-          
-          
+
+
           def load_file(path: Path):
               text = path.read_text(encoding="utf-8")
               if path.suffix == ".json":
                   return json.loads(text)
               return yaml.safe_load(text) or {}
-          
-          
+
+
           def first_existing(*names: str):
               for name in names:
                   path = addon_dir / name
                   if path.exists():
                       return path
               return None
-          
-          
+
+
           config_path = first_existing("config.json", "config.yaml", "config.yml")
           if config_path is None:
               raise SystemExit(f"No config file found in {addon}")
-          
+
           build_path = first_existing("build.json", "build.yaml", "build.yml")
           config = load_file(config_path)
           build = load_file(build_path) if build_path else {}
-          
+
           build_from_map = build.get("build_from") or {}
           arch_list = list(build_from_map.keys()) if build_from_map else list(config.get("arch") or [])
           build_arch = arch in arch_list
-          
+
           image_raw = str(config.get("image") or "").strip()
           image = image_raw.replace("{arch}", arch)
           version = str(config.get("version") or "").strip()
@@ -218,16 +221,16 @@ jobs:
           url = str(config.get("url") or "").strip()
           build_from = str(build_from_map.get(arch) or "").strip()
           build_date = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-          
+
           dockerfile = addon_dir / f"Dockerfile.{arch}"
           if dockerfile.exists():
-              dockerfile_name = dockerfile.name
+              dockerfile_path = str(dockerfile)
               has_dockerfile = True
           else:
               dockerfile = addon_dir / "Dockerfile"
-              dockerfile_name = dockerfile.name
+              dockerfile_path = str(dockerfile)
               has_dockerfile = dockerfile.exists()
-          
+
           labels = [
               f"io.hass.name={name}",
               f"io.hass.description={description}",
@@ -235,29 +238,31 @@ jobs:
           ]
           if url:
               labels.append(f"io.hass.url={url}")
-          
+
           build_args = [
+              f"BUILD_ARCH={arch}",
+              f"BUILD_VERSION={version}",
               f"BUILD_DATE={build_date}",
               f"BUILD_DESCRIPTION={description}",
               f"BUILD_NAME={name}",
-              f"BUILD_REF={os.environ.get('GITHUB_SHA', '')}",
+              f"BUILD_REF={github_sha}",
               f"BUILD_REPOSITORY={repository}",
           ]
           if build_from:
-              build_args.insert(0, f"BUILD_FROM={build_from}")
-          
-          
+              build_args.insert(2, f"BUILD_FROM={build_from}")
+
+
           def write_output(key: str, value: str):
               with output_path.open("a", encoding="utf-8") as fh:
                   print(f"{key}<<__EOF__", file=fh)
                   print(value, file=fh)
                   print("__EOF__", file=fh)
-          
-          
+
+
           write_output("architectures", json.dumps(arch_list))
           write_output("build_arch", "true" if build_arch else "false")
           write_output("has_dockerfile", "true" if has_dockerfile else "false")
-          write_output("dockerfile", dockerfile_name)
+          write_output("dockerfile", dockerfile_path)
           write_output("image", image)
           write_output("version", version)
           write_output("name", name)
@@ -412,3 +417,4 @@ jobs:
           done
 
           git push origin HEAD:master
+  
