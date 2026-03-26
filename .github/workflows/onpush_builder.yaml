@@ -4,12 +4,6 @@ name: Builder
 
 on:
   workflow_call:
-    inputs:
-      addons_json:
-        description: JSON array of add-on directories to process. If empty, all add-ons are discovered.
-        required: false
-        type: string
-        default: ""
   push:
     branches:
       - master
@@ -34,18 +28,10 @@ jobs:
 
       - name: Find add-on directories to process
         id: find_addons
-        env:
-          INPUT_ADDONS_JSON: ${{ inputs.addons_json }}
         run: |
           set -euo pipefail
 
-          if [ -n "${INPUT_ADDONS_JSON:-}" ]; then
-            if ! jq -e 'type == "array" and all(.[]; type == "string")' <<<"$INPUT_ADDONS_JSON" >/dev/null; then
-              echo "workflow_call input addons_json must be a JSON array of strings" >&2
-              exit 1
-            fi
-            changed_addons=$(jq -c 'map(select(length > 0)) | unique' <<<"$INPUT_ADDONS_JSON")
-          elif [ "${{ github.event_name }}" = "push" ]; then
+          if [ "${{ github.event_name }}" = "push" ]; then
             before="${{ github.event.before }}"
             if [ -n "$before" ] && [ "$before" != "0000000000000000000000000000000000000000" ]; then
               git fetch --no-tags --depth=1 origin "$before" || true
