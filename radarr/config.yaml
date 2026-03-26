@@ -108,4 +108,4 @@ schema:
 slug: radarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/radarr
-version: "6.0.4.10291-1"
+version: "6.0.4.10291-2"
