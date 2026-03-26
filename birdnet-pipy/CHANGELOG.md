@@ -1,4 +1,7 @@
 
+## 0.5.8 (2026-03-26)
+- Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
+
 ## 0.5.7 (2026-03-14)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 
