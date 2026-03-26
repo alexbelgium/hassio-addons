@@ -1,3 +1,4 @@
+## 5.1.4-20 (26-03-2026)
 - If multiple openvpn configs are available and none is defined in the options, use a random one
 - Add upnp for vpn
 
