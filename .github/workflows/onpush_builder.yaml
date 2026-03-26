@@ -115,6 +115,7 @@ jobs:
       contents: read
       packages: write
     strategy:
+      fail-fast: false
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
         arch: ["aarch64", "amd64"]
@@ -125,6 +126,8 @@ jobs:
             runner: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - name: Resolve Symlinks (in repo)
         run: |
           find . -type l | while read -r link; do
@@ -199,6 +202,7 @@ jobs:
           echo "description=$description" >> "$GITHUB_OUTPUT"
           echo "architectures=$arch_list" >> "$GITHUB_OUTPUT"
           echo "build_from=$build_from" >> "$GITHUB_OUTPUT"
+          echo "build_date=$(date --rfc-3339=seconds --utc)" >> "$GITHUB_OUTPUT"
 
           echo "Addon: $ADDON, Arch: $ARCH"
           echo "  Version: $version"
@@ -228,6 +232,7 @@ jobs:
         uses: home-assistant/builder/actions/build-image@2026.03.2
         with:
           arch: ${{ matrix.arch }}
+          cache-gha-scope: ${{ matrix.addon }}
           context: "./${{ matrix.addon }}"
           image: ${{ steps.info.outputs.image }}
           image-tags: |
@@ -239,6 +244,7 @@ jobs:
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
           build-args: |
             BUILD_FROM=${{ steps.info.outputs.build_from }}
+            BUILD_DATE=${{ steps.info.outputs.build_date }}
             BUILD_DESCRIPTION=${{ steps.info.outputs.description }}
             BUILD_NAME=${{ steps.info.outputs.name }}
             BUILD_REF=${{ github.sha }}
