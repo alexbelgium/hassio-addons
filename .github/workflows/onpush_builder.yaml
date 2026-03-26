@@ -167,7 +167,7 @@ jobs:
                 image=$(grep -m1 '^image:' "config.$ext" | sed 's/^image:[[:space:]]*//' | tr -d "\"'")
                 name=$(grep -m1 '^name:' "config.$ext" | sed 's/^name:[[:space:]]*//' | tr -d "\"'")
                 description=$(grep -m1 '^description:' "config.$ext" | sed 's/^description:[[:space:]]*//' | tr -d "\"'")
-                arch_list=$(sed -n '/^arch:/,/^[^ -]/p' "config.$ext" | grep '^ *-' | sed 's/^ *- *//' | tr -d "\"'" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+                arch_list=$(sed -n '/^arch:/,/^[^ a]/p' "config.$ext" | grep '^ *-' | sed 's/^ *- *//' | tr -d "\"'" | jq -R -s -c 'split("\n") | map(select(length > 0))')
               fi
               break
             fi
