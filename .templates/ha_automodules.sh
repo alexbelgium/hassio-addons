@@ -21,16 +21,28 @@ if ! command -v curl > /dev/null 2> /dev/null; then
 fi
 
 # Install ca-certificates if not available
-apt-get update && apt-get install -yqq --no-install-recommends ca-certificates || apk add --no-cache ca-certificates > /dev/null || true
+(apt-get update && apt-get install -yqq --no-install-recommends ca-certificates || apk add --no-cache ca-certificates) > /dev/null 2>&1 || true
 
 # Create folder for scripts
 mkdir -p /etc/cont-init.d
 
 # Download scripts
 for scripts in $MODULES; do
-    echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" \
-        && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] \
-        || (echo "script failed to install $scripts" && exit 1)
+    echo "$scripts"
+    success=false
+    for attempt in 1 2 3 4 5; do
+        if curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" \
+            && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ]; then
+            success=true
+            break
+        fi
+        echo "Attempt $attempt failed for $scripts, retrying in ${attempt}s..."
+        sleep "$attempt"
+    done
+    if [ "$success" != "true" ]; then
+        echo "script failed to install $scripts after 5 attempts"
+        exit 1
+    fi
 done
 
 chmod -R 755 /etc/cont-init.d

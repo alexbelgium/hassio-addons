@@ -67,7 +67,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 USER root
 
 # --- LSIO helper ---
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" /ha_lsio.sh
+COPY ha_lsio.sh /ha_lsio.sh
 ARG CONFIGLOCATION="/config"
 RUN set -eux; \
     chmod 744 /ha_lsio.sh; \
@@ -105,14 +105,14 @@ COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
 
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh 00-local_mounts.sh 00-smb_mounts.sh"
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" /ha_automodules.sh
+COPY ha_automodules.sh /ha_automodules.sh
 RUN set -eux; \
     chmod 744 /ha_automodules.sh; \
     /ha_automodules.sh "$MODULES"; \
     rm /ha_automodules.sh
 
 ENV PACKAGES="sudo jq yamllint nginx"
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" /ha_autoapps.sh
+COPY ha_autoapps.sh /ha_autoapps.sh
 RUN set -eux; \
     chmod 744 /ha_autoapps.sh; \
     /ha_autoapps.sh "$PACKAGES"; \
@@ -122,7 +122,7 @@ RUN set -eux; \
 # 4) Entrypoint
 ###############
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" /ha_entrypoint.sh
+COPY ha_entrypoint.sh /ha_entrypoint.sh
 RUN chmod +x /ha_entrypoint.sh
 
 ENTRYPOINT ["/usr/bin/env"]

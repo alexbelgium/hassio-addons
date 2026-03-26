@@ -78,7 +78,7 @@ RUN curl -L -o /usr/local/bin/jq "https://github.com/jqlang/jq/releases/download
 ARG MODULES="00-banner.sh"
 
 # Automatic modules download
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
+COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh \
     && /ha_automodules.sh "$MODULES" \
     && rm /ha_automodules.sh
@@ -89,7 +89,7 @@ RUN chmod 744 /ha_automodules.sh \
 ENV PACKAGES=""
 
 # Automatic apps & bashio
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
+COPY ha_autoapps.sh /ha_autoapps.sh
 RUN chmod 744 /ha_autoapps.sh \
     && /ha_autoapps.sh "$PACKAGES" \
     && rm /ha_autoapps.sh
@@ -98,10 +98,10 @@ RUN chmod 744 /ha_autoapps.sh \
 # 4 Entrypoint #
 ################
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+COPY ha_entrypoint.sh /ha_entrypoint.sh
 RUN chmod 777 /ha_entrypoint.sh
 
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
+COPY bashio-standalone.sh /.bashio-standalone.sh
 RUN chmod 0644 /.bashio-standalone.sh
 
 #WORKDIR /
