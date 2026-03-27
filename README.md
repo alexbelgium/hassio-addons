@@ -57,18 +57,18 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 127
-- Installed : 125333
+- Installed : 128014
 
 ### Top 3
 
 1. Filebrowser (24134x)
 2. Portainer (14344x)
-3. Postgres_17 (5248x)
+3. Postgres_17 (5642x)
 
 ### Architectures used
 
-- amd64: 64%
-- aarch64: 36%
+- amd64: 65%
+- aarch64: 35%
 - %%STATS_ARMV7%%
 
 ### Stars evolution
