@@ -303,6 +303,7 @@ jobs:
         uses: home-assistant/builder/actions/build-image@2026.03.2
         with:
           arch: ${{ matrix.arch }}
+          cache-gha: "false"
           cache-gha-scope: ${{ matrix.addon }}-${{ matrix.arch }}
           context: ./${{ matrix.addon }}
           file: ${{ steps.info.outputs.dockerfile }}
