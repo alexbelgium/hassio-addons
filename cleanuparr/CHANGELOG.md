@@ -1,4 +1,7 @@
 
+## 2.9.1 (2026-03-28)
+- Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
+
 ## 2.8.1 (2026-03-14)
 - Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
 # Changelog
