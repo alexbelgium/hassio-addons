@@ -499,15 +499,23 @@ _openvpn_up() {
     chmod 755 ${config["PostDownScript"]}
 
     # Define logging
-    log_path="/dev/null"
-    [[ "$log_level" == "debug" ]] && log_path="/proc/1/fd/1"
+    declare -A verbosity=(
+        ["fatal"]=1
+        ["error"]=1
+        ["warning"]=2
+        ["notice"]=3
+        ["info"]=4
+        ["debug"]=5
+        ["trace"]=6
+    )
 
     # Start OpenVPN in the background
     _cmd "/usr/sbin/openvpn \
         --config "${config["ConfigFile"]}" \
         --client \
         --daemon \
-        --log "$log_path" \
+        --verb ${verbosity[${$log_level}]} \
+        --log "/proc/1/fd/1" \
         --script-security 2 \
         --auth-user-pass "${OPENVPN_STATE_DIR}/credentials.conf" \
         --auth-retry none \
