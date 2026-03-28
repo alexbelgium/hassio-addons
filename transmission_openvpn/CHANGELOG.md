@@ -1,4 +1,7 @@
 
+## v5.4.1 (2026-03-28)
+- Update to latest version from haugene/docker-transmission-openvpn (changelog : https://github.com/haugene/docker-transmission-openvpn/releases)
+
 ## v5.4.0-2 (2026-03-16)
 
 - Fix: Replace update-resolv-conf script that uses systemd-resolved (unavailable in containers) with one that directly updates /etc/resolv.conf
