@@ -183,6 +183,12 @@ done
 [ "$VERBOSE" = true ] && echo "installing packages $PACKAGES"
 if [ "$PACKMANAGER" = "apt" ]; then apt-get update > /dev/null; fi
 if [ "$PACKMANAGER" = "pacman" ]; then pacman -Sy > /dev/null; fi
+if [ "$PACKMANAGER" = "apk" ] && [ -f /etc/apk/repositories ] && ! grep -q "community" /etc/apk/repositories; then
+    ALPINE_VER=$(cat /etc/alpine-release 2>/dev/null | cut -d. -f1,2)
+    if [ -n "$ALPINE_VER" ]; then
+        echo "https://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VER}/community" >> /etc/apk/repositories
+    fi
+fi
 
 # Install apps one by one to allow failures
 # shellcheck disable=SC2086
