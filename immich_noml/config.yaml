@@ -70,7 +70,6 @@ devices:
   - /dev/nvme2
 environment:
   CI_PORT: "8080"
-  DOCKER_MODS: imagegenius/mods:universal-redis
   MACHINE_LEARNING_CACHE_FOLDER: /data/machine-learning
   MACHINE_LEARNING_WORKERS: "1"
   MACHINE_LEARNING_WORKER_TIMEOUT: "120"
@@ -142,6 +141,6 @@ slug: immich_noml
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "2.6.2"
+version: "2.6.2-2"
 video: true
 webui: http://[HOST]:[PORT:8080]
