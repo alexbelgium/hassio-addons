@@ -187,6 +187,7 @@ if [ "$PACKMANAGER" = "apk" ] && [ -f /etc/apk/repositories ] && ! grep -q "comm
     ALPINE_VER=$(cat /etc/alpine-release 2>/dev/null | cut -d. -f1,2)
     if [ -n "$ALPINE_VER" ]; then
         echo "https://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VER}/community" >> /etc/apk/repositories
+        apk update > /dev/null
     fi
 fi
 
