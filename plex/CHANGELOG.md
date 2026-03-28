@@ -1,4 +1,7 @@
 
+## 1.43.0.10492-121068a07-ls297 (2026-03-28)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
+
 ## 1.43.0.10492-121068a07-ls296 (2026-03-21)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 
