@@ -34,13 +34,8 @@ COPY ha_lsio.sh /ha_lsio.sh
 ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
-# Install REDIS
-ENV DOCKER_MODS="imagegenius/mods:universal-redis"
-
-#    && chmod 777 -R /docker-mods \
-#        && /./docker-mods/* || ls / \
-#    && if [ !-f /defaults/redis.conf ]; then echo "Not installed" && exit 1; fi
-#ENV DOCKER_MODS=""
+# Install REDIS directly instead of via Docker mods for reliability
+# (Docker mods can fail to install Redis at runtime, causing ECONNRESET errors)
 
 ##################
 # 3 Install apps #
@@ -63,7 +58,7 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="sudo yamllint pip sed jq"
+ENV PACKAGES="sudo yamllint pip sed jq redis-server"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh

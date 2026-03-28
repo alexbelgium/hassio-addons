@@ -97,9 +97,8 @@ fi
 # REDIS LOCATION #
 ##################
 
-echo "sed -i \"s=/config/redis=/data/redis=g\" /etc/s6*/s6*/*/run" >> /docker-mods
-echo "sed -i \"s=/config/log/redis=/data/log=g\" /etc/s6*/s6*/*/run" >> /docker-mods
 mkdir -p /data/redis
 mkdir -p /data/log
+mkdir -p /var/run/redis
 chmod 755 /data/redis
 chmod 755 /data/log

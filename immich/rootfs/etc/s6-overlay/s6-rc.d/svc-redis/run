@@ -1,0 +1,27 @@
+#!/usr/bin/with-contenv bash
+
+# Create Redis directories
+mkdir -p \
+    /data/redis \
+    /data/log \
+    /var/run/redis
+
+# Copy default redis.conf if not present
+if [[ ! -f /data/redis/redis.conf ]]; then
+    cp /defaults/redis.conf /data/redis/redis.conf 2>/dev/null || touch /data/redis/redis.conf
+fi
+
+# Set permissions
+chown -R root:root \
+    /data/redis \
+    /data/log \
+    /var/run/redis
+
+exec \
+    redis-server /data/redis/redis.conf \
+    --bind 127.0.0.1 \
+    --port 6379 \
+    --pidfile /var/run/redis/redis.pid \
+    --always-show-logo no \
+    --dir /data/redis \
+    --logfile /data/log/redis.log
