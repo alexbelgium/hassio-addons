@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_FROM
-ARG BUILD_UPSTREAM="0.2.4"
+ARG BUILD_UPSTREAM="0.2.5"
 FROM ssenart/gazpar2mqtt:latest
 
 ##################
@@ -51,7 +51,7 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="0.2.4"
+ENV PACKAGES="0.2.5"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
