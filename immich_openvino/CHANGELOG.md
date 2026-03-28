@@ -1,4 +1,7 @@
 
+## 2.6.2-2 (2026-03-28)
+- Fix Redis startup: install redis-server directly instead of via Docker mods to prevent ECONNRESET errors (issue #2615)
+
 ## 2.6.2 (2026-03-28)
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
