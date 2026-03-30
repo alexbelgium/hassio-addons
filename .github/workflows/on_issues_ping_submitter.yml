@@ -42,7 +42,7 @@ jobs:
               comments_url="https://api.github.com/repos/${REPO}/issues/${ISSUE_NUMBER}/comments"
 
               export GH_TOKEN="${GITHUB_TOKEN}"
-              existing="$(gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json comments --jq '[.comments[] | select(.body | contains($marker))] | length')"
+              existing="$(gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json comments | jq --arg marker "$marker" '[.comments[] | select(.body | contains($marker))] | length')"
 
               if [ "$existing" -eq 0 ]; then
                 body=$(jq -cn --arg marker "$marker" --arg addon "$addon" --arg user "$user" '{body: ($marker + "\nHeads up @" + $user + ": this issue appears to mention `" + $addon + "`.")}')
