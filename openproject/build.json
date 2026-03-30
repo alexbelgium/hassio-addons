@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "openproject/openproject:17",
-    "amd64": "openproject/openproject:17"
+    "aarch64": "openproject/openproject:latest",
+    "amd64": "openproject/openproject:latest"
   }
 }
