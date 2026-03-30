@@ -69,7 +69,6 @@ If you want to do add the repository manually, please follow the procedure highl
 
 - amd64: 65%
 - aarch64: 35%
-- %%STATS_ARMV7%%
 
 ### Stars evolution
 
