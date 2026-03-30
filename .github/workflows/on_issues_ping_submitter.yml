@@ -28,11 +28,12 @@ jobs:
 
           TEXT="${ISSUE_TITLE} ${ISSUE_BODY}"
           TEXT_LOWER="$(printf '%s' "$TEXT" | tr '[:upper:]' '[:lower:]')"
+          ADDON_LOWER="$(printf '%s' "$addon" | tr '[:upper:]' '[:lower:]')"
 
           while IFS= read -r addon; do
-            [ -z "$addon" ] && continue
+            [ -z "$ADDON_LOWER" ] && continue
 
-            if [[ "$TEXT_LOWER" == *"$addon"* ]]; then
+            if [[ "$TEXT_LOWER" == *"$ADDON_LOWER"* ]]; then
               user="$(jq -r --arg addon "$addon" '.[$addon]' .github/addon_submitters.json)"
               if [ -z "$user" ] || [ "$user" = "null" ]; then
                 continue
