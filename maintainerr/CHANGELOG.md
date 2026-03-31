@@ -1,4 +1,7 @@
 
+## 3.2.0-2 (2026-03-31)
+- Fix configuration lost after container restart by using persistent addon_config directory
+
 ## 3.2.0 (2026-03-28)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
 

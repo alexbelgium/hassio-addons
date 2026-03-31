@@ -24,17 +24,26 @@ if [ -d /etc/cont-init.d ]; then
 fi
 
 # ─── Setup persistent data directory ─────────────────────────────────────────
-# /opt/data is a Docker VOLUME in the upstream image and cannot be removed.
-# Maintainerr supports the DATA_DIR env var to redirect data storage.
-DATA_DIR="/config"
-echo "[Maintainerr] Setting up data directory: $DATA_DIR"
-mkdir -p "$DATA_DIR"
-# Only chown on first run to avoid slow startup on large directories
-if [ ! -f "$DATA_DIR/.initialized" ]; then
-    chown -R node:node "$DATA_DIR"
-    touch "$DATA_DIR/.initialized"
+# /opt/data is a Docker VOLUME in the upstream image; it is NOT persistent
+# across addon updates/reinstalls in HA.  Use the addon_config directory
+# which is mapped by "addon_config:rw" in config.yaml and survives restarts.
+HA_DATA_DIR="/addon_configs/maintainerr"
+echo "[Maintainerr] Setting up data directory: $HA_DATA_DIR"
+mkdir -p "$HA_DATA_DIR"
+
+# Copy any seed / initial data from the upstream volume on first run
+if [ -d /opt/data ] && [ ! -f "$HA_DATA_DIR/.initialized" ]; then
+    cp -rn /opt/data/. "$HA_DATA_DIR/" 2>/dev/null || true
 fi
-export DATA_DIR
+
+# Only chown on first run to avoid slow startup on large directories
+if [ ! -f "$HA_DATA_DIR/.initialized" ]; then
+    chown -R node:node "$HA_DATA_DIR"
+    touch "$HA_DATA_DIR/.initialized"
+fi
+
+# Tell Maintainerr to use the persistent directory
+export DATA_DIR="$HA_DATA_DIR"
 
 # ─── Start Maintainerr as unprivileged node user ─────────────────────────────
 echo "[Maintainerr] Starting application on port ${UI_PORT:-6246}..."
