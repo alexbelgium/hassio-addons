@@ -1,4 +1,7 @@
 
+## 3.2.0-3 (2026-03-31)
+- Fix addon never starts: symlink contents inside /opt/data instead of replacing the Docker VOLUME directory
+
 ## 3.2.0-2 (2026-03-31)
 - Fix configuration lost after container restart by symlinking /opt/data to persistent /config directory
 

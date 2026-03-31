@@ -65,6 +65,8 @@ devices:
   - /dev/nvme0
   - /dev/nvme1
   - /dev/nvme2
+environment:
+  - DATA_DIR: "/config"
 image: ghcr.io/alexbelgium/maintainerr-{arch}
 ingress: true
 ingress_stream: true
@@ -87,5 +89,5 @@ schema:
   TZ: str?
 slug: maintainerr
 url: https://github.com/alexbelgium/hassio-addons/tree/master/maintainerr
-version: "3.2.0-2"
+version: "3.2.0-3"
 webui: "[PROTO:ssl]://[HOST]:[PORT:6246]"
