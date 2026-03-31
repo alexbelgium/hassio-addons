@@ -89,5 +89,5 @@ schema:
   TZ: str?
 slug: maintainerr
 url: https://github.com/alexbelgium/hassio-addons/tree/master/maintainerr
-version: "3.2.0-2"
+version: "3.2.0-3"
 webui: "[PROTO:ssl]://[HOST]:[PORT:6246]"
