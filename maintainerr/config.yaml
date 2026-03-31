@@ -65,6 +65,8 @@ devices:
   - /dev/nvme0
   - /dev/nvme1
   - /dev/nvme2
+environment:
+  - DATA_DIR: "/config"
 image: ghcr.io/alexbelgium/maintainerr-{arch}
 ingress: true
 ingress_stream: true
