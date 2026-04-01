@@ -514,7 +514,7 @@ _openvpn_up() {
         --config "${config["ConfigFile"]}" \
         --client \
         --daemon \
-        --verb ${verbosity[${$log_level}]} \
+        --verb ${verbosity[${log_level}]} \
         --log "/proc/1/fd/1" \
         --script-security 2 \
         --auth-user-pass "${OPENVPN_STATE_DIR}/credentials.conf" \
