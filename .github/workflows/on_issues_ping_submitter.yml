@@ -33,7 +33,7 @@ jobs:
             ADDON_LOWER="$(printf '%s' "$addon" | tr '[:upper:]' '[:lower:]')"
             [ -z "$ADDON_LOWER" ] && continue
 
-            if [[ "$TEXT_LOWER" == *"$ADDON_LOWER"* ]]; then
+            if [[ " $TEXT_LOWER " == *" $ADDON_LOWER "* ]]; then
               user="$(jq -r --arg addon "$addon" '.[$addon]' .github/addon_submitters.json)"
               if [ -z "$user" ] || [ "$user" = "null" ]; then
                 continue
