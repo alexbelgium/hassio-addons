@@ -21,6 +21,7 @@ if [ -d /etc/cont-init.d ]; then
         # Source the script so it inherits bashio functions from bashio-standalone.
         # Using bash "$script" would spawn a new process without bashio:: functions,
         # causing "command not found" failures under set -e.
+        # shellcheck disable=SC1090
         source "$script"
     done
 fi
