@@ -59,14 +59,31 @@ export DATA_DIR
 # ─── Start Maintainerr as unprivileged node user ─────────────────────────────
 echo "[Maintainerr] Starting application on port ${UI_PORT:-6246}..."
 gosu node /opt/app/start.sh &
+APP_PID=$!
+
+cleanup() {
+    if [ -n "${APP_PID:-}" ] && ps -p "$APP_PID" >/dev/null 2>&1; then
+        kill "$APP_PID" 2>/dev/null || true
+        wait "$APP_PID" 2>/dev/null || true
+    fi
+}
+trap 'cleanup' EXIT TERM INT
 
 # ─── Wait for Maintainerr to become available, then start Nginx ──────────────
 echo "[Maintainerr] Waiting for application to be ready..."
+app_ready=0
 for _ in $(seq 1 900); do
     if curl -s -o /dev/null -f "http://127.0.0.1:${UI_PORT:-6246}" 2>/dev/null; then
+        app_ready=1
         break
     fi
     sleep 1
 done
+
+if [ "$app_ready" -ne 1 ]; then
+    echo "[Maintainerr] ERROR: Application did not become ready within timeout. Aborting nginx startup."
+    # cleanup trap will handle stopping APP_PID if still running
+    exit 1
+fi
 echo "[Maintainerr] Starting Nginx..."
 exec nginx -c /etc/nginx/nginx.conf
