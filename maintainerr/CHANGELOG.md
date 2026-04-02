@@ -1,3 +1,5 @@
+## 3.2.0-4 (02-04-2026)
+- Minor bugs fixed
 
 ## 3.2.0-3 (2026-03-31)
 - Fix addon never starts: symlink contents inside /opt/data instead of replacing the Docker VOLUME directory
