@@ -17,8 +17,8 @@ if ! bashio::supervisor.ping 2>/dev/null; then
     bashio::log.blue "Config source: ENV + /data/options.json"
     bashio::log.blue '-----------------------------------------------------------'
     cp -rf /usr/local/lib/bashio-standalone.sh /usr/bin/bashio
-    grep -rlZ "^#!.*bashio" /etc |
-    while IFS= read -r -d '' f; do
+    grep -rl "^#!.*bashio" /etc |
+    while IFS= read -r f; do
         grep -qF "source /usr/local/lib/bashio-standalone.sh" "$f" && continue
         sed -i '1a source /usr/local/lib/bashio-standalone.sh' "$f"
     done
