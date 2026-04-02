@@ -1,3 +1,6 @@
+## 3.2.0-5 (02-04-2026)
+- Add Home Assistant ingress support with nginx reverse proxy
+
 ## 3.2.0-4 (02-04-2026)
 - Minor bugs fixed
 
