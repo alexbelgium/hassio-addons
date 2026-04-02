@@ -18,8 +18,10 @@ if [ -d /etc/cont-init.d ]; then
     for script in /etc/cont-init.d/*.sh; do
         [ -f "$script" ] || continue
         echo "[Maintainerr] Running init script: $script"
-        # Use bash directly (no S6 with-contenv available)
-        bash "$script"
+        # Source the script so it inherits bashio functions from bashio-standalone.
+        # Using bash "$script" would spawn a new process without bashio:: functions,
+        # causing "command not found" failures under set -e.
+        source "$script"
     done
 fi
 
