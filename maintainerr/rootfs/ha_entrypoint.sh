@@ -68,5 +68,5 @@ for _ in $(seq 1 900); do
     fi
     sleep 1
 done
-echo "[Maintainerr] Starting NGinx..."
+echo "[Maintainerr] Starting Nginx..."
 exec nginx -c /etc/nginx/nginx.conf
