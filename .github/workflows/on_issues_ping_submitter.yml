@@ -28,9 +28,9 @@ jobs:
 
           TEXT="${ISSUE_TITLE} ${ISSUE_BODY}"
           TEXT_LOWER="$(printf '%s' "$TEXT" | tr '[:upper:]' '[:lower:]')"
-          ADDON_LOWER="$(printf '%s' "$addon" | tr '[:upper:]' '[:lower:]')"
 
           while IFS= read -r addon; do
+            ADDON_LOWER="$(printf '%s' "$addon" | tr '[:upper:]' '[:lower:]')"
             [ -z "$ADDON_LOWER" ] && continue
 
             if [[ "$TEXT_LOWER" == *"$ADDON_LOWER"* ]]; then
