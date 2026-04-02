@@ -58,4 +58,15 @@ export DATA_DIR
 
 # ─── Start Maintainerr as unprivileged node user ─────────────────────────────
 echo "[Maintainerr] Starting application on port ${UI_PORT:-6246}..."
-exec gosu node /opt/app/start.sh
+gosu node /opt/app/start.sh &
+
+# ─── Wait for Maintainerr to become available, then start Nginx ──────────────
+echo "[Maintainerr] Waiting for application to be ready..."
+for i in $(seq 1 900); do
+    if curl -s -o /dev/null -f "http://127.0.0.1:${UI_PORT:-6246}" 2>/dev/null; then
+        break
+    fi
+    sleep 1
+done
+echo "[Maintainerr] Starting NGinx..."
+exec nginx
