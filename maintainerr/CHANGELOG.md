@@ -1,3 +1,6 @@
+
+## 3.3.0 (2026-04-04)
+- Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
 ## 3.2.0-10 (03-04-2026)
 - Minor bugs fixed
 ## 3.2.0-9 (03-04-2026)
