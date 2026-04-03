@@ -11,9 +11,9 @@ set -e
 if [ -d /etc/cont-init.d ]; then
     for script in /etc/cont-init.d/*.sh; do
         [ -f "$script" ] || continue
-        sed -i "1a\#!/usr/bin/env bashio" "$script"
+        sed -i '1s|.*|#!/usr/bin/env bashio|' "$script"
         echo "[Maintainerr] Running init script: $script"
-        exec "$script"
+        bash "$script"        # ← bash, not exec
     done
 fi
 
