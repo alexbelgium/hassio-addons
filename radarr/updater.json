@@ -1,8 +1,8 @@
 {
-  "last_update": "22-11-2025",
+  "last_update": "2026-04-04",
   "repository": "alexbelgium/hassio-addons",
   "slug": "radarr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-radarr",
-  "upstream_version": "6.0.4.10291"
+  "upstream_version": "6.1.1.10360"
 }
