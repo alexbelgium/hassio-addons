@@ -13,7 +13,7 @@ if [ -d /etc/cont-init.d ]; then
         [ -f "$script" ] || continue
         sed -i '1s|.*|#!/usr/bin/env bashio|' "$script"
         echo "[Maintainerr] Running init script: $script"
-        bash "$script"        # ← bash, not exec
+        bashio "$script"
     done
 fi
 
