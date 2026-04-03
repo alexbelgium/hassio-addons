@@ -7,13 +7,23 @@ set -e
 # Runs cont-init.d scripts then drops privileges and starts the app.
 ###############################################################################
 
+# ─── Source bashio library so init scripts can use bashio:: functions ─────────
+for _f in /usr/lib/bashio/bashio /usr/lib/bashio/bashio.sh; do
+    if [ -f "$_f" ]; then
+        # shellcheck disable=SC1090
+        source "$_f"
+        break
+    fi
+done
+
 # ─── Run cont-init.d scripts ─────────────────────────────────────────────────
 if [ -d /etc/cont-init.d ]; then
     for script in /etc/cont-init.d/*.sh; do
         [ -f "$script" ] || continue
-        sed -i '1s|.*|#!/usr/bin/env bashio|' "$script"
         echo "[Maintainerr] Running init script: $script"
-        bashio "$script"
+        # Run in subshell to isolate side effects; bashio functions are inherited
+        # shellcheck disable=SC1090
+        ( source "$script" )
     done
 fi
 
