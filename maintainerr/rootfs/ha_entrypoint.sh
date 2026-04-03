@@ -79,7 +79,9 @@ if [ -n "$ingress_entry" ]; then
     UI_DIST_DIR="/opt/app/apps/server/dist/ui"
     if [ -d "$UI_DIST_DIR" ]; then
         echo "[Maintainerr] Setting ingress base path: $ingress_entry"
-        find "$UI_DIST_DIR" -type f -not -path '*/node_modules/*' \
+        # Only process text-based web files (skip binary assets like images/fonts)
+        find "$UI_DIST_DIR" -type f \( -name '*.js' -o -name '*.mjs' -o -name '*.html' -o -name '*.css' -o -name '*.json' -o -name '*.map' \) \
+            -not -path '*/node_modules/*' \
             -print0 | xargs -0 sed -i "s,/__PATH_PREFIX__,${ingress_entry},g" 2>/dev/null || true
     fi
 fi
