@@ -8,13 +8,18 @@ set -e
 ###############################################################################
 
 # ─── Source bashio library so init scripts can use bashio:: functions ─────────
+_bashio_loaded=false
 for _f in /usr/lib/bashio/bashio /usr/lib/bashio/bashio.sh; do
     if [ -f "$_f" ]; then
         # shellcheck disable=SC1090
         source "$_f"
+        _bashio_loaded=true
         break
     fi
 done
+if [ "$_bashio_loaded" = false ]; then
+    echo "[Maintainerr] WARNING: bashio library not found; init scripts using bashio functions will fail"
+fi
 
 # ─── Run cont-init.d scripts ─────────────────────────────────────────────────
 if [ -d /etc/cont-init.d ]; then
