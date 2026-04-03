@@ -52,5 +52,5 @@ export DATA_DIR
 
 # ─── Start Maintainerr as unprivileged node user ─────────────────────────────
 echo "[Maintainerr] Starting application on port ${UI_PORT:-6246}..."
-exec gosu node /opt/app/start.sh
+exec gosu node /opt/app/start.sh &
 exec nginx
