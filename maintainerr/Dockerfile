@@ -96,6 +96,7 @@ COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
 # Use our wrapper as entrypoint (replaces original /opt/app/start.sh)
+WORKDIR "/config"
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 
