@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.2
+
+- Update to upstream BentoPDF v2.8.2
+
 ## 2.5.0
 
 - Initial release of BentoPDF Home Assistant add-on
