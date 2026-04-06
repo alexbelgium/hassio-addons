@@ -1,4 +1,8 @@
 
+## v0.15.2-2 (2026-04-06)
+- Fix environment variables not being passed into the container (e.g. VPN_AUTO_PORT_FORWARD, VPN_ENABLED)
+- Disable VPN port forwarder service when no VPN provider is configured
+
 ## v0.15.2 (2026-03-14)
 - Update to latest version from Unpackerr/unpackerr (changelog : https://github.com/Unpackerr/unpackerr/releases)
 
