@@ -42,7 +42,7 @@ else
     bashio::addon.stop
 fi
 
-echo -e "${openvpn_username}\n${openvpn_password}" > "${OPENVPN_STATE_DIR}/credentials.conf"
+printf '%s\n%s\n' "${openvpn_username}" "${openvpn_password}" > "${OPENVPN_STATE_DIR}/credentials.conf"
 chmod 600 "${OPENVPN_STATE_DIR}/credentials.conf"
 
 if bashio::config.has_value "openvpn_config"; then
@@ -99,7 +99,7 @@ sed -i '/^[[:blank:]]*$/d' "${openvpn_runtime_config}"
 sed -i '/^up/d' "${openvpn_runtime_config}"
 sed -i '/^down/d' "${openvpn_runtime_config}"
 sed -i '/^route/d' "${openvpn_runtime_config}"
-sed -i '/^auth-user-pass /d' "${openvpn_runtime_config}"
+sed -i '/^auth-user-pass/d' "${openvpn_runtime_config}"
 sed -i '/^cd /d' "${openvpn_runtime_config}"
 sed -i '/^chroot /d' "${openvpn_runtime_config}"
 sed -i '$q' "${openvpn_runtime_config}"
