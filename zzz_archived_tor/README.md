@@ -1,7 +1,6 @@
 ## &#9888; Open Issue : [🐛 [CloudCommander] cloudcmd.mjs: No such file or directory (opened 2026-02-04)](https://github.com/alexbelgium/hassio-addons/issues/2444) by [@axlFThn](https://github.com/axlFThn)
 ## &#9888; Open Issue : [🐛 Cloudcommander New Directory (opened 2026-03-19)](https://github.com/alexbelgium/hassio-addons/issues/2594) by [@pgitsov](https://github.com/pgitsov)
 ## &#9888; Open Issue : [🐛 [qBittorrent] No longer able to randomly select an openvpn config file (opened 2026-03-25)](https://github.com/alexbelgium/hassio-addons/issues/2611) by [@tylerbenson](https://github.com/tylerbenson)
-## &#9888; Open Issue : [🐛 [qbittorrent] OpenVPN no longer connecting (opened 2026-04-04)](https://github.com/alexbelgium/hassio-addons/issues/2629) by [@miteshchauhan](https://github.com/miteshchauhan)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
