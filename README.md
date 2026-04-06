@@ -553,7 +553,6 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmaintainerr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![ingress][ingress-badge]
 
 &#10003;  [Manyfold](manyfold/) : Manyfold 3D model manager as a Home Assistant add-on, using the upstream image with configurable library/index paths.
 
