@@ -1,6 +1,6 @@
 # Global build args — must be declared before the first FROM to be usable in FROM instructions
 ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.23
-ARG BUILD_VERSION=2.5.0
+ARG BUILD_VERSION=2.8.2
 
 # Stage 1: Download and extract the BentoPDF dist release (includes bundled WASM)
 FROM alpine:3.21 AS dist
