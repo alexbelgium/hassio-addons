@@ -24,10 +24,7 @@ fi
 # via addon_config:rw) without overwriting existing files.
 DATA_DIR="/config/data"
 echo "[Maintainerr] Setting up data directory: $DATA_DIR"
-mkdir -p "$DATA_DIR"
-mkdir -p "$DATA_DIR"/logs
-chmod -R 777 "$DATA_DIR"
-chown -R node:node "$DATA_DIR"
+mkdir -p "$DATA_DIR" "$DATA_DIR/logs"
 
 # Copy any seed/existing data from /opt/data to /config/data (don't overwrite)
 if [ -d /opt/data ] && [ "$(ls -A /opt/data 2>/dev/null)" ]; then
@@ -35,7 +32,8 @@ if [ -d /opt/data ] && [ "$(ls -A /opt/data 2>/dev/null)" ]; then
     cp -rn /opt/data/. "$DATA_DIR/" 2>/dev/null || true
 fi
 
-# Only chown on first run to avoid slow startup on large directories
+# Apply permissions/ownership once so copied files are also covered
+chmod -R 777 "$DATA_DIR"
 if [ ! -f "$DATA_DIR/.initialized" ]; then
     chown -R node:node "$DATA_DIR"
     touch "$DATA_DIR/.initialized"
