@@ -23,9 +23,12 @@ fi
 # /opt/data is declared as a Docker VOLUME in the upstream image, which is NOT
 # persistent across addon updates/reinstalls in HA.
 # Redirect /opt/data → /config (persistent via addon_config:rw) with a symlink.
-DATA_DIR="/config"
+DATA_DIR="/config/data"
 echo "[Maintainerr] Setting up data directory: $DATA_DIR"
-mkdir -p "$DATA_DIR" "$DATA_DIR/logs"
+mkdir -p "$DATA_DIR"
+mkdir -p "$DATA_DIR"/logs
+chmod -R 777 "$DATA_DIR"
+chown -R node:node "$DATA_DIR"
 
 # Preserve any seed data from the Docker volume before replacing it.
 # /opt/data is a Docker VOLUME mount and cannot be removed, so instead of
