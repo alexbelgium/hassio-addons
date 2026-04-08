@@ -64,7 +64,8 @@ COPY --from=ha_tools /out/ /
 # Add rootfs
 COPY rootfs/ /
 RUN chmod +x /entrypoint.sh \
-    && find /etc/cont-init.d /etc/cont-finish.d -type f -name "*.sh" -exec chmod +x {} \; 2>/dev/null || true
+    && find /etc/cont-init.d /etc/cont-finish.d -type f -name "*.sh" -exec chmod +x {} \; 2>/dev/null || true \
+    && find / -type f \( -name "*.js" -o -name "*.ts" -o -name "*.json" -o -name "*.sh" -o -name "*.yml" -o -name "*.yaml" -o -name "*.env" -o -name "*.conf" -o -name "*.cfg" \) ! -path "/proc/*" ! -path "/sys/*" ! -path "/dev/*" -exec grep -l "/opt/data" {} \; 2>/dev/null | xargs -r sed -i 's|/opt/data|/config/data|g'
 
 # Install bashio standalone
 RUN BASHIO_VERSION="0.14.3" && \

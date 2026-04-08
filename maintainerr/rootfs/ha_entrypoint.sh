@@ -18,11 +18,10 @@ if [ -d /etc/cont-init.d ]; then
 fi
 
 # ─── Setup persistent data directory ─────────────────────────────────────────
-# The upstream app hardcodes /opt/data for its database and logs
-# (typeOrmConfig.ts → /opt/data/maintainerr.sqlite, logs → /opt/data/logs/).
-# /opt/data is declared as a Docker VOLUME in the upstream image, which is NOT
-# persistent across addon updates/reinstalls in HA.
-# Redirect /opt/data → /config (persistent via addon_config:rw) with a symlink.
+# The upstream app hardcodes /opt/data for its database and logs.
+# The Dockerfile rewrites all /opt/data references to /config/data at build time.
+# At runtime we copy any seed data from /opt/data to /config/data (persistent
+# via addon_config:rw) without overwriting existing files.
 DATA_DIR="/config/data"
 echo "[Maintainerr] Setting up data directory: $DATA_DIR"
 mkdir -p "$DATA_DIR"
@@ -30,21 +29,11 @@ mkdir -p "$DATA_DIR"/logs
 chmod -R 777 "$DATA_DIR"
 chown -R node:node "$DATA_DIR"
 
-# Preserve any seed data from the Docker volume before replacing it.
-# /opt/data is a Docker VOLUME mount and cannot be removed, so instead of
-# replacing the directory with a symlink, we symlink each item inside it.
-if [ -d /opt/data ] && [ ! -L /opt/data ]; then
+# Copy any seed/existing data from /opt/data to /config/data (don't overwrite)
+if [ -d /opt/data ] && [ "$(ls -A /opt/data 2>/dev/null)" ]; then
+    echo "[Maintainerr] Copying existing files from /opt/data to $DATA_DIR..."
     cp -rn /opt/data/. "$DATA_DIR/" 2>/dev/null || true
-    # Remove contents inside /opt/data (the directory itself stays)
-    rm -rf /opt/data/*
 fi
-
-# Create symlinks for each item in $DATA_DIR inside /opt/data
-for item in "$DATA_DIR"/*; do
-    [ -e "$item" ] || continue
-    name="$(basename "$item")"
-    ln -sfn "$item" "/opt/data/$name"
-done
 
 # Only chown on first run to avoid slow startup on large directories
 if [ ! -f "$DATA_DIR/.initialized" ]; then
