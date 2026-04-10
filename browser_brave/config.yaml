@@ -69,5 +69,5 @@ slug: brave
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.88.138-ls88"
+version: "1.89.132-ls89"
 video: true
