@@ -1,3 +1,6 @@
+
+## 1.0.33.0 (2026-04-11)
+- Update to latest version from immichFrame/ImmichFrame (changelog : https://github.com/immichFrame/ImmichFrame/releases)
 ## 1.0.32.0-4 (17-03-2026)
 - Fix: env_vars now properly written to Settings.yaml instead of only environment variables
 - Added General config options to addon UI (Interval, ShowClock, PhotoDateFormat, Style, Layout, etc.)

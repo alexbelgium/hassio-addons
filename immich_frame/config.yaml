@@ -70,5 +70,5 @@ schema:
   RefreshAlbumPeopleInterval: int?
 slug: immich_frame
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.0.32.0-4"
+version: "1.0.33.0"
 webui: http://[HOST]:[PORT:8080]
