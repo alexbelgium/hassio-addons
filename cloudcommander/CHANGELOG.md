@@ -1,3 +1,5 @@
+## 19.12.1-2 (11-04-2026)
+- Minor bugs fixed
 
 ## 19.12.1 (2026-04-11)
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
