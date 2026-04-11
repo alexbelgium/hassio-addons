@@ -2,4 +2,15 @@
 # shellcheck shell=bash
 set -euo pipefail
 export PULSE_SERVER="${PULSE_SERVER:-unix:/run/pulse/native}"
+
+# Ensure the log directory and file are writable by the icecast2 user.
+# /app/data/logs is created as root by 01-structure.sh, but start-icecast.sh
+# runs via gosu icecast2 and would otherwise fail with "Permission denied"
+# on the first log write, taking icecast down before it can boot.
+mkdir -p /app/data/logs
+touch /app/data/logs/icecast.log
+# Use `icecast2:` (trailing colon) so chown picks the user's primary group,
+# which is `icecast` on Debian, not `icecast2`.
+chown icecast2: /app/data/logs /app/data/logs/icecast.log
+
 gosu icecast2 /usr/local/bin/start-icecast.sh
