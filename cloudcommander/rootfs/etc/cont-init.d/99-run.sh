@@ -88,16 +88,31 @@ fi
 bashio::log.info "Starting..."
 
 cd /
-if [ -f /usr/src/app/bin/cloudcmd.mjs ]; then
-    CLOUDCMD_BIN=/usr/src/app/bin/cloudcmd.mjs
-elif [ -f /usr/src/app/bin/cloudcmd.js ]; then
-    CLOUDCMD_BIN=/usr/src/app/bin/cloudcmd.js
-elif command -v cloudcmd >/dev/null 2>&1; then
-    CLOUDCMD_BIN=cloudcmd
-else
-    bashio::log.error "Cloud Commander binary not found in /usr/src/app/bin or PATH."
+declare CLOUDCMD_BIN=""
+declare -a cloudcmd_candidates=(
+    /usr/src/app/bin/cloudcmd.mjs
+    /usr/src/app/bin/cloudcmd.js
+    /usr/src/cloudcmd/bin/cloudcmd.mjs
+    /usr/src/cloudcmd/bin/cloudcmd.js
+)
+
+for candidate in "${cloudcmd_candidates[@]}"; do
+    if [ -f "$candidate" ]; then
+        CLOUDCMD_BIN="$candidate"
+        break
+    fi
+done
+
+if [ -z "$CLOUDCMD_BIN" ] && command -v cloudcmd >/dev/null 2>&1; then
+    CLOUDCMD_BIN=$(command -v cloudcmd)
+fi
+
+if [ -z "$CLOUDCMD_BIN" ]; then
+    bashio::log.error "Cloud Commander binary not found in expected locations or PATH."
     exit 1
 fi
+
+bashio::log.info "Using Cloud Commander binary: ${CLOUDCMD_BIN}"
 # shellcheck disable=SC2086
 "$CLOUDCMD_BIN" $DROPBOX_TOKEN $CUSTOMOPTIONS &
 bashio::net.wait_for 8000 localhost 900 || true
