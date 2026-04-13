@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] qbittorrent (opened 2025-10-11)](https://github.com/alexbelgium/hassio-addons/issues/2139) by [@nyok92](https://github.com/nyok92)
 ## &#9888; Open Issue : [🐛 Cloudcommander New Directory (opened 2026-03-19)](https://github.com/alexbelgium/hassio-addons/issues/2594) by [@pgitsov](https://github.com/pgitsov)
 # Hass.io Add-ons: Tor with bridges
 
