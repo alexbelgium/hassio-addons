@@ -73,21 +73,6 @@ jobs:
         run: |
           find . -type f \( -name "*.sh" -o -name "run" \) -exec chmod +x {} \;
 
-      - name: Sort changed JSON files
-        run: |
-          set -euo pipefail
-          mapfile -t changed < <(git diff --name-only "$DIFF_RANGE" -- '*/*.json')
-          if [ "${#changed[@]}" -eq 0 ]; then
-            echo "No changed JSON files to sort."
-            exit 0
-          fi
-          for file in "${changed[@]}"; do
-            if [ -f "$file" ]; then
-              tmp="$file.tmp"
-              jq --sort-keys . "$file" > "$tmp" && mv "$tmp" "$file"
-            fi
-          done
-
       - name: Remove Super-Linter output (prevent checkout conflict)
         run: sudo rm -rf super-linter-output/
 
@@ -130,7 +115,7 @@ jobs:
           FIX_JSON: false
           FIX_MARKDOWN: true
           FIX_PYTHON_BLACK: true
-          FIX_PYTHON_ISORT: true
+          FIX_PYTHON_ISORT: false
           FIX_PYTHON_RUFF: true
 
       - name: Use 4 spaces in shell scripts
@@ -138,15 +123,6 @@ jobs:
           curl -sSLo /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.12.0/shfmt_v3.12.0_linux_amd64
           chmod +x /usr/local/bin/shfmt
           find . -type f \( -name "*.sh" -o -name "run" \) -exec shfmt -w -i 4 -ci -bn -sr {} +
-
-      - name: Sort json files
-        run: |
-          set -euo pipefail
-          shopt -s nullglob
-          for file in */*.json; do
-            tmp="$file.tmp"
-            jq --sort-keys . "$file" > "$tmp" && mv "$tmp" "$file"
-          done
 
       - name: Restore executable permissions
         run: |
