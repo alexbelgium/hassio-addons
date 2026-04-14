@@ -33,7 +33,7 @@ fix_linkwarden_path() {
     # Preserve any data already written to the non-persistent path
     if [ -d "$resolved_path" ] && [ ! -L "$resolved_path" ]; then
         if ! cp -rn "$resolved_path/." "$actual_path/" 2>/dev/null; then
-            bashio::log.warning "Could not copy existing data from $resolved_path to $actual_path"
+            bashio::log.warning "Could not migrate existing data from $resolved_path to $actual_path (may be empty or a permissions issue)"
         fi
         rm -rf "$resolved_path"
     fi
