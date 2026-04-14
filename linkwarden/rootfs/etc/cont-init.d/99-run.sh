@@ -9,6 +9,25 @@ set -e
 bashio::log.info "Creating folders"
 mkdir -p "$STORAGE_FOLDER"
 
+# Linkwarden resolves STORAGE_FOLDER relative to its monorepo root via:
+#   path.join(process.cwd(), '../..', STORAGE_FOLDER, filePath)
+# When the app runs from /data_linkwarden/apps/web, an absolute STORAGE_FOLDER
+# (e.g. /config/library) is resolved to /data_linkwarden/config/library instead
+# of /config/library. Create a symlink so data reaches the persistent location.
+if [[ "$STORAGE_FOLDER" == /* ]]; then
+    RESOLVED_STORAGE="/data_linkwarden${STORAGE_FOLDER}"
+    if [ "$RESOLVED_STORAGE" != "$STORAGE_FOLDER" ]; then
+        mkdir -p "$(dirname "$RESOLVED_STORAGE")"
+        # Preserve any data already written to the non-persistent path
+        if [ -d "$RESOLVED_STORAGE" ] && [ ! -L "$RESOLVED_STORAGE" ]; then
+            cp -rn "$RESOLVED_STORAGE/." "$STORAGE_FOLDER/" 2>/dev/null || true
+            rm -rf "$RESOLVED_STORAGE"
+        fi
+        ln -sfn "$STORAGE_FOLDER" "$RESOLVED_STORAGE"
+        bashio::log.info "Symlinked $RESOLVED_STORAGE -> $STORAGE_FOLDER"
+    fi
+fi
+
 ######################
 # CONFIGURE POSTGRES #
 ######################
