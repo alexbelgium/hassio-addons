@@ -9,26 +9,41 @@ set -e
 bashio::log.info "Creating folders"
 mkdir -p "$STORAGE_FOLDER"
 
-# Linkwarden resolves STORAGE_FOLDER relative to its monorepo root via:
+# Upstream Linkwarden (packages/filesystem/*.ts) resolves STORAGE_FOLDER via:
 #   path.join(process.cwd(), '../..', STORAGE_FOLDER, filePath)
-# When the app runs from /data_linkwarden/apps/web, an absolute STORAGE_FOLDER
-# (e.g. /config/library) is resolved to /data_linkwarden/config/library instead
-# of /config/library. Create a symlink so data reaches the persistent location.
-if [[ "$STORAGE_FOLDER" == /* ]]; then
-    RESOLVED_STORAGE="/data_linkwarden${STORAGE_FOLDER}"
-    # Safety check: only create symlink if the paths actually differ
-    if [ "$RESOLVED_STORAGE" != "$STORAGE_FOLDER" ]; then
-        mkdir -p "$(dirname "$RESOLVED_STORAGE")"
-        # Preserve any data already written to the non-persistent path
-        if [ -d "$RESOLVED_STORAGE" ] && [ ! -L "$RESOLVED_STORAGE" ]; then
-            if ! cp -rn "$RESOLVED_STORAGE/." "$STORAGE_FOLDER/" 2>/dev/null; then
-                bashio::log.warning "Could not copy existing data from $RESOLVED_STORAGE to $STORAGE_FOLDER"
-            fi
-            rm -rf "$RESOLVED_STORAGE"
-        fi
-        ln -sfn "$STORAGE_FOLDER" "$RESOLVED_STORAGE"
-        bashio::log.info "Symlinked $RESOLVED_STORAGE -> $STORAGE_FOLDER"
+# The yarn workspace commands run from apps/web/ or apps/worker/, so
+# process.cwd()/../.. resolves to the monorepo root /data_linkwarden.
+# Node.js path.join treats absolute path segments as relative when they are not
+# the first argument, so an absolute STORAGE_FOLDER like /config/library becomes
+# /data_linkwarden/config/library instead of /config/library.
+# This affects all filesystem operations: createFile, createFolder, readFile,
+# moveFile, removeFile, removeFolder.
+# Fix: symlink the top-level directory so all subpaths resolve correctly.
+fix_linkwarden_path() {
+    local actual_path="$1"
+    local resolved_path="/data_linkwarden${actual_path}"
+
+    # Only needed for absolute paths that differ after prefixing
+    if [ "$resolved_path" = "$actual_path" ]; then
+        return
     fi
+
+    mkdir -p "$(dirname "$resolved_path")"
+
+    # Preserve any data already written to the non-persistent path
+    if [ -d "$resolved_path" ] && [ ! -L "$resolved_path" ]; then
+        if ! cp -rn "$resolved_path/." "$actual_path/" 2>/dev/null; then
+            bashio::log.warning "Could not copy existing data from $resolved_path to $actual_path"
+        fi
+        rm -rf "$resolved_path"
+    fi
+
+    ln -sfn "$actual_path" "$resolved_path"
+    bashio::log.info "Symlinked $resolved_path -> $actual_path"
+}
+
+if [[ "$STORAGE_FOLDER" == /* ]]; then
+    fix_linkwarden_path "$STORAGE_FOLDER"
 fi
 
 ######################
