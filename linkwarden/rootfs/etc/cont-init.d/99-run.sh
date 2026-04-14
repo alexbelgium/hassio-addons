@@ -16,11 +16,14 @@ mkdir -p "$STORAGE_FOLDER"
 # of /config/library. Create a symlink so data reaches the persistent location.
 if [[ "$STORAGE_FOLDER" == /* ]]; then
     RESOLVED_STORAGE="/data_linkwarden${STORAGE_FOLDER}"
+    # Safety check: only create symlink if the paths actually differ
     if [ "$RESOLVED_STORAGE" != "$STORAGE_FOLDER" ]; then
         mkdir -p "$(dirname "$RESOLVED_STORAGE")"
         # Preserve any data already written to the non-persistent path
         if [ -d "$RESOLVED_STORAGE" ] && [ ! -L "$RESOLVED_STORAGE" ]; then
-            cp -rn "$RESOLVED_STORAGE/." "$STORAGE_FOLDER/" 2>/dev/null || true
+            if ! cp -rn "$RESOLVED_STORAGE/." "$STORAGE_FOLDER/" 2>/dev/null; then
+                bashio::log.warning "Could not copy existing data from $RESOLVED_STORAGE to $STORAGE_FOLDER"
+            fi
             rm -rf "$RESOLVED_STORAGE"
         fi
         ln -sfn "$STORAGE_FOLDER" "$RESOLVED_STORAGE"
