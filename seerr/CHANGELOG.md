@@ -1,3 +1,5 @@
+## 3.1.0-3 (14-04-2026)
+- Minor bugs fixed
 
 ## 3.1.0-2 (22-03-2026)
 - Added configurable `NODE_MEMORY_LIMIT` option (default 512 MB) to control Node.js heap size and prevent OOM kills
