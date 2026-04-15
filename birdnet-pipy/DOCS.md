@@ -15,14 +15,13 @@
 ## Options
 
 ```yaml
-TZ: Europe/Paris # Timezone, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
-ICECAST_PASSWORD: "" # Optional: set a persistent password for the audio stream
-STREAM_BITRATE: 320k # Bitrate for the mp3 stream
-RECORDING_MODE: rtsp # pulseaudio | http_stream | rtsp
-RTSP_URL: "" # Required if RECORDING_MODE is rtsp
-data_location: /config/data # Persistent data location for BirdNET-PiPy
+ICECAST_PASSWORD: "" # Optional: persistent password for the Icecast audio stream
+data_location: /config/data # Persistent data location (under /config, /share, or /data)
+env_vars: # Optional: extra environment variables
+  - name: STREAM_BITRATE
+    value: 320k # Icecast mp3 stream bitrate (default 320k)
 ```
 
 ## Audio
 
-The add-on expects audio via PulseAudio (default) or an RTSP stream configured in the BirdNET-PiPy settings.
+The add-on expects audio via PulseAudio (default) or an RTSP stream. Pick the source in the BirdNET-PiPy Web UI under **Settings → Audio** after the add-on first starts.
