@@ -115,6 +115,25 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
     ShowArchived ShowVideos ImagesFromDays ImagesFromDate ImagesUntilDate Rating"
 
 # ---- Build Settings.yaml ----
+
+# Determine account configuration mode (and validate) before writing the file
+ACCOUNT_COUNT=$(jq '.Accounts // [] | length' /data/options.json 2>/dev/null || echo 0)
+
+if [ "$ACCOUNT_COUNT" -gt 0 ]; then
+    ACCOUNT_MODE="accounts_list"
+    bashio::log.info "Configuring ${ACCOUNT_COUNT} account(s) from Accounts list"
+elif config_has '.ApiKey' && config_has '.ImmichServerUrl'; then
+    ACCOUNT_MODE="single"
+    bashio::log.info "Using single account configuration"
+elif [ -n "${ACCOUNT_ENVS[ImmichServerUrl]:-}" ] && [ -n "${ACCOUNT_ENVS[ApiKey]:-}" ]; then
+    ACCOUNT_MODE="env_vars"
+    bashio::log.info "Using account configuration from env_vars"
+else
+    bashio::log.fatal "No accounts configured! Set either 'Accounts' list or both 'ApiKey' and 'ImmichServerUrl'"
+    exit 1
+fi
+
+# Generate Settings.yaml — only echo/yaml_kv inside this block (no bashio::log)
 {
     # -- General section --
     GENERAL_STARTED=false
@@ -135,10 +154,7 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
     done
 
     # -- Accounts section --
-    ACCOUNT_COUNT=$(jq '.Accounts // [] | length' /data/options.json 2>/dev/null || echo 0)
-
-    if [ "$ACCOUNT_COUNT" -gt 0 ]; then
-        bashio::log.info "Configuring ${ACCOUNT_COUNT} account(s) from Accounts list"
+    if [ "$ACCOUNT_MODE" = "accounts_list" ]; then
         echo "Accounts:"
         for i in $(seq 0 $((ACCOUNT_COUNT - 1))); do
             SRV="$(config_val ".Accounts[${i}].ImmichServerUrl")"
@@ -159,12 +175,9 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
                     yaml_kv "    " "$key" "${ACCOUNT_ENVS[$key]}"
                 fi
             done
-
-            bashio::log.info "  Account $((i + 1)): ${SRV}"
         done
 
-    elif config_has '.ApiKey' && config_has '.ImmichServerUrl'; then
-        bashio::log.info "Using single account configuration"
+    elif [ "$ACCOUNT_MODE" = "single" ]; then
         SRV="$(config_val '.ImmichServerUrl')"
         KEY="$(config_val '.ApiKey')"
         echo "Accounts:"
@@ -177,8 +190,7 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
             yaml_kv "    " "$key" "${ACCOUNT_ENVS[$key]}"
         done
 
-    elif [ -n "${ACCOUNT_ENVS[ImmichServerUrl]:-}" ] && [ -n "${ACCOUNT_ENVS[ApiKey]:-}" ]; then
-        bashio::log.info "Using account configuration from env_vars"
+    elif [ "$ACCOUNT_MODE" = "env_vars" ]; then
         echo "Accounts:"
         echo "  - ImmichServerUrl: '${ACCOUNT_ENVS[ImmichServerUrl]//\'/\'\'}'"
         echo "    ApiKey: '${ACCOUNT_ENVS[ApiKey]//\'/\'\'}'"
@@ -187,12 +199,16 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
             in_list "$key" " ImmichServerUrl ApiKey " && continue
             yaml_kv "    " "$key" "${ACCOUNT_ENVS[$key]}"
         done
-    else
-        bashio::log.fatal "No accounts configured! Set either 'Accounts' list or both 'ApiKey' and 'ImmichServerUrl'"
-        exit 1
     fi
 
 } > "${SETTINGS_FILE}"
+
+# Log account details after YAML generation
+if [ "$ACCOUNT_MODE" = "accounts_list" ]; then
+    for i in $(seq 0 $((ACCOUNT_COUNT - 1))); do
+        bashio::log.info "  Account $((i + 1)): $(config_val ".Accounts[${i}].ImmichServerUrl")"
+    done
+fi
 chmod 600 "${SETTINGS_FILE}"
 bashio::log.info "Settings.yaml generated at ${SETTINGS_FILE}"
 

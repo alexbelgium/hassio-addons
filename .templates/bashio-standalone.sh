@@ -47,7 +47,14 @@ _bashio_color() {
 
 _bashio_log() {
   local c="${1:-}"; shift || true
-  printf '%s%s%s\n' "$(_bashio_color "$c")" "$*" "$(_bashio_color reset)"
+  # Use LOG_FD (set by real bashio) if available, otherwise stderr.
+  # This prevents log output from leaking into stdout when it is redirected
+  # (e.g., { echo yaml; } > file).
+  if [[ "${LOG_FD:-}" =~ ^[0-9]+$ ]] && { : >&"${LOG_FD}"; } 2>/dev/null; then
+    printf '%s%s%s\n' "$(_bashio_color "$c")" "$*" "$(_bashio_color reset)" >&"$LOG_FD"
+  else
+    printf '%s%s%s\n' "$(_bashio_color "$c")" "$*" "$(_bashio_color reset)" >&2
+  fi
 }
 
 # -----------------------------------------------------------------------------
@@ -155,9 +162,11 @@ bashio::log.magenta() { _bashio_log magenta "$*"; }
 
 # Common aliases
 bashio::log.info()    { bashio::log.blue   "$@"; }
+bashio::log.notice()  { bashio::log.blue   "$@"; }
 bashio::log.warning() { bashio::log.yellow "$@"; }
 bashio::log.error()   { bashio::log.red    "$@"; }
-bashio::log.debug()   { printf '%s\n' "$*"; }
+bashio::log.fatal()   { bashio::log.red    "$@"; }
+bashio::log.debug()   { _bashio_log ""      "$*"; }
 
 # -----------------------------------------------------------------------------
 # Supervisor shim
