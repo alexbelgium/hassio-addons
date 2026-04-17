@@ -1,4 +1,7 @@
 
+## 6.0.2 (2026-04-18)
+- Update to latest version from linuxserver/docker-librespeed (changelog : https://github.com/linuxserver/docker-librespeed/releases)
+
 ## 5.5.1 (2026-01-12)
 - Update to latest version from linuxserver/docker-librespeed (changelog : https://github.com/linuxserver/docker-librespeed/releases)
 
