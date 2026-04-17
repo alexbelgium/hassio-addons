@@ -143,6 +143,6 @@ slug: immich
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "2.7.4"
+version: "2.7.5"
 video: true
 webui: http://[HOST]:[PORT:8080]
