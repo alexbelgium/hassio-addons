@@ -100,5 +100,5 @@ schema:
 slug: mylar3
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 0.8.3
+version: "0.9.0"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8090]"
