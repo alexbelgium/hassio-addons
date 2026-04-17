@@ -1,3 +1,6 @@
+
+## 0.6.4 (2026-04-18)
+- Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 ## 0.6.3-3 (2026-04-17)
 - Enable Core API access (`homeassistant_api: true`) so the addon can call HA Core's `update.install` service. Required for in-app self-update — Supervisor blocks `/store/addons/<self>/update`, so the backend routes through Core.
 
