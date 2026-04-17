@@ -1,4 +1,7 @@
 
+## 1.2.4 (2026-04-18)
+- Update to latest version from benbusby/whoogle-search (changelog : https://github.com/benbusby/whoogle-search/releases)
+
 ## 1.2.3 (2026-03-28)
 - Update to latest version from benbusby/whoogle-search (changelog : https://github.com/benbusby/whoogle-search/releases)
 
