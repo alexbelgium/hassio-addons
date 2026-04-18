@@ -15,7 +15,7 @@
 #################
 
 # Stage 1: Build Frontend with SUB_PATH
-FROM node:20 AS frontend-builder
+FROM node:22 AS frontend-builder
 
 # Set the SUB_PATH environment variable
 ARG SUB_PATH="/mealie/"
