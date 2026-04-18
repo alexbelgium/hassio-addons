@@ -1,6 +1,3 @@
-
-## 2.6-dev (2026-04-18)
-- Update to latest version from wger/server
 ## 2.5-dev-3 (2026-03-09)
 - Fix startup script database path rewrite by scanning `/home` for matching `settings.py` files and patching all matches.
 
