@@ -1,4 +1,7 @@
 
+## v3.16.0 (2026-04-18)
+- Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
+
 ## v3.14.0 (2026-03-28)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 
