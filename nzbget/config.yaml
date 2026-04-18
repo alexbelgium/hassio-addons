@@ -104,4 +104,4 @@ schema:
 slug: nzbget
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "v26.1-ls239"
+version: "v26.1-ls238"
