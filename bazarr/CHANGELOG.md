@@ -1,5 +1,5 @@
 
-## 1.5.6-2 (2026-04-20)
+## 1.5.6-3 (2026-04-20)
 - Add Ingress support with nginx reverse proxy for sidebar integration
 - Add connection_mode option (ingress_noauth/noingress_auth/ingress_auth)
 
