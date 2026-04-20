@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+# Set variables
+slug=bazarr
+port=6767
+CONFIG_LOCATION=/config/config/config.yaml
+
+# Wait for bazarr to become available
+bashio::net.wait_for "$port" localhost 900
+
+# Set base_url
+if [ -f "$CONFIG_LOCATION" ]; then
+    if ! bashio::config.true "ingress_disabled"; then
+        if ! bashio::config.has_value "connection_mode" || [ "$(bashio::config 'connection_mode')" != "noingress_auth" ]; then
+            if ! grep -q "base_url.*$slug" "$CONFIG_LOCATION"; then
+                bashio::log.warning "BaseUrl not set properly, restarting"
+                sed -i "s/  base_url:.*/  base_url: $slug/" "$CONFIG_LOCATION"
+                bashio::addon.restart
+            fi
+        fi
+    fi
+fi
+
+bashio::log.info "Starting NGinx..."
+exec nginx

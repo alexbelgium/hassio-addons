@@ -48,11 +48,18 @@ Configurations can be done through the app webUI, except for the following optio
 | `PGID` | int | `0` | Group ID for file permissions |
 | `PUID` | int | `0` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `connection_mode` | list | `ingress_noauth` | Connection mode (ingress_noauth/noingress_auth/ingress_auth) |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |
 | `cifsdomain` | str | | SMB domain for network shares |
+
+### Connection Modes
+
+- `ingress_noauth` - Default, disables authentication for seamless ingress integration
+- `noingress_auth` - Disables ingress for external URL, enables authentication
+- `ingress_auth` - Enables both ingress and authentication
 
 ### Example Configuration
 
@@ -60,6 +67,7 @@ Configurations can be done through the app webUI, except for the following optio
 PGID: 0
 PUID: 0
 TZ: "Europe/London"
+connection_mode: "ingress_noauth"
 localdisks: "sda1,sdb1"
 networkdisks: "//192.168.1.100/media,//nas.local/subtitles"
 cifsusername: "mediauser"
