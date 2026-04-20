@@ -90,9 +90,26 @@ case $(bashio::config 'DB_CONNECTION') in
         DB_CONNECTION=mysql
         DB_HOST=$(bashio::services "mysql" "host")
         DB_PORT=$(bashio::services "mysql" "port")
-        DB_DATABASE=firefly
-        DB_USERNAME=$(bashio::services "mysql" "username")
-        DB_PASSWORD=$(bashio::services "mysql" "password")
+
+        # Use user-configured database name if provided, otherwise default to 'firefly'
+        if bashio::config.has_value "DB_DATABASE"; then
+            DB_DATABASE=$(bashio::config "DB_DATABASE")
+        else
+            DB_DATABASE=firefly
+        fi
+
+        # Use user-configured credentials if provided, otherwise use service discovery
+        if bashio::config.has_value "DB_USERNAME"; then
+            DB_USERNAME=$(bashio::config "DB_USERNAME")
+        else
+            DB_USERNAME=$(bashio::services "mysql" "username")
+        fi
+        if bashio::config.has_value "DB_PASSWORD"; then
+            DB_PASSWORD=$(bashio::config "DB_PASSWORD")
+        else
+            DB_PASSWORD=$(bashio::services "mysql" "password")
+        fi
+
         export DB_CONNECTION
         export DB_HOST && bashio::log.blue "DB_HOST=$DB_HOST"
         export DB_PORT && bashio::log.blue "DB_PORT=$DB_PORT"
@@ -110,7 +127,7 @@ case $(bashio::config 'DB_CONNECTION') in
             --skip-ssl \
             -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
             -h "${DB_HOST}" -P "${DB_PORT}" \
-            -e "CREATE DATABASE IF NOT EXISTS \`firefly\`;"
+            -e "CREATE DATABASE IF NOT EXISTS \`${DB_DATABASE}\`;"
         ;;
 
         # Use remote
