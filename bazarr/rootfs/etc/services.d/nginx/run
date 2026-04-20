@@ -13,10 +13,14 @@ bashio::net.wait_for "$port" localhost 900
 
 # Set base_url
 if [ -f "$CONFIG_LOCATION" ]; then
-    if ! grep -q "base_url.*$slug" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then
-        bashio::log.warning "BaseUrl not set properly, restarting"
-        sed -i "s/  base_url:.*/  base_url: $slug/" "$CONFIG_LOCATION"
-        bashio::addon.restart
+    if ! bashio::config.true "ingress_disabled"; then
+        if ! bashio::config.has_value "connection_mode" || [ "$(bashio::config 'connection_mode')" != "noingress_auth" ]; then
+            if ! grep -q "base_url.*$slug" "$CONFIG_LOCATION"; then
+                bashio::log.warning "BaseUrl not set properly, restarting"
+                sed -i "s/  base_url:.*/  base_url: $slug/" "$CONFIG_LOCATION"
+                bashio::addon.restart
+            fi
+        fi
     fi
 fi
 
