@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 Cloudcommander New Directory (opened 2026-03-19)](https://github.com/alexbelgium/hassio-addons/issues/2594) by [@pgitsov](https://github.com/pgitsov)
+## &#9888; Open Issue : [🐛 [Nextcloud] Cannot create or write into the data directory /share/nextcloud (opened 2026-04-19)](https://github.com/alexbelgium/hassio-addons/issues/2661) by [@jonnyrider](https://github.com/jonnyrider)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
