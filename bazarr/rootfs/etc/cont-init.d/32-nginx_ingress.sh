@@ -45,12 +45,16 @@ if [ -f "$CONFIG_LOCATION" ]; then
             bashio::log.green "Ingress is enabled, and external authentication is enabled"
             # Set base_url
             sed -i "s/  base_url:.*/  base_url: $slug/" "$CONFIG_LOCATION"
+            # Enable Bazarr auth when leaving ingress_noauth
+            sed -i '/^auth:/,/^[^ ]/{ s/  type:.*/  type: form/ }' "$CONFIG_LOCATION"
             ;;
         # No ingress mode, with authentication
         noingress_auth)
             bashio::log.green "Disabling ingress and enabling authentication"
             bashio::log.yellow "WARNING : Ingress is disabled so the app won't be available from HA itself !"
             sed -i "s/  base_url:.*/  base_url: ''/" "$CONFIG_LOCATION"
+            # Enable Bazarr auth when leaving ingress_noauth
+            sed -i '/^auth:/,/^[^ ]/{ s/  type:.*/  type: form/ }' "$CONFIG_LOCATION"
             ;;
     esac
 
