@@ -1,4 +1,7 @@
 
+## 0.6.6 (2026-04-21)
+- Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
+
 ## 0.6.4 (2026-04-18)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 ## 0.6.3-3 (2026-04-17)
@@ -13,7 +16,7 @@
 - Removes incidental brittleness from byte-level `sub_filter` matches in minified JS bundles (the old `/stream/` rule had inadvertently double-prefixed the literal `api.get("/stream/config")` string).
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 
-## 0.6.2-2 (11-04-2026)
+## 0.6.2-2 (2026-04-11)
 - Minor bugs fixed
 
 ## 0.6.2 (2026-04-11)
@@ -39,21 +42,21 @@
 
 ## 0.5.6 (2026-03-07)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
-## 0.5.5-2 (04-03-2026)
+## 0.5.5-2 (2026-03-04)
 - Minor bugs fixed
 
 ## 0.5.5 (2026-03-02)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
-## 0.5.4-3 (26-02-2026)
+## 0.5.4-3 (2026-02-26)
 - Minor bugs fixed
-## 0.5.4-2 (23-02-2026)
+## 0.5.4-2 (2026-02-23)
 - Fix Icecast service failing to connect to PulseAudio on HAOS by respecting PULSE_SERVER env var and setting up socket symlink and auth cookie for icecast2 user
 
 ## 0.5.4 (2026-02-21)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
-## 0.5.0-6 (15-02-2026)
+## 0.5.0-6 (2026-02-15)
 - Minor bugs fixed
-## 0.5.0-5 (15-02-2026)
+## 0.5.0-5 (2026-02-15)
 - Minor bugs fixed
 ## 0.5.0-4 (2026-02-15)
 - Disable nginx service when ingress is not active
@@ -69,31 +72,20 @@
 
 ## 0.4.0 (2026-02-07)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
-## 0.3.2-6 (01-02-2026)
+## 0.3.2-6 (2026-02-01)
 - Minor bugs fixed
-## 0.3.2-5 (01-02-2026)
+## 0.3.2-5 (2026-02-01)
 - Minor bugs fixed
-## 0.3.2-4 (31-01-2026)
+## 0.3.2-4 (2026-01-31)
 - Minor bugs fixed
-## 0.3.2-2 (31-01-2026)
+## 0.3.2-2 (2026-01-31)
 - Minor bugs fixed
 
 ## 0.3.2-3 (2026-01-30)
 - Build frontend with /birdnet/ base path and serve under /birdnet/ for ingress compatibility.
 ## 0.3.2 (2026-01-30)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
-## 0.6.6 (30-01-2026)
-- Minor bugs fixed
-## 0.6.5 (30-01-2026)
-- Minor bugs fixed
-## 0.6.3 (29-01-2026)
-- Minor bugs fixed
-## 0.6.2 (29-01-2026)
-- Use upstream nginx.conf and generate ingress config at startup
-## 0.6.1 (29-01-2026)
-- Minor bugs fixed
-## 0.2 (29-01-2026)
-- Minor bugs fixed
+
 # Changelog
 
 ## 0.1.0
