@@ -8,24 +8,25 @@ This is a Home Assistant add-on repository containing 120+ Docker-based add-ons 
 
 ## Add-On Directory Structure
 
-Every add-on follows this layout:
+Most add-ons follow this common layout, though exceptions exist (e.g. some archived add-ons use `config.json` instead of `config.yaml`, some add-ons have `build.yaml` instead of `build.json` or no build file at all, and not every add-on includes a `rootfs/` tree):
 
 ```
 addon_name/
 ├── config.yaml          # HA add-on metadata, schema, ports, maps
-├── build.json           # Base Docker images per architecture
+├── build.json           # Base Docker images per architecture (may be build.yaml, or absent)
 ├── Dockerfile           # Multi-stage build (always uses shared .templates/ scripts)
-├── updater.json         # Upstream release tracking (used by addons_updater)
+├── updater.json         # Upstream release tracking; required to enable automatic updates
 ├── CHANGELOG.md         # Required; must be updated on every PR
-└── rootfs/
+└── rootfs/              # Optional; absent in some add-ons
     └── etc/
         ├── cont-init.d/ # S6-overlay init scripts (numbered, run in order)
-        └── services.d/  # S6-overlay supervised services
+        └── services.d/  # S6-overlay supervised services (some add-ons use
+                         # s6-overlay v3 layout at etc/s6-overlay/s6-rc.d/ instead)
 ```
 
 ## Dockerfile Convention
 
-All Dockerfiles follow a strict 6-section pattern:
+Most Dockerfiles follow this 6-section pattern (some add-ons deviate slightly, e.g. using a pinned upstream image directly instead of `ARG BUILD_FROM`):
 
 1. **Build Image** – `ARG BUILD_FROM` + `FROM ${BUILD_FROM}`
 2. **Modify Image** – S6 env vars, LSIO modifications via `ha_lsio.sh`
@@ -37,11 +38,11 @@ All Dockerfiles follow a strict 6-section pattern:
 Shared build-time scripts are pulled from `.templates/` at build time:
 - `ha_automodules.sh` – Downloads module scripts listed in `ARG MODULES=`
 - `ha_autoapps.sh` – Installs packages listed in `ENV PACKAGES=`
-- `ha_entrypoint.sh` – S6 stage-2 hook; converts `options.json` to env vars
+- `ha_entrypoint.sh` – S6 stage-2 hook; launches the cont-init stack at container start
 - `ha_lsio.sh` – Patches LinuxServer.io base images for HA compatibility
 - `bashio-standalone.sh` – Bashio library for scripts outside Supervisor context
 
-The `ARG MODULES=` line lists template scripts to download at build time (e.g., `00-banner.sh 01-custom_script.sh 00-smb_mounts.sh`). Available modules in `.templates/`:
+The `ARG MODULES=` line lists template scripts to download at build time (e.g., `00-banner.sh 01-custom_script.sh 00-smb_mounts.sh`). Commonly-used modules in `.templates/` (not exhaustive):
 - `00-global_var.sh` – Initialize global env vars from HA options
 - `00-local_mounts.sh` – Mount local disks (localdisks option)
 - `00-smb_mounts.sh` – SMB/CIFS network mount support
@@ -59,7 +60,7 @@ Key fields in every add-on's `config.yaml`:
 ```yaml
 arch: [aarch64, amd64]
 image: ghcr.io/alexbelgium/{slug}-{arch}
-version: "X.Y.Z-N"        # upstream version + patch suffix
+version: "X.Y.Z"          # upstream version (format varies; see Versioning section)
 ingress: true/false
 ingress_port: 8000
 map:
@@ -78,11 +79,19 @@ schema:
   localdisks: str?         # Local disk mounts
 ```
 
-The `env_vars` schema key enables the `ha_entrypoint.sh` passthrough mechanism, which converts all options in `/data/options.json` to environment variables at runtime.
+The `env_vars` schema key enables the env-var passthrough mechanism. At runtime the `00-global_var.sh` cont-init module reads `/data/options.json` and exports each key as an environment variable (writing to `/.env` and `/etc/environment`). `ha_entrypoint.sh` is the S6 stage-2 hook that launches the cont-init stack but does not itself perform the JSON-to-env conversion.
 
 ## Versioning
 
-Add-on versions use the format `X.Y.Z-N` where `X.Y.Z` is the upstream application version and `-N` is a patch counter. Both `config.yaml` and `build.json` (via `BUILD_UPSTREAM` arg) must be updated together. The `updater.json` file tracks which upstream source/repo to monitor and records the last seen version.
+Add-on versions in `config.yaml` closely follow the upstream release tag and do not conform to a single fixed format. Common patterns include:
+
+- `X.Y.Z` – plain upstream semver (e.g. `0.137.0`)
+- `X.Y.Z-N` – upstream version with a local patch counter (e.g. `0.6.26-2`)
+- LSIO-style tags (e.g. `1.43.1.10611-1e34174b1-ls301`)
+- Date-based versions (e.g. `2026.02.28`)
+- Nightly builds (e.g. `nightly-20260321-397`)
+
+When an upstream version is bumped, update `version` in `config.yaml`. If the add-on's `Dockerfile` contains an `ARG BUILD_UPSTREAM` line, update that value too — it is the canonical place that records the upstream version at build time (it is **not** stored in `build.json`/`build.yaml`). Some add-ons do not use `BUILD_UPSTREAM` at all. The `updater.json` file tracks which upstream source/repo to monitor and records the last seen version.
 
 ## updater.json Format
 
@@ -131,8 +140,9 @@ Adding `[nobuild]` anywhere in a commit message skips the builder workflow.
 
 ## S6-Overlay Init Script Naming
 
-Scripts in `rootfs/etc/cont-init.d/` run in lexicographic order. The conventional numbering:
+Scripts in `rootfs/etc/cont-init.d/` run in lexicographic order. Common numbering conventions (many add-ons use other prefixes too):
 - `20-*` – Directory/folder setup
+- `32-*` – Nginx ingress configuration (e.g. `32-nginx_ingress.sh`)
 - `80-*` – Application configuration
-- `90-*` – Ingress / nginx setup
+- `90-*` – Misc pre-startup tasks (ssl, vpn, custom run)
 - `99-*` – Final startup / launch
