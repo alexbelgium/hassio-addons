@@ -15,7 +15,7 @@ addon_name/
 ├── config.yaml          # HA add-on metadata, schema, ports, maps
 ├── build.json           # Base Docker images per architecture (may be build.yaml, or absent)
 ├── Dockerfile           # Multi-stage build (always uses shared .templates/ scripts)
-├── updater.json         # Upstream release tracking (used by addons_updater)
+├── updater.json         # Upstream release tracking (used by addons_updater; absent in some add-ons)
 ├── CHANGELOG.md         # Required; must be updated on every PR
 └── rootfs/              # Optional; absent in some add-ons
     └── etc/
@@ -26,7 +26,7 @@ addon_name/
 
 ## Dockerfile Convention
 
-All Dockerfiles follow a strict 6-section pattern:
+Most Dockerfiles follow this 6-section pattern (some add-ons deviate slightly, e.g. using a pinned upstream image directly instead of `ARG BUILD_FROM`):
 
 1. **Build Image** – `ARG BUILD_FROM` + `FROM ${BUILD_FROM}`
 2. **Modify Image** – S6 env vars, LSIO modifications via `ha_lsio.sh`
@@ -42,7 +42,7 @@ Shared build-time scripts are pulled from `.templates/` at build time:
 - `ha_lsio.sh` – Patches LinuxServer.io base images for HA compatibility
 - `bashio-standalone.sh` – Bashio library for scripts outside Supervisor context
 
-The `ARG MODULES=` line lists template scripts to download at build time (e.g., `00-banner.sh 01-custom_script.sh 00-smb_mounts.sh`). Available modules in `.templates/`:
+The `ARG MODULES=` line lists template scripts to download at build time (e.g., `00-banner.sh 01-custom_script.sh 00-smb_mounts.sh`). Commonly-used modules in `.templates/` (not exhaustive):
 - `00-global_var.sh` – Initialize global env vars from HA options
 - `00-local_mounts.sh` – Mount local disks (localdisks option)
 - `00-smb_mounts.sh` – SMB/CIFS network mount support
@@ -60,7 +60,7 @@ Key fields in every add-on's `config.yaml`:
 ```yaml
 arch: [aarch64, amd64]
 image: ghcr.io/alexbelgium/{slug}-{arch}
-version: "X.Y.Z-N"        # upstream version + patch suffix
+version: "X.Y.Z"          # upstream version (format varies; see Versioning section)
 ingress: true/false
 ingress_port: 8000
 map:
@@ -140,8 +140,9 @@ Adding `[nobuild]` anywhere in a commit message skips the builder workflow.
 
 ## S6-Overlay Init Script Naming
 
-Scripts in `rootfs/etc/cont-init.d/` run in lexicographic order. The conventional numbering:
+Scripts in `rootfs/etc/cont-init.d/` run in lexicographic order. Common numbering conventions (many add-ons use other prefixes too):
 - `20-*` – Directory/folder setup
+- `32-*` – Nginx ingress configuration (e.g. `32-nginx_ingress.sh`)
 - `80-*` – Application configuration
-- `90-*` – Ingress / nginx setup
+- `90-*` – Misc pre-startup tasks (ssl, vpn, custom run)
 - `99-*` – Final startup / launch
