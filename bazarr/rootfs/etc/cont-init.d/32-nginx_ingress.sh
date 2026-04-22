@@ -35,16 +35,16 @@ if [ -f "$CONFIG_LOCATION" ]; then
         ingress_noauth)
             bashio::log.green "Ingress is enabled, authentication is disabled"
             bashio::log.yellow "WARNING : Make sure that the port is not exposed externally by your router to avoid a security risk !"
-            # Set base_url
-            sed -i "s/  base_url:.*/  base_url: $slug/" "$CONFIG_LOCATION"
+            # Set base_url (must start with / for Flask blueprint registration)
+            sed -i "s|  base_url:.*|  base_url: /$slug|" "$CONFIG_LOCATION"
             # Disable auth
             sed -i '/^auth:/,/^[^ ]/{ s/  type:.*/  type: null/ }' "$CONFIG_LOCATION"
             ;;
         # Ingress mode, with authentication
         ingress_auth)
             bashio::log.green "Ingress is enabled, and external authentication is enabled"
-            # Set base_url
-            sed -i "s/  base_url:.*/  base_url: $slug/" "$CONFIG_LOCATION"
+            # Set base_url (must start with / for Flask blueprint registration)
+            sed -i "s|  base_url:.*|  base_url: /$slug|" "$CONFIG_LOCATION"
             # Enable Bazarr auth when leaving ingress_noauth
             sed -i '/^auth:/,/^[^ ]/{ s/  type:.*/  type: form/ }' "$CONFIG_LOCATION"
             ;;

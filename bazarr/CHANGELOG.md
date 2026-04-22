@@ -1,5 +1,8 @@
 
-## 1.5.6-3 (2026-04-20)
+## 1.5.6-4 (2026-04-22)
+- Fix Bazarr crash on startup: base_url must start with '/' for Flask blueprint registration
+
+## 1.5.6-3
 - Add Ingress support with nginx reverse proxy for sidebar integration
 - Add connection_mode option (ingress_noauth/noingress_auth/ingress_auth)
 
