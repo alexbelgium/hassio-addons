@@ -15,7 +15,7 @@ addon_name/
 ├── config.yaml          # HA add-on metadata, schema, ports, maps
 ├── build.json           # Base Docker images per architecture (may be build.yaml, or absent)
 ├── Dockerfile           # Multi-stage build (always uses shared .templates/ scripts)
-├── updater.json         # Upstream release tracking (used by addons_updater; absent in some add-ons)
+├── updater.json         # Upstream release tracking; required to enable automatic updates
 ├── CHANGELOG.md         # Required; must be updated on every PR
 └── rootfs/              # Optional; absent in some add-ons
     └── etc/
