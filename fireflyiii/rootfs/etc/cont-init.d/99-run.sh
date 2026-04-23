@@ -90,27 +90,52 @@ case $(bashio::config 'DB_CONNECTION') in
         DB_CONNECTION=mysql
         DB_HOST=$(bashio::services "mysql" "host")
         DB_PORT=$(bashio::services "mysql" "port")
-        DB_DATABASE=firefly
-        DB_USERNAME=$(bashio::services "mysql" "username")
-        DB_PASSWORD=$(bashio::services "mysql" "password")
+
+        # Always fetch service discovery credentials for bootstrap operations (CREATE DATABASE)
+        BOOTSTRAP_USERNAME=$(bashio::services "mysql" "username")
+        BOOTSTRAP_PASSWORD=$(bashio::services "mysql" "password")
+
+        # Use user-configured database name if provided, otherwise default to 'firefly'
+        if bashio::config.has_value "DB_DATABASE"; then
+            DB_DATABASE=$(bashio::config "DB_DATABASE")
+            # Validate: only allow alphanumeric, underscore, and dash
+            if [[ ! "$DB_DATABASE" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+                bashio::exit.nok "DB_DATABASE contains invalid characters. Only alphanumeric, underscore, and dash are allowed."
+            fi
+        else
+            DB_DATABASE=firefly
+        fi
+
+        # Use user-configured credentials if provided, otherwise use service discovery
+        if bashio::config.has_value "DB_USERNAME"; then
+            DB_USERNAME=$(bashio::config "DB_USERNAME")
+        else
+            DB_USERNAME=${BOOTSTRAP_USERNAME}
+        fi
+        if bashio::config.has_value "DB_PASSWORD"; then
+            DB_PASSWORD=$(bashio::config "DB_PASSWORD")
+        else
+            DB_PASSWORD=${BOOTSTRAP_PASSWORD}
+        fi
+
         export DB_CONNECTION
         export DB_HOST && bashio::log.blue "DB_HOST=$DB_HOST"
         export DB_PORT && bashio::log.blue "DB_PORT=$DB_PORT"
         export DB_DATABASE && bashio::log.blue "DB_DATABASE=$DB_DATABASE"
         export DB_USERNAME && bashio::log.blue "DB_USERNAME=$DB_USERNAME"
-        export DB_PASSWORD && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD"
+        export DB_PASSWORD  # do not log password
 
         bashio::log.warning "Firefly-iii is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
         bashio::log.info "Creating database for Firefly-iii if required"
-        # Create database without SSL requirement
+        # Create database using service discovery credentials which have CREATE privilege
         mysql \
             --skip-ssl \
-            -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
+            -u "${BOOTSTRAP_USERNAME}" -p"${BOOTSTRAP_PASSWORD}" \
             -h "${DB_HOST}" -P "${DB_PORT}" \
-            -e "CREATE DATABASE IF NOT EXISTS \`firefly\`;"
+            -e "CREATE DATABASE IF NOT EXISTS \`${DB_DATABASE}\`;"
         ;;
 
         # Use remote

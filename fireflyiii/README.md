@@ -51,9 +51,9 @@ Configurations can be done through the app webUI, except for the following optio
 | `DB_CONNECTION` | list | `sqlite_internal` | Database type (sqlite_internal/mariadb_addon/mysql/pgsql) |
 | `DB_HOST` | str | | Database host (for external databases) |
 | `DB_PORT` | str | | Database port (for external databases) |
-| `DB_DATABASE` | str | | Database name (for external databases) |
-| `DB_USERNAME` | str | | Database username (for external databases) |
-| `DB_PASSWORD` | str | | Database password (for external databases) |
+| `DB_DATABASE` | str | | Database name (defaults to `firefly` for mariadb_addon) |
+| `DB_USERNAME` | str | | Database username (overrides MariaDB addon service discovery if set) |
+| `DB_PASSWORD` | str | | Database password (overrides MariaDB addon service discovery if set) |
 | `Updates` | list | | Automatic update schedule (hourly/daily/weekly) |
 | `silent` | bool | `true` | Silent mode - set to false for debug info |
 

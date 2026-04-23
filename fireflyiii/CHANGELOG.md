@@ -1,6 +1,12 @@
 
+## 6.5.10 (2026-04-23)
+- Fix: use service discovery credentials for CREATE DATABASE bootstrap (prevents failure when user-specified credentials lack CREATE privilege)
+- Fix: validate DB_DATABASE name to prevent SQL injection in bootstrap SQL statement
+- Fix: DB_PASSWORD is no longer logged to addon logs
+
 ## 6.5.9 (2026-03-28)
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
+- Fix: mariadb_addon now respects user-configured DB_USERNAME, DB_PASSWORD, and DB_DATABASE options instead of always using service discovery credentials
 
 ## 6.5.6 (2026-03-21)
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
