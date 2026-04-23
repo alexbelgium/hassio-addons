@@ -2,4 +2,13 @@
 # shellcheck shell=bash
 set -euo pipefail
 
+# Wait for ingress configuration to be generated
+while [ ! -f /etc/nginx/servers/ingress.conf ]; do
+    bashio::log.info "Waiting for /etc/nginx/servers/ingress.conf..."
+    sleep 1
+done
+
+# Wait to be sure the script fully executed
+sleep 5
+
 nginx
