@@ -1,5 +1,8 @@
 
-## 0.6.6 (2026-04-21)
+## 0.6.6-1 (2026-04-23)
+- Fix 502 Bad Gateway on ingress: nginx now waits for the API server (port 5002) to be ready before starting. Previously, nginx started immediately while the ML model was still loading, causing all API calls to fail with 502 until the model finished loading.
+
+
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 
 ## 0.6.4 (2026-04-18)

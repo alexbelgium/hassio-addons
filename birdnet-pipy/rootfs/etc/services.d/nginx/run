@@ -2,4 +2,9 @@
 # shellcheck shell=bash
 set -euo pipefail
 
+# Wait for the API server to be ready before exposing the ingress. Without
+# this, nginx starts immediately while the model is still loading (can take
+# minutes), causing every frontend API call to return a 502 Bad Gateway.
+bashio::net.wait_for 5002 127.0.0.1 300
+
 nginx
