@@ -1,4 +1,7 @@
 
+## 6.6.1 (2026-04-23)
+- Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
+
 ## 6.5.10 (2026-04-23)
 - Fix: use service discovery credentials for CREATE DATABASE bootstrap (prevents failure when user-specified credentials lack CREATE privilege)
 - Fix: validate DB_DATABASE name to prevent SQL injection in bootstrap SQL statement
