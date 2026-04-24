@@ -1,3 +1,5 @@
+## 2.8.4 (24-04-2026)
+- Minor bugs fixed
 ## 2.8.2 (07-04-2026)
 - Minor bugs fixed
 # Changelog
