@@ -1,0 +1,4 @@
+---
+build_from:
+  aarch64: jc21/nginx-proxy-manager:latest
+  amd64: jc21/nginx-proxy-manager:latest

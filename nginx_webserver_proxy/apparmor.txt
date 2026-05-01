@@ -1,0 +1,104 @@
+#include <tunables/global>
+
+profile nginx-proxy-manager flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+
+  # Core capabilities
+  capability chown,
+  capability dac_override,
+  capability net_bind_service,
+  capability setfcap,
+  capability setgid,
+  capability setuid,
+  capability sys_chroot,
+  capability kill,
+
+  # Process and memory management
+  capability sys_resource,
+
+  # Deny dangerous capabilities
+  deny capability dac_read_search,
+  deny capability linux_immutable,
+  deny capability mac_admin,
+  deny capability mac_override,
+  deny capability sys_admin,
+  deny capability sys_boot,
+  deny capability sys_module,
+  deny capability sys_rawio,
+  deny capability syslog,
+
+  # Network
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
+  network unix stream,
+  network unix dgram,
+
+  # /data - addon config (read/write)
+  /data/ r,
+  /data/** rwk,
+
+  # /share - Home Assistant storage (read/write)
+  /share/ r,
+  /share/** rwk,
+
+  # /media - Home Assistant media (read/write)
+  /media/ r,
+  /media/** rwk,
+
+  # /config - Home Assistant config (read/write)
+  /config/ r,
+  /config/** rwk,
+
+  # /addon_configs - addon instance config
+  /addon_configs/ r,
+  /addon_configs/** rwk,
+
+  # /etc/letsencrypt - SSL certs
+  /etc/letsencrypt/ r,
+  /etc/letsencrypt/** rwk,
+
+  # /proc and /sys
+  @{PROC}/ r,
+  @{PROC}/** rw,
+  @{sys}/ r,
+  @{sys}/** rw,
+
+  # Temporary files
+  /tmp/ r,
+  /tmp/** rwk,
+  /var/tmp/ r,
+  /var/tmp/** rwk,
+
+  # Basic system access
+  /bin/bash ix,
+  /bin/sh ix,
+  /bin/ls ix,
+  /bin/cat ix,
+  /bin/sed ix,
+  /usr/bin/jq ix,
+
+  # Nginx binary and libraries
+  /usr/sbin/nginx ix,
+  /usr/local/sbin/nginx ix,
+  /usr/lib/** rm,
+  /lib/** rm,
+  /usr/local/lib/** rm,
+
+  # Allow reading app-specific configs (read-only)
+  /etc/nginx/ r,
+  /etc/nginx/** r,
+  /var/log/ r,
+  /var/log/** w,
+
+  # Deny sensitive system areas
+  deny /root/** rwkl,
+  deny /home/** rwkl,
+  deny /proc/sysrq-trigger rwkl,
+  deny /sys/firmware/** rwkl,
+  deny /sys/kernel/security/** rwkl,
+  deny /sys/kernel/debug/** rwkl,
+}
