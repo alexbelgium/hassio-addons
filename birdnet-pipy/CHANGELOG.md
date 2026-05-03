@@ -1,3 +1,5 @@
+## 0.6.6-4 (2026-05-02)
+- Fix nginx startup: wait for the upstream API on `127.0.0.1:5002` before starting nginx, instead of the prior `sleep 5` workaround. Under s6-overlay all `services.d/*` services start concurrently, so nginx could begin accepting requests before `core.api` had bound its port — `/api/`, `/socket.io/`, and `/internal/auth` would then return 502, and that 502 could be cached by an upstream service worker / edge cache (e.g. behind Cloudflare-fronted HA), leaving the UI stuck blank. Uses `bashio::net.wait_for` to match the pattern in sister addons (`bazarr`, `jellyfin`, `radarr`).
 ## 0.6.6-3 (23-04-2026)
 - Minor bugs fixed
 ## 0.6.6-2 (23-04-2026)

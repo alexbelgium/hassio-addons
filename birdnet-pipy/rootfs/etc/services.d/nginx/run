@@ -2,13 +2,13 @@
 # shellcheck shell=bash
 set -euo pipefail
 
-# Wait for ingress configuration to be generated
-while [ ! -f /etc/nginx/servers/ingress.conf ]; do
-    bashio::log.info "Waiting for /etc/nginx/servers/ingress.conf..."
-    sleep 1
-done
+# Wait for the upstream API service (Python core.api) to bind 127.0.0.1:5002
+# before starting nginx, so nginx never serves a 502 for the API/auth/socket
+# paths during boot. A boot-time 502 can be cached by an upstream cache layer
+# (HA's own PWA service worker, a Cloudflare edge worker, etc.), leaving the
+# UI in a stuck blank state until the cache is purged.
+bashio::log.info "Waiting for upstream API on 127.0.0.1:5002..."
+bashio::net.wait_for 5002 127.0.0.1 900
 
-# Wait to be sure the script fully executed
-sleep 5
-
-nginx
+bashio::log.info "Starting NGinx..."
+exec nginx
