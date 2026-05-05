@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fix Codacy style warnings: add blank lines around lists in README
+
 ## 2.14.0
 
 - Initial release wrapping jc21/nginx-proxy-manager:latest
