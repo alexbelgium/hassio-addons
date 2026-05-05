@@ -5,6 +5,7 @@
 ## Why This Add-on?
 
 Home Assistant's built-in folder server has limitations:
+
 - Can only serve from a single folder at a time
 - No reverse proxy capabilities
 - No SSL/HTTPS support
@@ -43,6 +44,7 @@ This add-on combines a full reverse proxy with a proper static file server, allo
 ## Default Credentials
 
 First login (port 81):
+
 - Email: `admin@example.com`
 - Password: `changeme`
 
@@ -59,11 +61,13 @@ Paths are validated at startup for safe access:
 ## Examples
 
 **Reverse proxy:**
+
 1. Open the admin UI at `http://<HA_IP>:81`
 2. Add a proxy host pointing to another service
 3. Configure SSL via Let's Encrypt (optional)
 
 **Static website:**
+
 1. Place files in `/share/www` (or your configured `static_site_root`)
 2. Access at `http://<HA_IP>:80/` (or your configured `static_site_prefix`)
 
