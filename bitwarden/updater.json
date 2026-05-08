@@ -1,9 +1,9 @@
 {
-  "last_update": "2026-05-02",
+  "last_update": "2026-05-09",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "bitwarden",
   "source": "github",
   "upstream_repo": "dani-garcia/bitwarden_rs",
-  "upstream_version": "1.35.8"
+  "upstream_version": "1.36.0"
 }
