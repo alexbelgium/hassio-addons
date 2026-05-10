@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 127
+- In the repository : 128
 - Installed : 195429
 
 ### Top 3
@@ -647,6 +647,12 @@ If you want to do add the repository manually, please follow the procedure highl
 ![MariaDB][mariadb-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003;  [Nginx Proxy Manager + Static Web Server](nginx_webserver_proxy/) : Nginx Proxy Manager with a built-in configurable static file server. Manage reverse proxies via NPM UI on port 81 while serving files from HA storage on port 80.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnginx_webserver_proxy%2Fconfig.yaml)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/arrow-down-bold-circle-outline.svg) [Nzbget](nzbget/) : usenet downloader
 
