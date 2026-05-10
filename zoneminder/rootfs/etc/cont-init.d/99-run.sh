@@ -36,7 +36,7 @@ case "$(bashio::config "DB_CONNECTION")" in
         # gained IPv6, but the MariaDB addon only grants its user from the IPv4
         # subnet (issue #2688). Fall back to the raw hostname if resolution fails.
         mariadb_host_raw="$(bashio::services "mysql" "host")"
-        mariadb_host_ipv4="$(getent ahostsv4 "$mariadb_host_raw" 2> /dev/null | awk '{print $1; exit}')"
+        mariadb_host_ipv4="$({ getent ahostsv4 "$mariadb_host_raw" 2> /dev/null || true; } | awk '{print $1; exit}')"
         ZM_DB_HOST="${mariadb_host_ipv4:-$mariadb_host_raw}"
         if [ "$ZM_DB_HOST" != "$mariadb_host_raw" ]; then
             bashio::log.info "Resolved ${mariadb_host_raw} -> ${ZM_DB_HOST} (forcing IPv4)"
