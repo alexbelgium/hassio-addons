@@ -34,9 +34,20 @@ case $(bashio::config 'DB_TYPE') in
         MYSQL_PORT="$(bashio::services 'mysql' 'port')"
 
         # Force IPv4 to avoid access denied errors when the container network uses IPv6 (HAOS 17.3+)
-        if MYSQL_HOST_V4=$(getent ahostsv4 "$MYSQL_HOST" 2>/dev/null | awk 'NR==1{print $1}') && [ -n "$MYSQL_HOST_V4" ]; then
+        MYSQL_HOST_V4=""
+        if command -v getent >/dev/null 2>&1; then
+            MYSQL_HOST_V4="$(getent ahostsv4 "$MYSQL_HOST" 2>/dev/null | awk 'NR==1{print $1}')"
+        elif command -v nslookup >/dev/null 2>&1; then
+            MYSQL_HOST_V4="$(nslookup "$MYSQL_HOST" 2>/dev/null | awk '/^Address [0-9]+: / { print $3; exit } /^Address: / && $2 ~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/ { print $2; exit }')"
+        else
+            bashio::log.warning "Unable to resolve MariaDB host to IPv4: neither getent nor nslookup is available"
+        fi
+
+        if [ -n "$MYSQL_HOST_V4" ]; then
             bashio::log.info "Resolved MariaDB host to IPv4: $MYSQL_HOST_V4"
             MYSQL_HOST="$MYSQL_HOST_V4"
+        else
+            bashio::log.warning "Unable to resolve MariaDB host '$MYSQL_HOST' to IPv4; continuing with hostname"
         fi
 
         PHOTOPRISM_DATABASE_SERVER="${MYSQL_HOST}:${MYSQL_PORT}"
