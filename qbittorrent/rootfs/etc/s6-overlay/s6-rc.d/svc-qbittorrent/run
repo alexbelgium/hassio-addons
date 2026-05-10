@@ -36,14 +36,14 @@ fi
 
 # --- Launch qBittorrent ---
 
-# Determine log output based on silent mode
-QB_OUTPUT="/dev/stdout"
-if bashio::config.true 'silent'; then
-    QB_OUTPUT="/dev/null"
-fi
-
 bashio::log.info "Starting qBittorrent..."
 
-exec \
-    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
-    s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
+# On aarch64 LSIO images svc-qbittorrent has no notification-fd, so fd 3 is never
+# opened by s6-rc. s6-notifyoncheck then exits with EBADF after its check passes,
+# s6 sees the supervised process die and restarts it — causing the startup loop.
+# Run qbittorrent-nox directly so s6 supervises the actual process.
+if bashio::config.true 'silent'; then
+    exec > /dev/null 2>&1
+fi
+
+exec s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}"
