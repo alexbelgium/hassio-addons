@@ -46,8 +46,8 @@ RUN \
     # Set download folder to /share
     sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
     \
-    # Remove fixed folders (SavePath/ScanDirsV2/TempPath), handled by init script
-    && sed -i '11,13d' /defaults/qBittorrent.conf \
+    # Remove fixed folders, allows connection to webUI
+    && sed '11,13d' /defaults/qBittorrent.conf \
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
     \
