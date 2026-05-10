@@ -4,6 +4,12 @@
 WEBUI_PORT=${WEBUI_PORT:-8080}
 export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
 
+# Read WebUI bind address from config (mirrors upstream LSIO approach)
+WEBUI_ADDRESS=$(grep -Po "^WebUI\\\\Address=\K(.*)" /config/qBittorrent/qBittorrent.conf 2>/dev/null || echo "")
+if [[ -z ${WEBUI_ADDRESS} ]] || [[ ${WEBUI_ADDRESS} == "*" ]]; then
+    WEBUI_ADDRESS="localhost"
+fi
+
 # --- Configuration & Pre-checks ---
 
 if bashio::config.true 'silent'; then
@@ -36,14 +42,21 @@ fi
 
 # --- Launch qBittorrent ---
 
-# Determine log output based on silent mode
-QB_OUTPUT="/dev/stdout"
-if bashio::config.true 'silent'; then
-    QB_OUTPUT="/dev/null"
-fi
-
 bashio::log.info "Starting qBittorrent..."
 
-exec \
-    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
-    s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
+# Suppress output in silent mode by redirecting the current shell's stdout/stderr
+# before exec replaces the process (avoids opening /dev/stdout which may fail on
+# some ARM platforms / container runtimes).
+if bashio::config.true 'silent'; then
+    exec >/dev/null 2>&1
+fi
+
+if [[ -z ${LSIO_NON_ROOT_USER} ]]; then
+    exec \
+        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z ${WEBUI_ADDRESS} ${WEBUI_PORT}" \
+        s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}"
+else
+    exec \
+        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z ${WEBUI_ADDRESS} ${WEBUI_PORT}" \
+        /app/qbittorrent-nox --webui-port="${WEBUI_PORT}"
+fi
