@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+set +u
+
 WEBUI_PORT=${WEBUI_PORT:-8080}
 export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
 
