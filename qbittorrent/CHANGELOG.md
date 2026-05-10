@@ -1,15 +1,3 @@
-## 5.2.0-5 (10-05-2026)
-- Minor bugs fixed
-
-## 5.2.0-4 (2026-05-10)
-- Fix "unbound variable" crash: use \`${LSIO_NON_ROOT_USER:-}\` so the variable is safely empty when unset; remove duplicate QB_BIN detection block
-
-## 5.2.0-3 (2026-05-10)
-- Fix qBittorrent restart loop: remove s6-notifyoncheck (notification-fd 3 EBADF when not running under s6-rc), discover binary path dynamically across LSIO image layouts, remove `/dev/stdout` redirect that fails on some ARM runtimes, align with upstream LSIO run script (WebUI address from config, LSIO_NON_ROOT_USER)
-- Fix Dockerfile: add missing `-i` flag to `sed '11,13d'` so default config lines are actually removed at build time
-
-## 5.2.0-2 (2026-05-10)
-- Fix qBittorrent restart loop: remove s6-notifyoncheck (avoids notification-fd EBADF crash) and discover binary path dynamically across LSIO image layouts
 
 ## 5.2.0-1 (2026-05-10)
 - Fix qbittorrent-nox path (/usr/bin → /app) after LSIO image update
