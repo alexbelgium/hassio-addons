@@ -1,3 +1,5 @@
+## 5.2.0-5 (10-05-2026)
+- Minor bugs fixed
 
 ## 5.2.0-4 (2026-05-10)
 - Fix "unbound variable" crash: use \`${LSIO_NON_ROOT_USER:-}\` so the variable is safely empty when unset; remove duplicate QB_BIN detection block
