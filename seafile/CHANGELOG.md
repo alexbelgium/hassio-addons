@@ -1,4 +1,7 @@
 
+## 12.0.18-4 (2026-05-10)
+- Fix admin account creation by writing `conf/admin.txt` and seeding `seafile.env` with `SEAFILE_ADMIN_EMAIL`/`SEAFILE_ADMIN_PASSWORD` so the upstream `check_init_admin.py` no longer falls back to an interactive prompt (#2685)
+
 ## 12.0.18-3 (2026-05-10)
 - Fix MariaDB connection on HAOS >=17.3 by forcing IPv4 host resolution (#2688)
 

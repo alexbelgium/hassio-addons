@@ -94,6 +94,43 @@ sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
 sed -i "s|/shared|$DATA_LOCATION|g" /home/seafile/*.sh
 #sed -i "s=cp -r ./media $DATA_LOCATION/=chown -R seafile:seafile $DATA_LOCATION/* && chmod -R 777 $DATA_LOCATION/media && cp -rnf ./media/. $DATA_LOCATION/media ||true=g" /home/seafile/*.sh
 
+#####################
+# Admin credentials #
+#####################
+
+# Seafile's check_init_admin.py looks for SEAFILE_ADMIN_EMAIL and
+# SEAFILE_ADMIN_PASSWORD in the env, then falls back to conf/admin.txt, and
+# only prompts interactively if neither is available. The upstream init.sh
+# writes admin.txt, but it is skipped when conf/ccnet.conf or conf/revision
+# already exist (e.g. after a partial previous install) and the env vars do
+# not always reach the seahub subprocess via su. Write admin.txt directly and
+# inject the values into seafile.env so admin creation succeeds (#2685).
+ADMIN_EMAIL_VAL="$(bashio::config 'SEAFILE_ADMIN_EMAIL')"
+ADMIN_PASSWORD_VAL="$(bashio::config 'SEAFILE_ADMIN_PASSWORD')"
+
+if [[ -n "${ADMIN_EMAIL_VAL}" && "${ADMIN_EMAIL_VAL}" != "null" \
+    && -n "${ADMIN_PASSWORD_VAL}" && "${ADMIN_PASSWORD_VAL}" != "null" ]]; then
+    bashio::log.info "Seeding admin credentials"
+
+    mkdir -p "${DATA_LOCATION}/conf"
+
+    ADMIN_FILE="${DATA_LOCATION}/conf/admin.txt"
+    jq -n --arg email "${ADMIN_EMAIL_VAL}" --arg password "${ADMIN_PASSWORD_VAL}" \
+        '{email: $email, password: $password}' > "${ADMIN_FILE}"
+    chown seafile:seafile "${ADMIN_FILE}"
+    chmod 600 "${ADMIN_FILE}"
+
+    SEAFILE_ENV_FILE="${DATA_LOCATION}/conf/seafile.env"
+    touch "${SEAFILE_ENV_FILE}"
+    sed -i '/^SEAFILE_ADMIN_EMAIL=/d' "${SEAFILE_ENV_FILE}"
+    sed -i '/^SEAFILE_ADMIN_PASSWORD=/d' "${SEAFILE_ENV_FILE}"
+    {
+        printf 'SEAFILE_ADMIN_EMAIL=%q\n' "${ADMIN_EMAIL_VAL}"
+        printf 'SEAFILE_ADMIN_PASSWORD=%q\n' "${ADMIN_PASSWORD_VAL}"
+    } >> "${SEAFILE_ENV_FILE}"
+    chown seafile:seafile "${SEAFILE_ENV_FILE}"
+fi
+
 #############################################
 # Configure service URL and file server root #
 #############################################
