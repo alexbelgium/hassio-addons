@@ -124,9 +124,22 @@ if [[ -n "${ADMIN_EMAIL_VAL}" && "${ADMIN_EMAIL_VAL}" != "null" \
     touch "${SEAFILE_ENV_FILE}"
     sed -i '/^SEAFILE_ADMIN_EMAIL=/d' "${SEAFILE_ENV_FILE}"
     sed -i '/^SEAFILE_ADMIN_PASSWORD=/d' "${SEAFILE_ENV_FILE}"
+
+    case "${ADMIN_EMAIL_VAL}" in
+        *$'\n'*|*$'\r'*)
+            bashio::exit.nok "SEAFILE_ADMIN_EMAIL must not contain newlines"
+            ;;
+    esac
+
+    case "${ADMIN_PASSWORD_VAL}" in
+        *$'\n'*|*$'\r'*)
+            bashio::exit.nok "SEAFILE_ADMIN_PASSWORD must not contain newlines"
+            ;;
+    esac
+
     {
-        printf 'SEAFILE_ADMIN_EMAIL=%q\n' "${ADMIN_EMAIL_VAL}"
-        printf 'SEAFILE_ADMIN_PASSWORD=%q\n' "${ADMIN_PASSWORD_VAL}"
+        printf 'SEAFILE_ADMIN_EMAIL=%s\n' "${ADMIN_EMAIL_VAL}"
+        printf 'SEAFILE_ADMIN_PASSWORD=%s\n' "${ADMIN_PASSWORD_VAL}"
     } >> "${SEAFILE_ENV_FILE}"
     chown seafile:seafile "${SEAFILE_ENV_FILE}"
     chmod 600 "${SEAFILE_ENV_FILE}"
