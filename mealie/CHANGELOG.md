@@ -1,4 +1,7 @@
 
+## v3.17.0-1 (2026-05-10)
+- Fix sidebar panel not visible to non-admin HA users (remove duplicate panel_admin key, keep panel_admin: false)
+
 ## v3.17.0 (2026-05-09)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 
