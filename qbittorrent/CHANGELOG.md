@@ -1,4 +1,7 @@
 
+## 5.2.0-1 (2026-05-10)
+- Fix qbittorrent-nox path (/usr/bin → /app) after LSIO image update
+
 ## 5.2.0 (2026-05-09)
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 ## 5.1.4-23 (06-04-2026)
