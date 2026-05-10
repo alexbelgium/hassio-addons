@@ -1,7 +1,10 @@
 
-## 5.2.0-2 (2026-05-10)
-- Fix qbittorrent restart loop on aarch64/ARM64 devices (e.g. odroid-c2): remove `> /dev/stdout` redirect in service run script that could fail on certain container runtimes, align with upstream LSIO run script (read WebUI address from config, honour LSIO_NON_ROOT_USER)
+## 5.2.0-3 (2026-05-10)
+- Fix qBittorrent restart loop: remove s6-notifyoncheck (notification-fd 3 EBADF when not running under s6-rc), discover binary path dynamically across LSIO image layouts, remove `/dev/stdout` redirect that fails on some ARM runtimes, align with upstream LSIO run script (WebUI address from config, LSIO_NON_ROOT_USER)
 - Fix Dockerfile: add missing `-i` flag to `sed '11,13d'` so default config lines are actually removed at build time
+
+## 5.2.0-2 (2026-05-10)
+- Fix qBittorrent restart loop: remove s6-notifyoncheck (avoids notification-fd EBADF crash) and discover binary path dynamically across LSIO image layouts
 
 ## 5.2.0-1 (2026-05-10)
 - Fix qbittorrent-nox path (/usr/bin → /app) after LSIO image update
