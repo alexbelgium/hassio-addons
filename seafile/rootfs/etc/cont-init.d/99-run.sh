@@ -129,6 +129,7 @@ if [[ -n "${ADMIN_EMAIL_VAL}" && "${ADMIN_EMAIL_VAL}" != "null" \
         printf 'SEAFILE_ADMIN_PASSWORD=%q\n' "${ADMIN_PASSWORD_VAL}"
     } >> "${SEAFILE_ENV_FILE}"
     chown seafile:seafile "${SEAFILE_ENV_FILE}"
+    chmod 600 "${SEAFILE_ENV_FILE}"
 fi
 
 #############################################
