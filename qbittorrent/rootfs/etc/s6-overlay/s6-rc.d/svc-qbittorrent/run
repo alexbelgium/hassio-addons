@@ -1,8 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-set +u
-
 WEBUI_PORT=${WEBUI_PORT:-8080}
 export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
 
@@ -67,6 +65,7 @@ if bashio::config.true 'silent'; then
     exec >/dev/null 2>&1
 fi
 
+set +u
 if [[ -z ${LSIO_NON_ROOT_USER} ]]; then
     exec s6-setuidgid abc "${QB_BIN}" --webui-port="${WEBUI_PORT}"
 else
