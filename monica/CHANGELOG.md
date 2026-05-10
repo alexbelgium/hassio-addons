@@ -1,3 +1,6 @@
+## 5.0.0b5-3 (2026-05-10)
+- Fix MariaDB connection on HAOS >=17.3 by forcing IPv4 host resolution (#2688)
+
 ## 5.0.0b5-2 (26-02-2026)
 - Minor bugs fixed
 
