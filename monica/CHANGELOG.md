@@ -1,3 +1,6 @@
+## 5.0.0b5-3 (2026-05-10)
+- Fix: Force IPv4 for MariaDB connections to resolve access denied errors after HAOS 17.3 (IPv6 networking change)
+
 ## 5.0.0b5-2 (26-02-2026)
 - Minor bugs fixed
 

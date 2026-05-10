@@ -1,4 +1,8 @@
 
+## 12.0.18-3 (2026-05-10)
+
+- Fix: Force IPv4 for MariaDB connections to resolve access denied errors after HAOS 17.3 (IPv6 networking change)
+
 ## 12.0.18-2 (2026-02-22)
 - Fix download URLs containing incorrect `/seafhttp` prefix on first run by re-applying URL configuration after upstream init scripts complete.
 

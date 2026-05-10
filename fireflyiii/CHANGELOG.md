@@ -1,4 +1,8 @@
 
+## 6.6.2-1 (2026-05-10)
+
+- Fix: Force IPv4 for MariaDB connections to resolve access denied errors after HAOS 17.3 (IPv6 networking change)
+
 ## 6.6.2 (2026-05-02)
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 

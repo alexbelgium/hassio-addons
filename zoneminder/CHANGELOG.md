@@ -1,4 +1,8 @@
 
+## 1.38.1-1 (2026-05-10)
+
+- Fix: Force IPv4 for MariaDB connections to resolve access denied errors after HAOS 17.3 (IPv6 networking change)
+
 ## 1.38.1 (2026-02-21)
 - Update to latest version from zoneminder-containers/zoneminder-base (changelog : https://github.com/zoneminder-containers/zoneminder-base/releases)
 

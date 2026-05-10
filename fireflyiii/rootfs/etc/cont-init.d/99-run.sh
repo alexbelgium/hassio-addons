@@ -91,6 +91,12 @@ case $(bashio::config 'DB_CONNECTION') in
         DB_HOST=$(bashio::services "mysql" "host")
         DB_PORT=$(bashio::services "mysql" "port")
 
+        # Force IPv4 to avoid access denied errors when the container network uses IPv6 (HAOS 17.3+)
+        if DB_HOST_V4=$(getent ahostsv4 "$DB_HOST" 2>/dev/null | awk 'NR==1{print $1}') && [ -n "$DB_HOST_V4" ]; then
+            bashio::log.info "Resolved MariaDB host to IPv4: $DB_HOST_V4"
+            DB_HOST="$DB_HOST_V4"
+        fi
+
         # Always fetch service discovery credentials for bootstrap operations (CREATE DATABASE)
         BOOTSTRAP_USERNAME=$(bashio::services "mysql" "username")
         BOOTSTRAP_PASSWORD=$(bashio::services "mysql" "password")

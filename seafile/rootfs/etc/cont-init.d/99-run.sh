@@ -207,7 +207,13 @@ case "${DATABASE_SELECTION}" in
         fi
 
         # Use values
-        export MYSQL_HOST="$(bashio::services 'mysql' 'host')" && sed -i "1a export MYSQL_HOST=$(bashio::services 'mysql' 'host')" /home/seafile/*.sh
+        MYSQL_HOST="$(bashio::services 'mysql' 'host')"
+        # Force IPv4 to avoid access denied errors when the container network uses IPv6 (HAOS 17.3+)
+        if MYSQL_HOST_V4=$(getent ahostsv4 "$MYSQL_HOST" 2>/dev/null | awk 'NR==1{print $1}') && [ -n "$MYSQL_HOST_V4" ]; then
+            bashio::log.info "Resolved MariaDB host to IPv4: $MYSQL_HOST_V4"
+            MYSQL_HOST="$MYSQL_HOST_V4"
+        fi
+        export MYSQL_HOST && sed -i "1a export MYSQL_HOST=$MYSQL_HOST" /home/seafile/*.sh
         export MYSQL_PORT="$(bashio::services 'mysql' 'port')" && sed -i "1a export MYSQL_PORT=$(bashio::services 'mysql' 'port')" /home/seafile/*.sh
         export MYSQL_USER="$(bashio::services "mysql" "username")" && sed -i "1a export MYSQL_USER=$(bashio::services 'mysql' 'username')" /home/seafile/*.sh
         export MYSQL_USER_PASSWD="$(bashio::services "mysql" "password")" && sed -i "1a export MYSQL_USER_PASSWD=$(bashio::services 'mysql' 'password')" /home/seafile/*.sh

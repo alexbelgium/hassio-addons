@@ -33,6 +33,11 @@ case "$(bashio::config "DB_CONNECTION")" in
         remoteDB="1"
         ZM_DB_HOST="$(bashio::services "mysql" "host")"
         ZM_DB_PORT="$(bashio::services "mysql" "port")"
+        # Force IPv4 to avoid access denied errors when the container network uses IPv6 (HAOS 17.3+)
+        if ZM_DB_HOST_V4=$(getent ahostsv4 "$ZM_DB_HOST" 2>/dev/null | awk 'NR==1{print $1}') && [ -n "$ZM_DB_HOST_V4" ]; then
+            bashio::log.info "Resolved MariaDB host to IPv4: $ZM_DB_HOST_V4"
+            ZM_DB_HOST="$ZM_DB_HOST_V4"
+        fi
         ZM_DB_NAME="zm"
         ZM_DB_USER="$(bashio::services "mysql" "username")"
         ZM_DB_PASS="$(bashio::services "mysql" "password")"

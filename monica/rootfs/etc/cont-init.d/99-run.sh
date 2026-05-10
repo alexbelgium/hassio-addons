@@ -46,7 +46,14 @@ case "$database" in
         fi
 
         # Use values
-        DB_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "DB_HOST=$DB_HOST" && sed -i "1a export DB_HOST=$DB_HOST" /usr/local/bin/entrypoint.sh
+        DB_HOST=$(bashio::services "mysql" "host")
+        # Force IPv4 to avoid access denied errors when the container network uses IPv6 (HAOS 17.3+)
+        if DB_HOST_V4=$(getent ahostsv4 "$DB_HOST" 2>/dev/null | awk 'NR==1{print $1}') && [ -n "$DB_HOST_V4" ]; then
+            bashio::log.info "Resolved MariaDB host to IPv4: $DB_HOST_V4"
+            DB_HOST="$DB_HOST_V4"
+        fi
+        bashio::log.blue "DB_HOST=$DB_HOST"
+        sed -i "1a export DB_HOST=$DB_HOST" /usr/local/bin/entrypoint.sh
         DB_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "DB_PORT=$DB_PORT" && sed -i "1a export DB_PORT=$DB_PORT" /usr/local/bin/entrypoint.sh
         DB_DATABASE=monica && bashio::log.blue "DB_DATABASE=$DB_DATABASE" && sed -i "1a export DB_DATABASE=$DB_DATABASE" /usr/local/bin/entrypoint.sh
         DB_USERNAME=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USERNAME=$DB_USERNAME" && sed -i "1a export DB_USERNAME=$DB_USERNAME" /usr/local/bin/entrypoint.sh
