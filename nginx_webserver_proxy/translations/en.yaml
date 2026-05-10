@@ -1,0 +1,25 @@
+configuration:
+  static_site_enabled:
+    name: Enable static file server
+    description: Serve files from static_site_root on port 80. NPM proxy functionality is always active regardless of this setting.
+  static_site_root:
+    name: Static site root path
+    description: >
+      Absolute path to the directory to serve as the static site.
+      /share, /media, and /config are fully mapped by HA.
+      /mnt is allowed with a warning — if files are inaccessible, create a symlink under /share or /media pointing to your /mnt path.
+      Dangerous system paths (/, /etc, /bin, /lib, /proc, /sys) are blocked and will prevent startup.
+  static_site_prefix:
+    name: URL prefix
+    description: >
+      The URL path at which static files are served on port 80.
+      Default "/" serves files at the root. Use a sub-path like "/files/" to restrict
+      static serving to that location, leaving other paths available for NPM proxy hosts.
+  log_level:
+    name: Log level
+    description: Controls the verbosity of add-on logging.
+
+network:
+  80/tcp: HTTP — static file server and NPM proxy hosts
+  81/tcp: NPM Admin Web UI
+  443/tcp: HTTPS — NPM proxy hosts
