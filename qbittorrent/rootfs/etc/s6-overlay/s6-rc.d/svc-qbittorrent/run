@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+set +u
+
 WEBUI_PORT=${WEBUI_PORT:-8080}
 export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
 
@@ -56,20 +58,6 @@ if [[ -z "${QB_BIN}" ]]; then
     exit 1
 fi
 
-# Find qbittorrent-nox binary across different LSIO image layouts
-QB_BIN=""
-for candidate in /app/qbittorrent-nox /usr/bin/qbittorrent-nox /usr/local/bin/qbittorrent-nox; do
-    if [[ -x "${candidate}" ]]; then
-        QB_BIN="${candidate}"
-        break
-    fi
-done
-
-if [[ -z "${QB_BIN}" ]]; then
-    bashio::log.fatal "qbittorrent-nox binary not found"
-    exit 1
-fi
-
 bashio::log.info "Starting qBittorrent..."
 
 # Suppress output in silent mode by redirecting the current shell's stdout/stderr
@@ -79,7 +67,7 @@ if bashio::config.true 'silent'; then
     exec >/dev/null 2>&1
 fi
 
-if [[ -z ${LSIO_NON_ROOT_USER} ]]; then
+if [[ -z ${LSIO_NON_ROOT_USER:-} ]]; then
     exec s6-setuidgid abc "${QB_BIN}" --webui-port="${WEBUI_PORT}"
 else
     exec "${QB_BIN}" --webui-port="${WEBUI_PORT}"
