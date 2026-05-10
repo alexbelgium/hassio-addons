@@ -1,4 +1,7 @@
 
+## 5.2.0-2 (2026-05-10)
+- Fix qBittorrent restart loop: remove s6-notifyoncheck (avoids notification-fd EBADF crash) and discover binary path dynamically across LSIO image layouts
+
 ## 5.2.0-1 (2026-05-10)
 - Fix qbittorrent-nox path (/usr/bin → /app) after LSIO image update
 
