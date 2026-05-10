@@ -1,4 +1,7 @@
 
+## 12.0.18-3 (2026-05-10)
+- Fix MariaDB connection on HAOS >=17.3 by forcing IPv4 host resolution (#2688)
+
 ## 12.0.18-2 (2026-02-22)
 - Fix download URLs containing incorrect `/seafhttp` prefix on first run by re-applying URL configuration after upstream init scripts complete.
 

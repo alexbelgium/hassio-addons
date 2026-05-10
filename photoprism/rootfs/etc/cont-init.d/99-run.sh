@@ -28,9 +28,20 @@ case $(bashio::config 'DB_TYPE') in
         # Install mysqlclient
         pip install pymysql &> /dev/null || true
 
+        # Resolve MariaDB hostname to IPv4: on HAOS >=17.3 the Supervisor network
+        # gained IPv6, but the MariaDB addon only grants its user from the IPv4
+        # subnet (issue #2688). Fall back to the raw hostname if resolution fails.
+        mariadb_host_raw="$(bashio::services 'mysql' 'host')"
+        mariadb_host_ipv4="$(getent ahostsv4 "$mariadb_host_raw" 2> /dev/null | awk '{print $1; exit}')"
+        mariadb_host="${mariadb_host_ipv4:-$mariadb_host_raw}"
+        if [ "$mariadb_host" != "$mariadb_host_raw" ]; then
+            bashio::log.info "Resolved ${mariadb_host_raw} -> ${mariadb_host} (forcing IPv4)"
+        fi
+        mariadb_port="$(bashio::services 'mysql' 'port')"
+
         # Use values
         PHOTOPRISM_DATABASE_DRIVER="mysql"
-        PHOTOPRISM_DATABASE_SERVER="$(bashio::services 'mysql' 'host'):$(bashio::services 'mysql' 'port')"
+        PHOTOPRISM_DATABASE_SERVER="${mariadb_host}:${mariadb_port}"
         PHOTOPRISM_DATABASE_NAME="photoprism"
         PHOTOPRISM_DATABASE_USER="$(bashio::services 'mysql' 'username')"
         PHOTOPRISM_DATABASE_PASSWORD="$(bashio::services 'mysql' 'password')"
@@ -58,9 +69,9 @@ case $(bashio::config 'DB_TYPE') in
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
         # Create database
-        mysql --skip-ssl --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME;"
+        mysql --skip-ssl --host="${mariadb_host}" --port="${mariadb_port}" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME;"
         # Force character set
-        mysql --skip-ssl --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"ALTER DATABASE $PHOTOPRISM_DATABASE_NAME CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;" || true
+        mysql --skip-ssl --host="${mariadb_host}" --port="${mariadb_port}" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"ALTER DATABASE $PHOTOPRISM_DATABASE_NAME CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;" || true
         ;;
 esac
 

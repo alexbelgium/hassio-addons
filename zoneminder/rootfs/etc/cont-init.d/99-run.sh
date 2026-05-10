@@ -31,7 +31,16 @@ case "$(bashio::config "DB_CONNECTION")" in
 
         DB_CONNECTION="mysql"
         remoteDB="1"
-        ZM_DB_HOST="$(bashio::services "mysql" "host")"
+
+        # Resolve MariaDB hostname to IPv4: on HAOS >=17.3 the Supervisor network
+        # gained IPv6, but the MariaDB addon only grants its user from the IPv4
+        # subnet (issue #2688). Fall back to the raw hostname if resolution fails.
+        mariadb_host_raw="$(bashio::services "mysql" "host")"
+        mariadb_host_ipv4="$(getent ahostsv4 "$mariadb_host_raw" 2> /dev/null | awk '{print $1; exit}')"
+        ZM_DB_HOST="${mariadb_host_ipv4:-$mariadb_host_raw}"
+        if [ "$ZM_DB_HOST" != "$mariadb_host_raw" ]; then
+            bashio::log.info "Resolved ${mariadb_host_raw} -> ${ZM_DB_HOST} (forcing IPv4)"
+        fi
         ZM_DB_PORT="$(bashio::services "mysql" "port")"
         ZM_DB_NAME="zm"
         ZM_DB_USER="$(bashio::services "mysql" "username")"
