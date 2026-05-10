@@ -42,8 +42,20 @@ if bashio::config.true 'silent'; then
     QB_OUTPUT="/dev/null"
 fi
 
+# Find qbittorrent-nox binary across different LSIO image layouts
+QB_BIN=""
+for candidate in /app/qbittorrent-nox /usr/bin/qbittorrent-nox /usr/local/bin/qbittorrent-nox; do
+    if [[ -x "${candidate}" ]]; then
+        QB_BIN="${candidate}"
+        break
+    fi
+done
+
+if [[ -z "${QB_BIN}" ]]; then
+    bashio::log.fatal "qbittorrent-nox binary not found"
+    exit 1
+fi
+
 bashio::log.info "Starting qBittorrent..."
 
-exec \
-    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
-    s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
+exec s6-setuidgid abc "${QB_BIN}" --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
