@@ -30,7 +30,16 @@ case $(bashio::config 'DB_TYPE') in
 
         # Use values
         PHOTOPRISM_DATABASE_DRIVER="mysql"
-        PHOTOPRISM_DATABASE_SERVER="$(bashio::services 'mysql' 'host'):$(bashio::services 'mysql' 'port')"
+        MYSQL_HOST="$(bashio::services 'mysql' 'host')"
+        MYSQL_PORT="$(bashio::services 'mysql' 'port')"
+
+        # Force IPv4 to avoid access denied errors when the container network uses IPv6 (HAOS 17.3+)
+        if MYSQL_HOST_V4=$(getent ahostsv4 "$MYSQL_HOST" 2>/dev/null | awk 'NR==1{print $1}') && [ -n "$MYSQL_HOST_V4" ]; then
+            bashio::log.info "Resolved MariaDB host to IPv4: $MYSQL_HOST_V4"
+            MYSQL_HOST="$MYSQL_HOST_V4"
+        fi
+
+        PHOTOPRISM_DATABASE_SERVER="${MYSQL_HOST}:${MYSQL_PORT}"
         PHOTOPRISM_DATABASE_NAME="photoprism"
         PHOTOPRISM_DATABASE_USER="$(bashio::services 'mysql' 'username')"
         PHOTOPRISM_DATABASE_PASSWORD="$(bashio::services 'mysql' 'password')"
@@ -58,9 +67,9 @@ case $(bashio::config 'DB_TYPE') in
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
         # Create database
-        mysql --skip-ssl --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME;"
+        mysql --skip-ssl --host="$MYSQL_HOST" --port="$MYSQL_PORT" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME;"
         # Force character set
-        mysql --skip-ssl --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"ALTER DATABASE $PHOTOPRISM_DATABASE_NAME CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;" || true
+        mysql --skip-ssl --host="$MYSQL_HOST" --port="$MYSQL_PORT" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"ALTER DATABASE $PHOTOPRISM_DATABASE_NAME CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;" || true
         ;;
 esac
 

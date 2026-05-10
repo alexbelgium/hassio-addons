@@ -1,4 +1,8 @@
 
+## ubuntu-2026-03-05-1 (2026-05-10)
+
+- Fix: Force IPv4 for MariaDB connections to resolve access denied errors after HAOS 17.3 (IPv6 networking change)
+
 ## ubuntu-2026-03-05 (2026-03-05)
 - Update to latest version from photoprism/photoprism
 ## ubuntu-2025-11-30-4 (26-02-2026)
