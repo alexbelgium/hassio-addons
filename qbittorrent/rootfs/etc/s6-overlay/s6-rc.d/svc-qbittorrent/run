@@ -67,7 +67,7 @@ if bashio::config.true 'silent'; then
     exec >/dev/null 2>&1
 fi
 
-if [[ -z ${LSIO_NON_ROOT_USER:-} ]]; then
+if [[ -z ${LSIO_NON_ROOT_USER} ]]; then
     exec s6-setuidgid abc "${QB_BIN}" --webui-port="${WEBUI_PORT}"
 else
     exec "${QB_BIN}" --webui-port="${WEBUI_PORT}"
