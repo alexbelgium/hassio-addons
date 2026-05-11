@@ -37,21 +37,13 @@ fi
 # --- Launch qBittorrent ---
 
 # Determine log output based on silent mode
-QB_OUTPUT="/dev/stdout"
+QB_OUTPUT="/proc/1/fd/1"
 if bashio::config.true 'silent'; then
     QB_OUTPUT="/dev/null"
 fi
 
 bashio::log.info "Starting qBittorrent..."
 
-# s6-notifyoncheck writes to fd 3 when its readiness check passes. s6-rc only
-# opens fd 3 when the service directory contains a notification-fd file. Without
-# it (LSIO arm64 images), s6-notifyoncheck exits with EBADF and s6 restarts the
-# service in a loop. Fall back to running qbittorrent-nox directly in that case.
-if [ -f /etc/s6-overlay/s6-rc.d/svc-qbittorrent/notification-fd ]; then
-    exec \
-        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
-        s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
-else
-    exec s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
-fi
+exec \
+    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
+    s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
