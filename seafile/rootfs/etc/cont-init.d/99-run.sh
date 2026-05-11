@@ -189,7 +189,7 @@ _seafile_validate_url() {
     local _val="$1" _name="$2"
     case "${_val}" in
         *$'\n'*|*$'\r'*|*\"*|*\'*)
-            bashio::exit.nok "${_name} must not contain newlines or quote characters: ${_val}"
+            bashio::exit.nok "${_name} contains invalid characters (newlines or quotes are not allowed)"
             ;;
     esac
 }
@@ -266,24 +266,50 @@ done
 # Configure fileserver binding (0.0.0.0)   #
 #############################################
 
-# Use awk to idempotently remove any existing 'host =' line from the
-# [fileserver] section, then insert the correct value with sed.  This avoids
-# the sed address-range pitfall (/^\[fileserver\]/,/^\[/) which can fail to
-# cover the section body and may leave duplicate keys on repeated runs.
+# The upstream write_config.sh hardcodes /seafhttp in FILE_SERVER_ROOT and
+# overwrites our settings on first run.  Create a helper that re-applies the
+# addon's URL configuration right before Seafile services start, so it always
+# takes effect regardless of what the upstream init/setup scripts wrote.
+#
+# addon_url_config.sh holds the baked-in values (printf %q escaped) AND the
+# shared _seafile_set_fileserver_host function so the logic lives in exactly
+# one place.  The apply_addon_urls.sh helper sources that file and uses the
+# function; this script sources it too so it can call the same function below.
+{
+    printf 'ADDON_DATA_LOCATION=%q\n'      "${DATA_LOCATION}"
+    printf 'ADDON_SERVICE_URL=%q\n'        "${SERVICE_URL_VALUE}"
+    printf 'ADDON_FILE_SERVER_ROOT=%q\n'   "${FILE_SERVER_ROOT_VALUE:-}"
+    printf 'ADDON_SERVER_HOSTNAME=%q\n'    "${SERVER_HOSTNAME}"
+    printf 'ADDON_SERVER_PROTOCOL=%q\n'    "${SERVER_PROTOCOL}"
+    printf 'ADDON_CSRF_ORIGIN=%q\n'        "${CSRF_ORIGIN}"
+    # Shared helper: idempotently set host = 0.0.0.0 in the [fileserver] INI
+    # section using awk (avoids sed address-range pitfalls that leave duplicate
+    # keys).  mktemp ensures a unique temp file; on any failure the original is
+    # left untouched.
+    cat << 'FUNCEOF'
 _seafile_set_fileserver_host() {
     local _cf="$1"
+    local _tmp
+    _tmp=$(mktemp "${_cf}.XXXXXX") || return 1
     awk '
         /^\[fileserver\]/ { in_fs=1; print; next }
         /^\[/             { in_fs=0 }
         in_fs && /^[[:space:]]*host[[:space:]]*=/ { next }
         { print }
-    ' "${_cf}" > "${_cf}.tmp" && mv "${_cf}.tmp" "${_cf}"
+    ' "${_cf}" > "${_tmp}" && mv "${_tmp}" "${_cf}" || { rm -f "${_tmp}"; return 1; }
     if grep -q '^\[fileserver\]' "${_cf}"; then
         sed -i '/^\[fileserver\]/a host = 0.0.0.0' "${_cf}"
     else
         printf '\n[fileserver]\nhost = 0.0.0.0\n' >> "${_cf}"
     fi
 }
+FUNCEOF
+} > /home/seafile/addon_url_config.sh
+chmod 644 /home/seafile/addon_url_config.sh
+
+# Source so _seafile_set_fileserver_host is available in this script.
+# shellcheck disable=SC1091
+. /home/seafile/addon_url_config.sh
 
 bashio::log.info "Setting fileserver host to 0.0.0.0 in seafile.conf"
 
@@ -298,51 +324,16 @@ for conf_dir in "${SEAHUB_CONF_DIRS[@]}"; do
     fi
 done
 
-# The upstream write_config.sh hardcodes /seafhttp in FILE_SERVER_ROOT and
-# overwrites our settings on first run.  Create a helper that re-applies the
-# addon's URL configuration right before Seafile services start, so it always
-# takes effect regardless of what the upstream init/setup scripts wrote.
-#
-# The baked-in config values are written to a separate sourced file (using
-# printf %q for safe shell escaping) and the helper script uses a single-quoted
-# heredoc so no user-supplied data is ever embedded in the script body.
-{
-    printf 'ADDON_DATA_LOCATION=%q\n'      "${DATA_LOCATION}"
-    printf 'ADDON_SERVICE_URL=%q\n'        "${SERVICE_URL_VALUE}"
-    printf 'ADDON_FILE_SERVER_ROOT=%q\n'   "${FILE_SERVER_ROOT_VALUE:-}"
-    printf 'ADDON_SERVER_HOSTNAME=%q\n'    "${SERVER_HOSTNAME}"
-    printf 'ADDON_SERVER_PROTOCOL=%q\n'    "${SERVER_PROTOCOL}"
-    printf 'ADDON_CSRF_ORIGIN=%q\n'        "${CSRF_ORIGIN}"
-} > /home/seafile/addon_url_config.sh
-chmod 644 /home/seafile/addon_url_config.sh
-
 cat > /home/seafile/apply_addon_urls.sh << 'URLEOF'
 #!/bin/bash
 # shellcheck disable=SC1091
 . /home/seafile/addon_url_config.sh
 
-# Idempotently set host = 0.0.0.0 in [fileserver] using awk to avoid
-# the sed address-range pitfall that can leave duplicate keys.
-_apply_fileserver_host() {
-    local _c="$1"
-    awk '
-        /^\[fileserver\]/ { in_fs=1; print; next }
-        /^\[/             { in_fs=0 }
-        in_fs && /^[[:space:]]*host[[:space:]]*=/ { next }
-        { print }
-    ' "$_c" > "$_c.tmp" && mv "$_c.tmp" "$_c"
-    if grep -q '^\[fileserver\]' "$_c"; then
-        sed -i '/^\[fileserver\]/a host = 0.0.0.0' "$_c"
-    else
-        printf '\n[fileserver]\nhost = 0.0.0.0\n' >> "$_c"
-    fi
-}
-
 for _CONF in "${ADDON_DATA_LOCATION}/conf/seahub_settings.py" \
              "${ADDON_DATA_LOCATION}/seafile/conf/seahub_settings.py"; do
     if [ -f "$_CONF" ]; then
-        sed -i '/^SERVICE_URL *=/d'       "$_CONF"
-        sed -i '/^FILE_SERVER_ROOT *=/d'  "$_CONF"
+        sed -i '/^SERVICE_URL *=/d'          "$_CONF"
+        sed -i '/^FILE_SERVER_ROOT *=/d'     "$_CONF"
         sed -i '/^CSRF_TRUSTED_ORIGINS *=/d' "$_CONF"
         printf 'SERVICE_URL = "%s"\n' "${ADDON_SERVICE_URL}" >> "$_CONF"
         if [ -n "${ADDON_FILE_SERVER_ROOT}" ]; then
@@ -363,7 +354,7 @@ done
 for _SCONF in "${ADDON_DATA_LOCATION}/conf/seafile.conf" \
               "${ADDON_DATA_LOCATION}/seafile/conf/seafile.conf"; do
     if [ -f "$_SCONF" ]; then
-        _apply_fileserver_host "$_SCONF"
+        _seafile_set_fileserver_host "$_SCONF"
     fi
 done
 URLEOF
