@@ -1,4 +1,11 @@
 
+## 12.0.18-6 (2026-05-11)
+- Preserve custom port in `SEAFILE_SERVER_HOSTNAME` (e.g. `seafile.example.com:8443`)
+- Fix `CSRF_TRUSTED_ORIGINS` to use scheme+host[:port] only (no URL path)
+- Add validation: reject newlines and quote characters in URL config values
+- Replace sed address-range approach for `seafile.conf` with idempotent `awk` edit so repeated runs never produce duplicate `host =` keys
+- Harden `apply_addon_urls.sh` generation: baked-in values are written to a separate sourced file using `printf %q` and the script body uses a single-quoted heredoc, eliminating any shell-injection risk from malformed config values
+
 ## 12.0.18-5 (2026-05-11)
 - Fix file uploads and downloads through a reverse proxy (e.g. Nginx Proxy Manager) by:
   - Writing `SEAFILE_SERVER_HOSTNAME` and `SEAFILE_SERVER_PROTOCOL` to `seafile.env` so Seafile knows its external URL

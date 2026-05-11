@@ -183,11 +183,30 @@ else
     FILE_SERVER_ROOT_VALUE=""
 fi
 
-# Extract hostname and protocol for seafile.env
+# Validate URL values: reject characters that would break config file syntax or
+# the generated helper script (quotes and newlines are the dangerous ones).
+_seafile_validate_url() {
+    local _val="$1" _name="$2"
+    case "${_val}" in
+        *$'\n'*|*$'\r'*|*\"*|*\'*)
+            bashio::exit.nok "${_name} must not contain newlines or quote characters: ${_val}"
+            ;;
+    esac
+}
+_seafile_validate_url "${SERVICE_URL_VALUE}" "url"
+if [[ -n "${FILE_SERVER_ROOT_VALUE}" ]]; then
+    _seafile_validate_url "${FILE_SERVER_ROOT_VALUE}" "FILE_SERVER_ROOT"
+fi
+
+# Extract protocol and host[:port] for seafile.env.
+# Keep the port when present (e.g. seafile.example.com:8443) so Seafile
+# advertises the correct external endpoint on non-standard ports.
 SERVER_PROTOCOL="${SERVICE_URL_VALUE%%://*}"
-SERVER_HOSTNAME="${SERVICE_URL_VALUE#*://}"
-SERVER_HOSTNAME="${SERVER_HOSTNAME%%/*}"
-SERVER_HOSTNAME="${SERVER_HOSTNAME%%:*}"
+_service_authority="${SERVICE_URL_VALUE#*://}"
+SERVER_HOSTNAME="${_service_authority%%/*}"   # strip any path; keep host:port
+
+# CSRF_TRUSTED_ORIGINS requires scheme://host[:port] only – no path component.
+CSRF_ORIGIN="${SERVER_PROTOCOL}://${SERVER_HOSTNAME}"
 
 SEAHUB_CONF_DIRS=()
 if [[ -d "${DATA_LOCATION}/conf" || ! -d "${DATA_LOCATION}/seafile/conf" ]]; then
@@ -209,11 +228,11 @@ for conf_dir in "${SEAHUB_CONF_DIRS[@]}"; do
     sed -i '/^FILE_SERVER_ROOT *=/d' "${SEAHUB_SETTINGS_FILE}"
     sed -i '/^CSRF_TRUSTED_ORIGINS *=/d' "${SEAHUB_SETTINGS_FILE}"
 
-    echo "SERVICE_URL = \"${SERVICE_URL_VALUE}\"" >> "${SEAHUB_SETTINGS_FILE}"
+    printf 'SERVICE_URL = "%s"\n' "${SERVICE_URL_VALUE}" >> "${SEAHUB_SETTINGS_FILE}"
     if [[ -n "${FILE_SERVER_ROOT_VALUE}" ]]; then
-        echo "FILE_SERVER_ROOT = \"${FILE_SERVER_ROOT_VALUE}\"" >> "${SEAHUB_SETTINGS_FILE}"
+        printf 'FILE_SERVER_ROOT = "%s"\n' "${FILE_SERVER_ROOT_VALUE}" >> "${SEAHUB_SETTINGS_FILE}"
     fi
-    echo "CSRF_TRUSTED_ORIGINS = [\"${SERVICE_URL_VALUE}\"]" >> "${SEAHUB_SETTINGS_FILE}"
+    printf 'CSRF_TRUSTED_ORIGINS = ["%s"]\n' "${CSRF_ORIGIN}" >> "${SEAHUB_SETTINGS_FILE}"
 done
 
 bashio::log.info "SERVICE_URL set to ${SERVICE_URL_VALUE}"
@@ -222,7 +241,7 @@ if [[ -n "${FILE_SERVER_ROOT_VALUE}" ]]; then
 else
     bashio::log.info "FILE_SERVER_ROOT not set; Seafile will derive it from SERVICE_URL"
 fi
-bashio::log.info "CSRF_TRUSTED_ORIGINS set to [\"${SERVICE_URL_VALUE}\"]"
+bashio::log.info "CSRF_TRUSTED_ORIGINS set to [\"${CSRF_ORIGIN}\"]"
 
 #############################################
 # Configure seafile.env (hostname/protocol) #
@@ -247,18 +266,32 @@ done
 # Configure fileserver binding (0.0.0.0)   #
 #############################################
 
+# Use awk to idempotently remove any existing 'host =' line from the
+# [fileserver] section, then insert the correct value with sed.  This avoids
+# the sed address-range pitfall (/^\[fileserver\]/,/^\[/) which can fail to
+# cover the section body and may leave duplicate keys on repeated runs.
+_seafile_set_fileserver_host() {
+    local _cf="$1"
+    awk '
+        /^\[fileserver\]/ { in_fs=1; print; next }
+        /^\[/             { in_fs=0 }
+        in_fs && /^[[:space:]]*host[[:space:]]*=/ { next }
+        { print }
+    ' "${_cf}" > "${_cf}.tmp" && mv "${_cf}.tmp" "${_cf}"
+    if grep -q '^\[fileserver\]' "${_cf}"; then
+        sed -i '/^\[fileserver\]/a host = 0.0.0.0' "${_cf}"
+    else
+        printf '\n[fileserver]\nhost = 0.0.0.0\n' >> "${_cf}"
+    fi
+}
+
 bashio::log.info "Setting fileserver host to 0.0.0.0 in seafile.conf"
 
 for conf_dir in "${SEAHUB_CONF_DIRS[@]}"; do
     SEAFILE_CONF="${conf_dir}/seafile.conf"
     mkdir -p "${conf_dir}"
     if [[ -f "${SEAFILE_CONF}" ]]; then
-        if grep -q '^\[fileserver\]' "${SEAFILE_CONF}"; then
-            sed -i '/^\[fileserver\]/,/^\[/{/^host *=/d}' "${SEAFILE_CONF}"
-            sed -i '/^\[fileserver\]/a host = 0.0.0.0' "${SEAFILE_CONF}"
-        else
-            printf '\n[fileserver]\nhost = 0.0.0.0\n' >> "${SEAFILE_CONF}"
-        fi
+        _seafile_set_fileserver_host "${SEAFILE_CONF}"
     else
         printf '[fileserver]\nhost = 0.0.0.0\n' > "${SEAFILE_CONF}"
         chown seafile:seafile "${SEAFILE_CONF}" 2>/dev/null || true
@@ -269,41 +302,68 @@ done
 # overwrites our settings on first run.  Create a helper that re-applies the
 # addon's URL configuration right before Seafile services start, so it always
 # takes effect regardless of what the upstream init/setup scripts wrote.
+#
+# The baked-in config values are written to a separate sourced file (using
+# printf %q for safe shell escaping) and the helper script uses a single-quoted
+# heredoc so no user-supplied data is ever embedded in the script body.
+{
+    printf 'ADDON_DATA_LOCATION=%q\n'      "${DATA_LOCATION}"
+    printf 'ADDON_SERVICE_URL=%q\n'        "${SERVICE_URL_VALUE}"
+    printf 'ADDON_FILE_SERVER_ROOT=%q\n'   "${FILE_SERVER_ROOT_VALUE:-}"
+    printf 'ADDON_SERVER_HOSTNAME=%q\n'    "${SERVER_HOSTNAME}"
+    printf 'ADDON_SERVER_PROTOCOL=%q\n'    "${SERVER_PROTOCOL}"
+    printf 'ADDON_CSRF_ORIGIN=%q\n'        "${CSRF_ORIGIN}"
+} > /home/seafile/addon_url_config.sh
+chmod 644 /home/seafile/addon_url_config.sh
 
-# Pre-compute the conditional FILE_SERVER_ROOT line for the generated script.
-_fsr_apply_line="# FILE_SERVER_ROOT not set; Seafile will derive it from SERVICE_URL"
-if [[ -n "${FILE_SERVER_ROOT_VALUE}" ]]; then
-    _fsr_apply_line="        echo 'FILE_SERVER_ROOT = \"${FILE_SERVER_ROOT_VALUE}\"' >> \"\$_CONF\""
-fi
-
-cat > /home/seafile/apply_addon_urls.sh << URLEOF
+cat > /home/seafile/apply_addon_urls.sh << 'URLEOF'
 #!/bin/bash
-for _CONF in "${DATA_LOCATION}/conf/seahub_settings.py" "${DATA_LOCATION}/seafile/conf/seahub_settings.py"; do
-    if [ -f "\$_CONF" ]; then
-        sed -i '/^SERVICE_URL *=/d' "\$_CONF"
-        sed -i '/^FILE_SERVER_ROOT *=/d' "\$_CONF"
-        sed -i '/^CSRF_TRUSTED_ORIGINS *=/d' "\$_CONF"
-        echo 'SERVICE_URL = "${SERVICE_URL_VALUE}"' >> "\$_CONF"
-        ${_fsr_apply_line}
-        echo 'CSRF_TRUSTED_ORIGINS = ["${SERVICE_URL_VALUE}"]' >> "\$_CONF"
+# shellcheck disable=SC1091
+. /home/seafile/addon_url_config.sh
+
+# Idempotently set host = 0.0.0.0 in [fileserver] using awk to avoid
+# the sed address-range pitfall that can leave duplicate keys.
+_apply_fileserver_host() {
+    local _c="$1"
+    awk '
+        /^\[fileserver\]/ { in_fs=1; print; next }
+        /^\[/             { in_fs=0 }
+        in_fs && /^[[:space:]]*host[[:space:]]*=/ { next }
+        { print }
+    ' "$_c" > "$_c.tmp" && mv "$_c.tmp" "$_c"
+    if grep -q '^\[fileserver\]' "$_c"; then
+        sed -i '/^\[fileserver\]/a host = 0.0.0.0' "$_c"
+    else
+        printf '\n[fileserver]\nhost = 0.0.0.0\n' >> "$_c"
     fi
-done
-for _ENV in "${DATA_LOCATION}/conf/seafile.env" "${DATA_LOCATION}/seafile/conf/seafile.env"; do
-    if [ -f "\$_ENV" ]; then
-        sed -i '/^SEAFILE_SERVER_HOSTNAME=/d' "\$_ENV"
-        sed -i '/^SEAFILE_SERVER_PROTOCOL=/d' "\$_ENV"
-        printf 'SEAFILE_SERVER_HOSTNAME=${SERVER_HOSTNAME}\n' >> "\$_ENV"
-        printf 'SEAFILE_SERVER_PROTOCOL=${SERVER_PROTOCOL}\n' >> "\$_ENV"
-    fi
-done
-for _SCONF in "${DATA_LOCATION}/conf/seafile.conf" "${DATA_LOCATION}/seafile/conf/seafile.conf"; do
-    if [ -f "\$_SCONF" ]; then
-        if grep -q '^\[fileserver\]' "\$_SCONF"; then
-            sed -i '/^\[fileserver\]/,/^\[/{/^host *=/d}' "\$_SCONF"
-            sed -i '/^\[fileserver\]/a host = 0.0.0.0' "\$_SCONF"
-        else
-            printf '\n[fileserver]\nhost = 0.0.0.0\n' >> "\$_SCONF"
+}
+
+for _CONF in "${ADDON_DATA_LOCATION}/conf/seahub_settings.py" \
+             "${ADDON_DATA_LOCATION}/seafile/conf/seahub_settings.py"; do
+    if [ -f "$_CONF" ]; then
+        sed -i '/^SERVICE_URL *=/d'       "$_CONF"
+        sed -i '/^FILE_SERVER_ROOT *=/d'  "$_CONF"
+        sed -i '/^CSRF_TRUSTED_ORIGINS *=/d' "$_CONF"
+        printf 'SERVICE_URL = "%s"\n' "${ADDON_SERVICE_URL}" >> "$_CONF"
+        if [ -n "${ADDON_FILE_SERVER_ROOT}" ]; then
+            printf 'FILE_SERVER_ROOT = "%s"\n' "${ADDON_FILE_SERVER_ROOT}" >> "$_CONF"
         fi
+        printf 'CSRF_TRUSTED_ORIGINS = ["%s"]\n' "${ADDON_CSRF_ORIGIN}" >> "$_CONF"
+    fi
+done
+for _ENV in "${ADDON_DATA_LOCATION}/conf/seafile.env" \
+            "${ADDON_DATA_LOCATION}/seafile/conf/seafile.env"; do
+    if [ -f "$_ENV" ]; then
+        sed -i '/^SEAFILE_SERVER_HOSTNAME=/d' "$_ENV"
+        sed -i '/^SEAFILE_SERVER_PROTOCOL=/d' "$_ENV"
+        printf 'SEAFILE_SERVER_HOSTNAME=%s\n' "${ADDON_SERVER_HOSTNAME}" >> "$_ENV"
+        printf 'SEAFILE_SERVER_PROTOCOL=%s\n' "${ADDON_SERVER_PROTOCOL}" >> "$_ENV"
+    fi
+done
+for _SCONF in "${ADDON_DATA_LOCATION}/conf/seafile.conf" \
+              "${ADDON_DATA_LOCATION}/seafile/conf/seafile.conf"; do
+    if [ -f "$_SCONF" ]; then
+        _apply_fileserver_host "$_SCONF"
     fi
 done
 URLEOF
