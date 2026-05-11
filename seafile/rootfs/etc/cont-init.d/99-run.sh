@@ -154,10 +154,8 @@ bashio::log.info "Configuring Seafile URLs"
 SERVER_IP_CONFIG=$(bashio::config 'SERVER_IP')
 SERVICE_URL_CONFIG=$(bashio::config 'url')
 FILE_SERVER_ROOT_CONFIG=$(bashio::config 'FILE_SERVER_ROOT')
-FILE_PORT_CONFIG=$(bashio::config 'PORT')
 
 DEFAULT_HOST=${SERVER_IP_CONFIG:-homeassistant.local}
-DEFAULT_FILE_PORT=${FILE_PORT_CONFIG:-8082}
 
 normalize_url() {
     local raw_url="${1%/}"
@@ -176,7 +174,20 @@ normalize_url() {
 }
 
 SERVICE_URL_VALUE=$(normalize_url "${SERVICE_URL_CONFIG:-${DEFAULT_HOST}:8000}" "http")
-FILE_SERVER_ROOT_VALUE=$(normalize_url "${FILE_SERVER_ROOT_CONFIG:-${DEFAULT_HOST}:${DEFAULT_FILE_PORT}}" "http")
+
+# FILE_SERVER_ROOT is optional; when empty Seafile derives it from SERVICE_URL
+# (clients then reach the fileserver via the same reverse proxy path /seafhttp).
+if [[ -n "${FILE_SERVER_ROOT_CONFIG}" && "${FILE_SERVER_ROOT_CONFIG}" != "null" ]]; then
+    FILE_SERVER_ROOT_VALUE=$(normalize_url "${FILE_SERVER_ROOT_CONFIG}" "http")
+else
+    FILE_SERVER_ROOT_VALUE=""
+fi
+
+# Extract hostname and protocol for seafile.env
+SERVER_PROTOCOL="${SERVICE_URL_VALUE%%://*}"
+SERVER_HOSTNAME="${SERVICE_URL_VALUE#*://}"
+SERVER_HOSTNAME="${SERVER_HOSTNAME%%/*}"
+SERVER_HOSTNAME="${SERVER_HOSTNAME%%:*}"
 
 SEAHUB_CONF_DIRS=()
 if [[ -d "${DATA_LOCATION}/conf" || ! -d "${DATA_LOCATION}/seafile/conf" ]]; then
@@ -196,28 +207,103 @@ for conf_dir in "${SEAHUB_CONF_DIRS[@]}"; do
 
     sed -i '/^SERVICE_URL *=/d' "${SEAHUB_SETTINGS_FILE}"
     sed -i '/^FILE_SERVER_ROOT *=/d' "${SEAHUB_SETTINGS_FILE}"
+    sed -i '/^CSRF_TRUSTED_ORIGINS *=/d' "${SEAHUB_SETTINGS_FILE}"
 
-    {
-        echo "SERVICE_URL = \"${SERVICE_URL_VALUE}\""
-        echo "FILE_SERVER_ROOT = \"${FILE_SERVER_ROOT_VALUE}\""
-    } >> "${SEAHUB_SETTINGS_FILE}"
+    echo "SERVICE_URL = \"${SERVICE_URL_VALUE}\"" >> "${SEAHUB_SETTINGS_FILE}"
+    if [[ -n "${FILE_SERVER_ROOT_VALUE}" ]]; then
+        echo "FILE_SERVER_ROOT = \"${FILE_SERVER_ROOT_VALUE}\"" >> "${SEAHUB_SETTINGS_FILE}"
+    fi
+    echo "CSRF_TRUSTED_ORIGINS = [\"${SERVICE_URL_VALUE}\"]" >> "${SEAHUB_SETTINGS_FILE}"
 done
 
 bashio::log.info "SERVICE_URL set to ${SERVICE_URL_VALUE}"
-bashio::log.info "FILE_SERVER_ROOT set to ${FILE_SERVER_ROOT_VALUE}"
+if [[ -n "${FILE_SERVER_ROOT_VALUE}" ]]; then
+    bashio::log.info "FILE_SERVER_ROOT set to ${FILE_SERVER_ROOT_VALUE}"
+else
+    bashio::log.info "FILE_SERVER_ROOT not set; Seafile will derive it from SERVICE_URL"
+fi
+bashio::log.info "CSRF_TRUSTED_ORIGINS set to [\"${SERVICE_URL_VALUE}\"]"
+
+#############################################
+# Configure seafile.env (hostname/protocol) #
+#############################################
+
+bashio::log.info "Configuring seafile.env (SEAFILE_SERVER_HOSTNAME=${SERVER_HOSTNAME}, SEAFILE_SERVER_PROTOCOL=${SERVER_PROTOCOL})"
+
+for conf_dir in "${SEAHUB_CONF_DIRS[@]}"; do
+    SEAFILE_ENV_FILE="${conf_dir}/seafile.env"
+    touch "${SEAFILE_ENV_FILE}"
+    chown seafile:seafile "${SEAFILE_ENV_FILE}" 2>/dev/null || true
+    chmod 600 "${SEAFILE_ENV_FILE}"
+    sed -i '/^SEAFILE_SERVER_HOSTNAME=/d' "${SEAFILE_ENV_FILE}"
+    sed -i '/^SEAFILE_SERVER_PROTOCOL=/d' "${SEAFILE_ENV_FILE}"
+    {
+        printf 'SEAFILE_SERVER_HOSTNAME=%s\n' "${SERVER_HOSTNAME}"
+        printf 'SEAFILE_SERVER_PROTOCOL=%s\n' "${SERVER_PROTOCOL}"
+    } >> "${SEAFILE_ENV_FILE}"
+done
+
+#############################################
+# Configure fileserver binding (0.0.0.0)   #
+#############################################
+
+bashio::log.info "Setting fileserver host to 0.0.0.0 in seafile.conf"
+
+for conf_dir in "${SEAHUB_CONF_DIRS[@]}"; do
+    SEAFILE_CONF="${conf_dir}/seafile.conf"
+    mkdir -p "${conf_dir}"
+    if [[ -f "${SEAFILE_CONF}" ]]; then
+        if grep -q '^\[fileserver\]' "${SEAFILE_CONF}"; then
+            sed -i '/^\[fileserver\]/,/^\[/{/^host *=/d}' "${SEAFILE_CONF}"
+            sed -i '/^\[fileserver\]/a host = 0.0.0.0' "${SEAFILE_CONF}"
+        else
+            printf '\n[fileserver]\nhost = 0.0.0.0\n' >> "${SEAFILE_CONF}"
+        fi
+    else
+        printf '[fileserver]\nhost = 0.0.0.0\n' > "${SEAFILE_CONF}"
+        chown seafile:seafile "${SEAFILE_CONF}" 2>/dev/null || true
+    fi
+done
 
 # The upstream write_config.sh hardcodes /seafhttp in FILE_SERVER_ROOT and
 # overwrites our settings on first run.  Create a helper that re-applies the
 # addon's URL configuration right before Seafile services start, so it always
 # takes effect regardless of what the upstream init/setup scripts wrote.
+
+# Pre-compute the conditional FILE_SERVER_ROOT line for the generated script.
+_fsr_apply_line="# FILE_SERVER_ROOT not set; Seafile will derive it from SERVICE_URL"
+if [[ -n "${FILE_SERVER_ROOT_VALUE}" ]]; then
+    _fsr_apply_line="        echo 'FILE_SERVER_ROOT = \"${FILE_SERVER_ROOT_VALUE}\"' >> \"\$_CONF\""
+fi
+
 cat > /home/seafile/apply_addon_urls.sh << URLEOF
 #!/bin/bash
 for _CONF in "${DATA_LOCATION}/conf/seahub_settings.py" "${DATA_LOCATION}/seafile/conf/seahub_settings.py"; do
     if [ -f "\$_CONF" ]; then
         sed -i '/^SERVICE_URL *=/d' "\$_CONF"
         sed -i '/^FILE_SERVER_ROOT *=/d' "\$_CONF"
+        sed -i '/^CSRF_TRUSTED_ORIGINS *=/d' "\$_CONF"
         echo 'SERVICE_URL = "${SERVICE_URL_VALUE}"' >> "\$_CONF"
-        echo 'FILE_SERVER_ROOT = "${FILE_SERVER_ROOT_VALUE}"' >> "\$_CONF"
+        ${_fsr_apply_line}
+        echo 'CSRF_TRUSTED_ORIGINS = ["${SERVICE_URL_VALUE}"]' >> "\$_CONF"
+    fi
+done
+for _ENV in "${DATA_LOCATION}/conf/seafile.env" "${DATA_LOCATION}/seafile/conf/seafile.env"; do
+    if [ -f "\$_ENV" ]; then
+        sed -i '/^SEAFILE_SERVER_HOSTNAME=/d' "\$_ENV"
+        sed -i '/^SEAFILE_SERVER_PROTOCOL=/d' "\$_ENV"
+        printf 'SEAFILE_SERVER_HOSTNAME=${SERVER_HOSTNAME}\n' >> "\$_ENV"
+        printf 'SEAFILE_SERVER_PROTOCOL=${SERVER_PROTOCOL}\n' >> "\$_ENV"
+    fi
+done
+for _SCONF in "${DATA_LOCATION}/conf/seafile.conf" "${DATA_LOCATION}/seafile/conf/seafile.conf"; do
+    if [ -f "\$_SCONF" ]; then
+        if grep -q '^\[fileserver\]' "\$_SCONF"; then
+            sed -i '/^\[fileserver\]/,/^\[/{/^host *=/d}' "\$_SCONF"
+            sed -i '/^\[fileserver\]/a host = 0.0.0.0' "\$_SCONF"
+        else
+            printf '\n[fileserver]\nhost = 0.0.0.0\n' >> "\$_SCONF"
+        fi
     fi
 done
 URLEOF

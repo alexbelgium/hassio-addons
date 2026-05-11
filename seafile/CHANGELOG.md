@@ -1,4 +1,11 @@
 
+## 12.0.18-5 (2026-05-11)
+- Fix file uploads and downloads through a reverse proxy (e.g. Nginx Proxy Manager) by:
+  - Writing `SEAFILE_SERVER_HOSTNAME` and `SEAFILE_SERVER_PROTOCOL` to `seafile.env` so Seafile knows its external URL
+  - Setting `host = 0.0.0.0` in the `[fileserver]` section of `seafile.conf` so the fileserver binds to all interfaces
+  - Adding `CSRF_TRUSTED_ORIGINS` to `seahub_settings.py` to prevent Django CSRF rejections on HTTPS setups
+  - Making `FILE_SERVER_ROOT` optional (`str?`) so it can be left empty when the reverse proxy handles `/seafhttp` routing
+
 ## 12.0.18-4 (2026-05-10)
 - Fix admin account creation by writing `conf/admin.txt` and seeding `seafile.env` with `SEAFILE_ADMIN_EMAIL`/`SEAFILE_ADMIN_PASSWORD` so the upstream `check_init_admin.py` no longer falls back to an interactive prompt (#2685)
 
