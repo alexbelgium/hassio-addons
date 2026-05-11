@@ -36,14 +36,22 @@ fi
 
 # --- Launch qBittorrent ---
 
-bashio::log.info "Starting qBittorrent..."
-
-# On aarch64 LSIO images svc-qbittorrent has no notification-fd, so fd 3 is never
-# opened by s6-rc. s6-notifyoncheck then exits with EBADF after its check passes,
-# s6 sees the supervised process die and restarts it — causing the startup loop.
-# Run qbittorrent-nox directly so s6 supervises the actual process.
+# Determine log output based on silent mode
+QB_OUTPUT="/dev/stdout"
 if bashio::config.true 'silent'; then
-    exec > /dev/null 2>&1
+    QB_OUTPUT="/dev/null"
 fi
 
-exec s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}"
+bashio::log.info "Starting qBittorrent..."
+
+# s6-notifyoncheck writes to fd 3 when its readiness check passes. s6-rc only
+# opens fd 3 when the service directory contains a notification-fd file. Without
+# it (LSIO arm64 images), s6-notifyoncheck exits with EBADF and s6 restarts the
+# service in a loop. Fall back to running qbittorrent-nox directly in that case.
+if [ -f /etc/s6-overlay/s6-rc.d/svc-qbittorrent/notification-fd ]; then
+    exec \
+        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
+        s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
+else
+    exec s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
+fi
