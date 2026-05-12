@@ -538,6 +538,15 @@ _openvpn_down() {
 }
 
 _openpvn_postup() {
+    # Add a /32 bypass route for the VPN server via the real gateway so that
+    # OpenVPN's own reconnection traffic doesn't get routed back through tun0
+    # (which would trigger "Recursive routing detected" and dropped packets).
+    # trusted_ip and route_net_gateway are set by OpenVPN when calling --up scripts.
+    if [ -n "${trusted_ip:-}" ] && [ -n "${route_net_gateway:-}" ]; then
+        bashio::log.info "Adding bypass route for VPN server ${trusted_ip} via ${route_net_gateway}"
+        ip -4 route add "${trusted_ip}/32" via "${route_net_gateway}" 2>/dev/null \
+            || bashio::log.warning "Could not add bypass route for VPN server ${trusted_ip} (non-fatal)."
+    fi
     # Add routing rules for VPN interface and DNS servers
     _routing_add || return 1
     # Add firewall rules for VPN interface (only when UPnP port mapping is enabled)
@@ -549,6 +558,10 @@ _openpvn_postup() {
 }
 
 _openpvn_postdown() {
+    # Remove the bypass route for the VPN server if it was added
+    if [ -n "${trusted_ip:-}" ]; then
+        ip -4 route del "${trusted_ip}/32" 2>/dev/null || true
+    fi
     # Update resolv.conf to remove VPN DNS servers
     _resolvconf "reset" || true
     # Remove routing rules for VPN interface and DNS servers

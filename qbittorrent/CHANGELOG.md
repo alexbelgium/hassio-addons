@@ -1,3 +1,6 @@
+## 5.2.0-9 (12-05-2026)
+- Fix OpenVPN "Recursive routing detected, drop tun packet" warnings: add /32 bypass route for the VPN server endpoint via the real gateway in the postup script so OpenVPN's own reconnect traffic never goes through tun0
+
 ## 5.2.0-8 (12-05-2026)
 - Minor bugs fixed
 ## 5.2.0-7 (12-05-2026)
