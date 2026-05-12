@@ -1,3 +1,5 @@
+## 5.2.0-6 (12-05-2026)
+- Minor bugs fixed
 
 ## 5.2.0-3 (2026-05-12)
 - Fix WireGuard "RTNETLINK answers: File exists" crash loop: clean up stale interface and routing rules before re-establishing the tunnel on S6 service restart
