@@ -537,16 +537,50 @@ _openvpn_down() {
     _routing_del || true
 }
 
-_openpvn_postup() {
-    # Add a /32 bypass route for the VPN server via the real gateway so that
-    # OpenVPN's own reconnection traffic doesn't get routed back through tun0
-    # (which would trigger "Recursive routing detected" and dropped packets).
-    # trusted_ip and route_net_gateway are set by OpenVPN when calling --up scripts.
+_openvpn_bypass_route_add() {
+    # OpenVPN sets trusted_ip/trusted_ip6 (server endpoint) and
+    # route_net_gateway/route_ipv6_gateway (real gateway) in --up scripts.
+    # We must add a bypass host-route for the server so that OpenVPN's own
+    # reconnect traffic is never forwarded through tun0 (recursive routing).
+    # Uses ip route replace so reconnects don't produce "File exists" warnings.
+    # Records added routes in a state file so postdown only removes what we added.
+    local state_file="${OPENVPN_STATE_DIR}/bypass_routes"
+    : > "${state_file}"
+
     if [ -n "${trusted_ip:-}" ] && [ -n "${route_net_gateway:-}" ]; then
-        bashio::log.info "Adding bypass route for VPN server ${trusted_ip} via ${route_net_gateway}"
-        ip -4 route add "${trusted_ip}/32" via "${route_net_gateway}" 2>/dev/null \
-            || bashio::log.warning "Could not add bypass route for VPN server ${trusted_ip} (non-fatal)."
+        bashio::log.info "Adding IPv4 bypass route for VPN server ${trusted_ip} via ${route_net_gateway}"
+        if ip -4 route replace "${trusted_ip}/32" via "${route_net_gateway}" 2>/dev/null; then
+            echo "4 ${trusted_ip}/32 ${route_net_gateway}" >> "${state_file}"
+        else
+            bashio::log.warning "Could not add IPv4 bypass route for VPN server ${trusted_ip} (non-fatal)."
+        fi
     fi
+
+    if [ -n "${trusted_ip6:-}" ] && [ -n "${route_ipv6_gateway:-}" ]; then
+        bashio::log.info "Adding IPv6 bypass route for VPN server ${trusted_ip6} via ${route_ipv6_gateway}"
+        if ip -6 route replace "${trusted_ip6}/128" via "${route_ipv6_gateway}" 2>/dev/null; then
+            echo "6 ${trusted_ip6}/128 ${route_ipv6_gateway}" >> "${state_file}"
+        else
+            bashio::log.warning "Could not add IPv6 bypass route for VPN server ${trusted_ip6} (non-fatal)."
+        fi
+    fi
+}
+
+_openvpn_bypass_route_del() {
+    local state_file="${OPENVPN_STATE_DIR}/bypass_routes"
+    [ -f "${state_file}" ] || return 0
+
+    local af host gw
+    while read -r af host gw; do
+        bashio::log.info "Removing bypass route ${host} via ${gw}"
+        ip "-${af}" route del "${host}" via "${gw}" 2>/dev/null || true
+    done < "${state_file}"
+    rm -f "${state_file}"
+}
+
+_openpvn_postup() {
+    local OPENVPN_STATE_DIR="/var/run/openvpn"
+    _openvpn_bypass_route_add
     # Add routing rules for VPN interface and DNS servers
     _routing_add || return 1
     # Add firewall rules for VPN interface (only when UPnP port mapping is enabled)
@@ -558,10 +592,8 @@ _openpvn_postup() {
 }
 
 _openpvn_postdown() {
-    # Remove the bypass route for the VPN server if it was added
-    if [ -n "${trusted_ip:-}" ]; then
-        ip -4 route del "${trusted_ip}/32" 2>/dev/null || true
-    fi
+    local OPENVPN_STATE_DIR="/var/run/openvpn"
+    _openvpn_bypass_route_del
     # Update resolv.conf to remove VPN DNS servers
     _resolvconf "reset" || true
     # Remove routing rules for VPN interface and DNS servers

@@ -1,3 +1,6 @@
+## 5.2.0-10 (12-05-2026)
+- Harden OpenVPN bypass-route logic: use ip route replace to avoid "File exists" warnings on reconnects; track added routes in a state file so postdown only removes routes this script created; add IPv6 endpoint support via trusted_ip6/route_ipv6_gateway; qualify route deletion with the exact gateway
+
 ## 5.2.0-9 (12-05-2026)
 - Fix OpenVPN "Recursive routing detected, drop tun packet" warnings: add /32 bypass route for the VPN server endpoint via the real gateway in the postup script so OpenVPN's own reconnect traffic never goes through tun0
 
