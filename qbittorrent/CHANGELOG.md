@@ -1,3 +1,5 @@
+## 5.2.0-7 (12-05-2026)
+- Minor bugs fixed
 ## 5.2.0-6 (12-05-2026)
 - Minor bugs fixed
 
