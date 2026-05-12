@@ -29,9 +29,17 @@ if [[ "${openvpn_enabled}" == true && "${wireguard_enabled}" == true ]]; then
 fi
 
 if [[ "${openvpn_enabled}" == true ]]; then
-    /usr/local/sbin/vpn openvpn up
+    if pgrep -x openvpn > /dev/null 2>&1; then
+        bashio::log.info "OpenVPN is already running, skipping startup."
+    else
+        /usr/local/sbin/vpn openvpn up
+    fi
 elif [[ "${wireguard_enabled}" == true ]]; then
-    /usr/local/sbin/vpn wireguard up
+    if pgrep -x wg > /dev/null 2>&1 || ip link show wg0 > /dev/null 2>&1; then
+        bashio::log.info "WireGuard is already running, skipping startup."
+    else
+        /usr/local/sbin/vpn wireguard up
+    fi
 fi
 
 # --- Launch qBittorrent ---
