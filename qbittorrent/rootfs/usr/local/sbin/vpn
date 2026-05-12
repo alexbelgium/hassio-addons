@@ -192,13 +192,36 @@ _routing_add() {
 
 _routing_del() {
     bashio::log.info "Removing routing rules for VPN interface ${config["Interface"]}..."
+    local table="${config["Table"]}"
+    local line prio rest
 
-    while _cmd "ip -4 rule del priority 1 from all table ${config["Table"]} 2>/dev/null"; do :; done
-    while _cmd "ip -4 rule del priority 1 to all table ${config["Table"]} 2>/dev/null"; do :; done
-    while _cmd "ip -4 route del default dev ${config["Interface"]} table ${config["Table"]} 2>/dev/null"; do :; done
-    while _cmd "ip -6 rule del priority 1 from all table ${config["Table"]} 2>/dev/null"; do :; done
-    while _cmd "ip -6 rule del priority 1 to all table ${config["Table"]} 2>/dev/null"; do :; done
-    while _cmd "ip -6 route del default dev ${config["Interface"]} table ${config["Table"]} 2>/dev/null"; do :; done
+    # Remove all IPv4 policy rules pointing to our custom routing table.
+    # We must parse `ip rule list` and delete each matching rule individually,
+    # because the rules were added with specific from/to selectors (e.g.
+    # "from 10.8.0.2" or "to 8.8.8.8") — not the "from all" wildcard that
+    # the old code tried to delete, which never matched anything.
+    while IFS= read -r line; do
+        [[ "${line}" =~ ^[[:space:]]*([0-9]+):[[:space:]]+(.*lookup[[:space:]]+${table}.*)$ ]] || continue
+        prio="${BASH_REMATCH[1]}"
+        rest="${BASH_REMATCH[2]}"
+        # shellcheck disable=SC2206 — word-split is intentional: ip needs individual tokens
+        local -a rule_args=( ${rest} )
+        ip -4 rule del prio "${prio}" "${rule_args[@]}" 2>/dev/null || true
+    done < <(ip -4 rule list 2>/dev/null)
+
+    # Same for IPv6
+    while IFS= read -r line; do
+        [[ "${line}" =~ ^[[:space:]]*([0-9]+):[[:space:]]+(.*lookup[[:space:]]+${table}.*)$ ]] || continue
+        prio="${BASH_REMATCH[1]}"
+        rest="${BASH_REMATCH[2]}"
+        # shellcheck disable=SC2206 — word-split is intentional: ip needs individual tokens
+        local -a rule_args=( ${rest} )
+        ip -6 rule del prio "${prio}" "${rule_args[@]}" 2>/dev/null || true
+    done < <(ip -6 rule list 2>/dev/null)
+
+    # Flush all routes in our custom table
+    ip -4 route flush table "${table}" 2>/dev/null || true
+    ip -6 route flush table "${table}" 2>/dev/null || true
 }
 
 # --- Firewall Specific Functions ---
@@ -499,6 +522,22 @@ _openvpn_up() {
     bashio::log.warning "Default route will be inserted into custom routing table: ${config["Table"]}"
     bashio::log.warning "This routing table will be used for traffic from the VPN interface and to the configured DNS servers."
     bashio::log.warning "Qbittorrent bittorrent client shall be set to use the VPN interface ${config["Interface"]} only."
+
+    # Clean up any leftover state from a previous run (e.g., after an S6 service restart).
+    # Without this, a second OpenVPN daemon starts while the first is still running, leaving
+    # stale routing rules that cause DNS resolution failures during reconnect — the same class
+    # of bug that was fixed for WireGuard in 5.2.0-3.
+    if pgrep -f "openvpn --config ${config["ConfigFile"]}" > /dev/null 2>&1; then
+        bashio::log.info "Previous OpenVPN process found. Stopping it before re-establishing connection."
+        pkill -TERM -f "openvpn --config ${config["ConfigFile"]}" 2>/dev/null || true
+        sleep 2
+    fi
+    if ip link show "${config["Interface"]}" > /dev/null 2>&1; then
+        bashio::log.info "OpenVPN interface ${config["Interface"]} already exists. Cleaning up before re-establishing connection."
+        ip link set "${config["Interface"]}" down 2>/dev/null || true
+    fi
+    _routing_del 2>/dev/null || true
+    _resolvconf "reset" 2>/dev/null || true
 
     # Register this script as OpenVPN up/down handlers to manage routing
     echo '#!/bin/bash' > ${config["PostUpScript"]}

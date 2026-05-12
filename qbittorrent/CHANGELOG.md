@@ -1,3 +1,7 @@
+## 5.2.0-7 (12-05-2026)
+- Fix OpenVPN stale-process crash loop on S6 service restart: kill any existing OpenVPN daemon and clean up stale interface/routing state before re-establishing the tunnel (same class of fix as WireGuard 5.2.0-3)
+- Fix broken routing rule cleanup: `_routing_del` was deleting rules with `from all`/`to all` wildcard which never matched the specific `from IP`/`to IP` rules added by `_routing_add`, leaving stale routing rules after VPN teardown and causing DNS resolution failures when OpenVPN tried to reconnect
+
 ## 5.2.0-6 (12-05-2026)
 - Minor bugs fixed
 
