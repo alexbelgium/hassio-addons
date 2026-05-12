@@ -279,6 +279,16 @@ _wireguard_up() {
         fi
     done
 
+    # Clean up any leftover state from a previous run (e.g., after an S6 service restart).
+    # Without this, `ip link add` and `ip rule add` fail with "RTNETLINK answers: File exists"
+    # when the svc-qbittorrent service is restarted while the WireGuard interface is still up.
+    if ip link show "${config["Interface"]}" > /dev/null 2>&1; then
+        bashio::log.info "WireGuard interface ${config["Interface"]} already exists. Cleaning up before re-establishing connection."
+        ip link set "${config["Interface"]}" down 2>/dev/null || true
+        ip link del "${config["Interface"]}" 2>/dev/null || true
+    fi
+    _routing_del 2>/dev/null || true
+
     _cmd "ip link add ${config["Interface"]} type wireguard" || return 1
 
     mapfile -d ',' -t local_ips < <(echo "${config["Address"]}" | tr -d ' ')

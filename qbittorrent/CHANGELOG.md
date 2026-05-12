@@ -1,4 +1,7 @@
 
+## 5.2.0-3 (2026-05-12)
+- Fix WireGuard "RTNETLINK answers: File exists" crash loop: clean up stale interface and routing rules before re-establishing the tunnel on S6 service restart
+
 ## 5.2.0-2 (2026-05-10)
 - Fix startup loop on aarch64: drop s6-notifyoncheck wrapper so s6 supervises qbittorrent-nox directly (LSIO arm64 image has no notification-fd, causing EBADF restart loop)
 
