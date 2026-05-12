@@ -29,17 +29,9 @@ if [[ "${openvpn_enabled}" == true && "${wireguard_enabled}" == true ]]; then
 fi
 
 if [[ "${openvpn_enabled}" == true ]]; then
-    if pgrep -x openvpn > /dev/null 2>&1; then
-        bashio::log.info "OpenVPN is already running, skipping startup."
-    else
-        /usr/local/sbin/vpn openvpn up
-    fi
+    /usr/local/sbin/vpn openvpn up
 elif [[ "${wireguard_enabled}" == true ]]; then
-    if pgrep -x wg > /dev/null 2>&1 || ip link show wg0 > /dev/null 2>&1; then
-        bashio::log.info "WireGuard is already running, skipping startup."
-    else
-        /usr/local/sbin/vpn wireguard up
-    fi
+    /usr/local/sbin/vpn wireguard up
 fi
 
 # --- Launch qBittorrent ---
@@ -52,10 +44,6 @@ fi
 
 bashio::log.info "Starting qBittorrent..."
 
-if [ -f /etc/s6-overlay/s6-rc.d/svc-qbittorrent/notification-fd ]; then
-    exec \
-        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
-        s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
-else
-    exec s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
-fi
+exec \
+    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
+    s6-setuidgid abc /app/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
