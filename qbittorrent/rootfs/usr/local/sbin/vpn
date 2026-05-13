@@ -439,7 +439,8 @@ _wireguard_up() {
     fi
 
     _cmd "ip link set ${config["Interface"]} up" || return 1
-    > "${config["EndpointRoutesFile"]}"
+    touch "${config["EndpointRoutesFile"]}" || return 1
+    > "${config["EndpointRoutesFile"]}" || return 1
     _endpoint_route_add "${config["EndpointIP"]}" || return 1
 
     # Add routing rules for VPN interface and DNS servers
@@ -599,7 +600,8 @@ _openvpn_up() {
     echo "${config["MySelf"]} openvpn postdown" >> ${config["PostDownScript"]}
     chmod 755 ${config["PostDownScript"]}
 
-    > "${config["EndpointRoutesFile"]}"
+    touch "${config["EndpointRoutesFile"]}" || return 1
+    > "${config["EndpointRoutesFile"]}" || return 1
     while IFS= read -r endpoint_ip || [ -n "${endpoint_ip}" ]; do
         [ -z "${endpoint_ip}" ] && continue
         _endpoint_route_add "${endpoint_ip}" || return 1
