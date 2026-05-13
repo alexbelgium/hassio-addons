@@ -5,7 +5,11 @@ mkdir -p /config/qBittorrent
 mkdir -p /config/wireguard
 mkdir -p /config/openvpn
 
-MIGRATED=""
+MIGRATED=""x
+
+if [ -f /config/qBittorrent/lockfile ]; then
+    rm /config/qBittorrent/lockfile
+fi
 
 # Move main folder
 if [ -f /homeassistant/addons_config/qBittorrent/qBittorrent.conf ] && [ ! -f /homeassistant/addons_config/qBittorrent/migrated ]; then
