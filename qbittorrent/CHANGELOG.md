@@ -1,3 +1,5 @@
+## 5.2.0-16 (13-05-2026)
+- Minor bugs fixed
 
 ## 5.2.0-2 (2026-05-10)
 - Fix startup loop on aarch64: drop s6-notifyoncheck wrapper so s6 supervises qbittorrent-nox directly (LSIO arm64 image has no notification-fd, causing EBADF restart loop)
