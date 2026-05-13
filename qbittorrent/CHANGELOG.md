@@ -1,4 +1,6 @@
-## 5.2.0-16 (13-05-2026)
+## 5.2.0-17 (13-05-2026)
+- OpenVPN: fix "Recursive routing detected" by adding a host route for the VPN server endpoint via the physical gateway in the postup handler, preventing tunnel-bound sockets (qBittorrent on tun0) from sending traffic to the VPN server IP
+
 - Minor bugs fixed
 
 ## 5.2.0-2 (2026-05-10)

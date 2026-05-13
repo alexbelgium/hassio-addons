@@ -535,9 +535,45 @@ _openvpn_down() {
     pkill -f "openvpn --config ${config["ConfigFile"]}" || true
     # Safety-net cleanup in case the --down callback was never invoked
     _routing_del || true
+    # Safety-net: remove host route for VPN server if postdown was never invoked
+    if [ -f "${OPENVPN_STATE_DIR}/server_ip" ]; then
+        local saved_ip
+        saved_ip=$(cat "${OPENVPN_STATE_DIR}/server_ip" 2>/dev/null || true)
+        if [ -n "${saved_ip}" ]; then
+            ip -4 route del "${saved_ip}/32" 2>/dev/null || true
+        fi
+        rm -f "${OPENVPN_STATE_DIR}/server_ip"
+    fi
 }
 
 _openpvn_postup() {
+    # Add explicit host route for VPN server endpoint to prevent recursive routing.
+    # With --route-noexec, OpenVPN skips adding its own host route for the remote
+    # endpoint. Without it, sockets bound to the VPN interface (e.g. qBittorrent
+    # bound to tun0) can send traffic destined for the VPN server IP through the
+    # tunnel, which OpenVPN detects as recursive routing and logs as an error.
+    # Adding the /32 host route via the physical gateway makes the kernel reject
+    # tunnel-bound sockets from sending to the VPN server IP (interface mismatch).
+    if [ -n "${trusted_ip:-}" ]; then
+        # Validate that trusted_ip is a well-formed IPv4 address before using it
+        if ! ipcalc -c -4 "${trusted_ip}" >/dev/null 2>&1; then
+            bashio::log.warning "trusted_ip '${trusted_ip}' is not a valid IPv4 address; recursive routing protection skipped."
+        else
+            local physical_gw
+            # Exclude routes that use the VPN interface to find the physical gateway
+            physical_gw=$(ip -4 route show default table main | awk -v iface="${config["Interface"]}" '$0 !~ iface && /via/ {print $3; exit}')
+            if [ -n "${physical_gw}" ]; then
+                bashio::log.info "Adding host route for VPN server ${trusted_ip} via ${physical_gw} to prevent recursive routing."
+                local route_err
+                route_err=$(ip -4 route add "${trusted_ip}/32" via "${physical_gw}" 2>&1) || \
+                    bashio::log.warning "Could not add host route for VPN server ${trusted_ip}: ${route_err}"
+                echo "${trusted_ip}" > "${OPENVPN_STATE_DIR}/server_ip"
+            else
+                bashio::log.warning "Could not determine physical gateway; recursive routing protection skipped."
+            fi
+        fi
+    fi
+
     # Add routing rules for VPN interface and DNS servers
     _routing_add || return 1
     # Add firewall rules for VPN interface (only when UPnP port mapping is enabled)
@@ -549,6 +585,18 @@ _openpvn_postup() {
 }
 
 _openpvn_postdown() {
+    # Remove host route for VPN server (added in postup to prevent recursive routing)
+    local server_ip=""
+    if [ -n "${trusted_ip:-}" ]; then
+        server_ip="${trusted_ip}"
+    elif [ -f "${OPENVPN_STATE_DIR}/server_ip" ]; then
+        server_ip=$(cat "${OPENVPN_STATE_DIR}/server_ip" 2>/dev/null || true)
+    fi
+    if [ -n "${server_ip}" ]; then
+        ip -4 route del "${server_ip}/32" 2>/dev/null || true
+        rm -f "${OPENVPN_STATE_DIR}/server_ip"
+    fi
+
     # Update resolv.conf to remove VPN DNS servers
     _resolvconf "reset" || true
     # Remove routing rules for VPN interface and DNS servers
