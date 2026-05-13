@@ -149,6 +149,101 @@ _resolve_hostname() {
     echo "${ips[@]}"
 }
 
+_endpoint_route_add() {
+    local endpoint_ip="$1"
+    local route_line=""
+    local route_via=""
+    local route_dev=""
+    local route_prefix=""
+    local route_family=""
+    local -a route_cmd=()
+    local result=0
+
+    _check_host "${endpoint_ip}" || result=$?
+    if [ "${result}" -eq 1 ]; then
+        route_family="-4"
+        route_prefix="${endpoint_ip}/32"
+        route_line="$(ip -4 route get "${endpoint_ip}" table main 2>/dev/null | head -n1)"
+    elif [ "${result}" -eq 2 ]; then
+        route_family="-6"
+        route_prefix="${endpoint_ip}/128"
+        route_line="$(ip -6 route get "${endpoint_ip}" table main 2>/dev/null | head -n1)"
+    else
+        bashio::log.error "Cannot add endpoint route. '${endpoint_ip}' is not a valid IP address."
+        return 1
+    fi
+
+    route_via="$(awk '{for (i=1; i<=NF; i++) if ($i=="via") {print $(i+1); exit}}' <<< "${route_line}")"
+    route_dev="$(awk '{for (i=1; i<=NF; i++) if ($i=="dev") {print $(i+1); exit}}' <<< "${route_line}")"
+    if [ -z "${route_dev}" ]; then
+        bashio::log.error "Unable to determine a main-table route for VPN endpoint ${endpoint_ip}."
+        return 1
+    fi
+
+    route_cmd=(ip "${route_family}" route replace "${route_prefix}" table main)
+    if [ -n "${route_via}" ]; then
+        route_cmd+=(via "${route_via}")
+    fi
+    route_cmd+=(dev "${route_dev}")
+    "${route_cmd[@]}" || return 1
+
+    if [ -n "${config["EndpointRoutesFile"]:-}" ]; then
+        touch "${config["EndpointRoutesFile"]}" || true
+        if ! grep -Fxq "${endpoint_ip}" "${config["EndpointRoutesFile"]}" 2>/dev/null; then
+            echo "${endpoint_ip}" >> "${config["EndpointRoutesFile"]}"
+        fi
+    fi
+    bashio::log.info "Pinned VPN endpoint ${endpoint_ip} to pre-VPN route via ${route_dev}."
+}
+
+_endpoint_routes_del() {
+    local endpoint_ip=""
+    local result=0
+
+    if [ -z "${config["EndpointRoutesFile"]:-}" ] || [ ! -f "${config["EndpointRoutesFile"]}" ]; then
+        return 0
+    fi
+
+    while IFS= read -r endpoint_ip || [ -n "${endpoint_ip}" ]; do
+        [ -z "${endpoint_ip}" ] && continue
+        result=0
+        _check_host "${endpoint_ip}" || result=$?
+        if [ "${result}" -eq 1 ]; then
+            _cmd "ip -4 route del ${endpoint_ip}/32 table main 2>/dev/null" || true
+        elif [ "${result}" -eq 2 ]; then
+            _cmd "ip -6 route del ${endpoint_ip}/128 table main 2>/dev/null" || true
+        fi
+    done < "${config["EndpointRoutesFile"]}"
+
+    rm -f "${config["EndpointRoutesFile"]}" || true
+}
+
+_openvpn_collect_endpoint_ips() {
+    local remote_host=""
+    local result=0
+    local endpoint_ip=""
+    local -a remote_hosts=()
+    local -a resolved_ips=()
+
+    mapfile -t remote_hosts < <(awk '/^[[:space:]]*remote[[:space:]]+/ {print $2}' "${config["ConfigFile"]}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | sort -u)
+    for remote_host in "${remote_hosts[@]}"; do
+        [ -z "${remote_host}" ] && continue
+        result=0
+        _check_host "${remote_host}" || result=$?
+        if [ "${result}" -eq 1 ] || [ "${result}" -eq 2 ]; then
+            resolved_ips+=("${remote_host}")
+        elif [ "${result}" -eq 3 ]; then
+            for endpoint_ip in $(_resolve_hostname "${remote_host}"); do
+                resolved_ips+=("${endpoint_ip}")
+            done
+        fi
+    done
+
+    if [ ${#resolved_ips[@]} -gt 0 ]; then
+        printf '%s\n' "${resolved_ips[@]}" | awk 'NF {print}' | sort -u
+    fi
+}
+
 _routing_add() {
     bashio::log.info "Adding routing rules for VPN interface ${config["Interface"]}..."
 
@@ -344,6 +439,8 @@ _wireguard_up() {
     fi
 
     _cmd "ip link set ${config["Interface"]} up" || return 1
+    : > "${config["EndpointRoutesFile"]}"
+    _endpoint_route_add "${config["EndpointIP"]}" || return 1
 
     # Add routing rules for VPN interface and DNS servers
     _routing_add || return 1
@@ -358,6 +455,7 @@ _wireguard_up() {
 }
 
 _wireguard_down() {
+    _endpoint_routes_del || true
     # Update resolv.conf to remove VPN DNS servers
     _resolvconf "reset" || true
     # Remove routing rules for VPN interface and DNS servers
@@ -399,6 +497,7 @@ wireguard() {
     config["Interface"]="${interface}"
     config["ConfigFile"]="${config_file}"
     config["Table"]="${config["Table"]:-1000}"
+    config["EndpointRoutesFile"]="${WIREGUARD_STATE_DIR}/endpoint-routes"
     config["ListenPort"]="${config["ListenPort"]:-51820}"
     config["EndpointHost"]="${config["Endpoint"]%:*}"
     config["EndpointPort"]="${config["Endpoint"]##*:}"
@@ -485,6 +584,8 @@ _openvpn_check() {
 }
 
 _openvpn_up() {
+    local endpoint_ip
+
     bashio::log.warning "This script force OpenvPN to ignore any routes and DNS settings pushed by the server."
     bashio::log.warning "Default route will be inserted into custom routing table: ${config["Table"]}"
     bashio::log.warning "This routing table will be used for traffic from the VPN interface and to the configured DNS servers."
@@ -497,6 +598,15 @@ _openvpn_up() {
     echo '#!/bin/bash' > ${config["PostDownScript"]}
     echo "${config["MySelf"]} openvpn postdown" >> ${config["PostDownScript"]}
     chmod 755 ${config["PostDownScript"]}
+
+    : > "${config["EndpointRoutesFile"]}"
+    while IFS= read -r endpoint_ip || [ -n "${endpoint_ip}" ]; do
+        [ -z "${endpoint_ip}" ] && continue
+        _endpoint_route_add "${endpoint_ip}" || return 1
+    done < <(_openvpn_collect_endpoint_ips)
+    if [ ! -s "${config["EndpointRoutesFile"]}" ]; then
+        bashio::log.warning "No OpenVPN endpoint host route could be prepared from ${config["ConfigFile"]}."
+    fi
 
     # Define logging
     declare -A verbosity=(
@@ -533,6 +643,7 @@ _openvpn_up() {
 _openvpn_down() {
     # Terminate OpenVPN process
     pkill -f "openvpn --config ${config["ConfigFile"]}" || true
+    _endpoint_routes_del || true
     # Safety-net cleanup in case the --down callback was never invoked
     _routing_del || true
 }
@@ -557,6 +668,7 @@ _openpvn_postdown() {
     if bashio::config.true 'vpn_upnp_enabled'; then
         _firewall_del || true
     fi
+    _endpoint_routes_del || true
 }
 
 openvpn() {
@@ -586,6 +698,7 @@ openvpn() {
     config["Interface"]="${interface}"
     config["ConfigFile"]="${config_file}"
     config["Table"]="${config["Table"]:-1000}"
+    config["EndpointRoutesFile"]="${OPENVPN_STATE_DIR}/endpoint-routes"
     config["PostUpScript"]="${OPENVPN_STATE_DIR}/up.sh"
     config["PostDownScript"]="${OPENVPN_STATE_DIR}/down.sh"
 

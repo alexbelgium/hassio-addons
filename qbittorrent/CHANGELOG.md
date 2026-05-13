@@ -1,3 +1,6 @@
+## 5.2.0-17 (13-05-2026)
+- Fix VPN endpoint routing by pinning OpenVPN/WireGuard server IPs to the pre-VPN main route, preventing recursive tunnel routing drops.
+
 ## 5.2.0-16 (13-05-2026)
 - Minor bugs fixed
 
