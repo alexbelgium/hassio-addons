@@ -93,6 +93,33 @@ _check_host() {
     fi
 }
 
+_add_endpoint_route() {
+    local endpoint_ip="$1"
+    local result=0
+
+    _check_host "${endpoint_ip}" || result=$?
+
+    if [ "${result}" -eq 1 ]; then
+        local default_route
+        default_route="$(ip -4 route show default | head -n1)"
+        if [ -z "${default_route}" ]; then
+            bashio::log.warning "No IPv4 default route found to pin VPN endpoint ${endpoint_ip}."
+            return 0
+        fi
+        _cmd "ip -4 route replace ${endpoint_ip}/32 ${default_route}" || return 1
+    elif [ "${result}" -eq 2 ]; then
+        local default_route
+        default_route="$(ip -6 route show default | head -n1)"
+        if [ -z "${default_route}" ]; then
+            bashio::log.warning "No IPv6 default route found to pin VPN endpoint ${endpoint_ip}."
+            return 0
+        fi
+        _cmd "ip -6 route replace ${endpoint_ip}/128 ${default_route}" || return 1
+    else
+        bashio::log.warning "Skipping endpoint route pinning for invalid endpoint IP: ${endpoint_ip}"
+    fi
+}
+
 _resolvconf() {
     local mode=$1
     local resolv_conf="/etc/resolv.conf"
@@ -435,6 +462,7 @@ wireguard() {
             for endpoint_ip in "${endpoint_ips[@]}"; do
                 bashio::log.info "Resolved WireGuard endpoint hostname ${config["EndpointHost"]} to IP: ${endpoint_ip}"
                 config["EndpointIP"]="${endpoint_ip}"
+                _add_endpoint_route "${config["EndpointIP"]}" || return 1
                 if _wireguard_up; then
                     bashio::log.info "WireGuard interface ${config["Interface"]} is up."
                     bashio::exit.ok 'WireGuard started.'
@@ -445,6 +473,7 @@ wireguard() {
         else
             bashio::log.debug "WireGuard endpoint ${config["EndpointHost"]} is a valid IP address. Using as is."
             config["EndpointIP"]="${config["EndpointHost"]}"
+            _add_endpoint_route "${config["EndpointIP"]}" || return 1
             if _wireguard_up; then
                 bashio::log.info "WireGuard interface ${config["Interface"]} is up."
                 bashio::exit.ok 'WireGuard started.'
