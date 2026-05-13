@@ -1,3 +1,6 @@
+## 5.2.0-18 (13-05-2026)
+- Simplify VPN endpoint route pinning to minimal helpers (single endpoint, no tracking list).
+
 ## 5.2.0-17 (13-05-2026)
 - Fix VPN endpoint routing by pinning OpenVPN/WireGuard server IPs to the pre-VPN main route, preventing recursive tunnel routing drops.
 
