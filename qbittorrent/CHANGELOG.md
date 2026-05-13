@@ -1,5 +1,5 @@
-## 5.2.0-17 (13-05-2026)
-- OpenVPN: fix "Recursive routing detected" by adding a host route for the VPN server endpoint via the physical gateway in the postup handler, preventing tunnel-bound sockets (qBittorrent on tun0) from sending traffic to the VPN server IP
+## 5.2.0-18 (13-05-2026)
+- OpenVPN: fix "Recursive routing detected" — previous fix added the VPN server host route only to the main routing table, which qBittorrent's traffic (policy-routed via `from <tun_ip> -> table 1000`) never consults; the route must also be added to table 1000 so the kernel selects the physical device, causing EHOSTUNREACH for the tun-bound qBittorrent socket
 
 - Minor bugs fixed
 

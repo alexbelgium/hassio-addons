@@ -535,41 +535,58 @@ _openvpn_down() {
     pkill -f "openvpn --config ${config["ConfigFile"]}" || true
     # Safety-net cleanup in case the --down callback was never invoked
     _routing_del || true
-    # Safety-net: remove host route for VPN server if postdown was never invoked
+    # Safety-net: remove host routes for VPN server if postdown was never invoked
     if [ -f "${OPENVPN_STATE_DIR}/server_ip" ]; then
         local saved_ip
         saved_ip=$(cat "${OPENVPN_STATE_DIR}/server_ip" 2>/dev/null || true)
         if [ -n "${saved_ip}" ]; then
             ip -4 route del "${saved_ip}/32" 2>/dev/null || true
+            ip -4 route del "${saved_ip}/32" table "${config["Table"]}" 2>/dev/null || true
         fi
         rm -f "${OPENVPN_STATE_DIR}/server_ip"
     fi
 }
 
 _openvpn_postup() {
-    # Add explicit host route for VPN server endpoint to prevent recursive routing.
+    # Add explicit host routes for VPN server endpoint to prevent recursive routing.
     # With --route-noexec, OpenVPN skips adding its own host route for the remote
     # endpoint. Without it, sockets bound to the VPN interface (e.g. qBittorrent
     # bound to tun0) can send traffic destined for the VPN server IP through the
     # tunnel, which OpenVPN detects as recursive routing and logs as an error.
-    # Adding the /32 host route via the physical gateway makes the kernel reject
-    # tunnel-bound sockets from sending to the VPN server IP (interface mismatch).
+    #
+    # qBittorrent uses SO_BINDTODEVICE=tun0, so all its traffic matches the policy
+    # rule "from <tun_ip> -> table 1000".  Table 1000 has "default dev tun0", so
+    # even a /32 host route for the VPN server in the *main* table is irrelevant –
+    # it is never consulted for qBittorrent's traffic.  The /32 route must be added
+    # to table 1000 as well, pointing to the physical device.  When the kernel
+    # selects the physical device as output but the socket is bound to tun0, it
+    # returns EHOSTUNREACH and the packet never reaches the tun device.
     if [ -n "${trusted_ip:-}" ]; then
         # Validate that trusted_ip is a well-formed IPv4 address before using it
         if ! ipcalc -c -4 "${trusted_ip}" >/dev/null 2>&1; then
-            bashio::log.warning "trusted_ip '${trusted_ip}' is not a valid IPv4 address; recursive routing protection skipped."
+            bashio::log.warning "trusted_ip '${trusted_ip}' is not a valid IPv4 address; VPN server host route not added. Recursive routing may occur."
         else
-            local physical_gw
-            # Exclude routes that use the VPN interface to find the physical gateway
+            local physical_gw physical_dev
+            # Find physical default gateway and device, excluding the VPN interface.
+            # Field order from `ip route show default`: default via GW dev DEV ...
             physical_gw=$(ip -4 route show default table main | awk -v iface="${config["Interface"]}" '$0 !~ iface && /via/ {print $3; exit}')
-            if [ -n "${physical_gw}" ]; then
-                bashio::log.info "Adding host route for VPN server ${trusted_ip} via ${physical_gw} to prevent recursive routing."
+            physical_dev=$(ip -4 route show default table main | awk -v iface="${config["Interface"]}" '$0 !~ iface && /dev/ {for(i=1;i<=NF;i++) if($i=="dev") {print $(i+1); exit}}')
+            if [ -n "${physical_gw}" ] && [ -n "${physical_dev}" ]; then
+                bashio::log.info "Adding host route for VPN server ${trusted_ip} via ${physical_gw} (${physical_dev}) to prevent recursive routing."
                 local route_err
+                # Add to main routing table (belt)
                 route_err=$(ip -4 route add "${trusted_ip}/32" via "${physical_gw}" 2>&1) || \
-                    bashio::log.warning "Could not add host route for VPN server ${trusted_ip}: ${route_err}"
+                    bashio::log.debug "Could not add main table route for ${trusted_ip} (may already exist): ${route_err}"
+                # Add to VPN routing table (suspenders): qBittorrent traffic from
+                # the tun IP is policy-routed into table 1000.  Adding a /32 here
+                # for the VPN server overrides the "default dev tun0" catch-all and
+                # directs those packets to the physical device, causing EHOSTUNREACH
+                # for the tun-bound socket so no packet ever reaches the tunnel.
+                route_err=$(ip -4 route add "${trusted_ip}/32" via "${physical_gw}" dev "${physical_dev}" table "${config["Table"]}" 2>&1) || \
+                    bashio::log.debug "Could not add VPN table route for ${trusted_ip} (may already exist): ${route_err}"
                 echo "${trusted_ip}" > "${OPENVPN_STATE_DIR}/server_ip"
             else
-                bashio::log.warning "Could not determine physical gateway; recursive routing protection skipped."
+                bashio::log.warning "Could not determine physical gateway/device; VPN server host route not added. Recursive routing may occur."
             fi
         fi
     fi
@@ -585,7 +602,7 @@ _openvpn_postup() {
 }
 
 _openvpn_postdown() {
-    # Remove host route for VPN server (added in postup to prevent recursive routing)
+    # Remove host routes for VPN server (added in postup to prevent recursive routing)
     local server_ip=""
     if [ -n "${trusted_ip:-}" ]; then
         server_ip="${trusted_ip}"
@@ -594,6 +611,7 @@ _openvpn_postdown() {
     fi
     if [ -n "${server_ip}" ]; then
         ip -4 route del "${server_ip}/32" 2>/dev/null || true
+        ip -4 route del "${server_ip}/32" table "${config["Table"]}" 2>/dev/null || true
         rm -f "${OPENVPN_STATE_DIR}/server_ip"
     fi
 
