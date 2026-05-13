@@ -225,7 +225,7 @@ _openvpn_collect_endpoint_ips() {
     local -a remote_hosts=()
     local -a resolved_ips=()
 
-    mapfile -t remote_hosts < <(awk '/^[[:space:]]*remote[[:space:]]+/ {print $2}' "${config["ConfigFile"]}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | sort -u)
+    mapfile -t remote_hosts < <(awk '/^[[:space:]]*remote[[:space:]]+/ {print $2}' "${config["ConfigFile"]}" | sort -u)
     for remote_host in "${remote_hosts[@]}"; do
         [ -z "${remote_host}" ] && continue
         result=0
