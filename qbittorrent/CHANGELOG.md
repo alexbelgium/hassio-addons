@@ -1,5 +1,5 @@
-## 5.2.0-18 (13-05-2026)
-- OpenVPN: fix "Recursive routing detected" — previous fix added the VPN server host route only to the main routing table, which qBittorrent's traffic (policy-routed via `from <tun_ip> -> table 1000`) never consults; the route must also be added to table 1000 so the kernel selects the physical device, causing EHOSTUNREACH for the tun-bound qBittorrent socket
+## 5.2.0-19 (13-05-2026)
+- OpenVPN: simplify recursive routing fix — use a single blackhole route for the VPN server IP in table 1000 (no AWK, no ipcalc, no physical device detection required)
 
 - Minor bugs fixed
 
