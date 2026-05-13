@@ -546,7 +546,7 @@ _openvpn_down() {
     fi
 }
 
-_openpvn_postup() {
+_openvpn_postup() {
     # Add explicit host route for VPN server endpoint to prevent recursive routing.
     # With --route-noexec, OpenVPN skips adding its own host route for the remote
     # endpoint. Without it, sockets bound to the VPN interface (e.g. qBittorrent
@@ -584,7 +584,7 @@ _openpvn_postup() {
     _resolvconf "update" || return 1
 }
 
-_openpvn_postdown() {
+_openvpn_postdown() {
     # Remove host route for VPN server (added in postup to prevent recursive routing)
     local server_ip=""
     if [ -n "${trusted_ip:-}" ]; then
@@ -652,10 +652,10 @@ openvpn() {
         bashio::log.info "OpenVPN on interface ${config["Interface"]} is down."
         bashio::exit.ok 'OpenVPN stopped.'
     elif [ "${mode}" = "postup" ]; then
-        _openpvn_postup
+        _openvpn_postup
         bashio::exit.ok 'OpenVPN routes added.'
     elif [ "${mode}" = "postdown" ]; then
-        _openpvn_postdown
+        _openvpn_postdown
         bashio::exit.ok 'OpenVPN routes deleted.'
     else
         bashio::log.error "Invalid OpenVPN mode specified. Use 'up', 'down', 'postup', or 'postdown'."
