@@ -152,7 +152,7 @@ _pnat_set_firewall() {
 # --- qBittorrent Specific Logic ---
 
 _qbt_login() {
-    config["SID"]=$(_cmd "curl -s -k -i --header \"Referer: ${config["Schema"]}://${config["Server"]}:${config["Port"]}\" --data \"username=${config["User"]}\" --data-urlencode \"password=${config["Pass"]}\" \"${config["Schema"]}://${config["Server"]}:${config["Port"]}/api/v2/auth/login\" | grep -oP '(?!set-cookie:.)SID=.*(?=\;.HttpOnly\;)'")
+    config["SID"]=$(_cmd "curl -s -k -i --header \"Referer: ${config["Schema"]}://${config["Server"]}:${config["Port"]}\" --data \"username=${config["User"]}\" --data-urlencode \"password=${config["Pass"]}\" \"${config["Schema"]}://${config["Server"]}:${config["Port"]}/api/v2/auth/login\" | grep -oiP 'set-cookie:.*SID[^=]*=\K[^;]+'")
     return $?
 }
 
