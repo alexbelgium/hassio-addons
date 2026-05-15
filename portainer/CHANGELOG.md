@@ -1,4 +1,7 @@
 
+## 2.41.1 (2026-05-16)
+- Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
+
 ## 2.41.0 (2026-05-02)
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
