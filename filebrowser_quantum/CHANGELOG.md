@@ -1,4 +1,7 @@
 
+## 1.3.2 (2026-05-16)
+- Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
+
 ## 1.3.1 (2026-05-02)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
 
