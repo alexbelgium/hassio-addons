@@ -60,7 +60,7 @@ sudo apt-get dist-upgrade -y
 
 # Install RTSP server
 sudo apt-get install -y micro ffmpeg lsof
-sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.9.1/mediamtx_v1.9.1_linux_arm64v8.tar.gz -O - | sudo tar -xz
+sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.18.1/mediamtx_v1.18.1_linux_arm64v8.tar.gz -O - | sudo tar -xz
 ```
 </details>
 
@@ -122,126 +122,6 @@ fi
 if [ -f "$HOME/autogain.py" ]; then
     sudo python3 -u "$HOME/autogain.py" >/tmp/log_autogain 2>/tmp/log_autogain_error &
 fi
-```
-</details>
-
-<details>
-<summary>Optional: use gstreamer instead of ffmpeg</summary>
-
-```bash
-# Install gstreamer
-sudo apt-get update
-#sudo apt-get install -y \
-#  gstreamer1.0-rtsp \
-#  gstreamer1.0-tools \
-#  gstreamer1.0-alsa \
-#  gstreamer1.0-plugins-base \
-#  gstreamer1.0-plugins-good \
-#  gstreamer1.0-plugins-bad \
-#  gstreamer1.0-plugins-ugly \
-#  gstreamer1.0-libav
-apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio -y
-```
-
-Create a script named `rtsp_audio_server.py`:
-
-```python
-#!/usr/bin/env python3
-
-import gi
-import sys
-import logging
-import os
-import signal
-
-gi.require_version('Gst', '1.0')
-gi.require_version('GstRtspServer', '1.0')
-
-from gi.repository import Gst, GstRtspServer, GLib
-
-# Initialize GStreamer
-Gst.init(None)
-
-# Configure Logging
-LOG_FILE = "gst_rtsp_server.log"
-logging.basicConfig(
-    filename=LOG_FILE,
-    filemode='a',
-    format='%(asctime)s %(levelname)s: %(message)s',
-    level=logging.DEBUG  # Set to DEBUG for comprehensive logging
-)
-logger = logging.getLogger(__name__)
-
-class AudioFactory(GstRtspServer.RTSPMediaFactory):
-    def __init__(self):
-        super(AudioFactory, self).__init__()
-        self.set_shared(True)
-        self.set_latency(500)
-        self.set_suspend_mode(GstRtspServer.RTSPSuspendMode.NONE)
-        logger.debug("AudioFactory initialized: shared=True, latency=500ms, suspend_mode=NONE.")
-
-    def do_create_element(self, url):
-        pipeline_str = (
-            "alsasrc device=plughw:0,0 do-timestamp=true buffer-time=2000000 latency-time=1000000 ! "
-            "queue max-size-buffers=0 max-size-bytes=0 max-size-time=0 ! "
-            "audioconvert ! "
-            "audioresample ! "
-            "audio/x-raw,format=S16BE,channels=2,rate=48000 ! "
-            "rtpL16pay name=pay0 pt=96"
-        )
-        logger.debug(f"Creating GStreamer pipeline: {pipeline_str}")
-        try:
-            pipeline = Gst.parse_launch(pipeline_str)
-            if not pipeline:
-                logger.error("Failed to parse GStreamer pipeline.")
-                return None
-            return pipeline
-        except Exception as e:
-            logger.error(f"Exception while creating pipeline: {e}")
-            return None
-
-class GstServer:
-    def __init__(self):
-        self.server = GstRtspServer.RTSPServer()
-        self.server.set_service("8554")
-        self.server.set_address("0.0.0.0")
-        logger.debug("RTSP server configured: address=0.0.0.0, port=8554.")
-
-        factory = AudioFactory()
-        mount_points = self.server.get_mount_points()
-        mount_points.add_factory("/birdmic", factory)
-        logger.debug("Factory mounted at /birdmic.")
-
-        self.server.attach(None)
-        logger.info("RTSP server attached and running.")
-
-def main():
-    server = GstServer()
-    print("RTSP server is running at rtsp://localhost:8554/birdmic")
-    logger.info("RTSP server is running at rtsp://localhost:8554/birdmic")
-
-    loop = GLib.MainLoop()
-
-    def shutdown(signum, frame):
-        logger.info(f"Shutting down RTSP server due to signal {signum}.")
-        print("\nShutting down RTSP server.")
-        loop.quit()
-
-    signal.signal(signal.SIGINT, shutdown)
-    signal.signal(signal.SIGTERM, shutdown)
-
-    try:
-        loop.run()
-    except Exception as e:
-        logger.error(f"Main loop encountered an exception: {e}")
-    finally:
-        logger.info("RTSP server has been shut down.")
-
-if __name__ == "__main__":
-    if not os.path.exists(LOG_FILE):
-        open(LOG_FILE, 'w').close()
-
-    main()
 ```
 </details>
 
