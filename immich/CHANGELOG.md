@@ -1,4 +1,7 @@
 
+## 2.7.5 (2026-05-17)
+- Switch upstream image tags from arch-specific (`arm64v8-latest`/`amd64-latest`) to `:latest`
+
 ## 2.7.5 (2026-04-18)
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
