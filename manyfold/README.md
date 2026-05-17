@@ -65,20 +65,33 @@ Local development alternative on the HA host:
 - `max_file_upload_size`: Max uploaded archive size in bytes.
 - `max_file_extract_size`: Max extracted archive size in bytes.
 
-## Small server tuning
+### Raspberry Pi (single-user) example
 
-For low-memory HAOS hosts, start with:
+For a Raspberry Pi 4 or Pi 5 running a single-user Manyfold instance with modest library sizes:
 
 ```yaml
+puid: 1000
+pgid: 1000
+multiuser: false
+library_path: /share/manyfold/models
+thumbnails_path: /config/thumbnails
+log_level: info
 web_concurrency: 1
-rails_max_threads: 5
-default_worker_concurrency: 2
+rails_max_threads: 4
+default_worker_concurrency: 1
 performance_worker_concurrency: 1
-max_file_upload_size: 268435456
-max_file_extract_size: 536870912
+max_file_upload_size: 134217728
+max_file_extract_size: 268435456
 ```
 
-Then restart the add-on and increase gradually only if needed.
+**Rationale:**
+- `web_concurrency: 1` — Single Puma worker (one process) saves RAM on Pi.
+- `rails_max_threads: 4` — Four threads per worker is sufficient for single-user browsing.
+- `default_worker_concurrency: 1` — Serial background job processing (indexing, thumbnail generation).
+- `performance_worker_concurrency: 1` — Single performance worker to avoid CPU thrashing during STL processing.
+- `multiuser: false` — Disable authentication/multiuser features for personal use.
+- `max_file_upload_size: 128 MB` — Reasonable limit for Pi storage and network.
+- `max_file_extract_size: 256 MB` — Extracted archives stay manageable.
 
 ## Fix root warning (PUID/PGID)
 
