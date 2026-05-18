@@ -180,6 +180,7 @@ export_var() {
 
 ################################################################################
 # JSON parsing (jq bug fixed: use "? //", not "?//")
+# Order: 1) top-level addon options first, 2) env_vars second (can override)
 ################################################################################
 while IFS= read -r -d $'\0' k && IFS= read -r v; do
     export_var "$k" "$v"
@@ -189,7 +190,15 @@ done < <(
 
         . as $root
         | (
-            # 1) env_vars[] (supported shapes)
+            # 1) top-level scalar options excluding env_vars (processed first)
+            $root
+            | to_entries[]
+            | select(.key != "env_vars")
+            | select((.value|type) != "object" and (.value|type) != "array" and (.value|type) != "null")
+            | emit(.key; .value)
+          ),
+          (
+            # 2) env_vars[] (processed second, overrides addon options if same key)
             ($root.env_vars? // [])[] as $e
             | if ($e|type) == "object" then
                   if ($e|has("name") and has("value")) then
@@ -205,14 +214,6 @@ done < <(
                         | emit($m.k; $m.v)
                     else empty end
               end
-          ),
-          (
-            # 2) top-level scalar options excluding env_vars
-            $root
-            | to_entries[]
-            | select(.key != "env_vars")
-            | select((.value|type) != "object" and (.value|type) != "array" and (.value|type) != "null")
-            | emit(.key; .value)
           )
     ' "$JSONSOURCE"
 )
