@@ -173,7 +173,7 @@ RUN \
     fi
 
 ENV HEALTH_PORT="8080" \
-    HEALTH_URL="/health"
+    HEALTH_URL="/healthcheck"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
