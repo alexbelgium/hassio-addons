@@ -4,9 +4,10 @@ set -e
 
 # Source environment variables for cron context
 # shellcheck disable=SC1091
-if [ -f /etc/environment ]; then chmod +x /etc/environment; set -a; /./etc/environment; set +a; fi
+if [ -f /etc/environment ]; then set -a; . /etc/environment; set +a; fi
 
-CONFIGSOURCE="$(bashio::config "CONFIG_LOCATION")"
+# Use persisted value instead of calling bashio::config (www-data may lack API access)
+CONFIGSOURCE="${CONFIG_LOCATION}"
 
 (
 bashio::log.info "Running update according to defined schedule. Files located in $CONFIGSOURCE/import_files will be imported. If /config, it is accessible in the folder /addon_configs/xxx-firefly_data_importer when using the Filebrowser addon"
