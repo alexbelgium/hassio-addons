@@ -1,10 +1,20 @@
-## 0.139.3 (11-05-2026)
-- Minor bugs fixed
-## 0.138.0 (24-04-2026)
-- Minor bugs fixed
-## 0.137.0 (13-04-2026)
-- Minor bugs fixed
 # Changelog
+
+## 0.140.1
+ - Bump version to 0.140.1
+ - Detailed changes https://github.com/manyfold3d/manyfold/compare/v0.139.3...v0.140.1
+
+## 0.139.3 (11-05-2026)
+
+- Minor bugs fixed
+
+## 0.138.0 (24-04-2026)
+
+- Minor bugs fixed
+
+## 0.137.0 (13-04-2026)
+
+- Minor bugs fixed
 
 ## 0.137.0
 
