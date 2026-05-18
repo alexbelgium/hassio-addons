@@ -82,11 +82,10 @@ dotenv_quote() {
 }
 
 shell_quote() {
-    # Single-quote for safe injection in shell code
-    local s="$1"
-    s="${s//\\/\\\\}"
-    s="${s//\'/\'\"\'\"\' }"
-    s="${s% }"
+    # Single-quote for safe injection in shell code.
+    # Inside single quotes only the single quote needs escaping ('->'\'').
+    # Do NOT escape backslashes: they are literal inside single quotes.
+    local s="${1//\'/\'\\\'\'}"
     printf "'%s'" "$s"
 }
 
@@ -166,9 +165,9 @@ export_var() {
     # Runtime environment (no eval, safe for special chars)
     export "$k=$v"
 
-    # S6 environment (preferred for services)
+    # S6 environment (preferred for services); best-effort, tolerate RO mounts
     if [[ -d /var/run/s6/container_environment ]]; then
-        printf '%s' "$v" > "/var/run/s6/container_environment/$k"
+        printf '%s' "$v" > "/var/run/s6/container_environment/$k" || true
     fi
 
     # Queue for .env and /etc/environment (written once, idempotent)
@@ -219,18 +218,31 @@ done < <(
 )
 
 ################################################################################
-# Write .env and /etc/environment (idempotent: replace whole file content)
+# Write .env and /etc/environment (idempotent: replace only our block,
+# preserving any pre-existing content from the upstream image / system).
 # Notes:
 # - /.env is commonly used by apps expecting dotenv format
 # - /etc/environment is read by PAM/system tooling; KEY="value" is acceptable
 ################################################################################
-{
-    echo "$BLOCK_BEGIN"
-    cat "$KV_FILE"
-    echo "$BLOCK_END"
-} > "$ENV_FILE.tmp"
-mv "$ENV_FILE.tmp" "$ENV_FILE"
-cp "$ENV_FILE" "$ETC_ENV_FILE"
+update_env_file() {
+    local f="$1" tmp
+    tmp="$(mktemp_safe)"
+    if [[ -f "$f" ]]; then
+        awk -v b="$BLOCK_BEGIN" -v e="$BLOCK_END" '
+            $0==b { skip=1; next }
+            $0==e { skip=0; next }
+            !skip
+        ' "$f" > "$tmp"
+    fi
+    {
+        echo "$BLOCK_BEGIN"
+        cat "$KV_FILE"
+        echo "$BLOCK_END"
+    } >> "$tmp"
+    mv "$tmp" "$f"
+}
+update_env_file "$ENV_FILE"
+update_env_file "$ETC_ENV_FILE"
 
 ################################################################################
 # Inject into scripts and shells (best-effort)
