@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -euo pipefail
 
-# Wait for the upstream API service (Python core.api) to bind 127.0.0.1:5002
+# Wait for the upstream API service (gunicorn / wsgi:application) to bind 127.0.0.1:5002
 # before starting nginx, so nginx never serves a 502 for the API/auth/socket
 # paths during boot. A boot-time 502 can be cached by an upstream cache layer
 # (HA's own PWA service worker, a Cloudflare edge worker, etc.), leaving the

@@ -1,4 +1,7 @@
 
+## 0.7.0-1 (2026-05-19)
+- Serve the API via gunicorn + a gevent-websocket worker instead of the Werkzeug development server
+
 ## 0.7.0 (2026-05-19)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 
