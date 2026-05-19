@@ -1,3 +1,5 @@
+- upnp fixed
+
 ## 5.2.0-17 (13-05-2026)
 - Remove lockfile due to upstream bug https://github.com/linuxserver/docker-qbittorrent/issues/434
 
