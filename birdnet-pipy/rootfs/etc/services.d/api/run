@@ -4,4 +4,16 @@ set -euo pipefail
 export PYTHONPATH=/app
 bashio::net.wait_for 5001 127.0.0.1 300
 cd /app
-exec python3 -m core.api
+# Single gevent-websocket worker is mandatory: live detections fan out via an
+# in-process socketio.emit (no Redis message_queue), so >1 worker would
+# silently drop Live Feed broadcasts. Bind 127.0.0.1 (single container; nginx
+# and core.main reach the API locally, satisfying the wait_for in nginx/run +
+# main/run). Heavy admin jobs cooperatively yield to keep this worker live.
+exec gunicorn wsgi:application \
+  --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker \
+  --workers 1 \
+  --bind 127.0.0.1:5002 \
+  --timeout 120 \
+  --graceful-timeout 30 \
+  --keep-alive 65 \
+  --error-logfile -
