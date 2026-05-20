@@ -1,0 +1,23 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================
+# Start Aurral with configuration from HA add-on options.
+# ==============================================================
+
+DOWNLOAD_FOLDER=$(bashio::config 'download_folder')
+DATA_FOLDER=$(bashio::config 'data_folder')
+
+# Ensure host-side directories exist
+mkdir -p "${DOWNLOAD_FOLDER}" "${DATA_FOLDER}"
+
+# Symlink HA share paths into the locations Aurral expects internally
+rm -rf /app/downloads
+ln -sf "${DOWNLOAD_FOLDER}" /app/downloads
+
+rm -rf /app/backend/data
+ln -sf "${DATA_FOLDER}" /app/backend/data
+
+bashio::log.info "Starting Aurral"
+bashio::log.info "  Downloads : ${DOWNLOAD_FOLDER}"
+bashio::log.info "  Data      : ${DATA_FOLDER}"
+
+exec node /app/backend/server.js
