@@ -1,4 +1,4 @@
-## 2.63.4-2 (2026-05-20)
+## 2.63.4-3 (2026-05-20)
 - Fix: add nginx redirect from root `/` to `/files/` to prevent Vue Router crash on startup
   - Vue Router 4's `/:catchAll(.*)*` redirect throws `TypeError: e.params.catchAll is not iterable` when `catchAll` is `undefined` (navigating to root `/`)
   - The redirect ensures the app always loads at `/files/` so the broken catch-all redirect code is never invoked
