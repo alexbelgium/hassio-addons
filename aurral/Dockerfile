@@ -17,9 +17,5 @@ LABEL \
 
 COPY rootfs /
 
-RUN chmod a+x /etc/services.d/aurral/run
-
-# Override the upstream docker-entrypoint.sh which tries to chown host-mounted
-# paths and fails with "Operation not permitted" in the HA supervisor environment.
-# s6-overlay's /init takes over process supervision instead.
-ENTRYPOINT ["/init"]
+RUN chmod a+x /etc/services.d/aurral/run && \
+    chmod a+x /usr/local/bin/docker-entrypoint.sh
