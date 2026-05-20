@@ -31,12 +31,9 @@ map:
 
 options:
   download_folder: /share/aurral/downloads
-  data_folder: /share/aurral/data
 
 schema:
   download_folder: str
-  data_folder: str
-  port: int?
 
 panel_icon: mdi:music-box-multiple
 panel_title: Aurral

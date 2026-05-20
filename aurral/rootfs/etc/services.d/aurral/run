@@ -4,19 +4,18 @@
 # ==============================================================
 
 DOWNLOAD_FOLDER=$(bashio::config 'download_folder')
-DATA_FOLDER=$(bashio::config 'data_folder')
 
-# Ensure host-side directories exist
-mkdir -p "${DOWNLOAD_FOLDER}" "${DATA_FOLDER}"
+# Ensure host-side download directory exists
+mkdir -p "${DOWNLOAD_FOLDER}"
 
 bashio::log.info "Starting Aurral"
-bashio::log.info "  Data      : ${DATA_FOLDER}"
+bashio::log.info "  Data      : /data (HA persistent storage)"
 bashio::log.info "  Downloads : ${DOWNLOAD_FOLDER}"
 
-# Use Aurral's native env vars to redirect paths to HA share locations.
-# This avoids symlinks into host-mounted paths which the upstream
-# docker-entrypoint.sh cannot chown (Operation not permitted).
-export AURRAL_DATA_DIR="${DATA_FOLDER}"
+# /data is HA's private persistent storage, automatically mounted per-addon.
+# AURRAL_DATA_DIR redirects Aurral's database/config there.
+# DOWNLOAD_FOLDER is user-configured and points to /share.
+export AURRAL_DATA_DIR="/data"
 export DOWNLOAD_FOLDER="${DOWNLOAD_FOLDER}"
 export WEEKLY_FLOW_FOLDER="${DOWNLOAD_FOLDER}/weekly-flow"
 
