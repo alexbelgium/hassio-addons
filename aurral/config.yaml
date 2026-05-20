@@ -18,6 +18,10 @@ ports_description:
 
 webui: http://[HOST]:[PORT:3001]
 
+ingress: true
+ingress_port: 3001
+ingress_stream: false
+
 map:
   - addon_config:rw
   - share:rw
