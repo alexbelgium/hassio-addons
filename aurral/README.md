@@ -1,65 +1,42 @@
-# Aurral
+# Home assistant add-on: Aurral
 
-[![Source][source-shield]][source]
-![Supports aarch64][aarch64-shield]
-![Supports amd64][amd64-shield]
+![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faurral%2Fconfig.yaml)
+![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faurral%2Fconfig.yaml)
+![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faurral%2Fconfig.yaml)
 
-Self-hosted music discovery, request management, flows, and playlist importing
-for Lidarr — with library-aware recommendations and Navidrome integration.
+## About
 
-## Installation
+---
 
-1. Add **alexbelgium's add-on repository** to Home Assistant:
-   [![Add repository][repo-badge]][repo-url]
-2. Go to **Settings → Add-ons → Add-on Store**, find **Aurral**, and click **Install**.
-3. Set the `download_folder` and `data_folder` options (see below), then click **Start**.
+[Aurral](https://github.com/lklynet/aurral) is a self-hosted music discovery, request management, flows, and playlist importing app for Lidarr with library-aware recommendations.
+This addon is based on the docker image https://github.com/lklynet/aurral
 
 ## Configuration
 
-All options are set in the **Configuration** tab of the add-on UI.
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+
+### Options
 
 | Option | Default | Description |
 |---|---|---|
-| `download_folder` | `/share/aurral/downloads` | Path where Aurral writes flow downloads and Navidrome playlists. Must be under `/share`. |
+| `download_folder` | `/share/aurral/downloads` | Path where Aurral writes flow downloads. Must be under `/share`. |
 | `data_folder` | `/share/aurral/data` | Path for Aurral's database and persistent config. Must be under `/share`. |
-| `PUID` | `1000` | User ID to run as — match your host directory ownership. |
-| `PGID` | `1000` | Group ID to run as. |
-| `TRUST_PROXY` | `true` | Set `true` when behind HA ingress or a reverse proxy. |
-| `TZ` | *(empty)* | Your timezone, e.g. `Australia/Melbourne`. Leave blank to inherit from HA. |
-| `LIDARR_INSECURE` | `false` | Allow self-signed TLS on your Lidarr instance. |
-| `AUTH_PROXY_ENABLED` | `false` | Enable reverse-proxy SSO auth. |
-| `AUTH_PROXY_HEADER` | *(empty)* | Header carrying the authenticated username, e.g. `X-Forwarded-User`. |
-| `AUTH_PROXY_TRUSTED_IPS` | *(empty)* | Comma-separated IPs trusted to send the auth header. |
-| `env_vars` | `[]` | Extra environment variables passed directly to Aurral. |
 
-## Volume Mapping
+## Installation
 
-| Option | Container path | Purpose |
-|---|---|---|
-| `download_folder` | `/app/downloads` | Flow output, Navidrome playlists |
-| `data_folder` | `/app/backend/data` | Database, settings |
-| *(built-in)* `/media` | `/media` | HA media library (read) |
+---
 
-## Ports
+The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
-| Port | Description |
-|---|---|
-| `3001/tcp` | Aurral Web UI (also available via HA Ingress sidebar) |
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+1. Install this add-on.
+1. Click the `Save` button to store your configuration.
+1. Set the `download_folder` and `data_folder` options to your preferred paths.
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+1. Open the webUI and complete onboarding.
 
-## Requirements
+## Support
 
-- **Lidarr** reachable from your HA host
-- **Last.fm API key** (free) for recommendations and metadata
-- Optional: **Navidrome** for flow/playlist library integration
-
-## More Information
-
-Full documentation, flows guide, and Spotify import helper:
-[github.com/lklynet/aurral][source]
-
-[source-shield]: https://img.shields.io/badge/source-lklynet%2Faurral-blue
-[source]: https://github.com/lklynet/aurral
-[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
-[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[repo-badge]: https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg
-[repo-url]: https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons
+Create an issue on github
