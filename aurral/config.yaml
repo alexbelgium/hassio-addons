@@ -18,14 +18,15 @@ ports_description:
 
 webui: http://[HOST]:[PORT:3001]
 
-ingress: true
-ingress_port: 3001
-ingress_stream: false
-
 map:
   - addon_config:rw
   - share:rw
   - media:rw
+
+env_vars:
+  - name: WEEKLY_FLOW_FOLDER
+    description: "Path for Navidrome smart playlist files (weekly flow)"
+    required: false
 
 options:
   download_folder: /share/aurral/downloads
