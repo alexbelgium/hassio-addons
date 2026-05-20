@@ -1,3 +1,5 @@
+## 2.63.4-2 (20-05-2026)
+- Minor bugs fixed
 
 ## 2.63.4-2 (2026-05-20)
 - Fix: add nginx redirect from root `/` to `/files/` to prevent Vue Router crash on startup
