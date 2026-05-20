@@ -5,10 +5,6 @@ This addon is based on the docker image https://github.com/lklynet/aurral
 
 ## Configuration
 
-Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
-
-### Options
-
 | Option | Default | Description |
 |---|---|---|
 | `download_folder` | `/share/aurral/downloads` | Path where Aurral writes flow downloads. Must be under `/share`. |
