@@ -17,4 +17,5 @@ LABEL \
 
 COPY rootfs /
 
-RUN chmod a+x /etc/services.d/aurral/run
+RUN chmod a+x /etc/services.d/aurral/run \
+    && chmod a+x /usr/local/bin/docker-entrypoint.sh
