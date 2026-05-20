@@ -1,4 +1,8 @@
 
+## 2.63.4-1 (2026-05-20)
+- Fix: always pass --noauth flag when NoAuth=true to ensure correct database initialization (prevents continuous loading screen / blue pulsating dots)
+- Fix: avoid passing empty string arguments to filebrowser command
+
 ## 2.63.4 (2026-05-19)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
 
