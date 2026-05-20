@@ -15,13 +15,14 @@ LABEL \
     io.hass.version="${BUILD_VERSION}" \
     maintainer="petruknw"
 
-# Set data dir via Docker ENV so it's available before any shell script runs.
-# /config is HA's addon_config mount point (always writable).
-ENV AURRAL_DATA_DIR=/config/data
+# Bake paths into the image so they're available before any shell runs.
+# The run script will override DOWNLOAD_FOLDER with the user's configured value.
+ENV AURRAL_DATA_DIR=/config/data \
+    DOWNLOAD_FOLDER=/share/aurral/downloads \
+    WEEKLY_FLOW_FOLDER=/share/aurral/downloads/weekly-flow
 
 COPY rootfs /
 
 RUN chmod a+x /etc/services.d/aurral/run \
     && chmod a+x /usr/local/bin/docker-entrypoint.sh \
-    # Pre-create the data dir so the entrypoint chown succeeds at startup
     && mkdir -p /config/data
