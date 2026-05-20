@@ -1,5 +1,5 @@
 name: Aurral
-version: "1.76.12-1"
+version: "1.76.12"
 slug: aurral
 description: >-
   Self-hosted music discovery, request management, flows, and playlist
@@ -28,6 +28,11 @@ map:
   - addon_config:rw
   - share:rw
   - media:rw
+
+env_vars:
+  - name: DOWNLOAD_FOLDER
+    description: "Path for music downloads"
+    required: false
 
 options:
   download_folder: /share/aurral/downloads

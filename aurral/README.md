@@ -8,7 +8,6 @@ This addon is based on the docker image https://github.com/lklynet/aurral
 | Option | Default | Description |
 |---|---|---|
 | `download_folder` | `/share/aurral/downloads` | Path where Aurral writes flow downloads. Must be under `/share`. |
-| `data_folder` | `/share/aurral/data` | Path for Aurral's database and persistent config. Must be under `/share`. |
 
 ## Installation
 
@@ -22,7 +21,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 2. Install this add-on.
 3. Click the `Save` button to store your configuration.
-4. Set the `download_folder` and `data_folder` options to your preferred paths.
+4. Set the `download_folder` option to your preferred path.
 5. Start the add-on.
 6. Check the logs of the add-on to see if everything went well.
 7. Open the webUI and complete onboarding.
