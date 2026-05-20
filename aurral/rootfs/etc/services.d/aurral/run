@@ -3,27 +3,42 @@
 # Start Aurral with configuration from HA add-on options.
 # ==============================================================
 
+# --- Volume paths (user-configurable in the add-on UI) -------
 DOWNLOAD_FOLDER=$(bashio::config 'download_folder')
 DATA_FOLDER=$(bashio::config 'data_folder')
+
+# --- Process identity ----------------------------------------
 PUID=$(bashio::config 'PUID')
 PGID=$(bashio::config 'PGID')
+
+# --- Networking ----------------------------------------------
 TRUST_PROXY=$(bashio::config 'TRUST_PROXY')
+
+# --- Optional settings ---------------------------------------
 TZ=$(bashio::config 'TZ' '')
 LIDARR_INSECURE=$(bashio::config 'LIDARR_INSECURE' 'false')
 AUTH_PROXY_ENABLED=$(bashio::config 'AUTH_PROXY_ENABLED' 'false')
 AUTH_PROXY_HEADER=$(bashio::config 'AUTH_PROXY_HEADER' '')
 AUTH_PROXY_TRUSTED_IPS=$(bashio::config 'AUTH_PROXY_TRUSTED_IPS' '')
 
-# Ensure host-side directories exist
+# --- Ensure host-side directories exist ----------------------
+bashio::log.info "Creating data directories if missing..."
 mkdir -p "${DOWNLOAD_FOLDER}" "${DATA_FOLDER}"
 
-# Symlink HA volume paths into the locations Aurral expects
-rm -rf /app/downloads && ln -sf "${DOWNLOAD_FOLDER}" /app/downloads
-rm -rf /app/backend/data && ln -sf "${DATA_FOLDER}" /app/backend/data
+# --- Wire HA share paths into the paths Aurral expects -------
+# Aurral hard-codes /app/downloads and /app/backend/data internally.
+# We symlink from those paths to the user-configured share locations
+# so data persists across add-on updates and restarts.
+rm -rf /app/downloads
+ln -sf "${DOWNLOAD_FOLDER}" /app/downloads
 
-bashio::log.info "Starting Aurral"
+rm -rf /app/backend/data
+ln -sf "${DATA_FOLDER}" /app/backend/data
+
+bashio::log.info "Starting Aurral v$(bashio::addon.version)"
 bashio::log.info "  Downloads : ${DOWNLOAD_FOLDER}"
 bashio::log.info "  Data      : ${DATA_FOLDER}"
+bashio::log.info "  PUID/PGID : ${PUID}/${PGID}"
 
 exec env \
     PUID="${PUID}" \
@@ -35,4 +50,4 @@ exec env \
     AUTH_PROXY_ENABLED="${AUTH_PROXY_ENABLED}" \
     AUTH_PROXY_HEADER="${AUTH_PROXY_HEADER}" \
     AUTH_PROXY_TRUSTED_IPS="${AUTH_PROXY_TRUSTED_IPS}" \
-    docker-entrypoint.sh node server.js
+    node /app/backend/server.js
