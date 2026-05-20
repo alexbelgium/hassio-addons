@@ -1,0 +1,15 @@
+{
+  "build_from": {
+    "aarch64": "ghcr.io/lklynet/aurral:latest",
+    "amd64": "ghcr.io/lklynet/aurral:latest"
+  },
+  "squash": false,
+  "labels": {
+    "io.hass.name": "Aurral",
+    "io.hass.description": "Self-hosted music discovery and request management for Lidarr",
+    "io.hass.arch": "{arch}",
+    "io.hass.type": "addon",
+    "io.hass.version": "dev",
+    "maintainer": "petruknw"
+  }
+}

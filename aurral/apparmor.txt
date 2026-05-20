@@ -1,0 +1,21 @@
+#include <tunables/global>
+
+profile aurral flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  file,
+  signal (send) set=(kill,term,int,hup,cont),
+
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /usr/local/bin/** ix,
+  /run/{s6,s6-rc*,fix-attrs.d}/** ix,
+
+  /share/aurral/** rwk,
+  /media/** rk,
+  /app/** rwk,
+
+  deny /proc/*/net/if_inet6 r,
+  deny /proc/*/net/ipv6_route r,
+}

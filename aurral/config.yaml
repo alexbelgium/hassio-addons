@@ -1,0 +1,58 @@
+name: Aurral
+version: "1.0.0"
+slug: aurral
+description: >-
+  Self-hosted music discovery, request management, flows, and playlist
+  importing for Lidarr with library-aware recommendations and Navidrome
+  integration.
+url: https://github.com/petruknw/hassio-addons/blob/feat/aurral-addon/aurral/README.md
+arch:
+  - aarch64
+  - amd64
+
+image: ghcr.io/lklynet/aurral
+
+init: false
+
+ports:
+  3001/tcp: 3001
+ports_description:
+  3001/tcp: Aurral Web UI
+
+webui: http://[HOST]:[PORT:3001]
+
+map:
+  - addon_config:rw
+  - share:rw
+  - media:rw
+
+options:
+  download_folder: /share/aurral/downloads
+  data_folder: /share/aurral/data
+  PUID: 1000
+  PGID: 1000
+  TRUST_PROXY: "true"
+  TZ: ""
+  LIDARR_INSECURE: "false"
+  AUTH_PROXY_ENABLED: "false"
+  AUTH_PROXY_HEADER: ""
+  AUTH_PROXY_TRUSTED_IPS: ""
+
+schema:
+  download_folder: str
+  data_folder: str
+  PUID: int
+  PGID: int
+  TRUST_PROXY: str
+  TZ: str?
+  LIDARR_INSECURE: str?
+  AUTH_PROXY_ENABLED: str?
+  AUTH_PROXY_HEADER: str?
+  AUTH_PROXY_TRUSTED_IPS: str?
+
+environment:
+  PUID: "1000"
+  PGID: "1000"
+
+panel_icon: mdi:music-box-multiple
+panel_title: Aurral

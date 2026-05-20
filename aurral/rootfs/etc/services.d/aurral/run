@@ -1,0 +1,38 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================
+# Start Aurral with configuration from HA add-on options.
+# ==============================================================
+
+DOWNLOAD_FOLDER=$(bashio::config 'download_folder')
+DATA_FOLDER=$(bashio::config 'data_folder')
+PUID=$(bashio::config 'PUID')
+PGID=$(bashio::config 'PGID')
+TRUST_PROXY=$(bashio::config 'TRUST_PROXY')
+TZ=$(bashio::config 'TZ' '')
+LIDARR_INSECURE=$(bashio::config 'LIDARR_INSECURE' 'false')
+AUTH_PROXY_ENABLED=$(bashio::config 'AUTH_PROXY_ENABLED' 'false')
+AUTH_PROXY_HEADER=$(bashio::config 'AUTH_PROXY_HEADER' '')
+AUTH_PROXY_TRUSTED_IPS=$(bashio::config 'AUTH_PROXY_TRUSTED_IPS' '')
+
+# Ensure host-side directories exist
+mkdir -p "${DOWNLOAD_FOLDER}" "${DATA_FOLDER}"
+
+# Symlink HA volume paths into the locations Aurral expects
+rm -rf /app/downloads && ln -sf "${DOWNLOAD_FOLDER}" /app/downloads
+rm -rf /app/backend/data && ln -sf "${DATA_FOLDER}" /app/backend/data
+
+bashio::log.info "Starting Aurral"
+bashio::log.info "  Downloads : ${DOWNLOAD_FOLDER}"
+bashio::log.info "  Data      : ${DATA_FOLDER}"
+
+exec env \
+    PUID="${PUID}" \
+    PGID="${PGID}" \
+    DOWNLOAD_FOLDER="${DOWNLOAD_FOLDER}" \
+    TRUST_PROXY="${TRUST_PROXY}" \
+    TZ="${TZ}" \
+    LIDARR_INSECURE="${LIDARR_INSECURE}" \
+    AUTH_PROXY_ENABLED="${AUTH_PROXY_ENABLED}" \
+    AUTH_PROXY_HEADER="${AUTH_PROXY_HEADER}" \
+    AUTH_PROXY_TRUSTED_IPS="${AUTH_PROXY_TRUSTED_IPS}" \
+    docker-entrypoint.sh node server.js
