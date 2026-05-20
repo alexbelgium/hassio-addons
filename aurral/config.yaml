@@ -9,8 +9,6 @@ arch:
   - aarch64
   - amd64
 
-image: ghcr.io/lklynet/aurral
-
 init: false
 
 ports:
@@ -28,11 +26,6 @@ map:
   - addon_config:rw
   - share:rw
   - media:rw
-
-env_vars:
-  - name: DOWNLOAD_FOLDER
-    description: "Path for music downloads"
-    required: false
 
 options:
   download_folder: /share/aurral/downloads

@@ -8,22 +8,15 @@ DOWNLOAD_FOLDER=$(bashio::config 'download_folder')
 # Ensure host-side download directory exists
 mkdir -p "${DOWNLOAD_FOLDER}"
 
-# Aurral writes its database/config to /app/backend/data inside the container.
-# We bind that to HA's addon_config directory (/config) which is always writable.
-# The upstream entrypoint chowns /app/backend/data — this must be a real directory,
-# not a symlink to a protected HA path, so we do NOT symlink it.
-mkdir -p /config/data
-
-# If /app/backend/data exists as a real dir (from image), replace with our persistent dir
-if [ ! -L /app/backend/data ]; then
-  rm -rf /app/backend/data
-  ln -sf /config/data /app/backend/data
-fi
-
 bashio::log.info "Starting Aurral"
+bashio::log.info "  Data      : /config/data (HA addon_config)"
 bashio::log.info "  Downloads : ${DOWNLOAD_FOLDER}"
-bashio::log.info "  Data      : /config/data"
 
+# AURRAL_DATA_DIR tells Aurral to write its DB/config to /config/data
+# (HA's writable addon_config mount) instead of /app/backend/data.
+# This avoids any symlink that docker-entrypoint.sh might try to chown.
+export AURRAL_DATA_DIR="/config/data"
 export DOWNLOAD_FOLDER="${DOWNLOAD_FOLDER}"
+export WEEKLY_FLOW_FOLDER="${DOWNLOAD_FOLDER}/weekly-flow"
 
-exec /usr/local/bin/docker-entrypoint.sh node /app/server.js
+exec node /app/server.js
