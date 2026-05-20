@@ -9,7 +9,7 @@ arch:
   - aarch64
   - amd64
 
-image: ghcr.io/lklynet/aurral
+image: ghcr.io/alexbelgium/aurral-{arch}
 
 init: false
 
