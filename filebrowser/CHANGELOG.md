@@ -1,5 +1,11 @@
-## 2.63.4-2 (20-05-2026)
-- Minor bugs fixed
+## 2.63.4-3 (2026-05-20)
+- Fix: add nginx redirect from root `/` to `/files/` to prevent Vue Router crash on startup
+  - Vue Router 4's `/:catchAll(.*)*` redirect throws `TypeError: e.params.catchAll is not iterable` when `catchAll` is `undefined` (navigating to root `/`)
+  - The redirect ensures the app always loads at `/files/` so the broken catch-all redirect code is never invoked
+
+## 2.63.4-1 (2026-05-20)
+- Fix: always pass --noauth flag when NoAuth=true to ensure correct database initialization (prevents continuous loading screen / blue pulsating dots)
+- Fix: avoid passing empty string arguments to filebrowser command
 
 ## 2.63.4 (2026-05-19)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)

@@ -77,9 +77,9 @@ if bashio::config.true 'NoAuth'; then
         rm /data/auth &> /dev/null || true
         rm /config/filebrowser.dB &> /dev/null || true
         touch /data/noauth
-        NOAUTH="--noauth"
         bashio::log.warning "Auth method change, database reset"
     fi
+    NOAUTH="--noauth"
     bashio::log.info "NoAuth option selected"
 else
     if ! bashio::fs.file_exists "/data/auth"; then
@@ -113,7 +113,7 @@ fi
 bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
-/./bin/filebrowser --disablePreviewResize --disableTypeDetectionByHeader --cacheDir="/cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/filebrowser.dB "$NOAUTH" "$DISABLE_THUMBNAILS" &
+/./bin/filebrowser --disablePreviewResize --disableTypeDetectionByHeader --cacheDir="/cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/filebrowser.dB ${NOAUTH:+$NOAUTH} ${DISABLE_THUMBNAILS:+$DISABLE_THUMBNAILS} &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 nginx || bashio::log.fatal "Nginx failed"
