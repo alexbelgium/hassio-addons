@@ -33,6 +33,3 @@ options:
 
 schema:
   download_folder: str
-
-panel_icon: mdi:music-box-multiple
-panel_title: Aurral
