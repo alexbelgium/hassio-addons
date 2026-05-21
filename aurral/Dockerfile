@@ -24,3 +24,8 @@ COPY rootfs /
 
 RUN chmod a+x /etc/services.d/aurral/run \
     && mkdir -p /config/data
+
+# The upstream image sets ENTRYPOINT ["docker-entrypoint.sh"].
+# Override it so s6-overlay (/init) owns startup instead.
+ENTRYPOINT ["/init"]
+CMD []
