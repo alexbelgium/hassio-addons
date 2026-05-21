@@ -7,8 +7,9 @@ mkdir -p "${AURRAL_DATA_DIR:-/config/data}/image-proxy"
 mkdir -p "${DOWNLOAD_FOLDER:-/share/aurral/downloads}"
 mkdir -p "${WEEKLY_FLOW_FOLDER:-/share/aurral/downloads/weekly-flow}"
 
-# Pre-create /app/backend/data and subdirs so node can write to them
+# The upstream app hardcodes /app/backend/data/image-proxy (relative to __dirname).
+# Symlink it into persistent storage so cached images survive restarts.
 mkdir -p /app/backend/data
-mkdir -p /app/backend/data/image-proxy
+ln -sfn "${AURRAL_DATA_DIR:-/config/data}/image-proxy" /app/backend/data/image-proxy
 
 exec "$@"
