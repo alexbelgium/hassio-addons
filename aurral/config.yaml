@@ -1,0 +1,35 @@
+name: Aurral
+version: "1.76.17"
+slug: aurral
+description: >-
+  Self-hosted music discovery, request management, flows, and playlist
+  importing for Lidarr with library-aware recommendations.
+url: https://github.com/alexbelgium/hassio-addons/blob/master/aurral/README.md
+arch:
+  - aarch64
+  - amd64
+
+init: false
+
+ports:
+  3001/tcp: 3001
+ports_description:
+  3001/tcp: Aurral Web UI
+
+webui: http://[HOST]:[PORT:3001]
+
+map:
+  - addon_config:rw
+  - share:rw
+  - media:rw
+
+env_vars:
+  - name: WEEKLY_FLOW_FOLDER
+    description: "Path for Navidrome smart playlist files (weekly flow)"
+    required: false
+
+options:
+  download_folder: /share/aurral/downloads
+
+schema:
+  download_folder: str
