@@ -3,7 +3,6 @@
     "aarch64": "ghcr.io/lklynet/aurral:1.76.17",
     "amd64": "ghcr.io/lklynet/aurral:1.76.17"
   },
-  "squash": false,
   "labels": {
     "io.hass.name": "Aurral",
     "io.hass.description": "Self-hosted music discovery and request management for Lidarr",

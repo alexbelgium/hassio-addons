@@ -9,6 +9,8 @@ arch:
   - aarch64
   - amd64
 
+image: ghcr.io/alexbelgium/aurral-{arch}
+
 init: false
 
 ports:
@@ -23,10 +25,8 @@ map:
   - share:rw
   - media:rw
 
-env_vars:
-  - name: WEEKLY_FLOW_FOLDER
-    description: "Path for Navidrome smart playlist files (weekly flow)"
-    required: false
+environment:
+  WEEKLY_FLOW_FOLDER: "/share/aurral/downloads/weekly-flow"
 
 options:
   download_folder: /share/aurral/downloads
