@@ -22,4 +22,5 @@ ENV AURRAL_DATA_DIR=/config/data \
 COPY rootfs /
 
 RUN chmod a+x /etc/services.d/aurral/run \
+    && chmod a+x /usr/local/bin/docker-entrypoint.sh \
     && mkdir -p /config/data
