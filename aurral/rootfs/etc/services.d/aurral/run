@@ -8,18 +8,19 @@ DOWNLOAD_FOLDER=$(bashio::config 'download_folder')
 # Ensure persistent directories exist
 mkdir -p "${DOWNLOAD_FOLDER}"
 mkdir -p /config/data
+mkdir -p /config/data/image-proxy
+
+# Aurral hardcodes image-proxy inside /app/backend/data regardless of
+# AURRAL_DATA_DIR, so symlink it to our persistent config path.
+mkdir -p /app/backend/data
+ln -sfn /config/data/image-proxy /app/backend/data/image-proxy
 
 bashio::log.info "Starting Aurral"
 bashio::log.info "  Data      : /config/data (HA addon_config)"
 bashio::log.info "  Downloads : ${DOWNLOAD_FOLDER}"
 
-# PUID=0/PGID=0 tells the upstream docker-entrypoint.sh to skip the
-# su-exec drop to nodejs (1001) and stay as root. HA addons always run
-# as root so this is safe and ensures /config/data is writable.
 export PUID=0
 export PGID=0
-
-# AURRAL_DATA_DIR redirects the DB/config to HA's addon_config mount.
 export AURRAL_DATA_DIR="/config/data"
 export DOWNLOAD_FOLDER="${DOWNLOAD_FOLDER}"
 export WEEKLY_FLOW_FOLDER="${DOWNLOAD_FOLDER}/weekly-flow"
