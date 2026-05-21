@@ -19,6 +19,11 @@ LABEL \
 ENV DOWNLOAD_FOLDER=/share/aurral/downloads \
     WEEKLY_FLOW_FOLDER=/share/aurral/downloads/weekly-flow
 
+# Replace the upstream data/downloads dirs with symlinks into HA persistent storage.
+# Must be done at build time — the dirs are owned by a non-root user at runtime.
+RUN rm -rf /app/backend/data && ln -s /config/data /app/backend/data \
+ && rm -rf /app/downloads && ln -s /share/aurral/downloads /app/downloads
+
 COPY rootfs /
 
 RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
