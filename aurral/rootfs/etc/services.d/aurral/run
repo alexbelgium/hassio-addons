@@ -10,8 +10,8 @@ mkdir -p "${DOWNLOAD_FOLDER}"
 mkdir -p /config/data
 mkdir -p /config/data/image-proxy
 
-# Aurral hardcodes image-proxy inside /app/backend/data regardless of
-# AURRAL_DATA_DIR, so symlink it to our persistent config path.
+# Pre-create /app/backend/data as a real directory so the upstream
+# docker-entrypoint.sh can chown it without error.
 mkdir -p /app/backend/data
 ln -sfn /config/data/image-proxy /app/backend/data/image-proxy
 
@@ -19,8 +19,10 @@ bashio::log.info "Starting Aurral"
 bashio::log.info "  Data      : /config/data (HA addon_config)"
 bashio::log.info "  Downloads : ${DOWNLOAD_FOLDER}"
 
+export PUID=0
+export PGID=0
 export AURRAL_DATA_DIR="/config/data"
 export DOWNLOAD_FOLDER="${DOWNLOAD_FOLDER}"
 export WEEKLY_FLOW_FOLDER="${DOWNLOAD_FOLDER}/weekly-flow"
 
-exec node /app/backend/server.js
+exec docker-entrypoint.sh node server.js
