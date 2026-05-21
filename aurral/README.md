@@ -1,7 +1,7 @@
 # Aurral
 
 [Aurral](https://github.com/lklynet/aurral) is a self-hosted music discovery, request management, flows, and playlist importing app for Lidarr with library-aware recommendations.
-This addon is based on the docker image https://github.com/lklynet/aurral
+This addon is based on the docker image <https://github.com/lklynet/aurral>
 
 ## Configuration
 
