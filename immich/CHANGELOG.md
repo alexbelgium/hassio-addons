@@ -1,3 +1,5 @@
+## 2.7.5-2 (21-05-2026)
+- Minor bugs fixed
 
 ## 2.7.5 (2026-05-19)
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
