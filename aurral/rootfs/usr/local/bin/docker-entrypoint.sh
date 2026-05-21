@@ -1,15 +1,14 @@
 #!/bin/sh
 set -e
 
-# Create persistent data directories
-mkdir -p "${AURRAL_DATA_DIR:-/config/data}"
-mkdir -p "${AURRAL_DATA_DIR:-/config/data}/image-proxy"
+# Create persistent directories in HA volumes
+mkdir -p /config/data
 mkdir -p "${DOWNLOAD_FOLDER:-/share/aurral/downloads}"
 mkdir -p "${WEEKLY_FLOW_FOLDER:-/share/aurral/downloads/weekly-flow}"
 
-# The upstream app hardcodes /app/backend/data/image-proxy (relative to __dirname).
-# Symlink it into persistent storage so cached images survive restarts.
-mkdir -p /app/backend/data
-ln -sfn "${AURRAL_DATA_DIR:-/config/data}/image-proxy" /app/backend/data/image-proxy
+# The upstream app expects its data at /app/backend/data and downloads at /app/downloads.
+# Symlink both into HA persistent storage.
+ln -sfn /config/data /app/backend/data
+ln -sfn "${DOWNLOAD_FOLDER:-/share/aurral/downloads}" /app/downloads
 
 exec "$@"

@@ -16,8 +16,7 @@ LABEL \
     io.hass.version="${BUILD_VERSION}" \
     maintainer="petruknw"
 
-ENV AURRAL_DATA_DIR=/config/data \
-    DOWNLOAD_FOLDER=/share/aurral/downloads \
+ENV DOWNLOAD_FOLDER=/share/aurral/downloads \
     WEEKLY_FLOW_FOLDER=/share/aurral/downloads/weekly-flow
 
 COPY rootfs /
