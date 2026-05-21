@@ -20,9 +20,10 @@ ENV AURRAL_DATA_DIR=/config/data \
     DOWNLOAD_FOLDER=/share/aurral/downloads \
     WEEKLY_FLOW_FOLDER=/share/aurral/downloads/weekly-flow
 
-# Pre-create the image-proxy directory at build time so the node process
-# (which may not run as root) can write to it without a mkdir at runtime.
-RUN mkdir -p /app/backend/data/image-proxy && chmod -R 777 /app/backend/data
+# Pre-create the image-proxy directory at build time and give ownership to
+# the node user that the upstream image runs the process as.
+RUN mkdir -p /app/backend/data/image-proxy \
+ && chown -R node:node /app/backend/data
 
 COPY rootfs /
 
