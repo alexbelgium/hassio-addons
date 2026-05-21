@@ -2,7 +2,7 @@
 # Home Assistant Add-on: Aurral
 # Wraps the upstream ghcr.io/lklynet/aurral image.
 # ==============================================================
-FROM ghcr.io/lklynet/aurral:v1.76.17
+FROM ghcr.io/lklynet/aurral:v1.76.16
 
 ARG BUILD_VERSION
 ARG BUILD_ARCH
