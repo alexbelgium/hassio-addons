@@ -7,12 +7,12 @@ DOWNLOAD_FOLDER=$(bashio::config 'download_folder')
 
 # Ensure persistent directories exist
 mkdir -p "${DOWNLOAD_FOLDER}"
+mkdir -p "${DOWNLOAD_FOLDER}/weekly-flow"
 mkdir -p /config/data
 mkdir -p /config/data/image-proxy
-
-# Pre-create /app/backend/data as a real directory so the upstream
-# docker-entrypoint.sh can chown it without error.
 mkdir -p /app/backend/data
+
+# Redirect image-proxy into persistent storage
 ln -sfn /config/data/image-proxy /app/backend/data/image-proxy
 
 bashio::log.info "Starting Aurral"
@@ -25,4 +25,4 @@ export AURRAL_DATA_DIR="/config/data"
 export DOWNLOAD_FOLDER="${DOWNLOAD_FOLDER}"
 export WEEKLY_FLOW_FOLDER="${DOWNLOAD_FOLDER}/weekly-flow"
 
-exec docker-entrypoint.sh node server.js
+exec node /app/server.js
