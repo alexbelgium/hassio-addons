@@ -2,6 +2,11 @@
 - Minor bugs fixed
 # Changelog
 
+## 1.76.17-2
+
+- Fix entrypoint: use HA-injected env vars instead of bashio (not available in upstream image)
+- Restore mkdir for persistent data/download directories
+
 ## 1.76.17-1
 
 - Add `weekly_flow_folder` option (configurable subfolder for weekly flow files)
