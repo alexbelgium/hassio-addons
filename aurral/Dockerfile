@@ -18,9 +18,7 @@ LABEL \
 
 ENV AURRAL_DATA_DIR=/config/data \
     DOWNLOAD_FOLDER=/share/aurral/downloads \
-    WEEKLY_FLOW_FOLDER=/share/aurral/downloads/weekly-flow \
-    PUID=0 \
-    PGID=0
+    WEEKLY_FLOW_FOLDER=/share/aurral/downloads/weekly-flow
 
 COPY rootfs /
 
