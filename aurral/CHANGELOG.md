@@ -1,3 +1,5 @@
+## 1.76.17-1 (21-05-2026)
+- Minor bugs fixed
 # Changelog
 
 ## 1.76.17-1
