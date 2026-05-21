@@ -2,7 +2,7 @@
 # Home Assistant Add-on: Aurral
 # Wraps the upstream ghcr.io/lklynet/aurral image.
 # ==============================================================
-FROM ghcr.io/lklynet/aurral:latest
+FROM ghcr.io/lklynet/aurral:v1.76.17
 
 ARG BUILD_VERSION
 ARG BUILD_ARCH
@@ -24,5 +24,4 @@ ENV AURRAL_DATA_DIR=/config/data \
 COPY rootfs /
 
 RUN chmod a+x /etc/services.d/aurral/run \
-    && chmod a+x /usr/local/bin/docker-entrypoint.sh \
     && mkdir -p /config/data
