@@ -25,11 +25,10 @@ map:
   - share:rw
   - media:rw
 
-environment:
-  WEEKLY_FLOW_FOLDER: "/share/aurral/downloads/weekly-flow"
-
 options:
   download_folder: /share/aurral/downloads
+  weekly_flow_folder: weekly-flow
 
 schema:
   download_folder: str
+  weekly_flow_folder: str
