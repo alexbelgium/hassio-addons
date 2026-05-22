@@ -1,3 +1,6 @@
+
+## 2.63.5 (2026-05-22)
+- Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
 ## 2.63.4-3 (2026-05-20)
 - Fix: add nginx redirect from root `/` to `/files/` to prevent Vue Router crash on startup
   - Vue Router 4's `/:catchAll(.*)*` redirect throws `TypeError: e.params.catchAll is not iterable` when `catchAll` is `undefined` (navigating to root `/`)
