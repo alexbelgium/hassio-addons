@@ -103,15 +103,16 @@ if bashio::config.has_value 'localdisks'; then
                 bashio::addon.stop
             )
 
-        # Set ownership and permissions on the mount point AFTER mounting
-        # so that apps running as PUID/PGID can access the content
+        # Check if the mount is accessible by the configured PUID/PGID
+        # We do NOT chown/chmod the mount point as that would modify actual disk permissions
         if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
             PUID="$(bashio::config 'PUID')"
-            PGID="$(bashio::config 'PGID')"
-            chown "$PUID:$PGID" "$dirpath"/"$disk" 2>/dev/null \
-                || bashio::log.warning "Could not chown $dirpath/$disk to $PUID:$PGID - content may not be accessible"
-            chmod 755 "$dirpath"/"$disk" 2>/dev/null \
-                || bashio::log.warning "Could not chmod $dirpath/$disk - content may not be accessible"
+            mount_owner=$(stat -c '%u' "$dirpath/$disk" 2>/dev/null)
+            mount_perms=$(stat -c '%a' "$dirpath/$disk" 2>/dev/null)
+            if [ "$mount_owner" != "$PUID" ] && [ "${mount_perms:2:1}" = "0" ]; then
+                bashio::log.warning "$dirpath/$disk is owned by UID $mount_owner with permissions $mount_perms - may not be accessible by PUID $PUID."
+                bashio::log.warning "If the drive appears empty, fix permissions on the drive root: chmod 755 <mountpoint> (on the host)."
+            fi
         fi
     done
 
