@@ -60,11 +60,6 @@ if bashio::config.has_value 'localdisks'; then
 
         # Creates dir
         mkdir -p /mnt/"$disk"
-        if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
-            PUID="$(bashio::config 'PUID')"
-            PGID="$(bashio::config 'PGID')"
-            chown "$PUID:$PGID" /mnt/"$disk"
-        fi
 
         # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)
         fstype=$(lsblk "$devpath"/"$disk" -no fstype)
@@ -101,12 +96,23 @@ if bashio::config.has_value 'localdisks'; then
         if [ -d /share/"$disk" ]; then dirpath="/share"; fi
 
         # shellcheck disable=SC2015
-        mount -t $type "$devpath"/"$disk" "$dirpath"/"$disk" -o $options && bashio::log.info "Success! $disk mounted to /mnt/$disk" \
+        mount -t $type "$devpath"/"$disk" "$dirpath"/"$disk" -o $options && bashio::log.info "Success! $disk mounted to $dirpath/$disk" \
             || (
                 bashio::log.fatal "Unable to mount local drives! Please check the name."
                 rmdir /mnt/"$disk"
                 bashio::addon.stop
             )
+
+        # Set ownership and permissions on the mount point AFTER mounting
+        # so that apps running as PUID/PGID can access the content
+        if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+            PUID="$(bashio::config 'PUID')"
+            PGID="$(bashio::config 'PGID')"
+            chown "$PUID:$PGID" "$dirpath"/"$disk" 2>/dev/null \
+                || bashio::log.warning "Could not chown $dirpath/$disk to $PUID:$PGID - content may not be accessible"
+            chmod 755 "$dirpath"/"$disk" 2>/dev/null \
+                || bashio::log.warning "Could not chmod $dirpath/$disk - content may not be accessible"
+        fi
     done
 
 fi
