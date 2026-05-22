@@ -1,4 +1,7 @@
 
+## 6.6.3 (2026-05-22)
+- Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
+
 ## 6.6.2-1 (2026-05-10)
 - Fix MariaDB connection on HAOS >=17.3 by forcing IPv4 host resolution (#2688)
 
