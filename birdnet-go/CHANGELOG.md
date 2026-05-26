@@ -1,5 +1,3 @@
-## nightly-20260528 (23-05-2026)
-- Minor bugs fixed
 ## nightly-20260511-414-2 (22-05-2026)
 - Minor bugs fixed
 
