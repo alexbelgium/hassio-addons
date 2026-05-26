@@ -1,5 +1,6 @@
 ## nightly-20260525-2 (26-05-2026)
 - Suppress noisy startup logs: silence `chmod /dev/snd` errors on the read-only HA mount, and hide unavailable ALSA plugins (JACK, OSS, dsnoop) from device enumeration so libjack and pcm_oss/dsnoop probes no longer print at launch.
+- Allow advanced users to override the addon's `/etc/asound.conf` by dropping a custom `asound.conf` into the addon config folder.
 
 ## nightly-20260525 (26-05-2026)
 - Minor bugs fixed

@@ -8,6 +8,13 @@ set -e
 
 echo " "
 
+# Allow advanced users to supply their own /etc/asound.conf (e.g. to enable
+# JACK or a custom dsnoop chain) by dropping it into the addon config folder.
+if [ -f /config/asound.conf ]; then
+    bashio::log.info "Using user-provided /config/asound.conf, overriding addon defaults"
+    cp /config/asound.conf /etc/asound.conf
+fi
+
 # Check if alsa_card is provided
 CONFIG_LOCATION="/config/config.yaml"
 if bashio::config.true "homeassistant_microphone"; then
