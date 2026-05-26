@@ -2,7 +2,7 @@ arch:
   - aarch64
   - amd64
 audio: true
-description: Realtime BirdNET soundscape analyzer
+description: Realtime BirdNET and Battybirdnet soundscape analyzer
 devices:
   - /dev/dri
   - /dev/snd
