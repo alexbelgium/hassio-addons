@@ -36,6 +36,13 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
 
+# Silence "chmod: Read-only file system" noise from upstream entrypoint:
+# Home Assistant mounts /dev/snd read-only, so the chmod is a no-op and the
+# stderr output is just noise. The "|| true" already absorbs the exit code.
+RUN if [ -f /usr/bin/entrypoint.sh ]; then \
+        sed -i 's#chmod -R a+rw /dev/snd || true#chmod -R a+rw /dev/snd 2>/dev/null || true#' /usr/bin/entrypoint.sh; \
+    fi
+
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
