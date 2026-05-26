@@ -100,3 +100,26 @@ bashio::log.info "Correcting configuration for defaults"
 # Update database location in config files
 yq -i -y ".output.sqlite.path = \"/config/birdnet.db\"" "$CONFIG_LOCATION"
 bashio::log.info "... database is located in /config/birdnet.db"
+
+####################
+# Log Management
+####################
+LOG_MAX_SIZE_MB="$(bashio::config "LOG_MAX_SIZE_MB")"
+LOG_MAX_SIZE_MB="${LOG_MAX_SIZE_MB:-50}"
+LOG_MAX_AGE_DAYS="$(bashio::config "LOG_MAX_AGE_DAYS")"
+LOG_MAX_AGE_DAYS="${LOG_MAX_AGE_DAYS:-7}"
+
+bashio::log.info "Configuring log rotation: max ${LOG_MAX_SIZE_MB}MB per file, max ${LOG_MAX_AGE_DAYS} days retention"
+
+# Configure log rotation in birdnet-go config
+yq -i -y ".logging.file_output.max_size = ${LOG_MAX_SIZE_MB}" "$CONFIG_LOCATION"
+yq -i -y ".logging.file_output.max_age = ${LOG_MAX_AGE_DAYS}" "$CONFIG_LOCATION"
+yq -i -y ".logging.file_output.max_rotated_files = 3" "$CONFIG_LOCATION"
+yq -i -y ".logging.file_output.compress = true" "$CONFIG_LOCATION"
+
+# Trim existing log files that exceed the configured max age
+LOG_DIR="/config/logs"
+if [ -d "$LOG_DIR" ]; then
+    bashio::log.info "Trimming log files older than ${LOG_MAX_AGE_DAYS} days in ${LOG_DIR}"
+    find "$LOG_DIR" -type f -name "*.log*" -mtime +"$LOG_MAX_AGE_DAYS" -delete 2>/dev/null || true
+fi
