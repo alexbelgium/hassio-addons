@@ -1,5 +1,9 @@
+- Add LOG_MAX_SIZE_MB and LOG_MAX_AGE_DAYS addon options to manage log storage size
+- Automatically trim log files exceeding configured age on startup
+
 ## nightly-20260525 (26-05-2026)
 - Minor bugs fixed
+
 ## nightly-20260511-414-2 (22-05-2026)
 - Minor bugs fixed
 

@@ -86,6 +86,8 @@ name: Birdnet-go
 options:
   env_vars: []
   BIRDSONGS_FOLDER: /config/clips
+  LOG_MAX_SIZE_MB: 50
+  LOG_MAX_AGE_DAYS: 7
   homeassistant_microphone: false
 panel_admin: false
 panel_icon: mdi:bird
@@ -104,6 +106,8 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
   BIRDSONGS_FOLDER: str?
+  LOG_MAX_SIZE_MB: int(1,1000)?
+  LOG_MAX_AGE_DAYS: int(1,365)?
   TZ: str?
   cifsdomain: str?
   cifspassword: str?
