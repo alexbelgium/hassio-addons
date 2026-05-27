@@ -8,16 +8,17 @@ set -e
 
 echo " "
 
-# Allow advanced users to supply their own /etc/asound.conf (e.g. to enable
-# JACK or a custom dsnoop chain) by dropping it into the addon config folder.
+# Allow advanced users to supply their own ALSA config (e.g. to enable JACK
+# or a custom dsnoop chain) by dropping asound.conf into the addon config
+# folder. Written to /root/.asoundrc because /etc/asound.conf is read-only.
 if [ -f /config/asound.conf ]; then
     if [ -r /config/asound.conf ]; then
         bashio::log.info "Using user-provided /config/asound.conf, overriding addon defaults"
-        if ! cp /config/asound.conf /etc/asound.conf; then
-            bashio::log.warning "Failed to copy /config/asound.conf; continuing with bundled /etc/asound.conf defaults"
+        if ! cp /config/asound.conf /root/.asoundrc; then
+            bashio::log.warning "Failed to copy /config/asound.conf; continuing with bundled /root/.asoundrc defaults"
         fi
     else
-        bashio::log.warning "/config/asound.conf exists but is not readable; continuing with bundled /etc/asound.conf defaults"
+        bashio::log.warning "/config/asound.conf exists but is not readable; continuing with bundled /root/.asoundrc defaults"
     fi
 fi
 
