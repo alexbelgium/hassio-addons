@@ -1,6 +1,14 @@
+# Changelog
+
+## 0.142.0
+
+- This release allows the use of videos in preview frames, so you can show off your models in a more dynamic fashion, and also adds indexer support for the upcoming DragonFruit resin slicer VOXL file format.
+- There are also a number of fixes to metadata scanning and other background jobs, as well as a large behind-the-scenes refactor of presupported relationships which will lead to some new features in the next release.
+- Details: <https://github.com/manyfold3d/manyfold/releases/tag/v0.142.0>
+
+
 ## 0.140.1 (18-05-2026)
 - Minor bugs fixed
-# Changelog
 
 ## 0.140.1
  - Bump version to 0.140.1
