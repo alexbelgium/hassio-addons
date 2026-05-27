@@ -1,9 +1,12 @@
 ## nightly-20260525-2 (26-05-2026)
 - Suppress noisy startup logs: silence `chmod /dev/snd` errors on the read-only HA mount, and hide unavailable ALSA plugins (JACK, OSS, dsnoop) from device enumeration so libjack and pcm_oss/dsnoop probes no longer print at launch. ALSA overrides are written to `/root/.asoundrc` (since `/etc/asound.conf` is read-only in this environment).
 - Allow advanced users to override the ALSA config by dropping a custom `asound.conf` into the addon config folder.
+- Add LOG_MAX_SIZE_MB and LOG_MAX_AGE_DAYS addon options to manage log storage size
+- Automatically trim log files exceeding configured age on startup
 
 ## nightly-20260525 (26-05-2026)
 - Minor bugs fixed
+
 ## nightly-20260511-414-2 (22-05-2026)
 - Minor bugs fixed
 
