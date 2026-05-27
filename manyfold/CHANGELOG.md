@@ -1,3 +1,5 @@
+## 0.142.0 (27-05-2026)
+- Minor bugs fixed
 # Changelog
 
 ## 0.142.0
