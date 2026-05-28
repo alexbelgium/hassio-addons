@@ -137,12 +137,3 @@ RUN \
         awk '/http \{/{print; print "map $http_user_agent $dontlog {\n  default 0;\n  \"~*HealthCheck\" 1;\n}\naccess_log /var/log/nginx/access.log combined if=$dontlog;"; next}1' /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.new && \
         mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf; \
     fi
-
-ENV HEALTH_PORT="80" \
-    HEALTH_URL=""
-HEALTHCHECK \
-    --interval=5s \
-    --retries=5 \
-    --start-period=30s \
-    --timeout=25s \
-    CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
