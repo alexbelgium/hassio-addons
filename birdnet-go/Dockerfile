@@ -39,8 +39,14 @@ RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -e
 # Silence "chmod: Read-only file system" noise from upstream entrypoint:
 # Home Assistant mounts /dev/snd read-only, so the chmod is a no-op and the
 # stderr output is just noise. The "|| true" already absorbs the exit code.
+# Warn (without failing the build) if the upstream pattern drifts so we notice
+# in CI logs and can update the patch.
 RUN if [ -f /usr/bin/entrypoint.sh ]; then \
-        sed -i 's#chmod -R a+rw /dev/snd || true#chmod -R a+rw /dev/snd 2>/dev/null || true#' /usr/bin/entrypoint.sh; \
+        if grep -q 'chmod -R a+rw /dev/snd || true' /usr/bin/entrypoint.sh; then \
+            sed -i 's#chmod -R a+rw /dev/snd || true#chmod -R a+rw /dev/snd 2>/dev/null || true#' /usr/bin/entrypoint.sh; \
+        else \
+            echo "WARN: upstream entrypoint.sh /dev/snd chmod pattern not found; nightly drift?" >&2; \
+        fi; \
     fi
 
 # Uses /bin for compatibility purposes
