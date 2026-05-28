@@ -1,18 +1,20 @@
-#!/usr/bin/env bashio
+#!/bin/bash
 # shellcheck shell=bash
 set -e
 
 # Source environment variables for cron context
 # shellcheck disable=SC1091
 if [ -f /etc/environment ]; then set -a; . /etc/environment; set +a; fi
+# shellcheck disable=SC1091
+if [ -f /.env ]; then set -a; . /.env; set +a; fi
 
 # Use persisted value instead of calling bashio::config (www-data may lack API access)
 CONFIGSOURCE="${CONFIG_LOCATION}"
 
 (
-bashio::log.info "Running update according to defined schedule. Files located in $CONFIGSOURCE/import_files will be imported. If /config, it is accessible in the folder /addon_configs/xxx-firefly_data_importer when using the Filebrowser addon"
-if bashio::config.true 'silent'; then
-    bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
+echo "[INFO] Running update according to defined schedule. Files located in $CONFIGSOURCE/import_files will be imported."
+if [ "${SILENT_MODE}" = "true" ]; then
+    echo "[WARNING] Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
     /usr/local/bin/php /var/www/html/artisan importer:auto-import "$CONFIGSOURCE/import_files" >/dev/null
 else
     /usr/local/bin/php /var/www/html/artisan importer:auto-import "$CONFIGSOURCE/import_files"

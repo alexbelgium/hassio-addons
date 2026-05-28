@@ -27,6 +27,10 @@ export CAN_POST_FILES="$(bashio::config "CAN_POST_FILES")"
 export CAN_POST_AUTOIMPORT="$(bashio::config "CAN_POST_AUTOIMPORT")"
 
 # Persist variables to /etc/environment for cron jobs
+SILENT_MODE="false"
+if bashio::config.true 'silent'; then
+    SILENT_MODE="true"
+fi
 {
     [ -n "$JSON_CONFIGURATION_DIR" ] && echo "JSON_CONFIGURATION_DIR=\"$JSON_CONFIGURATION_DIR\""
     echo "CONFIG_LOCATION=\"$CONFIGSOURCE\""
@@ -35,8 +39,9 @@ export CAN_POST_AUTOIMPORT="$(bashio::config "CAN_POST_AUTOIMPORT")"
     echo "AUTO_IMPORT_SECRET=\"$AUTO_IMPORT_SECRET\""
     echo "CAN_POST_FILES=\"$CAN_POST_FILES\""
     echo "CAN_POST_AUTOIMPORT=\"$CAN_POST_AUTOIMPORT\""
+    echo "SILENT_MODE=\"$SILENT_MODE\""
 } >> /etc/environment
-chmod 600 /etc/environment
+chmod 644 /etc/environment
 
 ################
 # CRON OPTIONS #
@@ -53,9 +58,6 @@ if bashio::config.has_value 'Updates'; then
     # Sets cron // do not delete this message
     cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
     chmod 755 /etc/cron."${FREQUENCY}"/cronupdate
-
-    # Sets cron to run with www-data user
-    sed -i 's|root|www-data|g' /etc/crontab
 
     # Starts cron
     service cron start
