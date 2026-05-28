@@ -15,8 +15,8 @@ CONFIGSOURCE="${CONFIG_LOCATION}"
 echo "[INFO] Running update according to defined schedule. Files located in $CONFIGSOURCE/import_files will be imported."
 if [ "${SILENT_MODE}" = "true" ]; then
     echo "[WARNING] Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
-    /usr/local/bin/php /var/www/html/artisan importer:auto-import "$CONFIGSOURCE/import_files" >/dev/null
+    sudo -Eu www-data /usr/local/bin/php /var/www/html/artisan importer:auto-import "$CONFIGSOURCE/import_files" >/dev/null
 else
-    /usr/local/bin/php /var/www/html/artisan importer:auto-import "$CONFIGSOURCE/import_files"
+    sudo -Eu www-data /usr/local/bin/php /var/www/html/artisan importer:auto-import "$CONFIGSOURCE/import_files"
 fi
 ) &>/proc/1/fd/1
