@@ -1,3 +1,6 @@
+## 2.3.2-5 (28-05-2026)
+- Fix cron jobs not running (wrong shebang, missing env vars, broken crontab)
+
 ## 2.3.2-4 (18-05-2026)
 - Minor bugs fixed
 ## 2.3.2-3 (18-05-2026)
