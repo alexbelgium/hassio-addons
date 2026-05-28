@@ -5,7 +5,7 @@
 - **Breaking (UI only)**: The nginx ingress reverse-proxy no longer rewrites HTML `href`/`src`/`action` attributes; upstream BirdNET-Go handles those itself via `X-Ingress-Path`. JavaScript string-literal rewrites are unchanged. Please file an issue if you see broken images, links, or forms in the ingress UI after upgrade.
 - Fix database-migration restore: the timestamped backup created during a `BIRDSONGS_FOLDER` change was being written to the script's working directory and looked up under a fresh timestamp on restore, so a SQL failure left the user unable to recover. Backup path is now absolute and reused for restore.
 - Harden the `BIRDSONGS_FOLDER` SQL/YAML path substitution: paths containing characters outside `[A-Za-z0-9._/-]` are now rejected up front instead of being interpolated raw into the SQL UPDATE statement.
-- Tolerate a missing internet connection on first boot: if the default `config.yaml` cannot be downloaded from GitHub, BirdNET-Go now falls back to its embedded defaults instead of starting with an empty config.
+- Tolerate a missing internet connection on first boot: if the default `config.yaml` cannot be downloaded from GitHub, the init script now seeds an empty YAML document so the addon-defaults block populates a usable config (rather than aborting the script on the next `yq` call under `set -e`).
 - Warn (without failing the build) if the upstream `entrypoint.sh` patch target drifts in a new nightly.
 - Remove a dead nginx upstream definition that pointed at an unused port.
 

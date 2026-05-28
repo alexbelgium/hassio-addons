@@ -27,13 +27,16 @@ validate_safe_path() {
 
 if [ ! -f "$CONFIG_LOCATION" ]; then
     bashio::log.warning "There is no config.yaml yet in the config folder, downloading a default one. Please customize"
-    # Network may be unreachable on first boot; tolerate failure and let
-    # birdnet-go fall back to its embedded default on first run.
+    # Network may be unreachable on first boot. If the download fails, seed
+    # an empty YAML document so the yq reads/writes below succeed and the
+    # default-value seeding logic later in this script populates a usable
+    # config. (We can't remove the file and continue — subsequent yq calls
+    # under set -e would abort the init script.)
     if ! curl -fL -s -S \
             https://raw.githubusercontent.com/tphakala/birdnet-go/refs/heads/main/internal/conf/config.yaml \
             -o "$CONFIG_LOCATION"; then
-        bashio::log.warning "Could not download default config.yaml; birdnet-go will create one from its embedded defaults"
-        rm -f "$CONFIG_LOCATION"
+        bashio::log.warning "Could not download default config.yaml; seeding an empty document so addon defaults can populate it"
+        echo '{}' > "$CONFIG_LOCATION"
     fi
 fi
 
@@ -48,8 +51,10 @@ fi
 ######################
 # Birdsongs Location
 ######################
-# Read the current folder from config.yaml; fall back to the legacy default.
-CURRENT_BIRDSONGS_FOLDER="$(yq '.realtime.audio.export.path' "$CONFIG_LOCATION" | tr -d '\"')"
+# Read the current folder from config.yaml; "// """ collapses both missing
+# keys and explicit nulls (e.g. in a freshly seeded "{}" doc) to an empty
+# string so the ${VAR:-DEFAULT} fallback below kicks in.
+CURRENT_BIRDSONGS_FOLDER="$(yq -r '.realtime.audio.export.path // ""' "$CONFIG_LOCATION")"
 CURRENT_BIRDSONGS_FOLDER="${CURRENT_BIRDSONGS_FOLDER:-$DEFAULT_BIRDSONGS_FOLDER}"
 # Treat the upstream-shipped relative "clips/" as the legacy default.
 if [[ "$CURRENT_BIRDSONGS_FOLDER" == "clips" || "$CURRENT_BIRDSONGS_FOLDER" == "clips/" ]]; then
