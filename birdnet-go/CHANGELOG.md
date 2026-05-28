@@ -1,3 +1,14 @@
+## nightly-20260525-3 (28-05-2026)
+- Auto-configure the Home Assistant MQTT addon: when Mosquitto is active, `realtime.mqtt.{enabled,broker,username,password}` are written directly to `config.yaml`. Set the new `mqtt_disable: true` addon option to opt out.
+- Auto-configure the Home Assistant MariaDB addon: when active, `output.mysql.*` is filled in and `output.sqlite.enabled` is set to `false`. Set the new `mariadb_disable: true` addon option to opt out.
+- **Breaking**: `output.sqlite.path` and `logging.file_output.*` are now seeded only when missing from `config.yaml` (previously overwritten every restart). Values changed through the BirdNET-Go UI or by hand-editing `config.yaml` now survive container restarts. If you relied on `LOG_MAX_SIZE_MB` / `LOG_MAX_AGE_DAYS` addon options to override an existing setting in `config.yaml`, remove the existing key from `config.yaml` or edit it directly — the option will only be applied on first run.
+- **Breaking (UI only)**: The nginx ingress reverse-proxy no longer rewrites HTML `href`/`src`/`action` attributes; upstream BirdNET-Go handles those itself via `X-Ingress-Path`. JavaScript string-literal rewrites are unchanged. Please file an issue if you see broken images, links, or forms in the ingress UI after upgrade.
+- Fix database-migration restore: the timestamped backup created during a `BIRDSONGS_FOLDER` change was being written to the script's working directory and looked up under a fresh timestamp on restore, so a SQL failure left the user unable to recover. Backup path is now absolute and reused for restore.
+- Harden the `BIRDSONGS_FOLDER` SQL/YAML path substitution: paths containing characters outside `[A-Za-z0-9._/-]` are now rejected up front instead of being interpolated raw into the SQL UPDATE statement.
+- Tolerate a missing internet connection on first boot: if the default `config.yaml` cannot be downloaded from GitHub, BirdNET-Go now falls back to its embedded defaults instead of starting with an empty config.
+- Warn (without failing the build) if the upstream `entrypoint.sh` patch target drifts in a new nightly.
+- Remove a dead nginx upstream definition that pointed at an unused port.
+
 ## nightly-20260525-2 (26-05-2026)
 - Suppress noisy startup logs: silence `chmod /dev/snd` errors on the read-only HA mount, and hide unavailable ALSA plugins (JACK, OSS, dsnoop) from device enumeration so libjack and pcm_oss/dsnoop probes no longer print at launch. ALSA overrides are written to `/root/.asoundrc` (since `/etc/asound.conf` is read-only in this environment).
 - Allow advanced users to override the ALSA config by dropping a custom `asound.conf` into the addon config folder.

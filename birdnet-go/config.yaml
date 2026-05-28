@@ -89,6 +89,8 @@ options:
   LOG_MAX_SIZE_MB: 50
   LOG_MAX_AGE_DAYS: 7
   homeassistant_microphone: false
+  mqtt_disable: false
+  mariadb_disable: false
 panel_admin: false
 panel_icon: mdi:bird
 ports:
@@ -114,6 +116,8 @@ schema:
   cifsusername: str?
   homeassistant_microphone: bool?
   localdisks: str?
+  mariadb_disable: bool?
+  mqtt_disable: bool?
   networkdisks: str?
 services:
   - mysql:want
@@ -122,4 +126,4 @@ slug: birdnet-go
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go
 usb: true
-version: "nightly-20260525-2"
+version: "nightly-20260525-3"

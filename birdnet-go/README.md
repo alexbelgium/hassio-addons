@@ -49,6 +49,8 @@ Options can be configured through three ways :
 ALSA_CARD : number of the card (0 or 1 usually), see https://github.com/tphakala/birdnet-go/blob/main/doc/installation.md#deciding-alsa_card-value
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 COMMAND : realtime --rtsp url # allows to provide arguments to birdnet-go
+mqtt_disable: false # set true to skip auto-wiring of the Home Assistant MQTT addon
+mariadb_disable: false # set true to skip auto-wiring of the Home Assistant MariaDB addon
 ```
 
 - Config.yaml
@@ -56,6 +58,14 @@ Additional variables can be configured using the config.yaml file found in /conf
 
 - Config_env.yaml
 Additional environment variables can be configured there
+
+### MQTT and MariaDB auto-configuration
+
+If the Home Assistant **MQTT** addon is installed and running, BirdNET-Go is now wired to it automatically on startup: `realtime.mqtt.enabled`, `broker`, `username`, and `password` in `config.yaml` are populated from the HA Mosquitto credentials, and the topic defaults to `birdnet`. Set `mqtt_disable: true` in the addon options to keep manual control.
+
+If the Home Assistant **MariaDB** addon is installed and running, BirdNET-Go is switched to it automatically: `output.mysql` is enabled with the HA credentials (database `birdnet`, created on first connect) and `output.sqlite.enabled` is set to `false`. Set `mariadb_disable: true` to keep using SQLite or to point at a different MySQL server manually.
+
+The addon also seeds `output.sqlite.path` and `logging.file_output.*` defaults only when those keys are missing from `config.yaml`, so values you change through the BirdNET-Go UI now survive container restarts.
 
 ### Mounting Drives
 
