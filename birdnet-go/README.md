@@ -46,9 +46,12 @@ Options can be configured through three ways :
 - Addon options
 
 ```yaml
-ALSA_CARD : number of the card (0 or 1 usually), see https://github.com/tphakala/birdnet-go/blob/main/doc/installation.md#deciding-alsa_card-value
-TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
-COMMAND : realtime --rtsp url # allows to provide arguments to birdnet-go
+BIRDSONGS_FOLDER: /config/clips # where audio clips are stored (can be on a mounted drive)
+LOG_MAX_SIZE_MB: 50 # max log file size before rotation
+LOG_MAX_AGE_DAYS: 7 # max log retention in days
+homeassistant_microphone: false # when true, force audio source to "default" (HA microphone)
+env_vars: [] # extra environment variables to pass to the container
+TZ: Etc/UTC # timezone, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 mqtt_auto_config: false # set true to auto-wire the Home Assistant MQTT addon into config.yaml
 mariadb_auto_config: false # set true to auto-wire the Home Assistant MariaDB addon into config.yaml (also disables SQLite)
 ```
@@ -167,6 +170,5 @@ Create an issue on github
 ---
 
 ![illustration](https://raw.githubusercontent.com/tphakala/birdnet-go/main/doc/BirdNET-Go-dashboard.webp)
-
 
 
