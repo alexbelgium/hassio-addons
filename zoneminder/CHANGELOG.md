@@ -1,7 +1,4 @@
 
-## 1.38.3 (2026-05-30)
-- Update to latest version from zoneminder-containers/zoneminder-base (changelog : https://github.com/zoneminder-containers/zoneminder-base/releases)
-
 ## 1.38.1-1 (2026-05-10)
 - Fix MariaDB connection on HAOS >=17.3 by forcing IPv4 host resolution (#2688)
 
