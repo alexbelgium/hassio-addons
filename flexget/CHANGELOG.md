@@ -1,7 +1,4 @@
 
-## 3.19.22 (2026-05-30)
-- Update to latest version from wiserain/flexget
-
 ## 3.19.21 (2026-05-23)
 - Update to latest version from wiserain/flexget
 
