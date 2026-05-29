@@ -1,7 +1,4 @@
 
-## ubuntu-2026-05-23 (2026-05-23)
-- Update to latest version from photoprism/photoprism
-
 ## ubuntu-2026-03-05-1 (2026-05-10)
 - Fix MariaDB connection on HAOS >=17.3 by forcing IPv4 host resolution (#2688)
 
