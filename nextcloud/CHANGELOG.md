@@ -1,4 +1,8 @@
 
+## 33.0.3-2 (2026-05-29)
+- Fix: Change default data directory for new installations from /config/data to /share/nextcloud
+- Add data_location option to allow users to customize the Nextcloud data directory
+
 ## 33.0.3 (2026-05-02)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 

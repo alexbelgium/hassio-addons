@@ -16,17 +16,31 @@ mkdir -p /data/config
 chmod 755 -R /data/config
 chown -R "$PUID:$PGID" "/data/config"
 
+# Check data_location option
+if bashio::config.has_value "data_location"; then
+    custom_data_location="$(bashio::config 'data_location')"
+    # Validate path is in an allowed location
+    location_ok=""
+    for location in "/share" "/config" "/data" "/mnt"; do
+        if [[ "$custom_data_location" == "$location"* ]]; then
+            location_ok=true
+        fi
+    done
+    if [ -z "$location_ok" ]; then
+        bashio::log.warning "Your data_location value can only be set in /share, /config, /data or /mnt. Falling back to default."
+        custom_data_location=""
+    fi
+fi
+
 # Check current version
 if [ -f /data/config/www/nextcloud/config/config.php ]; then
     datadirectory="$(sed -n "s|.*datadirectory.*' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
     echo "... data directory detected : $datadirectory"
 else
-    datadirectory=/config/data
+    datadirectory="${custom_data_location:-/share/nextcloud}"
     echo "Nextcloud is not installed yet, the default data directory is : $datadirectory. You can change it during nextcloud installation."
-    mkdir -p /config/data
-    chmod 755 /config/data
-    mkdir -p /share/nextcloud
-    chmod 755 /share/nextcloud
+    mkdir -p "$datadirectory"
+    chmod 755 "$datadirectory"
 fi
 
 # Is the directory valid
