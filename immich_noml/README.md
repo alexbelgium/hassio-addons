@@ -101,6 +101,20 @@ This addon supports mounting both local drives and remote SMB shares:
 - **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
 - **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
 
+#### Using a Local Disk for Immich Storage
+
+To save Immich data to a mounted local disk:
+
+1. Set the `localdisks` option to your drive name (e.g., `sda1`). The drive will be mounted at `/mnt/sda1`.
+2. Set the `data_location` option to a path on the mounted drive, for example `/mnt/sda1/immich`.
+
+Example configuration:
+
+```yaml
+localdisks: "sda1"
+data_location: "/mnt/sda1/immich"
+```
+
 ### Custom Scripts and Environment Variables
 
 This addon supports custom scripts and environment variables through the `addon_config` mapping:
