@@ -1,5 +1,5 @@
-## description: Automatic addons update by aligning version tag with upstream releases 3.19.16 (2026-01-10)
-- Minor bugs fixed
+- Update lastversion to 3.6.12
+
 ## 3.19.16 (2026-01-10)
 - Add config option to choose ISO8601 (YYYY-MM-DD) or DD-MM-YYYY dates for last_update/changelog entries
 
