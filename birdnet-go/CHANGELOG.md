@@ -1,3 +1,5 @@
+## nightly-20260429-405 (2026-05-30)
+- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 ## nightly-20260525-3 (28-05-2026)
 - New `mqtt_auto_config` addon option (default `false`). When `true` and the Home Assistant MQTT addon is active, `realtime.mqtt.{enabled,broker,username,password}` are written directly to `config.yaml` on every restart. When `false` but Mosquitto is detected, the addon still logs the broker details and reminds you about the option — nothing is written.
 - New `mariadb_auto_config` addon option (default `false`). When `true` and the Home Assistant MariaDB addon is active, `output.mysql.*` is filled in and `output.sqlite.enabled` is set to `false`. When `false` but MariaDB is detected, the addon logs the credentials and reminds you about the option.
