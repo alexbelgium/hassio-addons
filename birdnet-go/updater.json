@@ -1,4 +1,6 @@
 {
+  "github_beta": true,
+  "github_exclude": "nightly-20260511-414",
   "github_fulltag": true,
   "last_update": "2026-05-16",
   "repository": "alexbelgium/hassio-addons",
