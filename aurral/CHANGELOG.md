@@ -1,3 +1,5 @@
+## 1.76.42 (2026-06-01)
+- Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
 
 ## 1.76.40 (2026-05-30)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
