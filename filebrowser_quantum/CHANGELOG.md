@@ -1,3 +1,5 @@
+## 1.3.3-3 (03-06-2026)
+- Minor bugs fixed
 ## 1.3.3-2 (03-06-2026)
 - Minor bugs fixed
 
