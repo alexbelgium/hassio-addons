@@ -67,166 +67,100 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 mkdir -p /config /cache
 
-# Add config if not existing
-if [ !-f "$FILEBROWSER_CONFIG" ]; then
+# Copy default config if not existing
+if [ ! -f "$FILEBROWSER_CONFIG" ]; then
     cp /home/filebrowser/data/config.yaml "$FILEBROWSER_CONFIG"
 fi
 
-if [ !-f "$FILEBROWSER_CONFIG" ]; then
+# Update existing fields in config using yq
+bashio::log.info "Updating FileBrowser config..."
 
-python3 - <<'PY'
-import json
-import os
+# --- Server ---
+BASE_URL=$(bashio::config 'base_url' "${FB_BASEURL:-/}")
+yq e -i ".server.baseURL = \"${BASE_URL}\"" "$FILEBROWSER_CONFIG"
 
-options_path = "/data/options.json"
-config_path = os.environ["FILEBROWSER_CONFIG"]
-
-with open(options_path, "r", encoding="utf-8") as f:
-    options = json.load(f)
-
-base_url = options.get("base_url") or os.environ.get("FB_BASEURL") or "/"
-
-def bool_or_none(value):
-    return value if isinstance(value, bool) else None
-
-sources = []
-for source in options.get("sources") or [{"path": "/", "name": "Root", "default_enabled": True}]:
-    entry = {"path": source.get("path", "/")}
-    if source.get("name"):
-        entry["name"] = source["name"]
-
-    source_config = {}
-    config_mappings = {
-        "default_enabled": "defaultEnabled",
-        "default_user_scope": "defaultUserScope",
-        "create_user_dir": "createUserDir",
-        "disable_indexing": "disableIndexing",
-        "deny_by_default": "denyByDefault",
-        "private": "private",
-        "indexing_interval_minutes": "indexingIntervalMinutes",
-    }
-    for option_key, config_key in config_mappings.items():
-        if option_key in source and source[option_key] not in (None, ""):
-            value = source[option_key]
-            if option_key == "indexing_interval_minutes" and not value:
-                continue
-            source_config[config_key] = value
-
-    conditionals = {}
-    if "ignore_hidden" in source:
-        value = bool_or_none(source.get("ignore_hidden"))
-        if value is not None:
-            conditionals["ignoreHidden"] = value
-    if "ignore_zero_size_folders" in source:
-        value = bool_or_none(source.get("ignore_zero_size_folders"))
-        if value is not None:
-            conditionals["ignoreZeroSizeFolders"] = value
-    if conditionals:
-        source_config["conditionals"] = conditionals
-
-    if source_config:
-        entry["config"] = source_config
-    sources.append(entry)
-
-server = {
-    "port": 8080,
-    "listen": "0.0.0.0",
-    "baseURL": base_url,
-    "logging": [
-        {
-            "levels": options.get("log_levels", "info|warning|error"),
-        }
-    ],
-    "database": "/config/filebrowser_quantum.db",
-    "cacheDir": "/cache",
-    "cacheDirCleanup": options.get("cache_dir_cleanup", True),
-    "disablePreviews": options.get("disable_previews", False),
-    "disablePreviewResize": options.get("disable_preview_resize", False),
-    "disableTypeDetectionByHeader": options.get("disable_type_detection_by_header", False),
-    "disableUpdateCheck": options.get("disable_update_check", False),
-    "sources": sources,
-}
-
-if options.get("external_url"):
-    server["externalUrl"] = options["external_url"]
-if options.get("internal_url"):
-    server["internalUrl"] = options["internal_url"]
-if options.get("max_archive_size_gb"):
-    server["maxArchiveSize"] = options["max_archive_size_gb"]
-
-certfile = os.environ.get("CERTFILE")
-keyfile = os.environ.get("KEYFILE")
-if certfile and keyfile:
-    server["tlsCert"] = certfile
-    server["tlsKey"] = keyfile
-
-auth_method = options.get("auth_method", "password")
-
-password_config = {
-    "enabled": auth_method == "password",
-    "minLength": options.get("password_min_length", 5),
-    "signup": options.get("password_signup", False),
-    "enforcedOtp": options.get("password_enforced_otp", False),
-}
-
-proxy_config = {
-    "enabled": auth_method == "proxy",
-}
-if options.get("proxy_auth_header"):
-    proxy_config["header"] = options["proxy_auth_header"]
-proxy_config["createUser"] = options.get("proxy_auth_create_user", False)
-if options.get("proxy_auth_logout_redirect_url"):
-    proxy_config["logoutRedirectUrl"] = options["proxy_auth_logout_redirect_url"]
-
-oidc_config = {
-    "enabled": auth_method == "oidc",
-}
-if options.get("oidc_client_id"):
-    oidc_config["clientId"] = options["oidc_client_id"]
-if options.get("oidc_client_secret"):
-    oidc_config["clientSecret"] = options["oidc_client_secret"]
-if options.get("oidc_issuer_url"):
-    oidc_config["issuerUrl"] = options["oidc_issuer_url"]
-if options.get("oidc_scopes"):
-    oidc_config["scopes"] = options["oidc_scopes"]
-if options.get("oidc_user_identifier"):
-    oidc_config["userIdentifier"] = options["oidc_user_identifier"]
-if options.get("oidc_admin_group"):
-    oidc_config["adminGroup"] = options["oidc_admin_group"]
-if options.get("oidc_groups_claim"):
-    oidc_config["groupsClaim"] = options["oidc_groups_claim"]
-if options.get("oidc_logout_redirect_url"):
-    oidc_config["logoutRedirectUrl"] = options["oidc_logout_redirect_url"]
-oidc_config["createUser"] = options.get("oidc_create_user", False)
-oidc_config["disableVerifyTLS"] = options.get("oidc_disable_verify_tls", False)
-
-auth = {
-    "tokenExpirationHours": options.get("token_expiration_hours", 2),
-    "adminUsername": options.get("admin_username", "admin"),
-    "adminPassword": options.get("admin_password", "admin"),
-    "methods": {
-        "noauth": auth_method == "noauth",
-        "password": password_config,
-        "proxy": proxy_config,
-        "oidc": oidc_config,
-    },
-}
-
-frontend = {
-    "name": "FileBrowser Quantum",
-}
-
-config = {
-    "server": server,
-    "auth": auth,
-    "frontend": frontend,
-}
-
-with open(config_path, "w", encoding="utf-8") as f:
-    json.dump(config, f, indent=2)
-    f.write("\n")
-PY
+if bashio::config.has_value 'log_levels'; then
+    yq e -i ".server.logging[0].levels = \"$(bashio::config 'log_levels')\"" "$FILEBROWSER_CONFIG"
 fi
+
+yq e -i ".server.cacheDirCleanup = $(bashio::config 'cache_dir_cleanup' 'true')" "$FILEBROWSER_CONFIG"
+yq e -i ".server.disablePreviews = $(bashio::config 'disable_previews' 'false')" "$FILEBROWSER_CONFIG"
+yq e -i ".server.disablePreviewResize = $(bashio::config 'disable_preview_resize' 'false')" "$FILEBROWSER_CONFIG"
+yq e -i ".server.disableTypeDetectionByHeader = $(bashio::config 'disable_type_detection_by_header' 'false')" "$FILEBROWSER_CONFIG"
+yq e -i ".server.disableUpdateCheck = $(bashio::config 'disable_update_check' 'false')" "$FILEBROWSER_CONFIG"
+
+if bashio::config.has_value 'external_url'; then
+    yq e -i ".server.externalUrl = \"$(bashio::config 'external_url')\"" "$FILEBROWSER_CONFIG"
+fi
+if bashio::config.has_value 'internal_url'; then
+    yq e -i ".server.internalUrl = \"$(bashio::config 'internal_url')\"" "$FILEBROWSER_CONFIG"
+fi
+if bashio::config.has_value 'max_archive_size_gb'; then
+    yq e -i ".server.maxArchiveSize = $(bashio::config 'max_archive_size_gb')" "$FILEBROWSER_CONFIG"
+fi
+
+# SSL cert/key (only when SSL is enabled)
+if [ -n "$CERTFILE" ] && [ -n "$KEYFILE" ]; then
+    yq e -i ".server.tlsCert = \"${CERTFILE}\"" "$FILEBROWSER_CONFIG"
+    yq e -i ".server.tlsKey = \"${KEYFILE}\"" "$FILEBROWSER_CONFIG"
+fi
+
+# --- Auth ---
+AUTH_METHOD=$(bashio::config 'auth_method' 'password')
+
+yq e -i ".auth.tokenExpirationHours = $(bashio::config 'token_expiration_hours' '2')" "$FILEBROWSER_CONFIG"
+yq e -i ".auth.adminUsername = \"$(bashio::config 'admin_username' 'admin')\"" "$FILEBROWSER_CONFIG"
+yq e -i ".auth.adminPassword = \"$(bashio::config 'admin_password' 'admin')\"" "$FILEBROWSER_CONFIG"
+
+# Enable/disable auth methods based on auth_method selection
+yq e -i ".auth.methods.noauth = $( [ "$AUTH_METHOD" = "noauth" ]    && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
+yq e -i ".auth.methods.password.enabled = $( [ "$AUTH_METHOD" = "password" ] && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
+yq e -i ".auth.methods.proxy.enabled = $( [ "$AUTH_METHOD" = "proxy" ]    && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
+yq e -i ".auth.methods.oidc.enabled = $( [ "$AUTH_METHOD" = "oidc" ]     && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
+
+# Password settings
+if bashio::config.has_value 'password_min_length'; then
+    yq e -i ".auth.methods.password.minLength = $(bashio::config 'password_min_length')" "$FILEBROWSER_CONFIG"
+fi
+yq e -i ".auth.methods.password.signup = $(bashio::config 'password_signup' 'false')" "$FILEBROWSER_CONFIG"
+yq e -i ".auth.methods.password.enforcedOtp = $(bashio::config 'password_enforced_otp' 'false')" "$FILEBROWSER_CONFIG"
+
+# Proxy auth settings
+if bashio::config.has_value 'proxy_auth_header'; then
+    yq e -i ".auth.methods.proxy.header = \"$(bashio::config 'proxy_auth_header')\"" "$FILEBROWSER_CONFIG"
+fi
+yq e -i ".auth.methods.proxy.createUser = $(bashio::config 'proxy_auth_create_user' 'false')" "$FILEBROWSER_CONFIG"
+if bashio::config.has_value 'proxy_auth_logout_redirect_url'; then
+    yq e -i ".auth.methods.proxy.logoutRedirectUrl = \"$(bashio::config 'proxy_auth_logout_redirect_url')\"" "$FILEBROWSER_CONFIG"
+fi
+
+# OIDC settings
+if bashio::config.has_value 'oidc_client_id'; then
+    yq e -i ".auth.methods.oidc.clientId = \"$(bashio::config 'oidc_client_id')\"" "$FILEBROWSER_CONFIG"
+fi
+if bashio::config.has_value 'oidc_client_secret'; then
+    yq e -i ".auth.methods.oidc.clientSecret = \"$(bashio::config 'oidc_client_secret')\"" "$FILEBROWSER_CONFIG"
+fi
+if bashio::config.has_value 'oidc_issuer_url'; then
+    yq e -i ".auth.methods.oidc.issuerUrl = \"$(bashio::config 'oidc_issuer_url')\"" "$FILEBROWSER_CONFIG"
+fi
+if bashio::config.has_value 'oidc_scopes'; then
+    yq e -i ".auth.methods.oidc.scopes = \"$(bashio::config 'oidc_scopes')\"" "$FILEBROWSER_CONFIG"
+fi
+if bashio::config.has_value 'oidc_user_identifier'; then
+    yq e -i ".auth.methods.oidc.userIdentifier = \"$(bashio::config 'oidc_user_identifier')\"" "$FILEBROWSER_CONFIG"
+fi
+if bashio::config.has_value 'oidc_admin_group'; then
+    yq e -i ".auth.methods.oidc.adminGroup = \"$(bashio::config 'oidc_admin_group')\"" "$FILEBROWSER_CONFIG"
+fi
+if bashio::config.has_value 'oidc_groups_claim'; then
+    yq e -i ".auth.methods.oidc.groupsClaim = \"$(bashio::config 'oidc_groups_claim')\"" "$FILEBROWSER_CONFIG"
+fi
+if bashio::config.has_value 'oidc_logout_redirect_url'; then
+    yq e -i ".auth.methods.oidc.logoutRedirectUrl = \"$(bashio::config 'oidc_logout_redirect_url')\"" "$FILEBROWSER_CONFIG"
+fi
+yq e -i ".auth.methods.oidc.createUser = $(bashio::config 'oidc_create_user' 'false')" "$FILEBROWSER_CONFIG"
+yq e -i ".auth.methods.oidc.disableVerifyTLS = $(bashio::config 'oidc_disable_verify_tls' 'false')" "$FILEBROWSER_CONFIG"
 
 ######################
 # LAUNCH FILEBROWSER #
