@@ -321,7 +321,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [FileBrowser Quantum](filebrowser_quantum/) : FileBrowser Quantum provides a modern, responsive file manager with multi-source support, advanced authentication options, and realtime indexing for your Home Assistant files.
+&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [FileBrowser Quantum](filebrowser_quantum/) : FileBrowser Quantum provides a modern, responsive file manager with multi-source support, advanced authentication options, and realtime indexing for your Home Assistant files
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser_quantum%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser_quantum%2Fupdater.json)
