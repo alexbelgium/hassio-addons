@@ -81,11 +81,37 @@ BASE_URL=$(bashio::config 'base_url' "${FB_BASEURL:-/}")
 yq e -i ".server.baseURL = \"${BASE_URL}\"" "$FILEBROWSER_CONFIG"
 
 # Enable/disable auth methods based on auth_method selection
+AUTH_METHOD=$(bashio::config 'auth_method' 'password')
 bashio::log.info "... authentification method set to $AUTH_METHOD"
-yq e -i ".auth.methods.noauth = $( [ "$AUTH_METHOD" = "noauth" ]    && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
-yq e -i ".auth.methods.password.enabled = $( [ "$AUTH_METHOD" = "password" ] && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
-yq e -i ".auth.methods.proxy.enabled = $( [ "$AUTH_METHOD" = "proxy" ]    && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
-yq e -i ".auth.methods.oidc.enabled = $( [ "$AUTH_METHOD" = "oidc" ]     && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
+case "$AUTH_METHOD" in
+    noauth)
+        yq e -i ".auth.methods.noauth = true"              "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.password.enabled = false"   "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.proxy.enabled = false"      "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.oidc.enabled = false"       "$FILEBROWSER_CONFIG"
+        ;;
+    password)
+        yq e -i ".auth.methods.noauth = false"             "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.password.enabled = true"    "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.proxy.enabled = false"      "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.oidc.enabled = false"       "$FILEBROWSER_CONFIG"
+        ;;
+    proxy)
+        yq e -i ".auth.methods.noauth = false"             "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.password.enabled = false"   "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.proxy.enabled = true"       "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.oidc.enabled = false"       "$FILEBROWSER_CONFIG"
+        ;;
+    oidc)
+        yq e -i ".auth.methods.noauth = false"             "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.password.enabled = false"   "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.proxy.enabled = false"      "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.oidc.enabled = true"        "$FILEBROWSER_CONFIG"
+        ;;
+    *)
+        bashio::log.fatal "Unknown auth_method: $AUTH_METHOD"
+        ;;
+esac
 
 ######################
 # LAUNCH FILEBROWSER #
