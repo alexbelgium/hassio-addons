@@ -1,4 +1,7 @@
 
+## 4.4.23 (2026-06-03)
+- Fix nginx rewrite loop on /index.html causing 500 Internal Server Error in Web UI
+
 ## 4.4.22 (2026-05-16)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
 
