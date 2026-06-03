@@ -52,7 +52,7 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 # Manual apps
 ENV PACKAGES="bind-tools \
     nginx \
-    python3"
+    python3 yq"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
