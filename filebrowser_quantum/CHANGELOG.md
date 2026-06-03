@@ -1,7 +1,4 @@
-## 1.3.3-3 (03-06-2026)
-- Minor bugs fixed
-## 1.3.3-2 (03-06-2026)
-- Minor bugs fixed
+- Allow config persistence
 
 ## 1.3.3 (2026-05-19)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
