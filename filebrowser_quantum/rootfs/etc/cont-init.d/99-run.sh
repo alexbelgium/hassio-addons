@@ -80,6 +80,7 @@ yq e -i ".server.port = 8080"            "$FILEBROWSER_CONFIG"
 yq e -i ".server.listen = \"0.0.0.0\""  "$FILEBROWSER_CONFIG"
 yq e -i ".server.database = \"/config/filebrowser_quantum.db\"" "$FILEBROWSER_CONFIG"
 yq e -i ".server.cacheDir = \"/cache\""  "$FILEBROWSER_CONFIG"
+yq e -i ".server.path = \"/\""  "$FILEBROWSER_CONFIG"
 
 # --- Base URL (from env or config) ---
 bashio::log.info "... set base URL to allow ingress"
