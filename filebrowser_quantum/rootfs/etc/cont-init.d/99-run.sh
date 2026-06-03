@@ -68,7 +68,7 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 CONFIG_PATH="/config/filebrowser_quantum.yaml"
 mkdir -p /config /cache
 
-export FILEBROWSER_CONFIG="${CONFIG_PATH}"
+if [ !-f "$CONFIG_PATH" ]; then
 
 python3 - <<'PY'
 import json
@@ -222,6 +222,7 @@ with open(config_path, "w", encoding="utf-8") as f:
     json.dump(config, f, indent=2)
     f.write("\n")
 PY
+fi
 
 ######################
 # LAUNCH FILEBROWSER #
