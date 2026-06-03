@@ -13,14 +13,15 @@ if [ -f /homeassistant/addons_config/filebrowser_quantum/filebrowser_quantum.db 
 fi
 
 if [ ! -f /config/filebrowser_quantum.db ] && [ -d /addon_configs ]; then
+    shopt -s nullglob
     for addon_config_dir in /addon_configs/*_filebrowser_quantum; do
-        [ -d "$addon_config_dir" ] || continue
         if [ -f "$addon_config_dir/filebrowser_quantum.db" ]; then
             echo "Moving database from addon_configs location to /config"
             cp -rnf "$addon_config_dir"/. /config/
             break
         fi
     done
+    shopt -u nullglob
 fi
 
 ######################
@@ -46,12 +47,16 @@ if [ -d /homeassistant ]; then
 fi
 
 # Create symlinks with legacy folders
+addon_configs_symlink_dir=""
 if [ -d /homeassistant/addons_config ]; then
     ln -s /homeassistant/addons_config /config
-    find /addon_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*filebrowser_quantum*" -exec ln -s {} /config/addons_config/ \;
+    addon_configs_symlink_dir="/config/addons_config"
 elif [ -d /addon_configs ]; then
     mkdir -p /config/addon_configs
-    find /addon_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*filebrowser_quantum*" -exec ln -s {} /config/addon_configs/ \;
+    addon_configs_symlink_dir="/config/addon_configs"
+fi
+if [ -n "$addon_configs_symlink_dir" ]; then
+    find /addon_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*filebrowser_quantum*" -exec ln -s {} "$addon_configs_symlink_dir"/ \;
 fi
 if [ -d /homeassistant/addons_autoscripts ]; then
     ln -s /homeassistant/addons_autoscripts /config
