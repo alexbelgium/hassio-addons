@@ -65,10 +65,14 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 # FILEBROWSER CONFIGURATION #
 ############################
 
-CONFIG_PATH="/config/filebrowser_quantum.yaml"
 mkdir -p /config /cache
 
-if [ !-f "$CONFIG_PATH" ]; then
+# Add config if not existing
+if [ !-f "$FILEBROWSER_CONFIG" ]; then
+    cp /home/filebrowser/data/config.yaml "$FILEBROWSER_CONFIG"
+fi
+
+if [ !-f "$FILEBROWSER_CONFIG" ]; then
 
 python3 - <<'PY'
 import json
