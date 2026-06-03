@@ -80,7 +80,27 @@ yq e -i ".server.port = 8080"            "$FILEBROWSER_CONFIG"
 yq e -i ".server.listen = \"0.0.0.0\""  "$FILEBROWSER_CONFIG"
 yq e -i ".server.database = \"/config/database.db\"" "$FILEBROWSER_CONFIG"
 yq e -i ".server.cacheDir = \"/cache\""  "$FILEBROWSER_CONFIG"
-yq e -i ".server.sources[0].path = \"/\""  "$FILEBROWSER_CONFIG"
+
+# --- Default user scope / source path ---
+bashio::log.info "... set default user scope"
+DEFAULT_USER_SCOPE=$(bashio::config 'default_user_scope' '/')
+
+# Validate: must start with /
+if [[ "$DEFAULT_USER_SCOPE" != /* ]]; then
+    bashio::log.fatal "default_user_scope '${DEFAULT_USER_SCOPE}' is not a valid absolute path (must start with /). Stopping."
+    exit 1
+fi
+
+# Validate: path must exist
+if [ ! -d "$DEFAULT_USER_SCOPE" ]; then
+    bashio::log.fatal "default_user_scope '${DEFAULT_USER_SCOPE}' does not exist or is not a directory. Stopping."
+    exit 1
+fi
+
+bashio::log.info "... set source path and defaultUserScope to ${DEFAULT_USER_SCOPE}"
+yq e -i ".server.sources[0].path = \"${DEFAULT_USER_SCOPE}\""  "$FILEBROWSER_CONFIG"
+yq e -i ".server.sources[0].name = \"Default\""                "$FILEBROWSER_CONFIG"
+yq e -i ".server.sources[0].config.defaultUserScope = \"${DEFAULT_USER_SCOPE}\"" "$FILEBROWSER_CONFIG"
 
 # --- Base URL (from env or config) ---
 bashio::log.info "... set base URL to allow ingress"

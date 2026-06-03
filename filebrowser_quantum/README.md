@@ -1,9 +1,7 @@
 # Home assistant add-on: FileBrowser Quantum
 
 
-I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
-
-If this add-on saves you time or makes your setup easier, I would be very grateful for your support!
+I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 hours a week for this. If this add-on saves you time or makes your setup easier, I would be very grateful for your support!
 
 [![Buy me a coffee][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate via PayPal][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
@@ -29,7 +27,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-FileBrowser Quantum is a modern, responsive, multi-source file manager with realtime indexing, advanced sharing, and expanded authentication options (password, proxy, OIDC, or no-auth). It is a major fork of the original Filebrowser project, designed for faster browsing and richer previews.
+FileBrowser Quantum is a modern, responsive, multi-source file manager with realtime indexing, advanced sharing, and expanded authentication options (password, proxy, OIDC, or no-auth). It is a maintained fork of the original FileBrowser project.
 
 This addon is based on the [docker image](https://hub.docker.com/r/gtstef/filebrowser) from the FileBrowser Quantum project.
 
@@ -61,6 +59,7 @@ The web UI can be found at `<your-ip>:8071` or through the Home Assistant sideba
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `auth_method` | list | `password` | Authentication method (`password`, `noauth`, `proxy`, `oidc`) |
+| `default_user_scope` | str | `/` | The root filesystem path used as the FileBrowser source and as the default scope for all users. Must be an existing absolute directory path (e.g. `/share`, `/media`). |
 | `localdisks` | str | _(optional)_ | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
 | `networkdisks` | str | _(optional)_ | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | _(optional)_ | SMB username for network shares |
@@ -89,7 +88,7 @@ This addon supports mounting both local drives and remote SMB shares:
 This addon supports custom scripts and environment variables through the `addon_config` mapping:
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
-- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-add-ons
 
 ## Support
 
@@ -99,4 +98,3 @@ Create an issue on GitHub, or ask on the [Home Assistant Community thread](https
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
-

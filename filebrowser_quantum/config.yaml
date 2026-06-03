@@ -94,6 +94,7 @@ name: FileBrowser Quantum
 options:
   env_vars: []
   auth_method: noauth
+  default_user_scope: "/"
 panel_admin: false
 panel_icon: mdi:file-search
 privileged:
@@ -104,6 +105,7 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
   auth_method: list(password|noauth|proxy|oidc)
+  default_user_scope: str
   cifsdomain: str?
   cifspassword: str?
   cifsusername: str?
@@ -112,4 +114,4 @@ schema:
 slug: filebrowser_quantum
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.3.3-7"
+version: "1.3.3-8"
