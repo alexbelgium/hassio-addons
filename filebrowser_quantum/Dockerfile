@@ -71,7 +71,8 @@ RUN chmod 777 /ha_entrypoint.sh
 COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
-RUN sed -i "s|/command/with-contenv|/usr/bin/env|g" "/ha_entrypoint.sh"
+RUN sed -i "s|/command/with-contenv|/usr/bin/env|g" "/ha_entrypoint.sh" && \
+    [[ -f /etc/cont-init.d/01-config_yaml.sh ]] && rm -r /etc/cont-init.d/01-config_yaml.sh
 
 VOLUME [ "/data" ]
 WORKDIR /
