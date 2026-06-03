@@ -55,7 +55,7 @@ elif [ -d /addon_configs ]; then
     mkdir -p /config/addon_configs
     addon_configs_symlink_dir="/config/addon_configs"
 fi
-if [ -n "$addon_configs_symlink_dir" ]; then
+if [ -n "$addon_configs_symlink_dir" ] && [ -d /addon_configs ]; then
     find /addon_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*filebrowser_quantum*" -exec ln -s {} "$addon_configs_symlink_dir"/ \;
 fi
 if [ -d /homeassistant/addons_autoscripts ]; then
