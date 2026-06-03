@@ -14,9 +14,10 @@ fi
 
 if [ ! -f /config/filebrowser_quantum.db ] && [ -d /addon_configs ]; then
     for addon_config_dir in /addon_configs/*_filebrowser_quantum; do
+        [ -d "$addon_config_dir" ] || continue
         if [ -f "$addon_config_dir/filebrowser_quantum.db" ]; then
             echo "Moving database from addon_configs location to /config"
-            cp -rnf "$addon_config_dir"/* /config/
+            cp -rnf "$addon_config_dir"/. /config/
             break
         fi
     done
