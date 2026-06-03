@@ -1,6 +1,3 @@
-## 1.3.3-8 (03-06-2026)
-- Minor bugs fixed
-## 1.3.3-7 (03-06-2026)
 - Allow config persistence
 
 ## 1.3.3 (2026-05-19)
