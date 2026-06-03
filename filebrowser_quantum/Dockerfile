@@ -131,11 +131,11 @@ RUN \
         mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf; \
     fi
 
-ENV HEALTH_PORT="8080" \
-    HEALTH_URL=""
+ENV HEALTH_PORT="3001" \
+    HEALTH_URL="/health"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || curl -k --fail "https://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
+    CMD pgrep -x filebrowser &>/dev/null || exit 1; curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
