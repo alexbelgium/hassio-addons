@@ -78,7 +78,7 @@ bashio::log.info "Updating FileBrowser config..."
 bashio::log.info "... set server"
 yq e -i ".server.port = 8080"            "$FILEBROWSER_CONFIG"
 yq e -i ".server.listen = \"0.0.0.0\""  "$FILEBROWSER_CONFIG"
-yq e -i ".server.database = \"/config/filebrowser_quantum.db\"" "$FILEBROWSER_CONFIG"
+yq e -i ".server.database = \"/config/database.db\"" "$FILEBROWSER_CONFIG"
 yq e -i ".server.cacheDir = \"/cache\""  "$FILEBROWSER_CONFIG"
 yq e -i ".server.path = \"/\""  "$FILEBROWSER_CONFIG"
 
