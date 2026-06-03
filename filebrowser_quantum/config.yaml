@@ -73,6 +73,8 @@ devices:
   - /dev/md3
 environment:
   FB_BASEURL: /filebrowser_quantum
+  FILEBROWSER_CONFIG: "/config/config.yaml"
+  FILEBROWSER_DATABASE: "/config/database.db"
   PGID: "0"
   PUID: "0"
 image: ghcr.io/alexbelgium/filebrowser_quantum-{arch}
@@ -110,4 +112,4 @@ schema:
 slug: filebrowser_quantum
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.3.3"
+version: "1.3.3-2"
