@@ -4,7 +4,7 @@ arch:
 description:
   FileBrowser Quantum provides a modern, responsive file manager with multi-source
   support, advanced authentication options, and realtime indexing for your Home
-  Assistant files.
+  Assistant files
 devices:
   - /dev/dri
   - /dev/dri/card0
