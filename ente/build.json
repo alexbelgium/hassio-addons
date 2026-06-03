@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/ente-io/server:latest",
-    "amd64": "ghcr.io/ente-io/server:latest"
+    "aarch64": "ghcr.io/ente-io/server:927c6a316f181c7901446311f0085593b346b336",
+    "amd64": "ghcr.io/ente-io/server:927c6a316f181c7901446311f0085593b346b336"
   }
 }
