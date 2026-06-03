@@ -76,91 +76,16 @@ fi
 bashio::log.info "Updating FileBrowser config..."
 
 # --- Server ---
+bashio::log.info "... base URL set to allow ingress"
 BASE_URL=$(bashio::config 'base_url' "${FB_BASEURL:-/}")
 yq e -i ".server.baseURL = \"${BASE_URL}\"" "$FILEBROWSER_CONFIG"
 
-if bashio::config.has_value 'log_levels'; then
-    yq e -i ".server.logging[0].levels = \"$(bashio::config 'log_levels')\"" "$FILEBROWSER_CONFIG"
-fi
-
-yq e -i ".server.cacheDirCleanup = $(bashio::config 'cache_dir_cleanup' 'true')" "$FILEBROWSER_CONFIG"
-yq e -i ".server.disablePreviews = $(bashio::config 'disable_previews' 'false')" "$FILEBROWSER_CONFIG"
-yq e -i ".server.disablePreviewResize = $(bashio::config 'disable_preview_resize' 'false')" "$FILEBROWSER_CONFIG"
-yq e -i ".server.disableTypeDetectionByHeader = $(bashio::config 'disable_type_detection_by_header' 'false')" "$FILEBROWSER_CONFIG"
-yq e -i ".server.disableUpdateCheck = $(bashio::config 'disable_update_check' 'false')" "$FILEBROWSER_CONFIG"
-
-if bashio::config.has_value 'external_url'; then
-    yq e -i ".server.externalUrl = \"$(bashio::config 'external_url')\"" "$FILEBROWSER_CONFIG"
-fi
-if bashio::config.has_value 'internal_url'; then
-    yq e -i ".server.internalUrl = \"$(bashio::config 'internal_url')\"" "$FILEBROWSER_CONFIG"
-fi
-if bashio::config.has_value 'max_archive_size_gb'; then
-    yq e -i ".server.maxArchiveSize = $(bashio::config 'max_archive_size_gb')" "$FILEBROWSER_CONFIG"
-fi
-
-# SSL cert/key (only when SSL is enabled)
-if [ -n "$CERTFILE" ] && [ -n "$KEYFILE" ]; then
-    yq e -i ".server.tlsCert = \"${CERTFILE}\"" "$FILEBROWSER_CONFIG"
-    yq e -i ".server.tlsKey = \"${KEYFILE}\"" "$FILEBROWSER_CONFIG"
-fi
-
-# --- Auth ---
-AUTH_METHOD=$(bashio::config 'auth_method' 'password')
-
-yq e -i ".auth.tokenExpirationHours = $(bashio::config 'token_expiration_hours' '2')" "$FILEBROWSER_CONFIG"
-yq e -i ".auth.adminUsername = \"$(bashio::config 'admin_username' 'admin')\"" "$FILEBROWSER_CONFIG"
-yq e -i ".auth.adminPassword = \"$(bashio::config 'admin_password' 'admin')\"" "$FILEBROWSER_CONFIG"
-
 # Enable/disable auth methods based on auth_method selection
+bashio::log.info "... authentification method set to $AUTH_METHOD"
 yq e -i ".auth.methods.noauth = $( [ "$AUTH_METHOD" = "noauth" ]    && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
 yq e -i ".auth.methods.password.enabled = $( [ "$AUTH_METHOD" = "password" ] && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
 yq e -i ".auth.methods.proxy.enabled = $( [ "$AUTH_METHOD" = "proxy" ]    && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
 yq e -i ".auth.methods.oidc.enabled = $( [ "$AUTH_METHOD" = "oidc" ]     && echo 'true' || echo 'false' )" "$FILEBROWSER_CONFIG"
-
-# Password settings
-if bashio::config.has_value 'password_min_length'; then
-    yq e -i ".auth.methods.password.minLength = $(bashio::config 'password_min_length')" "$FILEBROWSER_CONFIG"
-fi
-yq e -i ".auth.methods.password.signup = $(bashio::config 'password_signup' 'false')" "$FILEBROWSER_CONFIG"
-yq e -i ".auth.methods.password.enforcedOtp = $(bashio::config 'password_enforced_otp' 'false')" "$FILEBROWSER_CONFIG"
-
-# Proxy auth settings
-if bashio::config.has_value 'proxy_auth_header'; then
-    yq e -i ".auth.methods.proxy.header = \"$(bashio::config 'proxy_auth_header')\"" "$FILEBROWSER_CONFIG"
-fi
-yq e -i ".auth.methods.proxy.createUser = $(bashio::config 'proxy_auth_create_user' 'false')" "$FILEBROWSER_CONFIG"
-if bashio::config.has_value 'proxy_auth_logout_redirect_url'; then
-    yq e -i ".auth.methods.proxy.logoutRedirectUrl = \"$(bashio::config 'proxy_auth_logout_redirect_url')\"" "$FILEBROWSER_CONFIG"
-fi
-
-# OIDC settings
-if bashio::config.has_value 'oidc_client_id'; then
-    yq e -i ".auth.methods.oidc.clientId = \"$(bashio::config 'oidc_client_id')\"" "$FILEBROWSER_CONFIG"
-fi
-if bashio::config.has_value 'oidc_client_secret'; then
-    yq e -i ".auth.methods.oidc.clientSecret = \"$(bashio::config 'oidc_client_secret')\"" "$FILEBROWSER_CONFIG"
-fi
-if bashio::config.has_value 'oidc_issuer_url'; then
-    yq e -i ".auth.methods.oidc.issuerUrl = \"$(bashio::config 'oidc_issuer_url')\"" "$FILEBROWSER_CONFIG"
-fi
-if bashio::config.has_value 'oidc_scopes'; then
-    yq e -i ".auth.methods.oidc.scopes = \"$(bashio::config 'oidc_scopes')\"" "$FILEBROWSER_CONFIG"
-fi
-if bashio::config.has_value 'oidc_user_identifier'; then
-    yq e -i ".auth.methods.oidc.userIdentifier = \"$(bashio::config 'oidc_user_identifier')\"" "$FILEBROWSER_CONFIG"
-fi
-if bashio::config.has_value 'oidc_admin_group'; then
-    yq e -i ".auth.methods.oidc.adminGroup = \"$(bashio::config 'oidc_admin_group')\"" "$FILEBROWSER_CONFIG"
-fi
-if bashio::config.has_value 'oidc_groups_claim'; then
-    yq e -i ".auth.methods.oidc.groupsClaim = \"$(bashio::config 'oidc_groups_claim')\"" "$FILEBROWSER_CONFIG"
-fi
-if bashio::config.has_value 'oidc_logout_redirect_url'; then
-    yq e -i ".auth.methods.oidc.logoutRedirectUrl = \"$(bashio::config 'oidc_logout_redirect_url')\"" "$FILEBROWSER_CONFIG"
-fi
-yq e -i ".auth.methods.oidc.createUser = $(bashio::config 'oidc_create_user' 'false')" "$FILEBROWSER_CONFIG"
-yq e -i ".auth.methods.oidc.disableVerifyTLS = $(bashio::config 'oidc_disable_verify_tls' 'false')" "$FILEBROWSER_CONFIG"
 
 ######################
 # LAUNCH FILEBROWSER #
