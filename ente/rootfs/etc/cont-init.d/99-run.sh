@@ -9,14 +9,14 @@ if [ -f "$MINIO_CRED_FILE" ]; then
     MINIO_PASS="$(sed -n '2p' "$MINIO_CRED_FILE")"
     # Regenerate if file is corrupted
     if [ -z "$MINIO_USER" ] || [ -z "$MINIO_PASS" ]; then
-        MINIO_USER="minio_$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 8)"
+        MINIO_USER="minio_$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 8 || true)"
         MINIO_PASS="$(head -c 24 /dev/urandom | base64 | tr -d '\n')"
         printf '%s\n%s\n' "$MINIO_USER" "$MINIO_PASS" > "$MINIO_CRED_FILE"
         chmod 600 "$MINIO_CRED_FILE"
     fi
 else
     # Generate random credentials on first run
-    MINIO_USER="minio_$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 8)"
+    MINIO_USER="minio_$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 8 || true)"
     MINIO_PASS="$(head -c 24 /dev/urandom | base64 | tr -d '\n')"
     printf '%s\n%s\n' "$MINIO_USER" "$MINIO_PASS" > "$MINIO_CRED_FILE"
     chmod 600 "$MINIO_CRED_FILE"
