@@ -1,3 +1,7 @@
+## 4.4.22-3 (04-06-2026)
+- Remove DISABLE_WEB_UI option, web UI is now always enabled
+- Make MinIO internal-only (127.0.0.1) since museum proxies S3 operations
+
 ## 4.4.22-2 (04-06-2026)
 - Minor bugs fixed
 

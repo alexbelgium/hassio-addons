@@ -9,7 +9,7 @@ S3_BUCKET="b2-eu-cen"
 export ENTE_S3_ARE_LOCAL_BUCKETS=true
 export ENTE_S3_B2_EU_CEN_KEY="$MINIO_USER"
 export ENTE_S3_B2_EU_CEN_SECRET="$MINIO_PASS"
-export ENTE_S3_B2_EU_CEN_ENDPOINT="http://192.168.178.23:$(bashio::addon.port "3200")"
+export ENTE_S3_B2_EU_CEN_ENDPOINT="http://127.0.0.1:3200"
 export ENTE_S3_B2_EU_CEN_REGION=eu-central-2
 export ENTE_S3_B2_EU_CEN_BUCKET="$S3_BUCKET"
 
@@ -40,11 +40,6 @@ if bashio::config.true 'USE_EXTERNAL_DB'; then
     bashio::log.warning "USE_EXTERNAL_DB enabled: will connect to external Postgres."
 else
     bashio::log.info "Using internal Postgres."
-fi
-
-DISABLE_WEB_UI=false
-if bashio::config.true 'DISABLE_WEB_UI'; then
-    DISABLE_WEB_UI=true
 fi
 
 # Active DB connection target (may be overridden below)
@@ -186,9 +181,9 @@ bootstrap_internal_db() {
 # MinIO
 ############################################
 start_minio() {
-    bashio::log.info "Starting MinIO (:3200)..."
+    bashio::log.info "Starting MinIO (127.0.0.1:3200)..."
     mkdir -p /config/minio-data
-    "$MINIO_BIN" server /config/minio-data --address ":3200" &
+    "$MINIO_BIN" server /config/minio-data --address "127.0.0.1:3200" &
     MINIO_PID=$!
 }
 
@@ -206,11 +201,6 @@ wait_minio_ready_and_bucket() {
 # Web (static nginx bundle)
 ############################################
 start_web() {
-    if $DISABLE_WEB_UI; then
-        bashio::log.info "Web UI disabled."
-        return 0
-    fi
-
     ENTE_API_ORIGIN=http://localhost:8080
     ENTE_ALBUMS_ORIGIN=http://localhost:3002
     export ENTE_API_ORIGIN ENTE_ALBUMS_ORIGIN

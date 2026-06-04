@@ -58,7 +58,6 @@ Webui can be found at <http://homeassistant:PORT>.
 | `MINIO_ROOT_PASSWORD` | str | `minioadmin` | MinIO root password |
 | `MINIO_DATA_LOCATION` | str | `/config/minio-data` | Path where MinIO stores data |
 | `DB_PASSWORD` | str | `ente` | Database password for internal PostgreSQL |
-| `DISABLE_WEB_UI` | bool | `true` | Disable the web UI (use mobile/desktop apps) |
 | `USE_EXTERNAL_DB` | bool | `false` | Use external PostgreSQL database |
 | `TZ` | str | `Europe/Paris` | Timezone setting |
 
@@ -81,7 +80,6 @@ MINIO_ROOT_USER: "myuser"
 MINIO_ROOT_PASSWORD: "mypassword"
 MINIO_DATA_LOCATION: "/config/ente-storage"
 DB_PASSWORD: "securepassword"
-DISABLE_WEB_UI: false
 TZ: "America/New_York"
 ```
 
@@ -137,11 +135,17 @@ After starting the addon for the first time:
 
 ## Ports
 
-The addon exposes three ports:
+The addon exposes the following ports:
 
-- **8300** (3000/tcp): Ente web UI (if enabled)
+- **8300** (3000/tcp): Ente web UI
+- **8305** (3005/tcp): Ente Share
+- **8306** (3006/tcp): Ente Embed
+- **8307** (3007/tcp): Ente Paste
+- **8308** (3008/tcp): Ente Locker
+- **8309** (3009/tcp): Ente Memories
 - **8280** (8080/tcp): Ente API server (museum) - Main endpoint for apps
-- **8320** (3200/tcp): MinIO S3 endpoint (for storage backend)
+
+MinIO S3 is internal-only (127.0.0.1:3200) and not exposed externally since museum proxies all S3 operations.
 
 ## Data Storage
 
