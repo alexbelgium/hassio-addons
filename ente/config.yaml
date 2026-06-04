@@ -87,10 +87,20 @@ options:
   USE_EXTERNAL_DB: false
 ports:
   3000/tcp: 8300
+  3005/tcp: 8305
+  3006/tcp: 8306
+  3007/tcp: 8307
+  3008/tcp: 8308
+  3009/tcp: 8309
   3200/tcp: 8320
   8080/tcp: 8280
 ports_description:
   3000/tcp: Ente web UI
+  3005/tcp: Ente Share
+  3006/tcp: Ente Embed
+  3007/tcp: Ente Paste
+  3008/tcp: Ente Locker
+  3009/tcp: Ente Memories
   3200/tcp: MinIO S3 endpoint
   8080/tcp: Ente API (museum)
 privileged:

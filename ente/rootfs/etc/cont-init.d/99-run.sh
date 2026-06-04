@@ -225,7 +225,7 @@ start_web() {
     # Set nginx
     mv /etc/nginx/http.d/web.bak /etc/nginx/http.d/web.conf
 
-    bashio::log.info "Starting Ente web (nginx, ports 3000‑3004)..."
+    bashio::log.info "Starting Ente web (nginx, ports 3000‑3009)..."
     exec nginx -g 'daemon off;' &
     WEB_PID=$!
 }

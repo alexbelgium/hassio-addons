@@ -6,7 +6,7 @@
 ########################################################
 # 0) Build the ente-web static front-end (multi-stage) #
 ########################################################
-FROM node:22-bookworm-slim AS web-builder
+FROM node:24 AS web-builder
 
 # Build-time selector; set `--build-arg ENTE_WEB_TAG=vX.Y.Z` if you want a specific release
 ARG ENTE_WEB_TAG=main
@@ -15,7 +15,7 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-# Tools needed to build (git, rust, wasm-pack, yarn classic)
+# Tools needed to build (git, rust for ente-wasm)
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
@@ -23,17 +23,10 @@ RUN set -eux; \
       curl \
       ca-certificates \
       build-essential \
-      pkg-config \
-      python3 \
     ; \
     rm -rf /var/lib/apt/lists/*; \
     \
-    curl -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain stable; \
-    rustup target add wasm32-unknown-unknown; \
-    \
-    corepack enable; \
-    corepack prepare yarn@1.22.22 --activate; \
-    npm install -g wasm-pack@0.13.1
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable --target wasm32-unknown-unknown
 
 # Pull the web source
 WORKDIR /src
@@ -41,16 +34,20 @@ RUN git clone --depth 1 --branch "${ENTE_WEB_TAG}" https://github.com/ente-io/en
 
 # Build web workspace (lives in ./web)
 WORKDIR /src/web
-ENV NEXT_PUBLIC_ENTE_ENDPOINT=ENTE_API_ORIGIN_PLACEHOLDER \
-    NEXT_PUBLIC_ENTE_ALBUMS_ENDPOINT=ENTE_ALBUMS_ORIGIN_PLACEHOLDER
+ENV NEXT_PUBLIC_ENTE_ENDPOINT=ENTE_API_ORIGIN_PLACEHOLDER
+ENV NEXT_PUBLIC_ENTE_ALBUMS_ENDPOINT=ENTE_ALBUMS_ORIGIN_PLACEHOLDER
 
-RUN set -eux; \
-    yarn config set network-timeout 900000 -g; \
-    yarn install --frozen-lockfile; \
-    yarn build:photos; \
-    yarn build:accounts; \
-    yarn build:auth; \
-    yarn build:cast
+RUN npm ci
+RUN npm run build:photos
+RUN npm run build:albums
+RUN npm run build:accounts
+RUN npm run build:auth
+RUN npm run build:cast
+RUN npm run build:share
+RUN npm run build:embed
+RUN npm run build:paste
+RUN npm run build:locker
+RUN npm run build:memories
 
 #################
 # 1) Base image #
@@ -94,9 +91,15 @@ RUN apk add --no-cache nginx
 
 # Static files built in the previous stage
 COPY --from=web-builder /src/web/apps/photos/out    /www/photos
+COPY --from=web-builder /src/web/apps/albums/out    /www/albums
 COPY --from=web-builder /src/web/apps/accounts/out  /www/accounts
 COPY --from=web-builder /src/web/apps/auth/out      /www/auth
 COPY --from=web-builder /src/web/apps/cast/out      /www/cast
+COPY --from=web-builder /src/web/apps/share/out     /www/share
+COPY --from=web-builder /src/web/apps/embed/out     /www/embed
+COPY --from=web-builder /src/web/apps/paste/out     /www/paste
+COPY --from=web-builder /src/web/apps/locker/out    /www/locker
+COPY --from=web-builder /src/web/apps/memories/out  /www/memories
 
 ############################
 # 3) Install add-on helpers #
@@ -151,4 +154,4 @@ LABEL \
 #################
 # 6) Finish line
 #################
-EXPOSE 3000 3001 3002 3003 3004
+EXPOSE 3000 3001 3002 3003 3004 3005 3006 3007 3008 3009
