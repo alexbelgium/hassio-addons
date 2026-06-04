@@ -18,3 +18,23 @@ server {
     listen 3004; root /www/cast;
     location / { try_files $uri $uri.html /index.html =404; }
 }
+server {
+    listen 3005; root /www/share;
+    location / { try_files $uri $uri.html /index.html =404; }
+}
+server {
+    listen 3006; root /www/embed;
+    location / { try_files $uri $uri.html /index.html =404; }
+}
+server {
+    listen 3007; root /www/paste;
+    location / { try_files $uri $uri.html /index.html =404; }
+}
+server {
+    listen 3008; root /www/locker;
+    location / { try_files $uri $uri.html /index.html =404; }
+}
+server {
+    listen 3009; root /www/memories;
+    location / { try_files $uri $uri.html /index.html =404; }
+}

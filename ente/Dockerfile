@@ -43,6 +43,11 @@ RUN npm run build:albums
 RUN npm run build:accounts
 RUN npm run build:auth
 RUN npm run build:cast
+RUN npm run build:share
+RUN npm run build:embed
+RUN npm run build:paste
+RUN npm run build:locker
+RUN npm run build:memories
 
 #################
 # 1) Base image #
@@ -90,6 +95,11 @@ COPY --from=web-builder /src/web/apps/albums/out    /www/albums
 COPY --from=web-builder /src/web/apps/accounts/out  /www/accounts
 COPY --from=web-builder /src/web/apps/auth/out      /www/auth
 COPY --from=web-builder /src/web/apps/cast/out      /www/cast
+COPY --from=web-builder /src/web/apps/share/out     /www/share
+COPY --from=web-builder /src/web/apps/embed/out     /www/embed
+COPY --from=web-builder /src/web/apps/paste/out     /www/paste
+COPY --from=web-builder /src/web/apps/locker/out    /www/locker
+COPY --from=web-builder /src/web/apps/memories/out  /www/memories
 
 ############################
 # 3) Install add-on helpers #
@@ -144,4 +154,4 @@ LABEL \
 #################
 # 6) Finish line
 #################
-EXPOSE 3000 3001 3002 3003 3004
+EXPOSE 3000 3001 3002 3003 3004 3005 3006 3007 3008 3009
