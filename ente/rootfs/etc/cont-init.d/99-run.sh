@@ -3,8 +3,25 @@
 set -euo pipefail
 
 # Internal MinIO credentials (not user-configurable; MinIO is 127.0.0.1 only)
-MINIO_USER="minioadmin"
-MINIO_PASS="minioadmin"
+MINIO_CRED_FILE="/config/minio-creds"
+if [ -f "$MINIO_CRED_FILE" ]; then
+    # Reuse persisted credentials across restarts
+    MINIO_USER="$(sed -n '1p' "$MINIO_CRED_FILE")"
+    MINIO_PASS="$(sed -n '2p' "$MINIO_CRED_FILE")"
+    # Regenerate if file is corrupted
+    if [ -z "$MINIO_USER" ] || [ -z "$MINIO_PASS" ]; then
+        MINIO_USER="minio_$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 8)"
+        MINIO_PASS="$(head -c 24 /dev/urandom | base64 | tr -d '\n')"
+        printf '%s\n%s\n' "$MINIO_USER" "$MINIO_PASS" > "$MINIO_CRED_FILE"
+        chmod 600 "$MINIO_CRED_FILE"
+    fi
+else
+    # Generate random credentials on first run
+    MINIO_USER="minio_$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 8)"
+    MINIO_PASS="$(head -c 24 /dev/urandom | base64 | tr -d '\n')"
+    printf '%s\n%s\n' "$MINIO_USER" "$MINIO_PASS" > "$MINIO_CRED_FILE"
+    chmod 600 "$MINIO_CRED_FILE"
+fi
 S3_BUCKET="b2-eu-cen"
 
 export ENTE_S3_ARE_LOCAL_BUCKETS=true
@@ -184,7 +201,9 @@ bootstrap_internal_db() {
 start_minio() {
     bashio::log.info "Starting MinIO (127.0.0.1:3200)..."
     mkdir -p /config/minio-data
-    "$MINIO_BIN" server /config/minio-data --address "127.0.0.1:3200" &
+    export MINIO_ROOT_USER="$MINIO_USER"
+    export MINIO_ROOT_PASSWORD="$MINIO_PASS"
+    "$MINIO_BIN" server /config/minio-data --address "127.0.0.1:3200" --console-address "127.0.0.1:9001" &
     MINIO_PID=$!
 }
 
@@ -203,7 +222,9 @@ wait_minio_ready_and_bucket() {
 ############################################
 start_web() {
     ENTE_API_ORIGIN="$(bashio::config 'ENTE_ENDPOINT_URL')"
-    ENTE_ALBUMS_ORIGIN="http://localhost:3002"
+    # Derive albums origin from the same host as the API endpoint, mapped to port 8302
+    ENTE_ALBUMS_HOST="$(echo "$ENTE_API_ORIGIN" | sed -E 's#(https?://[^:/]+).*#\1#')"
+    ENTE_ALBUMS_ORIGIN="${ENTE_ALBUMS_HOST}:8302"
     export ENTE_API_ORIGIN ENTE_ALBUMS_ORIGIN
 
     # Running ente-web-prepare
@@ -213,8 +234,10 @@ start_web() {
 
     mkdir -p /run/nginx /var/log/nginx
 
-    # Set nginx
-    mv /etc/nginx/http.d/web.bak /etc/nginx/http.d/web.conf
+    # Set nginx (idempotent: only move if .bak still exists)
+    if [ -f /etc/nginx/http.d/web.bak ]; then
+        mv /etc/nginx/http.d/web.bak /etc/nginx/http.d/web.conf
+    fi
 
     bashio::log.info "Starting Ente web (nginx, ports 3000‑3009)..."
     nginx -g 'daemon off;' &

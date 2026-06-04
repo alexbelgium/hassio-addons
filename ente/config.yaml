@@ -83,6 +83,7 @@ options:
   USE_EXTERNAL_DB: false
 ports:
   3000/tcp: 8300
+  3002/tcp: 8302
   3005/tcp: 8305
   3006/tcp: 8306
   3007/tcp: 8307
@@ -91,6 +92,7 @@ ports:
   8080/tcp: 8280
 ports_description:
   3000/tcp: Ente web UI
+  3002/tcp: Ente Albums
   3005/tcp: Ente Share
   3006/tcp: Ente Embed
   3007/tcp: Ente Paste
