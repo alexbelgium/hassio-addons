@@ -1,6 +1,9 @@
 arch:
   - aarch64
   - amd64
+backup_exclude:
+  - "**/minio-data/**"
+  - "**/postgres/**"
 description:
   Self-hosted, end-to-end-encrypted photo & video storage (Ente server
   + MinIO)
@@ -83,7 +86,10 @@ options:
   USE_EXTERNAL_DB: false
 ports:
   3000/tcp: 8300
+  3001/tcp: 8301
   3002/tcp: 8302
+  3003/tcp: 8303
+  3004/tcp: 8304
   3005/tcp: 8305
   3006/tcp: 8306
   3007/tcp: 8307
@@ -92,7 +98,10 @@ ports:
   8080/tcp: 8280
 ports_description:
   3000/tcp: Ente web UI
+  3001/tcp: Ente Accounts
   3002/tcp: Ente Albums
+  3003/tcp: Ente Auth
+  3004/tcp: Ente Cast
   3005/tcp: Ente Share
   3006/tcp: Ente Embed
   3007/tcp: Ente Paste
@@ -122,6 +131,6 @@ schema:
 slug: ente
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "4.4.22-4"
+version: "4.4.22-5"
 video: true
 webui: http://[HOST]:[PORT:3000]

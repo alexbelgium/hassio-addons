@@ -50,6 +50,8 @@ DB_PASS="$(bashio::config 'DB_PASSWORD' || echo ente)"
 # External DB opts (may be blank)
 DB_HOST_EXT="$(bashio::config 'DB_HOSTNAME' || echo '')"
 DB_PORT_EXT="$(bashio::config 'DB_PORT' || echo '')"
+# Default external Postgres port when unset
+[ -z "$DB_PORT_EXT" ] && DB_PORT_EXT=5432
 
 USE_EXTERNAL_DB=false
 if bashio::config.true 'USE_EXTERNAL_DB'; then
@@ -107,8 +109,8 @@ jwt:
   secret: $(_rand_b64url 32)
 
 db:
-  host:     ${DB_HOST_INTERNAL}
-  port:     ${DB_PORT_INTERNAL}
+  host:     ${DB_HOST}
+  port:     ${DB_PORT}
   name:     ${DB_NAME}
   user:     ${DB_USER}
   password: ${DB_PASS}

@@ -1,3 +1,9 @@
+## 4.4.22-5 (04-06-2026)
+- Fix AppArmor profile name (was copied from qbittorrent, could collide with that add-on)
+- Expose Accounts (3001), Auth (3003) and Cast (3004) ports so the login/2FA web apps are reachable
+- Default external Postgres port to 5432 when DB_PORT is left blank
+- Write the correct DB host/port to museum.yaml when using an external database
+- Exclude minio-data and postgres folders from Home Assistant backups
 ## 4.4.22-4 (04-06-2026)
 - Minor bugs fixed
 ## 4.4.22-3 (04-06-2026)
