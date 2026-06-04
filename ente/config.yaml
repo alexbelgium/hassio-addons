@@ -78,11 +78,7 @@ name: Ente
 options:
   env_vars: []
   DB_PASSWORD: ente
-  DISABLE_WEB_UI: true
   ENTE_ENDPOINT_URL: http://homeassistant.local:8280
-  MINIO_DATA_LOCATION: /config/minio-data
-  MINIO_ROOT_PASSWORD: minioadmin
-  MINIO_ROOT_USER: minioadmin
   TZ: Europe/Paris
   USE_EXTERNAL_DB: false
 ports:
@@ -92,7 +88,6 @@ ports:
   3007/tcp: 8307
   3008/tcp: 8308
   3009/tcp: 8309
-  3200/tcp: 8320
   8080/tcp: 8280
 ports_description:
   3000/tcp: Ente web UI
@@ -101,7 +96,6 @@ ports_description:
   3007/tcp: Ente Paste
   3008/tcp: Ente Locker
   3009/tcp: Ente Memories
-  3200/tcp: MinIO S3 endpoint
   8080/tcp: Ente API (museum)
 privileged:
   - SYS_ADMIN
@@ -115,11 +109,7 @@ schema:
   DB_PASSWORD: str
   DB_PORT: int?
   DB_USERNAME: str?
-  DISABLE_WEB_UI: bool?
   ENTE_ENDPOINT_URL: str
-  MINIO_DATA_LOCATION: str
-  MINIO_ROOT_PASSWORD: str
-  MINIO_ROOT_USER: str
   TZ: str?
   USE_EXTERNAL_DB: bool?
   cifsdomain: str?
@@ -130,6 +120,6 @@ schema:
 slug: ente
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "4.4.22-2"
+version: "4.4.22-3"
 video: true
 webui: http://[HOST]:[PORT:3000]
