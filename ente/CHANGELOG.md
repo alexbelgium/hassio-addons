@@ -1,3 +1,6 @@
+## 4.4.22-6 (04-06-2026)
+- Fix SIGPIPE (exit 141) on startup: tr piped to head -c against /dev/urandom
+  now suppresses the expected SIGPIPE under set -o pipefail
 ## 4.4.22-5 (04-06-2026)
 - Fix AppArmor profile name (was copied from qbittorrent, could collide with that add-on)
 - Expose Accounts (3001), Auth (3003) and Cast (3004) ports so the login/2FA web apps are reachable
