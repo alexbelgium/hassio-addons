@@ -35,6 +35,7 @@ RUN git clone --depth 1 --branch "${ENTE_WEB_TAG}" https://github.com/ente-io/en
 # Build web workspace (lives in ./web)
 WORKDIR /src/web
 ENV NEXT_PUBLIC_ENTE_ENDPOINT=ENTE_API_ORIGIN_PLACEHOLDER
+ENV NEXT_PUBLIC_ENTE_ALBUMS_ENDPOINT=ENTE_ALBUMS_ORIGIN_PLACEHOLDER
 
 RUN npm ci
 RUN npm run build:photos
@@ -42,11 +43,6 @@ RUN npm run build:albums
 RUN npm run build:accounts
 RUN npm run build:auth
 RUN npm run build:cast
-RUN npm run build:share
-RUN npm run build:embed
-RUN npm run build:paste
-RUN npm run build:locker
-RUN npm run build:memories
 
 #################
 # 1) Base image #
@@ -94,11 +90,6 @@ COPY --from=web-builder /src/web/apps/albums/out    /www/albums
 COPY --from=web-builder /src/web/apps/accounts/out  /www/accounts
 COPY --from=web-builder /src/web/apps/auth/out      /www/auth
 COPY --from=web-builder /src/web/apps/cast/out      /www/cast
-COPY --from=web-builder /src/web/apps/share/out     /www/share
-COPY --from=web-builder /src/web/apps/embed/out     /www/embed
-COPY --from=web-builder /src/web/apps/paste/out     /www/paste
-COPY --from=web-builder /src/web/apps/locker/out    /www/locker
-COPY --from=web-builder /src/web/apps/memories/out  /www/memories
 
 ############################
 # 3) Install add-on helpers #

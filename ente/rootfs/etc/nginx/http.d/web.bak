@@ -7,7 +7,7 @@ server {
     location / { try_files $uri $uri.html /index.html =404; }
 }
 server {
-    listen 3002; root /www/photos;
+    listen 3002; root /www/albums;
     location / { try_files $uri $uri.html /index.html =404; }
 }
 server {
