@@ -38,7 +38,7 @@ fi
 
 bashio::log.info "Starting app..."
 # shellcheck disable=SC2086
-/usr/bin/entrypoint.sh birdnet-go realtime &
+/usr/bin/entrypoint.sh /usr/bin/startup-wrapper.sh birdnet-go realtime &
 true
 
 # Wait for app to become available to start nginx
