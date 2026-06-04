@@ -1,3 +1,5 @@
+## 4.4.22-7 (04-06-2026)
+- Minor bugs fixed
 ## 4.4.22-6 (04-06-2026)
 - Fix SIGPIPE (exit 141) on startup: tr piped to head -c against /dev/urandom
   now suppresses the expected SIGPIPE under set -o pipefail
