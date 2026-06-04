@@ -1,3 +1,5 @@
+## 4.4.22-2 (04-06-2026)
+- Minor bugs fixed
 
 ## 4.4.23 (2026-06-03)
 - Fix nginx rewrite loop on /index.html causing 500 Internal Server Error in Web UI
