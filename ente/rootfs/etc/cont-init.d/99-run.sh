@@ -1,6 +1,5 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
-set -euo pipefail
 
 # Internal MinIO credentials (not user-configurable; MinIO is 127.0.0.1 only)
 MINIO_CRED_FILE="/config/minio-creds"
