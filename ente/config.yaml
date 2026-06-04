@@ -79,9 +79,6 @@ options:
   env_vars: []
   DB_PASSWORD: ente
   ENTE_ENDPOINT_URL: http://homeassistant.local:8280
-  MINIO_DATA_LOCATION: /config/minio-data
-  MINIO_ROOT_PASSWORD: minioadmin
-  MINIO_ROOT_USER: minioadmin
   TZ: Europe/Paris
   USE_EXTERNAL_DB: false
 ports:
@@ -113,9 +110,6 @@ schema:
   DB_PORT: int?
   DB_USERNAME: str?
   ENTE_ENDPOINT_URL: str
-  MINIO_DATA_LOCATION: str
-  MINIO_ROOT_PASSWORD: str
-  MINIO_ROOT_USER: str
   TZ: str?
   USE_EXTERNAL_DB: bool?
   cifsdomain: str?

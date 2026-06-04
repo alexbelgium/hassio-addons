@@ -53,10 +53,7 @@ Webui can be found at <http://homeassistant:PORT>.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `ENTE_ENDPOINT_URL` | str | `http://homeassistant.local:8280` | The URL where Ente API will be accessible |
-| `MINIO_ROOT_USER` | str | `minioadmin` | MinIO root username |
-| `MINIO_ROOT_PASSWORD` | str | `minioadmin` | MinIO root password |
-| `MINIO_DATA_LOCATION` | str | `/config/minio-data` | Path where MinIO stores data |
+| `ENTE_ENDPOINT_URL` | str | `http://homeassistant.local:8280` | The URL where Ente API will be accessible (used by web UI) |
 | `DB_PASSWORD` | str | `ente` | Database password for internal PostgreSQL |
 | `USE_EXTERNAL_DB` | bool | `false` | Use external PostgreSQL database |
 | `TZ` | str | `Europe/Paris` | Timezone setting |
@@ -76,9 +73,6 @@ If you want to use an external PostgreSQL database, set `USE_EXTERNAL_DB: true` 
 
 ```yaml
 ENTE_ENDPOINT_URL: "http://homeassistant.local:8280"
-MINIO_ROOT_USER: "myuser"
-MINIO_ROOT_PASSWORD: "mypassword"
-MINIO_DATA_LOCATION: "/config/ente-storage"
 DB_PASSWORD: "securepassword"
 TZ: "America/New_York"
 ```

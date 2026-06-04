@@ -2,8 +2,9 @@
 # shellcheck shell=bash
 set -euo pipefail
 
-MINIO_USER="$(bashio::config 'MINIO_ROOT_USER')"
-MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD')"
+# Internal MinIO credentials (not user-configurable; MinIO is 127.0.0.1 only)
+MINIO_USER="minioadmin"
+MINIO_PASS="minioadmin"
 S3_BUCKET="b2-eu-cen"
 
 export ENTE_S3_ARE_LOCAL_BUCKETS=true
@@ -201,8 +202,8 @@ wait_minio_ready_and_bucket() {
 # Web (static nginx bundle)
 ############################################
 start_web() {
-    ENTE_API_ORIGIN=http://localhost:8080
-    ENTE_ALBUMS_ORIGIN=http://localhost:3002
+    ENTE_API_ORIGIN="$(bashio::config 'ENTE_ENDPOINT_URL')"
+    ENTE_ALBUMS_ORIGIN="http://localhost:3002"
     export ENTE_API_ORIGIN ENTE_ALBUMS_ORIGIN
 
     # Running ente-web-prepare
@@ -216,7 +217,7 @@ start_web() {
     mv /etc/nginx/http.d/web.bak /etc/nginx/http.d/web.conf
 
     bashio::log.info "Starting Ente web (nginx, ports 3000‑3009)..."
-    exec nginx -g 'daemon off;' &
+    nginx -g 'daemon off;' &
     WEB_PID=$!
 }
 
