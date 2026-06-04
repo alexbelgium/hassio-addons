@@ -1,3 +1,8 @@
+## 4.4.22-7 (04-06-2026)
+- Disable the per-account storage limit by default via the new NO_STORAGE_LIMIT
+  option (default true). Grants every account 100 TB and ~100 years validity,
+  equivalent to `ente admin update-subscription --no-limit`. Set to false to
+  keep Ente's default storage limits.
 ## 4.4.22-6 (04-06-2026)
 - Fix SIGPIPE (exit 141) on startup: tr piped to head -c against /dev/urandom
   now suppresses the expected SIGPIPE under set -o pipefail

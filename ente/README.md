@@ -55,6 +55,7 @@ Webui can be found at <http://homeassistant:PORT>.
 |--------|------|---------|-------------|
 | `ENTE_ENDPOINT_URL` | str | `http://homeassistant.local:8280` | The URL where Ente API will be accessible (used by web UI) |
 | `DB_PASSWORD` | str | `ente` | Database password for internal PostgreSQL |
+| `NO_STORAGE_LIMIT` | bool | `true` | Remove the per-account storage limit (grants every account 100 TB and ~100 years validity, equivalent to `ente admin update-subscription --no-limit`). Set to `false` to keep the default Ente storage limits. |
 | `USE_EXTERNAL_DB` | bool | `false` | Use external PostgreSQL database |
 | `TZ` | str | `Europe/Paris` | Timezone setting |
 
@@ -132,6 +133,10 @@ After starting the addon for the first time:
 The addon exposes the following ports:
 
 - **8300** (3000/tcp): Ente web UI
+- **8301** (3001/tcp): Ente Accounts
+- **8302** (3002/tcp): Ente Albums
+- **8303** (3003/tcp): Ente Auth
+- **8304** (3004/tcp): Ente Cast
 - **8305** (3005/tcp): Ente Share
 - **8306** (3006/tcp): Ente Embed
 - **8307** (3007/tcp): Ente Paste

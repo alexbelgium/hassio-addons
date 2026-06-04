@@ -62,6 +62,13 @@ else
     bashio::log.info "Using internal Postgres."
 fi
 
+# Disable per-account storage limits by default (mirrors `ente admin
+# update-subscription --no-limit`). Set NO_STORAGE_LIMIT=false to keep limits.
+NO_STORAGE_LIMIT=true
+if bashio::config.false 'NO_STORAGE_LIMIT'; then
+    NO_STORAGE_LIMIT=false
+fi
+
 # Active DB connection target (may be overridden below)
 if $USE_EXTERNAL_DB; then
     DB_HOST="$DB_HOST_EXT"
@@ -247,6 +254,43 @@ start_web() {
 }
 
 ############################################
+# Storage limit (no-limit) reconcile
+############################################
+# Equivalent of `ente admin update-subscription --no-limit`: grant every
+# account 100 TB of storage and ~100 years of validity. The Ente CLI only
+# supports this per-user and interactively, so to make it the default for all
+# current and future accounts we reconcile the museum `subscriptions` table
+# directly (the method documented by the Ente maintainers). Runs in the
+# background and re-applies periodically so newly registered users are covered.
+NO_LIMIT_STORAGE_BYTES=109951162777600 # 100 * 1024^4 (100 TiB)
+NO_LIMIT_EXPIRY_SQL="(extract(epoch from now() + interval '100 years') * 1000000)::bigint"
+
+reconcile_no_limit() {
+    export PGPASSWORD="$DB_PASS"
+    while true; do
+        # Storage is the limit that actually enforces quota; apply it first and
+        # independently so a schema change to other columns can't block it.
+        psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" \
+            -c "UPDATE subscriptions SET storage = ${NO_LIMIT_STORAGE_BYTES} WHERE storage < ${NO_LIMIT_STORAGE_BYTES};" \
+            > /dev/null 2>&1 || true
+        psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" \
+            -c "UPDATE subscriptions SET expiry_time = ${NO_LIMIT_EXPIRY_SQL} WHERE expiry_time < ${NO_LIMIT_EXPIRY_SQL};" \
+            > /dev/null 2>&1 || true
+        sleep 60
+    done
+}
+
+start_no_limit_reconcile() {
+    if ! $NO_STORAGE_LIMIT; then
+        bashio::log.info "NO_STORAGE_LIMIT disabled; per-account storage limits stay in effect."
+        return 0
+    fi
+    bashio::log.info "NO_STORAGE_LIMIT enabled; granting unlimited storage to all accounts."
+    reconcile_no_limit &
+    NO_LIMIT_PID=$!
+}
+
+############################################
 # Museum (API)
 ############################################
 start_museum_foreground() {
@@ -295,6 +339,8 @@ start_minio
 wait_minio_ready_and_bucket
 
 start_web
+
+start_no_limit_reconcile
 
 # Foreground — keeps container alive
 start_museum_foreground
