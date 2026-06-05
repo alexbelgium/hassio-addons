@@ -45,14 +45,16 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
 # Modules
-ARG MODULES="00-banner.sh 00-local_mounts.sh 00-smb_mounts.sh 01-custom_script.sh"
+ARG MODULES="00-banner.sh 00-global_var.sh 00-local_mounts.sh 00-smb_mounts.sh 01-custom_script.sh"
 
 # Automatic modules download
 COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="redis-server"
+# redis-server: paperless-ngx expects an external broker, provided by this add-on
+# jq: required by the 00-global_var module for env_vars passthrough
+ENV PACKAGES="redis-server jq"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
@@ -63,22 +65,21 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ################
 
 # Add entrypoint
-#ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-#COPY ha_entrypoint.sh /ha_entrypoint.sh
-RUN chmod 777 /ha_entrypoint.sh
+# Upstream paperless-ngx ships an s6-overlay v3 init (ENTRYPOINT ["/init"]) and no
+# longer provides /sbin/docker-entrypoint.sh, so initialization is injected through
+# the s6 stage-2 hook instead of patching the upstream entrypoint.
+ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+COPY ha_entrypoint.sh /ha_entrypoint.sh
+RUN chmod 0755 /ha_entrypoint.sh
 
 # Install bashio
 COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
-# Add custom scripts
-RUN sed -i "2a source /ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
-    sed -i "s=/\.=source =g" /ha_entrypoint.sh && \
-    sed -i "s=env bash=env bashio=g" /sbin/docker-entrypoint.sh
-
-RUN \
-    # Activate imagemagick
-    sed -i "s/rights=\"none\"/rights=\"read|write\"/g" /etc/ImageMagick-6/policy.xml
+# Activate imagemagick (upstream already ships a paperless policy; guard for safety)
+RUN if [ -f /etc/ImageMagick-6/policy.xml ]; then \
+        sed -i "s/rights=\"none\"/rights=\"read|write\"/g" /etc/ImageMagick-6/policy.xml; \
+    fi
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
