@@ -1,3 +1,5 @@
+## 2026.06 (05-06-2026)
+- Minor bugs fixed
 ## 2026.05 (30-05-2026)
 - Update lastversion to 3.6.12
 
