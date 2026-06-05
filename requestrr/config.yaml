@@ -95,5 +95,5 @@ schema:
 slug: requestrr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 2.1.9
+version: "2.1.10"
 webui: "[PROTO:ssl]://[HOST]:[PORT:4545]"
