@@ -125,6 +125,7 @@ if command -v redis-server > /dev/null 2>&1; then
     redis-server &
 else
     bashio::log.fatal "redis-server is not installed; paperless-ngx requires it as broker"
+    bashio::exit.nok "redis-server is required (install it in PACKAGES or configure an external broker)"
 fi
 
 #################
