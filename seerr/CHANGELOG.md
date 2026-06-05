@@ -1,3 +1,5 @@
+## 3.3.0 (2026-06-05)
+- Update to latest version from seerr-team/seerr (changelog : https://github.com/seerr-team/seerr/releases)
 
 ## 3.2.0 (2026-04-23)
 - Update to latest version from seerr-team/seerr (changelog : https://github.com/seerr-team/seerr/releases)
