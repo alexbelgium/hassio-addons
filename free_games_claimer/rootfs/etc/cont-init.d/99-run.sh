@@ -82,4 +82,4 @@ done
 
 bashio::log.info "All actions concluded. Stopping in 10 seconds."
 sleep 10
-bashio::addon.stop
+bashio::app.stop

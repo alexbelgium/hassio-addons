@@ -68,7 +68,7 @@ SHEBANG_ERRORS=()
 probe_script_content='
 set -e
 
-if ! command -v bashio::addon.version >/dev/null 2>&1; then
+if ! command -v bashio::app.version >/dev/null 2>&1 && ! command -v bashio::addon.version >/dev/null 2>&1; then
   for f in \
     /usr/lib/bashio/bashio.sh \
     /usr/lib/bashio/lib.sh \
@@ -83,9 +83,13 @@ if ! command -v bashio::addon.version >/dev/null 2>&1; then
   done
 fi
 
-# Try regular bashio, fallback to standalone if unavailable or fails
+# Try bashio::app.version (new API), fall back to bashio::addon.version (old API)
 set +e
-_bv="$(bashio::addon.version 2>/dev/null)"
+if command -v bashio::app.version >/dev/null 2>&1; then
+  _bv="$(bashio::app.version 2>/dev/null)"
+else
+  _bv="$(bashio::addon.version 2>/dev/null)"
+fi
 _rc=$?
 set -e
 
@@ -94,7 +98,11 @@ if [ "$_rc" -ne 0 ] || [ -z "$_bv" ] || [ "$_bv" = "null" ]; then
     if [ -f "$_sf" ]; then
       # shellcheck disable=SC1090
       . "$_sf"
-      _bv="$(bashio::addon.version 2>/dev/null || true)"
+      if command -v bashio::app.version >/dev/null 2>&1; then
+        _bv="$(bashio::app.version 2>/dev/null || true)"
+      else
+        _bv="$(bashio::addon.version 2>/dev/null || true)"
+      fi
       break
     fi
   done
@@ -158,7 +166,7 @@ for candidate in "${candidate_shebangs[@]}"; do
 done
 
 if [ -z "$shebang" ]; then
-  echo "ERROR: No valid shebang found (unable to execute bashio::addon.version via candidates)." >&2
+  echo "ERROR: No valid shebang found (unable to execute bashio::app.version / bashio::addon.version via candidates)." >&2
   echo "Tried:" >&2
   printf ' - %s\n' "${candidate_shebangs[@]}" >&2
   if [ "${#SHEBANG_ERRORS[@]}" -gt 0 ]; then
@@ -192,6 +200,15 @@ fi
 # Starting scripts #
 ####################
 
+# Inject a backward-compat shim after the shebang so scripts using bashio::app.*
+# also work on older bashio installations that only provide bashio::addon.*.
+# On new bashio the guard (command -v bashio::app.version) is true and the block is skipped.
+_BASHIO_COMPAT_SHIM='command -v bashio::app.version >/dev/null 2>&1 || { bashio::app.version(){ bashio::addon.version "$@"; }; bashio::app.name(){ bashio::addon.name "$@"; }; bashio::app.description(){ bashio::addon.description "$@"; }; bashio::app.version_latest(){ bashio::addon.version_latest "$@"; }; bashio::app.update_available(){ bashio::addon.update_available "$@"; }; bashio::app.ingress_port(){ bashio::addon.ingress_port "$@"; }; bashio::app.ingress_entry(){ bashio::addon.ingress_entry "$@"; }; bashio::app.ingress_url(){ bashio::addon.ingress_url "$@"; }; bashio::app.ip_address(){ bashio::addon.ip_address "$@"; }; bashio::app.port(){ bashio::addon.port "$@"; }; bashio::app.option(){ bashio::addon.option "$@"; }; bashio::app.restart(){ bashio::addon.restart "$@"; }; bashio::app.stop(){ bashio::addon.stop "$@"; }; }'
+
+_inject_bashio_compat() {
+  sed -i "1a $_BASHIO_COMPAT_SHIM" "$1"
+}
+
 run_one_script() {
   local script="$1"
 
@@ -207,6 +224,7 @@ run_one_script() {
   fi
 
   sed -i "1s|^.*|#!$shebang|" "$script"
+  _inject_bashio_compat "$script"
   chmod +x "$script"
 
   if [ "${ha_entry_source:-null}" = "true" ]; then
@@ -251,6 +269,7 @@ if $PID1; then
     [ -f "$runfile" ] || continue
     echo "Starting: $runfile"
     sed -i "1s|^.*|#!$shebang|" "$runfile"
+    _inject_bashio_compat "$runfile"
     chmod +x "$runfile"
     (
       restart_count=0

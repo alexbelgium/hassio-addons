@@ -39,7 +39,7 @@ check_db_hostname() {
         bashio::log.warning "The addon will stop until this is fixed."
         bashio::log.warning "------------------------------------"
         sleep 30
-        bashio::addon.stop
+        bashio::app.stop
     else
         echo "$DB_HOSTNAME is reachable."
     fi
@@ -89,7 +89,7 @@ setup_root_user() {
     else
         bashio::log.warning "DB_ROOT_PASSWORD not set. Generating a random 12-character alphanumeric password and storing it in the addon options."
         export DB_ROOT_PASSWORD="$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c12)"
-        bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
+        bashio::app.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
 
         # Store generated password in the s6 environment if available
         if [ -d /var/run/s6/container_environment ]; then

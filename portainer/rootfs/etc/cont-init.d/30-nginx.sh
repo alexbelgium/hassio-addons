@@ -24,8 +24,8 @@ else
 fi
 
 bashio::var.json \
-    interface "$(bashio::addon.ip_address)" \
-    port "^$(bashio::addon.ingress_port)" \
+    interface "$(bashio::app.ip_address)" \
+    port "^$(bashio::app.ingress_port)" \
     protocol "${portainer_protocol}" \
     certfile "$(bashio::config 'certfile')" \
     keyfile "$(bashio::config 'keyfile')" \

@@ -24,9 +24,9 @@ fi
 
 bashio::log.info "Adapting for ingress"
 
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
-ingress_entry=$(bashio::addon.ingress_entry)
+ingress_port=$(bashio::app.ingress_port)
+ingress_interface=$(bashio::app.ip_address)
+ingress_entry=$(bashio::app.ingress_entry)
 base_path="/mealie/"
 sed -i "s|%%port%%|${ingress_port}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf
@@ -36,7 +36,7 @@ sed -i "s|%%base_subpath%%|${base_path}|g" /etc/nginx/servers/ssl.conf
 
 if bashio::config.has_value "BASE_URL"; then
     BASE_URL="$(bashio::config "BASE_URL")"
-    BASE_URL="${BASE_URL#*://}:$(bashio::addon.port 9001)"
+    BASE_URL="${BASE_URL#*://}:$(bashio::app.port 9001)"
     sed -i "s|%%BASE_URL%%|$BASE_URL|g" /etc/nginx/servers/ssl.conf
 else
     sed -i "/BASE_URL/d" /etc/nginx/servers/ssl.conf

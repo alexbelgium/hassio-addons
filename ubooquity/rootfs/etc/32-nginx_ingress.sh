@@ -12,12 +12,12 @@ declare port
 #declare keyfile
 
 # General values
-port=$(bashio::addon.ingress_port)
+port=$(bashio::app.ingress_port)
 # shellcheck disable=SC2210
 if [ "$port" ] > 1; then
     # Adapt nginx
     sed -i "s|%%port%%|$port|g" /etc/nginx/servers/ingress.conf
-    sed -i "s|%%interface%%|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ingress.conf
+    sed -i "s|%%interface%%|$(bashio::app.ip_address)|g" /etc/nginx/servers/ingress.conf
     # Removebaseurl
     jq '.reverseProxyPrefix = ""' /config/addons_config/ubooquity/preferences.json | sponge /config/addons_config/ubooquity/preferences.json
     # Log

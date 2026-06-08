@@ -62,7 +62,7 @@ if [[ "$CONFIGLOCATION" == "/config" ]]; then
     fi
     # Migrate option
     if [[ "$(bashio::config "CONFIG_LOCATION")" == "/config/addons_config"* ]] && [ -f /config/config.yaml ]; then
-        bashio::addon.option "CONFIG_LOCATION" "/config/config.yaml"
+        bashio::app.option "CONFIG_LOCATION" "/config/config.yaml"
         CONFIGSOURCE="/config/config.yaml"
     fi
 fi

@@ -11,7 +11,7 @@ declare ingress_interface
 declare ingress_port
 declare keyfile
 
-port=$(bashio::addon.port 80)
+port=$(bashio::app.port 80)
 if bashio::var.has_value "${port}"; then
     bashio::config.require.ssl
 
@@ -28,8 +28,8 @@ if bashio::var.has_value "${port}"; then
     fi
 fi
 
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
+ingress_port=$(bashio::app.ingress_port)
+ingress_interface=$(bashio::app.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 

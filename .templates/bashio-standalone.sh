@@ -202,6 +202,13 @@ bashio::addon.port() {
   fi
 }
 
+# addon.ingress_url : HA Supervisor provides this; in standalone mode return empty
+bashio::addon.ingress_url() { printf '%s' "${ADDON_INGRESS_URL:-}"; }
+
+# addon.restart / addon.stop : no-ops in standalone (no Supervisor to call)
+bashio::addon.restart() { bashio::log.warning "bashio::app.restart called in standalone mode – no-op"; }
+bashio::addon.stop()    { bashio::log.warning "bashio::app.stop called in standalone mode – no-op"; }
+
 # addon.option : write/delete option in JSON when possible; fallback export env
 bashio::addon.option() {
   local key="${1:-}" value="${2-__BASHIO_UNSET__}" file="${STANDALONE_OPTIONS_JSON:-}"
@@ -432,3 +439,22 @@ bashio::core.check() {
     return 0
   fi
 }
+
+# -----------------------------------------------------------------------------
+# bashio::app.* — forward-compat aliases for the new API (replaces addon.*)
+# Scripts should use bashio::app.* going forward; bashio::addon.* is kept for
+# backward compatibility with older bashio installations.
+# -----------------------------------------------------------------------------
+bashio::app.name()            { bashio::addon.name "$@"; }
+bashio::app.description()     { bashio::addon.description "$@"; }
+bashio::app.version()         { bashio::addon.version "$@"; }
+bashio::app.version_latest()  { bashio::addon.version_latest "$@"; }
+bashio::app.update_available(){ bashio::addon.update_available "$@"; }
+bashio::app.ingress_port()    { bashio::addon.ingress_port "$@"; }
+bashio::app.ingress_entry()   { bashio::addon.ingress_entry "$@"; }
+bashio::app.ingress_url()     { bashio::addon.ingress_url "$@"; }
+bashio::app.ip_address()      { bashio::addon.ip_address "$@"; }
+bashio::app.port()            { bashio::addon.port "$@"; }
+bashio::app.option()          { bashio::addon.option "$@"; }
+bashio::app.restart()         { bashio::addon.restart "$@"; }
+bashio::app.stop()            { bashio::addon.stop "$@"; }

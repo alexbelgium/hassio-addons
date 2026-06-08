@@ -93,7 +93,7 @@ if bashio::config.true 'ssl'; then
     export HTTPS=true
     export SSL=true
     export HTTPS_REDIRECT=true
-    BASE_URL_PORT=":$(bashio::addon.port 443)"
+    BASE_URL_PORT=":$(bashio::app.port 443)"
     if [[ "$BASE_URL_PORT" == ":443" ]]; then BASE_URL_PORT=""; fi
     BASE_URL_PROTO="https"
 
@@ -103,14 +103,14 @@ else
     export HTTPS=false
     export SSL=false
     export HTTPS_REDIRECT=false
-    BASE_URL_PORT=":$(bashio::addon.port 80)"
+    BASE_URL_PORT=":$(bashio::app.port 80)"
     if [[ "$BASE_URL_PORT" == ":80" ]]; then BASE_URL_PORT=""; fi
     BASE_URL_PROTO="http"
 fi
 
 if [[ "$BASE_URL_PORT" == ":" ]]; then
     bashio::log.fatal "Your $BASE_URL_PROTO port is not set in the addon options, please check your configuration and restart"
-    bashio::addon.stop
+    bashio::app.stop
 fi
 BASE_URL="${BASE_URL_PROTO}://${BASE_URL}${BASE_URL_PORT}"
 export BASE_URL

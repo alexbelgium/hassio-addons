@@ -24,8 +24,8 @@ fi
 cp /etc/nginx/templates/ingress.gtpl /etc/nginx/servers/ingress.conf
 
 [ "$DEBUG" = "debug" ] && echo "Before sed"
-sed -i "s|{{ .interface }}|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ingress.conf
-sed -i "s|{{ .port }}|$(bashio::addon.ingress_port)|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .interface }}|$(bashio::app.ip_address)|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .port }}|$(bashio::app.ingress_port)|g" /etc/nginx/servers/ingress.conf
 sed -i "s|{{ .protocol }}|${qbittorrent_protocol}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|{{ .certfile }}|$(bashio::config 'certfile')|g" /etc/nginx/servers/ingress.conf
 sed -i "s|{{ .keyfile }}|$(bashio::config 'keyfile')|g" /etc/nginx/servers/ingress.conf

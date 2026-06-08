@@ -6,7 +6,7 @@ set -e
 
 sed -i "s|'/server'|''|g" /app/back/app.conf
 sed -i "s|gzip on|gzip off|g" /services/config/nginx/netalertx.conf.template
-sed -i "/add_header X-Forwarded-Prefix/a sub_filter '\"/server' '\"$(bashio::addon.ingress_entry)/server';" /services/config/nginx/netalertx.conf.template
+sed -i "/add_header X-Forwarded-Prefix/a sub_filter '\"/server' '\"$(bashio::app.ingress_entry)/server';" /services/config/nginx/netalertx.conf.template
 sed -i "/add_header X-Forwarded-Prefix/a sub_filter_types *;" /services/config/nginx/netalertx.conf.template
 sed -i "/add_header X-Forwarded-Prefix/a sub_filter_once off;" /services/config/nginx/netalertx.conf.template
 
@@ -113,7 +113,7 @@ wait_for_config_file() {
         sleep 1
     done
     echo "$config_file is now available. Rebooting the addon."
-    bashio::addon.restart
+    bashio::app.restart
 }
 
 # Main script logic

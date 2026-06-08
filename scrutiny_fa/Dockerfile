@@ -70,7 +70,7 @@ RUN chmod 777 /ha_entrypoint.sh
 COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
-RUN sed -i "1a if ! bashio::require.unprotected; then bashio::addon.stop; fi" /etc/cont-init.d/90-run.sh
+RUN sed -i "1a if ! bashio::require.unprotected; then bashio::app.stop; fi" /etc/cont-init.d/90-run.sh
 
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]

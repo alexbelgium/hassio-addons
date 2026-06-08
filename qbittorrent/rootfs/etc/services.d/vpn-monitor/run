@@ -140,7 +140,7 @@ fi
 
 if [[ "${vpn_openvpn}" == true && "${vpn_wireguard}" == true ]]; then
     bashio::log.error "Both OpenVPN and WireGuard are enabled. Only one VPN mode is supported."
-    bashio::addon.stop
+    bashio::app.stop
     exit 1
 fi
 
@@ -153,7 +153,7 @@ elif [[ "${vpn_wireguard}" == true ]]; then
 fi
 if [[ -z "${VPN_INTERFACE}" ]] || ! ip link show "${VPN_INTERFACE}" > /dev/null 2>&1 ; then
     bashio::log.error "VPN interface not found."
-    bashio::addon.stop
+    bashio::app.stop
     exit 1
 fi
 
@@ -169,7 +169,7 @@ bashio::log.info "VPN detected; enabling IP leak protection and periodic monitor
 
 if ! VPN_INFO_OUT="$(wait_for_vpn_ip)"; then
     bashio::log.error "Unable to obtain a VPN external IP different from real IP. Stopping add-on."
-    bashio::addon.stop
+    bashio::app.stop
     exit 1
 fi
 
@@ -191,7 +191,7 @@ while true; do
 
     if [[ -n "${REAL_IP}" ]] && [[ "${current_ip}" == "${REAL_IP}" ]]; then
         bashio::log.error "IP LEAK DETECTED: current external IP ${current_ip} matches real IP ${REAL_IP}. Stopping add-on."
-        bashio::addon.stop
+        bashio::app.stop
         exit 1
     fi
 

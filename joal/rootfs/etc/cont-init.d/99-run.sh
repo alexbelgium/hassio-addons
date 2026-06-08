@@ -63,16 +63,16 @@ declare ingress_interface
 declare ingress_port
 #declare keyfile
 
-#INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::addon.ingress_url)
+#INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::app.ingress_url)
 host_port=$(bashio::core.port)
-ingress_url=$(bashio::addon.ingress_entry)
-ADDONPORT=$(bashio::addon.port "8081")
+ingress_url=$(bashio::app.ingress_entry)
+ADDONPORT=$(bashio::app.port "8081")
 host_ip=$(bashio::network.ipv4_address)
 host_ip=${host_ip%/*}
 UIPATH=$(bashio::config 'ui_path')
-#port=$(bashio::addon.port 80)
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
+#port=$(bashio::app.port 80)
+ingress_port=$(bashio::app.ingress_port)
+ingress_interface=$(bashio::app.ip_address)
 
 #################
 # NGINX SETTING #

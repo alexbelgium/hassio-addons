@@ -47,7 +47,7 @@ done
 # CHECK PORT #
 ##############
 
-if [[ "$(bashio::addon.port "80")" == 3000 ]]; then
+if [[ "$(bashio::app.port "80")" == 3000 ]]; then
     bashio::log.fatal "This is crazy but your port is set to 3000 and streamlit doesn't accept this port! You need to change it from the addon options and restart. Thanks"
     sleep infinity
 fi

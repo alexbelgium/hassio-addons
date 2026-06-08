@@ -26,14 +26,14 @@ if ! bashio::supervisor.ping 2>/dev/null; then
     done
 else
     bashio::log.blue '-----------------------------------------------------------'
-    bashio::log.blue " Add-on: $(bashio::addon.name)"
-    bashio::log.blue " $(bashio::addon.description)"
+    bashio::log.blue " Add-on: $(bashio::app.name)"
+    bashio::log.blue " $(bashio::app.description)"
     bashio::log.blue '-----------------------------------------------------------'
 
-    bashio::log.blue " Add-on version: $(bashio::addon.version)"
-    if bashio::var.true "$(bashio::addon.update_available)"; then
+    bashio::log.blue " Add-on version: $(bashio::app.version)"
+    if bashio::var.true "$(bashio::app.update_available)"; then
         bashio::log.magenta " There is an update available!"
-        bashio::log.magenta " Latest version: $(bashio::addon.version_latest)"
+        bashio::log.magenta " Latest version: $(bashio::app.version_latest)"
     else
         bashio::log.green " You are running the latest version."
     fi

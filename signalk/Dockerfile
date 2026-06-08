@@ -77,7 +77,7 @@ COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
 # Restart the addon on crash
-RUN echo "bashio::addon.restart" >> /ha_entrypoint.sh
+RUN echo "bashio::app.restart" >> /ha_entrypoint.sh
 
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]

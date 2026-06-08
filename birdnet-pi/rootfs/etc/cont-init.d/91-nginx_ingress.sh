@@ -18,9 +18,9 @@ fi
 #################
 
 # Variables
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
-ingress_entry=$(bashio::addon.ingress_entry)
+ingress_port=$(bashio::app.ingress_port)
+ingress_interface=$(bashio::app.ip_address)
+ingress_entry=$(bashio::app.ingress_entry)
 
 # Quits if ingress is not active
 if [[ "$ingress_entry" != "/api"* ]]; then

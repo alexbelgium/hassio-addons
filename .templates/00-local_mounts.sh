@@ -105,7 +105,7 @@ if bashio::config.has_value 'localdisks'; then
             || (
                 bashio::log.fatal "Unable to mount local drives! Please check the name."
                 rmdir /mnt/"$disk"
-                bashio::addon.stop
+                bashio::app.stop
             )
     done
 

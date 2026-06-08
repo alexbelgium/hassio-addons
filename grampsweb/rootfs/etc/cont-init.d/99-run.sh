@@ -44,7 +44,7 @@ else
     bashio::log.warning "Secret key saved to addon options."
     GRAMPSWEB_SECRET_KEY="$(cat /config/secret/secret)"
     export GRAMPSWEB_SECRET_KEY
-    bashio::addon.option "GRAMPSWEB_SECRET_KEY" "$GRAMPSWEB_SECRET_KEY"
+    bashio::app.option "GRAMPSWEB_SECRET_KEY" "$GRAMPSWEB_SECRET_KEY"
 fi
 
 ##################

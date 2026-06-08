@@ -4,7 +4,7 @@ set -e
 
 # nginx Path
 NGINX_CONFIG=/etc/nginx/sites-available/ingress.conf
-SUBFOLDER="$(bashio::addon.ingress_entry)/"
+SUBFOLDER="$(bashio::app.ingress_entry)/"
 
 # Copy template
 cp /defaults/default.conf "${NGINX_CONFIG}"
@@ -15,7 +15,7 @@ mv tmpfile "${NGINX_CONFIG}"
 # Remove ipv6
 sed -i '/listen \[::\]/d' "${NGINX_CONFIG}"
 # Add ingress parameters
-sed -i "s|3000|$(bashio::addon.ingress_port)|g" "${NGINX_CONFIG}"
+sed -i "s|3000|$(bashio::app.ingress_port)|g" "${NGINX_CONFIG}"
 sed -i "s|CWS|8082|g" "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a proxy_set_header Accept-Encoding "";' "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a sub_filter_once off;' "${NGINX_CONFIG}"

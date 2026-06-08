@@ -19,7 +19,7 @@ if ! bashio::config.true 'openvpn_enabled'; then
     bashio::exit.ok 'OpenVPN is disabled.'
 elif bashio::config.true 'wireguard_enabled'; then
     bashio::log.fatal 'OpenVPN and WireGuard cannot be enabled simultaneously. Disable one of them.'
-    bashio::addon.stop
+    bashio::app.stop
 fi
 
 mkdir -p "${OPENVPN_STATE_DIR}"
@@ -33,13 +33,13 @@ if bashio::config.has_value "openvpn_username"; then
     openvpn_username=$(bashio::config 'openvpn_username')
 else
     bashio::log.fatal "Openvpn is enabled, but openvpn_username option is empty! Exiting"
-    bashio::addon.stop
+    bashio::app.stop
 fi
 if bashio::config.has_value "openvpn_password"; then
     openvpn_password=$(bashio::config 'openvpn_password')
 else
     bashio::log.fatal "Openvpn is enabled, but openvpn_password option is empty! Exiting"
-    bashio::addon.stop
+    bashio::app.stop
 fi
 
 printf '%s\n%s\n' "${openvpn_username}" "${openvpn_password}" > "${OPENVPN_STATE_DIR}/credentials.conf"
@@ -50,7 +50,7 @@ if bashio::config.has_value "openvpn_config"; then
     openvpn_config="${openvpn_config##*/}"
     if [[ ! "${openvpn_config}" =~ ^[A-Za-z0-9._-]+\.(conf|ovpn)$ ]]; then
         bashio::log.fatal "Invalid openvpn_config filename '${openvpn_config}'. Allowed characters: letters, numbers, dot, underscore, dash. Extension must be .conf or .ovpn."
-        bashio::addon.stop
+        bashio::app.stop
     fi
 fi
 if [[ -z "${openvpn_config}" ]]; then
@@ -58,7 +58,7 @@ if [[ -z "${openvpn_config}" ]]; then
         mapfile -t configs < <(find /config/openvpn -maxdepth 1 \( -type f -name '*.conf' -o -name '*.ovpn' \) -print)
     if [ "${#configs[@]}" -eq 0 ]; then
         bashio::log.fatal 'OpenVPN is enabled but no .conf or .ovpn file was found in /config/openvpn.'
-        bashio::addon.stop
+        bashio::app.stop
     elif [ "${#configs[@]}" -eq 1 ]; then
         openvpn_config="${configs[0]}"
         bashio::log.info "OpenVPN configuration not specified. Using ${openvpn_config##*/}."
@@ -73,13 +73,13 @@ elif bashio::fs.file_exists "/config/openvpn/${openvpn_config}"; then
     openvpn_config="/config/openvpn/${openvpn_config}"
 else
     bashio::log.fatal "OpenVPN configuration '/config/openvpn/${openvpn_config}' not found."
-    bashio::addon.stop
+    bashio::app.stop
 fi
 
 interface_name="$(sed -n "/^dev tun/p" "${openvpn_config}" | awk -F' ' '{print $2}')"
 if [[ -z "${interface_name}" ]]; then
     bashio::log.fatal "OpenVPN configuration '${openvpn_config}' misses device directive."
-    bashio::addon.stop
+    bashio::app.stop
 elif [[ ${interface_name} = "tun" ]]; then
     interface_name='tun0'
 elif [[ ${interface_name} = "tap" ]]; then
