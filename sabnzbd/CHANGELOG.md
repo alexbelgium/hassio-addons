@@ -1,3 +1,6 @@
+ 
+## 5.0.4 (2026-06-11)
+- Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
 ## 5.0.3 (2026-05-16)
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
