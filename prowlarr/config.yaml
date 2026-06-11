@@ -110,5 +110,5 @@ schema:
 slug: prowlarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "nightly-2.4.0.5391-ls238"
+version: "2.4.0.5397-ls149"
 webui: "[PROTO:ssl]://[HOST]:[PORT:9696]"
