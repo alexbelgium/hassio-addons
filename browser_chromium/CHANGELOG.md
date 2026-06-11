@@ -1,3 +1,6 @@
+ 
+## version-cca5154d (2026-06-11)
+- Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)
 ## version-89f88890 (2026-06-05)
 - Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)
 
