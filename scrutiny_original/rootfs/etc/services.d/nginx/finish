@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Stop the container when Nginx fails
+# ==============================================================================
+if [[ "$1" -ne 0 && "$1" -ne 256 ]]; then
+    bashio::log.error "Nginx exited with code $1"
+    kill -15 1
+fi
