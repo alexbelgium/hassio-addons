@@ -1,0 +1,48 @@
+apparmor: "true"
+arch:
+  - aarch64
+  - amd64
+description: Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)
+environment:
+  COLLECTOR_API_ENDPOINT: http://localhost:8080
+  COLLECTOR_HOST_ID: home_assistant
+full_access: true
+image: ghcr.io/alexbelgium/scrutiny-fa-original-{arch}
+ingress: true
+init: false
+map:
+  - share:rw
+  - addon_config:rw
+name: scrutiny_fa_original
+options:
+  env_vars: []
+  Updates: Hourly
+panel_admin: false
+panel_icon: mdi:glasses
+ports:
+  8080/tcp: null
+  8086/tcp: null
+ports_description:
+  8080/tcp: Web UI port
+  8086/tcp: InfluxDB admin
+privileged:
+  - SYS_ADMIN
+  - SYS_RAWIO
+  - DAC_READ_SEARCH
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
+  COLLECTOR_API_ENDPOINT: str?
+  COLLECTOR_HOST_ID: str?
+  Mode: list(Collector+WebUI|Collector)?
+  SMARTCTL_COMMAND_DEVICE_TYPE: list(auto|ata|scsi|sat|usbcypress|usbjmicron|usbsunplus|sntasmedia|sntjmicron|sntrealtek|marvell|megaraid)?
+  SMARTCTL_MEGARAID_DISK_NUM: int?
+  TZ: str?
+  Updates: list(Quarterly|Hourly|Daily|Weekly|Custom)
+  Updates_custom_time: str?
+  expose_collector: bool?
+slug: scrutiny_fa_original
+udev: true
+url: https://github.com/analogj/scrutiny
+version: "v1.63.0"
