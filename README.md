@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 129
+- In the repository : 131
 - Installed : 187951
 
 ### Top 3
@@ -1061,6 +1061,23 @@ If you want to do add the repository manually, please follow the procedure highl
 ![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/glasses.svg) [scrutiny_fa_original](scrutiny_fa_original/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_fa_original%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_fa_original%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
+![full_access][full_access-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/glasses.svg) [scrutiny_original](scrutiny_original/) : Scrutiny webUI for smartd S.M.A.R.T monitoring
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_original%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_original%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
 
 &#10003;  [zzz_archived - Paperless NGX](zzz_archived_paperless_ngx/) : Scan, index and archive all your physical documents
 
