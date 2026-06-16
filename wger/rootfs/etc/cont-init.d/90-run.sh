@@ -32,6 +32,25 @@ move_persistent_dir() {
     ln -sfn "$target" "$source"
 }
 
+migrate_database() {
+    local legacy_db=/home/wger/db/database.sqlite
+    local persistent_db=/data/database.sqlite
+
+    if [ -f "$persistent_db" ]; then
+        bashio::log.info "Using existing persistent database at $persistent_db"
+    elif [ -f "$legacy_db" ]; then
+        bashio::log.info "Migrating legacy database from $legacy_db to $persistent_db"
+        cp -n "$legacy_db" "$persistent_db"
+    else
+        bashio::log.info "No existing database found; wger will create a new persistent database at $persistent_db"
+    fi
+
+    if [ -f "$persistent_db" ]; then
+        chown wger "$persistent_db" || bashio::log.warning "Unable to set $persistent_db ownership to wger"
+        chmod a+rw "$persistent_db" || bashio::log.warning "Unable to make $persistent_db writable"
+    fi
+}
+
 ############################
 # Change database location #
 ############################
@@ -51,6 +70,7 @@ fi
 #####################
 echo "... create directories"
 prepare_data_root
+migrate_database
 move_persistent_dir /home/wger/static /data/static
 move_persistent_dir /home/wger/media /data/media
 
@@ -60,10 +80,7 @@ move_persistent_dir /home/wger/media /data/media
 echo "... align permissions"
 prepare_writable_dir /data/static
 prepare_writable_dir /data/media
-if [ -f /data/database.sqlite ]; then
-    chown wger /data/database.sqlite || bashio::log.warning "Unable to set /data/database.sqlite ownership to wger"
-    chmod a+rw /data/database.sqlite || bashio::log.warning "Unable to make /data/database.sqlite writable"
-fi
+migrate_database
 
 echo "... add env variables"
 (
