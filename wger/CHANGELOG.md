@@ -1,4 +1,6 @@
 
+## 2.6-dev-2 (2026-06-16)
+- Fix startup script database path rewrite by switching the `settings.py` matching with `*.py` since last update moved the settings.py file into several files within the settings folder
 ## 2.6-dev (2026-04-23)
 - Update to latest version from wger/server
 ## 2.5-dev-3 (2026-03-09)
