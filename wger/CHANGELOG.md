@@ -1,3 +1,6 @@
+## 2.6-dev-3 (2026-06-16)
+- Fix fresh-install startup by making the persistent `/data/static` and `/data/media` directories writable by the `wger` user without recursively changing all of `/data`.
+- Make nginx startup idempotent and fail loudly if its configuration is invalid, instead of masking nginx startup errors that can leave the add-on web port closed.
 
 ## 2.6-dev-2 (2026-06-16)
 - Fix startup script database path rewrite by switching the `settings.py` matching with `*.py` since last update moved the settings.py file into several files within the settings folder
