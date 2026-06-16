@@ -4,7 +4,7 @@
 # Change database location #
 ############################
 echo "... set database path"
-mapfile -t SETTINGS_FILES < <(grep -rl --include='settings.py' '/home/wger/db/database.sqlite' /home 2> /dev/null || true)
+mapfile -t SETTINGS_FILES < <(grep -rl --include='*.py' '/home/wger/db/database.sqlite' /home 2> /dev/null || true)
 
 if [ "${#SETTINGS_FILES[@]}" -gt 0 ]; then
     for settings_file in "${SETTINGS_FILES[@]}"; do
