@@ -106,7 +106,7 @@ mkdir -p /run/nginx /var/log/nginx
 if [ -f /run/nginx.pid ] && kill -0 "$(cat /run/nginx.pid)" 2> /dev/null; then
     bashio::log.info "nginx is already running"
 elif nginx -t; then
-    nginx
+    nginx &
 else
     bashio::log.error "nginx configuration test failed"
     exit 1
