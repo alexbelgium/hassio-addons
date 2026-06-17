@@ -1,9 +1,9 @@
 {
   "github_beta": "true",
-  "last_update": "2026-05-30",
+  "last_update": "2026-06-17",
   "repository": "alexbelgium/hassio-addons",
   "slug": "codex",
   "source": "github",
   "upstream_repo": "ajslater/codex",
-  "upstream_version": "1.12.7"
+  "upstream_version": "1.12.8"
 }
