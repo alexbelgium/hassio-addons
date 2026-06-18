@@ -4,5 +4,6 @@
   "slug": "aurral",
   "source": "github",
   "upstream_repo": "lklynet/aurral",
-  "upstream_version": "1.76.51"
+  "upstream_version": "1.76.51",
+  "github_beta": false
 }
