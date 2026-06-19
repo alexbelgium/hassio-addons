@@ -1,7 +1,7 @@
 name: "Nginx Proxy Manager + Static Web Server"
 slug: nginx_webserver_proxy
 description: "Nginx Proxy Manager with a built-in configurable static file server. Manage reverse proxies via NPM UI on port 81 while serving files from HA storage on port 80."
-version: "2.14.0"
+version: "2.14.1"
 url: "https://github.com/alexbelgium/hassio-addons/tree/master/nginx_webserver_proxy"
 arch:
   - amd64

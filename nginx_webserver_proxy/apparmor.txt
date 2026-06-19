@@ -5,20 +5,47 @@ profile nginx-proxy-manager flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/nameservice>
   #include <abstractions/openssl>
 
-  # Core capabilities
+  # Blanket file access, following the official Home Assistant add-on AppArmor
+  # template. Confinement is enforced through the capability allow-list and the
+  # explicit deny rules below rather than by enumerating every path. Enumerating
+  # paths is impractical here: this add-on wraps the s6-overlay based
+  # jc21/nginx-proxy-manager image, whose boot runs useradd/groupadd, certbot,
+  # nginx and a Node.js backend across a deep exec chain (issue #2777).
+  file,
+
+  # Signals used by the s6-overlay supervision tree.
+  signal (send) set=(kill,term,int,hup,cont),
+
+  # Network
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
+  network unix stream,
+  network unix dgram,
+
+  # Capabilities required by the boot chain.
+  # - chown/fowner/fsetid/dac_override: file ownership and mode changes
+  # - setgid/setuid/setfcap: useradd/groupadd and privilege drops (s6-setuidgid)
+  # - net_bind_service: bind ports 80/443/81
+  # - sys_chroot: s6/nginx
+  # - kill: s6 service supervision
+  # - audit_write: PAM/useradd audit records
+  # - sys_resource: raise limits
+  capability audit_write,
   capability chown,
   capability dac_override,
+  capability fowner,
+  capability fsetid,
+  capability kill,
   capability net_bind_service,
   capability setfcap,
   capability setgid,
   capability setuid,
   capability sys_chroot,
-  capability kill,
-
-  # Process and memory management
   capability sys_resource,
 
-  # Deny dangerous capabilities
+  # Deny dangerous capabilities outright.
   deny capability dac_read_search,
   deny capability linux_immutable,
   deny capability mac_admin,
@@ -29,72 +56,30 @@ profile nginx-proxy-manager flags=(attach_disconnected,mediate_deleted) {
   deny capability sys_rawio,
   deny capability syslog,
 
-  # Network
-  network inet stream,
-  network inet dgram,
-  network inet6 stream,
-  network inet6 dgram,
-  network unix stream,
-  network unix dgram,
+  # S6-Overlay boot chain and the add-on entrypoint.
+  # The run.sh shebang is "#!/usr/bin/with-contenv bash", and with-contenv
+  # execs "/usr/bin/env bash"; without exec access here AppArmor denied it with
+  # "/usr/bin/env: 'bash': Permission denied" (issue #2777).
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /sbin/** ix,
+  /usr/sbin/** ix,
+  /usr/local/bin/** ix,
+  /usr/local/sbin/** ix,
+  /opt/** ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /npm-addon-init.sh ix,
+  /etc/s6-overlay/** rwix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /run/{,**} rwk,
+  /dev/tty rw,
 
-  # /data - addon config (read/write)
-  /data/ r,
-  /data/** rwk,
-
-  # /share - Home Assistant storage (read/write)
-  /share/ r,
-  /share/** rwk,
-
-  # /media - Home Assistant media (read/write)
-  /media/ r,
-  /media/** rwk,
-
-  # /config - Home Assistant config (read/write)
-  /config/ r,
-  /config/** rwk,
-
-  # /addon_configs - addon instance config
-  /addon_configs/ r,
-  /addon_configs/** rwk,
-
-  # /etc/letsencrypt - SSL certs
-  /etc/letsencrypt/ r,
-  /etc/letsencrypt/** rwk,
-
-  # /proc and /sys
-  @{PROC}/ r,
-  @{PROC}/** rw,
-  @{sys}/ r,
-  @{sys}/** rw,
-
-  # Temporary files
-  /tmp/ r,
-  /tmp/** rwk,
-  /var/tmp/ r,
-  /var/tmp/** rwk,
-
-  # Basic system access
-  /bin/bash ix,
-  /bin/sh ix,
-  /bin/ls ix,
-  /bin/cat ix,
-  /bin/sed ix,
-  /usr/bin/jq ix,
-
-  # Nginx binary and libraries
-  /usr/sbin/nginx ix,
-  /usr/local/sbin/nginx ix,
-  /usr/lib/** rm,
-  /lib/** rm,
-  /usr/local/lib/** rm,
-
-  # Allow reading app-specific configs (read-only)
-  /etc/nginx/ r,
-  /etc/nginx/** r,
-  /var/log/ r,
-  /var/log/** w,
-
-  # Deny sensitive system areas
+  # Deny sensitive system areas.
   deny /root/** rwkl,
   deny /home/** rwkl,
   deny /proc/sysrq-trigger rwkl,
