@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Access to Gitea app.ini (opened 2025-06-10)](https://github.com/alexbelgium/hassio-addons/issues/1907) by [@UplandJacob](https://github.com/UplandJacob)
 # Home assistant add-on: Gitea
 
 
@@ -61,6 +60,15 @@ APP_NAME: "Gitea for Homeassistant"
 DOMAIN: "homeassistant.local"
 ROOT_URL: "http://homeassistant.local:3000"
 ```
+
+### Direct app.ini Access
+
+The Gitea `app.ini` configuration file is exposed in the add-on's config folder (`/addon_configs/gitea/app.ini` on the host), making it directly editable via the HA file editor or Studio Code add-on.
+
+- **On first run**: complete the Gitea setup wizard, then restart the add-on. The generated `app.ini` will be copied to the addon_config folder automatically.
+- **On subsequent runs**: edit `/addon_configs/gitea/app.ini` directly for any Gitea setting not covered by the options above. The add-on options (SSL, DOMAIN, ROOT_URL, APP_NAME) are still applied on top of your file each restart.
+
+See the [Gitea configuration cheat sheet](https://docs.gitea.com/administration/config-cheat-sheet) for all available options.
 
 ### Custom Scripts and Environment Variables
 
