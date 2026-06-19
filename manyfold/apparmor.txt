@@ -15,6 +15,7 @@ profile hassio-addons/manyfold flags=(attach_disconnected,mediate_deleted) {
   capability fowner,
   capability setgid,
   capability setuid,
+  capability sys_chroot,
 
   deny /proc/kcore rwklx,
   deny /proc/sysrq-trigger rwklx,
