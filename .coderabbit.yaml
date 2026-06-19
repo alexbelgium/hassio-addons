@@ -1,0 +1,181 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+#
+# CodeRabbit configuration for alexbelgium/hassio-addons
+# Goals:
+#   1. Triage and provide first-line help on issues (bug reports, feature requests).
+#   2. Review pull requests against this repository's add-on conventions and linters.
+# Docs: https://docs.coderabbit.ai/getting-started/configure-coderabbit
+language: "en-US"
+
+# Steer CodeRabbit toward the Home Assistant add-on context. This drives both
+# PR review comments and the help it offers when mentioned on issues.
+tone_instructions: >-
+  You are assisting a Home Assistant add-on repository that packages 120+
+  Docker-based add-ons for the Home Assistant Supervisor. Be concise, friendly
+  and practical. Most contributors are hobbyists, not professional developers,
+  so explain reasoning briefly and link to the add-on's README or the repo wiki
+  when relevant. Each add-on lives in its own top-level directory with a
+  config.yaml, Dockerfile, updater.json and CHANGELOG.md. Respect the existing
+  conventions described in CLAUDE.md rather than imposing generic best practices.
+
+early_access: false
+enable_free_tier: true
+
+reviews:
+  # "chill" keeps reviews helpful without nitpicking the many small upstream
+  # version-bump PRs that dominate this repo.
+  profile: "chill"
+  # Don't block merges; this repo merges frequently and relies on CI gating.
+  request_changes_workflow: false
+  high_level_summary: true
+  high_level_summary_placeholder: "@coderabbitai summary"
+  auto_title_placeholder: "@coderabbitai"
+  review_status: true
+  commit_status: true
+  poem: false
+  collapse_walkthrough: false
+  changed_files_summary: true
+  sequence_diagrams: false
+  assess_linked_issues: true
+  related_issues: true
+  related_prs: true
+  suggested_labels: true
+  suggested_reviewers: true
+
+  # Auto-apply labels consistent with the repo's existing scheme.
+  labeling_instructions:
+    - label: "bug"
+      instructions: >-
+        Apply when the PR fixes incorrect behavior in an add-on (broken startup,
+        crash, regression) rather than adding functionality.
+    - label: "enhancement"
+      instructions: >-
+        Apply when the PR adds a new add-on, a new option/feature, or otherwise
+        extends functionality.
+
+  # Skip generated/vendored content and large data artifacts that produce noise.
+  path_filters:
+    - "!**/*.png"
+    - "!**/*.svg"
+    - "!**/*.jpg"
+    - "!**/*.jpeg"
+    - "!**/*.csv"
+    - "!**/Stats"
+    - "!**/Stats2"
+    - "!README.md"
+    - "!.github/stargazer_countries.csv"
+    - "!**/translations/**"
+
+  # Repository-specific review guidance keyed by file path.
+  path_instructions:
+    - path: "**/config.yaml"
+      instructions: >-
+        Home Assistant add-on metadata. Verify that `version` was bumped when the
+        upstream version changes, that `image` follows
+        `ghcr.io/alexbelgium/{slug}-{arch}`, and that `arch`, `schema`, `map` and
+        `ports` are internally consistent. The `env_vars` schema key enables
+        arbitrary env-var passthrough handled at runtime by 00-global_var.sh; do
+        not flag it as insecure by default. Versions legitimately vary in format
+        (semver, X.Y.Z-N patch counter, LSIO tags, date-based, nightly).
+    - path: "**/Dockerfile"
+      instructions: >-
+        Add-on Dockerfiles follow a 6-section pattern and pull shared scripts from
+        .templates/. `ARG BUILD_FROM` + `FROM ${BUILD_FROM}` is expected. Package
+        pinning is NOT required (Hadolint DL3008/DL3018 are intentionally ignored).
+        If the file has an `ARG BUILD_UPSTREAM` line it must match the upstream
+        version in config.yaml. Do not suggest generic pinning or multi-stage
+        rewrites that conflict with the shared-template convention.
+    - path: "**/rootfs/etc/cont-init.d/**"
+      instructions: >-
+        S6-overlay init scripts that run in lexicographic order. Respect the
+        numbering convention (20- folders, 32- nginx ingress, 80- app config,
+        90- misc, 99- launch). Check that scripts use bashio where appropriate and
+        fail safely. SC2002 is intentionally disabled in shellcheck.
+    - path: "**/rootfs/etc/services.d/**"
+      instructions: >-
+        S6-overlay supervised service definitions. Verify run/finish scripts are
+        executable and long-running services do not exit prematurely.
+    - path: "**/*.sh"
+      instructions: >-
+        Shell scripts are formatted with shfmt (4-space indent) and linted with
+        shellcheck (SC2002 disabled). Prefer bashio helpers in add-on scripts.
+    - path: "**/updater.json"
+      instructions: >-
+        Upstream tracking config for the addons_updater automation. Validate the
+        `source` is a supported type (github, dockerhub, pip, gitlab, bitbucket,
+        helm_chart, ...) and that `upstream_repo`/`slug` are coherent. Do not
+        hand-edit `upstream_version`; it is auto-populated.
+    - path: "**/CHANGELOG.md"
+      instructions: >-
+        Every changed add-on must update its CHANGELOG.md (CI enforces this).
+        Confirm the new entry matches the bumped version in config.yaml.
+    - path: ".github/workflows/**"
+      instructions: >-
+        GitHub Actions CI/CD. Be careful with permissions and pinned action
+        versions. Note that `[nobuild]` in a commit message intentionally skips
+        the builder workflow.
+
+  abort_on_close: true
+
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    drafts: false
+    # Skip bot-generated upstream version bumps and explicit skip markers to
+    # save review budget; humans can still request a review with @coderabbitai.
+    ignore_title_keywords:
+      - "[nobuild]"
+      - "bump"
+      - "dependabot"
+    base_branches:
+      - "master"
+
+  finishing_touches:
+    docstrings:
+      enabled: true
+    unit_tests:
+      enabled: false
+
+  # Enable the linters that match this repo's CI so CodeRabbit surfaces the same
+  # issues reviewers and CI would flag.
+  tools:
+    shellcheck:
+      enabled: true
+    hadolint:
+      enabled: true
+    markdownlint:
+      enabled: true
+    yamllint:
+      enabled: true
+    actionlint:
+      enabled: true
+    gitleaks:
+      enabled: true
+    checkov:
+      enabled: true
+    languagetool:
+      enabled: true
+      level: "default"
+    github-checks:
+      enabled: true
+      timeout_ms: 120000
+
+# Issue triage & first-line help. CodeRabbit replies in issues and PRs; auto_reply
+# lets it respond without an explicit @coderabbitai mention, and the knowledge
+# base lets it reuse past issues/PRs/learnings for better triage.
+chat:
+  auto_reply: true
+
+knowledge_base:
+  opt_out: false
+  learnings:
+    scope: "auto"
+  issues:
+    scope: "auto"
+  pull_requests:
+    scope: "auto"
+
+# Match generated docstrings to the repo language.
+code_generation:
+  docstrings:
+    language: "en-US"
