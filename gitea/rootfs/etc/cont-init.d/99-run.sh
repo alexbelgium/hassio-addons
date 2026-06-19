@@ -9,12 +9,13 @@ set -e
 # Ensure the gitea conf directory exists
 mkdir -p /data/gitea/conf
 
-# If a real file (not a symlink) exists, migrate it to /config so users can edit it
+# If a real file (not a symlink) exists, move it to /config.
+# This covers both the initial migration from older installs and the post-wizard
+# case where Gitea's atomic SaveTo replaces the symlink with the completed config.
+# Always overwrite /config/app.ini so the installed settings are never discarded.
 if [ -f "/data/gitea/conf/app.ini" ] && [ ! -L "/data/gitea/conf/app.ini" ]; then
-    if [ ! -f "/config/app.ini" ]; then
-        bashio::log.info "Migrating app.ini to addon_config folder for direct access"
-        cp /data/gitea/conf/app.ini /config/app.ini
-    fi
+    bashio::log.info "Moving app.ini to addon_config folder for direct access"
+    cp /data/gitea/conf/app.ini /config/app.ini
     rm /data/gitea/conf/app.ini
 fi
 
