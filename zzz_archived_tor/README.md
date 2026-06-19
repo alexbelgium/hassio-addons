@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 Cloudcommander New Directory (opened 2026-03-19)](https://github.com/alexbelgium/hassio-addons/issues/2594) by [@pgitsov](https://github.com/pgitsov)
-## &#9888; Open Issue : [🐛 [Elasticsearch] Data location moved. Please wait while elasticsearch starts... chroot: cannot change root directory (opened 2026-05-12)](https://github.com/alexbelgium/hassio-addons/issues/2709) by [@aelg305](https://github.com/aelg305)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
