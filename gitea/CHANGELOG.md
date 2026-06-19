@@ -1,4 +1,7 @@
 
+## 1.26.2-1 (2026-06-19)
+- Fix SSH authentication failing with `chroot("/var/empty"): Operation not permitted [preauth]` by allowing `capability sys_chroot` in the AppArmor profile, which sshd needs for privilege-separation (#2653)
+
 ## 1.26.2 (2026-05-22)
 - Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
 
