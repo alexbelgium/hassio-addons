@@ -73,6 +73,19 @@ profile nginx-proxy-manager flags=(attach_disconnected,mediate_deleted) {
   /var/tmp/ r,
   /var/tmp/** rwk,
 
+  # s6-overlay boot chain and add-on entrypoint.
+  # The run.sh shebang is "#!/usr/bin/with-contenv bash", and with-contenv
+  # execs "/usr/bin/env bash". Without these rules AppArmor denies the exec
+  # with: "/usr/bin/env: 'bash': Permission denied" (issue #2777).
+  /init ix,
+  /usr/bin/env ix,
+  /usr/bin/with-contenv ix,
+  /npm-addon-init.sh ix,
+  /command/** ix,
+  /package/** ix,
+  /run/{s6,s6-rc,service}/** rwix,
+  /etc/s6-overlay/** rwix,
+
   # Basic system access
   /bin/bash ix,
   /bin/sh ix,

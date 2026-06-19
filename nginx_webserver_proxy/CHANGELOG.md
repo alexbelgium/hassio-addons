@@ -1,13 +1,13 @@
-## 2.14.0 (10-05-2026)
-- Minor bugs fixed
 # Changelog
 
-## Unreleased
+## 2.14.1
+- Fix startup failure on aarch64/HAos: "/usr/bin/env: 'bash': Permission denied" (#2777)
+- Add s6-overlay/env/with-contenv exec rules to AppArmor profile
 
-- Fix Codacy style warnings: add blank lines around lists in README
+## 2.14.0 
+- Minor bugs fixed
 
 ## 2.14.0
-
 - Initial release wrapping jc21/nginx-proxy-manager:latest
 - NPM Admin UI on port 81; HTTP on port 80; HTTPS on port 443
 - Configurable static file server via NPM's default_host nginx config
