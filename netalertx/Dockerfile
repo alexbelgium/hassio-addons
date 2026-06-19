@@ -58,6 +58,18 @@ USER 0
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
 
+# Neutralise the upstream capabilities-audit step.
+# Under the Home Assistant Supervisor the required NET_RAW/NET_ADMIN capabilities
+# are granted, but the upstream audit cannot read them and prints a misleading
+# "🚨 ALERT: capabilities are missing" banner that users mistake for the cause of
+# unrelated issues (see issue #2454). The script is informational only, so we
+# replace its body with a no-op while keeping the file in place for the runner.
+RUN set -eux; \
+    for f in $(find / -type f -name '*capabilities*audit*.sh' 2>/dev/null); do \
+      printf '#!/usr/bin/env bash\n# Neutralised by the Home Assistant add-on: the required capabilities are\n# provided by the Supervisor but the upstream audit misreports them, which\n# alarmed users (issue #2454). This audit is informational only.\n:\n' > "$f"; \
+      chmod +x "$f"; \
+    done
+
 # Bring in jq + gosu (and their libs). NO apk in final stage.
 COPY --from=ha_tools /out/ /
 
