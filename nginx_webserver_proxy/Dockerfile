@@ -1,18 +1,14 @@
-ARG BUILD_FROM=jc21/nginx-proxy-manager:latest
+ARG BUILD_FROM=jc21/nginx-proxy-manager:2.14.0
 FROM ${BUILD_FROM}
 
-# NPM is Debian-based; install jq for options parsing + stub with-contenv if absent
+# NPM is Debian-based; install jq for options parsing and ensure bash is present.
 # hadolint ignore=DL3008
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends jq \
-    && rm -rf /var/lib/apt/lists/* \
-    && if ! command -v with-contenv >/dev/null 2>&1; then \
-         printf '#!/usr/bin/env bash\nexec "$@"\n' > /usr/bin/with-contenv \
-         && chmod +x /usr/bin/with-contenv; \
-       fi
+    && apt-get install -y --no-install-recommends bash jq \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY run.sh /npm-addon-init.sh
-RUN chmod +x /npm-addon-init.sh
+RUN chmod 0755 /npm-addon-init.sh
 
 ARG BUILD_VERSION
 LABEL \
@@ -20,4 +16,4 @@ LABEL \
   io.hass.type="addon" \
   io.hass.arch="aarch64|amd64"
 
-ENTRYPOINT ["/npm-addon-init.sh"]
+ENTRYPOINT ["/bin/bash", "/npm-addon-init.sh"]
