@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+bashio::log.info "Starting Zoraxy..."
+
+# All Zoraxy options are passed as environment variables (converted from the
+# add-on options by the 00-global_var module) and consumed by the upstream
+# entrypoint, which launches the zoraxy binary from /config.
+exec python3 -u /opt/zoraxy/entrypoint.py

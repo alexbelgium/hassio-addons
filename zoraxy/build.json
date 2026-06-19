@@ -1,0 +1,6 @@
+{
+    "build_from": {
+        "aarch64": "zoraxydocker/zoraxy:latest",
+        "amd64": "zoraxydocker/zoraxy:latest"
+    }
+}
