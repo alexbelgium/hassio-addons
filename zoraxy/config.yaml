@@ -1,0 +1,48 @@
+---
+arch:
+  - aarch64
+  - amd64
+description: "🦓 General purpose request (reverse) proxy and forwarding tool with web management UI"
+image: ghcr.io/alexbelgium/zoraxy-{arch}
+name: Zoraxy
+slug: zoraxy
+url: https://github.com/alexbelgium/hassio-addons/tree/master/zoraxy
+version: "3.3.3"
+init: false
+startup: services
+webui: "http://[HOST]:[PORT:8000]"
+ports:
+  80/tcp: 80
+  443/tcp: 443
+  8000/tcp: 8000
+ports_description:
+  80/tcp: HTTP traffic for reverse-proxied hosts
+  443/tcp: HTTPS traffic for reverse-proxied hosts
+  8000/tcp: Management Web UI
+map:
+  - addon_config:rw
+  - share:rw
+  - ssl
+privileged:
+  - NET_ADMIN
+devices:
+  - /dev/net/tun
+environment:
+  PORT: "8000"
+  DOCKER: "true"
+  PLUGIN: /config/plugin
+options:
+  NOAUTH: false
+  ZEROTIER: false
+  FASTGEOIP: false
+  MDNS: true
+  env_vars: []
+schema:
+  NOAUTH: bool
+  ZEROTIER: bool
+  FASTGEOIP: bool
+  MDNS: bool
+  TZ: str?
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
