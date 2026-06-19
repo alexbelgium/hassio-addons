@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile inadyn_addon flags=(attach_disconnected,mediate_deleted) {
+profile elasticsearch_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability chown,
@@ -8,6 +8,7 @@ profile inadyn_addon flags=(attach_disconnected,mediate_deleted) {
   capability fowner,
   capability setgid,
   capability setuid,
+  capability sys_chroot,
   file,
   signal,
   mount,
