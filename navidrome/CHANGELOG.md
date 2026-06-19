@@ -1,3 +1,5 @@
+## 0.62.0-2 (19-06-2026)
+- Minor bugs fixed
  
 ## 0.62.0 (2026-06-11)
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
