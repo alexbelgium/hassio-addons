@@ -23,6 +23,10 @@ map:
   - addon_config:rw
   - share:rw
   - ssl
+privileged:
+  - NET_ADMIN
+devices:
+  - /dev/net/tun
 environment:
   PORT: "8000"
   DOCKER: "true"

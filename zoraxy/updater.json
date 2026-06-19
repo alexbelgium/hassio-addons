@@ -1,6 +1,6 @@
 {
   "last_update": "2026-06-19",
-  "paused": "false",
+  "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "zoraxy",
   "source": "github",

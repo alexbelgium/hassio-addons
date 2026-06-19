@@ -57,7 +57,7 @@ container as `/config`), so they survive add-on updates and restarts.
 | Option      | Default | Description                                                                                  |
 | ----------- | ------- | -------------------------------------------------------------------------------------------- |
 | `NOAUTH`    | `false` | Disable authentication for the management interface (use with care).                          |
-| `ZEROTIER`  | `false` | Enable the ZeroTier global area network controller (requires extra host capabilities).        |
+| `ZEROTIER`  | `false` | Enable the ZeroTier global area network controller (uses the `NET_ADMIN` capability and `/dev/net/tun`, both granted by the add-on). |
 | `FASTGEOIP` | `false` | Enable high-speed GeoIP lookup (uses ~1 GB extra memory).                                      |
 | `MDNS`      | `true`  | Enable mDNS service discovery.                                                                 |
 | `TZ`        | -       | Timezone, e.g. `Europe/Brussels`.                                                             |
