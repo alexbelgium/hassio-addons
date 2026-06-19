@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-06-11",
+  "last_update": "2026-06-20",
   "repository": "alexbelgium/hassio-addons",
   "slug": "maintainerr",
   "source": "github",
   "upstream_repo": "maintainerr/maintainerr",
-  "upstream_version": "3.15.0"
+  "upstream_version": "3.15.1"
 }
