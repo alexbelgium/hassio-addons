@@ -1,7 +1,8 @@
 #include <tunables/global>
 
-profile addon_updater flags=(attach_disconnected,mediate_deleted) {
+profile sponsorblockcast_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
+  capability sys_chroot,
 
   # Capabilities
   file,

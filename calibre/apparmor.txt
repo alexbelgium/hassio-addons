@@ -10,6 +10,7 @@ profile calibre_addon flags=(attach_disconnected,mediate_deleted) {
   capability net_admin,
   capability setgid,
   capability setuid,
+  capability sys_chroot,
   capability sys_admin,
   file,
   signal,

@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile joplin flags=(attach_disconnected,mediate_deleted) {
+profile flaresolverr_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability chown,
@@ -8,6 +8,7 @@ profile joplin flags=(attach_disconnected,mediate_deleted) {
   capability fowner,
   capability setgid,
   capability setuid,
+  capability sys_chroot,
   file,
   signal,
   mount,
