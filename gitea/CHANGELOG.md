@@ -1,3 +1,5 @@
+## 1.26.2-3 (19-06-2026)
+- Minor bugs fixed
 
 ## 1.26.2-2 (2026-06-19)
 - Expose app.ini in the addon_config folder so users can edit it directly via the HA file editor
