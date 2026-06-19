@@ -43,15 +43,21 @@ Shared build-time scripts are pulled from `.templates/` at build time:
 - `bashio-standalone.sh` – Bashio library for scripts outside Supervisor context
 
 The `ARG MODULES=` line lists template scripts to download at build time (e.g., `00-banner.sh 01-custom_script.sh 00-smb_mounts.sh`). Commonly-used modules in `.templates/` (not exhaustive):
+- `00-banner.sh` – Print the add-on startup banner
 - `00-global_var.sh` – Initialize global env vars from HA options
 - `00-local_mounts.sh` – Mount local disks (localdisks option)
 - `00-smb_mounts.sh` – SMB/CIFS network mount support
+- `00-deprecated.sh` – Print a deprecation warning for add-ons superseded by official ones
 - `01-config_yaml.sh` – Map HA options → app's `config.yaml`
 - `01-custom_script.sh` – Run user-provided custom scripts
+- `19-json_repair.sh` – Validate/repair JSON config files
 - `90-disable_ingress.sh` – Allow disabling HA ingress
 - `90-dns_set.sh` – Configure custom DNS
+- `91-silent.sh` – Reduce log verbosity
 - `91-universal_graphic_drivers.sh` – GPU driver detection
-- `19-json_repair.sh` – Validate/repair JSON config files
+- `99-custom_script.sh` – Run a user `script.sh` from the add-on config dir at startup
+
+Other helper scripts in `.templates/` used at build/run time: `ha_automatic_packages.sh` (resolve package names across distros), `ha_entrypoint_modif.sh`, `00-aaa_dockerfile_backup.sh`, plus `config.template`/`script.template`/`show_text_color` (templates/assets copied into add-ons).
 
 ## config.yaml Schema
 
@@ -120,6 +126,15 @@ When an upstream version is bumped, update `version` in `config.yaml`. If the ad
 
 **Weekly** (`weekly_addons_updater`): Runs the `addons_updater` container to bump add-on versions to match upstream.
 
+Other automation workflows:
+- `daily_README.yaml` – Regenerates the root `README.md` add-on table.
+- `weekly_crlftolf.yaml` – Finds and fixes CRLF line endings repo-wide.
+- `weekly_reduceimagesize.yml` – Compresses images and opens a PR with savings.
+- `weekly_stats.yaml` / `helper_stats_graphs.yaml` – Refresh the `Stats`/`Stats2` files and stat graphs.
+- `daily_stale.yml` – Warns and closes stale issues/PRs.
+- `on_issues.yml` / `on_issues_ping_submitter.yml` – Link issues to add-on READMEs and ping submitters.
+- `generate_stargazer_map.yml` – Regenerates the stargazer map image.
+
 Adding `[nobuild]` anywhere in a commit message skips the builder workflow.
 
 ## Linting Rules
@@ -146,3 +161,7 @@ Scripts in `rootfs/etc/cont-init.d/` run in lexicographic order. Common numberin
 - `80-*` – Application configuration
 - `90-*` – Misc pre-startup tasks (ssl, vpn, custom run)
 - `99-*` – Final startup / launch
+
+## User Customization
+
+Add-ons support end-user customization without rebuilding the image (see the repo wiki). At startup, `99-custom_script.sh` looks in the add-on's config directory for a user-provided `script.sh` (seeded from `.templates/script.template`) and executes it. Combined with the `env_vars` passthrough and the custom-script modules, this lets users inject commands and environment without forking the add-on.
