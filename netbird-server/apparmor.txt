@@ -1,0 +1,49 @@
+#include <tunables/global>
+
+profile netbird-server_addon flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  capability chown,
+  capability dac_override,
+  capability fowner,
+  capability net_bind_service,
+  capability setgid,
+  capability setuid,
+  capability sys_chroot,
+  file,
+  signal,
+  mount,
+  umount,
+  remount,
+  network udp,
+  network tcp,
+  network dgram,
+  network stream,
+  network inet,
+  network inet6,
+  network netlink raw,
+  network unix dgram,
+
+  /init ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /usr/lib/bashio/** ix,
+  /etc/s6/** rix,
+  /run/s6/** rix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+
+  # Data access
+  /data/** rw,
+
+  # suppress ptrace denials when using 'docker ps' or using 'ps' inside a container
+  ptrace (trace,read) peer=docker-default,
+
+  # docker daemon confinement requires explict allow rule for signal
+  signal (receive) set=(kill,term) peer=/usr/bin/docker,
+
+}
