@@ -7,16 +7,8 @@
 # Docs: https://docs.coderabbit.ai/getting-started/configure-coderabbit
 language: "en-US"
 
-# Steer CodeRabbit toward the Home Assistant add-on context. This drives both
-# PR review comments and the help it offers when mentioned on issues.
-tone_instructions: >-
-  You are assisting a Home Assistant add-on repository that packages 120+
-  Docker-based add-ons for the Home Assistant Supervisor. Be concise, friendly
-  and practical. Most contributors are hobbyists, not professional developers,
-  so explain reasoning briefly and link to the add-on's README or the repo wiki
-  when relevant. Each add-on lives in its own top-level directory with a
-  config.yaml, Dockerfile, updater.json and CHANGELOG.md. Respect the existing
-  conventions described in CLAUDE.md rather than imposing generic best practices.
+# Max 250 chars. Detailed context lives in path_instructions below.
+tone_instructions: "HA add-on repo with 120+ Docker add-ons for Home Assistant Supervisor. Be concise, practical and friendly; most contributors are hobbyists. Link to add-on READMEs and the repo wiki. Follow existing conventions over generic best practices."
 
 early_access: false
 enable_free_tier: true
