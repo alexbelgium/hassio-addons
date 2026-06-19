@@ -16,4 +16,4 @@ LABEL \
   io.hass.type="addon" \
   io.hass.arch="aarch64|amd64"
 
-ENTRYPOINT ["/bin/bash", "/npm-addon-init.sh"]
+ENTRYPOINT ["/npm-addon-init.sh"]
