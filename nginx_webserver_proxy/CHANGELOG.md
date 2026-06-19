@@ -1,3 +1,5 @@
+## 2.14.1 (19-06-2026)
+- Minor bugs fixed
 # Changelog
 
 ## 2.14.1
