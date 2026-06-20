@@ -79,6 +79,7 @@ options:
   PGID: "0"
   PUID: "0"
 panel_icon: mdi:movie-search
+panel_admin: false
 ports:
   5055/tcp: 5055
 ports_description:
