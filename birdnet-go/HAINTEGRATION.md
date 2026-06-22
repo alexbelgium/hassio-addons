@@ -2,6 +2,15 @@
 
 BirdNET-Go can be integrated with Home Assistant using a MQTT Broker.
 
+> **💡 Easiest path — automatic discovery.** If you run the Home Assistant
+> Mosquitto (MQTT) addon, just set `mqtt_auto_config: true` in this add-on's
+> options. The add-on then wires in the broker credentials **and** enables
+> BirdNET-Go's native Home Assistant MQTT auto-discovery, so the detection
+> sensors appear in Home Assistant automatically with **no manual YAML at
+> all**. The manual sensor/template/card configuration below is only needed if
+> you want to build your own custom entities instead of (or in addition to) the
+> auto-discovered ones.
+
 ## MQTT Configuration
 
 Your Home Assistant must be setup with MQTT and BirdNET-Go MQTT integration must be enabled. Modify the BirdNET-Go config.yaml file to enable MQTT. If you are using the Mosquitto Broker addon, you will see a log message during the BirdNET-Go startup showing the internal MQTT server details needed for configuration similar to below.
