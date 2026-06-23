@@ -1,6 +1,6 @@
 ## nightly-20260615-2 (2026-06-23)
 - MariaDB auto-config: create the `birdnet` database on first start if it does not exist (birdnet-go connects to a pre-existing schema and does not create it, causing "database doesn't exist" errors)
-- MariaDB auto-config: disabling `mariadb_auto_config` now writes `output.mysql.enabled = false` and `output.sqlite.enabled = true` back to config.yaml, so turning the option off fully reverts to SQLite
+- MariaDB auto-config: disabling `mariadb_auto_config` now reverts to SQLite only when `output.mysql.host` in config.yaml matches the HA MariaDB host (avoids clobbering manually-configured MySQL pointing at a different server)
 - Added `mariadb-client` to the addon packages so the `mysql` CLI used for database creation is available inside the container
 
  - MQTT auto-config now also enables BirdNET-Go's native Home Assistant MQTT auto-discovery: detection sensors appear in Home Assistant automatically with no manual YAML (existing UI/config.yaml edits are preserved)
