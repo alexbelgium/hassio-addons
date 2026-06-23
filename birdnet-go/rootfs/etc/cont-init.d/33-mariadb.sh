@@ -68,17 +68,30 @@ bashio::log.blue "User:     ${MYSQL_USER}"
 bashio::log.blue "Database: ${MYSQL_DATABASE}"
 bashio::log.green "---"
 
-# Create the database — birdnet-go connects to an existing schema and does NOT
-# create it automatically, so we must do it here. MYSQL_PWD avoids exposing
-# the password via the process command line.
+# Ensure the database exists. birdnet-go connects to an existing schema and
+# does NOT create it automatically. MYSQL_PWD avoids password in process list.
+# The HA MariaDB service user may lack global CREATE DATABASE privilege, so if
+# CREATE DATABASE fails we fall back to checking whether the database already
+# exists (pre-created manually or by a previous run with broader privileges).
 if ! MYSQL_PWD="${MYSQL_PASS}" mysql \
     --host="${MYSQL_HOST}" \
     --port="${MYSQL_PORT}" \
     --user="${MYSQL_USER}" \
     --connect-timeout=10 \
     -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" 2>/dev/null; then
-    bashio::log.error "Failed to create MariaDB database '${MYSQL_DATABASE}' — verify the MariaDB addon is running and the user has CREATE DATABASE privileges"
-    exit 1
+    bashio::log.warning "Could not CREATE DATABASE '${MYSQL_DATABASE}' (insufficient privileges?) — checking if it already exists"
+    if ! MYSQL_PWD="${MYSQL_PASS}" mysql \
+        --host="${MYSQL_HOST}" \
+        --port="${MYSQL_PORT}" \
+        --user="${MYSQL_USER}" \
+        --connect-timeout=10 \
+        "${MYSQL_DATABASE}" \
+        -e "SELECT 1;" >/dev/null 2>&1; then
+        bashio::log.error "Database '${MYSQL_DATABASE}' does not exist and could not be created."
+        bashio::log.error "Create it manually in MariaDB: CREATE DATABASE \`${MYSQL_DATABASE}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+        exit 1
+    fi
+    bashio::log.yellow "Database '${MYSQL_DATABASE}' already exists — skipping creation"
 fi
 bashio::log.blue "Database '${MYSQL_DATABASE}' is ready"
 

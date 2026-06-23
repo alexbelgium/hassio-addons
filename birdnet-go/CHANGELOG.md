@@ -1,5 +1,5 @@
 ## nightly-20260615-2 (2026-06-23)
-- MariaDB auto-config: create the `birdnet` database on first start if it does not exist (birdnet-go connects to a pre-existing schema and does not create it, causing "database doesn't exist" errors)
+- MariaDB auto-config: ensure the `birdnet` database exists before starting — birdnet-go does not create it automatically; if `CREATE DATABASE` fails due to insufficient privileges the script falls back to checking whether the database was pre-created manually, and exits with a clear instruction if it is missing
 - MariaDB auto-config: disabling `mariadb_auto_config` now reverts to SQLite only when `output.mysql.host` in config.yaml matches the HA MariaDB host (avoids clobbering manually-configured MySQL pointing at a different server)
 - Added `mariadb-client` to the addon packages so the `mysql` CLI used for database creation is available inside the container
 
