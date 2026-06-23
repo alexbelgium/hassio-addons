@@ -157,5 +157,6 @@ yq -i -y '.logging.file_output.compress //= true' "$CONFIG_LOCATION"
 LOG_DIR="/config/logs"
 if [ -d "$LOG_DIR" ]; then
     bashio::log.info "Trimming log files older than ${LOG_MAX_AGE_DAYS} days in ${LOG_DIR}"
+    ln -sf "$LOG_DIR" /logs
     find "$LOG_DIR" -type f -name "*.log*" -mtime +"$LOG_MAX_AGE_DAYS" -delete 2>/dev/null || true
 fi
