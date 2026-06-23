@@ -35,7 +35,7 @@ if ! bashio::config.true 'mariadb_auto_config'; then
     bashio::log.yellow "Home Assistant MariaDB addon detected but mariadb_auto_config is disabled; ensuring BirdNET-Go uses SQLite."
     bashio::log.yellow "Set 'mariadb_auto_config: true' in the addon options to wire MariaDB into BirdNET-Go automatically. Connection details:"
     bashio::log.blue "Database user    : ${MYSQL_USER}"
-    bashio::log.blue "Database password: ${MYSQL_PASS}"
+    bashio::log.blue "Database password: [redacted]"
     bashio::log.blue "Database name    : ${MYSQL_DATABASE}"
     bashio::log.blue "Host-name        : ${MYSQL_HOST}"
     bashio::log.blue "Port             : ${MYSQL_PORT}"
