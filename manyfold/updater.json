@@ -2,7 +2,7 @@
   "github_fulltag": "false",
   "last_update": "2026-05-30",
   "repository": "alexbelgium/hassio-addons",
-  "slug": "manyfold3d",
+  "slug": "manyfold",
   "source": "github",
   "upstream_repo": "manyfold3d/manyfold",
   "upstream_version": "0.145.1"
