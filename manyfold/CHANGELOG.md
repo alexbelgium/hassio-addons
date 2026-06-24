@@ -1,6 +1,9 @@
-## 0.142.0 (27-05-2026)
-- Minor bugs fixed
 # Changelog
+
+## 0.145.1
+
+- Details: <https://github.com/manyfold3d/manyfold/releases/tag/v0.145.1>
+- Details: <https://github.com/manyfold3d/manyfold/releases/tag/v0.145.0>
 
 ## 0.142.0
 
