@@ -1,3 +1,8 @@
+## nightly-20260615-2 (2026-06-23)
+- MariaDB auto-config: resolve MariaDB hostname to IPv4 before connecting — on HAOS >=17.3 the Supervisor network gained IPv6 but the MariaDB addon only grants the service user from the IPv4 subnet, causing authentication failures and `CREATE DATABASE` errors; also add `--skip-ssl` to match the connection approach used by other addons
+- MariaDB auto-config: disabling `mariadb_auto_config` now reverts to SQLite only when `output.mysql.host` in config.yaml matches the HA MariaDB host (avoids clobbering manually-configured MySQL pointing at a different server)
+- Added `mariadb-client` to the addon packages so the `mysql` CLI used for database creation is available inside the container
+
  - MQTT auto-config now also enables BirdNET-Go's native Home Assistant MQTT auto-discovery: detection sensors appear in Home Assistant automatically with no manual YAML (existing UI/config.yaml edits are preserved)
 - MQTT auto-config seeds `realtime.mqtt.retain: true` (only when unset) so sensor states survive Home Assistant restarts
 - Added supervisor watchdog (tcp://[HOST]:[PORT:8080]) so the add-on is automatically restarted if BirdNET-Go stops responding

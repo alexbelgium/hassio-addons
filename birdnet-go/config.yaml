@@ -128,4 +128,5 @@ slug: birdnet-go
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go
 usb: true
-version: "nightly-20260615"
+version: "nightly-20260615-2"
+video: true
