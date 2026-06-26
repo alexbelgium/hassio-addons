@@ -21,7 +21,7 @@ FROM node:22 AS frontend-builder
 ARG SUB_PATH="/mealie/"
 ENV SUB_PATH=$SUB_PATH
 
-ENV MEALIE_VERSION="v3.19.2"
+ENV MEALIE_VERSION="v3.20.1"
 
 # Clone the Mealie repository to get the frontend source code
 WORKDIR /frontend
