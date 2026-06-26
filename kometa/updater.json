@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-06-23",
+  "last_update": "2026-06-27",
   "repository": "alexbelgium/hassio-addons",
   "slug": "kometa",
   "source": "github",
   "upstream_repo": "linuxserver/docker-kometa",
-  "upstream_version": "2.4.3"
+  "upstream_version": "2.4.4"
 }
