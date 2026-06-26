@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "2026-06-20",
+  "last_update": "2026-06-27",
   "repository": "alexbelgium/hassio-addons",
   "slug": "brave",
   "source": "github",
   "upstream_repo": "linuxserver/docker-brave",
-  "upstream_version": "1.91.175-ls106"
+  "upstream_version": "1.91.180-ls108"
 }
