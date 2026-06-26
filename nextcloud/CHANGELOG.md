@@ -1,4 +1,7 @@
  
+## 34.0.1 (2026-06-27)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
+ 
 ## 34.0.0 (2026-06-11)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 ## 33.0.5 (2026-06-05)
