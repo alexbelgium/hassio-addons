@@ -1,3 +1,6 @@
+ 
+## 9.10.0 (2026-06-27)
+- Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 9.9.0 (2026-05-30)
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
