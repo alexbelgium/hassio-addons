@@ -1,3 +1,6 @@
+## 2.28.0-2 (2026-06-28)
+- Add Bonjour/mDNS development headers so native npm modules such as mdns can rebuild after add-on updates.
+
  
 ## 2.28.0 (2026-06-20)
 - Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
