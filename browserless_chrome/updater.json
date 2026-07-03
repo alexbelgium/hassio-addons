@@ -1,9 +1,9 @@
 {
   "github_tagfilter": "v",
-  "last_update": "2026-06-23",
+  "last_update": "2026-07-04",
   "repository": "alexbelgium/hassio-addons",
   "slug": "browserless_chrome",
   "source": "github",
   "upstream_repo": "browserless/chrome",
-  "upstream_version": "2.54.1"
+  "upstream_version": "2.54.2"
 }
