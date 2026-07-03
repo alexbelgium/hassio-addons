@@ -1,3 +1,6 @@
+ 
+## 6.6.6 (2026-07-04)
+- Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.6.3 (2026-05-22)
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
