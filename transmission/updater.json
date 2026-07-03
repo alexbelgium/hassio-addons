@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-06-05",
+  "last_update": "2026-07-04",
   "repository": "alexbelgium/hassio-addons",
   "slug": "transmission",
   "source": "github",
   "upstream_repo": "linuxserver/docker-transmission",
-  "upstream_version": "4.1.2"
+  "upstream_version": "4.1.3"
 }
