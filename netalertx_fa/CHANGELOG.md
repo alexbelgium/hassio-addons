@@ -1,3 +1,6 @@
+ 
+## 26.7.1 (2026-07-04)
+- Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
 ## 26.6.3-1 (2026-06-19)
 - Suppress the misleading upstream "capabilities audit" ALERT (NET_RAW/NET_ADMIN reported as missing). Under the Home Assistant Supervisor these capabilities are granted but the upstream audit cannot read them, which alarmed users (#2454).
 
