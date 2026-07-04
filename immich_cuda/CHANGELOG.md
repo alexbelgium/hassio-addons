@@ -1,3 +1,5 @@
+## 3.0.1-2 (04-07-2026)
+- Minor bugs fixed
 
 ## 3.0.1 (2026-07-04)
 - Migrate to Immich v3 (now based on the `ghcr.io/imagegenius/immich:3-cuda` image line, tracking the v3 major release)
