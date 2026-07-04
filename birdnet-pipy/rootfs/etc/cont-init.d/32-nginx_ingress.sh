@@ -24,11 +24,18 @@ if ! [[ "${ingress_port}" =~ ^[0-9]+$ ]] || [[ "${ingress_port}" -le 0 ]]; then
     exit 0
 fi
 
-cp /etc/nginx/servers/nginx.conf /etc/nginx/servers/ingress.conf
+# Build the ingress server from the server block ONLY. Both files in
+# servers/ are included into one http context, so http-level directives
+# (map, limit_req_zone, ...) must stay declared once, in nginx.conf — a
+# duplicated limit_req_zone is a fatal "already bound" error and nginx
+# never starts (502 on every page). Upstream keeps all http-level
+# directives above its single column-0 "server {".
+sed -n '/^server {/,$p' /etc/nginx/servers/nginx.conf > /etc/nginx/servers/ingress.conf
 sed -i \
     -e "s|listen 80;|listen ${ingress_interface}:${ingress_port} default_server;|g" \
     -e "/index index.html;/a\\    include /etc/nginx/includes/ingress_params.conf;" \
     -e 's|^[[:space:]]*add_header X|#&|g' \
+    -e 's|^[[:space:]]*add_header Content-Security-Policy|#&|g' \
     /etc/nginx/servers/ingress.conf
 
 sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/nginx/includes/ingress_params.conf

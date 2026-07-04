@@ -1,4 +1,8 @@
  
+## 0.8.2-1 (2026-07-04)
+- Fix nginx failing to start with `limit_req_zone "api_rl" already bound` (502 on every page, Suncuss/BirdNET-PiPy#59). Upstream 0.8.2 added http-level rate-limit zones, and the ingress config was generated as a full copy of nginx.conf — duplicating those declarations in the shared http context. `ingress.conf` is now built from the `server` block only, so http-level directives stay declared once.
+- Comment out the new upstream Content-Security-Policy header in ingress mode, matching the existing X-* security-header handling (ingress runs inside Home Assistant's authenticated frame; direct access keeps the full CSP).
+
 ## 0.8.2 (2026-07-04)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
  
