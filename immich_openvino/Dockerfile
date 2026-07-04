@@ -92,9 +92,11 @@ RUN if [ -f /etc/s6-overlay/s6-rc.d/init-test-run/run ]; then \
     fi
 
 # postgresql-client (for the psql CLI used in 99-run.sh) is already installed by the
-# imagegenius base image (postgresql-client-14 through 18), so no separate install is
-# needed here. A previous PGDG-repo install using `apt-key add` was removed: the base
-# image moved to a release where the apt-key binary no longer exists, breaking the build.
+# imagegenius base image, so no separate install is needed here. A previous PGDG-repo
+# install using `apt-key add` was removed: the base image moved to a release where the
+# apt-key binary no longer exists, breaking the build. Fail the build early, rather than
+# surfacing a cryptic runtime failure in 99-run.sh, if a future base image drops it.
+RUN command -v psql || { echo "psql not found in base image; postgresql-client must be provided by the upstream base image" >&2; exit 1; }
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
