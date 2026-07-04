@@ -46,7 +46,7 @@ See the official [v3 migration guide](https://immich.app/blog/v3-migration) for 
 
 ## Configuration
 
-Webui can be found at `<your-ip>:8080`. PostgreSQL/MySQL can be either internal or external.
+Webui can be found at `<your-ip>:8080`. PostgreSQL can be either internal or external.
 
 ### Options
 

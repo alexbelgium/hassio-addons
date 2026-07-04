@@ -144,28 +144,31 @@ EOF
     bashio::log.info "Database setup completed successfully."
 }
 
-# Function to check if vectors extension is enabled
+# Function to check if the vectors (pgvecto.rs) extension is available on the server
 check_vector_extension() {
-    echo "Checking if 'vectors' extension is enabled..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
-    if [[ "$RESULT" == "vectors" ]]; then
-        echo "✅ 'vectors' extension is enabled."
+    echo "Checking if 'vectors' extension is available for database '${DB_DATABASE_NAME}'..."
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/${DB_DATABASE_NAME}" -tAc "SELECT 1 FROM pg_available_extensions WHERE name = 'vectors';")
+    if [[ "$RESULT" == "1" ]]; then
+        echo "✅ 'vectors' extension is available."
         return 0
     else
-        bashio::log.warning "❌ 'vectors' extension is NOT enabled."
+        bashio::log.warning "❌ 'vectors' extension is NOT available."
         return 1
     fi
 }
 
-# Function to check if vchord extension is enabled
+# Function to check if the VectorChord (vchord) extension is available on the server.
+# Uses pg_available_extensions (whether the extension CAN be created) rather than
+# pg_extension (whether it has already been created), since Immich creates the extension
+# itself on first startup; checking pg_extension would false-warn on every fresh install.
 check_vchord_extension() {
-    echo "Checking if 'vchord' extension is enabled..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vchord';")
-    if [[ "$RESULT" == "vchord" ]]; then
-        echo "✅ 'vchord' extension is enabled."
+    echo "Checking if 'vchord' extension is available for database '${DB_DATABASE_NAME}'..."
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/${DB_DATABASE_NAME}" -tAc "SELECT 1 FROM pg_available_extensions WHERE name = 'vchord';")
+    if [[ "$RESULT" == "1" ]]; then
+        echo "✅ 'vchord' extension is available."
         return 0
     else
-        bashio::log.warning "❌ 'vchord' extension is NOT enabled."
+        bashio::log.warning "❌ 'vchord' extension is NOT available."
         return 1
     fi
 }

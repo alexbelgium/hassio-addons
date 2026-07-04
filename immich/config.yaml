@@ -137,8 +137,6 @@ schema:
   localdisks: str?
   networkdisks: str?
   skip_permissions_check: bool?
-services:
-  - mysql:want
 slug: immich
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
