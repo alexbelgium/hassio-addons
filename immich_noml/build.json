@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/imagegenius/immich:noml",
-    "amd64": "ghcr.io/imagegenius/immich:noml"
+    "aarch64": "ghcr.io/imagegenius/immich:3-noml",
+    "amd64": "ghcr.io/imagegenius/immich:3-noml"
   }
 }

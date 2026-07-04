@@ -144,28 +144,31 @@ EOF
     bashio::log.info "Database setup completed successfully."
 }
 
-# Function to check if vectors extension is enabled
+# Function to check if the vectors (pgvecto.rs) extension is available on the server
 check_vector_extension() {
-    echo "Checking if 'vectors' extension is enabled..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
-    if [[ "$RESULT" == "vectors" ]]; then
-        echo "✅ 'vectors' extension is enabled."
+    echo "Checking if 'vectors' extension is available for database '${DB_DATABASE_NAME}'..."
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/${DB_DATABASE_NAME}" -tAc "SELECT 1 FROM pg_available_extensions WHERE name = 'vectors';")
+    if [[ "$RESULT" == "1" ]]; then
+        echo "✅ 'vectors' extension is available."
         return 0
     else
-        bashio::log.warning "❌ 'vectors' extension is NOT enabled."
+        bashio::log.warning "❌ 'vectors' extension is NOT available."
         return 1
     fi
 }
 
-# Function to check if vchord extension is enabled
+# Function to check if the VectorChord (vchord) extension is available on the server.
+# Uses pg_available_extensions (whether the extension CAN be created) rather than
+# pg_extension (whether it has already been created), since Immich creates the extension
+# itself on first startup; checking pg_extension would false-warn on every fresh install.
 check_vchord_extension() {
-    echo "Checking if 'vchord' extension is enabled..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vchord';")
-    if [[ "$RESULT" == "vchord" ]]; then
-        echo "✅ 'vchord' extension is enabled."
+    echo "Checking if 'vchord' extension is available for database '${DB_DATABASE_NAME}'..."
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/${DB_DATABASE_NAME}" -tAc "SELECT 1 FROM pg_available_extensions WHERE name = 'vchord';")
+    if [[ "$RESULT" == "1" ]]; then
+        echo "✅ 'vchord' extension is available."
         return 0
     else
-        bashio::log.warning "❌ 'vchord' extension is NOT enabled."
+        bashio::log.warning "❌ 'vchord' extension is NOT available."
         return 1
     fi
 }
@@ -193,4 +196,18 @@ migrate_database
 export_db_env
 setup_root_user
 setup_database
-# check_vchord_extension || check_vector_extension
+
+# Immich v3 requires the VectorChord ('vchord') extension and no longer supports
+# 'pgvecto.rs'. Warn (non-fatally) when the external database does not expose it, so users
+# get a clear diagnostic instead of an opaque Immich startup failure. Immich creates and
+# validates the extension itself, so we never stop the addon here.
+if ! check_vchord_extension; then
+    bashio::log.warning "------------------------------------------------------------"
+    bashio::log.warning "Immich v3 requires the VectorChord ('vchord') PostgreSQL extension."
+    bashio::log.warning "Support for 'pgvecto.rs' has been removed upstream."
+    bashio::log.warning "Use the 'Postgres 15'/'Postgres 17' add-ons from this repository,"
+    bashio::log.warning "or another VectorChord-capable PostgreSQL image."
+    bashio::log.warning "Immich will attempt to create the extension itself on startup."
+    bashio::log.warning "Migration guide: https://immich.app/blog/v3-migration"
+    bashio::log.warning "------------------------------------------------------------"
+fi

@@ -137,12 +137,10 @@ schema:
   localdisks: str?
   networkdisks: str?
   skip_permissions_check: bool?
-services:
-  - mysql:want
 slug: immich
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "2.7.5-2"
+version: "3.0.1"
 video: true
 webui: http://[HOST]:[PORT:8080]

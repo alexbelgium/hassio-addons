@@ -1,5 +1,5 @@
 {
   "build_from": {
-    "amd64": "ghcr.io/imagegenius/immich:cuda"
+    "amd64": "ghcr.io/imagegenius/immich:3-cuda"
   }
 }
