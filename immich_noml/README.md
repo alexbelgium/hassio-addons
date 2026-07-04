@@ -35,6 +35,16 @@ Self-hosted photo and video backup solution directly from your mobile phone. Thi
 
 This addon is based on the [docker image](https://github.com/imagegenius/docker-immich) from imagegenius with machine learning components excluded to reduce resource consumption and improve compatibility with resource-constrained systems.
 
+## Immich v3
+
+This add-on tracks **Immich v3** (built on the `ghcr.io/imagegenius/immich:3-noml` image line). Machine learning is excluded, but the database requirement below still applies.
+
+- **Database**: Immich v3 requires PostgreSQL (14–17) with the **VectorChord (`vchord`)** extension; upstream `pgvecto.rs` support has been removed. The `Postgres 15` and `Postgres 17` add-ons in this repository already provide a VectorChord-capable database and are the recommended choice (you can also use the official `ghcr.io/immich-app/postgres:*-vectorchord*` image).
+- **Upgrading from Immich v2**: keep your existing VectorChord-capable database so Immich can migrate its data automatically. If your database still holds data in the old `pgvecto.rs` extension, leave that extension in place until Immich has finished migrating to VectorChord.
+- **CPU**: on `amd64`, Immich v3 requires an x86-64-v2 (or newer) CPU.
+
+See the official [v3 migration guide](https://immich.app/blog/v3-migration) for details.
+
 ## Use Cases
 
 The NoML variant is ideal for:

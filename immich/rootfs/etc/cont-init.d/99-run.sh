@@ -193,4 +193,18 @@ migrate_database
 export_db_env
 setup_root_user
 setup_database
-# check_vchord_extension || check_vector_extension
+
+# Immich v3 requires the VectorChord ('vchord') extension and no longer supports
+# 'pgvecto.rs'. Warn (non-fatally) when the external database does not expose it, so users
+# get a clear diagnostic instead of an opaque Immich startup failure. Immich creates and
+# validates the extension itself, so we never stop the addon here.
+if ! check_vchord_extension; then
+    bashio::log.warning "------------------------------------------------------------"
+    bashio::log.warning "Immich v3 requires the VectorChord ('vchord') PostgreSQL extension."
+    bashio::log.warning "Support for 'pgvecto.rs' has been removed upstream."
+    bashio::log.warning "Use the 'Postgres 15'/'Postgres 17' add-ons from this repository,"
+    bashio::log.warning "or another VectorChord-capable PostgreSQL image."
+    bashio::log.warning "Immich will attempt to create the extension itself on startup."
+    bashio::log.warning "Migration guide: https://immich.app/blog/v3-migration"
+    bashio::log.warning "------------------------------------------------------------"
+fi

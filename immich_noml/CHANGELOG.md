@@ -1,4 +1,10 @@
 
+## 3.0.1 (2026-07-04)
+- Migrate to Immich v3 (now based on the `ghcr.io/imagegenius/immich:3-noml` image line, tracking the v3 major release)
+- This add-on ships without machine learning; the VectorChord (`vchord`) Postgres extension is still required by Immich v3, while upstream `pgvecto.rs` support has been removed. Use this repository's `Postgres 15`/`Postgres 17` add-ons (or another VectorChord-capable Postgres), and let Immich finish migrating existing data before the old extension is removed
+- Immich v3 requires an x86-64-v2 (or newer) CPU on amd64
+- Migration guide: https://immich.app/blog/v3-migration
+
 ## 2.7.5 (2026-05-22)
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
