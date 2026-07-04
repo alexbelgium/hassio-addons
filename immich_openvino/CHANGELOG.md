@@ -1,3 +1,5 @@
+## 3.0.1-2 (04-07-2026)
+- Minor bugs fixed
 ## 3.0.1 (2026-07-04)
 - Migrate to Immich v3 (now based on the `ghcr.io/imagegenius/immich:3-openvino` image line, tracking the v3 major release)
 - Immich v3 requires the VectorChord (`vchord`) Postgres extension; upstream `pgvecto.rs` support has been removed. Use this repository's `Postgres 15`/`Postgres 17` add-ons (or another VectorChord-capable Postgres), and let Immich finish migrating existing data before the old extension is removed
