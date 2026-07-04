@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 Cloudcommander New Directory (opened 2026-03-19)](https://github.com/alexbelgium/hassio-addons/issues/2594) by [@pgitsov](https://github.com/pgitsov)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
