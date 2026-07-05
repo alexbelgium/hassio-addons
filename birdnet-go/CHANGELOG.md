@@ -1,3 +1,5 @@
+## nightly-20260615-2 (05-07-2026)
+- Minor bugs fixed
  - Fix detections/database not persisting across restarts on a fresh install: upstream's default `config.yaml` ships `output.sqlite.path: birdnet.db` (relative) explicitly, so the missing-only (`//=`) seeding introduced previously never rewrote it to an absolute path. A relative path resolves against the app's ephemeral working directory, so the database was silently recreated empty on every restart. Any relative `output.sqlite.path` is now rewritten to live under the persistent `/config` on startup; values already set to an absolute path are left untouched. (https://github.com/tphakala/birdnet-go/discussions/3774)
  - MQTT auto-config now also enables BirdNET-Go's native Home Assistant MQTT auto-discovery: detection sensors appear in Home Assistant automatically with no manual YAML (existing UI/config.yaml edits are preserved)
 - MQTT auto-config seeds `realtime.mqtt.retain: true` (only when unset) so sensor states survive Home Assistant restarts
