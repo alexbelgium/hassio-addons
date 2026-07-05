@@ -135,6 +135,20 @@ fi
 # survive container restarts.
 bashio::log.info "Seeding default configuration values (only if missing)"
 
+# Upstream's shipped default config.yaml explicitly sets output.sqlite.path
+# to the relative "birdnet.db", so the "//=" below (default-if-missing)
+# never fires for it. A relative path resolves against the app's working
+# directory, which lives in the ephemeral container filesystem rather than
+# a persistent volume, so the database is silently recreated empty on every
+# restart. Rewrite any relative sqlite path to live under the persistent
+# /config so detections survive reboots.
+CURRENT_SQLITE_PATH="$(yq -r '.output.sqlite.path // ""' "$CONFIG_LOCATION")"
+if [[ -n "$CURRENT_SQLITE_PATH" && "$CURRENT_SQLITE_PATH" != /* ]]; then
+    validate_safe_path "$CURRENT_SQLITE_PATH"
+    bashio::log.warning "output.sqlite.path ('$CURRENT_SQLITE_PATH') is relative and would not persist across restarts; rewriting to /config/$CURRENT_SQLITE_PATH"
+    yq -i -y ".output.sqlite.path = \"/config/${CURRENT_SQLITE_PATH}\"" "$CONFIG_LOCATION"
+fi
+
 yq -i -y '.output.sqlite.path //= "/config/birdnet.db"' "$CONFIG_LOCATION"
 
 ####################
