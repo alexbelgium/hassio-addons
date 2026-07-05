@@ -17,12 +17,22 @@ normalize_path() {
 
 # Reject paths containing characters that would break the SQL/YAML literals
 # we substitute into below. We deliberately allow only "safe" filename chars.
+# Also reject ".." path segments so a relative path can't traverse outside
+# the directory we prefix it with (e.g. "/config") when we rewrite it below.
 validate_safe_path() {
     local p="$1"
     if [[ ! "$p" =~ ^[A-Za-z0-9._/-]+$ ]]; then
         bashio::log.fatal "Refusing unsafe path: '$p' (only [A-Za-z0-9._/-] allowed)"
         exit 1
     fi
+    local segment
+    local IFS=/
+    for segment in $p; do
+        if [[ "$segment" == ".." ]]; then
+            bashio::log.fatal "Refusing unsafe path: '$p' (path traversal '..' is not allowed)"
+            exit 1
+        fi
+    done
 }
 
 if [ ! -f "$CONFIG_LOCATION" ]; then
@@ -145,8 +155,12 @@ bashio::log.info "Seeding default configuration values (only if missing)"
 CURRENT_SQLITE_PATH="$(yq -r '.output.sqlite.path // ""' "$CONFIG_LOCATION")"
 if [[ -n "$CURRENT_SQLITE_PATH" && "$CURRENT_SQLITE_PATH" != /* ]]; then
     validate_safe_path "$CURRENT_SQLITE_PATH"
-    bashio::log.warning "output.sqlite.path ('$CURRENT_SQLITE_PATH') is relative and would not persist across restarts; rewriting to /config/$CURRENT_SQLITE_PATH"
-    yq -i -y ".output.sqlite.path = \"/config/${CURRENT_SQLITE_PATH}\"" "$CONFIG_LOCATION"
+    NEW_SQLITE_PATH="/config/${CURRENT_SQLITE_PATH}"
+    bashio::log.warning "output.sqlite.path ('$CURRENT_SQLITE_PATH') is relative and would not persist across restarts; rewriting to $NEW_SQLITE_PATH"
+    # SQLite does not create missing parent directories, so ensure one exists
+    # if the (validated, traversal-free) path includes a subdirectory.
+    mkdir -p "$(dirname "$NEW_SQLITE_PATH")"
+    yq -i -y ".output.sqlite.path = \"${NEW_SQLITE_PATH}\"" "$CONFIG_LOCATION"
 fi
 
 yq -i -y '.output.sqlite.path //= "/config/birdnet.db"' "$CONFIG_LOCATION"

@@ -1,3 +1,6 @@
+## nightly-20260615-3 (05-07-2026)
+- Harden the `output.sqlite.path` rewrite added for the persistence fix: reject paths containing `..` traversal segments (shared `validate_safe_path` check), and create the destination's parent directory under `/config` when the relative path includes a subdirectory (e.g. `db/birdnet.db`), since SQLite does not create missing parent directories itself.
+
 ## nightly-20260615-2 (05-07-2026)
 - Minor bugs fixed
  - Fix detections/database not persisting across restarts on a fresh install: upstream's default `config.yaml` ships `output.sqlite.path: birdnet.db` (relative) explicitly, so the missing-only (`//=`) seeding introduced previously never rewrote it to an absolute path. A relative path resolves against the app's ephemeral working directory, so the database was silently recreated empty on every restart. Any relative `output.sqlite.path` is now rewritten to live under the persistent `/config` on startup; values already set to an absolute path are left untouched. (https://github.com/tphakala/birdnet-go/discussions/3774)
