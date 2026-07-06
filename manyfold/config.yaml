@@ -1,7 +1,7 @@
 name: "Manyfold"
 slug: manyfold
 description: "Manyfold 3D model manager as a Home Assistant add-on, using the upstream image with configurable library/index paths."
-version: "0.146.0"
+version: "0.146.1"
 url: "https://github.com/alexbelgium/hassio-addons/tree/master/manyfold"
 image: ghcr.io/alexbelgium/manyfold-{arch}
 arch:
@@ -9,6 +9,7 @@ arch:
   - aarch64
 startup: services
 init: false
+hassio_api: true
 
 ports:
   3214/tcp: 3214
@@ -27,6 +28,7 @@ options:
   puid: 1000
   pgid: 1000
   multiuser: true
+  public_hostname: ""
   library_path: "/share/manyfold/models"
   thumbnails_path: "/config/thumbnails"
   log_level: "info"
@@ -41,6 +43,7 @@ schema:
   secret_key_base: str
   puid: int
   pgid: int
+  public_hostname: str?
   multiuser: bool
   library_path: str
   thumbnails_path: str

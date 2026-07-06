@@ -11,6 +11,9 @@ configuration:
   multiuser:
     name: Multiuser mode
     description: Enable or disable Manyfold multiuser login.
+  public_hostname:
+    name: Public hostname
+    description: Public hostname used by Manyfold for generated links. Leave blank to use Home Assistant external URL host, or homeassistant.local if unavailable.
   library_path:
     name: Library path
     description: Folder scanned/indexed by Manyfold. Must be under /share, /media, or /config.
