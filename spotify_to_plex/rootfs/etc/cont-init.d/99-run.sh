@@ -11,7 +11,7 @@ if [ -d /app/config ] && [ ! -L /app/config ]; then
     if cp -rn /app/config/. "$CONFIG_TARGET/"; then
         rm -rf /app/config
     else
-        bashio::log.error "Failed to migrate /app/config to $CONFIG_TARGET; leaving original config in place"
+        bashio::exit.nok "Failed to migrate /app/config to $CONFIG_TARGET; refusing to start with a non-persistent config"
     fi
 fi
 
@@ -36,5 +36,5 @@ if [ -z "${ENCRYPTION_KEY:-}" ]; then
 fi
 
 # Hand off to the upstream supervisord (web + scraper + scheduler)
-cd /app || true
+cd /app || bashio::exit.nok "Cannot find /app (upstream image layout may have changed)"
 exec /docker-entrypoint.sh supervisord -n -c /etc/supervisor/conf.d/supervisord.conf
