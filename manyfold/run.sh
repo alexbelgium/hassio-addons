@@ -14,6 +14,7 @@ DEFAULT_DEFAULT_WORKER_CONCURRENCY="4"
 DEFAULT_PERFORMANCE_WORKER_CONCURRENCY="1"
 DEFAULT_MAX_FILE_UPLOAD_SIZE="1073741824"
 DEFAULT_MAX_FILE_EXTRACT_SIZE="1073741824"
+DEFAULT_PUBLIC_HOSTNAME="homeassistant.local"
 
 log() {
   echo "[manyfold-addon] $*"
@@ -26,7 +27,46 @@ die() {
 
 read_opt() {
   local key="$1"
-  jq -er --arg k "$key" '.[$k]' "$OPTIONS_JSON" 2>/dev/null || true
+  jq -er --arg k "$key" '.[$k] // empty' "$OPTIONS_JSON" 2>/dev/null || true
+}
+
+strip_hostname() {
+  local raw="$1"
+
+  raw="${raw#http://}"
+  raw="${raw#https://}"
+  raw="${raw%%/*}"
+
+  if [[ "$raw" =~ ^(\[[^]]+\])(:[0-9]+)?$ ]]; then
+    raw="${BASH_REMATCH[1]}"
+  else
+    raw="${raw%%:*}"
+  fi
+
+  printf '%s\n' "$raw"
+}
+
+detect_ha_public_hostname() {
+  local supervisor_url="${SUPERVISOR:-http://supervisor}"
+  local response external_url external_host
+
+  if [[ -z "${SUPERVISOR_TOKEN:-}" ]] || ! command -v curl >/dev/null 2>&1; then
+    printf '%s\n' "$DEFAULT_PUBLIC_HOSTNAME"
+    return
+  fi
+
+  response="$(curl -fsSL \
+    -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
+    "${supervisor_url}/core/api/config" 2>/dev/null || true)"
+  external_url="$(jq -er '.external_url // empty' <<< "$response" 2>/dev/null || true)"
+  external_host="$(strip_hostname "$external_url")"
+
+  if [[ -n "$external_host" && "$external_host" != "null" ]]; then
+    printf '%s\n' "$external_host"
+    return
+  fi
+
+  printf '%s\n' "$DEFAULT_PUBLIC_HOSTNAME"
 }
 
 normalize_path() {
@@ -176,6 +216,7 @@ PERFORMANCE_WORKER_CONCURRENCY="$(read_opt performance_worker_concurrency)"; PER
 MAX_FILE_UPLOAD_SIZE="$(read_opt max_file_upload_size)"; MAX_FILE_UPLOAD_SIZE="${MAX_FILE_UPLOAD_SIZE:-$DEFAULT_MAX_FILE_UPLOAD_SIZE}"
 MAX_FILE_EXTRACT_SIZE="$(read_opt max_file_extract_size)"; MAX_FILE_EXTRACT_SIZE="${MAX_FILE_EXTRACT_SIZE:-$DEFAULT_MAX_FILE_EXTRACT_SIZE}"
 SECRET_KEY_BASE="$(read_opt secret_key_base)"; SECRET_KEY_BASE="${SECRET_KEY_BASE:-}"
+PUBLIC_HOSTNAME_RAW="$(read_opt public_hostname)"; PUBLIC_HOSTNAME_RAW="${PUBLIC_HOSTNAME_RAW:-}"
 
 [[ "$PUID" =~ ^[0-9]+$ ]] || die "puid must be a non-negative integer"
 [[ "$PGID" =~ ^[0-9]+$ ]] || die "pgid must be a non-negative integer"
@@ -188,6 +229,13 @@ SECRET_KEY_BASE="$(read_opt secret_key_base)"; SECRET_KEY_BASE="${SECRET_KEY_BAS
 
 LIBRARY_PATH="$(require_mapped_path "library_path" "$LIBRARY_PATH_RAW")"
 THUMBNAILS_PATH="$(require_mapped_path "thumbnails_path" "$THUMBNAILS_PATH_RAW")"
+
+if [[ -n "$PUBLIC_HOSTNAME_RAW" ]]; then
+  PUBLIC_HOSTNAME="$(strip_hostname "$PUBLIC_HOSTNAME_RAW")"
+else
+  PUBLIC_HOSTNAME="$(detect_ha_public_hostname)"
+fi
+[[ -n "$PUBLIC_HOSTNAME" && "$PUBLIC_HOSTNAME" != "null" ]] || PUBLIC_HOSTNAME="$DEFAULT_PUBLIC_HOSTNAME"
 
 case "$THUMBNAILS_PATH" in
   /config|/config/*) ;;
@@ -223,6 +271,7 @@ export MULTIUSER
 export MANYFOLD_MULTIUSER="$MULTIUSER"
 export MANYFOLD_LIBRARY_PATH="$LIBRARY_PATH"
 export MANYFOLD_THUMBNAILS_PATH="$THUMBNAILS_PATH"
+export PUBLIC_HOSTNAME
 export RAILS_LOG_LEVEL="$LOG_LEVEL"
 export MANYFOLD_LOG_LEVEL="$LOG_LEVEL"
 export WEB_CONCURRENCY

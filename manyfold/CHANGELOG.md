@@ -1,4 +1,9 @@
+## 0.146.1-2 (06-07-2026)
+- Minor bugs fixed
  
+## 0.146.1 (2026-07-06)
+- Add configurable Manyfold public hostname with Home Assistant external URL and homeassistant.local fallbacks.
+
 ## 0.146.0 (2026-07-04)
 - Update to latest version from manyfold3d/manyfold (changelog : https://github.com/manyfold3d/manyfold/releases)
 ## 0.145.1 (24-06-2026)
