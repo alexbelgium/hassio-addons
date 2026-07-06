@@ -1,0 +1,6 @@
+{
+  "build_from": {
+    "aarch64": "jjdenhertog/spotify-to-plex:1.0.104",
+    "amd64": "jjdenhertog/spotify-to-plex:1.0.104"
+  }
+}

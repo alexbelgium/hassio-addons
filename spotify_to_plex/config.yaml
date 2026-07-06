@@ -1,0 +1,34 @@
+arch:
+  - amd64
+  - aarch64
+description: Sync Spotify playlists to Plex
+environment:
+  STORAGE_DIR: /config
+image: ghcr.io/alexbelgium/spotify_to_plex-{arch}
+init: false
+map:
+  - addon_config:rw
+name: Spotify to Plex
+options:
+  env_vars: []
+  SPOTIFY_API_CLIENT_ID: ""
+  SPOTIFY_API_CLIENT_SECRET: ""
+  SPOTIFY_API_REDIRECT_URI: "https://jjdenhertog.github.io/spotify-to-plex/callback.html"
+  ENCRYPTION_KEY: ""
+panel_icon: mdi:spotify
+ports:
+  9030/tcp: 9030
+ports_description:
+  9030/tcp: Web interface
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
+  SPOTIFY_API_CLIENT_ID: str?
+  SPOTIFY_API_CLIENT_SECRET: str?
+  SPOTIFY_API_REDIRECT_URI: str?
+  ENCRYPTION_KEY: str?
+slug: spotify_to_plex
+url: https://github.com/alexbelgium/hassio-addons/tree/master/spotify_to_plex
+version: "1.0.104"
+webui: "http://[HOST]:[PORT:9030]"
