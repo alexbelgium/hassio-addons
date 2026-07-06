@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 133
+- In the repository : 134
 - Installed : 508490
 
 ### Top 3
@@ -908,6 +908,13 @@ If you want to do add the repository manually, please follow the procedure highl
 ![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/spotify.svg) [Spotify to Plex](spotify_to_plex/) : Sync Spotify playlists to Plex
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fspotify_to_plex%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fspotify_to_plex%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/chart-timeline.svg) [Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
 
