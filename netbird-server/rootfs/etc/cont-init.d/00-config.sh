@@ -31,6 +31,7 @@ DASHBOARD_PORT=8080
 SIGNAL_PORT=8083
 SIGNAL_GRPC_PORT=10000
 RELAY_PORT=8084
+RELAY_METRICS_PORT=9093
 
 if [[ -z "$DOMAIN" || "$DOMAIN" == "netbird.example.com" ]]; then
   result=$(bashio::api.supervisor GET /core/api/config true || true)
@@ -110,10 +111,14 @@ NB_LOG_LEVEL=info
 NB_LISTEN_ADDRESS=:${RELAY_PORT}
 NB_EXPOSED_ADDRESS=${NETBIRD_RELAY_PROTO}://${DOMAIN}:${NETBIRD_PORT}
 NB_AUTH_SECRET=${RELAY_AUTH_SECRET}
+NB_METRICS_PORT=${RELAY_METRICS_PORT}
 NB_ENABLE_STUN=true
 NB_STUN_LOG_LEVEL=info
 NB_STUN_PORTS=${NETBIRD_STUN_PORT}
 CONFIG
+fi
+if ! grep -q '^NB_METRICS_PORT=' "$RELAY_ENV_FILE"; then
+  echo "NB_METRICS_PORT=${RELAY_METRICS_PORT}" >> "$RELAY_ENV_FILE"
 fi
 
 # Generate dashboard env file if missing
@@ -130,7 +135,7 @@ AUTH_CLIENT_ID=netbird-dashboard
 AUTH_CLIENT_SECRET=
 AUTH_AUTHORITY=${NETBIRD_HTTP_PROTOCOL}://${DOMAIN}/oauth2
 USE_AUTH0=false
-AUTH_SUPPORTED_SCOPES=openid profile email groups
+AUTH_SUPPORTED_SCOPES="openid profile email groups"
 AUTH_REDIRECT_URI=/nb-auth
 AUTH_SILENT_REDIRECT_URI=/nb-silent-auth
 # SSL
@@ -140,6 +145,7 @@ LETSENCRYPT_DOMAIN=none
 CONFIG
   chmod 600 "$DASHBOARD_ENV_FILE"
 fi
+sed -i 's/^AUTH_SUPPORTED_SCOPES=openid profile email groups$/AUTH_SUPPORTED_SCOPES="openid profile email groups"/' "$DASHBOARD_ENV_FILE"
 
 # Generate Caddyfile if missing
 CADDYFILE="$DATA_DIR/Caddyfile"
