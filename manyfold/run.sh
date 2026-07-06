@@ -27,7 +27,7 @@ die() {
 
 read_opt() {
   local key="$1"
-  jq -er --arg k "$key" '.[$k]' "$OPTIONS_JSON" 2>/dev/null || true
+  jq -er --arg k "$key" '.[$k] // empty' "$OPTIONS_JSON" 2>/dev/null || true
 }
 
 strip_hostname() {
