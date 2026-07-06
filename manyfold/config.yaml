@@ -10,6 +10,7 @@ arch:
 startup: services
 init: false
 hassio_api: true
+homeassistant_api: true
 
 ports:
   3214/tcp: 3214

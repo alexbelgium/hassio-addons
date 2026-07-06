@@ -36,7 +36,12 @@ strip_hostname() {
   raw="${raw#http://}"
   raw="${raw#https://}"
   raw="${raw%%/*}"
-  raw="${raw%%:*}"
+
+  if [[ "$raw" =~ ^(\[[^]]+\])(:[0-9]+)?$ ]]; then
+    raw="${BASH_REMATCH[1]}"
+  else
+    raw="${raw%%:*}"
+  fi
 
   printf '%s\n' "$raw"
 }
