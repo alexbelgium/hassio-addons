@@ -1,0 +1,8 @@
+{
+  "last_update": "2026-07-06",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "spotify_to_plex",
+  "source": "dockerhub",
+  "upstream_repo": "jjdenhertog/spotify-to-plex",
+  "upstream_version": "1.0.104"
+}
