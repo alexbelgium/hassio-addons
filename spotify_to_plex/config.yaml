@@ -1,7 +1,7 @@
 arch:
   - amd64
   - aarch64
-description: Sync Spotify playlists to Plex
+description: "Sync Spotify playlists to Plex"
 environment:
   STORAGE_DIR: /config
 image: ghcr.io/alexbelgium/spotify_to_plex-{arch}
