@@ -1,3 +1,5 @@
+## 0.146.1-2 (06-07-2026)
+- Minor bugs fixed
  
 ## 0.146.1 (2026-07-06)
 - Add configurable Manyfold public hostname with Home Assistant external URL and homeassistant.local fallbacks.
