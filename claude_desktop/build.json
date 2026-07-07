@@ -1,0 +1,6 @@
+{
+  "build_from": {
+    "aarch64": "ghcr.io/linuxserver/baseimage-selkies:arm64v8-debianbookworm",
+    "amd64": "ghcr.io/linuxserver/baseimage-selkies:amd64-debianbookworm"
+  }
+}

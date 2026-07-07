@@ -1,0 +1,7 @@
+{
+  "source": "github",
+  "upstream_repo": "linuxserver/docker-baseimage-selkies",
+  "github_fulltag": true,
+  "slug": "claude_desktop",
+  "paused": false
+}
