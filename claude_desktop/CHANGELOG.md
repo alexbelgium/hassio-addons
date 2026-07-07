@@ -1,3 +1,5 @@
+## 1.0 (07-07-2026)
+- Minor bugs fixed
 # Changelog
 
 ## 1.1
