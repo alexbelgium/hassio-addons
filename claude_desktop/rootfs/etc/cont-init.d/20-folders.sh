@@ -38,7 +38,7 @@ done
 
 for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
     if [ -d "$folders" ]; then
-        sed -i "s|/config/data|$LOCATION|g" $(find "$folders" -type f) &> /dev/null || true
+        find "$folders" -type f -exec sed -i "s|/config/data|$LOCATION|g" {} + &> /dev/null || true
     fi
 done
 
