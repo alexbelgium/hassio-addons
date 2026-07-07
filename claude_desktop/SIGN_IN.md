@@ -1,11 +1,11 @@
-# Claude Desktop sign-in — fix plan (not implemented)
+# Claude Desktop sign-in — shipped fixes and planned work
 
 Two related sign-in problems when Claude Desktop runs inside the LinuxServer Selkies
 streamed desktop.
 
 **Status:**
-- **Problem B (keyring persistence) — IMPLEMENTED** in v1.4 (Dockerfile + `rootfs/defaults/autostart`).
-- **Problem A (in-desktop browser for OAuth) — PLAN ONLY, intentionally not implemented.**
+- **Shipped:** Problem B (keyring persistence) is implemented in v1.4 (Dockerfile + `rootfs/defaults/autostart`).
+- **Planned only:** Problem A (in-desktop browser for OAuth) is intentionally not implemented.
   The image ships no browser; complete the login with the user-side workaround below.
 
 ---

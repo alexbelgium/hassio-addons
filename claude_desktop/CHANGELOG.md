@@ -1,3 +1,8 @@
+## 1.5 (07-07-2026)
+
+- Change the default Claude Desktop data location to `/data/data`.
+- Add Home Assistant smart context, Home Assistant MCP, and dangerous permission skip options.
+
 ## 1.4 (07-07-2026)
 
 - Persist Claude Desktop sign-in: bundle gnome-keyring/libsecret/dbus-x11 and start an unlocked Secret Service in the desktop session, and launch with --password-store=gnome-libsecret. Fixes "Your sign-in won't be saved on this device. Install and unlock a system keyring". The keyring DB lives on persistent storage (/config/data), so the session survives restarts.

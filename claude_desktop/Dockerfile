@@ -31,12 +31,12 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Allow UID and GID setting
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
-    usermod --home /config/data abc && \
+    usermod --home /data/data abc && \
     if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
 # Global LSIO modifications
 COPY ha_lsio.sh /ha_lsio.sh
-ARG CONFIGLOCATION="/config/data"
+ARG CONFIGLOCATION="/data/data"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 ##################
