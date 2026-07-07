@@ -33,8 +33,5 @@ sed -i '/proxy_buffering/a sub_filter_types *;' "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a sub_filter "vnc/index.html?autoconnect" "vnc/index.html?path=%%path%%/websockify?autoconnect";' "${NGINX_CONFIG}"
 sed -i "s|%%path%%|${SUBFOLDER:1}|g" "${NGINX_CONFIG}"
 
-# Avoid content encoding on proxied responses to keep Selkies happy
-sed -i '/proxy_buffering/a \
-    proxy_set_header Accept-Encoding "";' "${NGINX_CONFIG}"
-
+# Avoid content encoding on proxied responses to keep Selkies happy (handled by proxy_set_header Accept-Encoding insertion above)
 cp "${NGINX_CONFIG}" /etc/nginx/sites-enabled
