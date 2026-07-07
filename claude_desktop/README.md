@@ -38,7 +38,7 @@ Claude Desktop sign-in requires a claude.ai plan that supports the Desktop app. 
 | `DRINODE` | | Optional GPU device override for Selkies. |
 | `DNS_server` | `8.8.8.8` | DNS server used by the standard DNS module. |
 | `auto_update` | `true` | Check Anthropic's apt repository and upgrade `claude-desktop` at add-on startup. |
-| `install_headroom` | `true` | Make the baked-in `headroom` command available and log a usage hint. |
+| `install_headroom` | `true` | Register the baked-in `headroom` MCP server in Claude Desktop, exposing its `headroom_compress`/`headroom_retrieve`/`headroom_stats` context-compression tools inside the app. (Claude Desktop overrides `ANTHROPIC_BASE_URL`, so transparent proxy compression is not possible — MCP is the supported path; see [headroom #869](https://github.com/headroomlabs-ai/headroom/issues/869).) Disabling removes the entry again. |
 | `install_rtk` | `true` | Configure the rtk Claude Code `PreToolUse` hook in the persistent Claude Code settings. |
 | `install_caveman` | `true` | Install the caveman Claude Code plugin into the persistent Claude Code home. |
 | `install_github_cli` | `true` | Enable first-start checks and setup for the baked-in `git` and `gh` commands. |
