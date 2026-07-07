@@ -1,1 +1,16 @@
-claude-desktop --no-sandbox
+#!/usr/bin/env sh
+# Persist Claude Desktop sign-in across restarts.
+# Claude Desktop (Electron) stores its auth token via safeStorage, which on Linux needs the
+# Secret Service API (org.freedesktop.secrets). Provide it with gnome-keyring on the openbox
+# session bus (startwm.sh runs `dbus-launch --exit-with-session`), unlocked with an empty
+# password so it comes back automatically after a restart. The keyring DB lives under
+# $HOME/.local/share/keyrings, and HOME=/config/data is persistent add-on storage, so the
+# saved sign-in survives add-on restarts.
+eval "$(gnome-keyring-daemon --start --components=secrets 2>/dev/null)" || true
+printf '' | gnome-keyring-daemon --unlock 2>/dev/null || true
+export GNOME_KEYRING_CONTROL SSH_AUTH_SOCK
+dbus-update-activation-environment --all >/dev/null 2>&1 || true
+
+# --password-store=gnome-libsecret forces Electron onto the libsecret backend instead of
+# falling back to plaintext (and warning that the sign-in will not be saved).
+claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret
