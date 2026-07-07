@@ -51,10 +51,7 @@ import os
 from pathlib import Path
 
 path = Path(os.environ["CLAUDE_DESKTOP_CONFIG"])
-try:
-    data = json.loads(path.read_text())
-except Exception:
-    data = None
+data = json.loads(path.read_text())
 if isinstance(data, dict):
     servers = data.get("mcpServers")
     if isinstance(servers, dict) and servers.pop("headroom", None) is not None:
