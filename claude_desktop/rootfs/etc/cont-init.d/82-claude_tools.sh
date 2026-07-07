@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 set -e
-
+set -o pipefail
 mkdir -p "$HOME/.claude"
 
 if bashio::config.true 'install_headroom'; then
