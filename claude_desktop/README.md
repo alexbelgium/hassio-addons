@@ -22,6 +22,7 @@ Claude Desktop sign-in requires a claude.ai plan that supports the Desktop app. 
 - Persistent `$HOME` under `/config/data`, preserving Claude Desktop and Claude Code sign-in state across restarts.
 - Optional runtime Claude Desktop updates from Anthropic's apt repository.
 - Optional extra apt and pip package installation.
+- Baked-in `git` and GitHub CLI (`gh`) with optional startup credential configuration.
 - Custom script support through the repository standard `claude_desktop.sh` script.
 - Optional bundled Claude Code optimization tools: headroom, rtk, and caveman.
 - Low-power defaults: GPU device mapping, `AUTO_GPU=1`, `SELKIES_FRAMERATE=30`, `/tmp` tmpfs, and `$HOME/.cache` redirected to `/tmp/cache`.
@@ -40,6 +41,10 @@ Claude Desktop sign-in requires a claude.ai plan that supports the Desktop app. 
 | `install_headroom` | `true` | Make the baked-in `headroom` command available and log a usage hint. |
 | `install_rtk` | `true` | Configure the rtk Claude Code `PreToolUse` hook in the persistent Claude Code settings. |
 | `install_caveman` | `true` | Install the caveman Claude Code plugin into the persistent Claude Code home. |
+| `install_github_cli` | `true` | Enable first-start checks and setup for the baked-in `git` and `gh` commands. |
+| `github_token` | | Optional GitHub personal access token used to authenticate `gh` and configure Git credentials for GitHub. |
+| `github_username` | | Optional global Git author name. |
+| `github_email` | | Optional global Git author email. |
 | `additional_apps` | | Comma-separated Debian apt packages to install at startup, for example `htop,git`. |
 | `additional_pip` | | Comma-separated pip packages to install at startup. Installs use `--break-system-packages`. |
 | `data_location` | `/config/data` | Persistent home directory location. Keep this persistent so Claude sign-in survives restarts. |

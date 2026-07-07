@@ -1,4 +1,5 @@
 ## 1.2 (07-07-2026)
+- Add baked-in git/GitHub CLI support with optional startup credential configuration.
 
 - Fix Selkies startup by creating the s6 environment directory and XDG runtime directory before services start.
 

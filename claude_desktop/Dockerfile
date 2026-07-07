@@ -56,7 +56,7 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
 RUN curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
     echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" > /etc/apt/sources.list.d/claude-desktop.list && \
     apt-get update && \
-    apt-get install -y --no-install-recommends claude-desktop python3-pip && \
+    apt-get install -y --no-install-recommends claude-desktop python3-pip git gh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
