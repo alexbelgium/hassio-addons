@@ -62,7 +62,7 @@ RUN curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://d
         gnome-keyring \
         libsecret-1-0 \
         dbus-x11 \
-        git gh && \
+        git gh intel-opencl-icd && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
