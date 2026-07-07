@@ -64,7 +64,9 @@ RUN curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://d
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
     pip3 install --break-system-packages "headroom-ai[all]" && \
-    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh && \
+    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh -o /tmp/rtk-install.sh && \
+    HOME=/root sh /tmp/rtk-install.sh && \
+    rm /tmp/rtk-install.sh && \
     if [ -x /root/.local/bin/rtk ] && [ ! -x /usr/local/bin/rtk ]; then mv /root/.local/bin/rtk /usr/local/bin/rtk; fi && \
     if [ -x /usr/local/bin/rtk ]; then chmod +x /usr/local/bin/rtk; else echo "rtk binary was not installed on PATH"; exit 1; fi && \
     apt-get clean && \
