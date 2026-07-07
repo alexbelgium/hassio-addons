@@ -1,0 +1,16 @@
+#!/usr/bin/with-contenv bashio
+# Headroom optimization proxy — runs ONLY as a local backend for the headroom MCP tools
+# (headroom_compress / headroom_retrieve, registered in 82-claude_tools.sh). It is NOT a
+# traffic router: no client's ANTHROPIC_BASE_URL is pointed at it, so the Claude Desktop
+# Electron app (which force-overrides ANTHROPIC_BASE_URL — headroom #869) and every other
+# client are unaffected. Without this backend the MCP tools cannot store/retrieve compressed
+# content and no savings are ever recorded.
+declare port=8787
+
+if bashio::config.true 'install_headroom' && command -v headroom >/dev/null 2>&1; then
+    bashio::log.info "svc-headroom: starting headroom proxy on 127.0.0.1:${port} (MCP backend only; no client routing)"
+    exec headroom proxy --host 127.0.0.1 --port "${port}"
+fi
+
+bashio::log.info "svc-headroom: install_headroom disabled or headroom not found; idling"
+exec sleep infinity

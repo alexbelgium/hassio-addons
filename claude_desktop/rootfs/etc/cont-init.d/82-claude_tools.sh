@@ -61,6 +61,52 @@ if isinstance(data, dict):
 PY
 fi
 
+# Guide Claude to actually use the headroom compression tools so the MCP integration produces
+# real savings (otherwise the tools sit unused and `headroom savings` stays empty). Managed,
+# idempotent block appended to the user's global CLAUDE.md; removed when headroom is disabled.
+CLAUDE_MD="$HOME/.claude/CLAUDE.md"
+HEADROOM_GUIDE_BEGIN="<!-- BEGIN headroom (managed by claude_desktop addon) -->"
+if bashio::config.true 'install_headroom'; then
+    mkdir -p "$(dirname "$CLAUDE_MD")"
+    if ! { [ -f "$CLAUDE_MD" ] && grep -qF "$HEADROOM_GUIDE_BEGIN" "$CLAUDE_MD"; }; then
+        bashio::log.info "Adding headroom usage guidance to CLAUDE.md"
+        {
+            [ -s "$CLAUDE_MD" ] && printf '\n'
+            cat <<'MD'
+<!-- BEGIN headroom (managed by claude_desktop addon) -->
+## Headroom context compression
+
+A local Headroom proxy (127.0.0.1:8787) backs the `headroom` MCP tools. To save context tokens:
+when you produce or read a **large, structured** blob you will keep referring to — file listings,
+search results, JSON/config dumps, big command outputs, roughly >500 tokens — call
+`mcp__headroom__headroom_compress` on it and keep the returned compressed text + `hash` instead of
+the raw content. Call `mcp__headroom__headroom_retrieve` with that hash when you need the full
+original back. Skip compression for error/stack-trace output (Headroom deliberately protects it)
+and for small or one-off content. Use `mcp__headroom__headroom_stats` to check savings.
+<!-- END headroom (managed by claude_desktop addon) -->
+MD
+        } >> "$CLAUDE_MD"
+    fi
+elif [ -f "$CLAUDE_MD" ] && grep -qF "$HEADROOM_GUIDE_BEGIN" "$CLAUDE_MD"; then
+    bashio::log.info "Removing headroom usage guidance from CLAUDE.md"
+    CLAUDE_MD="$CLAUDE_MD" python3 - <<'PY' || bashio::log.warning "Unable to remove headroom guidance automatically"
+import os
+import re
+from pathlib import Path
+
+path = Path(os.environ["CLAUDE_MD"])
+text = path.read_text()
+pattern = re.compile(
+    r"\n*<!-- BEGIN headroom \(managed by claude_desktop addon\) -->.*?"
+    r"<!-- END headroom \(managed by claude_desktop addon\) -->\n?",
+    re.DOTALL,
+)
+new = pattern.sub("", text)
+if new != text:
+    path.write_text(new)
+PY
+fi
+
 if bashio::config.true 'install_rtk'; then
     if command -v rtk &> /dev/null; then
         if [ -f "$HOME/.claude/settings.json" ] && grep -q 'rtk hook claude' "$HOME/.claude/settings.json"; then
