@@ -1,3 +1,7 @@
+## 1.2 (07-07-2026)
+
+- Fix Selkies startup by creating the s6 environment directory and XDG runtime directory before services start.
+
 ## 1.0 (07-07-2026)
 - Minor bugs fixed
 # Changelog
