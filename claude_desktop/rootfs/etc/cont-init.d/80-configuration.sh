@@ -39,7 +39,7 @@ if bashio::config.has_value 'KEYBOARD'; then
     KEYBOARD=$(bashio::config 'KEYBOARD')
     bashio::log.info "Setting keyboard to $KEYBOARD"
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "$KEYBOARD" > /var/run/s6/container_environment/KEYBOARD; fi
-    printf "%s\n" "KEYBOARD=\"$KEYBOARD\"" >> ~/.bashrc
+grep -qxF "KEYBOARD=\"$KEYBOARD\"" ~/.bashrc 2>/dev/null || printf "%s\n" "KEYBOARD=\"$KEYBOARD\"" >> ~/.bashrc
 fi || true
 
 if bashio::config.has_value 'PASSWORD'; then
