@@ -47,7 +47,7 @@ sed -i "s|^\(abc:[^:]*:[^:]*:[^:]*:[^:]*:\)[^:]*|\1$LOCATION|" /etc/passwd
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "/tmp/cache" > /var/run/s6/container_environment/XDG_CACHE_HOME; fi
-{
+grep -qxF "export HOME=\"$LOCATION\"" ~/.bashrc 2>/dev/null || {
     printf "%s\n" "export HOME=\"$LOCATION\""
     printf "%s\n" "export FM_HOME=\"$LOCATION\""
     printf "%s\n" "export XDG_CACHE_HOME=\"/tmp/cache\""
