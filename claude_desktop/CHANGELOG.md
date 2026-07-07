@@ -11,6 +11,7 @@
 - Run Claude Desktop with --disable-dev-shm-usage and drop the misplaced shm_size env var (Home Assistant ignores shm_size), fixing Electron renderer crashes on the default 64 MB /dev/shm.
 
 ## 1.2 (07-07-2026)
+- Add baked-in git/GitHub CLI support with optional startup credential configuration.
 
 - Fix Selkies startup by creating the s6 environment directory and XDG runtime directory before services start.
 

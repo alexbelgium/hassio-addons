@@ -35,7 +35,11 @@ options:
   additional_apps: ""
   additional_pip: ""
   auto_update: true
+  github_email: ""
+  github_token: ""
+  github_username: ""
   install_caveman: true
+  install_github_cli: true
   install_headroom: true
   install_rtk: true
 panel_admin: false
@@ -63,7 +67,11 @@ schema:
   additional_apps: str?
   additional_pip: str?
   auto_update: bool?
+  github_email: str?
+  github_token: password?
+  github_username: str?
   install_caveman: bool
+  install_github_cli: bool
   install_headroom: bool
   install_rtk: bool
 slug: claude_desktop
