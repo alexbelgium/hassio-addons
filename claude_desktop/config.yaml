@@ -18,7 +18,6 @@ environment:
   SELKIES_FRAMERATE: "30"
   START_DOCKER: "false"
   TITLE: Claude Desktop
-  shm_size: 1gb
 image: ghcr.io/alexbelgium/claude_desktop-{arch}
 ingress: true
 init: false
@@ -71,5 +70,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.2"
+version: "1.4"
 video: true
