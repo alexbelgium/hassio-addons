@@ -29,7 +29,7 @@ fi
 bashio::log.info "Setting data location to $LOCATION"
 
 for file in /etc/s6-overlay/s6-rc.d/*/run; do
-    if [ "$(sed -n '1{/bash/p};q' "$file")" ]; then
+    if [ "$(sed -n '1{/bash/p};q' "$file")" ] && ! grep -q '^export XDG_CACHE_HOME=/tmp/cache$' "$file"; then
         sed -i "1a export HOME=$LOCATION" "$file"
         sed -i "1a export FM_HOME=$LOCATION" "$file"
         sed -i "1a export XDG_CACHE_HOME=/tmp/cache" "$file"
