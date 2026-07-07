@@ -78,5 +78,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "debianbookworm-1ae1f8ff-ls13"
+version: "1.0"
 video: true
