@@ -36,7 +36,6 @@ options:
   additional_apps: ""
   additional_pip: ""
   auto_update: true
-  data_location: /config/data
   install_caveman: true
   install_headroom: true
   install_rtk: true
