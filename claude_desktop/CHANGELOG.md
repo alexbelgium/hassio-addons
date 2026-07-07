@@ -1,3 +1,8 @@
+## 1.6 (07-07-2026)
+
+- Fix default desktop launch failing when `install_headroom` is enabled (the default). `headroom wrap` only supports coding-agent CLIs (`claude`, `codex`, ...) with agent arguments after `--`, so wrapping `claude-desktop` produced an invalid command that left the app unlaunched. Keep the plain Claude Desktop launch and instead just expose `headroom` with a usage hint.
+- Make the autostart resilient: if a custom/wrapped launch command fails to start, fall back to the default Claude Desktop launch so the app still comes up.
+
 ## 1.5 (07-07-2026)
 
 - Change the default Claude Desktop data location to `/data/data`.

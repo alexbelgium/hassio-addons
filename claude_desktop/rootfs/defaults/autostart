@@ -14,8 +14,18 @@ dbus-update-activation-environment --all >/dev/null 2>&1 || true
 # --password-store=gnome-libsecret forces Electron onto the libsecret backend instead of
 # falling back to plaintext (and warning that the sign-in will not be saved).
 CLAUDE_DESKTOP_COMMAND_FILE="/tmp/claude-desktop-command"
+DEFAULT_CLAUDE_DESKTOP_COMMAND="claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret"
 if [ -s "$CLAUDE_DESKTOP_COMMAND_FILE" ]; then
-    sh -c "$(cat "$CLAUDE_DESKTOP_COMMAND_FILE")"
+    CLAUDE_DESKTOP_COMMAND="$(cat "$CLAUDE_DESKTOP_COMMAND_FILE")"
 else
-    claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret
+    CLAUDE_DESKTOP_COMMAND="$DEFAULT_CLAUDE_DESKTOP_COMMAND"
+fi
+
+# Launch the configured command. If a custom/wrapped command fails to start, fall back to
+# the plain Claude Desktop launch so the desktop app still comes up for the user.
+if ! sh -c "$CLAUDE_DESKTOP_COMMAND"; then
+    if [ "$CLAUDE_DESKTOP_COMMAND" != "$DEFAULT_CLAUDE_DESKTOP_COMMAND" ]; then
+        echo "autostart: '$CLAUDE_DESKTOP_COMMAND' failed; falling back to default Claude Desktop launch" >&2
+        exec sh -c "$DEFAULT_CLAUDE_DESKTOP_COMMAND"
+    fi
 fi

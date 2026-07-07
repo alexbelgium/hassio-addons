@@ -10,8 +10,11 @@ printf '%s\n' "$DEFAULT_CLAUDE_DESKTOP_COMMAND" > "$CLAUDE_DESKTOP_COMMAND_FILE"
 
 if bashio::config.true 'install_headroom'; then
     if command -v headroom &> /dev/null; then
-        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available; launching Claude Desktop through headroom"
-        printf '%s\n' "headroom wrap $DEFAULT_CLAUDE_DESKTOP_COMMAND" > "$CLAUDE_DESKTOP_COMMAND_FILE"
+        # headroom "wrap" only supports coding-agent CLIs (claude|codex|cursor|...),
+        # not the Claude Desktop Electron app. Wrapping "claude-desktop" produced an
+        # invalid command that left the desktop app unlaunched, so keep the default
+        # launch untouched and just expose headroom for the user to wrap Claude Code.
+        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available; run 'headroom wrap claude' in a terminal to route Claude Code through headroom"
     else
         bashio::log.warning "headroom is not available"
     fi
