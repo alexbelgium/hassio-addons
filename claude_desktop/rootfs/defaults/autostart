@@ -13,4 +13,9 @@ dbus-update-activation-environment --all >/dev/null 2>&1 || true
 
 # --password-store=gnome-libsecret forces Electron onto the libsecret backend instead of
 # falling back to plaintext (and warning that the sign-in will not be saved).
-claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret
+CLAUDE_DESKTOP_COMMAND_FILE="/tmp/claude-desktop-command"
+if [ -s "$CLAUDE_DESKTOP_COMMAND_FILE" ]; then
+    sh -c "$(cat "$CLAUDE_DESKTOP_COMMAND_FILE")"
+else
+    claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret
+fi
