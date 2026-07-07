@@ -118,7 +118,7 @@ if bashio::config.true 'install_caveman'; then
         bashio::log.info "caveman Claude Code plugin already configured"
     else
         bashio::log.info "Installing caveman Claude Code plugin"
-        curl --connect-timeout 10 --max-time 60 -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash || bashio::log.warning "caveman install failed (offline?)"
+        curl --connect-timeout 10 --max-time 60 -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash >/dev/null || bashio::log.warning "caveman install failed (offline?)"
     fi
 else
     bashio::log.info "Disabling caveman Claude Code plugin"
