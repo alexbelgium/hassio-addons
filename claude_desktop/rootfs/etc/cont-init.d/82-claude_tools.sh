@@ -10,11 +10,18 @@ printf '%s\n' "$DEFAULT_CLAUDE_DESKTOP_COMMAND" > "$CLAUDE_DESKTOP_COMMAND_FILE"
 
 if bashio::config.true 'install_headroom'; then
     if command -v headroom &> /dev/null; then
-        # headroom "wrap" only supports coding-agent CLIs (claude|codex|cursor|...),
-        # not the Claude Desktop Electron app. Wrapping "claude-desktop" produced an
-        # invalid command that left the desktop app unlaunched, so keep the default
-        # launch untouched and just expose headroom for the user to wrap Claude Code.
-        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available; run 'headroom wrap claude' in a terminal to route Claude Code through headroom"
+        # headroom "wrap" only supports coding-agent CLIs (claude|codex|cursor|...) and is
+        # invalid for the Claude Desktop Electron app, so route the launch through headroom's
+        # standalone compression proxy instead: start "headroom proxy" and point Claude Desktop
+        # at it via ANTHROPIC_BASE_URL.
+        #
+        # NOTE: Claude Desktop currently force-overrides ANTHROPIC_BASE_URL to the production
+        # endpoint (headroom #869), so compression only actually engages once upstream adds
+        # Desktop support. Until then the app still launches normally, and the autostart falls
+        # back to a plain launch if this command fails.
+        HEADROOM_PROXY_PORT="8787"
+        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available; launching Claude Desktop through the headroom proxy on 127.0.0.1:${HEADROOM_PROXY_PORT} (transparent compression pending Claude Desktop support, headroom #869)"
+        printf '%s\n' "headroom proxy --port ${HEADROOM_PROXY_PORT} > /tmp/headroom-proxy.log 2>&1 & ANTHROPIC_BASE_URL=http://127.0.0.1:${HEADROOM_PROXY_PORT} ${DEFAULT_CLAUDE_DESKTOP_COMMAND}" > "$CLAUDE_DESKTOP_COMMAND_FILE"
     else
         bashio::log.warning "headroom is not available"
     fi
