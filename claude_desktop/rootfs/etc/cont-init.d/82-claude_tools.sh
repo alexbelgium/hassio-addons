@@ -4,9 +4,14 @@ set -e
 set -o pipefail
 mkdir -p "$HOME/.claude"
 
+CLAUDE_DESKTOP_COMMAND_FILE="/tmp/claude-desktop-command"
+DEFAULT_CLAUDE_DESKTOP_COMMAND='claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret'
+printf '%s\n' "$DEFAULT_CLAUDE_DESKTOP_COMMAND" > "$CLAUDE_DESKTOP_COMMAND_FILE"
+
 if bashio::config.true 'install_headroom'; then
     if command -v headroom &> /dev/null; then
-        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available. Use 'headroom wrap claude' or MCP mode from Claude Code."
+        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available; launching Claude Desktop through headroom"
+        printf '%s\n' "headroom wrap $DEFAULT_CLAUDE_DESKTOP_COMMAND" > "$CLAUDE_DESKTOP_COMMAND_FILE"
     else
         bashio::log.warning "headroom is not available"
     fi
@@ -14,11 +19,31 @@ fi
 
 if bashio::config.true 'install_rtk'; then
     if command -v rtk &> /dev/null; then
-        if [ -f "$HOME/.claude/settings.json" ] && grep -q 'rtk' "$HOME/.claude/settings.json"; then
+        if [ -f "$HOME/.claude/settings.json" ] && grep -q 'rtk hook claude' "$HOME/.claude/settings.json"; then
             bashio::log.info "rtk Claude Code hook already configured"
         else
             bashio::log.info "Configuring rtk Claude Code hook"
-            rtk init -g || bashio::log.warning "rtk hook configuration failed"
+            RTK_NONINTERACTIVE=1 rtk init -g || bashio::log.warning "rtk global files configuration failed"
+            python3 - <<'PY' || bashio::log.warning "Unable to configure rtk hook automatically"
+import json
+from pathlib import Path
+path = Path.home() / ".claude" / "settings.json"
+try:
+    data = json.loads(path.read_text()) if path.exists() else {}
+    if not isinstance(data, dict):
+        data = {}
+except Exception:
+    if path.exists():
+        path.rename(path.with_suffix(path.suffix + ".bak"))
+    data = {}
+hooks = data.setdefault("hooks", {})
+pre = hooks.setdefault("PreToolUse", [])
+rtk_entry = {"matcher": "Bash", "hooks": [{"type": "command", "command": "rtk hook claude"}]}
+if not any("rtk hook claude" in json.dumps(entry) for entry in pre if isinstance(entry, dict)):
+    pre.append(rtk_entry)
+path.parent.mkdir(parents=True, exist_ok=True)
+path.write_text(json.dumps(data, indent=2) + "\n")
+PY
         fi
     else
         bashio::log.warning "rtk is not available"
