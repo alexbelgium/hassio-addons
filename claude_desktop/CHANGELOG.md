@@ -1,7 +1,7 @@
 ## 1.6 (07-07-2026)
 
-- Fix default desktop launch failing when `install_headroom` is enabled (the default): `headroom wrap` only supports coding-agent CLIs (`claude`, `codex`, ...) with agent arguments after `--`, so wrapping `claude-desktop` produced an invalid command that left the app unlaunched. Launch Claude Desktop through headroom's standalone compression proxy (`headroom proxy` + `ANTHROPIC_BASE_URL`) instead. Note: Claude Desktop currently overrides `ANTHROPIC_BASE_URL` ([headroom #869](https://github.com/headroomlabs-ai/headroom/issues/869)), so transparent compression engages only once upstream adds Desktop support; the app launches normally in the meantime.
-- Make the autostart resilient: if the headroom/custom launch command fails to start, fall back to the plain Claude Desktop launch so the app always comes up.
+- Fix default desktop launch failing when `install_headroom` is enabled (the default): the code rewrote the launch to `headroom wrap claude-desktop …`, but `headroom wrap` only supports coding-agent CLIs (`claude`, `codex`, ...) with arguments after `--`, so it produced an invalid command that left the app unlaunched. Leave the plain launch intact and instead register the `headroom` MCP server (`headroom mcp serve`) in Claude Desktop's config, exposing the `headroom_compress`/`headroom_retrieve`/`headroom_stats` tools inside the app. This is the supported headroom integration for Desktop, which overrides `ANTHROPIC_BASE_URL` so transparent proxy compression is not possible ([headroom #869](https://github.com/headroomlabs-ai/headroom/issues/869)). Disabling the option removes the entry again.
+- Make the autostart resilient: if the launch command fails to start, fall back to the plain Claude Desktop launch so the app always comes up.
 
 ## 1.5 (07-07-2026)
 

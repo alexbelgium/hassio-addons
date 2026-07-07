@@ -8,23 +8,60 @@ CLAUDE_DESKTOP_COMMAND_FILE="/tmp/claude-desktop-command"
 DEFAULT_CLAUDE_DESKTOP_COMMAND='claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret'
 printf '%s\n' "$DEFAULT_CLAUDE_DESKTOP_COMMAND" > "$CLAUDE_DESKTOP_COMMAND_FILE"
 
+# headroom's "wrap"/proxy routing works by setting ANTHROPIC_BASE_URL, which the Claude Desktop
+# Electron app force-overrides to the production endpoint (headroom #869), so transparent
+# compression cannot be applied to the desktop launch. The integration that does work with
+# Claude Desktop is headroom's MCP server, which exposes the headroom_compress/headroom_retrieve/
+# headroom_stats tools inside the app. Register it in Claude Desktop's MCP config, leaving the
+# plain launch untouched. The merge is idempotent and preserves any other MCP servers.
+CLAUDE_DESKTOP_CONFIG="$HOME/.config/Claude/claude_desktop_config.json"
 if bashio::config.true 'install_headroom'; then
     if command -v headroom &> /dev/null; then
-        # headroom "wrap" only supports coding-agent CLIs (claude|codex|cursor|...) and is
-        # invalid for the Claude Desktop Electron app, so route the launch through headroom's
-        # standalone compression proxy instead: start "headroom proxy" and point Claude Desktop
-        # at it via ANTHROPIC_BASE_URL.
-        #
-        # NOTE: Claude Desktop currently force-overrides ANTHROPIC_BASE_URL to the production
-        # endpoint (headroom #869), so compression only actually engages once upstream adds
-        # Desktop support. Until then the app still launches normally, and the autostart falls
-        # back to a plain launch if this command fails.
-        HEADROOM_PROXY_PORT="8787"
-        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available; launching Claude Desktop through the headroom proxy on 127.0.0.1:${HEADROOM_PROXY_PORT} (transparent compression pending Claude Desktop support, headroom #869)"
-        printf '%s\n' "headroom proxy --port ${HEADROOM_PROXY_PORT} > /tmp/headroom-proxy.log 2>&1 & ANTHROPIC_BASE_URL=http://127.0.0.1:${HEADROOM_PROXY_PORT} ${DEFAULT_CLAUDE_DESKTOP_COMMAND}" > "$CLAUDE_DESKTOP_COMMAND_FILE"
+        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available; registering the headroom MCP server for Claude Desktop"
+        HEADROOM_BIN="$(command -v headroom)" CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" python3 - <<'PY' || bashio::log.warning "Unable to register the headroom MCP server automatically"
+import json
+import os
+from pathlib import Path
+
+path = Path(os.environ["CLAUDE_DESKTOP_CONFIG"])
+try:
+    data = json.loads(path.read_text()) if path.exists() else {}
+    if not isinstance(data, dict):
+        data = {}
+except Exception:
+    if path.exists():
+        path.rename(path.with_suffix(path.suffix + ".bak"))
+    data = {}
+servers = data.get("mcpServers")
+if not isinstance(servers, dict):
+    servers = {}
+    data["mcpServers"] = servers
+servers["headroom"] = {"command": os.environ.get("HEADROOM_BIN", "headroom"), "args": ["mcp", "serve"]}
+path.parent.mkdir(parents=True, exist_ok=True)
+path.write_text(json.dumps(data, indent=2) + "\n")
+PY
     else
         bashio::log.warning "headroom is not available"
     fi
+elif [ -f "$CLAUDE_DESKTOP_CONFIG" ]; then
+    bashio::log.info "Removing the headroom MCP server from Claude Desktop"
+    CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" python3 - <<'PY' || bashio::log.warning "Unable to remove the headroom MCP server automatically"
+import json
+import os
+from pathlib import Path
+
+path = Path(os.environ["CLAUDE_DESKTOP_CONFIG"])
+try:
+    data = json.loads(path.read_text())
+except Exception:
+    data = None
+if isinstance(data, dict):
+    servers = data.get("mcpServers")
+    if isinstance(servers, dict) and servers.pop("headroom", None) is not None:
+        if not servers:
+            data.pop("mcpServers", None)
+        path.write_text(json.dumps(data, indent=2) + "\n")
+PY
 fi
 
 if bashio::config.true 'install_rtk'; then
