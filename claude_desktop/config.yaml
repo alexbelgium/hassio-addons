@@ -65,10 +65,15 @@ schema:
   additional_apps: str?
   additional_pip: str?
   auto_update: bool
+  cifsdomain: str?
+  cifspassword: str?
+  cifsusername: str?
   data_location: str?
   install_caveman: bool
   install_headroom: bool
   install_rtk: bool
+  localdisks: str?
+  networkdisks: str?
 slug: claude_desktop
 tmpfs: true
 udev: true
