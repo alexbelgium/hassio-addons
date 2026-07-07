@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1
+
+- Fix build failure: set HOME=/root when running rtk install script to ensure binary is installed to /root/.local/bin instead of /config/.local/bin (caused by LSIO base image overriding HOME)
+
 ## 1.0
 
 - Fix build failure: remove separate `npm` apt package (already bundled in NodeSource nodejs)
