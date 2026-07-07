@@ -59,7 +59,6 @@ RUN curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://d
     apt-get install -y --no-install-recommends \
         claude-desktop \
         python3-pip \
-        gnome-keyring \
         libsecret-1-0 \
         dbus-x11 \
         git gh && \
