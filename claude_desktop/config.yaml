@@ -40,7 +40,6 @@ options:
   install_caveman: true
   install_headroom: true
   install_rtk: true
-panel_admin: false
 panel_icon: mdi:robot-happy
 ports:
   3000/tcp: null
