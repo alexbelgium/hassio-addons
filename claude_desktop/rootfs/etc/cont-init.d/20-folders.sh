@@ -8,7 +8,7 @@ PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
 
 # Check data location
-LOCATION=$(bashio::config 'data_location')
+LOCATION=""
 
 if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
     LOCATION="/config/data"
