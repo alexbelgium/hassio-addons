@@ -11,8 +11,8 @@ devices:
   - /dev/fuse
 environment:
   AUTO_GPU: "1"
-  FM_HOME: /config/data
-  HOME: /config/data
+  FM_HOME: /data/data
+  HOME: /data/data
   PGID: "0"
   PUID: "0"
   SELKIES_FRAMERATE: "30"
@@ -21,6 +21,10 @@ environment:
 image: ghcr.io/alexbelgium/claude_desktop-{arch}
 ingress: true
 init: false
+hassio_api: true
+hassio_role: manager
+homeassistant_api: true
+auth_api: true
 map:
   - addon_config:rw
   - share:rw
@@ -30,12 +34,16 @@ name: Claude Desktop
 options:
   env_vars: []
   DNS_server: 8.8.8.8
+  data_location: /data/data
   PGID: 0
   PUID: 0
   additional_apps: ""
   additional_pip: ""
   auto_update: true
   github_email: ""
+  ha_smart_context: true
+  enable_ha_mcp: true
+  dangerously_skip_permissions: false
   github_token: ""
   github_username: ""
   install_caveman: true
@@ -58,6 +66,7 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
   DNS_server: str?
+  data_location: str?
   DRINODE: list(/dev/dri/card0|/dev/dri/card1|/dev/dri/card2|/dev/dri/renderD128|/dev/dri/renderD129|)?
   KEYBOARD: list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?
   PASSWORD: str?
@@ -68,6 +77,9 @@ schema:
   additional_pip: str?
   auto_update: bool?
   github_email: str?
+  ha_smart_context: bool?
+  enable_ha_mcp: bool?
+  dangerously_skip_permissions: bool?
   github_token: password?
   github_username: str?
   install_caveman: bool
@@ -78,5 +90,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.4"
+version: "1.5"
 video: true

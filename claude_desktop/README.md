@@ -19,7 +19,7 @@ Claude Desktop sign-in requires a claude.ai plan that supports the Desktop app. 
 
 - Claude Desktop in single-app Selkies mode.
 - Home Assistant ingress support.
-- Persistent `$HOME` under `/config/data`, preserving Claude Desktop and Claude Code sign-in state across restarts.
+- Persistent `$HOME` under `/data/data`, preserving Claude Desktop and Claude Code sign-in state across restarts.
 - Optional runtime Claude Desktop updates from Anthropic's apt repository.
 - Optional extra apt and pip package installation.
 - Baked-in `git` and GitHub CLI (`gh`) with optional startup credential configuration.
@@ -45,9 +45,12 @@ Claude Desktop sign-in requires a claude.ai plan that supports the Desktop app. 
 | `github_token` | | Optional GitHub personal access token used to authenticate `gh` and configure Git credentials for GitHub. |
 | `github_username` | | Optional global Git author name. |
 | `github_email` | | Optional global Git author email. |
+| `ha_smart_context` | `true` | Enable Home Assistant smart context support for Claude tooling. |
+| `enable_ha_mcp` | `true` | Enable Home Assistant MCP support for Claude tooling. |
+| `dangerously_skip_permissions` | `false` | Expose Claude Code's dangerous permission skip mode option. Only enable if you understand the risk. |
 | `additional_apps` | | Comma-separated Debian apt packages to install at startup, for example `htop,git`. |
 | `additional_pip` | | Comma-separated pip packages to install at startup. Installs use `--break-system-packages`. |
-| `data_location` | `/config/data` | Persistent home directory location. Keep this persistent so Claude sign-in survives restarts. |
+| `data_location` | `/data/data` | Persistent home directory location. Keep this persistent so Claude sign-in survives restarts. |
 | `networkdisks`, `cifsusername`, `cifspassword`, `cifsdomain` | | Standard SMB mount options. |
 | `localdisks` | | Standard local disk mount option. |
 | `env_vars` | `[]` | Extra environment variables to export into the container. This can override `SELKIES_*` defaults. |

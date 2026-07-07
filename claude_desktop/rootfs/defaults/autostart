@@ -4,7 +4,7 @@
 # Secret Service API (org.freedesktop.secrets). Provide it with gnome-keyring on the openbox
 # session bus (startwm.sh runs `dbus-launch --exit-with-session`), unlocked with an empty
 # password so it comes back automatically after a restart. The keyring DB lives under
-# $HOME/.local/share/keyrings, and HOME=/config/data is persistent add-on storage, so the
+# $HOME/.local/share/keyrings, and HOME=/data/data is persistent add-on storage, so the
 # saved sign-in survives add-on restarts.
 eval "$(gnome-keyring-daemon --start --components=secrets 2>/dev/null)" || true
 printf '' | gnome-keyring-daemon --unlock 2>/dev/null || true
