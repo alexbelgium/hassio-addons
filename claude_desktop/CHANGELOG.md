@@ -1,3 +1,8 @@
+## 1.8 (08-07-2026)
+
+- Expose the Headroom live savings dashboard on mapped port `8787` when `install_headroom` is enabled, while keeping the proxy local-only if the port mapping is disabled.
+- Map `8787/tcp` by default and document the dashboard URL.
+
 ## 1.7 (07-07-2026)
 
 - Add an hourly rtk + headroom token-savings report to the add-on log (`claude-gains-report.sh`, seeded via `/defaults/crontabs/root` and run by the base image's cron). Lets you confirm at a glance that both tools keep running and see accumulated gains — if the numbers stop growing, the tool has stopped working.

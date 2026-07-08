@@ -25,6 +25,7 @@ Claude Desktop sign-in requires a claude.ai plan that supports the Desktop app. 
 - Baked-in `git` and GitHub CLI (`gh`) with optional startup credential configuration.
 - Custom script support through the repository standard `claude_desktop.sh` script.
 - Optional bundled Claude Code optimization tools: headroom, rtk, and caveman.
+- Headroom dashboard exposed on mapped port `8787` when `install_headroom` is enabled.
 - Low-power defaults: GPU device mapping, `AUTO_GPU=1`, `SELKIES_FRAMERATE=30`, `/tmp` tmpfs, and `$HOME/.cache` redirected to `/tmp/cache`.
 
 ## Options
@@ -38,7 +39,7 @@ Claude Desktop sign-in requires a claude.ai plan that supports the Desktop app. 
 | `DRINODE` | | Optional GPU device override for Selkies. |
 | `DNS_server` | `8.8.8.8` | DNS server used by the standard DNS module. |
 | `auto_update` | `true` | Check Anthropic's apt repository and upgrade `claude-desktop` at add-on startup. |
-| `install_headroom` | `true` | Register the baked-in `headroom` MCP server in Claude Desktop, exposing its `headroom_compress`/`headroom_retrieve`/`headroom_stats` context-compression tools inside the app. (Claude Desktop overrides `ANTHROPIC_BASE_URL`, so transparent proxy compression is not possible — MCP is the supported path; see [headroom #869](https://github.com/headroomlabs-ai/headroom/issues/869).) Disabling removes the entry again. |
+| `install_headroom` | `true` | Register the baked-in `headroom` MCP server in Claude Desktop, start the Headroom proxy backend, and expose the Headroom dashboard on mapped port `8787` at `/dashboard` when that port is open. This exposes the `headroom_compress`/`headroom_retrieve`/`headroom_stats` context-compression tools inside the app. (Claude Desktop overrides `ANTHROPIC_BASE_URL`, so transparent proxy compression is not possible — MCP is the supported path; see [headroom #869](https://github.com/headroomlabs-ai/headroom/issues/869).) Disabling removes the MCP entry and stops the backend/dashboard service. |
 | `install_rtk` | `true` | Configure the rtk Claude Code `PreToolUse` hook in the persistent Claude Code settings. |
 | `install_caveman` | `true` | Install the caveman Claude Code plugin into the persistent Claude Code home. |
 | `install_github_cli` | `true` | Enable first-start checks and setup for the baked-in `git` and `gh` commands. |
@@ -62,6 +63,10 @@ The add-on includes the repository standard custom-script executor. On first sta
 ## Data and cache locations
 
 Persistent state is stored in the configured `data_location`. Claude Desktop stores sign-in data below `~/.config/Claude`, and Claude Code/tool configuration is stored below `~/.claude`. Volatile cache data is redirected to `/tmp/cache` through `$XDG_CACHE_HOME` and `$HOME/.cache`.
+
+## Headroom dashboard
+
+When `install_headroom` is enabled, the add-on starts the local Headroom proxy backend and maps port `8787` by default. Open `http://<home-assistant-host>:8787/dashboard` to view the Headroom live savings dashboard. If you disable the `8787/tcp` port mapping, the backend binds to localhost for MCP use only and the dashboard is not externally exposed.
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg

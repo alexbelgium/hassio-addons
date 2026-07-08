@@ -54,8 +54,10 @@ panel_admin: false
 panel_icon: mdi:robot-happy
 ports:
   3001/tcp: null
+  8787/tcp: 8787
 ports_description:
   3001/tcp: Web interface https
+  8787/tcp: Headroom dashboard and proxy
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
@@ -88,5 +90,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.7"
+version: "1.8"
 video: true
