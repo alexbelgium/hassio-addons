@@ -53,6 +53,7 @@ Local development alternative on the HA host:
 ## Options
 
 - `secret_key_base`: App secret used by Rails to sign/encrypt sessions and tokens. See [Secret Key Base](#secret-key-base) below.
+- `public_hostname`: Hostname or server IP used to generate links (mailer and "Open in slicer" download URLs). Leave blank to auto-detect from Home Assistant's configured external URL, falling back to `homeassistant.local`.
 - `puid` / `pgid`: Ownership applied to writable mapped directories (`/config` paths).
 - `multiuser`: Toggle Manyfold multiuser mode.
 - `library_path`: Scanned/indexed path.

@@ -153,16 +153,39 @@ generate_secret() {
   head -c 64 /dev/urandom | od -An -tx1 | tr -d ' \n'
 }
 
+# Manyfold's production.rb sets config.assume_ssl = PUBLIC_HOSTNAME.present?,
+# with no separate env var to opt out. assume_ssl makes Rails treat every
+# request as if it arrived over HTTPS (for a proxy that terminates SSL
+# upstream), which is wrong here: this add-on serves plain HTTP directly on
+# port 3214 with no TLS termination, so it produces bad https:// redirects
+# (e.g. to /users/sign_in) that browsers can't complete. Force it back off
+# via an initializer dropped into whichever app directory is found, since we
+# still need PUBLIC_HOSTNAME set for correct link generation elsewhere.
+disable_assume_ssl() {
+  local app_dir="$1"
+  local initializer_dir="${app_dir}/config/initializers"
+  [[ -d "$initializer_dir" ]] || return 0
+
+  cat > "${initializer_dir}/manyfold_addon_disable_assume_ssl.rb" << 'EOF'
+# Added by the Manyfold Home Assistant add-on: this add-on has no
+# SSL-terminating reverse proxy in front of it, so assuming SSL produces
+# incorrect https:// redirects on a plain-HTTP port.
+Rails.application.config.assume_ssl = false
+EOF
+}
+
 start_manyfold() {
   if [[ -x /usr/src/app/bin/docker-entrypoint.sh ]]; then
     log "Starting Manyfold via /usr/src/app/bin/docker-entrypoint.sh foreman start"
     cd /usr/src/app
+    disable_assume_ssl /usr/src/app
     exec ./bin/docker-entrypoint.sh foreman start
   fi
 
   if [[ -x /app/bin/docker-entrypoint.sh ]]; then
     log "Starting Manyfold via /app/bin/docker-entrypoint.sh foreman start"
     cd /app
+    disable_assume_ssl /app
     exec ./bin/docker-entrypoint.sh foreman start
   fi
 
@@ -189,8 +212,10 @@ start_manyfold() {
 
   if [[ -d /usr/src/app ]]; then
     cd /usr/src/app
+    disable_assume_ssl /usr/src/app
   elif [[ -d /app ]]; then
     cd /app
+    disable_assume_ssl /app
   fi
 
   if command -v bundle >/dev/null 2>&1; then
@@ -272,6 +297,7 @@ export MANYFOLD_MULTIUSER="$MULTIUSER"
 export MANYFOLD_LIBRARY_PATH="$LIBRARY_PATH"
 export MANYFOLD_THUMBNAILS_PATH="$THUMBNAILS_PATH"
 export PUBLIC_HOSTNAME
+export PUBLIC_PORT="3214"
 export RAILS_LOG_LEVEL="$LOG_LEVEL"
 export MANYFOLD_LOG_LEVEL="$LOG_LEVEL"
 export WEB_CONCURRENCY
