@@ -1,3 +1,8 @@
+## 0.146.1-3 (2026-07-08)
+- Fix forced HTTPS redirect loop on the plain-HTTP UI by re-adding the `assume_ssl` disable workaround.
+- Export `PUBLIC_PORT` alongside `public_hostname` so generated links point at port 3214.
+- Document `public_hostname` in README (accepts hostname or server IP).
+
 ## 0.146.1-2 (06-07-2026)
 - Minor bugs fixed
  
