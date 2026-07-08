@@ -83,7 +83,7 @@ map:
   - addon_config:rw
   - media:rw
   - share:rw
-name: Birdnet-go (custom version)
+name: Birdnet-go (customized and built from source)
 options:
   env_vars: []
   BIRDSONGS_FOLDER: /config/clips
@@ -127,5 +127,5 @@ slug: birdnet-go-dev
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "source-20260708-2"
+version: "source-20260708-3"
 video: true
