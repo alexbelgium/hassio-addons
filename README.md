@@ -176,7 +176,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/bird.svg) [Birdnet-go (custom version)](birdnet-go-dev/) : Realtime BirdNET soundscape analyzer, compiled from the alexbelgium/birdnet-go fork with all open PRs merged, with OpenVINO enabled for Intel CPU/iGPU acceleration (amd64-only test build)
+&#10003; ![image](https://api.iconify.design/mdi/bird.svg) [Birdnet-go (customized and built from source)](birdnet-go-dev/) : Realtime BirdNET soundscape analyzer, compiled from the alexbelgium/birdnet-go fork with all open PRs merged, with OpenVINO enabled for Intel CPU/iGPU acceleration (amd64-only test build)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbirdnet-go-dev%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbirdnet-go-dev%2Fupdater.json)
