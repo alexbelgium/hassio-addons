@@ -24,12 +24,11 @@ fi
 if ! $have_rtk && ! $headroom_enabled; then exit 0; fi
 
 echo "===== claude gains report $(date '+%Y-%m-%d %H:%M:%S') ====="
-if $have_rtk; then
-    echo "--- rtk gain ---"
-    rtk gain 2>&1 || echo "[warn] rtk gain failed"
-fi
 if $headroom_enabled; then
     echo "--- headroom savings ---"
     headroom savings 2>&1 || echo "[warn] headroom savings failed"
+elif $have_rtk; then
+    echo "--- rtk gain ---"
+    rtk gain 2>&1 || echo "[warn] rtk gain failed"
 fi
 echo "===== end gains report ====="
