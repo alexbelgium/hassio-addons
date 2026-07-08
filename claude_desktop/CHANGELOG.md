@@ -1,3 +1,5 @@
+## 1.9 (08-07-2026)
+- Minor bugs fixed
 ## 1.8 (08-07-2026)
 
 - Expose the Headroom live savings dashboard on mapped port `8787` when `install_headroom` is enabled, while keeping the proxy local-only if the port mapping is disabled.
