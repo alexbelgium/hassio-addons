@@ -9,7 +9,7 @@ declare port=8787
 
 if bashio::config.true 'install_headroom' && command -v headroom >/dev/null 2>&1; then
     bashio::log.info "svc-headroom: starting headroom proxy on 127.0.0.1:${port} (MCP backend only; no client routing)"
-    exec headroom proxy --host 127.0.0.1 --port "${port}"
+    exec headroom proxy --host 127.0.0.1 --port "${port}" --code-aware
 fi
 
 bashio::log.info "svc-headroom: install_headroom disabled or headroom not found; idling"
