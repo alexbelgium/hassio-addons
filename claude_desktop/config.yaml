@@ -53,10 +53,8 @@ options:
 panel_admin: false
 panel_icon: mdi:robot-happy
 ports:
-  3000/tcp: null
   3001/tcp: null
 ports_description:
-  3000/tcp: Web interface
   3001/tcp: Web interface https
 privileged:
   - SYS_ADMIN
