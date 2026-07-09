@@ -1,3 +1,5 @@
+## nightly-20260615-4 (09-07-2026)
+- Minor bugs fixed
 ## nightly-20260615-3 (05-07-2026)
 - Harden the `output.sqlite.path` rewrite added for the persistence fix: reject paths containing `..` traversal segments (shared `validate_safe_path` check), and create the destination's parent directory under `/config` when the relative path includes a subdirectory (e.g. `db/birdnet.db`), since SQLite does not create missing parent directories itself.
 
