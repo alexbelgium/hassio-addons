@@ -1,4 +1,8 @@
 
+## 5.2.3-1 (2026-07-09)
+
+- Rebuild images after VueTorrent download path fix
+
 ## 5.2.3 (2026-07-08)
 
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
