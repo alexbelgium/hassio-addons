@@ -74,6 +74,9 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /root/.cache
 
+# Fix startup
+RUN sed "1a\set +e" /etc/s6-overlay/s6-rc.d/svc-selkies/run
+
 # Modules
 ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-dns_set.sh"
 
