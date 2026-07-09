@@ -198,7 +198,7 @@ if [ "$CUSTOMUI" = default ]; then
     sed -i '/AlternativeUIEnabled/d' qBittorrent.conf
     sed -i '/RootFolder/d' qBittorrent.conf
     # Update ingress webui
-    curl -f -s -S -O -J -L "$(curl -f -s -L https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" > /dev/null
+    curl -f -s -S -O -J -L https://github.com/VueTorrent/VueTorrent/releases/latest/download/vuetorrent.zip > /dev/null
     unzip -o vuetorrent.zip -d / > /dev/null
     rm vuetorrent.zip
 fi
@@ -211,7 +211,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     ### Download WebUI
     case $CUSTOMUI in
         "vuetorrent")
-            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" > /dev/null
+            curl -f -s -S -J -L -o /webui/release.zip https://github.com/VueTorrent/VueTorrent/releases/latest/download/vuetorrent.zip > /dev/null
             ;;
 
         "qbit-matUI")
