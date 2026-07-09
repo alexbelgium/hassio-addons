@@ -8,14 +8,6 @@
 declare port=8787
 declare host=127.0.0.1
 
-# Expose the built-in Headroom dashboard only when the add-on option is enabled
-# and Home Assistant has mapped the Headroom port. The port is mapped by default
-# in config.yaml, so users can open http://<ha-host>:8787/dashboard to inspect
-# live savings, while disabling install_headroom still leaves the service idle.
-if [[ -n "$(bashio::addon.port "${port}")" ]]; then
-    host=127.0.0.1
-fi
-
 if bashio::config.true 'install_headroom' && command -v headroom >/dev/null 2>&1; then
     bashio::log.info "svc-headroom: starting headroom proxy on ${host}:${port}; dashboard available at /dashboard when the port is mapped (MCP backend only; no client routing)"
     exec headroom proxy --host "${host}" --port "${port}" --code-aware
