@@ -1,4 +1,8 @@
- 
+
+## 5.2.3 (2026-07-08)
+
+- Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
+
 ## 5.2.2 (2026-06-20)
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 

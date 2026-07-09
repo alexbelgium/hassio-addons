@@ -1,4 +1,8 @@
 
+## 1.6.0 (2026-07-08)
+
+- Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
+
 ## 1.5.6-4 (2026-04-22)
 - Fix Bazarr crash on startup: base_url must start with '/' for Flask blueprint registration
 
