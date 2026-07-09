@@ -13,7 +13,7 @@ declare host=127.0.0.1
 # in config.yaml, so users can open http://<ha-host>:8787/dashboard to inspect
 # live savings, while disabling install_headroom still leaves the service idle.
 if [[ -n "$(bashio::addon.port "${port}")" ]]; then
-    host=0.0.0.0
+    host=127.0.0.1
 fi
 
 if bashio::config.true 'install_headroom' && command -v headroom >/dev/null 2>&1; then
