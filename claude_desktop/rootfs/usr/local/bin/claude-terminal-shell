@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export HOME="${HOME:-/data/data}"
+if [ -z "${HOME:-}" ]; then
+    echo "Claude terminal: HOME is not initialized." >&2
+    exit 1
+fi
+
+export SHELL="/bin/bash"
 export PATH="${HOME}/.local/bin:/usr/local/bin:/usr/bin:/bin:${PATH:-}"
 
 workspace="${CLAUDE_TERMINAL_WORKSPACE:-${HOME}/workspace}"
 session_name="${CLAUDE_TMUX_SESSION:-claude}"
 
-mkdir -p "$workspace"
-cd "$workspace"
+if [ ! -d "$workspace" ]; then
+    echo "Claude terminal: workspace does not exist: $workspace" >&2
+    exit 1
+fi
+
+cd -- "$workspace"
 
 # Reattach every browser connection to the same terminal session. Closing the browser detaches
 # the client but leaves Claude Code and other commands running inside tmux.
-exec tmux new-session -A -s "$session_name"
+exec tmux new-session -A -s "$session_name" -c "$workspace"
