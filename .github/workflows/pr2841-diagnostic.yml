@@ -26,10 +26,19 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Build aarch64 and capture tail
+      - name: Inspect context and build aarch64
         shell: bash
         run: |
           set +e
+          {
+            echo '=== claude_desktop listing ==='
+            ls -la claude_desktop
+            echo '=== symlinks ==='
+            find claude_desktop -maxdepth 1 -type l -printf '%p -> %l\n'
+            echo '=== template candidates ==='
+            find .templates -maxdepth 1 -type f -printf '%f\n' | sort
+          } >context.txt 2>&1
+
           BUILD_FROM="$(jq -r '.build_from.aarch64 // empty' '${{ steps.information.outputs.build }}')"
           docker buildx build \
             --platform linux/arm64 \
@@ -47,6 +56,7 @@ jobs:
         with:
           name: pr2841-aarch64-build-log
           path: |
+            context.txt
             build-tail.log
             build-status.txt
           retention-days: 1
