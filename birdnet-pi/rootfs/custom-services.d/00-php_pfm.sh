@@ -4,12 +4,13 @@
 # Correct /config permissions after startup
 chown pi:pi /config
 
-# Waiting for dbus
-until [[ -e /var/run/dbus/system_bus_socket ]]; do
-    sleep 1s
-done
+# D-Bus is not guaranteed to be available in standalone Docker mode. Use the
+# configured TZ directly and only query timedatectl when its bus is ready.
+TZ_VALUE="${TZ:-}"
+if [[ -S /var/run/dbus/system_bus_socket ]] && command -v timedatectl > /dev/null 2>&1; then
+    TZ_VALUE="$(timedatectl show -p Timezone --value 2> /dev/null || true)"
+fi
+export TZ="${TZ_VALUE:-Etc/UTC}"
 
-TZ_VALUE="$(timedatectl show -p Timezone --value)"
-export TZ="$TZ_VALUE"
-echo "Starting service: php pfm"
+echo "Starting service: php fpm"
 exec /usr/sbin/php-fpm* -F
