@@ -188,4 +188,4 @@ Volatile cache data is redirected to `/tmp/cache` through `$XDG_CACHE_HOME` and
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[maintenance-shield]: https://img.shields.io/maintenance-yes-2026.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg
