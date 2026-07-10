@@ -42,25 +42,47 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 
 # Add rootfs
 COPY rootfs/ /
-RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
+RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \; && \
+    chmod +x /usr/local/bin/claude-direct /usr/local/bin/claude-headroom /usr/local/bin/claude-terminal-shell
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
-# Install Claude Desktop and Python tooling
-RUN curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
+# Install Claude Desktop, Claude Code, browser-terminal tooling, and Python tooling
+RUN install -d -m 0755 /etc/apt/keyrings && \
+    curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
+    curl -fsSLo /etc/apt/keyrings/claude-code.asc https://downloads.claude.ai/keys/claude-code.asc && \
     echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" > /etc/apt/sources.list.d/claude-desktop.list && \
+    echo "deb [signed-by=/etc/apt/keyrings/claude-code.asc] https://downloads.claude.ai/claude-code/apt/stable stable main" > /etc/apt/sources.list.d/claude-code.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         claude-desktop \
+        claude-code \
         python3-pip \
         libsecret-1-0 \
         dbus-x11 \
-        git gh && \
+        git \
+        gh \
+        ripgrep \
+        tmux && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# ttyd is not packaged in Debian bookworm. Install the pinned upstream static binary.
+ARG TTYD_VERSION="1.7.7"
+RUN set -eux; \
+    case "$(dpkg --print-architecture)" in \
+        amd64) ttyd_arch="x86_64" ;; \
+        arm64) ttyd_arch="aarch64" ;; \
+        *) echo "Unsupported architecture for ttyd: $(dpkg --print-architecture)" >&2; exit 1 ;; \
+    esac; \
+    curl -fsSL --retry 3 --retry-delay 2 \
+        -o /usr/local/bin/ttyd \
+        "https://github.com/tsl0922/ttyd/releases/download/${TTYD_VERSION}/ttyd.${ttyd_arch}"; \
+    chmod 0755 /usr/local/bin/ttyd; \
+    /usr/local/bin/ttyd --version
 
 # Install token-optimization tool prerequisites and binaries at build time
 RUN apt-get update && \
