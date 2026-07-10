@@ -31,10 +31,15 @@ RUN \
     usermod --home /data/data abc && \
     if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
+ARG TEMPLATE_BASE_URL="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates"
+
 # Global LSIO modifications
-COPY ha_lsio.sh /ha_lsio.sh
 ARG CONFIGLOCATION="/data/data"
-RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
+RUN curl -fsSL --retry 3 --retry-delay 2 \
+        -o /ha_lsio.sh "${TEMPLATE_BASE_URL}/ha_lsio.sh" && \
+    chmod 744 /ha_lsio.sh && \
+    if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && \
+    rm /ha_lsio.sh
 
 ##################
 # 3 Install apps #
@@ -105,27 +110,33 @@ RUN if [ -f /etc/s6-overlay/s6-rc.d/svc-selkies/run ]; then \
 ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-dns_set.sh"
 
 # Automatic modules download
-COPY ha_automodules.sh /ha_automodules.sh
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+RUN curl -fsSL --retry 3 --retry-delay 2 \
+        -o /ha_automodules.sh "${TEMPLATE_BASE_URL}/ha_automodules.sh" && \
+    chmod 744 /ha_automodules.sh && \
+    /ha_automodules.sh "$MODULES" && \
+    rm /ha_automodules.sh
 
 # Manual apps
 ENV PACKAGES="nginx"
 
 # Automatic apps & bashio
-COPY ha_autoapps.sh /ha_autoapps.sh
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+RUN curl -fsSL --retry 3 --retry-delay 2 \
+        -o /ha_autoapps.sh "${TEMPLATE_BASE_URL}/ha_autoapps.sh" && \
+    chmod 744 /ha_autoapps.sh && \
+    /ha_autoapps.sh "$PACKAGES" && \
+    rm /ha_autoapps.sh
 
 ################
 # 4 Entrypoint #
 ################
 
-# Add entrypoint
-COPY ha_entrypoint.sh /ha_entrypoint.sh
-RUN chmod 777 /ha_entrypoint.sh
-
-# Install bashio
-COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
-RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
+# Add entrypoint and standalone bashio compatibility
+RUN curl -fsSL --retry 3 --retry-delay 2 \
+        -o /ha_entrypoint.sh "${TEMPLATE_BASE_URL}/ha_entrypoint.sh" && \
+    curl -fsSL --retry 3 --retry-delay 2 \
+        -o /usr/local/lib/bashio-standalone.sh "${TEMPLATE_BASE_URL}/bashio-standalone.sh" && \
+    chmod 0777 /ha_entrypoint.sh && \
+    chmod 0755 /usr/local/lib/bashio-standalone.sh
 
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
