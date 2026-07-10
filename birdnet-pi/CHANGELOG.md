@@ -1,3 +1,6 @@
+## 2026.07.10-1 (10-07-2026)
+- Fix standalone (no-Supervisor) mode: strip `sudo` from BirdNET-Pi scripts at build time (the previous hook ran before the repo was cloned, so `sudo` remained and broke service/WebUI actions run by non-sudoers users such as `caddy`/`abc`)
+- Ensure `/run/php` exists before starting PHP-FPM so the WebUI starts even when `/run` is a fresh tmpfs
 ## 2026.07.10 (10-07-2026)
 - Minor bugs fixed
 ## 2026.06.01 (19-06-2026)
