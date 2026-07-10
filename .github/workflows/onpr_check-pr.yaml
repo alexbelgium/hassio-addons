@@ -35,6 +35,7 @@ jobs:
           git fetch origin "${{ github.event.before }}" || true
           changed_changelog_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -iE '^([^/]+/)?changelog\.(md|txt|ya?ml|json)$' || true)
           echo "$changed_changelog_files"
+          echo "changelogs_files=$changed_changelog_files" >> "$GITHUB_OUTPUT"
           changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "$changed_config_files"
           all_changed_files=$(echo -e "$changed_config_files\n$changed_changelog_files" | sort -u)
@@ -208,6 +209,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: ${{ matrix.addon }}
+          platforms: linux/arm64
           push: false
           load: true
           file: ${{ matrix.addon }}/Dockerfile
