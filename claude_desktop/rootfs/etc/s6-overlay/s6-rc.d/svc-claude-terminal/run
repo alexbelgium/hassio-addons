@@ -7,9 +7,17 @@ declare port=7681
 declare username
 declare password=""
 declare workspace
+declare canonical_workspace
+
+export PATH="${HOME:-/data/data}/.local/bin:/usr/local/bin:/usr/bin:/bin:${PATH:-}"
 
 if bashio::config.has_value 'enable_terminal' && ! bashio::config.true 'enable_terminal'; then
     bashio::log.info "svc-claude-terminal: terminal disabled; idling"
+    exec sleep infinity
+fi
+
+if [ -z "${HOME:-}" ]; then
+    bashio::log.error "svc-claude-terminal: HOME is not initialized; idling"
     exec sleep infinity
 fi
 
@@ -22,9 +30,11 @@ username="claude"
 if bashio::config.has_value 'terminal_username'; then
     username="$(bashio::config 'terminal_username')"
 fi
+
 if bashio::config.has_value 'terminal_password'; then
     password="$(bashio::config 'terminal_password')"
 elif bashio::config.has_value 'PASSWORD'; then
+    bashio::log.warning "svc-claude-terminal: using PASSWORD as fallback for terminal authentication; prefer a unique terminal_password"
     password="$(bashio::config 'PASSWORD')"
 fi
 
@@ -38,9 +48,49 @@ if bashio::config.has_value 'terminal_workspace'; then
     workspace="$(bashio::config 'terminal_workspace')"
 fi
 
-install -d -o abc -g abc "$workspace"
+if [[ "$workspace" != /* ]]; then
+    bashio::log.error "svc-claude-terminal: terminal_workspace must be an absolute path; idling"
+    exec sleep infinity
+fi
+
+if [ -L "$workspace" ]; then
+    bashio::log.error "svc-claude-terminal: terminal_workspace must not be a symbolic link; idling"
+    exec sleep infinity
+fi
+
+if ! canonical_workspace="$(realpath -m -- "$workspace")"; then
+    bashio::log.error "svc-claude-terminal: unable to resolve terminal_workspace '$workspace'; idling"
+    exec sleep infinity
+fi
+workspace="$canonical_workspace"
+
+case "$workspace" in
+    "$HOME" | "$HOME"/* | /share/* | /media/* | /mnt/* | /data/* | /config/*)
+        ;;
+    *)
+        bashio::log.error "svc-claude-terminal: terminal_workspace must be the configured data_location or a subdirectory of /share, /media, /mnt, /data, or /config; idling"
+        exec sleep infinity
+        ;;
+esac
+
+if [ ! -e "$workspace" ]; then
+    if ! install -d -m 0750 -o abc -g abc -- "$workspace"; then
+        bashio::log.error "svc-claude-terminal: failed to create workspace '$workspace'; idling"
+        exec sleep infinity
+    fi
+elif [ ! -d "$workspace" ]; then
+    bashio::log.error "svc-claude-terminal: terminal_workspace '$workspace' is not a directory; idling"
+    exec sleep infinity
+fi
+
+if ! s6-setuidgid abc test -r "$workspace" ||
+    ! s6-setuidgid abc test -w "$workspace" ||
+    ! s6-setuidgid abc test -x "$workspace"; then
+    bashio::log.error "svc-claude-terminal: workspace '$workspace' must be readable, writable, and searchable by user abc; idling"
+    exec sleep infinity
+fi
+
 export CLAUDE_TERMINAL_WORKSPACE="$workspace"
-export PATH="${HOME}/.local/bin:/usr/local/bin:/usr/bin:/bin:${PATH}"
 
 bashio::log.info "svc-claude-terminal: starting authenticated ttyd terminal on port ${port}; workspace=${workspace}"
 exec s6-setuidgid abc ttyd \
