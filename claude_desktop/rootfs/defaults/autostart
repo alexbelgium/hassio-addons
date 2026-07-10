@@ -20,12 +20,13 @@ if [ -s "$CLAUDE_DESKTOP_COMMAND_FILE" ]; then
 else
     CLAUDE_DESKTOP_COMMAND="$DEFAULT_CLAUDE_DESKTOP_COMMAND"
 fi
-if bashio::config.true 'install_headroom'; then
-    export ANTHROPIC_BASE_URL="http://127.0.0.1:8787"
-fi
+
+# Headroom is intentionally not injected into the Desktop process. Claude Desktop overrides
+# ANTHROPIC_BASE_URL, so Desktop uses the registered Headroom MCP tools instead. The Claude Code
+# terminal uses the supported `headroom wrap claude` integration through claude-headroom.
 
 # Launch the configured command. If a custom/wrapped command fails to start, fall back to
-# the plain Claude Desktop launch so the desktop app still comes up for the user.
+# the plain Claude Desktop launch so the app always comes up for the user.
 if ! sh -c "$CLAUDE_DESKTOP_COMMAND"; then
     if [ "$CLAUDE_DESKTOP_COMMAND" != "$DEFAULT_CLAUDE_DESKTOP_COMMAND" ]; then
         echo "autostart: '$CLAUDE_DESKTOP_COMMAND' failed; falling back to default Claude Desktop launch" >&2

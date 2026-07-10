@@ -1,3 +1,14 @@
+## 1.13 (10-07-2026)
+
+- Add the official Claude Code stable package, `tmux`, `ripgrep`, and a pinned upstream `ttyd` binary for both supported architectures.
+- Add an optional authenticated Claude Code web terminal on port `7681`; the port remains unmapped by default and reconnecting clients attach to the same persistent tmux session.
+- Validate and canonicalize `terminal_workspace`, restrict it to supported storage roots, and never re-own existing directories.
+- Order the terminal after service initialization and start tmux with an explicit Bash shell and workspace.
+- Add `claude-headroom` for Headroom's supported wrapper, reusing the supervised proxy with `--no-proxy` while leaving RTK management to the add-on.
+- Keep Claude Desktop on the MCP-only Headroom integration and remove the ineffective `ANTHROPIC_BASE_URL` export from its launch environment.
+- Preserve ownership of Claude settings for the configured runtime user and remove only the exact add-on-managed RTK hook when RTK is disabled.
+- Document the shared-home architecture, separate Desktop/CLI sessions, direct HTTP terminal security, shared concurrent sessions, and configurable data location.
+
 ## 1.12 (09-07-2026)
 - Minor bugs fixed
 ## 1.11 (09-07-2026)

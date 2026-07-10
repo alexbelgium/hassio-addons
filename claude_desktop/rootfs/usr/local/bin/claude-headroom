@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v claude >/dev/null 2>&1; then
+    echo "Claude Code is not installed or is not on PATH." >&2
+    exit 127
+fi
+
+if ! command -v headroom >/dev/null 2>&1; then
+    echo "Headroom is unavailable; start Claude Code directly with claude-direct." >&2
+    exit 127
+fi
+
+if ! curl -fsS --max-time 3 "http://127.0.0.1:8787/readyz" >/dev/null; then
+    echo "The supervised Headroom proxy is not ready on 127.0.0.1:8787. Ensure install_headroom is enabled and check the add-on log." >&2
+    exit 1
+fi
+
+# Reuse the s6-supervised proxy instead of starting a competing proxy. RTK is already managed
+# through the persistent Claude Code PreToolUse hook, so Headroom must not reinstall it.
+exec headroom wrap claude --port 8787 --no-proxy --no-rtk -- "$@"

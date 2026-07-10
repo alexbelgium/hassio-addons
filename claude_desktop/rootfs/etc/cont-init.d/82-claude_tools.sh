@@ -2,6 +2,9 @@
 # shellcheck shell=bash
 set -e
 set -o pipefail
+
+PUID="$(if bashio::config.has_value 'PUID'; then bashio::config 'PUID'; else echo '0'; fi)"
+PGID="$(if bashio::config.has_value 'PGID'; then bashio::config 'PGID'; else echo '0'; fi)"
 mkdir -p "$HOME/.claude"
 
 CLAUDE_DESKTOP_COMMAND_FILE="/tmp/claude-desktop-command"
@@ -138,24 +141,66 @@ PY
     else
         bashio::log.warning "rtk is not available"
     fi
-elif [ -f "$HOME/.claude/settings.json" ] && grep -q 'rtk' "$HOME/.claude/settings.json"; then
-    bashio::log.info "Removing rtk Claude Code hook"
+elif [ -f "$HOME/.claude/settings.json" ]; then
+    bashio::log.info "Removing the add-on-managed rtk Claude Code hook"
     python3 - <<'PY' || bashio::log.warning "Unable to remove rtk hook automatically"
 import json
 from pathlib import Path
+
 path = Path.home() / ".claude" / "settings.json"
 data = json.loads(path.read_text())
-hooks = data.get("hooks", {})
-for event, entries in list(hooks.items()):
-    if isinstance(entries, list):
-        hooks[event] = [entry for entry in entries if "rtk" not in json.dumps(entry)]
-        if not hooks[event]:
-            hooks.pop(event, None)
-if hooks:
-    data["hooks"] = hooks
-else:
-    data.pop("hooks", None)
-path.write_text(json.dumps(data, indent=2) + "\n")
+if not isinstance(data, dict):
+    raise TypeError("Claude settings must contain a JSON object")
+
+hooks = data.get("hooks")
+if not isinstance(hooks, dict):
+    raise SystemExit(0)
+
+entries = hooks.get("PreToolUse")
+if not isinstance(entries, list):
+    raise SystemExit(0)
+
+changed = False
+filtered_entries = []
+for entry in entries:
+    if not isinstance(entry, dict) or entry.get("matcher") != "Bash":
+        filtered_entries.append(entry)
+        continue
+
+    commands = entry.get("hooks")
+    if not isinstance(commands, list):
+        filtered_entries.append(entry)
+        continue
+
+    filtered_commands = [
+        command
+        for command in commands
+        if not (
+            isinstance(command, dict)
+            and command.get("type") == "command"
+            and command.get("command") == "rtk hook claude"
+        )
+    ]
+    if len(filtered_commands) == len(commands):
+        filtered_entries.append(entry)
+        continue
+
+    changed = True
+    if filtered_commands:
+        updated_entry = dict(entry)
+        updated_entry["hooks"] = filtered_commands
+        filtered_entries.append(updated_entry)
+
+if changed:
+    if filtered_entries:
+        hooks["PreToolUse"] = filtered_entries
+    else:
+        hooks.pop("PreToolUse", None)
+    if hooks:
+        data["hooks"] = hooks
+    else:
+        data.pop("hooks", None)
+    path.write_text(json.dumps(data, indent=2) + "\n")
 PY
 fi
 
@@ -170,3 +215,11 @@ else
     bashio::log.info "Disabling caveman Claude Code plugin"
     find "$HOME/.claude" -maxdepth 4 -iname '*caveman*' -exec rm -rf {} + 2> /dev/null || true
 fi
+
+# Startup configuration runs as root, while Claude Desktop and the web terminal run as abc.
+# Return managed persistent files to the configured runtime UID/GID after all writes complete.
+for managed_path in "$HOME/.claude" "$HOME/.config/Claude"; do
+    if [ -e "$managed_path" ]; then
+        chown -R -- "${PUID}:${PGID}" "$managed_path" || bashio::log.warning "Unable to set ownership on $managed_path"
+    fi
+done
