@@ -57,8 +57,8 @@ options:
 panel_admin: false
 panel_icon: mdi:robot-happy
 ports:
-  3001/tcp: null
-  7681/tcp: null
+  3001/tcp: "debiantrixie-version-c55d3809"
+  7681/tcp: "debiantrixie-version-c55d3809"
   8787/tcp: 8787
 ports_description:
   3001/tcp: Claude Desktop web interface
@@ -100,5 +100,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.13"
+version: "debiantrixie-version-c55d3809"
 video: true

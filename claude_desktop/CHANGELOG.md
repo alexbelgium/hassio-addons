@@ -1,3 +1,6 @@
+ 
+## debiantrixie-version-c55d3809 (2026-07-11)
+- Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 ## 1.13 (10-07-2026)
 
 - Add the official Claude Code stable package, `tmux`, `ripgrep`, and a pinned upstream `ttyd` binary for both supported architectures.
