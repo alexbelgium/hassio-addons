@@ -62,7 +62,7 @@ ports:
   8787/tcp: 8787
 ports_description:
   3001/tcp: Claude Desktop web interface
-  7681/tcp: HTTP Basic-auth Claude Code terminal (no TLS)
+  7681/tcp: Claude Code web terminal over HTTP Basic auth (no TLS)
   8787/tcp: Headroom dashboard and proxy
 privileged:
   - SYS_ADMIN
