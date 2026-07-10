@@ -66,10 +66,23 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
         git \
         gh \
         ripgrep \
-        tmux \
-        ttyd && \
+        tmux && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# ttyd is not packaged in Debian bookworm. Install the pinned upstream static binary.
+ARG TTYD_VERSION="1.7.7"
+RUN set -eux; \
+    case "$(dpkg --print-architecture)" in \
+        amd64) ttyd_arch="x86_64" ;; \
+        arm64) ttyd_arch="aarch64" ;; \
+        *) echo "Unsupported architecture for ttyd: $(dpkg --print-architecture)" >&2; exit 1 ;; \
+    esac; \
+    curl -fsSL --retry 3 --retry-delay 2 \
+        -o /usr/local/bin/ttyd \
+        "https://github.com/tsl0922/ttyd/releases/download/${TTYD_VERSION}/ttyd.${ttyd_arch}"; \
+    chmod 0755 /usr/local/bin/ttyd; \
+    /usr/local/bin/ttyd --version
 
 # Install token-optimization tool prerequisites and binaries at build time
 RUN apt-get update && \
