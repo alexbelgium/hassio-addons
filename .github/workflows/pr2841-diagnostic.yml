@@ -1,5 +1,5 @@
 ---
-name: PR 2841 Build Diagnostic
+name: Claude Add-on Build Diagnostic
 
 on:
   pull_request:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   diagnose:
-    if: ${{ github.event.pull_request.number == 2841 }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,16 +19,19 @@ jobs:
         with:
           path: ./claude_desktop/
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Build amd64 and capture tail
+      - name: Build aarch64 and capture tail
         shell: bash
         run: |
           set +e
-          BUILD_FROM="$(jq -r '.build_from.amd64 // empty' '${{ steps.information.outputs.build }}')"
+          BUILD_FROM="$(jq -r '.build_from.aarch64 // empty' '${{ steps.information.outputs.build }}')"
           docker buildx build \
-            --platform linux/amd64 \
+            --platform linux/arm64 \
             --progress=plain \
             --build-arg "BUILD_FROM=${BUILD_FROM}" \
             --file claude_desktop/Dockerfile \
@@ -42,7 +44,7 @@ jobs:
       - name: Upload diagnostic log
         uses: actions/upload-artifact@v4
         with:
-          name: pr2841-amd64-build-log
+          name: claude-aarch64-build-log
           path: |
             build-tail.log
             build-status.txt
