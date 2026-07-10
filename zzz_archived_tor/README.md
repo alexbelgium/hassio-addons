@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [qBittorrent] Cant update to 5.2.3 (opened 2026-07-09)](https://github.com/alexbelgium/hassio-addons/issues/2836) by [@tschoehuijs](https://github.com/tschoehuijs)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
