@@ -9,6 +9,22 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
+ARG RTK_VERSION="v0.43.0"
+ARG RTK_COMMIT="5a7880d404db8364d602f2ecdc41dd790f64013f"
+
+# The upstream aarch64 release is cross-built on ubuntu-latest and requires
+# GLIBC 2.39. Build the pinned source on Bookworm instead so it is compatible
+# with the add-on runtime on both supported architectures.
+FROM rust:1.91-bookworm AS rtk-builder
+ARG RTK_VERSION
+ARG RTK_COMMIT
+RUN git clone --depth 1 --branch "${RTK_VERSION}" https://github.com/rtk-ai/rtk.git /src/rtk && \
+    test "$(git -C /src/rtk rev-parse HEAD)" = "${RTK_COMMIT}" && \
+    cd /src/rtk && \
+    cargo build --release --locked && \
+    install -D -m 0755 target/release/rtk /out/rtk && \
+    /out/rtk --version
+
 FROM ${BUILD_FROM}
 
 ##################
@@ -89,15 +105,15 @@ RUN set -eux; \
     chmod 0755 /usr/local/bin/ttyd; \
     /usr/local/bin/ttyd --version
 
+# Copy the pinned Bookworm-built RTK binary and execute it in the final image.
+# This makes an ABI mismatch fail the image build instead of surfacing at runtime.
+COPY --from=rtk-builder /out/rtk /usr/local/bin/rtk
+RUN /usr/local/bin/rtk --version
+
 # Install only the Headroom proxy, code-compression, and MCP features used by this add-on.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
     pip3 install --break-system-packages "headroom-ai[proxy,code,mcp]" && \
-    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh -o /tmp/rtk-install.sh && \
-    HOME=/root sh /tmp/rtk-install.sh && \
-    rm /tmp/rtk-install.sh && \
-    if [ -x /root/.local/bin/rtk ] && [ ! -x /usr/local/bin/rtk ]; then mv /root/.local/bin/rtk /usr/local/bin/rtk; fi && \
-    if [ -x /usr/local/bin/rtk ]; then chmod +x /usr/local/bin/rtk; else echo "rtk binary was not installed on PATH"; exit 1; fi && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /root/.cache
 
