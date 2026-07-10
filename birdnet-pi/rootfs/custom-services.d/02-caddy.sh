@@ -1,25 +1,29 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
-# Dependencies
-sockfile="empty"
-until [[ -e /var/run/dbus/system_bus_socket ]] && [[ -e "$sockfile" ]]; do
+# Wait for PHP-FPM only. D-Bus is optional in standalone Docker mode and must
+# not prevent the web service from starting.
+sockfile=""
+until [[ -n "$sockfile" ]] && [[ -e "$sockfile" ]]; do
     sleep 1s
-    sockfile="$(find /run/php -name "*.sock")"
+    sockfile="$(find /run/php -name "*.sock" -print -quit 2> /dev/null || true)"
 done
 
 # Correct fpm.sock
-chown caddy:caddy /run/php/php*-fpm.sock
+chown caddy:caddy "$sockfile"
 sed -i "s|/run/php/php-fpm.sock|$sockfile|g" /helpers/caddy_ingress.sh
 sed -i "s|/run/php/php-fpm.sock|$sockfile|g" /etc/caddy/Caddyfile
 sed -i "s|/run/php/php-fpm.sock|$sockfile|g" "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
 
-# Set timezone
-TZ_VALUE="$(timedatectl show -p Timezone --value)"
-export TZ="$TZ_VALUE"
+# Set timezone without requiring D-Bus.
+TZ_VALUE="${TZ:-}"
+if [[ -S /var/run/dbus/system_bus_socket ]] && command -v timedatectl > /dev/null 2>&1; then
+    TZ_VALUE="$(timedatectl show -p Timezone --value 2> /dev/null || true)"
+fi
+export TZ="${TZ_VALUE:-Etc/UTC}"
 
 # Update caddyfile with password
-/."$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh &> /dev/null || true
+"$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh &> /dev/null || true
 
 echo "Starting service: caddy"
-/usr/bin/caddy run --config /etc/caddy/Caddyfile
+exec /usr/bin/caddy run --config /etc/caddy/Caddyfile
