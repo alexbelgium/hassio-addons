@@ -89,10 +89,10 @@ RUN set -eux; \
     chmod 0755 /usr/local/bin/ttyd; \
     /usr/local/bin/ttyd --version
 
-# Install token-optimization tool prerequisites and binaries at build time
+# Install only the Headroom proxy, code-compression, and MCP features used by this add-on.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
-    pip3 install --break-system-packages "headroom-ai[all]" && \
+    pip3 install --break-system-packages "headroom-ai[proxy,code,mcp]" && \
     curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh -o /tmp/rtk-install.sh && \
     HOME=/root sh /tmp/rtk-install.sh && \
     rm /tmp/rtk-install.sh && \
