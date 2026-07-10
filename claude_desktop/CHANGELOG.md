@@ -3,6 +3,7 @@
 - Build pinned RTK 0.43.0 source on Debian Bookworm for both architectures instead of installing the upstream arm64 release binary, which requires GLIBC 2.39 and cannot run in the add-on image.
 - Execute `rtk --version` inside the final image during the Docker build so future ABI incompatibilities fail CI instead of surfacing at runtime.
 - Validate the final Bookworm-built RTK binary in a native aarch64 image build.
+- Correct the repository PR checks so changed changelog paths are exported and aarch64 images are built explicitly for `linux/arm64`.
 
 ## 1.13 (10-07-2026)
 
