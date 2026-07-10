@@ -86,8 +86,8 @@ schema:
   ha_smart_context: bool?
   enable_ha_mcp: bool?
   dangerously_skip_permissions: bool?
-  enable_terminal: bool
-  terminal_username: match(^[A-Za-z0-9_.-]+$)
+  enable_terminal: bool?
+  terminal_username: match(^[A-Za-z0-9_.-]+$)?
   terminal_password: password?
   terminal_workspace: str?
   github_token: password?
