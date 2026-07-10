@@ -33,9 +33,9 @@ if [ -z "$password" ]; then
     exec sleep infinity
 fi
 
-workspace="$(bashio::config 'terminal_workspace')"
-if [ -z "$workspace" ]; then
-    workspace="${HOME}/workspace"
+workspace="${HOME}/workspace"
+if bashio::config.has_value 'terminal_workspace'; then
+    workspace="$(bashio::config 'terminal_workspace')"
 fi
 
 install -d -o abc -g abc "$workspace"
