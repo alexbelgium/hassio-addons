@@ -1,0 +1,283 @@
+# Microphone considerations
+
+The critical element is the microphone quality: a Boya By-lm 40 or Clippy EM272 (with a very good aux-usb converter) is key to improve the quality of detections.
+
+Here are some example tests I did (the whole threads are really interesting also):
+
+- <https://github.com/mcguirepr89/BirdNET-Pi/discussions/39#discussioncomment-9706951>
+- <https://github.com/mcguirepr89/BirdNET-Pi/discussions/1092#discussioncomment-9706191>
+
+**My recommendation:**
+
+- **Best entry system (< 50 €):** Boya By-lm40 (30 €) + deadcat (10 €)
+- **Best middle end system (< 150 €):** Clippy EM272 TRS/TRRS (55 €) + Rode AI micro trs/trrs to usb (70 €) + Rycote deadcat (27 €)
+- **Best high end system (<400 €):** Clippy EM272 XLR (85 €) or LOM Ucho Pro (75 €) + Focusrite Scarlet 2i2 4th Gen (200 €) + Bubblebee Pro Extreme deadcat (45 €)
+
+**Sources for high end microphones in Europe:**
+
+- Clippy (EM272): <https://www.veldshop.nl/en/clippy-xlr-em272z1-mono-microphone.html>
+- LOM (EM272): <https://store.lom.audio/collections/basicucho-series>
+- Immersive sound (AOM5024): <https://immersivesoundscapes.com/earsight-standard-v2/>
+
+# App settings recommendation
+
+I've tested lots of settings by running 2 versions of my HA birdnet-pi addon in parallel using the same RTSP feed and comparing the impact of parameters. My conclusions aren't universal, as it seems to be highly dependent on the region and type of mic used. For example, the old model seems to be better in Australia, while the new one is better in Europe.
+
+- **Model**
+  - **Version:** 6k_v2.4 _(performs better in Europe at least, the 6k performs better in Australia)_
+  - **Species range model:** v1 _(uncheck v2.4; seems more robust in Europe)_
+  - **Species occurrence threshold:** 0.001 _(was 0.00015 using v2.4; use the Species List Tester to check the correct value for you)_
+- **Audio settings**
+  - **Default**
+  - **Channel:** 1 _(doesn't really matter as analysis is made on mono signal; 1 allows decreased saved audio size but seems to give slightly messed up spectrograms in my experience)_
+  - **Recording Length:** 18 _(that's because I use an overlap of 0.5; so it analyzes 0-3s, 2.5-5.5s, 5-8s, 7.5-10.5, 10-13, 12.5-15.5, 15-18)_
+  - **Extraction Length:** 9s _(could be 6, but I like to hear my birds :-))_
+  - **Audio format:** mp3 _(why bother with something else)_
+- **Birdnet-lite settings**
+  - **Overlap:** 0.5s
+  - **Minimum confidence:** 0.7
+  - **Sigmoid sensitivity:** 1.25 _(I've tried 1.00 but it gave much more false positives; decreasing this value increases sensitivity)_
+
+# Set RTSP server
+
+Inspired by: <https://github.com/mcguirepr89/BirdNET-Pi/discussions/1006#discussioncomment-6747450>
+
+<details>
+<summary>On your desktop</summary>
+
+- Download imager
+- Install raspbian lite 64
+
+</details>
+
+<details>
+<summary>With ssh, install requisite softwares</summary>
+
+```bash
+# Update
+sudo apt-get update -y
+sudo apt-get dist-upgrade -y
+
+# Install RTSP server
+sudo apt-get install -y micro ffmpeg lsof
+sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.18.1/mediamtx_v1.18.1_linux_arm64v8.tar.gz -O - | sudo tar -xz
+```
+</details>
+
+<details>
+<summary>Configure Audio</summary>
+
+### Find right device
+
+```bash
+# List audio devices
+arecord -l
+
+# Check audio device parameters. Example:
+arecord -D hw:1,0 --dump-hw-params
+```
+
+### Add startup script
+
+```bash
+sudo nano startmic.sh && chmod +x startmic.sh
+```
+
+Paste the following content:
+
+```bash
+#!/bin/bash
+echo "Starting birdmic"
+
+# Disable gigabit ethernet
+sudo ethtool -s eth0 speed 100 duplex full autoneg on
+
+# Detect Scarlett 2i2 card index - relevant only if you use that card
+SCARLETT_INDEX=$(arecord -l | grep -i "Scarlett" | awk '{print $2}' | sed 's/://')
+
+if [ -z "$SCARLETT_INDEX" ]; then
+    echo "Error: Scarlett 2i2 not found! Using 0 as default"
+    SCARLETT_INDEX="0"
+fi
+
+# Start mediamtx first and give it a moment to initialize
+./mediamtx &
+sleep 5
+
+# Run ffmpeg
+ffmpeg -nostdin -use_wallclock_as_timestamps 1 -fflags +genpts -f alsa -acodec pcm_s16be -ac 2 -ar 96000 -i plughw:$SCARLETT_INDEX,0 -ac 2 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2>/tmp/rtsp_error &
+
+# Set microphone volume
+sleep 5
+MICROPHONE_NAME="Line In 1 Gain" # for Focusrite Scarlett 2i2
+sudo amixer -c 0 sset "$MICROPHONE_NAME" 40
+
+sleep 60
+
+# Run focusrite and autogain scripts if present
+if [ -f "$HOME/focusrite.sh" ]; then
+    sudo python3 -u "$HOME/focusrite.sh" >/tmp/log_focusrite 2>/tmp/log_focusrite_error &
+fi
+
+if [ -f "$HOME/autogain.py" ]; then
+    sudo python3 -u "$HOME/autogain.py" >/tmp/log_autogain 2>/tmp/log_autogain_error &
+fi
+```
+</details>
+
+<details>
+<summary>Optional: Startup automatically</summary>
+
+```bash
+chmod +x startmic.sh
+crontab -e # select nano as your editor
+```
+Paste in:
+
+```bash
+@reboot $HOME/startmic.sh
+```
+
+then save and exit nano.
+Reboot the Pi and test again with VLC to make sure the RTSP stream is live.
+
+</details>
+
+<details>
+<summary>Optional: disable unnecessary elements</summary>
+
+- **Optimize config.txt**
+
+```bash
+sudo nano /boot/firmware/config.txt
+```
+
+Paste in:
+
+```ini
+# ── Audio ──────────────────────────────────────────────────────
+dtparam=audio=off
+
+# ── Disable radios (RF + background jitter) ─────────────────────
+dtoverlay=disable-wifi
+dtoverlay=disable-bt
+
+# ── Headless / minimal firmware probing ─────────────────────────
+gpu_mem=16
+start_x=0
+camera_auto_detect=0
+display_auto_detect=0
+disable_splash=1
+
+# ── Optional: only effective on newer Pi4B revs / Pi 400 ────────
+arm_boost=1
+hdmi_blanking=2             # Disable HDMI (save power and reduce interference)
+```
+
+- **Optimize cmdline.txt**
+
+```bash
+sudo nano /boot/firmware/cmdline.txt
+```
+
+Paste in:
+
+```ini
+console=serial0,115200 console=tty1 root=PARTUUID=2f0ecb16-02 rootfstype=ext4 fsck.repair=yes rootwait cfg80211.ieee80211_regdom=FI dwc_otg.fiq_enable=0 dwc_otg.fiq_split_enable=0 dwc_otg.fiq_fsm_enable=0 dwc_otg.lpm_enable=0 usbcore.autosuspend=-1 snd_usb_audio.nrpacks=1 threadirqs
+```
+
+- **Disable useless services**
+
+```bash
+# Disable useless services
+sudo systemctl disable hciuart
+sudo systemctl disable bluetooth
+sudo systemctl disable triggerhappy
+sudo systemctl disable avahi-daemon
+sudo systemctl disable dphys-swapfile
+sudo systemctl disable hciuart.service
+
+# Disable bluetooth
+for element in bluetooth btbcm hci_uart btintel btrtl btusb; do
+    sudo sed -i "/$element/d" /etc/modprobe.d/raspi-blacklist.conf
+    echo "blacklist $element" | sudo tee -a /etc/modprobe.d/raspi-blacklist.conf
+done
+
+# Disable Video (Including V4L2) on Your Raspberry Pi
+for element in bcm2835_v4l2 bcm2835_codec bcm2835_isp videobuf2_vmalloc videobuf2_memops videobuf2_v4l2 videobuf2_common videodev; do
+    sudo sed -i "/$element/d" /etc/modprobe.d/raspi-blacklist.conf
+    echo "blacklist $element" | sudo tee -a /etc/modprobe.d/raspi-blacklist.conf
+done
+
+# Disable WiFi Power Management
+sudo iw dev wlan0 set power_save off
+for element in brcmfmac brcmutil; do
+    sudo sed -i "/$element/d" /etc/modprobe.d/raspi-blacklist.conf
+    echo "blacklist $element" | sudo tee -a /etc/modprobe.d/raspi-blacklist.conf
+done
+
+# Disable USB Power Management
+echo 'on' | sudo tee /sys/bus/usb/devices/usb*/power/control
+
+# Preventing the Raspberry Pi from Entering Power-Saving Mode
+sudo apt update
+sudo apt install -y cpufrequtils
+echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
+sudo systemctl disable ondemand
+sudo systemctl stop ondemand
+```
+</details>
+
+<details>
+<summary>Optional: install Focusrite driver</summary>
+
+```bash
+sudo apt-get install make linux-headers-$(uname -r)
+curl -LO https://github.com/geoffreybennett/scarlett-gen2/releases/download/v6.9-v1.3/snd-usb-audio-kmod-6.6-v1.3.tar.gz
+tar -xzf snd-usb-audio-kmod-6.6-v1.3.tar.gz
+cd snd-usb-audio-kmod-6.6-v1.3
+KSRCDIR=/lib/modules/$(uname -r)/build
+make -j4 -C $KSRCDIR M=$(pwd) clean
+make -j4 -C $KSRCDIR M=$(pwd)
+sudo make -j4 -C $KSRCDIR M=$(pwd) INSTALL_MOD_DIR=updates/snd-usb-audio modules_install
+sudo depmod
+sudo reboot
+dmesg | grep -A 5 -B 5 -i focusrite
+```
+</details>
+
+<details>
+<summary>Optional: add RAM disk</summary>
+
+```bash
+sudo cp /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
+sudo systemctl enable tmp.mount
+sudo systemctl start tmp.mount
+```
+</details>
+
+<details>
+<summary>Optional: Configuration for Focusrite Scarlett 2i2</summary>
+
+Add this content in `$HOME/focusrite.sh` and run:
+
+```bash
+chmod +x "$HOME/focusrite.sh"
+```
+
+See: <https://github.com/alexbelgium/Birdnet-tools/blob/main/focusrite.sh>
+
+</details>
+
+<details>
+<summary>Optional: Autogain script for microphone</summary>
+
+Add this content in `$HOME/autogain.py` and run:
+
+```bash
+chmod +x "$HOME/autogain.py"
+```
+
+See: <https://github.com/alexbelgium/Birdnet-tools/blob/main/autogain.py>
+
+</details>
