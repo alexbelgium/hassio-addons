@@ -8,7 +8,7 @@ declare username
 declare password=""
 declare workspace
 
-if ! bashio::config.true 'enable_terminal'; then
+if bashio::config.has_value 'enable_terminal' && ! bashio::config.true 'enable_terminal'; then
     bashio::log.info "svc-claude-terminal: terminal disabled; idling"
     exec sleep infinity
 fi
@@ -18,7 +18,10 @@ if ! command -v ttyd >/dev/null 2>&1 || ! command -v tmux >/dev/null 2>&1 || ! c
     exec sleep infinity
 fi
 
-username="$(bashio::config 'terminal_username')"
+username="claude"
+if bashio::config.has_value 'terminal_username'; then
+    username="$(bashio::config 'terminal_username')"
+fi
 if bashio::config.has_value 'terminal_password'; then
     password="$(bashio::config 'terminal_password')"
 elif bashio::config.has_value 'PASSWORD'; then
