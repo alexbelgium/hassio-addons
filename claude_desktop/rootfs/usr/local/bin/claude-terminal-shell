@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export HOME="${HOME:-/data/data}"
+export PATH="${HOME}/.local/bin:/usr/local/bin:/usr/bin:/bin:${PATH:-}"
+
+workspace="${CLAUDE_TERMINAL_WORKSPACE:-${HOME}/workspace}"
+session_name="${CLAUDE_TMUX_SESSION:-claude}"
+
+mkdir -p "$workspace"
+cd "$workspace"
+
+# Reattach every browser connection to the same terminal session. Closing the browser detaches
+# the client but leaves Claude Code and other commands running inside tmux.
+exec tmux new-session -A -s "$session_name"
