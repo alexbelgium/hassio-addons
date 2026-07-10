@@ -1,0 +1,48 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+set -o pipefail
+
+declare port=7681
+declare username
+declare password=""
+declare workspace
+
+if ! bashio::config.true 'enable_terminal'; then
+    bashio::log.info "svc-claude-terminal: terminal disabled; idling"
+    exec sleep infinity
+fi
+
+if ! command -v ttyd >/dev/null 2>&1 || ! command -v tmux >/dev/null 2>&1 || ! command -v claude >/dev/null 2>&1; then
+    bashio::log.error "svc-claude-terminal: ttyd, tmux, or Claude Code is missing; idling"
+    exec sleep infinity
+fi
+
+username="$(bashio::config 'terminal_username')"
+if bashio::config.has_value 'terminal_password'; then
+    password="$(bashio::config 'terminal_password')"
+elif bashio::config.has_value 'PASSWORD'; then
+    password="$(bashio::config 'PASSWORD')"
+fi
+
+if [ -z "$password" ]; then
+    bashio::log.warning "svc-claude-terminal: set terminal_password (or PASSWORD) before mapping port ${port}; terminal will remain disabled"
+    exec sleep infinity
+fi
+
+workspace="$(bashio::config 'terminal_workspace')"
+if [ -z "$workspace" ]; then
+    workspace="${HOME}/workspace"
+fi
+
+install -d -o abc -g abc "$workspace"
+export CLAUDE_TERMINAL_WORKSPACE="$workspace"
+export PATH="${HOME}/.local/bin:/usr/local/bin:/usr/bin:/bin:${PATH}"
+
+bashio::log.info "svc-claude-terminal: starting authenticated ttyd terminal on port ${port}; workspace=${workspace}"
+exec s6-setuidgid abc ttyd \
+    -p "$port" \
+    -W \
+    -O \
+    -c "${username}:${password}" \
+    /usr/local/bin/claude-terminal-shell
