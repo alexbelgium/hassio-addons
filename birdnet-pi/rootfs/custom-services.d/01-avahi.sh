@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 # Waiting for dbus
 until [[ -e /var/run/dbus/system_bus_socket ]]; do
