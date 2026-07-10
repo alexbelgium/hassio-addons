@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v claude >/dev/null 2>&1; then
+    echo "Claude Code is not installed or is not on PATH." >&2
+    exit 127
+fi
+
+if ! command -v headroom >/dev/null 2>&1; then
+    echo "Headroom is unavailable; starting Claude Code directly." >&2
+    exec claude "$@"
+fi
+
+# Headroom's supported Claude Code integration starts or reuses its local proxy, configures the
+# required routing/MCP environment, and then launches Claude Code. RTK remains active through
+# the persistent Claude Code PreToolUse hook configured at add-on startup.
+exec headroom wrap claude -- "$@"
