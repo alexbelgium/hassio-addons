@@ -49,16 +49,24 @@ RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -e
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
-# Install Claude Desktop and Python tooling
-RUN curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
+# Install Claude Desktop, Claude Code, browser-terminal tooling, and Python tooling
+RUN install -d -m 0755 /etc/apt/keyrings && \
+    curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
+    curl -fsSLo /etc/apt/keyrings/claude-code.asc https://downloads.claude.ai/keys/claude-code.asc && \
     echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" > /etc/apt/sources.list.d/claude-desktop.list && \
+    echo "deb [signed-by=/etc/apt/keyrings/claude-code.asc] https://downloads.claude.ai/claude-code/apt/stable stable main" > /etc/apt/sources.list.d/claude-code.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         claude-desktop \
+        claude-code \
         python3-pip \
         libsecret-1-0 \
         dbus-x11 \
-        git gh && \
+        git \
+        gh \
+        ripgrep \
+        tmux \
+        ttyd && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
