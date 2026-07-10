@@ -7,11 +7,15 @@ if ! command -v claude >/dev/null 2>&1; then
 fi
 
 if ! command -v headroom >/dev/null 2>&1; then
-    echo "Headroom is unavailable; starting Claude Code directly." >&2
-    exec claude "$@"
+    echo "Headroom is unavailable; start Claude Code directly with claude-direct." >&2
+    exit 127
 fi
 
-# Headroom's supported Claude Code integration starts or reuses its local proxy, configures the
-# required routing/MCP environment, and then launches Claude Code. RTK remains active through
-# the persistent Claude Code PreToolUse hook configured at add-on startup.
-exec headroom wrap claude -- "$@"
+if ! curl -fsS --max-time 3 "http://127.0.0.1:8787/readyz" >/dev/null; then
+    echo "The supervised Headroom proxy is not ready on 127.0.0.1:8787. Ensure install_headroom is enabled and check the add-on log." >&2
+    exit 1
+fi
+
+# Reuse the s6-supervised proxy instead of starting a competing proxy. RTK is already managed
+# through the persistent Claude Code PreToolUse hook, so Headroom must not reinstall it.
+exec headroom wrap claude --port 8787 --no-proxy --no-rtk -- "$@"
