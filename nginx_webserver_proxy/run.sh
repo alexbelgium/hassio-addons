@@ -115,7 +115,10 @@ log "static_site_root=${STATIC_ROOT} prefix=${STATIC_PREFIX} log_level=${LOG_LEV
 # Supervisor persists /data as a Docker volume; /etc/letsencrypt would otherwise be ephemeral.
 if [ ! -L /etc/letsencrypt ]; then
     if [ -d /etc/letsencrypt ] && [ "$(ls -A /etc/letsencrypt 2> /dev/null)" ]; then
-        cp -a /etc/letsencrypt/. /data/letsencrypt/ 2> /dev/null || true
+        # Abort migration on copy failure so we never rm -rf certs that weren't copied.
+        mkdir -p /data/letsencrypt
+        cp -a /etc/letsencrypt/. /data/letsencrypt/ \
+            || die "Failed to migrate /etc/letsencrypt to /data/letsencrypt; leaving existing certs intact"
     fi
     rm -rf /etc/letsencrypt
     ln -sf /data/letsencrypt /etc/letsencrypt
