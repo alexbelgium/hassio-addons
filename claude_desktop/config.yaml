@@ -100,5 +100,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "debiantrixie-version-c55d3809"
+version: "debiantrixie-version-c55d3809-2"
 video: true
