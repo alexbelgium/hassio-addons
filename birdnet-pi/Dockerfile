@@ -74,17 +74,6 @@ RUN \
     curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     \
-    # Use installer to modify other scripts
-    #######################################
-    # Define file
-    sed -i "1a /./newinstallermod.sh" /newinstaller.sh && \
-    echo '#!/bin/bash' >> /newinstallermod.sh && \
-    # Remove all instances of sudo from all other scripts
-    echo 'for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' >> /newinstallermod.sh && \
-    echo 'for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
-    # Set permission
-    chmod +x /newinstallermod.sh && \
-    \
     # Modify installer
     ##################
     # Use my repository
@@ -109,6 +98,16 @@ RUN \
     \
     # Execute installer
     /./newinstaller.sh && \
+    \
+    # Remove sudo from the installed BirdNET-Pi scripts.
+    # Inside the container everything already runs with the privileges it needs
+    # (root during init, user "pi" for the services), so "sudo" is never required.
+    # Leaving it in breaks any script invoked by a user that is not in sudoers -
+    # e.g. php-fpm's "caddy" user driving the WebUI System Controls, or the "abc"
+    # user - which is what prevented BirdNET-Pi from working in standalone
+    # (no-Supervisor) mode. This must run AFTER the installer has cloned the repo;
+    # the previous build-time hook ran before the clone and was therefore a no-op.
+    for file in $(grep -srlF "sudo " "$HOME/BirdNET-Pi/scripts"); do sed -i "s|sudo ||g" "$file"; done && \
     \
     # Install dateparser and resampy, upgrade numpy
     $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser resampy && \

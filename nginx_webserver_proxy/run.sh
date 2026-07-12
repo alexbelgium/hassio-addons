@@ -111,8 +111,19 @@ fi
 # ---------------------------------------------------------------------------
 log "static_site_root=${STATIC_ROOT} prefix=${STATIC_PREFIX} log_level=${LOG_LEVEL}"
 # NPM's prepare service requires /etc/letsencrypt to exist.
-# HA Supervisor maps the ssl volume there automatically; for other environments create it.
-mkdir -p /etc/letsencrypt
+# Symlink /etc/letsencrypt to /data/letsencrypt for persistence across restarts.
+# Supervisor persists /data as a Docker volume; /etc/letsencrypt would otherwise be ephemeral.
+if [ ! -L /etc/letsencrypt ]; then
+    if [ -d /etc/letsencrypt ] && [ "$(ls -A /etc/letsencrypt 2> /dev/null)" ]; then
+        # Abort migration on copy failure so we never rm -rf certs that weren't copied.
+        mkdir -p /data/letsencrypt
+        cp -a /etc/letsencrypt/. /data/letsencrypt/ \
+            || die "Failed to migrate /etc/letsencrypt to /data/letsencrypt; leaving existing certs intact"
+    fi
+    rm -rf /etc/letsencrypt
+    ln -sf /data/letsencrypt /etc/letsencrypt
+fi
+mkdir -p /data/letsencrypt
 
 log "Handing off to NPM: exec /init"
 exec /init

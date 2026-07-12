@@ -3,5 +3,7 @@
   "upstream_repo": "linuxserver/docker-baseimage-selkies",
   "github_fulltag": true,
   "slug": "claude_desktop",
-  "paused": false
+  "paused": false,
+  "upstream_version": "debiantrixie-version-c55d3809",
+  "last_update": "2026-07-11"
 }

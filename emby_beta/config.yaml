@@ -122,5 +122,5 @@ schema:
 slug: emby_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/emby
-version: "4.10.0.17"
+version: "4.10.0.18"
 video: true

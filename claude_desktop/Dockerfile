@@ -45,7 +45,7 @@ VOLUME [ "/sys/fs/cgroup" ]
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
     usermod --home /data/data abc && \
-    if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
+    if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/"debiantrixie-version-c55d3809" 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
 ARG TEMPLATE_BASE_URL="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates"
 

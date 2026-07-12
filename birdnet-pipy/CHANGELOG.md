@@ -1,4 +1,7 @@
  
+## 0.8.3 (2026-07-11)
+- Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
+ 
 ## 0.8.2.1 (2026-07-05)
 - Re-tag of 0.8.2-1 with no content change. Home Assistant compares add-on versions with semver semantics, where a `-N` suffix counts as a *pre-release* and sorts **below** the base version — so users already on 0.8.2 saw the 0.8.2-1 nginx fix as "Up-to-date" with the Update button disabled. Four-segment `0.8.2.1` sorts above both `0.8.2` and `0.8.2-1` (and below the next upstream `0.8.3`), so the update becomes installable everywhere.
 
