@@ -2,7 +2,7 @@ arch:
   - aarch64
   - amd64
 audio: true
-description: Claude Desktop with a persistent Claude Code web terminal in one add-on
+description: Claude Desktop and a persistent Claude Code web terminal
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -62,7 +62,7 @@ ports:
   8787/tcp: 8787
 ports_description:
   3001/tcp: Claude Desktop web interface
-  7681/tcp: HTTP Basic-auth Claude Code terminal (no TLS)
+  7681/tcp: Claude Code web terminal over HTTP Basic auth (no TLS)
   8787/tcp: Headroom dashboard and proxy
 privileged:
   - SYS_ADMIN
@@ -100,5 +100,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "debiantrixie-version-c55d3809-2"
+version: "1.14"
 video: true
