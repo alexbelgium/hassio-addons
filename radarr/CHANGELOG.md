@@ -1,4 +1,7 @@
  
+## 6.3.0.10514 (2026-07-13)
+- Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
+ 
 ## 6.2.1.10461 (2026-06-11)
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
