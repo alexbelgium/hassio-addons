@@ -1,3 +1,6 @@
+ 
+## ubunturesolute-version-6dc44b0e (2026-07-13)
+- Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 ## 1.14 (10-07-2026)
 
 - Build pinned RTK 0.43.0 source on Debian Bookworm for both architectures instead of installing the upstream arm64 release binary, which requires GLIBC 2.39 and cannot run in the add-on image.
