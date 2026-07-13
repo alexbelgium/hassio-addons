@@ -1,3 +1,5 @@
+## 1.15 (13-07-2026)
+- Minor bugs fixed
  
 ## ubunturesolute-version-6dc44b0e (2026-07-13)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
