@@ -1,4 +1,7 @@
  
+## 4.128.0 (2026-07-13)
+- Update to latest version from linuxserver/docker-code-server (changelog : https://github.com/linuxserver/docker-code-server/releases)
+ 
 ## 4.127.0 (2026-07-04)
 - Update to latest version from linuxserver/docker-code-server (changelog : https://github.com/linuxserver/docker-code-server/releases)
  
