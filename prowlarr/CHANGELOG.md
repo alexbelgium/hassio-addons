@@ -1,3 +1,6 @@
+ 
+## develop-2.5.1.5464-ls268 (2026-07-13)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 
 ## nightly-2.5.1.5460-ls4 (2026-07-08)
 
