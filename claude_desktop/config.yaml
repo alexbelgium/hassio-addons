@@ -100,5 +100,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "ubunturesolute-version-6dc44b0e"
+version: "1.15"
 video: true
