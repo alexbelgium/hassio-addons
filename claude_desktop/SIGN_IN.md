@@ -4,7 +4,10 @@ Two related sign-in problems when Claude Desktop runs inside the LinuxServer Sel
 streamed desktop.
 
 **Status:**
-- **Shipped:** Problem B (keyring persistence) is implemented in v1.4 (Dockerfile + `rootfs/defaults/autostart`).
+- **Shipped:** Problem B (keyring persistence) — the `autostart` bootstrap landed in v1.4, but
+  the `gnome-keyring` package itself was missing from the image until v1.17 (the bootstrap
+  silently no-oped and Electron logged "safeStorage encryption is not available"). Fixed in
+  v1.17: the Dockerfile now installs `gnome-keyring`.
 - **Planned only:** Problem A (in-desktop browser for OAuth) is intentionally not implemented.
   The image ships no browser; complete the login with the user-side workaround below.
 
@@ -50,8 +53,9 @@ magic link into the in-session Chromium (not a phone).
 ### User-side workaround (no rebuild)
 - Add-on Configuration → `additional_apps: chromium`, restart (installed by
   `rootfs/etc/cont-init.d/80-configuration.sh`).
-- Run the two `xdg-settings`/`xdg-mime` commands once in an in-session terminal, or add them
-  to the custom script `/addon_configs/db21ed7f_claude-desktop/claude-desktop.sh`.
+- Add the two `xdg-settings`/`xdg-mime` commands to the custom script
+  `/addon_configs/db21ed7f_claude-desktop/claude-desktop.sh` (the image ships no standalone
+  terminal).
 
 ---
 

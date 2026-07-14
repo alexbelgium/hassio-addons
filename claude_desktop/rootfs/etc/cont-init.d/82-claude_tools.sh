@@ -15,54 +15,120 @@ printf '%s\n' "$DEFAULT_CLAUDE_DESKTOP_COMMAND" > "$CLAUDE_DESKTOP_COMMAND_FILE"
 # Electron app force-overrides to the production endpoint (headroom #869), so transparent
 # compression cannot be applied to the desktop launch. The integration that does work with
 # Claude Desktop is headroom's MCP server, which exposes the headroom_compress/headroom_retrieve/
-# headroom_stats tools inside the app. Register it in Claude Desktop's MCP config, leaving the
-# plain launch untouched. The merge is idempotent and preserves any other MCP servers.
+# headroom_stats tools inside the app.
+#
+# Register the add-on-managed MCP servers (headroom, tokensave, homeassistant) in both Claude
+# Desktop's config and Claude Code's user config (used by Desktop cowork/dispatch sessions).
+# The merge is idempotent, preserves any other MCP servers, never overwrites a user-customized
+# entry with a different command, and removes only add-on-managed entries when disabled.
 CLAUDE_DESKTOP_CONFIG="$HOME/.config/Claude/claude_desktop_config.json"
+CLAUDE_CODE_CONFIG="$HOME/.claude.json"
+
+HEADROOM_ENABLED=false
 if bashio::config.true 'install_headroom'; then
     if command -v headroom &> /dev/null; then
-        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available; registering the headroom MCP server for Claude Desktop"
-        HEADROOM_BIN="$(command -v headroom)" CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" python3 - <<'PY' || bashio::log.warning "Unable to register the headroom MCP server automatically"
-import json
-import os
-from pathlib import Path
-
-path = Path(os.environ["CLAUDE_DESKTOP_CONFIG"])
-try:
-    data = json.loads(path.read_text()) if path.exists() else {}
-    if not isinstance(data, dict):
-        data = {}
-except Exception:
-    if path.exists():
-        path.rename(path.with_suffix(path.suffix + ".bak"))
-    data = {}
-servers = data.get("mcpServers")
-if not isinstance(servers, dict):
-    servers = {}
-    data["mcpServers"] = servers
-servers["headroom"] = {"command": os.environ.get("HEADROOM_BIN", "headroom"), "args": ["mcp", "serve"]}
-path.parent.mkdir(parents=True, exist_ok=True)
-path.write_text(json.dumps(data, indent=2) + "\n")
-PY
+        HEADROOM_ENABLED=true
+        bashio::log.info "headroom $(headroom --version 2> /dev/null || true) available; registering the headroom MCP server"
     else
         bashio::log.warning "headroom is not available"
     fi
-elif [ -f "$CLAUDE_DESKTOP_CONFIG" ]; then
-    bashio::log.info "Removing the headroom MCP server from Claude Desktop"
-    CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" python3 - <<'PY' || bashio::log.warning "Unable to remove the headroom MCP server automatically"
+fi
+
+TOKENSAVE_ENABLED=false
+if bashio::config.true 'install_tokensave'; then
+    if command -v tokensave &> /dev/null; then
+        TOKENSAVE_ENABLED=true
+        bashio::log.info "tokensave $(tokensave --version 2> /dev/null || true) available; registering the tokensave MCP server"
+    else
+        bashio::log.warning "tokensave is not available"
+    fi
+fi
+
+HA_MCP_ENABLED=false
+HA_MCP_URL=""
+HA_MCP_TOKEN=""
+if bashio::config.true 'enable_ha_mcp'; then
+    HA_MCP_URL="$(bashio::config 'ha_mcp_url' 'http://homeassistant:8123/mcp_server/sse')"
+    if bashio::config.has_value 'ha_mcp_token'; then
+        HA_MCP_TOKEN="$(bashio::config 'ha_mcp_token')"
+    fi
+    if [ -z "$HA_MCP_TOKEN" ]; then
+        bashio::log.warning "enable_ha_mcp is on but ha_mcp_token is empty; set a Home Assistant long-lived access token (Profile -> Security) and enable the 'Model Context Protocol Server' integration"
+    elif ! command -v mcp-proxy &> /dev/null; then
+        bashio::log.warning "mcp-proxy is not available; cannot register the Home Assistant MCP server"
+    else
+        HA_MCP_ENABLED=true
+        bashio::log.info "Registering the Home Assistant MCP server (${HA_MCP_URL})"
+    fi
+fi
+
+HEADROOM_ENABLED="$HEADROOM_ENABLED" HEADROOM_BIN="$(command -v headroom || echo headroom)" \
+    TOKENSAVE_ENABLED="$TOKENSAVE_ENABLED" TOKENSAVE_BIN="/usr/local/bin/tokensave" \
+    HA_MCP_ENABLED="$HA_MCP_ENABLED" HA_MCP_URL="$HA_MCP_URL" HA_MCP_TOKEN="$HA_MCP_TOKEN" \
+    MCP_PROXY_BIN="$(command -v mcp-proxy || echo mcp-proxy)" \
+    CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" CLAUDE_CODE_CONFIG="$CLAUDE_CODE_CONFIG" \
+    python3 - <<'PY' || bashio::log.warning "Unable to update the MCP server registrations automatically"
 import json
 import os
 from pathlib import Path
 
-path = Path(os.environ["CLAUDE_DESKTOP_CONFIG"])
-data = json.loads(path.read_text())
-if isinstance(data, dict):
+MANAGED_COMMANDS = {
+    "headroom": {os.environ["HEADROOM_BIN"], "headroom"},
+    "tokensave": {os.environ["TOKENSAVE_BIN"], "tokensave"},
+    "homeassistant": {os.environ["MCP_PROXY_BIN"], "mcp-proxy"},
+}
+
+desired = {}
+if os.environ["HEADROOM_ENABLED"] == "true":
+    desired["headroom"] = {"command": os.environ["HEADROOM_BIN"], "args": ["mcp", "serve"]}
+if os.environ["TOKENSAVE_ENABLED"] == "true":
+    desired["tokensave"] = {"command": os.environ["TOKENSAVE_BIN"], "args": ["serve"]}
+if os.environ["HA_MCP_ENABLED"] == "true":
+    desired["homeassistant"] = {
+        "command": os.environ["MCP_PROXY_BIN"],
+        "args": [os.environ["HA_MCP_URL"]],
+        "env": {"API_ACCESS_TOKEN": os.environ["HA_MCP_TOKEN"]},
+    }
+
+def is_managed(name, entry):
+    return isinstance(entry, dict) and entry.get("command") in MANAGED_COMMANDS[name]
+
+for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_CONFIG", True)):
+    path = Path(os.environ[config_var])
+    try:
+        data = json.loads(path.read_text()) if path.exists() else {}
+        if not isinstance(data, dict):
+            data = {}
+    except Exception:
+        if path.exists():
+            path.rename(path.with_suffix(path.suffix + ".bak"))
+        data = {}
     servers = data.get("mcpServers")
-    if isinstance(servers, dict) and servers.pop("headroom", None) is not None:
-        if not servers:
-            data.pop("mcpServers", None)
-        path.write_text(json.dumps(data, indent=2) + "\n")
+    if not isinstance(servers, dict):
+        servers = {}
+    changed = False
+    for name in MANAGED_COMMANDS:
+        existing = servers.get(name)
+        if name in desired:
+            entry = dict(desired[name])
+            if stdio_type:
+                entry["type"] = "stdio"
+            if existing is None or is_managed(name, existing):
+                if existing != entry:
+                    servers[name] = entry
+                    changed = True
+        elif existing is not None and is_managed(name, existing):
+            del servers[name]
+            changed = True
+    if not changed:
+        continue
+    if servers:
+        data["mcpServers"] = servers
+    else:
+        data.pop("mcpServers", None)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2) + "\n")
 PY
-fi
 
 # Guide Claude to actually use the headroom compression tools so the MCP integration produces
 # real savings (otherwise the tools sit unused and `headroom savings` stays empty). Managed,
@@ -216,9 +282,9 @@ else
     find "$HOME/.claude" -maxdepth 4 -iname '*caveman*' -exec rm -rf {} + 2> /dev/null || true
 fi
 
-# Startup configuration runs as root, while Claude Desktop and the web terminal run as abc.
-# Return managed persistent files to the configured runtime UID/GID after all writes complete.
-for managed_path in "$HOME/.claude" "$HOME/.config/Claude"; do
+# Startup configuration runs as root, while Claude Desktop runs as abc. Return managed
+# persistent files to the configured runtime UID/GID after all writes complete.
+for managed_path in "$HOME/.claude" "$HOME/.claude.json" "$HOME/.config/Claude"; do
     if [ -e "$managed_path" ]; then
         chown -R -- "${PUID}:${PGID}" "$managed_path" || bashio::log.warning "Unable to set ownership on $managed_path"
     fi
