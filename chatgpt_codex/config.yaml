@@ -65,4 +65,4 @@ slug: chatgpt_codex
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "0.1.0"
+version: "0.144.3"

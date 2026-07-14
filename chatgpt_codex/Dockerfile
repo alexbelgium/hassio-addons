@@ -9,6 +9,8 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
+ARG BUILD_UPSTREAM="0.144.3"
+ARG HEADROOM_VERSION="0.31.0"
 ARG RTK_VERSION="v0.43.0"
 ARG RTK_COMMIT="5a7880d404db8364d602f2ecdc41dd790f64013f"
 
@@ -38,6 +40,8 @@ VOLUME [ "/sys/fs/cgroup" ]
 
 ARG TEMPLATE_BASE_URL="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates"
 ARG TTYD_VERSION="1.7.7"
+ARG BUILD_UPSTREAM
+ARG HEADROOM_VERSION
 
 ##################
 # 3 Install apps #
@@ -64,7 +68,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install the official Codex static binary for the target architecture.
+# Install the pinned official Codex static binary for the target architecture.
 RUN set -eux; \
     case "$(dpkg --print-architecture)" in \
         amd64) codex_arch="x86_64" ;; \
@@ -74,7 +78,7 @@ RUN set -eux; \
     archive="/tmp/codex.tar.gz"; \
     curl -fsSL --retry 3 --retry-delay 2 \
         -o "$archive" \
-        "https://github.com/openai/codex/releases/latest/download/codex-${codex_arch}-unknown-linux-musl.tar.gz"; \
+        "https://github.com/openai/codex/releases/download/rust-v${BUILD_UPSTREAM}/codex-${codex_arch}-unknown-linux-musl.tar.gz"; \
     tar -xzf "$archive" -C /tmp; \
     install -m 0755 "/tmp/codex-${codex_arch}-unknown-linux-musl" /usr/local/bin/codex; \
     rm -f "$archive" "/tmp/codex-${codex_arch}-unknown-linux-musl"; \
@@ -95,7 +99,7 @@ RUN set -eux; \
 
 COPY --from=rtk-builder /out/rtk /usr/local/bin/rtk
 RUN rtk --version && \
-    pip3 install --break-system-packages --no-cache-dir "headroom-ai[proxy,code,mcp]" && \
+    pip3 install --break-system-packages --no-cache-dir "headroom-ai[proxy,code,mcp]==${HEADROOM_VERSION}" && \
     headroom --version
 
 ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-dns_set.sh"
