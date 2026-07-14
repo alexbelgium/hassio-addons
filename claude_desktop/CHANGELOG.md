@@ -1,3 +1,5 @@
+## 1.16 (14-07-2026)
+- Minor bugs fixed
 ## 1.15 (13-07-2026)
 - Minor bugs fixed
  
