@@ -127,7 +127,11 @@ echo "Data location: $PERSISTENT_HOME (persistent). Please wait while elasticsea
 if [ "$data_version" != "$current_version" ]; then
     (
         for _ in $(seq 1 180); do
-            if curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:9200" >/dev/null 2>&1; then
+            # Check the HTTP status directly instead of curl -f: a 401 means
+            # Elasticsearch is up and answering (security just requires
+            # auth), so it must count as healthy too, not as a failure.
+            status=$(curl -A "HealthCheck: Docker/1.0" -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:9200" 2>/dev/null || true)
+            if [ "$status" = "200" ] || [ "$status" = "401" ]; then
                 echo "$current_version" >"$VERSION_MARKER"
                 echo "Elasticsearch $current_version started successfully; data version recorded."
                 exit 0
