@@ -92,7 +92,6 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
         claude-desktop \
         claude-code \
         python3-pip \
-        gnome-keyring \
         libsecret-1-0 \
         dbus-x11 \
         git \
