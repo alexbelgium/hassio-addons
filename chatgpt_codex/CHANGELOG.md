@@ -1,3 +1,5 @@
+## 0.144.3-3 (14-07-2026)
+- Minor bugs fixed
 ## 0.144.3-2 (14-07-2026)
 
 - Initial ChatGPT Codex add-on.
