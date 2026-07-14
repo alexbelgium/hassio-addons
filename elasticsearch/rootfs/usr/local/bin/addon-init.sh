@@ -31,6 +31,17 @@ PERSISTENT_HOME="/data"
 VERSION_MARKER="$PERSISTENT_HOME/.addon-upstream-version"
 OPTIONS_JSON="/data/options.json"
 
+# This first pass must be root so it can relocate and take ownership of
+# pre-existing /data content written by an earlier (root) install. If it
+# is not root (e.g. an old cached image that pinned USER 1000:0, or the
+# container being forced to another user), the moves/chowns below fail
+# with a cryptic "Permission denied"; fail loudly with the real reason.
+if [ "$(id -u)" -ne 0 ]; then
+    echo "FATAL: the Elasticsearch add-on must start as root (currently uid $(id -u))."
+    echo "If you upgraded from an older version, the running image is likely stale - fully stop and update/reinstall the add-on so Home Assistant pulls the current image."
+    exit 1
+fi
+
 ############################
 # 1 Export user env_vars   #
 ############################
@@ -94,7 +105,11 @@ if [ -n "$data_version" ] && [[ $current_major =~ ^[0-9]+$ ]]; then
         if [ -d "$PERSISTENT_HOME/config" ] && [ ! -L "$PERSISTENT_HOME/config" ]; then
             config_backup="$PERSISTENT_HOME/config.bak-$data_version"
             if [ ! -e "$config_backup" ]; then
-                mv "$PERSISTENT_HOME/config" "$config_backup"
+                if ! mv "$PERSISTENT_HOME/config" "$config_backup"; then
+                    echo "FATAL: could not archive the old config to $config_backup."
+                    echo "This add-on must run as root to migrate a previous install. Restore a Home Assistant backup and ensure the add-on is not forced to a non-root user."
+                    exit 1
+                fi
                 echo "NOTICE: previous config archived to $config_backup. Re-apply any custom settings to the new config."
             fi
         fi
