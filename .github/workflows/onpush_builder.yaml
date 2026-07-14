@@ -300,7 +300,7 @@ jobs:
 
       - name: Build ${{ matrix.addon }} add-on
         if: steps.info.outputs.build_arch == 'true' && steps.info.outputs.has_dockerfile == 'true'
-        uses: home-assistant/builder/actions/build-image@2026.03.2
+        uses: home-assistant/builder/actions/build-image@2026.06.0
         with:
           arch: ${{ matrix.arch }}
           cache-gha: "false"
@@ -433,4 +433,3 @@ jobs:
           done
 
           git push origin HEAD:master
-  
