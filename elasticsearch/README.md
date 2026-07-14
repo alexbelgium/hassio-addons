@@ -91,6 +91,22 @@ Connect other applications to Elasticsearch using:
 
 Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
+Elasticsearch settings can be set through variables named `ES_SETTING_<SETTING_WITH_UNDERSCORES>`; for example `ES_SETTING_XPACK_SECURITY_ENABLED` maps to `xpack.security.enabled`.
+
+### Security
+
+To preserve the plain-HTTP behavior of previous versions (and compatibility with the Home Assistant Elasticsearch integration), `xpack.security.enabled` defaults to `false`. To enable Elasticsearch security, add `ES_SETTING_XPACK_SECURITY_ENABLED` with value `true` in `env_vars`.
+
+## Upgrading from 7.x
+
+The upgrade to Elasticsearch 8.x is automatic and **one-way**:
+
+1. Take a Home Assistant backup of the add-on before updating.
+2. Update the add-on and start it. Elasticsearch upgrades the existing indices in place on first start — this can take a while on large datasets; do **not** stop the add-on during the first start.
+3. The previous bundled config directory is archived to `/data/config.bak-<old-version>`; re-apply any custom settings to the new config.
+
+Downgrading afterwards is not supported by Elasticsearch — restore the backup instead.
+
 ## Integration with HA
 
 Component : https://community.home-assistant.io/t/elasticsearch-component-publish-home-assistant-events-to-elasticsearch/66877

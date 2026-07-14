@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_UPSTREAM="7.17.9"
+ARG BUILD_UPSTREAM="8.19.18"
 FROM elasticsearch:$BUILD_UPSTREAM
 
 ##################
@@ -26,20 +26,15 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# Expose the upstream version to the add-on init script (migration guard)
+ARG BUILD_UPSTREAM
+ENV UPSTREAM_VERSION="$BUILD_UPSTREAM"
 
-# Data persistence
-# hadolint ignore=SC2016
-RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts..."' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a chown -R $(id -u):$(id -g) $HOME' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a done' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a ln -s $NEWHOME/$file /usr/share/elasticsearch || true' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a rm -r /usr/share/elasticsearch/$file || true' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a cp -rn /usr/share/elasticsearch/$file $NEWHOME || true' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a for file in "data" "config"; do' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a mkdir -p $NEWHOME' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a NEWHOME="/data"' /usr/local/bin/docker-entrypoint.sh \
-    # Install plugins
-    && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
+# Data persistence & migration: source the add-on init script at the top of
+# the official entrypoint (pattern-anchored; ingest-attachment is bundled
+# since ES 8.0 so no plugin install is needed anymore)
+RUN sed -i '/^set -e$/a . /usr/local/bin/addon-init.sh' /usr/local/bin/docker-entrypoint.sh \
+    && grep -q "addon-init.sh" /usr/local/bin/docker-entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -62,7 +57,7 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES=""
+ENV PACKAGES="jq"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
