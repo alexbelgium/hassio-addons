@@ -8,8 +8,9 @@
 - Removed the `ingest-attachment` plugin install: it is a bundled module since Elasticsearch 8.0.
 - Startup persistence logic rewritten as a proper init script (`/usr/local/bin/addon-init.sh`) instead of line-number-based entrypoint patching.
 - Added `updater.json` so upstream 8.19.x releases are tracked automatically (pinned to the 8.19 line: 9.x cannot read indices created in 7.x).
-- The upstream 8.x image ends the build as a non-root user with a read-only entrypoint; the Dockerfile now switches to root for the build steps that patch/install into it and restores the Elasticsearch user before runtime.
+- The upstream 8.x image ends the build as a non-root user with a read-only entrypoint; the Dockerfile now switches to root for the build steps that patch/install into it. The image stays root at runtime too (unchanged from 7.17.9): the upstream entrypoint no longer drops privileges itself, and `addon-init.sh` needs to chown/move pre-existing `/data` content that may be owned by root from earlier installs.
 - `env_vars` names starting with a digit are now rejected before export instead of crashing the entrypoint.
+- Fixed a startup failure (`mv: cannot move '/data/config' ... Permission denied`) on upgrade from an existing 7.17.9 install, caused by an earlier fix in this same release that switched the runtime user to non-root before this fix was in place.
 
 ## 8.14.3-3 (2026-06-19)
 - Fix startup failing with `chroot: cannot change root directory` by allowing `capability sys_chroot` in the AppArmor profile (#2709)

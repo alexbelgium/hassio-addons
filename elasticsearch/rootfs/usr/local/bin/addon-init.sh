@@ -1,8 +1,9 @@
 #!/bin/bash
 # shellcheck shell=bash
 # Sourced by /usr/local/bin/docker-entrypoint.sh (right after "set -e"),
-# before Elasticsearch starts. Runs as root when the Supervisor starts the
-# container; the official entrypoint then drops privileges itself.
+# before Elasticsearch starts. Runs as root (the image stays root at
+# runtime - see Dockerfile); the official entrypoint does not drop
+# privileges itself, and Elasticsearch ends up running as root too.
 #
 # Responsibilities:
 #   1. Export user env_vars from /data/options.json
