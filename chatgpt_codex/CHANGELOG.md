@@ -1,4 +1,4 @@
-## 0.144.3 (14-07-2026)
+## 0.144.3-2 (14-07-2026)
 
 - Initial ChatGPT Codex add-on.
 - Added a persistent, administrator-only Home Assistant ingress terminal backed by tmux.
