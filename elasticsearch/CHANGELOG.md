@@ -1,3 +1,5 @@
+## 8.19.18-2 (14-07-2026)
+- Minor bugs fixed
 ## 8.19.18 (2026-07-14)
 
 - Upgrade to Elasticsearch 8.19.18 (#2849). Note: despite the previous add-on version reading `8.14.3`, the shipped image was still Elasticsearch 7.17.9 — the Dockerfile upstream version was never bumped. This release actually delivers 8.x, making the add-on compatible with the `homeassistant-elasticsearch` integration (requires 8.14+).
