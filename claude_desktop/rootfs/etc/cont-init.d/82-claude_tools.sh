@@ -48,7 +48,7 @@ HA_MCP_ENABLED=false
 HA_MCP_URL=""
 HA_MCP_TOKEN=""
 if bashio::config.true 'enable_ha_mcp'; then
-    HA_MCP_URL="$(bashio::config 'ha_mcp_url' 'http://homeassistant:8123/mcp_server/sse')"
+    HA_MCP_URL="$(bashio::config 'ha_mcp_url' 'http://homeassistant:8123/api/mcp')"
     if bashio::config.has_value 'ha_mcp_token'; then
         HA_MCP_TOKEN="$(bashio::config 'ha_mcp_token')"
     fi
@@ -63,7 +63,7 @@ if bashio::config.true 'enable_ha_mcp'; then
 fi
 
 HEADROOM_ENABLED="$HEADROOM_ENABLED" HEADROOM_BIN="$(command -v headroom || echo headroom)" \
-    TOKENSAVE_ENABLED="$TOKENSAVE_ENABLED" TOKENSAVE_BIN="/usr/local/bin/tokensave" \
+    TOKENSAVE_ENABLED="$TOKENSAVE_ENABLED" TOKENSAVE_BIN="$(command -v tokensave || echo tokensave)" \
     HA_MCP_ENABLED="$HA_MCP_ENABLED" HA_MCP_URL="$HA_MCP_URL" HA_MCP_TOKEN="$HA_MCP_TOKEN" \
     MCP_PROXY_BIN="$(command -v mcp-proxy || echo mcp-proxy)" \
     CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" CLAUDE_CODE_CONFIG="$CLAUDE_CODE_CONFIG" \
@@ -72,10 +72,10 @@ import json
 import os
 from pathlib import Path
 
-MANAGED_COMMANDS = {
-    "headroom": {os.environ["HEADROOM_BIN"], "headroom"},
-    "tokensave": {os.environ["TOKENSAVE_BIN"], "tokensave"},
-    "homeassistant": {os.environ["MCP_PROXY_BIN"], "mcp-proxy"},
+MANAGED_BASENAMES = {
+    "headroom": "headroom",
+    "tokensave": "tokensave",
+    "homeassistant": "mcp-proxy",
 }
 
 desired = {}
@@ -84,14 +84,27 @@ if os.environ["HEADROOM_ENABLED"] == "true":
 if os.environ["TOKENSAVE_ENABLED"] == "true":
     desired["tokensave"] = {"command": os.environ["TOKENSAVE_BIN"], "args": ["serve"]}
 if os.environ["HA_MCP_ENABLED"] == "true":
+    # Home Assistant's MCP Server integration speaks stateless Streamable HTTP on /api/mcp;
+    # mcp-proxy defaults to SSE, so the transport flags are required.
     desired["homeassistant"] = {
         "command": os.environ["MCP_PROXY_BIN"],
-        "args": [os.environ["HA_MCP_URL"]],
+        "args": ["--transport=streamablehttp", "--stateless", os.environ["HA_MCP_URL"]],
         "env": {"API_ACCESS_TOKEN": os.environ["HA_MCP_TOKEN"]},
     }
 
+# An entry is add-on-managed when its command is one of our binaries living outside the
+# persistent home. Matching on the basename (rather than the exact path recorded at write
+# time) keeps entries updatable when a base-image upgrade moves the binary, while commands
+# under $HOME stay untouched because those are user-installed.
+HOME_PREFIX = os.path.expanduser("~") + os.sep
+
 def is_managed(name, entry):
-    return isinstance(entry, dict) and entry.get("command") in MANAGED_COMMANDS[name]
+    if not isinstance(entry, dict):
+        return False
+    command = entry.get("command")
+    if not isinstance(command, str) or command.startswith(HOME_PREFIX):
+        return False
+    return os.path.basename(command) == MANAGED_BASENAMES[name]
 
 for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_CONFIG", True)):
     path = Path(os.environ[config_var])
@@ -107,7 +120,7 @@ for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_C
     if not isinstance(servers, dict):
         servers = {}
     changed = False
-    for name in MANAGED_COMMANDS:
+    for name in MANAGED_BASENAMES:
         existing = servers.get(name)
         if name in desired:
             entry = dict(desired[name])
@@ -128,6 +141,8 @@ for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_C
         data.pop("mcpServers", None)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=2) + "\n")
+    # The Home Assistant long-lived access token is stored here in clear text.
+    path.chmod(0o600)
 PY
 
 # Guide Claude to actually use the headroom compression tools so the MCP integration produces

@@ -69,9 +69,11 @@ RUN curl -fsSL --retry 3 --retry-delay 2 \
 # 3 Install apps #
 ##################
 
-# Add rootfs
+# Add rootfs. Only the directories this add-on ships scripts in are traversed, so the chmod
+# cannot alter executables elsewhere in the image.
 COPY rootfs/ /
-RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
+RUN find /etc/cont-init.d /etc/s6-overlay /defaults /usr/local/bin -type f \
+        \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005

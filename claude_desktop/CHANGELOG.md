@@ -1,11 +1,13 @@
-## 1.17 (14-07-2026)
+## 1.18 (14-07-2026)
 
 - **Breaking:** remove the standalone Claude Code web terminal (ttyd/tmux service, port `7681`, and the `enable_terminal`, `terminal_username`, `terminal_password`, `terminal_workspace` options). The add-on is now built purely around Claude Desktop; Claude Code remains installed and powers Desktop cowork/dispatch sessions with the RTK hook, Caveman, and MCP servers intact. If the add-on refuses to start after the update, open its Configuration tab and re-save to drop the removed options.
 - Remove the `claude-direct` and `claude-headroom` terminal wrapper scripts and the unused `ha_smart_context` and `dangerously_skip_permissions` options.
 - Fix the Headroom dashboard being unreachable at `http://<host>:8787/dashboard`: the supervised proxy only listened on `127.0.0.1`; it now binds `0.0.0.0` so the mapped port works.
 - Fix dispatch/remote sessions and sign-in persistence: install the missing `gnome-keyring` package. The existing keyring bootstrap silently no-oped without it, leaving Electron `safeStorage` unavailable ("cannot store allowlist cache"), so auth tokens and dispatch permission grants were lost on restart.
 - Add the tokensave code-intelligence MCP server (pinned 7.2.0, built from source like RTK), registered for both Claude Desktop and Claude Code; disable with `install_tokensave: false`.
-- Implement the Home Assistant MCP bridge for real: `enable_ha_mcp` plus new `ha_mcp_url`/`ha_mcp_token` options register Home Assistant's MCP Server integration in Claude through `mcp-proxy`.
+- Implement the Home Assistant MCP bridge for real: `enable_ha_mcp` plus new `ha_mcp_url`/`ha_mcp_token` options register Home Assistant's MCP Server integration in Claude through `mcp-proxy`, using the integration's stateless Streamable HTTP endpoint (`/api/mcp`).
+- Write the Claude configuration files with `0600` permissions, since they hold the Home Assistant access token in clear text.
+- Restrict the build-time `chmod +x` pass to the directories the add-on actually ships scripts in instead of traversing the whole image.
 - Register add-on-managed MCP servers in Claude Code's `~/.claude.json` as well as Claude Desktop's config, without clobbering user-customized entries.
 - Install `uv` and use it for the `additional_pip` option for much faster package installs.
 

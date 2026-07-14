@@ -96,10 +96,10 @@ The Headroom dashboard is available at:
 http://<home-assistant-host>:8787/dashboard
 ```
 
-through the default `8787/tcp` port mapping. Treat this endpoint as sensitive:
-it serves your local network only — do not expose it directly to the public
-internet, and unmap the port in the add-on **Network** section if you do not
-want it reachable at all.
+through the default `8787/tcp` port mapping. The dashboard is unauthenticated
+and is reachable wherever Home Assistant publishes that port, so treat it as
+sensitive: do not expose it directly to the public internet, and unmap the port
+in the add-on **Network** section if you do not want it reachable at all.
 
 ## Home Assistant MCP bridge
 
@@ -111,9 +111,9 @@ To let Claude query and control Home Assistant:
 3. Set `enable_ha_mcp: true` and paste the token into `ha_mcp_token` in the
    add-on configuration, then restart the add-on.
 
-The add-on bridges Claude to the integration's SSE endpoint with `mcp-proxy`.
-Override `ha_mcp_url` only if your Home Assistant instance is not reachable as
-`homeassistant:8123` from add-ons.
+The add-on bridges Claude to the integration's stateless Streamable HTTP
+endpoint (`/api/mcp`) with `mcp-proxy`. Override `ha_mcp_url` only if your Home
+Assistant instance is not reachable as `homeassistant:8123` from add-ons.
 
 ## Custom scripts
 

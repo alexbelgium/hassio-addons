@@ -42,7 +42,7 @@ options:
   auto_update: true
   github_email: ""
   enable_ha_mcp: false
-  ha_mcp_url: http://homeassistant:8123/mcp_server/sse
+  ha_mcp_url: http://homeassistant:8123/api/mcp
   ha_mcp_token: ""
   github_token: ""
   github_username: ""
@@ -92,5 +92,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.17"
+version: "1.18"
 video: true
