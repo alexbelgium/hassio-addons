@@ -10,6 +10,7 @@ Run the official OpenAI Codex CLI in a persistent Home Assistant ingress termina
 
 ## Features
 
+- Latest stable Codex, Headroom, RTK, ttyd, and Rust toolchain versions are resolved during every Docker build; tool versions are not pinned in the Dockerfile.
 - Official Codex CLI static binary for `amd64` and `aarch64`.
 - Home Assistant authenticated, administrator-only ingress; no unauthenticated terminal port is exposed.
 - Persistent `$HOME`, Codex authentication, settings, sessions, Headroom state, and RTK statistics.
