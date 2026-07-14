@@ -1,14 +1,25 @@
 #!/bin/bash
 # shellcheck shell=bash
 # Sourced by /usr/local/bin/docker-entrypoint.sh (right after "set -e"),
-# before Elasticsearch starts. Runs as root when the Supervisor starts the
-# container; the official entrypoint then drops privileges itself.
+# before Elasticsearch starts. The container starts as root (see
+# Dockerfile) so this script can chown/move pre-existing /data content
+# that may be owned by root from earlier installs. Elasticsearch itself
+# refuses to run as root, and unlike 7.x the upstream 8.x entrypoint no
+# longer drops privileges on its own, so this script does it at the end
+# (section 6) by re-execing the entrypoint as uid 1000. On that re-exec'd
+# pass this script just returns immediately (see the guard right below).
 #
 # Responsibilities:
 #   1. Export user env_vars from /data/options.json
 #   2. Default xpack.security.enabled=false (7.x behavior) unless user overrides
 #   3. Relocate data & config to /data for persistence (idempotent)
 #   4. Guard major-version data migrations (7.x -> 8.x is automatic)
+#   5. Record the running version once Elasticsearch is confirmed healthy
+#   6. Drop root privileges before Elasticsearch actually starts
+
+if [ -n "${_ADDON_INIT_REEXEC:-}" ]; then
+    return 0
+fi
 
 echo "-----------------------------------------------------------"
 echo " Add-on: Elasticsearch server"
@@ -139,4 +150,18 @@ if [ "$data_version" != "$current_version" ]; then
             sleep 10
         done
     ) &
+fi
+
+############################
+# 6 Drop privileges        #
+############################
+
+# Elasticsearch refuses to start as root ("can not run elasticsearch as
+# root"). 7.x's own entrypoint dropped to uid 1000 via chroot before
+# launching Elasticsearch; 8.x no longer does that, so do it here instead,
+# then let the entrypoint continue as uid 1000 (matches the sys_chroot /
+# setuid / setgid capabilities already granted in the AppArmor profile).
+if [ "$(id -u)" -eq 0 ]; then
+    export _ADDON_INIT_REEXEC=1
+    exec chroot --userspec=1000:0 / /usr/local/bin/docker-entrypoint.sh "$@"
 fi

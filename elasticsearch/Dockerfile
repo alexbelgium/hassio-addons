@@ -141,5 +141,10 @@ HEALTHCHECK \
     --timeout=25s \
     CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
 
-# Restore the Elasticsearch user for runtime, matching the base image
-USER 1000:0
+# Start as root: addon-init.sh needs it to chown/move pre-existing /data
+# content that may be owned by root from earlier installs. It drops to
+# uid 1000 itself (via chroot --userspec) before Elasticsearch actually
+# starts, since Elasticsearch refuses to run as root and the upstream 8.x
+# entrypoint no longer does that drop on its own (7.x's did). This matches
+# the addon's own AppArmor profile (chown, setuid, setgid, sys_chroot,
+# mount capabilities).
