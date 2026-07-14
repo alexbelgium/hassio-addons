@@ -36,7 +36,6 @@ options:
   github_email: ""
   additional_apps: ""
   additional_pip: ""
-panel_admin: true
 panel_icon: mdi:code-braces-box
 privileged:
   - SYS_ADMIN
