@@ -17,6 +17,11 @@
 ARG BUILD_UPSTREAM="8.19.18"
 FROM elasticsearch:$BUILD_UPSTREAM
 
+# The base image ends as USER 1000:0 with a root-owned, read-only (0555)
+# entrypoint; switch back to root for the remaining build steps (entrypoint
+# patch, package install, chmod), then restore the Elasticsearch user below
+USER root
+
 ##################
 # 2 Modify Image #
 ##################
@@ -135,3 +140,6 @@ HEALTHCHECK \
     --start-period=30s \
     --timeout=25s \
     CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
+
+# Restore the Elasticsearch user for runtime, matching the base image
+USER 1000:0

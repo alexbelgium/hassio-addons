@@ -28,7 +28,7 @@ if [ -f "$OPTIONS_JSON" ] && command -v jq >/dev/null 2>&1; then
     while IFS= read -r pair; do
         name=$(jq -r '.name // empty' <<<"$pair")
         value=$(jq -r '.value // empty' <<<"$pair")
-        if [[ $name =~ ^[A-Za-z0-9_]+$ ]]; then
+        if [[ $name =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
             echo "Setting env variable from options: $name"
             export "$name"="$value"
         elif [ -n "$name" ]; then
