@@ -1,5 +1,7 @@
 ## 8.19.18-3 (14-07-2026)
-- Minor bugs fixed
+- Force a fresh image pull for users left on a stale cached image (some upgrades kept running the old Elasticsearch 7.17.9 image, failing with `mv: cannot move '/data/config' ... Permission denied` and `AccessDeniedException[/usr/share/elasticsearch/data/nodes/0]`). Fully stop and update the add-on so Home Assistant pulls this build.
+- Replaced the cryptic `Permission denied` failure with a clear message when the add-on is not running as root (the state that caused the failure above).
+
 ## 8.19.18-2 (14-07-2026)
 - Minor bugs fixed
 ## 8.19.18 (2026-07-14)
