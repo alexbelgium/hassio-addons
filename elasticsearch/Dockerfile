@@ -141,5 +141,9 @@ HEALTHCHECK \
     --timeout=25s \
     CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
 
-# Restore the Elasticsearch user for runtime, matching the base image
-USER 1000:0
+# Stay root at runtime: addon-init.sh must chown/mv pre-existing /data
+# content that may be owned by root from earlier installs, and the upstream
+# entrypoint no longer drops privileges itself, so a non-root container
+# can't touch that data at all. This matches the addon's own AppArmor
+# profile (chown, setuid, setgid, sys_chroot, mount capabilities), which
+# assumes a root process.
