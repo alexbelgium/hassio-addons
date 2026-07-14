@@ -11,7 +11,7 @@ Run the official OpenAI Codex CLI in a persistent Home Assistant ingress termina
 ## Features
 
 - Official Codex CLI static binary for `amd64` and `aarch64`.
-- Home Assistant authenticated ingress; no unauthenticated terminal port is exposed.
+- Home Assistant authenticated, administrator-only ingress; no unauthenticated terminal port is exposed.
 - Persistent `$HOME`, Codex authentication, settings, sessions, Headroom state, and RTK statistics.
 - Persistent `tmux` session that survives browser disconnects.
 - `headroom wrap codex` as the default launch path.
@@ -84,7 +84,7 @@ Persistent data is stored below `data_location`:
 | Option | Default | Description |
 | --- | --- | --- |
 | `data_location` | `/data/data` | Persistent home. Must be below `/data`, `/share`, `/media`, `/config`, or `/mnt`. |
-| `workspace` | `/data/data/workspace` | Initial project directory used by the persistent terminal. |
+| `workspace` | `<data_location>/workspace` | Initial project directory. Leave empty to follow `data_location`. |
 | `PUID` / `PGID` | `0` / `0` | Runtime user and group used by the LinuxServer `abc` account. |
 | `TZ` | | Optional timezone, for example `Europe/Brussels`. |
 | `auto_start_codex` | `true` | Start Codex automatically when the tmux session is first created. |
@@ -104,7 +104,7 @@ Configuration changes affecting the launch command apply to a newly created tmux
 
 The add-on deliberately does not enable Codex approval or sandbox bypass flags. Codex can execute commands and edit files available inside the configured workspace, so only mount locations you intend it to access.
 
-The terminal is exposed only through Home Assistant ingress. Do not add an unauthenticated direct port mapping. Treat `github_token`, Codex authentication data, and the persistent home as secrets and include them only in trusted backups.
+The terminal is exposed only through Home Assistant administrator-only ingress. Do not add an unauthenticated direct port mapping. Treat `github_token`, Codex authentication data, and the persistent home as secrets and include them only in trusted backups.
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg

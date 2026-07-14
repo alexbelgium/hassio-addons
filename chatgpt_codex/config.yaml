@@ -24,7 +24,7 @@ options:
   env_vars: []
   DNS_server: 8.8.8.8
   data_location: /data/data
-  workspace: /data/data/workspace
+  workspace: ""
   PUID: 0
   PGID: 0
   auto_start_codex: true
