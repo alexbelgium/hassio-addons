@@ -1,0 +1,9 @@
+{
+  "github_beta": false,
+  "last_update": "2026-07-14",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "chatgpt_codex",
+  "source": "github",
+  "upstream_repo": "openai/codex",
+  "upstream_version": "0.1.0"
+}
