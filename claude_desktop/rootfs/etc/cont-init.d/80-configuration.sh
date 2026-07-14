@@ -24,7 +24,12 @@ fi
 if bashio::config.has_value 'additional_pip'; then
     for p in $(bashio::config 'additional_pip' | tr ',' ' '); do
         bashio::log.green "... pip: $p"
-        pip3 install --break-system-packages "$p" || bashio::log.fatal "Error: pip package $p failed"
+        # Prefer uv (much faster resolver/installer); fall back to pip3 when unavailable.
+        if command -v uv &> /dev/null; then
+            uv pip install --system --break-system-packages "$p" || bashio::log.fatal "Error: pip package $p failed"
+        else
+            pip3 install --break-system-packages "$p" || bashio::log.fatal "Error: pip package $p failed"
+        fi
     done
 fi
 

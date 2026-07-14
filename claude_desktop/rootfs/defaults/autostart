@@ -22,8 +22,7 @@ else
 fi
 
 # Headroom is intentionally not injected into the Desktop process. Claude Desktop overrides
-# ANTHROPIC_BASE_URL, so Desktop uses the registered Headroom MCP tools instead. The Claude Code
-# terminal uses the supported `headroom wrap claude` integration through claude-headroom.
+# ANTHROPIC_BASE_URL, so Desktop uses the registered Headroom MCP tools instead.
 
 # Launch the configured command. If a custom/wrapped command fails to start, fall back to
 # the plain Claude Desktop launch so the app always comes up for the user.

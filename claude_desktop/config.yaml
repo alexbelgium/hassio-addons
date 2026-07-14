@@ -2,7 +2,7 @@ arch:
   - aarch64
   - amd64
 audio: true
-description: "Claude Desktop and a persistent Claude Code web terminal"
+description: "Claude Desktop with Headroom MCP context compression and RTK acceleration"
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -41,28 +41,23 @@ options:
   additional_pip: ""
   auto_update: true
   github_email: ""
-  ha_smart_context: true
-  enable_ha_mcp: true
-  dangerously_skip_permissions: false
-  enable_terminal: true
-  terminal_username: claude
-  terminal_password: ""
-  terminal_workspace: ""
+  enable_ha_mcp: false
+  ha_mcp_url: http://homeassistant:8123/mcp_server/sse
+  ha_mcp_token: ""
   github_token: ""
   github_username: ""
   install_caveman: true
   install_github_cli: true
   install_headroom: true
   install_rtk: true
+  install_tokensave: true
 panel_admin: false
 panel_icon: mdi:robot-happy
 ports:
   3001/tcp: null
-  7681/tcp: 7681
   8787/tcp: 8787
 ports_description:
   3001/tcp: Claude Desktop web interface
-  7681/tcp: Claude Code web terminal over HTTP Basic auth (no TLS)
   8787/tcp: Headroom dashboard and proxy
 privileged:
   - SYS_ADMIN
@@ -83,22 +78,19 @@ schema:
   additional_pip: str?
   auto_update: bool?
   github_email: str?
-  ha_smart_context: bool?
   enable_ha_mcp: bool?
-  dangerously_skip_permissions: bool?
-  enable_terminal: bool?
-  terminal_username: match(^[A-Za-z0-9_.-]+$)?
-  terminal_password: password?
-  terminal_workspace: str?
+  ha_mcp_url: str?
+  ha_mcp_token: password?
   github_token: password?
   github_username: str?
   install_caveman: bool
   install_github_cli: bool
   install_headroom: bool
   install_rtk: bool
+  install_tokensave: bool
 slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.16"
+version: "1.17"
 video: true

@@ -4,8 +4,9 @@
 ![Supports amd64 Architecture][amd64-shield]
 ![Project Maintenance][maintenance-shield]
 
-Run Claude Desktop and an optional persistent Claude Code web terminal in one
-LinuxServer.io Selkies add-on.
+Run Claude Desktop in a LinuxServer.io Selkies add-on, with Headroom MCP
+context compression, RTK Bash-output acceleration, and code-intelligence
+tooling wired in by default.
 
 ## Installation
 
@@ -20,101 +21,37 @@ currently does not include Computer Use or dictation.
 
 ## Architecture
 
-Claude Desktop and Claude Code run as separate clients inside the same add-on.
-They share the configured persistent home directory, Git credentials,
-repositories, Claude Code configuration, Headroom storage, and RTK
-configuration, but they do not share or hand off a conversation.
+Everything is built around the Claude Desktop app. Claude Code is installed in
+the same image but is not exposed as a standalone service: Claude Desktop's
+cowork and dispatch sessions run it internally, and they pick up the shared
+Claude Code configuration (`~/.claude`), hooks, and MCP servers automatically.
 
 - **Claude Desktop** uses Headroom through its MCP tools.
-- **Claude Code** uses Headroom's supported `headroom wrap claude` integration.
-- **RTK** filters Claude Code Bash output through its `PreToolUse` hook.
-- **tmux** keeps the terminal session running when the browser disconnects.
+- **Claude Code sessions inside Desktop** get the same MCP servers via
+  `~/.claude.json` and RTK's `PreToolUse` Bash hook via
+  `~/.claude/settings.json`.
+- **gnome-keyring** provides the Secret Service backend Electron needs to
+  persist sign-in and dispatch permission grants across restarts.
 
 ## Features
 
-- Claude Desktop in single-app Selkies mode.
-- Home Assistant ingress support for Claude Desktop.
-- Official Claude Code stable package installed in the same image.
-- Optional authenticated `ttyd` web terminal on port `7681`.
-- Persistent `tmux` session shared by reconnecting terminal clients.
+- Claude Desktop in single-app Selkies mode with Home Assistant ingress.
+- Official Claude Code stable package powering Desktop cowork/dispatch
+  sessions.
 - Persistent `$HOME` at the configured `data_location` (default `/data/data`),
   preserving Desktop and Claude Code state across restarts.
+- Persistent sign-in through a bundled, auto-unlocked gnome-keyring.
 - Optional runtime Claude Desktop updates from Anthropic's apt repository.
-- Optional extra apt and pip package installation.
-- Baked-in `git`, GitHub CLI (`gh`), `ripgrep`, and terminal tooling.
+- Optional extra apt and pip package installation (pip installs use `uv` for
+  speed).
+- Baked-in `git`, GitHub CLI (`gh`), and `ripgrep`.
 - Custom script support through the repository standard `claude_desktop.sh`.
-- Optional bundled Claude Code optimization tools: Headroom, RTK, and Caveman.
-- Headroom dashboard exposed on mapped port `8787` when enabled.
+- Bundled optimization tools: Headroom (MCP + local proxy), RTK, tokensave,
+  and Caveman — each individually switchable.
+- Optional Home Assistant MCP bridge so Claude can query and control Home
+  Assistant.
+- Headroom dashboard exposed on mapped port `8787`.
 - Low-power defaults for GPU mapping, Selkies frame rate, and volatile caches.
-
-## Claude Code terminal setup
-
-The terminal service is enabled in the add-on configuration but remains
-unavailable until authentication is configured. Port `7681` is not mapped by
-default.
-
-1. Set a unique `terminal_password`. The existing `PASSWORD` option is accepted
-   only as a compatibility fallback.
-2. Optionally set `terminal_username` and `terminal_workspace`.
-3. Map container port `7681` to a host port in the add-on **Network** section.
-4. Restart the add-on.
-5. Reach `http://<home-assistant-host>:7681` only through an encrypted VPN or an
-   HTTPS reverse proxy, then sign in with the configured terminal credentials.
-
-The terminal opens in a persistent tmux session. Closing the browser detaches
-from tmux rather than terminating commands that are already running.
-
-Start the optimized Claude Code path with:
-
-```shell
-claude-headroom
-```
-
-This reuses the supervised Headroom proxy on `127.0.0.1:8787` and launches
-Claude Code with the required routing. Headroom is told not to install RTK
-because the add-on already maintains the RTK hook in
-`~/.claude/settings.json`.
-
-To bypass Headroom for troubleshooting, run:
-
-```shell
-claude-direct
-```
-
-Running `claude` directly is equivalent to the direct path. The first Claude
-Code launch may require its own account authentication; Desktop and Claude Code
-store separate client credentials even though both use the configured
-persistent home directory.
-
-### Multiple concurrent clients
-
-Every browser connection attaches to the same tmux session. Concurrent clients
-therefore see the same terminal, keystrokes, and resize events. This is useful
-for reconnecting to one long-running session, but it is not an isolated
-multi-user terminal.
-
-### Terminal user and permissions
-
-The service drops privileges to the LinuxServer `abc` account before starting
-ttyd. The effective numeric UID and GID follow the configured `PUID` and `PGID`.
-Using `PUID: 0` can provide root-equivalent access inside the add-on; use a
-non-zero UID/GID where your storage permissions allow it.
-
-The configured workspace must resolve to the persistent home directory or a
-subdirectory of `/share`, `/media`, `/mnt`, `/data`, or `/config`. Existing
-directories are never re-owned by the terminal service and must already be
-readable, writable, and searchable by `abc`.
-
-### Terminal security
-
-The direct ttyd endpoint uses HTTP Basic Authentication without TLS.
-Credentials and terminal traffic are unencrypted on the network. ttyd also
-receives its Basic Authentication credential as a process argument, so it is
-visible to processes with sufficient access inside the container.
-
-Do not expose port `7681` directly to the public internet. Use a VPN such as
-WireGuard or Tailscale, or place the endpoint behind an HTTPS reverse proxy.
-Use a unique `terminal_password` rather than reusing the Selkies `PASSWORD`.
 
 ## Options
 
@@ -123,48 +60,60 @@ Use a unique `terminal_password` rather than reusing the Selkies `PASSWORD`.
 | `PUID` / `PGID` | `0` / `0` | Numeric user and group applied by the LinuxServer initialization. |
 | `TZ` | | Optional timezone, for example `Europe/Brussels`. |
 | `KEYBOARD` | | Optional Selkies keyboard layout. |
-| `PASSWORD` | | Optional password for direct Selkies ports and compatibility fallback for terminal authentication. |
+| `PASSWORD` | | Optional password for direct Selkies ports. |
 | `DRINODE` | | Optional GPU device override for Selkies. |
 | `DNS_server` | `8.8.8.8` | DNS server used by the standard DNS module. |
 | `auto_update` | `true` | Upgrade `claude-desktop` from Anthropic's apt repository at startup. |
-| `enable_terminal` | `true` | Enable the supervised Claude Code web-terminal service. |
-| `terminal_username` | `claude` | Username used by ttyd Basic Authentication. |
-| `terminal_password` | | Dedicated terminal password. The service idles when this and `PASSWORD` are empty. |
-| `terminal_workspace` | | Initial directory; defaults to `<data_location>/workspace`. |
-| `install_headroom` | `true` | Enable Headroom MCP for Desktop and the supervised local proxy reused by `claude-headroom`. |
+| `install_headroom` | `true` | Register the Headroom MCP server and run the supervised local proxy/dashboard. |
 | `install_rtk` | `true` | Configure RTK's Claude Code `PreToolUse` hook. |
+| `install_tokensave` | `true` | Register the tokensave code-intelligence MCP server for Desktop and Claude Code. |
 | `install_caveman` | `true` | Install the Caveman Claude Code plugin in the persistent Claude home. |
 | `install_github_cli` | `true` | Enable setup checks for the baked-in `git` and `gh` commands. |
 | `github_token` | | Optional GitHub token used to authenticate `gh` and Git operations. |
 | `github_username` | | Optional global Git author name. |
 | `github_email` | | Optional global Git author email. |
-| `ha_smart_context` | `true` | Enable Home Assistant smart context support for Claude tooling. |
-| `enable_ha_mcp` | `true` | Enable Home Assistant MCP support for Claude tooling. |
-| `dangerously_skip_permissions` | `false` | Reserved compatibility option; it is not applied by the terminal launcher. |
+| `enable_ha_mcp` | `false` | Register Home Assistant's MCP server in Claude (requires `ha_mcp_token`). |
+| `ha_mcp_url` | `http://homeassistant:8123/mcp_server/sse` | SSE endpoint of Home Assistant's MCP Server integration. |
+| `ha_mcp_token` | | Home Assistant long-lived access token used by the MCP bridge. |
 | `additional_apps` | | Comma-separated Debian apt packages to install at startup. |
-| `additional_pip` | | Comma-separated pip packages installed with `--break-system-packages`. |
-| `data_location` | `/data/data` | Persistent home directory for both Claude clients and tooling. |
+| `additional_pip` | | Comma-separated pip packages installed at startup (via `uv`). |
+| `data_location` | `/data/data` | Persistent home directory for Claude and tooling. |
 | `env_vars` | `[]` | Additional environment variables exported inside the container. |
 
 ## Headroom behavior
 
-When `install_headroom` is enabled, the add-on registers `headroom mcp serve` in
-Claude Desktop and starts a supervised local Headroom backend. Desktop can use
-`headroom_compress`, `headroom_retrieve`, and `headroom_stats` through MCP.
+When `install_headroom` is enabled, the add-on registers `headroom mcp serve`
+in Claude Desktop and Claude Code, and starts a supervised local Headroom
+backend. Claude can use `headroom_compress`, `headroom_retrieve`, and
+`headroom_stats` through MCP.
 
 Claude Desktop overrides `ANTHROPIC_BASE_URL`, so it is deliberately launched
-without proxy injection. The web terminal instead provides `claude-headroom`,
-which reuses the supervised proxy through Headroom's `--no-proxy` mode. RTK
-setup remains owned by the add-on through Headroom's `--no-rtk` mode.
+without proxy injection; the MCP integration is the supported path.
 
-The Headroom dashboard remains available at:
+The Headroom dashboard is available at:
 
 ```text
 http://<home-assistant-host>:8787/dashboard
 ```
 
-when the `8787/tcp` port is mapped. Treat this endpoint as sensitive and do not
-expose it directly to the public internet.
+through the default `8787/tcp` port mapping. Treat this endpoint as sensitive:
+it serves your local network only — do not expose it directly to the public
+internet, and unmap the port in the add-on **Network** section if you do not
+want it reachable at all.
+
+## Home Assistant MCP bridge
+
+To let Claude query and control Home Assistant:
+
+1. In Home Assistant, add the **Model Context Protocol Server** integration
+   (Settings → Devices & services → Add integration).
+2. Create a long-lived access token (your profile → Security).
+3. Set `enable_ha_mcp: true` and paste the token into `ha_mcp_token` in the
+   add-on configuration, then restart the add-on.
+
+The add-on bridges Claude to the integration's SSE endpoint with `mcp-proxy`.
+Override `ha_mcp_url` only if your Home Assistant instance is not reachable as
+`homeassistant:8123` from add-ons.
 
 ## Custom scripts
 
@@ -178,10 +127,11 @@ the image.
 Persistent state is stored in the configured `data_location` (default
 `/data/data`):
 
-- Claude Desktop sign-in: `~/.config/Claude`
+- Claude Desktop sign-in: `~/.config/Claude` (token encrypted via
+  gnome-keyring; keyring DB in `~/.local/share/keyrings`)
 - Claude Code settings, hooks, sessions, and plugins: `~/.claude`
-- Default terminal workspace: `~/workspace`
-- Headroom and RTK user state: their standard paths below the shared home
+- Headroom, RTK, and tokensave user state: their standard paths below the
+  shared home
 
 Volatile cache data is redirected to `/tmp/cache` through `$XDG_CACHE_HOME` and
 `$HOME/.cache`.
