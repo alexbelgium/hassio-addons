@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv bashio
-# Diagnose installation, registration, routing, indexing, and recorded savings without
+# Diagnose installation, registration, routing, indexing, permissions, and recorded savings without
 # printing MCP environment values (which may contain the Home Assistant access token).
 # shellcheck shell=bash
 set +e
@@ -22,9 +22,30 @@ for tool in claude claude-desktop headroom rtk tokensave git gh rg jq shellcheck
 done
 
 section "Configured switches"
-for option in install_headroom headroom_wrap_claude_code expose_headroom_dashboard install_rtk install_tokensave install_caveman enable_tools_health_report; do
+for option in permission_mode install_headroom headroom_wrap_claude_code expose_headroom_dashboard install_rtk install_tokensave install_caveman enable_tools_health_report; do
     printf '%-30s %s\n' "$option" "$(bashio::config "$option")"
 done
+
+section "Claude Code permission state"
+python3 - <<'PY'
+import json
+from pathlib import Path
+
+path = Path.home() / ".claude/settings.json"
+try:
+    data = json.loads(path.read_text())
+except FileNotFoundError:
+    print("settings: MISSING")
+except Exception as exc:
+    print(f"settings: INVALID: {exc}")
+else:
+    permissions = data.get("permissions", {})
+    if isinstance(permissions, dict):
+        print(f"permissions.defaultMode: {permissions.get('defaultMode', '<upstream default>')}")
+    else:
+        print("permissions: INVALID")
+print(f"managed-state marker: {(Path.home() / '.claude/.addon-permission-mode.json').exists()}")
+PY
 
 section "MCP registrations (environment values redacted)"
 python3 - <<'PY'
@@ -118,11 +139,11 @@ if bashio::config.true 'install_tokensave'; then
     tokensave gain --all --range 30d || true
     while IFS= read -r configured_path; do
         [ -n "$configured_path" ] || continue
-        repo_root="$(git -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
+        repo_root="$(s6-setuidgid abc env HOME="$HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
         if [ -z "$repo_root" ]; then
             echo "${configured_path}: not a Git repository"
         elif [ -f "$repo_root/.tokensave/tokensave.db" ]; then
-            tokensave status "$repo_root" --short || true
+            s6-setuidgid abc env HOME="$HOME" tokensave status "$repo_root" --short || true
         else
             echo "${repo_root}: NOT INITIALIZED"
         fi
