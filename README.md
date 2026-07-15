@@ -258,13 +258,15 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![ingress][ingress-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/robot-happy.svg) [Claude Desktop](claude_desktop/) : Claude Desktop with Headroom MCP context compression and RTK acceleration
+&#10003; ![image](https://api.iconify.design/mdi/robot-happy.svg) [Claude Desktop](claude_desktop/) : Claude Desktop with Headroom, RTK, and TokenSave optimization
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fclaude_desktop%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fclaude_desktop%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![ingress][ingress-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/movie-search.svg) [Cleanuparr](cleanuparr/) : Automatically removes stuck and unwanted downloads from your *arr and download clients
 
