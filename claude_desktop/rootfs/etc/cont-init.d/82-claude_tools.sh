@@ -193,15 +193,64 @@ if $TOKENSAVE_ENABLED; then
         fi
         TOKENSAVE_REPOS_SEEN[$repo_root]=1
 
-        if [ -f "$repo_root/.tokensave/tokensave.db" ]; then
-            bashio::log.info "Synchronizing TokenSave index: ${repo_root}"
-            run_as_runtime_user tokensave sync "$repo_root" \
-                || bashio::log.warning "TokenSave sync failed for ${repo_root}"
-        else
-            bashio::log.info "Initializing TokenSave index: ${repo_root}"
-            run_as_runtime_user tokensave init "$repo_root" \
-                || bashio::log.warning "TokenSave initialization failed for ${repo_root}"
-        fi
+        bashio::log.info "Preparing TokenSave index: ${repo_root}"
+        # Prepare the per-repo semantic graph defensively so a hard add-on stop or storage
+        # hiccup can never leave a broken index that fails every subsequent boot:
+        #   * a startup-scoped flock serializes against an overlapping restart (and any git
+        #     post-commit/checkout sync hook that fires mid-boot), so two writers never race;
+        #   * an existing index is refreshed with a cheap incremental `sync`, retried a few
+        #     times because SQLITE_BUSY under lock contention is transient, not corruption;
+        #   * only a genuinely unreadable/malformed index (sync still failing after retries)
+        #     or a half-written one from an interrupted `init` is quarantined and rebuilt,
+        #     so the graph self-heals instead of propagating corruption;
+        #   * `init` is bracketed by a sentinel file so an interrupted full build is detected
+        #     as incomplete on the next start and rebuilt rather than trusted.
+        # All file operations run as the abc runtime user because the repo `.tokensave`
+        # directory is not covered by this script's final ownership pass.
+        # shellcheck disable=SC2016  # single-quoted on purpose: $1/$db/etc. expand in the abc shell
+        run_as_runtime_user bash -c '
+            set -o pipefail
+            repo_root="$1"
+            ts_dir="$repo_root/.tokensave"
+            db="$ts_dir/tokensave.db"
+            lock="$ts_dir/.startup.lock"
+            initflag="$ts_dir/.init-incomplete"
+            mkdir -p "$ts_dir"
+            exec 9>"$lock"
+            if ! flock -n 9; then
+                echo "TokenSave: index busy for $repo_root; skipping startup sync" >&2
+                exit 0
+            fi
+            quarantine() {
+                stamp="$(date +%Y%m%d-%H%M%S)"
+                bdir="$ts_dir/corrupt-$stamp"
+                mkdir -p "$bdir"
+                for f in "$db" "$db-wal" "$db-shm"; do
+                    [ -e "$f" ] && mv -f "$f" "$bdir/" 2>/dev/null || true
+                done
+                echo "TokenSave: quarantined suspect index to $bdir" >&2
+            }
+            if [ -f "$db" ] && [ ! -f "$initflag" ]; then
+                attempt=1
+                while :; do
+                    tokensave sync "$repo_root" && exit 0
+                    [ "$attempt" -ge 3 ] && break
+                    echo "TokenSave: sync attempt $attempt failed for $repo_root; retrying" >&2
+                    attempt=$((attempt + 1))
+                    sleep 2
+                done
+                echo "TokenSave: sync failed after retries for $repo_root; rebuilding index" >&2
+                quarantine
+            elif [ -f "$db" ]; then
+                echo "TokenSave: previous init did not finish for $repo_root; rebuilding index" >&2
+                quarantine
+            fi
+            : > "$initflag"
+            tokensave init "$repo_root" && { rm -f "$initflag"; exit 0; }
+            echo "TokenSave: init failed for $repo_root; will retry on next start" >&2
+            exit 1
+        ' _ "$repo_root" \
+            || bashio::log.warning "TokenSave preparation failed for ${repo_root}"
     done < <(bashio::config.array 'tokensave_project_paths')
 fi
 

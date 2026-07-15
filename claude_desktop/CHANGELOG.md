@@ -1,6 +1,7 @@
 ## 1.24 (15-07-2026)
 
 - Fix the `/usr/local/bin/claude` wrapper never routing terminal Claude Code sessions through the Headroom proxy: it hardcoded `HEADROOM_BIN="/usr/local/bin/headroom"` while the binary is installed at `/usr/bin/headroom`, so the executable check always failed and the wrapper fell back to launching Claude Code directly. Resolve the binary with `command -v headroom` instead.
+- Harden startup TokenSave indexing so an interrupted `init`/`sync` or a hard add-on stop can no longer leave a corrupt semantic graph that fails every subsequent boot. Each configured repository is now prepared under a startup-scoped `flock` (serialised against overlapping restarts and mid-boot git sync hooks); an existing index is refreshed with a retried incremental `sync` (transient `SQLITE_BUSY` no longer looks like corruption); and only a genuinely unreadable index — or a half-written one flagged by an `init` sentinel — is quarantined to `.tokensave/corrupt-<timestamp>/` and rebuilt from scratch, so the graph self-heals instead of propagating corruption.
 
 ## 1.23 (15-07-2026)
 
