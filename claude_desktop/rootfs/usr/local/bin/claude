@@ -5,6 +5,22 @@ set -o pipefail
 REAL_CLAUDE="/usr/bin/claude"
 HEADROOM_BIN="/usr/local/bin/headroom"
 HEADROOM_URL="http://127.0.0.1:8787"
+PERMISSION_MODE="$(bashio::config 'permission_mode')"
+declare -a CLAUDE_PERMISSION_ARGS=()
+
+case "$PERMISSION_MODE" in
+    bypass)
+        CLAUDE_PERMISSION_ARGS+=("--dangerously-skip-permissions")
+        ;;
+    auto)
+        CLAUDE_PERMISSION_ARGS+=("--permission-mode" "auto")
+        ;;
+    strict|"")
+        ;;
+    *)
+        echo "claude wrapper: unknown permission_mode '${PERMISSION_MODE}', using strict mode" >&2
+        ;;
+esac
 
 if [ ! -x "$REAL_CLAUDE" ]; then
     echo "claude wrapper: ${REAL_CLAUDE} is unavailable" >&2
@@ -17,9 +33,10 @@ if bashio::config.true 'install_headroom' && bashio::config.true 'headroom_wrap_
         # executable; otherwise it would resolve this wrapper recursively.
         export HEADROOM_CONTEXT_TOOL="rtk"
         exec env PATH="/usr/bin:/bin:/usr/local/bin" \
-            "$HEADROOM_BIN" wrap claude --no-proxy -- "$@"
+            "$HEADROOM_BIN" wrap claude --no-proxy -- \
+            "${CLAUDE_PERMISSION_ARGS[@]}" "$@"
     fi
     echo "claude wrapper: Headroom proxy is unavailable; launching Claude Code directly" >&2
 fi
 
-exec "$REAL_CLAUDE" "$@"
+exec "$REAL_CLAUDE" "${CLAUDE_PERMISSION_ARGS[@]}" "$@"
