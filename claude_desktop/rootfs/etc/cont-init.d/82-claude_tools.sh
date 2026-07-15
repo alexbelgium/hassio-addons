@@ -308,6 +308,63 @@ if new != text:
 PY
 fi
 
+# Route every Claude Code session through the Headroom proxy via the `env` block in the user's
+# ~/.claude/settings.json. Claude Code writes settings `env` entries into the process
+# environment at startup, replacing inherited values — this is the only supported way to reach
+# Desktop cowork/local-agent-mode sessions, which spawn the bundled CLI at an absolute path
+# (bypassing the PATH wrapper) with ANTHROPIC_BASE_URL pinned to the production endpoint
+# (headroom #869). Managed-value semantics: only set or remove the variable when it is absent
+# or already equals the add-on-managed proxy URL, so a user-customized endpoint is never
+# clobbered. The svc-headroom longrun is s6-supervised, so a crashed proxy restarts within
+# seconds; the terminal wrapper's per-launch health check remains as an extra safety net.
+if $HEADROOM_ENABLED && bashio::config.true 'headroom_wrap_claude_code'; then
+    HEADROOM_ROUTE_ACTION="add"
+else
+    HEADROOM_ROUTE_ACTION="remove"
+fi
+HEADROOM_ROUTE_ACTION="$HEADROOM_ROUTE_ACTION" python3 - <<'PY' || bashio::log.warning "Unable to manage the Claude Code proxy routing env"
+import json
+import os
+from pathlib import Path
+
+MANAGED_URL = "http://127.0.0.1:8787"
+
+path = Path.home() / ".claude" / "settings.json"
+try:
+    data = json.loads(path.read_text()) if path.exists() else {}
+    if not isinstance(data, dict):
+        data = {}
+except Exception:
+    if path.exists():
+        path.rename(path.with_suffix(path.suffix + ".bak"))
+    data = {}
+
+env = data.get("env")
+if not isinstance(env, dict):
+    env = {}
+current = env.get("ANTHROPIC_BASE_URL")
+changed = False
+
+if os.environ["HEADROOM_ROUTE_ACTION"] == "add":
+    if current is None or current == MANAGED_URL:
+        if current != MANAGED_URL:
+            env["ANTHROPIC_BASE_URL"] = MANAGED_URL
+            changed = True
+    else:
+        print(f"Claude settings env already sets ANTHROPIC_BASE_URL={current}; leaving it untouched")
+elif current == MANAGED_URL:
+    del env["ANTHROPIC_BASE_URL"]
+    changed = True
+
+if changed:
+    if env:
+        data["env"] = env
+    elif "env" in data:
+        del data["env"]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2) + "\n")
+PY
+
 # Tell Claude Code that it can configure Home Assistant over the Core API via the shipped
 # `ha-cli` helper (no /config filesystem mount needed). Managed, idempotent block appended to
 # the user's global CLAUDE.md; removed when the helper is disabled. Mirrors the headroom block.
