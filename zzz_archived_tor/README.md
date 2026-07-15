@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [qBittorrent] Cant update to 5.2.3 (opened 2026-07-09)](https://github.com/alexbelgium/hassio-addons/issues/2836) by [@tschoehuijs](https://github.com/tschoehuijs)
+## &#9888; Open Request : [✨ [REQUEST] transmission, document where torrent files are stored (opened 2026-07-14)](https://github.com/alexbelgium/hassio-addons/issues/2852) by [@bilogic](https://github.com/bilogic)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
