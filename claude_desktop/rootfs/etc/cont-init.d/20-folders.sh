@@ -5,8 +5,8 @@ set -e
 
 # Use the effective shared desktop user identity. In bypass mode an earlier init script may
 # remap abc away from UID 0 because Claude Code rejects bypass permissions when run as root.
-PUID="$(id -u abc)"
-PGID="$(id -g abc)"
+PUID=1000
+PGID=1000
 
 # Check data location
 LOCATION="$(bashio::config 'data_location')"
@@ -82,7 +82,7 @@ fi
 ln -sfn /tmp/cache "$LOCATION/.cache"
 
 bashio::log.info "Setting ownership to $PUID:$PGID"
-chown -R "$PUID":"$PGID" "$LOCATION" /tmp/cache "$XDG_RUNTIME_DIR"
+chown -R "$PUID":"$PGID" "$LOCATION" /tmp/cache "$XDG_RUNTIME_DIR" /data
 chmod -R 700 "$LOCATION"
 
 # The base init-selkies-config script overrides XDG_RUNTIME_DIR to $HOME/.XDG, which lands
