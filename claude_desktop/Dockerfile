@@ -116,7 +116,7 @@ RUN set -eux; \
         aarch64) hadolint_arch="arm64"; actionlint_arch="arm64" ;; \
         *) echo "Unsupported validation-tools architecture: ${BUILD_ARCH}" >&2; exit 1 ;; \
     esac; \
-    hadolint_name="hadolint-Linux-${hadolint_arch}"; \
+    hadolint_name="hadolint-linux-${hadolint_arch}"; \
     hadolint_url="$(curl -fsSL https://api.github.com/repos/hadolint/hadolint/releases/latest \
         | jq -r --arg name "${hadolint_name}" '.assets[] | select(.name == $name) | .browser_download_url' \
         | head -n 1)"; \
