@@ -251,6 +251,61 @@ if new != text:
 PY
 fi
 
+# Tell Claude Code that it can configure Home Assistant over the Core API via the shipped
+# `ha-cli` helper (no /config filesystem mount needed). Managed, idempotent block appended to
+# the user's global CLAUDE.md; removed when the helper is disabled. Mirrors the headroom block.
+HA_HELPER_GUIDE_BEGIN="<!-- BEGIN ha-api-helper (managed by claude_desktop addon) -->"
+if bashio::config.true 'enable_ha_api_helper'; then
+    mkdir -p "$(dirname "$CLAUDE_MD")"
+    if ! { [ -f "$CLAUDE_MD" ] && grep -qF "$HA_HELPER_GUIDE_BEGIN" "$CLAUDE_MD"; }; then
+        bashio::log.info "Adding Home Assistant API helper guidance to CLAUDE.md"
+        {
+            [ -s "$CLAUDE_MD" ] && printf '\n'
+            cat <<'MD'
+<!-- BEGIN ha-api-helper (managed by claude_desktop addon) -->
+## Configuring Home Assistant
+
+You can configure this Home Assistant instance through its Core API using the `ha-cli`
+command (on `PATH`). It authenticates automatically with the add-on's `$SUPERVISOR_TOKEN`,
+so no token setup is needed. There is **no `/config` filesystem mount** — work only through
+`ha-cli`, and never try to read or write Home Assistant YAML files directly.
+
+What is editable this way: automations, scripts, and scenes
+(`ha-cli get|post|delete config/automation/config/<id>` and the `script`/`scene` equivalents);
+service calls (`ha-cli call <domain.service> '<json>'`); state reads (`ha-cli states`); and,
+over WebSocket, helpers, dashboards, and area/label/floor/entity registries
+(`ha-cli ws '{"type":"..."}'`). Run `ha-cli --help` for the full reference. Raw YAML
+(`configuration.yaml`, `secrets.yaml`) is intentionally unreachable — if a change needs it,
+say so instead of working around it.
+
+Rules: run `ha-cli config` first to confirm connectivity; **read the current object and show
+the user the intended change, then wait for confirmation** before any create/update/delete or
+any state-changing `call`; after writing, read the object back and reload if needed
+(e.g. `ha-cli call automation.reload`).
+<!-- END ha-api-helper (managed by claude_desktop addon) -->
+MD
+        } >> "$CLAUDE_MD"
+    fi
+elif [ -f "$CLAUDE_MD" ] && grep -qF "$HA_HELPER_GUIDE_BEGIN" "$CLAUDE_MD"; then
+    bashio::log.info "Removing Home Assistant API helper guidance from CLAUDE.md"
+    CLAUDE_MD="$CLAUDE_MD" python3 - <<'PY' || bashio::log.warning "Unable to remove Home Assistant API helper guidance automatically"
+import os
+import re
+from pathlib import Path
+
+path = Path(os.environ["CLAUDE_MD"])
+text = path.read_text(encoding="utf-8")
+pattern = re.compile(
+    r"\n*<!-- BEGIN ha-api-helper \(managed by claude_desktop addon\) -->.*?"
+    r"<!-- END ha-api-helper \(managed by claude_desktop addon\) -->\n?",
+    re.DOTALL,
+)
+new = pattern.sub("", text)
+if new != text:
+    path.write_text(new, encoding="utf-8")
+PY
+fi
+
 if bashio::config.true 'install_rtk'; then
     if command -v rtk &> /dev/null; then
         bashio::log.info "Configuring rtk Claude Code integration"
