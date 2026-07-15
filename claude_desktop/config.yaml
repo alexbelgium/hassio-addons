@@ -13,8 +13,8 @@ environment:
   AUTO_GPU: "1"
   FM_HOME: /data/data
   HOME: /data/data
-  PGID: "0"
-  PUID: "0"
+  PGID: "1000"
+  PUID: "1000"
   SELKIES_FRAMERATE: "30"
   START_DOCKER: "false"
   TITLE: Claude Desktop
@@ -35,8 +35,6 @@ options:
   env_vars: []
   DNS_server: 8.8.8.8
   data_location: /data/data
-  PGID: 0
-  PUID: 0
   additional_apps: ""
   additional_pip: ""
   auto_update: true
@@ -76,8 +74,6 @@ schema:
   DRINODE: list(/dev/dri/card0|/dev/dri/card1|/dev/dri/card2|/dev/dri/renderD128|/dev/dri/renderD129|)?
   KEYBOARD: list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?
   PASSWORD: str?
-  PGID: int
-  PUID: int
   TZ: match([A-Z][a-z]*./[A-Z][a-z]*.)?
   additional_apps: str?
   additional_pip: str?
