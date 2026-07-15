@@ -4,9 +4,9 @@
 ![Supports amd64 Architecture][amd64-shield]
 ![Project Maintenance][maintenance-shield]
 
-Run Claude Desktop in a LinuxServer.io Selkies add-on, with Headroom MCP
-context compression, RTK Bash-output acceleration, and code-intelligence
-tooling wired in by default.
+Run Claude Desktop in a LinuxServer.io Selkies add-on, with Headroom context
+compression, RTK Bash-output acceleration, and TokenSave semantic code
+intelligence wired in by default.
 
 ## Installation
 
@@ -24,14 +24,32 @@ currently does not include Computer Use or dictation.
 Everything is built around the Claude Desktop app. Claude Code is installed in
 the same image but is not exposed as a standalone service: Claude Desktop's
 cowork and dispatch sessions run it internally, and they pick up the shared
-Claude Code configuration (`~/.claude`), hooks, and MCP servers automatically.
+Claude Code configuration (`~/.claude`), hooks, MCP servers, and PATH tools.
 
 - **Claude Desktop** uses Headroom through its MCP tools.
-- **Claude Code sessions inside Desktop** get the same MCP servers via
-  `~/.claude.json` and RTK's `PreToolUse` Bash hook via
-  `~/.claude/settings.json`.
+- **Claude Code sessions inside Desktop** get the same MCP servers and the
+  RTK/TokenSave hooks through the shared Claude Code configuration.
+- PATH-based Claude Code launches are routed through the supervised Headroom
+  proxy when `headroom_wrap_claude_code` is enabled. If a Desktop release calls
+  `/usr/bin/claude` directly, the session remains functional and still has the
+  Headroom MCP tools, but transparent proxy compression cannot be injected.
 - **gnome-keyring** provides the Secret Service backend Electron needs to
   persist sign-in and dispatch permission grants across restarts.
+
+## Optimization layers
+
+The three bundled optimization tools are complementary:
+
+- **RTK** rewrites supported Bash commands so Claude receives compact output.
+- **TokenSave** builds a local semantic graph for explicitly selected code
+  repositories and steers Claude away from repeated Explore/Grep/Read fan-out.
+- **Headroom** transparently compresses proxied Claude Code traffic and also
+  exposes on-demand compress/retrieve/statistics MCP tools to Claude Desktop.
+
+TokenSave's complete Claude integration is installed at startup: MCP server,
+permissions, PreToolUse/UserPromptSubmit/Stop hooks, global prompt rules, and
+Git synchronization hooks. A repository is indexed only when it is listed in
+`tokensave_project_paths`; no automatic filesystem scan is performed.
 
 ## Features
 
@@ -42,15 +60,17 @@ Claude Code configuration (`~/.claude`), hooks, and MCP servers automatically.
   preserving Desktop and Claude Code state across restarts.
 - Persistent sign-in through a bundled, auto-unlocked gnome-keyring.
 - Optional runtime Claude Desktop updates from Anthropic's apt repository.
-- Optional extra apt and pip package installation (pip installs use `uv` for
-  speed).
-- Baked-in `git`, GitHub CLI (`gh`), and `ripgrep`.
+- Optional extra apt and pip package installation (pip installs use `uv`).
+- Baked-in `git`, GitHub CLI (`gh`), `ripgrep`, `jq`, `shellcheck`, `yamllint`,
+  `hadolint`, and `actionlint`.
 - Custom script support through the repository standard `claude_desktop.sh`.
-- Bundled optimization tools: Headroom (MCP + local proxy), RTK, tokensave,
-  and Caveman — each individually switchable.
+- Bundled optimization tools: Headroom, RTK, and TokenSave; Caveman remains
+  available as an opt-in plugin.
 - Optional Home Assistant MCP bridge so Claude can query and control Home
   Assistant.
-- Headroom dashboard exposed on mapped port `8787`.
+- Independent hourly savings reports for Headroom, RTK, and TokenSave.
+- `claude-tools-doctor.sh` diagnostics for binaries, routing, hooks, MCP
+  registrations, project indexes, proxy health, and gains.
 - Low-power defaults for GPU mapping, Selkies frame rate, and volatile caches.
 
 ## Options
@@ -64,42 +84,79 @@ Claude Code configuration (`~/.claude`), hooks, and MCP servers automatically.
 | `DRINODE` | | Optional GPU device override for Selkies. |
 | `DNS_server` | `8.8.8.8` | DNS server used by the standard DNS module. |
 | `auto_update` | `true` | Upgrade `claude-desktop` from Anthropic's apt repository at startup. |
-| `install_headroom` | `true` | Register the Headroom MCP server and run the supervised local proxy/dashboard. |
-| `install_rtk` | `true` | Configure RTK's Claude Code `PreToolUse` hook. |
-| `install_tokensave` | `true` | Register the tokensave code-intelligence MCP server for Desktop and Claude Code. |
-| `install_caveman` | `true` | Install the Caveman Claude Code plugin in the persistent Claude home. |
+| `install_headroom` | `true` | Register Headroom MCP and run the supervised local proxy. |
+| `headroom_wrap_claude_code` | `true` | Route PATH-based Claude Code launches through the already-running Headroom proxy. |
+| `expose_headroom_dashboard` | `false` | Bind Headroom to all interfaces. Port `8787/tcp` must also be mapped manually. |
+| `install_rtk` | `true` | Configure RTK's Claude Code `PreToolUse` Bash hook. |
+| `install_tokensave` | `true` | Install TokenSave's complete global Claude integration. |
+| `tokensave_project_paths` | `[]` | Explicit absolute Git repository paths to initialize or sync at startup. |
+| `install_caveman` | `false` | Install the third-party Caveman Claude Code plugin at startup. |
+| `enable_tools_health_report` | `true` | Write independent Headroom, RTK, and TokenSave gains to the add-on log hourly. |
 | `install_github_cli` | `true` | Enable setup checks for the baked-in `git` and `gh` commands. |
 | `github_token` | | Optional GitHub token used to authenticate `gh` and Git operations. |
 | `github_username` | | Optional global Git author name. |
 | `github_email` | | Optional global Git author email. |
 | `enable_ha_mcp` | `false` | Register Home Assistant's MCP server in Claude (requires `ha_mcp_token`). |
-| `ha_mcp_url` | `http://homeassistant:8123/mcp_server/sse` | SSE endpoint of Home Assistant's MCP Server integration. |
+| `ha_mcp_url` | `http://homeassistant:8123/api/mcp` | Streamable HTTP endpoint of Home Assistant's MCP Server integration. |
 | `ha_mcp_token` | | Home Assistant long-lived access token used by the MCP bridge. |
 | `additional_apps` | | Comma-separated Debian apt packages to install at startup. |
 | `additional_pip` | | Comma-separated pip packages installed at startup (via `uv`). |
 | `data_location` | `/data/data` | Persistent home directory for Claude and tooling. |
 | `env_vars` | `[]` | Additional environment variables exported inside the container. |
 
+### TokenSave project example
+
+Only repositories listed here are indexed. Paths must be absolute, mounted in
+the add-on, and resolve to a Git working tree:
+
+```yaml
+tokensave_project_paths:
+  - /share/projects/hassio-addons
+  - /share/projects/birdnet-go
+```
+
+At startup, an uninitialized repository receives `tokensave init`; an existing
+index receives an incremental `tokensave sync`. Removing a path from the option
+stops automatic synchronization but does not delete its `.tokensave` database.
+
 ## Headroom behavior
 
 When `install_headroom` is enabled, the add-on registers `headroom mcp serve`
-in Claude Desktop and Claude Code, and starts a supervised local Headroom
-backend. Claude can use `headroom_compress`, `headroom_retrieve`, and
-`headroom_stats` through MCP.
+with the explicit local proxy URL in Claude Desktop and Claude Code, then starts
+a supervised Headroom backend on `127.0.0.1:8787`.
 
-Claude Desktop overrides `ANTHROPIC_BASE_URL`, so it is deliberately launched
-without proxy injection; the MCP integration is the supported path.
+Claude Desktop overrides `ANTHROPIC_BASE_URL`, so Desktop chat deliberately uses
+the MCP integration. The `/usr/local/bin/claude` wrapper routes PATH-based Claude
+Code sessions through `headroom wrap claude --no-proxy`, reusing the supervised
+backend without starting a second proxy.
 
-The Headroom dashboard is available at:
+The dashboard is disabled externally by default. To expose it:
 
-```text
-http://<home-assistant-host>:8787/dashboard
+1. Set `expose_headroom_dashboard: true`.
+2. Map `8787/tcp` in the add-on **Network** section.
+3. Open `http://<home-assistant-host>:8787/dashboard`.
+
+The dashboard is unauthenticated. Do not publish this port to the public
+internet.
+
+## Diagnostics
+
+Run the following inside the add-on through a custom script or container console:
+
+```bash
+claude-tools-doctor.sh
 ```
 
-through the default `8787/tcp` port mapping. The dashboard is unauthenticated
-and is reachable wherever Home Assistant publishes that port, so treat it as
-sensitive: do not expose it directly to the public internet, and unmap the port
-in the add-on **Network** section if you do not want it reachable at all.
+The report checks the tool binaries, configuration switches, redacted MCP
+registrations, Claude hooks, Headroom health, TokenSave indexes, routing, and
+recorded savings. It never prints MCP environment values because the Home
+Assistant MCP entry can contain a long-lived token.
+
+The hourly report can also be invoked manually:
+
+```bash
+claude-gains-report.sh
+```
 
 ## Home Assistant MCP bridge
 
@@ -130,8 +187,10 @@ Persistent state is stored in the configured `data_location` (default
 - Claude Desktop sign-in: `~/.config/Claude` (token encrypted via
   gnome-keyring; keyring DB in `~/.local/share/keyrings`)
 - Claude Code settings, hooks, sessions, and plugins: `~/.claude`
-- Headroom, RTK, and tokensave user state: their standard paths below the
+- Headroom, RTK, and TokenSave user state: their standard paths below the
   shared home
+- TokenSave repository indexes: `.tokensave/` inside each explicitly configured
+  project
 
 Volatile cache data is redirected to `/tmp/cache` through `$XDG_CACHE_HOME` and
 `$HOME/.cache`.
