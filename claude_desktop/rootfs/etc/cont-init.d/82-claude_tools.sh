@@ -7,15 +7,18 @@ PUID="$(if bashio::config.has_value 'PUID'; then bashio::config 'PUID'; else ech
 PGID="$(if bashio::config.has_value 'PGID'; then bashio::config 'PGID'; else echo '0'; fi)"
 mkdir -p "$HOME/.claude"
 
+run_as_runtime_user() {
+    s6-setuidgid abc env HOME="$HOME" "$@"
+}
+
 CLAUDE_DESKTOP_COMMAND_FILE="/tmp/claude-desktop-command"
 DEFAULT_CLAUDE_DESKTOP_COMMAND='claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret'
 printf '%s\n' "$DEFAULT_CLAUDE_DESKTOP_COMMAND" > "$CLAUDE_DESKTOP_COMMAND_FILE"
 
-# headroom's "wrap"/proxy routing works by setting ANTHROPIC_BASE_URL, which the Claude Desktop
-# Electron app force-overrides to the production endpoint (headroom #869), so transparent
-# compression cannot be applied to the desktop launch. The integration that does work with
-# Claude Desktop is headroom's MCP server, which exposes the headroom_compress/headroom_retrieve/
-# headroom_stats tools inside the app.
+# Headroom's proxy routing works by setting ANTHROPIC_BASE_URL, which the Claude Desktop
+# Electron app force-overrides to the production endpoint (headroom #869). Desktop therefore
+# uses Headroom's MCP tools. Claude Code launches that resolve `claude` through PATH use the
+# add-on's /usr/local/bin/claude wrapper and can be transparently proxied when enabled.
 #
 # Register the add-on-managed MCP servers (headroom, tokensave, homeassistant) in both Claude
 # Desktop's config and Claude Code's user config (used by Desktop cowork/dispatch sessions).
@@ -38,10 +41,18 @@ TOKENSAVE_ENABLED=false
 if bashio::config.true 'install_tokensave'; then
     if command -v tokensave &> /dev/null; then
         TOKENSAVE_ENABLED=true
-        bashio::log.info "tokensave $(tokensave --version 2> /dev/null || true) available; registering the tokensave MCP server"
+        bashio::log.info "tokensave $(tokensave --version 2> /dev/null || true) available; configuring the complete Claude Code integration"
+        # The upstream installer adds the MCP entry, PreToolUse/UserPromptSubmit/Stop hooks,
+        # MCP permissions, global CLAUDE.md rules, and the global post-commit/checkout sync hook.
+        run_as_runtime_user tokensave install --agent claude --git-hook yes \
+            || bashio::log.warning "tokensave Claude Code integration setup failed"
     else
         bashio::log.warning "tokensave is not available"
     fi
+elif command -v tokensave &> /dev/null; then
+    bashio::log.info "Removing the tokensave Claude Code integration"
+    run_as_runtime_user tokensave uninstall --agent claude \
+        || bashio::log.warning "tokensave Claude Code integration removal failed"
 fi
 
 HA_MCP_ENABLED=false
@@ -80,7 +91,10 @@ MANAGED_BASENAMES = {
 
 desired = {}
 if os.environ["HEADROOM_ENABLED"] == "true":
-    desired["headroom"] = {"command": os.environ["HEADROOM_BIN"], "args": ["mcp", "serve"]}
+    desired["headroom"] = {
+        "command": os.environ["HEADROOM_BIN"],
+        "args": ["mcp", "serve", "--proxy-url", "http://127.0.0.1:8787"],
+    }
 if os.environ["TOKENSAVE_ENABLED"] == "true":
     desired["tokensave"] = {"command": os.environ["TOKENSAVE_BIN"], "args": ["serve"]}
 if os.environ["HA_MCP_ENABLED"] == "true":
@@ -98,6 +112,7 @@ if os.environ["HA_MCP_ENABLED"] == "true":
 # under $HOME stay untouched because those are user-installed.
 HOME_PREFIX = os.path.expanduser("~") + os.sep
 
+
 def is_managed(name, entry):
     if not isinstance(entry, dict):
         return False
@@ -105,6 +120,7 @@ def is_managed(name, entry):
     if not isinstance(command, str) or command.startswith(HOME_PREFIX):
         return False
     return os.path.basename(command) == MANAGED_BASENAMES[name]
+
 
 for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_CONFIG", True)):
     path = Path(os.environ[config_var])
@@ -145,12 +161,56 @@ for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_C
     path.chmod(0o600)
 PY
 
-# Guide Claude to actually use the headroom compression tools so the MCP integration produces
-# real savings (otherwise the tools sit unused and `headroom savings` stays empty). Managed,
-# idempotent block appended to the user's global CLAUDE.md; removed when headroom is disabled.
+# Initialize or incrementally sync only explicitly configured repositories. TokenSave deliberately
+# requires one-time per-project opt-in; an empty list therefore has no startup or storage cost.
+if $TOKENSAVE_ENABLED; then
+    declare -A TOKENSAVE_REPOS_SEEN=()
+    while IFS= read -r configured_path; do
+        # Trim surrounding whitespace while preserving spaces inside paths.
+        configured_path="${configured_path#"${configured_path%%[![:space:]]*}"}"
+        configured_path="${configured_path%"${configured_path##*[![:space:]]}"}"
+        [ -n "$configured_path" ] || continue
+
+        case "$configured_path" in
+            /*) ;;
+            *)
+                bashio::log.warning "Skipping non-absolute tokensave_project_paths entry: ${configured_path}"
+                continue
+                ;;
+        esac
+        if [ ! -d "$configured_path" ]; then
+            bashio::log.warning "Skipping missing TokenSave project path: ${configured_path}"
+            continue
+        fi
+
+        repo_root="$(git -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
+        if [ -z "$repo_root" ] || [ "$repo_root" = "/" ]; then
+            bashio::log.warning "Skipping TokenSave path that is not a supported Git repository: ${configured_path}"
+            continue
+        fi
+        if [[ -n "${TOKENSAVE_REPOS_SEEN[$repo_root]:-}" ]]; then
+            continue
+        fi
+        TOKENSAVE_REPOS_SEEN[$repo_root]=1
+
+        if [ -f "$repo_root/.tokensave/tokensave.db" ]; then
+            bashio::log.info "Synchronizing TokenSave index: ${repo_root}"
+            run_as_runtime_user tokensave sync "$repo_root" \
+                || bashio::log.warning "TokenSave sync failed for ${repo_root}"
+        else
+            bashio::log.info "Initializing TokenSave index: ${repo_root}"
+            run_as_runtime_user tokensave init "$repo_root" \
+                || bashio::log.warning "TokenSave initialization failed for ${repo_root}"
+        fi
+    done < <(bashio::config.array 'tokensave_project_paths')
+fi
+
+# Guide Claude to actually use the Headroom compression tools so the MCP integration produces
+# real savings when transparent proxying is unavailable. Managed, idempotent block appended to
+# the user's global CLAUDE.md; removed when Headroom is disabled.
 CLAUDE_MD="$HOME/.claude/CLAUDE.md"
 HEADROOM_GUIDE_BEGIN="<!-- BEGIN headroom (managed by claude_desktop addon) -->"
-if bashio::config.true 'install_headroom'; then
+if $HEADROOM_ENABLED; then
     mkdir -p "$(dirname "$CLAUDE_MD")"
     if ! { [ -f "$CLAUDE_MD" ] && grep -qF "$HEADROOM_GUIDE_BEGIN" "$CLAUDE_MD"; }; then
         bashio::log.info "Adding headroom usage guidance to CLAUDE.md"
@@ -193,14 +253,13 @@ fi
 
 if bashio::config.true 'install_rtk'; then
     if command -v rtk &> /dev/null; then
-        if [ -f "$HOME/.claude/settings.json" ] && grep -q 'rtk hook claude' "$HOME/.claude/settings.json"; then
-            bashio::log.info "rtk Claude Code hook already configured"
-        else
-            bashio::log.info "Configuring rtk Claude Code hook"
-            RTK_NONINTERACTIVE=1 rtk init -g || bashio::log.warning "rtk global files configuration failed"
-            python3 - <<'PY' || bashio::log.warning "Unable to configure rtk hook automatically"
+        bashio::log.info "Configuring rtk Claude Code integration"
+        run_as_runtime_user env RTK_NONINTERACTIVE=1 rtk init -g \
+            || bashio::log.warning "rtk global files configuration failed"
+        python3 - <<'PY' || bashio::log.warning "Unable to configure rtk hook automatically"
 import json
 from pathlib import Path
+
 path = Path.home() / ".claude" / "settings.json"
 try:
     data = json.loads(path.read_text()) if path.exists() else {}
@@ -218,7 +277,6 @@ if not any("rtk hook claude" in json.dumps(entry) for entry in pre if isinstance
 path.parent.mkdir(parents=True, exist_ok=True)
 path.write_text(json.dumps(data, indent=2) + "\n")
 PY
-        fi
     else
         bashio::log.warning "rtk is not available"
     fi
@@ -290,7 +348,8 @@ if bashio::config.true 'install_caveman'; then
         bashio::log.info "caveman Claude Code plugin already configured"
     else
         bashio::log.info "Installing caveman Claude Code plugin"
-        curl --connect-timeout 10 --max-time 60 -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash >/dev/null || bashio::log.warning "caveman install failed (offline?)"
+        curl --connect-timeout 10 --max-time 60 -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash > /dev/null \
+            || bashio::log.warning "caveman install failed (offline?)"
     fi
 else
     bashio::log.info "Disabling caveman Claude Code plugin"
