@@ -55,6 +55,7 @@ for file in /config/app.ini /etc/templates/app.ini; do
         PROTOCOL=http
         sed -i "/server/a PROTOCOL=http" "$file"
     fi
+    echo -n "${PROTOCOL}" > /run/health_protocol
 
     ##################
     # ADAPT ROOT_URL #
