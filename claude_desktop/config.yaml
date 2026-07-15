@@ -54,6 +54,7 @@ options:
   install_headroom: true
   install_rtk: true
   install_tokensave: true
+  permission_mode: auto
   tokensave_project_paths: []
 panel_admin: false
 panel_icon: mdi:robot-happy
@@ -95,6 +96,7 @@ schema:
   install_headroom: bool
   install_rtk: bool
   install_tokensave: bool
+  permission_mode: list(strict|auto|bypass)
   tokensave_project_paths:
     - str
 slug: claude_desktop
