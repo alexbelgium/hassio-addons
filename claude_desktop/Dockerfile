@@ -112,7 +112,7 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
 # developer tools are intentionally not version-pinned.
 RUN set -eux; \
     case "${BUILD_ARCH}" in \
-        amd64) hadolint_arch="x86_64"; actionlint_arch="x86_64" ;; \
+        amd64) hadolint_arch="x86_64"; actionlint_arch="amd64" ;; \
         aarch64) hadolint_arch="arm64"; actionlint_arch="arm64" ;; \
         *) echo "Unsupported validation-tools architecture: ${BUILD_ARCH}" >&2; exit 1 ;; \
     esac; \
