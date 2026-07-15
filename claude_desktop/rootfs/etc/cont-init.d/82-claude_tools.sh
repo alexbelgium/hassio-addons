@@ -203,12 +203,17 @@ if $TOKENSAVE_ENABLED; then
         # Prepare the per-repo semantic graph defensively so a hard add-on stop or storage
         # hiccup can never leave a broken index that fails every subsequent boot:
         #   * a startup-scoped flock serializes against an overlapping restart (and any git
-        #     post-commit/checkout sync hook that fires mid-boot), so two writers never race;
+        #     post-commit/checkout sync hook that fires mid-boot); waits up to 60s for the
+        #     other writer to finish rather than silently skipping, since a held lock clears
+        #     itself the moment its holder exits or dies (the kernel releases flock on exit);
         #   * an existing index is refreshed with a cheap incremental `sync`, retried a few
         #     times because SQLITE_BUSY under lock contention is transient, not corruption;
-        #   * only a genuinely unreadable/malformed index (sync still failing after retries)
-        #     or a half-written one from an interrupted `init` is quarantined and rebuilt,
-        #     so the graph self-heals instead of propagating corruption;
+        #   * quarantine is reserved for sync failures whose stderr actually names database
+        #     corruption (SQLite's own "malformed"/"not a database"/"disk image" wording) or
+        #     a half-written index from an interrupted `init` (sentinel-flagged). Any other
+        #     failure (permissions, disk full, missing binary, ...) leaves the existing index
+        #     untouched and simply retries on the next start — corruption should self-heal,
+        #     a transient environment problem should not nuke a healthy graph;
         #   * `init` is bracketed by a sentinel file so an interrupted full build is detected
         #     as incomplete on the next start and rebuilt rather than trusted.
         # All file operations run as the abc runtime user because the repo `.tokensave`
@@ -223,10 +228,13 @@ if $TOKENSAVE_ENABLED; then
             initflag="$ts_dir/.init-incomplete"
             mkdir -p "$ts_dir"
             exec 9>"$lock"
-            if ! flock -n 9; then
-                echo "TokenSave: index busy for $repo_root; skipping startup sync" >&2
+            if ! flock -w 60 9; then
+                echo "TokenSave: index still locked for $repo_root after 60s; skipping startup sync" >&2
                 exit 0
             fi
+            is_corruption() {
+                printf "%s" "$1" | grep -qiE "malformed|not a database|file is encrypted|disk image|database.*corrupt"
+            }
             quarantine() {
                 stamp="$(date +%Y%m%d-%H%M%S)"
                 bdir="$ts_dir/corrupt-$stamp"
@@ -239,14 +247,20 @@ if $TOKENSAVE_ENABLED; then
             if [ -f "$db" ] && [ ! -f "$initflag" ]; then
                 attempt=1
                 while :; do
-                    tokensave sync "$repo_root" && exit 0
+                    sync_err="$(tokensave sync "$repo_root" 2>&1 1>/dev/null)" && exit 0
                     [ "$attempt" -ge 3 ] && break
                     echo "TokenSave: sync attempt $attempt failed for $repo_root; retrying" >&2
                     attempt=$((attempt + 1))
                     sleep 2
                 done
-                echo "TokenSave: sync failed after retries for $repo_root; rebuilding index" >&2
-                quarantine
+                if is_corruption "$sync_err"; then
+                    echo "TokenSave: sync failed after retries for $repo_root (corruption detected); rebuilding index" >&2
+                    quarantine
+                else
+                    echo "TokenSave: sync failed after retries for $repo_root (no corruption signature); leaving index in place, will retry next start" >&2
+                    echo "TokenSave: last sync error: $sync_err" >&2
+                    exit 1
+                fi
             elif [ -f "$db" ]; then
                 echo "TokenSave: previous init did not finish for $repo_root; rebuilding index" >&2
                 quarantine
