@@ -35,6 +35,10 @@ PATH tools.
   `/usr/bin/claude` directly, the session remains functional and still has the
   shared permission mode and Headroom MCP tools, but transparent proxy
   compression cannot be injected.
+- When `permission_mode: bypass` is selected while `PUID` is `0`, the add-on
+  automatically remaps the shared `abc` desktop account to an unused non-root
+  UID before Selkies and Claude Desktop start. Claude Code refuses bypass mode
+  under an effective root UID.
 - **gnome-keyring** provides the Secret Service backend Electron needs to
   persist sign-in and dispatch permission grants across restarts.
 
@@ -63,6 +67,8 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 - Persistent sign-in through a bundled, auto-unlocked gnome-keyring.
 - Configurable Claude Code permissions: strict prompts, automatic safe-action
   approval, or explicit full bypass for trusted installations.
+- Automatic non-root runtime enforcement for bypass mode, including root-console
+  wrapper launches.
 - Optional runtime Claude Desktop updates from Anthropic's apt repository.
 - Optional extra apt and pip package installation (pip installs use `uv`).
 - Baked-in `git`, GitHub CLI (`gh`), `ripgrep`, `jq`, `shellcheck`, `yamllint`,
@@ -74,14 +80,15 @@ Git synchronization hooks. A repository is indexed only when it is listed in
   Assistant.
 - Independent hourly savings reports for Headroom, RTK, and TokenSave.
 - `claude-tools-doctor.sh` diagnostics for binaries, routing, hooks, MCP
-  registrations, project indexes, proxy health, permissions, and gains.
+  registrations, project indexes, proxy health, permissions, runtime identity,
+  and gains.
 - Low-power defaults for GPU mapping, Selkies frame rate, and volatile caches.
 
 ## Options
 
 | Option | Default | Description |
 | ------ | ------- | ----------- |
-| `PUID` / `PGID` | `0` / `0` | Numeric user and group applied by the LinuxServer initialization. |
+| `PUID` / `PGID` | `0` / `0` | Numeric user and group applied by LinuxServer initialization. In bypass mode, a root `PUID` is automatically replaced at runtime by an unused non-root UID while the configured group is retained. |
 | `TZ` | | Optional timezone, for example `Europe/Brussels`. |
 | `KEYBOARD` | | Optional Selkies keyboard layout. |
 | `PASSWORD` | | Optional password for direct Selkies ports. |
@@ -122,9 +129,21 @@ permission_mode: auto
   `bypassPermissions` in the shared settings and
   `--dangerously-skip-permissions` for wrapper-launched sessions.
 
+Claude Code does not permit bypass mode when its effective UID is `0`. If the
+add-on is configured with `PUID: 0`, selecting `bypass` remaps only the shared
+`abc` runtime account to an available non-root UID (preferring `1000`, then
+`911`) before storage ownership and Desktop startup. Its configured primary
+GID is retained, so group-based access to mounted Home Assistant paths remains
+available. Strict and auto modes keep the configured identity unchanged.
+
+A root shell invoking `/usr/local/bin/claude` in bypass mode is also dropped to
+the remapped `abc` account. Directly invoking `/usr/bin/claude` as root still
+bypasses the add-on wrapper and will be rejected by Claude Code.
+
 `bypass` gives Claude broad authority over all mounted writable data and every
 command or credential available inside the add-on. Enable it only in a trusted
-installation with trusted repositories and mounts.
+installation with trusted repositories and mounts. Mounted paths must remain
+accessible to the effective non-root UID or its retained group.
 
 ### TokenSave project example
 
@@ -171,10 +190,11 @@ Run the following inside the add-on through a custom script or container console
 claude-tools-doctor.sh
 ```
 
-The report checks the tool binaries, configuration switches, redacted MCP
-registrations, Claude hooks, permission mode, Headroom health, TokenSave indexes,
-routing, and recorded savings. It never prints MCP environment values because
-the Home Assistant MCP entry can contain a long-lived token.
+The report checks the tool binaries, configuration switches, configured and
+effective runtime identities, redacted MCP registrations, Claude hooks,
+permission mode, Headroom health, TokenSave indexes, routing, and recorded
+savings. It never prints MCP environment values because the Home Assistant MCP
+entry can contain a long-lived token.
 
 The hourly report can also be invoked manually:
 

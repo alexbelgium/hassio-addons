@@ -26,6 +26,18 @@ for option in permission_mode install_headroom headroom_wrap_claude_code expose_
     printf '%-30s %s\n' "$option" "$(bashio::config "$option")"
 done
 
+section "Runtime identity"
+printf '%-30s %s\n' "configured PUID:PGID" "$(bashio::config 'PUID'):$(bashio::config 'PGID')"
+printf '%-30s %s\n' "effective abc UID:GID" "$(id -u abc):$(id -g abc)"
+printf '%-30s %s\n' "current process UID:GID" "$(id -u):$(id -g)"
+if [ "$(bashio::config 'permission_mode')" = "bypass" ]; then
+    if [ "$(id -u abc)" -eq 0 ]; then
+        echo "bypass runtime: ERROR - Claude Code will reject bypass permissions while abc is root"
+    else
+        echo "bypass runtime: OK - Claude Desktop and Cowork run as a non-root UID"
+    fi
+fi
+
 section "Claude Code permission state"
 python3 - <<'PY'
 import json

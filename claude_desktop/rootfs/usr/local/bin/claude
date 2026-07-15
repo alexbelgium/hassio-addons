@@ -27,6 +27,17 @@ if [ ! -x "$REAL_CLAUDE" ]; then
     exit 127
 fi
 
+# Claude Code rejects bypass mode when the effective UID is 0. Normal Desktop sessions run
+# as abc, which startup remaps to a non-root UID when bypass is selected. Also handle a user
+# invoking this wrapper directly from a root container console by dropping to abc here.
+if [ "$PERMISSION_MODE" = "bypass" ] && [ "$(id -u)" -eq 0 ]; then
+    if command -v s6-setuidgid > /dev/null 2>&1 && [ "$(id -u abc)" -ne 0 ]; then
+        exec s6-setuidgid abc "$0" "$@"
+    fi
+    echo "claude wrapper: bypass mode requires a non-root runtime user, but abc is still UID 0" >&2
+    exit 1
+fi
+
 if bashio::config.true 'install_headroom' && bashio::config.true 'headroom_wrap_claude_code'; then
     if [ -x "$HEADROOM_BIN" ] && curl -fsS --max-time 2 "${HEADROOM_URL}/health" > /dev/null 2>&1; then
         # Put /usr/bin before /usr/local/bin while Headroom resolves its upstream `claude`

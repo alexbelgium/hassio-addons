@@ -1,3 +1,11 @@
+## 1.21 (15-07-2026)
+
+- Fix Claude Code bypass permissions being rejected when the add-on uses its default root `PUID`.
+- In `permission_mode: bypass`, remap the shared `abc` Desktop runtime to an unused non-root UID before storage ownership and Selkies startup, while retaining its configured primary group for mounted-path access.
+- Make folder setup and final Claude configuration ownership follow the effective `abc` identity instead of the configured root UID.
+- Drop root console invocations of the add-on's `/usr/local/bin/claude` wrapper to the non-root `abc` runtime before passing `--dangerously-skip-permissions`.
+- Extend `claude-tools-doctor.sh` with configured/effective UID and GID checks for bypass mode.
+
 ## 1.20 (15-07-2026)
 
 - Complete the TokenSave Claude Code integration at startup: install its MCP server, permissions, PreToolUse/UserPromptSubmit/Stop hooks, global guidance, and Git synchronization hooks instead of registering only `tokensave serve`.

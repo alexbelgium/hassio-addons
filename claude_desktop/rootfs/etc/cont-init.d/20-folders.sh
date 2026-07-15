@@ -3,9 +3,10 @@
 # shellcheck disable=SC2046
 set -e
 
-# Define user
-PUID=$(bashio::config "PUID")
-PGID=$(bashio::config "PGID")
+# Use the effective shared desktop user identity. In bypass mode an earlier init script may
+# remap abc away from UID 0 because Claude Code rejects bypass permissions when run as root.
+PUID="$(id -u abc)"
+PGID="$(id -g abc)"
 
 # Check data location
 LOCATION="$(bashio::config 'data_location')"
