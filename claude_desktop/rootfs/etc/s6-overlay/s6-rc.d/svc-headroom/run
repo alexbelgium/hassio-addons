@@ -1,11 +1,15 @@
 #!/usr/bin/with-contenv bashio
 # Headroom optimization proxy — local backend for Claude Desktop MCP and Claude Code.
 declare port=8787
-# Bind all interfaces so the dashboard is reachable on the mapped host port
-# (http://<ha-ip>:8787/dashboard). Local consumers keep using 127.0.0.1.
-declare host=0.0.0.0
+declare host=127.0.0.1
 
-if bashio::config.true 'install_headroom' && command -v headroom >/dev/null 2>&1; then
+# The dashboard is unauthenticated. Keep it container-local by default and bind all
+# interfaces only when the user explicitly opts in and maps port 8787.
+if bashio::config.true 'expose_headroom_dashboard'; then
+    host=0.0.0.0
+fi
+
+if bashio::config.true 'install_headroom' && command -v headroom > /dev/null 2>&1; then
     bashio::log.info "svc-headroom: starting local Headroom proxy on ${host}:${port}"
     exec s6-setuidgid abc headroom proxy --host "${host}" --port "${port}" --code-aware
 fi

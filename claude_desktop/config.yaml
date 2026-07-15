@@ -2,7 +2,7 @@ arch:
   - aarch64
   - amd64
 audio: true
-description: "Claude Desktop with Headroom MCP context compression and RTK acceleration"
+description: "Claude Desktop with Headroom, RTK, and TokenSave optimization"
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -46,19 +46,24 @@ options:
   ha_mcp_token: ""
   github_token: ""
   github_username: ""
-  install_caveman: true
+  enable_tools_health_report: true
+  expose_headroom_dashboard: false
+  headroom_wrap_claude_code: true
+  install_caveman: false
   install_github_cli: true
   install_headroom: true
   install_rtk: true
   install_tokensave: true
+  permission_mode: auto
+  tokensave_project_paths: []
 panel_admin: false
 panel_icon: mdi:robot-happy
 ports:
   3001/tcp: null
-  8787/tcp: 8787
+  8787/tcp: null
 ports_description:
   3001/tcp: Claude Desktop web interface
-  8787/tcp: Headroom dashboard and proxy
+  8787/tcp: Optional Headroom dashboard and proxy
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
@@ -83,14 +88,20 @@ schema:
   ha_mcp_token: password?
   github_token: password?
   github_username: str?
+  enable_tools_health_report: bool
+  expose_headroom_dashboard: bool
+  headroom_wrap_claude_code: bool
   install_caveman: bool
   install_github_cli: bool
   install_headroom: bool
   install_rtk: bool
   install_tokensave: bool
+  permission_mode: list(strict|auto|bypass)
+  tokensave_project_paths:
+    - str
 slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.19"
+version: "1.20"
 video: true

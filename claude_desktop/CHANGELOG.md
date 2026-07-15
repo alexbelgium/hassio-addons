@@ -1,3 +1,15 @@
+## 1.20 (15-07-2026)
+
+- Complete the TokenSave Claude Code integration at startup: install its MCP server, permissions, PreToolUse/UserPromptSubmit/Stop hooks, global guidance, and Git synchronization hooks instead of registering only `tokensave serve`.
+- Add `tokensave_project_paths` for explicit per-repository initialization and incremental synchronization; no repositories are scanned or indexed unless listed.
+- Route PATH-based Claude Code launches through the already-supervised Headroom proxy by default with a recursion-safe `/usr/local/bin/claude` wrapper; fall back to the official binary when the proxy is unavailable.
+- Pass the local proxy URL explicitly to the Headroom MCP server, while retaining MCP-only integration for the Desktop Electron application.
+- Keep the unauthenticated Headroom dashboard container-local by default; add `expose_headroom_dashboard` and leave port `8787/tcp` unmapped until explicitly enabled.
+- Fix the hourly gains report so Headroom no longer suppresses RTK output, add TokenSave gains, and gate each tool on its actual add-on option.
+- Add `claude-tools-doctor.sh` to inspect binaries, redacted MCP registrations, hooks, proxy health, routing, project indexes, and gains.
+- Install local validation tools (`jq`, `shellcheck`, `yamllint`, current `hadolint`, and current `actionlint`) to reduce avoidable CI round-trips.
+- Disable the unpinned third-party Caveman startup installer by default; it remains opt-in.
+
 ## 1.19 (14-07-2026)
 - Minor bugs fixed
 ## 1.18 (14-07-2026)
@@ -17,7 +29,7 @@
 - Minor bugs fixed
 ## 1.15 (13-07-2026)
 - Minor bugs fixed
- 
+  
 ## ubunturesolute-version-6dc44b0e (2026-07-13)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 ## 1.14 (10-07-2026)
