@@ -1,3 +1,5 @@
+## 1.25 (15-07-2026)
+- Minor bugs fixed
 ## 1.24 (15-07-2026)
 
 - Fix the `/usr/local/bin/claude` wrapper never routing terminal Claude Code sessions through the Headroom proxy: it hardcoded `HEADROOM_BIN="/usr/local/bin/headroom"` while the binary is installed at `/usr/bin/headroom`, so the executable check always failed and the wrapper fell back to launching Claude Code directly. Resolve the binary with `command -v headroom` instead.
