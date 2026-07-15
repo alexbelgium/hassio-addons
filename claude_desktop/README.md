@@ -24,15 +24,17 @@ currently does not include Computer Use or dictation.
 Everything is built around the Claude Desktop app. Claude Code is installed in
 the same image but is not exposed as a standalone service: Claude Desktop's
 cowork and dispatch sessions run it internally, and they pick up the shared
-Claude Code configuration (`~/.claude`), hooks, MCP servers, and PATH tools.
+Claude Code configuration (`~/.claude`), hooks, MCP servers, permissions, and
+PATH tools.
 
 - **Claude Desktop** uses Headroom through its MCP tools.
-- **Claude Code sessions inside Desktop** get the same MCP servers and the
-  RTK/TokenSave hooks through the shared Claude Code configuration.
+- **Claude Code sessions inside Desktop** get the same MCP servers, permission
+  mode, and RTK/TokenSave hooks through the shared Claude Code configuration.
 - PATH-based Claude Code launches are routed through the supervised Headroom
   proxy when `headroom_wrap_claude_code` is enabled. If a Desktop release calls
   `/usr/bin/claude` directly, the session remains functional and still has the
-  Headroom MCP tools, but transparent proxy compression cannot be injected.
+  shared permission mode and Headroom MCP tools, but transparent proxy
+  compression cannot be injected.
 - **gnome-keyring** provides the Secret Service backend Electron needs to
   persist sign-in and dispatch permission grants across restarts.
 
@@ -59,6 +61,8 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 - Persistent `$HOME` at the configured `data_location` (default `/data/data`),
   preserving Desktop and Claude Code state across restarts.
 - Persistent sign-in through a bundled, auto-unlocked gnome-keyring.
+- Configurable Claude Code permissions: strict prompts, automatic safe-action
+  approval, or explicit full bypass for trusted installations.
 - Optional runtime Claude Desktop updates from Anthropic's apt repository.
 - Optional extra apt and pip package installation (pip installs use `uv`).
 - Baked-in `git`, GitHub CLI (`gh`), `ripgrep`, `jq`, `shellcheck`, `yamllint`,
@@ -70,7 +74,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
   Assistant.
 - Independent hourly savings reports for Headroom, RTK, and TokenSave.
 - `claude-tools-doctor.sh` diagnostics for binaries, routing, hooks, MCP
-  registrations, project indexes, proxy health, and gains.
+  registrations, project indexes, proxy health, permissions, and gains.
 - Low-power defaults for GPU mapping, Selkies frame rate, and volatile caches.
 
 ## Options
@@ -84,6 +88,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `DRINODE` | | Optional GPU device override for Selkies. |
 | `DNS_server` | `8.8.8.8` | DNS server used by the standard DNS module. |
 | `auto_update` | `true` | Upgrade `claude-desktop` from Anthropic's apt repository at startup. |
+| `permission_mode` | `auto` | Claude Code permission policy: `strict`, `auto`, or `bypass`. |
 | `install_headroom` | `true` | Register Headroom MCP and run the supervised local proxy. |
 | `headroom_wrap_claude_code` | `true` | Route PATH-based Claude Code launches through the already-running Headroom proxy. |
 | `expose_headroom_dashboard` | `false` | Bind Headroom to all interfaces. Port `8787/tcp` must also be mapped manually. |
@@ -104,6 +109,23 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `data_location` | `/data/data` | Persistent home directory for Claude and tooling. |
 | `env_vars` | `[]` | Additional environment variables exported inside the container. |
 
+### Permission modes
+
+```yaml
+permission_mode: auto
+```
+
+- `strict` keeps Claude Code's normal interactive permission prompts.
+- `auto` asks Claude Code's automatic permission classifier to approve safe
+  operations while retaining prompts for risky actions. This is the default.
+- `bypass` disables Claude Code permission checks by using
+  `bypassPermissions` in the shared settings and
+  `--dangerously-skip-permissions` for wrapper-launched sessions.
+
+`bypass` gives Claude broad authority over all mounted writable data and every
+command or credential available inside the add-on. Enable it only in a trusted
+installation with trusted repositories and mounts.
+
 ### TokenSave project example
 
 Only repositories listed here are indexed. Paths must be absolute, mounted in
@@ -118,6 +140,8 @@ tokensave_project_paths:
 At startup, an uninitialized repository receives `tokensave init`; an existing
 index receives an incremental `tokensave sync`. Removing a path from the option
 stops automatic synchronization but does not delete its `.tokensave` database.
+Configured repositories are added to Git's `safe.directory` list for the shared
+runtime user before TokenSave performs repository discovery.
 
 ## Headroom behavior
 
@@ -148,9 +172,9 @@ claude-tools-doctor.sh
 ```
 
 The report checks the tool binaries, configuration switches, redacted MCP
-registrations, Claude hooks, Headroom health, TokenSave indexes, routing, and
-recorded savings. It never prints MCP environment values because the Home
-Assistant MCP entry can contain a long-lived token.
+registrations, Claude hooks, permission mode, Headroom health, TokenSave indexes,
+routing, and recorded savings. It never prints MCP environment values because
+the Home Assistant MCP entry can contain a long-lived token.
 
 The hourly report can also be invoked manually:
 
@@ -186,7 +210,8 @@ Persistent state is stored in the configured `data_location` (default
 
 - Claude Desktop sign-in: `~/.config/Claude` (token encrypted via
   gnome-keyring; keyring DB in `~/.local/share/keyrings`)
-- Claude Code settings, hooks, sessions, and plugins: `~/.claude`
+- Claude Code settings, hooks, sessions, plugins, and permission mode:
+  `~/.claude`
 - Headroom, RTK, and TokenSave user state: their standard paths below the
   shared home
 - TokenSave repository indexes: `.tokensave/` inside each explicitly configured
