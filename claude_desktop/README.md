@@ -35,9 +35,10 @@ PATH tools.
   `/usr/bin/claude` directly, the session remains functional and still has the
   shared permission mode and Headroom MCP tools, but transparent proxy
   compression cannot be injected.
-- When `permission_mode: bypass` is selected while `PUID` is `0`, the add-on
-  automatically remaps the shared `abc` desktop account to an unused non-root
-  UID before Selkies and Claude Desktop start. Claude Code refuses bypass mode
+- The shared `abc` desktop account runs under the configured `PUID`/`PGID`
+  (default `1000:1000`). When `permission_mode: bypass` is selected while
+  `PUID` is `0`, the add-on automatically falls back to UID `1000` before
+  Selkies and Claude Desktop start, because Claude Code refuses bypass mode
   under an effective root UID.
 - **gnome-keyring** provides the Secret Service backend Electron needs to
   persist sign-in and dispatch permission grants across restarts.
@@ -88,7 +89,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 
 | Option | Default | Description |
 | ------ | ------- | ----------- |
-| `PUID` / `PGID` | `0` / `0` | Numeric user and group applied by LinuxServer initialization. In bypass mode, a root `PUID` is automatically replaced at runtime by an unused non-root UID while the configured group is retained. |
+| `PUID` / `PGID` | `1000` / `1000` | Numeric user and group of the shared `abc` desktop account that owns the data location and runs Claude Desktop. In bypass mode, a root `PUID` is automatically replaced at runtime by UID `1000` while the configured group is retained. |
 | `TZ` | | Optional timezone, for example `Europe/Brussels`. |
 | `KEYBOARD` | | Optional Selkies keyboard layout. |
 | `PASSWORD` | | Optional password for direct Selkies ports. |
@@ -131,11 +132,11 @@ permission_mode: auto
   `--dangerously-skip-permissions` for wrapper-launched sessions.
 
 Claude Code does not permit bypass mode when its effective UID is `0`. If the
-add-on is configured with `PUID: 0`, selecting `bypass` remaps only the shared
-`abc` runtime account to an available non-root UID (preferring `1000`, then
-`911`) before storage ownership and Desktop startup. Its configured primary
-GID is retained, so group-based access to mounted Home Assistant paths remains
-available. Strict and auto modes keep the configured identity unchanged.
+add-on is configured with `PUID: 0`, selecting `bypass` runs the shared `abc`
+runtime account as UID `1000` instead, before storage ownership and Desktop
+startup. Its configured primary GID is retained, so group-based access to
+mounted Home Assistant paths remains available. Strict and auto modes keep the
+configured identity unchanged.
 
 A root shell invoking `/usr/local/bin/claude` in bypass mode is also dropped to
 the remapped `abc` account. Directly invoking `/usr/bin/claude` as root still

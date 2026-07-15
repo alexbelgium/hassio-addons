@@ -150,7 +150,7 @@ if bashio::config.true 'install_tokensave'; then
     tokensave doctor --agent claude || true
     tokensave gain --all --range 30d || true
     while IFS= read -r configured_path; do
-        [ -n "$configured_path" ] || continue
+        [ -n "$configured_path" ] && [ "$configured_path" != "null" ] || continue
         repo_root="$(s6-setuidgid abc env HOME="$HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
         if [ -z "$repo_root" ]; then
             echo "${configured_path}: not a Git repository"
@@ -159,7 +159,7 @@ if bashio::config.true 'install_tokensave'; then
         else
             echo "${repo_root}: NOT INITIALIZED"
         fi
-    done < <(bashio::config.array 'tokensave_project_paths')
+    done < <(bashio::config 'tokensave_project_paths')
 else
     echo "disabled"
 fi

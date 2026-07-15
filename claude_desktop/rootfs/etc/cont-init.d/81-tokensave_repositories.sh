@@ -11,7 +11,7 @@ declare -A REPOS_SEEN=()
 while IFS= read -r configured_path; do
     configured_path="${configured_path#"${configured_path%%[![:space:]]*}"}"
     configured_path="${configured_path%"${configured_path##*[![:space:]]}"}"
-    [ -n "$configured_path" ] || continue
+    [ -n "$configured_path" ] && [ "$configured_path" != "null" ] || continue
 
     case "$configured_path" in
         /*) ;;
@@ -33,4 +33,6 @@ while IFS= read -r configured_path; do
         s6-setuidgid abc env HOME="$HOME" git config --global --add safe.directory "$repo_root"
         bashio::log.info "Marked TokenSave repository as safe for Git: ${repo_root}"
     fi
-done < <(bashio::config.array 'tokensave_project_paths')
+# bashio::config prints list options one entry per line ("null" when the key is absent);
+# bashio::config.array only exists in the repo's standalone bashio, not in the real bashio here.
+done < <(bashio::config 'tokensave_project_paths')
