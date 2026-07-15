@@ -74,7 +74,7 @@ RUN curl -fsSL --retry 3 --retry-delay 2 \
 # cannot alter executables elsewhere in the image.
 COPY rootfs/ /
 RUN find /etc/cont-init.d /etc/s6-overlay /defaults /usr/local/bin -type f \
-        \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \; && \
+        \( -name "*.sh" -o -name "run" -o -name "finish" -o -name "ha-cli" \) -print -exec chmod +x {} \; && \
     chmod +x /usr/local/bin/claude
 
 # Uses /bin for compatibility purposes
@@ -146,7 +146,7 @@ RUN /usr/local/bin/rtk --version && /usr/local/bin/tokensave --version
 # installer used for the additional_pip option).
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
-    pip3 install --break-system-packages "headroom-ai[proxy,code,mcp]" mcp-proxy uv && \
+    pip3 install --break-system-packages "headroom-ai[proxy,code,mcp]" mcp-proxy uv websockets && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /root/.cache
 

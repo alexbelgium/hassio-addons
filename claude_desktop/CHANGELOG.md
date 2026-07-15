@@ -1,3 +1,7 @@
+## 1.23 (15-07-2026)
+
+- Add a `ha-cli` helper that lets Claude configure Home Assistant (automations, scripts, scenes, helpers, dashboards, area/label/floor/entity registries, and service calls) through the Home Assistant Core API instead of a filesystem mount. It authenticates automatically with the add-on's `SUPERVISOR_TOKEN` via the Supervisor Core-API proxy (no token setup), and deliberately cannot reach `configuration.yaml`/`secrets.yaml` or other add-ons' credentials. Toggle with the new `enable_ha_api_helper` option (default on), which also controls a managed guidance block appended to `~/.claude/CLAUDE.md`.
+
 ## 1.21 (15-07-2026)
 
 - Fix Claude Code bypass permissions being rejected when the add-on uses its default root `PUID`.

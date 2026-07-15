@@ -42,6 +42,7 @@ options:
   enable_ha_mcp: false
   ha_mcp_url: http://homeassistant:8123/api/mcp
   ha_mcp_token: ""
+  enable_ha_api_helper: true
   github_token: ""
   github_username: ""
   enable_tools_health_report: true
@@ -86,6 +87,7 @@ schema:
   enable_ha_mcp: bool?
   ha_mcp_url: str?
   ha_mcp_token: password?
+  enable_ha_api_helper: bool?
   github_token: password?
   github_username: str?
   enable_tools_health_report: bool
@@ -103,5 +105,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.22"
+version: "1.23"
 video: true

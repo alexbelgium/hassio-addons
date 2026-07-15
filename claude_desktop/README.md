@@ -111,6 +111,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `enable_ha_mcp` | `false` | Register Home Assistant's MCP server in Claude (requires `ha_mcp_token`). |
 | `ha_mcp_url` | `http://homeassistant:8123/api/mcp` | Streamable HTTP endpoint of Home Assistant's MCP Server integration. |
 | `ha_mcp_token` | | Home Assistant long-lived access token used by the MCP bridge. |
+| `enable_ha_api_helper` | `true` | Ship the `ha-cli` Core-API helper and add guidance so Claude can configure Home Assistant without a `/config` mount. |
 | `additional_apps` | | Comma-separated Debian apt packages to install at startup. |
 | `additional_pip` | | Comma-separated pip packages installed at startup (via `uv`). |
 | `data_location` | `/data/data` | Persistent home directory for Claude and tooling. |
@@ -215,6 +216,45 @@ To let Claude query and control Home Assistant:
 The add-on bridges Claude to the integration's stateless Streamable HTTP
 endpoint (`/api/mcp`) with `mcp-proxy`. Override `ha_mcp_url` only if your Home
 Assistant instance is not reachable as `homeassistant:8123` from add-ons.
+
+## Configuring Home Assistant (API helper)
+
+When `enable_ha_api_helper` is on (the default), the add-on ships a `ha-cli`
+command and tells Claude — via a managed block in `~/.claude/CLAUDE.md` — that
+it can configure Home Assistant through the Home Assistant **Core API** rather
+than a filesystem mount. This is deliberately more contained than mapping
+`/config`: the API cannot read `configuration.yaml`, `secrets.yaml`, or any
+other add-on's stored credentials.
+
+`ha-cli` authenticates automatically with the add-on's `SUPERVISOR_TOKEN`
+through the Supervisor Core-API proxy (the add-on already sets
+`homeassistant_api: true`), so there is nothing to configure. It can create and
+edit automations, scripts, and scenes; call any service; read entity states;
+and, over WebSocket, manage helpers, dashboards, and the area/label/floor/entity
+registries. Run `ha-cli --help` inside the add-on for the full command
+reference.
+
+```bash
+ha-cli config                                   # connectivity check
+ha-cli get config/automation/config/<id>        # read one automation
+ha-cli post config/automation/config/<id> @new.json   # create/update it
+ha-cli call automation.reload                   # apply YAML-mode changes
+ha-cli ws '{"type":"config/area_registry/list"}'
+```
+
+Security notes:
+
+- The Supervisor proxy token grants **admin-equivalent** Core API access (it can
+  call any service and edit any UI-managed configuration), but it cannot reach
+  the raw YAML files or other add-ons' data. For a tighter scope, set
+  `HA_BASE_URL`/`HA_TOKEN` (or the `ha_mcp_token` option) to a limited Home
+  Assistant user's long-lived token — `ha-cli` prefers those when present.
+- The guidance instructs Claude to read each object and show you the intended
+  change before writing, but Claude Code's own tool-permission prompts remain
+  the real gate: each `ha-cli` call still needs your approval unless
+  `permission_mode` is set to `bypass`.
+- Set `enable_ha_api_helper: false` to remove both the guidance block and the
+  helper's registration if you do not want Claude configuring Home Assistant.
 
 ## Custom scripts
 
