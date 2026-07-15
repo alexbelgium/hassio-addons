@@ -294,7 +294,7 @@ import re
 from pathlib import Path
 
 path = Path(os.environ["CLAUDE_MD"])
-text = path.read_text()
+text = path.read_text(encoding="utf-8")
 pattern = re.compile(
     r"\n*<!-- BEGIN ha-api-helper \(managed by claude_desktop addon\) -->.*?"
     r"<!-- END ha-api-helper \(managed by claude_desktop addon\) -->\n?",
@@ -302,7 +302,7 @@ pattern = re.compile(
 )
 new = pattern.sub("", text)
 if new != text:
-    path.write_text(new)
+    path.write_text(new, encoding="utf-8")
 PY
 fi
 

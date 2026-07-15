@@ -9,10 +9,15 @@ therefore never reachable.
 Authentication and the base URL are resolved automatically, in this order:
 
   1. $HA_BASE_URL + $HA_TOKEN               explicit override (advanced/scoped)
-  2. $SUPERVISOR_TOKEN                       Supervisor Core-API proxy
-                                             (needs homeassistant_api: true,
-                                             which this add-on sets — zero setup)
-  3. `ha_mcp_token` in /data/options.json   user long-lived token -> :8123
+  2. `ha_mcp_token` in /data/options.json   scoped user long-lived token -> :8123
+  3. $SUPERVISOR_TOKEN                       Supervisor Core-API proxy fallback
+                                             (admin-equivalent; needs
+                                             homeassistant_api: true, which this
+                                             add-on sets — zero setup)
+
+The scoped token is checked before the Supervisor fallback so setting
+`ha_mcp_token` actually narrows access instead of being shadowed by the
+always-present admin-equivalent Supervisor token.
 
 Subcommands:
   ha-cli get    <path>                 GET   e.g. get config/automation/config/1700000000
@@ -49,19 +54,26 @@ def _load_option(name):
         return None
 
 
+def _helper_enabled():
+    """Mirror config.yaml's enable_ha_api_helper default (true) when unset."""
+    value = _load_option("enable_ha_api_helper")
+    return value is not False
+
+
 def resolve_endpoint():
     """Return (rest_base, ws_url, token) for the best available auth path."""
     base = os.environ.get("HA_BASE_URL")
     token = os.environ.get("HA_TOKEN")
     if base and token:
         rest = base.rstrip("/")
+        if not rest.endswith("/api"):
+            rest += "/api"
         ws = rest.replace("http", "ws", 1).rsplit("/api", 1)[0] + "/api/websocket"
         return rest, ws, token
 
-    token = os.environ.get("SUPERVISOR_TOKEN")
-    if token:
-        return "http://supervisor/core/api", "ws://supervisor/core/websocket", token
-
+    # Checked before SUPERVISOR_TOKEN: this add-on always sets homeassistant_api,
+    # so the admin-equivalent Supervisor token is otherwise always present and
+    # would shadow a user's deliberately scoped-down ha_mcp_token.
     token = _load_option("ha_mcp_token")
     if token:
         return (
@@ -70,9 +82,14 @@ def resolve_endpoint():
             token,
         )
 
+    token = os.environ.get("SUPERVISOR_TOKEN")
+    if token:
+        return "http://supervisor/core/api", "ws://supervisor/core/websocket", token
+
     sys.exit(
-        "ha-cli: no credentials. Expected $SUPERVISOR_TOKEN (default inside the "
-        "add-on), or $HA_BASE_URL+$HA_TOKEN, or ha_mcp_token in the add-on options."
+        "ha-cli: no credentials. Expected ha_mcp_token in the add-on options "
+        "(scoped user), $SUPERVISOR_TOKEN (admin-equivalent fallback, default "
+        "inside the add-on), or an explicit $HA_BASE_URL+$HA_TOKEN override."
     )
 
 
@@ -169,6 +186,12 @@ def main(argv):
     if not argv or argv[0] in ("-h", "--help", "help"):
         print(__doc__)
         return 0
+
+    if not _helper_enabled():
+        sys.exit(
+            "ha-cli: disabled (enable_ha_api_helper is false in the add-on "
+            "options). Enable it there to let Claude configure Home Assistant."
+        )
 
     rest_base, ws_url, token = resolve_endpoint()
     cmd, args = argv[0], argv[1:]
