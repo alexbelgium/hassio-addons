@@ -3,8 +3,10 @@
 set -e
 set -o pipefail
 
-PUID="$(if bashio::config.has_value 'PUID'; then bashio::config 'PUID'; else echo '0'; fi)"
-PGID="$(if bashio::config.has_value 'PGID'; then bashio::config 'PGID'; else echo '0'; fi)"
+# 20-folders.sh already remapped abc to the effective runtime identity (never root in bypass
+# mode), so follow abc instead of re-reading the raw PUID/PGID options here.
+RUNTIME_UID="$(id -u abc)"
+RUNTIME_GID="$(id -g abc)"
 mkdir -p "$HOME/.claude"
 
 run_as_runtime_user() {
@@ -165,11 +167,15 @@ PY
 # requires one-time per-project opt-in; an empty list therefore has no startup or storage cost.
 if $TOKENSAVE_ENABLED; then
     declare -A TOKENSAVE_REPOS_SEEN=()
-    while IFS= read -r configured_path; do
+    # bashio::config prints its result without a trailing newline, so the last record arrives
+    # with read returning non-zero; the extra test keeps that final path in the loop.
+    while IFS= read -r configured_path || [ -n "$configured_path" ]; do
         # Trim surrounding whitespace while preserving spaces inside paths.
         configured_path="${configured_path#"${configured_path%%[![:space:]]*}"}"
         configured_path="${configured_path%"${configured_path##*[![:space:]]}"}"
-        [ -n "$configured_path" ] || continue
+        if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
+            continue
+        fi
 
         case "$configured_path" in
             /*) ;;
@@ -251,7 +257,9 @@ if $TOKENSAVE_ENABLED; then
             exit 1
         ' _ "$repo_root" \
             || bashio::log.warning "TokenSave preparation failed for ${repo_root}"
-    done < <(bashio::config.array 'tokensave_project_paths')
+    # bashio::config prints list options one entry per line ("null" when the key is absent);
+    # bashio::config.array only exists in the repo's standalone bashio, not in the real bashio here.
+    done < <(bashio::config 'tokensave_project_paths')
 fi
 
 # Guide Claude to actually use the Headroom compression tools so the MCP integration produces
@@ -461,9 +469,9 @@ else
 fi
 
 # Startup configuration runs as root, while Claude Desktop runs as abc. Return managed
-# persistent files to the configured runtime UID/GID after all writes complete.
+# persistent files to the effective runtime UID/GID after all writes complete.
 for managed_path in "$HOME/.claude" "$HOME/.claude.json" "$HOME/.config/Claude"; do
     if [ -e "$managed_path" ]; then
-        chown -R -- "${PUID}:${PGID}" "$managed_path" || bashio::log.warning "Unable to set ownership on $managed_path"
+        chown -R -- "${RUNTIME_UID}:${RUNTIME_GID}" "$managed_path" || bashio::log.warning "Unable to set ownership on $managed_path"
     fi
 done

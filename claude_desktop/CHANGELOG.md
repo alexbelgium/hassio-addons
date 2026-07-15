@@ -1,3 +1,12 @@
+## 1.26 (15-07-2026)
+
+- Fix startup permission failures that prevented Claude Desktop from starting: storage was chowned to a hardcoded `1000:1000`, but the shared `abc` desktop user was never mapped to that UID. During init `abc` was still the image default (`911`), so TokenSave (`.claude.json.new`), RTK (`RTK.md`), nginx, PulseAudio, the Mesa shader cache, and Claude Desktop itself all hit `Permission denied`; the base image's `init-adduser` then remapped `abc` to root mid-startup (PUID/PGID were read from add-on options where they did not exist, falling back to `0`), which also made Claude Code reject `permission_mode: bypass`.
+- Add `PUID`/`PGID` add-on options (default `1000:1000`) and remap `abc` to that identity at the very start of folder setup, before any ownership is applied and before any service resolves the user. The base image's `init-adduser` is pinned to the same effective identity so it can no longer remap `abc` mid-startup.
+- In `permission_mode: bypass`, a configured `PUID: 0` automatically falls back to UID `1000` (Claude Code refuses bypass permissions as root), retaining the configured group.
+- Fix `bashio::config.array: command not found` in the TokenSave repository setup, tools configuration, and `claude-tools-doctor.sh`: the function only exists in the repo's standalone bashio, not in the real bashio shipped in the image. Use `bashio::config`, which prints list entries one per line.
+- Return managed Claude configuration files to the effective `abc` identity instead of the raw configured `PUID`/`PGID` (which previously fell back to `0` and left the files root-owned).
+- Pre-create `/tmp/.X11-unix` with the standard sticky mode so Xorg, which runs as the non-root `abc` user on a tmpfs `/tmp`, no longer fails to create its socket directory (`_XSERVTransmkdir: euid != 0`).
+
 ## 1.25 (15-07-2026)
 - Minor bugs fixed
 ## 1.24 (15-07-2026)

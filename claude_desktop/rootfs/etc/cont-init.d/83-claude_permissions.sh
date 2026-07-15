@@ -3,8 +3,10 @@
 set -e
 set -o pipefail
 
-PUID="$(if bashio::config.has_value 'PUID'; then bashio::config 'PUID'; else echo '0'; fi)"
-PGID="$(if bashio::config.has_value 'PGID'; then bashio::config 'PGID'; else echo '0'; fi)"
+# 20-folders.sh already remapped abc to the effective runtime identity (never root in bypass
+# mode), so follow abc instead of re-reading the raw PUID/PGID options here.
+RUNTIME_UID="$(id -u abc)"
+RUNTIME_GID="$(id -g abc)"
 PERMISSION_MODE="$(bashio::config 'permission_mode')"
 SETTINGS_PATH="$HOME/.claude/settings.json"
 STATE_PATH="$HOME/.claude/.addon-permission-mode.json"
@@ -86,7 +88,7 @@ case "$PERMISSION_MODE" in
         ;;
 esac
 
-chown -- "${PUID}:${PGID}" "$SETTINGS_PATH" 2> /dev/null || true
+chown -- "${RUNTIME_UID}:${RUNTIME_GID}" "$SETTINGS_PATH" 2> /dev/null || true
 if [ -e "$STATE_PATH" ]; then
-    chown -- "${PUID}:${PGID}" "$STATE_PATH" 2> /dev/null || true
+    chown -- "${RUNTIME_UID}:${RUNTIME_GID}" "$STATE_PATH" 2> /dev/null || true
 fi
