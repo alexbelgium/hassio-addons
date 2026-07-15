@@ -8,7 +8,9 @@ if ! bashio::config.true 'install_tokensave' || ! command -v git > /dev/null 2>&
 fi
 
 declare -A REPOS_SEEN=()
-while IFS= read -r configured_path; do
+# bashio::config prints its result without a trailing newline, so the last record arrives
+# with read returning non-zero; the extra test keeps that final path in the loop.
+while IFS= read -r configured_path || [ -n "$configured_path" ]; do
     configured_path="${configured_path#"${configured_path%%[![:space:]]*}"}"
     configured_path="${configured_path%"${configured_path##*[![:space:]]}"}"
     if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then

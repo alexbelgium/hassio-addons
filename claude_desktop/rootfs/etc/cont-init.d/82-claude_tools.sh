@@ -167,7 +167,9 @@ PY
 # requires one-time per-project opt-in; an empty list therefore has no startup or storage cost.
 if $TOKENSAVE_ENABLED; then
     declare -A TOKENSAVE_REPOS_SEEN=()
-    while IFS= read -r configured_path; do
+    # bashio::config prints its result without a trailing newline, so the last record arrives
+    # with read returning non-zero; the extra test keeps that final path in the loop.
+    while IFS= read -r configured_path || [ -n "$configured_path" ]; do
         # Trim surrounding whitespace while preserving spaces inside paths.
         configured_path="${configured_path#"${configured_path%%[![:space:]]*}"}"
         configured_path="${configured_path%"${configured_path##*[![:space:]]}"}"

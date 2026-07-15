@@ -149,7 +149,7 @@ section "TokenSave"
 if bashio::config.true 'install_tokensave'; then
     tokensave doctor --agent claude || true
     tokensave gain --all --range 30d || true
-    while IFS= read -r configured_path; do
+    while IFS= read -r configured_path || [ -n "$configured_path" ]; do
         if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
             continue
         fi
