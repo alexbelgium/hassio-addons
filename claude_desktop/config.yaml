@@ -74,6 +74,7 @@ schema:
   DRINODE: list(/dev/dri/card0|/dev/dri/card1|/dev/dri/card2|/dev/dri/renderD128|/dev/dri/renderD129|)?
   KEYBOARD: list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?
   PASSWORD: str?
+  SUDO_PASSWORD: password?
   TZ: match([A-Z][a-z]*./[A-Z][a-z]*.)?
   additional_apps: str?
   additional_pip: str?
@@ -103,5 +104,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.22"
+version: "1.23"
 video: true

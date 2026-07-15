@@ -92,6 +92,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `TZ` | | Optional timezone, for example `Europe/Brussels`. |
 | `KEYBOARD` | | Optional Selkies keyboard layout. |
 | `PASSWORD` | | Optional password for direct Selkies ports. |
+| `SUDO_PASSWORD` | | LinuxServer.io convention: grants the `abc` user sudo access gated by this password. Sudo access is disabled by default when left unset. |
 | `DRINODE` | | Optional GPU device override for Selkies. |
 | `DNS_server` | `8.8.8.8` | DNS server used by the standard DNS module. |
 | `auto_update` | `true` | Upgrade `claude-desktop` from Anthropic's apt repository at startup. |

@@ -1,3 +1,7 @@
+## 1.23 (15-07-2026)
+
+- Expose `SUDO_PASSWORD`, per LinuxServer.io's base-image convention: setting it grants the `abc` user sudo access gated by that password. Sudo access stays disabled by default when left unset. Passed straight through by the existing option-to-env-var mechanism; no rootfs changes needed.
+
 ## 1.21 (15-07-2026)
 
 - Fix Claude Code bypass permissions being rejected when the add-on uses its default root `PUID`.
