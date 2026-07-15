@@ -1,0 +1,25 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -o pipefail
+
+REAL_CLAUDE="/usr/bin/claude"
+HEADROOM_BIN="/usr/local/bin/headroom"
+HEADROOM_URL="http://127.0.0.1:8787"
+
+if [ ! -x "$REAL_CLAUDE" ]; then
+    echo "claude wrapper: ${REAL_CLAUDE} is unavailable" >&2
+    exit 127
+fi
+
+if bashio::config.true 'install_headroom' && bashio::config.true 'headroom_wrap_claude_code'; then
+    if [ -x "$HEADROOM_BIN" ] && curl -fsS --max-time 2 "${HEADROOM_URL}/health" > /dev/null 2>&1; then
+        # Put /usr/bin before /usr/local/bin while Headroom resolves its upstream `claude`
+        # executable; otherwise it would resolve this wrapper recursively.
+        export HEADROOM_CONTEXT_TOOL="rtk"
+        exec env PATH="/usr/bin:/bin:/usr/local/bin" \
+            "$HEADROOM_BIN" wrap claude --no-proxy -- "$@"
+    fi
+    echo "claude wrapper: Headroom proxy is unavailable; launching Claude Code directly" >&2
+fi
+
+exec "$REAL_CLAUDE" "$@"
