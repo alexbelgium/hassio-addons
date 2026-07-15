@@ -11,7 +11,9 @@ declare -A REPOS_SEEN=()
 while IFS= read -r configured_path; do
     configured_path="${configured_path#"${configured_path%%[![:space:]]*}"}"
     configured_path="${configured_path%"${configured_path##*[![:space:]]}"}"
-    [ -n "$configured_path" ] && [ "$configured_path" != "null" ] || continue
+    if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
+        continue
+    fi
 
     case "$configured_path" in
         /*) ;;

@@ -171,7 +171,9 @@ if $TOKENSAVE_ENABLED; then
         # Trim surrounding whitespace while preserving spaces inside paths.
         configured_path="${configured_path#"${configured_path%%[![:space:]]*}"}"
         configured_path="${configured_path%"${configured_path##*[![:space:]]}"}"
-        [ -n "$configured_path" ] && [ "$configured_path" != "null" ] || continue
+        if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
+            continue
+        fi
 
         case "$configured_path" in
             /*) ;;
