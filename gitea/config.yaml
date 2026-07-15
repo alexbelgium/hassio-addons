@@ -97,5 +97,5 @@ schema:
 slug: gitea
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/gitea
-version: "1.26.4"
+version: "1.27"
 webui: "[PROTO:ssl]://[HOST]:[PORT:3000]"
