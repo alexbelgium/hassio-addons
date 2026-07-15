@@ -3,7 +3,7 @@
 set -o pipefail
 
 REAL_CLAUDE="/usr/bin/claude"
-HEADROOM_BIN="/usr/local/bin/headroom"
+HEADROOM_BIN="$(command -v headroom || true)"
 HEADROOM_URL="http://127.0.0.1:8787"
 PERMISSION_MODE="$(bashio::config 'permission_mode')"
 declare -a CLAUDE_PERMISSION_ARGS=()
