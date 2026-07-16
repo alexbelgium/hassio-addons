@@ -85,10 +85,23 @@ printf "%s" "$LOCATION" > "$S6_ENVDIR/HOME"
 printf "%s" "$LOCATION" > "$S6_ENVDIR/FM_HOME"
 printf "%s" "/tmp/cache" > "$S6_ENVDIR/XDG_CACHE_HOME"
 printf "%s" "$XDG_RUNTIME_DIR" > "$S6_ENVDIR/XDG_RUNTIME_DIR"
-grep -qxF "export HOME=\"$LOCATION\"" ~/.bashrc 2>/dev/null || {
+# Re-derived on every boot rather than gated on a "does it already say $LOCATION" grep: that
+# guard only ever recognized the CURRENT $LOCATION, so a user who changed data_location and
+# later changed it back left two stale HOME/FM_HOME exports in ~/.bashrc, with the last one
+# (not necessarily the correct one) winning for every interactive shell. The marker makes this
+# idempotent regardless of how many times $LOCATION has changed: strip any previously managed
+# block, then append one that reflects the current value.
+BASHRC_HOME_BEGIN="# --- BEGIN ADDON HOME (managed) ---"
+BASHRC_HOME_END="# --- END ADDON HOME (managed) ---"
+if [ -f ~/.bashrc ]; then
+    sed -i "/^${BASHRC_HOME_BEGIN}\$/,/^${BASHRC_HOME_END}\$/d" ~/.bashrc
+fi
+{
+    printf "%s\n" "$BASHRC_HOME_BEGIN"
     printf "%s\n" "export HOME=\"$LOCATION\""
     printf "%s\n" "export FM_HOME=\"$LOCATION\""
     printf "%s\n" "export XDG_CACHE_HOME=\"/tmp/cache\""
+    printf "%s\n" "$BASHRC_HOME_END"
 } >> ~/.bashrc
 
 bashio::log.info "Creating $LOCATION"

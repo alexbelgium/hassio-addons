@@ -76,6 +76,7 @@ if bashio::config.true 'enable_ha_mcp'; then
 fi
 
 HEADROOM_ENABLED="$HEADROOM_ENABLED" HEADROOM_BIN="$(command -v headroom || echo headroom)" \
+    HEADROOM_HF_HOME="${HOME}/.headroom/hf" \
     TOKENSAVE_ENABLED="$TOKENSAVE_ENABLED" TOKENSAVE_BIN="$(command -v tokensave || echo tokensave)" \
     HA_MCP_ENABLED="$HA_MCP_ENABLED" HA_MCP_URL="$HA_MCP_URL" HA_MCP_TOKEN="$HA_MCP_TOKEN" \
     MCP_PROXY_BIN="$(command -v mcp-proxy || echo mcp-proxy)" \
@@ -96,6 +97,11 @@ if os.environ["HEADROOM_ENABLED"] == "true":
     desired["headroom"] = {
         "command": os.environ["HEADROOM_BIN"],
         "args": ["mcp", "serve", "--proxy-url", "http://127.0.0.1:8787"],
+        # The MCP server is a separate process from the svc-headroom proxy longrun and does
+        # not inherit its HF_HOME export, so Kompress falls back to the default (tmpfs, wiped
+        # every restart) cache dir, never finds the model, and silently no-ops every
+        # compression request. Point it at the same persistent cache the proxy warms.
+        "env": {"HF_HOME": os.environ["HEADROOM_HF_HOME"]},
     }
 if os.environ["TOKENSAVE_ENABLED"] == "true":
     desired["tokensave"] = {"command": os.environ["TOKENSAVE_BIN"], "args": ["serve"]}
