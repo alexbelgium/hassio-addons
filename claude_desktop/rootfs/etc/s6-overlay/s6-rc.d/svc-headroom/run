@@ -13,24 +13,18 @@ if bashio::config.true 'install_headroom' && command -v headroom > /dev/null 2>&
     # Kompress (the ONNX compression engine) needs its model in the local HF cache: the
     # proxy's startup preload is deliberately cache-only, and the default HF cache lands
     # under ~/.cache, which the add-on points at tmpfs (/tmp/cache) — wiped on every
-    # restart. Without a warm persistent cache the proxy runs forever in "deferred" mode
-    # and records zero compression savings. Cache on persistent storage and pre-warm it
-    # once (bounded so an offline install still starts the proxy, in pass-through mode,
-    # and retries the download on the next start).
+    # restart. Without a warm persistent cache the proxy ran forever in "deferred" mode
+    # and recorded zero compression savings. Point the cache at persistent storage;
+    # nothing else is needed here — the proxy's own request path already downloads a
+    # missing model in the background on first use (ensure_background_load) and passes
+    # requests through uncompressed until it lands, so this self-heals within a couple of
+    # requests on the first boot and loads instantly (eager preload) on every boot after.
+    # A synchronous pre-warm was tried here and removed: it blocked the port bind for up
+    # to the download's duration, which left the settings-managed ANTHROPIC_BASE_URL
+    # (see 82-claude_tools.sh) pointing at a proxy that wasn't listening yet.
     export HF_HOME="${HOME}/.headroom/hf"
     mkdir -p "$HF_HOME"
     chown abc:abc "$HF_HOME" 2> /dev/null || true
-    # headroom lives in the lsiopy virtualenv; plain `python3` does not see its packages,
-    # so derive the venv interpreter from the resolved headroom entry script.
-    headroom_python="$(dirname "$(readlink -f "$(command -v headroom)")")/python3"
-    if ! s6-setuidgid abc "$headroom_python" -c \
-        'from headroom.transforms.kompress_compressor import _load_kompress; _load_kompress(allow_download=False)' \
-        > /dev/null 2>&1; then
-        bashio::log.info "svc-headroom: pre-warming the Kompress model cache (one-time download)"
-        timeout 300 s6-setuidgid abc "$headroom_python" -c \
-            'from headroom.transforms.kompress_compressor import _load_kompress; _load_kompress()' \
-            || bashio::log.warning "svc-headroom: Kompress pre-warm failed; compression stays deferred until the model can be downloaded"
-    fi
     bashio::log.info "svc-headroom: starting local Headroom proxy on ${host}:${port}"
     exec s6-setuidgid abc headroom proxy --host "${host}" --port "${port}" --code-aware
 fi
