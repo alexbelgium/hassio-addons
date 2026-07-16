@@ -24,14 +24,31 @@ Design constraints:
   the savings on tool output anyway; plain prose passes through unchanged.
 - stderr fields are never compressed — error text must reach the model verbatim
   (matching Headroom's own error-protection policy).
+- File-list arrays (Glob's `filenames`, Grep's `filenames` in files_with_matches
+  mode — both typed `string[]` by the CLI's own output schema) are handled
+  separately from prose/JSON-blob fields: Headroom's SmartCrusher subsamples
+  JSON arrays for informational dumps, which is fine for e.g. a list of sensor
+  states but silently drops most paths from a file listing the model needs to
+  act on. Those fields are truncated deterministically instead (keep the first
+  N entries, append one marker string) so the model always sees a labeled cut
+  point rather than a shorter list it might mistake for the complete result.
 """
 
 import json
 import os
 import sys
 
-MIN_CHARS = int(os.environ.get("HEADROOM_HOOK_MIN_CHARS", "4000"))
-MIN_SAVED_TOKENS = int(os.environ.get("HEADROOM_HOOK_MIN_SAVED_TOKENS", "50"))
+
+def _int_env(name: str, default: str) -> int:
+    try:
+        return int(os.environ.get(name, default))
+    except (TypeError, ValueError):
+        return int(default)
+
+
+MIN_CHARS = _int_env("HEADROOM_HOOK_MIN_CHARS", "4000")
+MIN_SAVED_TOKENS = _int_env("HEADROOM_HOOK_MIN_SAVED_TOKENS", "50")
+ARRAY_KEEP = _int_env("HEADROOM_HOOK_ARRAY_KEEP", "40")
 TTL_SECONDS = 3600  # matches the headroom MCP server's session TTL
 SKIP_KEYS = {"stderr"}
 
@@ -57,18 +74,26 @@ def main() -> int:
         return 0
     response = payload.get("tool_response")
 
-    # Find big string fields before paying the headroom import cost.
+    # Find big string/array fields before paying the headroom import cost.
+    def is_string_array(value):
+        return isinstance(value, list) and len(value) > ARRAY_KEEP and all(isinstance(v, str) for v in value)
+
     if isinstance(response, str):
-        candidates = ["__whole__"] if len(response) >= MIN_CHARS else []
+        string_candidates = ["__whole__"] if len(response) >= MIN_CHARS else []
+        array_candidates = []
     elif isinstance(response, dict):
-        candidates = [
+        string_candidates = [
             key
             for key, value in response.items()
             if key not in SKIP_KEYS and isinstance(value, str) and len(value) >= MIN_CHARS
         ]
+        array_candidates = [
+            key for key, value in response.items() if key not in SKIP_KEYS and is_string_array(value)
+        ]
     else:
-        candidates = []
-    if not candidates:
+        string_candidates = []
+        array_candidates = []
+    if not string_candidates and not array_candidates:
         return 0
 
     # Keep Kompress's cache probe away from the tmpfs-backed ~/.cache default.
@@ -111,14 +136,53 @@ def main() -> int:
             f"call mcp__headroom__headroom_retrieve with hash={hash_key} if you need the full original]"
         )
 
+    def shrink_array(items):
+        nonlocal store
+        original_json = json.dumps(items)
+        if len(original_json) < MIN_CHARS:
+            return None
+        kept = items[:ARRAY_KEEP]
+        truncated_json = json.dumps(kept)
+        # No ML/token-counter call needed for a plain truncation decision; a char/4
+        # estimate is the same fallback Headroom's own cost estimator uses and is
+        # only used here to decide eligibility and annotate the marker.
+        tokens_before = max(1, len(original_json) // 4)
+        tokens_after = max(1, len(truncated_json) // 4)
+        if tokens_before - tokens_after < MIN_SAVED_TOKENS:
+            return None
+        if store is None:
+            store = get_compression_store()
+        hash_key = store.store(
+            original=original_json,
+            compressed=truncated_json,
+            original_tokens=tokens_before,
+            compressed_tokens=tokens_after,
+            compression_strategy="posttooluse_hook_array_truncate",
+            ttl=TTL_SECONDS,
+        )
+        totals[0] += tokens_before
+        totals[1] += tokens_after
+        remaining = len(items) - len(kept)
+        marker = (
+            f"[headroom: {remaining} more of {len(items)} entries omitted "
+            f"({tokens_before}->{tokens_after} tokens); call mcp__headroom__headroom_retrieve "
+            f"with hash={hash_key} for the complete list]"
+        )
+        return kept + [marker]
+
     updated = None
     if isinstance(response, str):
         updated = shrink(response)
     else:
         rewritten = dict(response)
         changed = False
-        for key in candidates:
+        for key in string_candidates:
             new_value = shrink(rewritten[key])
+            if new_value is not None:
+                rewritten[key] = new_value
+                changed = True
+        for key in array_candidates:
+            new_value = shrink_array(rewritten[key])
             if new_value is not None:
                 rewritten[key] = new_value
                 changed = True
