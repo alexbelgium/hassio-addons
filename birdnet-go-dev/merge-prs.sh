@@ -77,10 +77,27 @@ for entry in "${prs[@]}"; do
     # Fetch the PR head commit by number; works unauthenticated for public repos.
     git fetch --no-tags origin "refs/pull/${number}/head"
     if ! git merge --no-edit --no-ff -m "Merge PR #${number}: ${title}" "${sha}"; then
-        echo "!!! Merge conflict while merging PR #${number} (${title})." >&2
-        echo "!!! Resolve the conflict in the fork or pause this PR, then rebuild." >&2
-        git merge --abort || true
-        exit 1
+        mapfile -t conflicted_files < <(git diff --name-only --diff-filter=U)
+
+        # package-lock.json is generated content and stacked PRs can carry an
+        # older copy even when their source changes merge cleanly. Keep the
+        # lockfile already assembled from upstream and earlier PRs, but only
+        # when it is the sole conflict. Any source conflict remains fatal.
+        if [ "${#conflicted_files[@]}" -eq 1 ] \
+            && [ "${conflicted_files[0]}" = "frontend/package-lock.json" ]; then
+            log "Resolving generated frontend/package-lock.json conflict using the accumulated tree"
+            git checkout --ours -- frontend/package-lock.json
+            git add frontend/package-lock.json
+            git commit --no-edit
+        else
+            echo "!!! Merge conflict while merging PR #${number} (${title})." >&2
+            if [ "${#conflicted_files[@]}" -gt 0 ]; then
+                printf '!!! Conflicting file: %s\n' "${conflicted_files[@]}" >&2
+            fi
+            echo "!!! Resolve the conflict in the fork or pause this PR, then rebuild." >&2
+            git merge --abort || true
+            exit 1
+        fi
     fi
 done
 
