@@ -20,6 +20,7 @@ environment:
   TITLE: Claude Desktop
 image: ghcr.io/alexbelgium/claude_desktop-{arch}
 ingress: true
+ingress_port: 3001
 init: false
 hassio_api: true
 hassio_role: manager
