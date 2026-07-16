@@ -36,6 +36,10 @@ run_as_runtime_user() {
 # Reclaim any root-owned copies left by an earlier add-on version before writing as abc:
 # these paths are not covered by 82-claude_tools.sh's ownership pass, and a root-owned
 # ~/.gitconfig would make the first `git config` below fail outright under `set -e`.
+
+mkdir -p "$HOME/.config"
+chown -- "${RUNTIME_UID}:${RUNTIME_GID}" "$HOME/.config"
+
 for managed_path in "$HOME/.gitconfig" "$HOME/.config/gh"; do
     if [ -e "$managed_path" ]; then
         chown -R -- "${RUNTIME_UID}:${RUNTIME_GID}" "$managed_path" || bashio::log.warning "Unable to set ownership on $managed_path"
