@@ -115,4 +115,5 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-# Upstream
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:3001/health || exit 1
