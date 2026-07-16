@@ -108,27 +108,22 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
     rm -rf /var/lib/apt/lists/*
 
 # Install the current upstream hadolint and actionlint releases for both supported
-# architectures. The GitHub release API resolves the latest asset at build time, so these
-# developer tools are intentionally not version-pinned.
+ARG HADOLINT_VERSION=v2.14.0
+ARG ACTIONLINT_VERSION=v1.7.12
+
 RUN set -eux; \
     case "${BUILD_ARCH}" in \
         amd64) hadolint_arch="x86_64"; actionlint_arch="amd64" ;; \
         aarch64) hadolint_arch="arm64"; actionlint_arch="arm64" ;; \
         *) echo "Unsupported validation-tools architecture: ${BUILD_ARCH}" >&2; exit 1 ;; \
     esac; \
-    hadolint_name="hadolint-linux-${hadolint_arch}"; \
-    hadolint_url="$(curl -fsSL https://api.github.com/repos/hadolint/hadolint/releases/latest \
-        | jq -r --arg name "${hadolint_name}" '.assets[] | select(.name == $name) | .browser_download_url' \
-        | head -n 1)"; \
-    test -n "${hadolint_url}"; \
-    curl -fsSL --retry 3 --retry-delay 2 -o /usr/local/bin/hadolint "${hadolint_url}"; \
+    curl -fsSL --retry 3 --retry-delay 2 \
+        -o /usr/local/bin/hadolint \
+        "https://github.com/hadolint/hadolint/releases/download/${HADOLINT_VERSION}/hadolint-linux-${hadolint_arch}"; \
     chmod 0755 /usr/local/bin/hadolint; \
-    actionlint_suffix="_linux_${actionlint_arch}.tar.gz"; \
-    actionlint_url="$(curl -fsSL https://api.github.com/repos/rhysd/actionlint/releases/latest \
-        | jq -r --arg suffix "${actionlint_suffix}" '.assets[] | select(.name | endswith($suffix)) | .browser_download_url' \
-        | head -n 1)"; \
-    test -n "${actionlint_url}"; \
-    curl -fsSL --retry 3 --retry-delay 2 -o /tmp/actionlint.tar.gz "${actionlint_url}"; \
+    curl -fsSL --retry 3 --retry-delay 2 \
+        -o /tmp/actionlint.tar.gz \
+        "https://github.com/rhysd/actionlint/releases/download/${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION#v}_linux_${actionlint_arch}.tar.gz"; \
     tar -xzf /tmp/actionlint.tar.gz -C /tmp actionlint; \
     install -m 0755 /tmp/actionlint /usr/local/bin/actionlint; \
     rm -f /tmp/actionlint /tmp/actionlint.tar.gz; \
