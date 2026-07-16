@@ -143,7 +143,10 @@ RUN /usr/local/bin/rtk --version && /usr/local/bin/tokensave --version
 
 # Install only the Headroom proxy, code-compression, and MCP features used by this add-on,
 # plus mcp-proxy (stdio->HTTP bridge for the Home Assistant MCP server) and uv (fast
-# installer used for the additional_pip option).
+# installer used for the additional_pip option). The `proxy` extra already ships the ONNX
+# runtime + transformers needed by the Kompress compressor — the `ml` extra (full PyTorch,
+# ~5 GB with CUDA wheels) is deliberately NOT installed; svc-headroom pre-warms the ONNX
+# model into the persistent HF cache instead.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
     pip3 install --break-system-packages "headroom-ai[proxy,code,mcp]" mcp-proxy uv websockets && \
