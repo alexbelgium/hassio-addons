@@ -49,6 +49,7 @@ options:
   github_username: ""
   enable_tools_health_report: true
   expose_headroom_dashboard: false
+  headroom_auto_compress: true
   headroom_wrap_claude_code: true
   install_caveman: false
   install_github_cli: true
@@ -96,6 +97,7 @@ schema:
   github_username: str?
   enable_tools_health_report: bool
   expose_headroom_dashboard: bool
+  headroom_auto_compress: bool?
   headroom_wrap_claude_code: bool
   install_caveman: bool
   install_github_cli: bool
@@ -109,5 +111,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.29"
+version: "1.30"
 video: true

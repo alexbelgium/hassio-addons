@@ -99,6 +99,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `permission_mode` | `auto` | Claude Code permission policy: `strict`, `auto`, or `bypass`. |
 | `install_headroom` | `true` | Register Headroom MCP and run the supervised local proxy. |
 | `headroom_wrap_claude_code` | `true` | Route PATH-based Claude Code launches through the already-running Headroom proxy. |
+| `headroom_auto_compress` | `true` | Auto-compress large tool outputs in every Claude Code session via a managed `PostToolUse` hook. |
 | `expose_headroom_dashboard` | `false` | Bind Headroom to all interfaces. Port `8787/tcp` must also be mapped manually. |
 | `install_rtk` | `true` | Configure RTK's Claude Code `PreToolUse` Bash hook. |
 | `install_tokensave` | `true` | Install TokenSave's complete global Claude integration. |
@@ -174,6 +175,16 @@ Claude Desktop overrides `ANTHROPIC_BASE_URL`, so Desktop chat deliberately uses
 the MCP integration. The `/usr/local/bin/claude` wrapper routes PATH-based Claude
 Code sessions through `headroom wrap claude --no-proxy`, reusing the supervised
 backend without starting a second proxy.
+
+With `headroom_auto_compress` enabled (the default), a managed Claude Code
+`PostToolUse` hook additionally compresses large `Bash`/`Grep`/`Glob`/`WebFetch`
+outputs (over ~4000 characters) in **every** session type — terminal, Desktop
+cowork, dispatch, and cron — without the model having to remember to call the
+MCP tools. The original output is kept in Headroom's local store for one hour
+and can always be recovered with `mcp__headroom__headroom_retrieve` using the
+hash printed in the compression marker. Error text (`stderr`) is never
+compressed, and plain prose passes through unchanged; the savings come from
+structured output such as JSON dumps, search results, and logs.
 
 The dashboard is disabled externally by default. To expose it:
 

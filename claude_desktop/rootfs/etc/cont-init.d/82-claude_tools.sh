@@ -385,6 +385,92 @@ if changed:
     path.write_text(json.dumps(data, indent=2) + "\n")
 PY
 
+# Compress large tool outputs automatically in every Claude Code session via a managed
+# PostToolUse hook (settings.json hooks apply to terminal, cowork, dispatch and cron sessions
+# alike). Desktop-spawned sessions pin ANTHROPIC_BASE_URL to the production endpoint
+# (headroom #869) so the proxy never sees their traffic, and the CLAUDE.md guidance above only
+# helps when the model remembers to call the MCP tools. The hook closes that gap: outputs over
+# ~4000 chars from Bash/Grep/Glob/WebFetch are compressed with Headroom's rule-based pipeline
+# and swapped in through hookSpecificOutput.updatedToolOutput, with the original kept in the
+# shared CCR store so the model can fetch it back with mcp__headroom__headroom_retrieve. The
+# script fails open (any error leaves the tool output untouched) and its --self-test gate
+# keeps a broken interpreter path from registering a hook that would warn on every tool call.
+HEADROOM_HOOK_CMD="/usr/local/bin/headroom-posttooluse-compress.py"
+HEADROOM_HOOK_ACTION="remove"
+if $HEADROOM_ENABLED && bashio::config.true 'headroom_auto_compress'; then
+    if run_as_runtime_user "$HEADROOM_HOOK_CMD" --self-test; then
+        HEADROOM_HOOK_ACTION="add"
+        bashio::log.info "Registering the Headroom PostToolUse auto-compression hook"
+    else
+        bashio::log.warning "headroom-posttooluse-compress.py --self-test failed; not registering the auto-compression hook"
+    fi
+fi
+HEADROOM_HOOK_ACTION="$HEADROOM_HOOK_ACTION" HEADROOM_HOOK_CMD="$HEADROOM_HOOK_CMD" \
+    HEADROOM_HOOK_MATCHER="Bash|Grep|Glob|WebFetch" \
+    python3 - <<'PY' || bashio::log.warning "Unable to manage the Headroom auto-compression hook"
+import json
+import os
+from pathlib import Path
+
+action = os.environ["HEADROOM_HOOK_ACTION"]
+command = os.environ["HEADROOM_HOOK_CMD"]
+matcher = os.environ["HEADROOM_HOOK_MATCHER"]
+
+path = Path.home() / ".claude" / "settings.json"
+original = path.read_text() if path.exists() else None
+try:
+    data = json.loads(original) if original is not None else {}
+    if not isinstance(data, dict):
+        data = {}
+except Exception:
+    if action != "add":
+        raise SystemExit(0)
+    path.rename(path.with_suffix(path.suffix + ".bak"))
+    original = None
+    data = {}
+
+hooks = data.get("hooks") if isinstance(data.get("hooks"), dict) else {}
+entries = hooks.get("PostToolUse") if isinstance(hooks.get("PostToolUse"), list) else []
+
+# Strip the managed command everywhere first, then re-append when enabled: the same pass
+# handles removal, de-duplication, and matcher migration on version upgrades. The final
+# text comparison keeps the write idempotent across boots.
+filtered = []
+for entry in entries:
+    if not isinstance(entry, dict) or not isinstance(entry.get("hooks"), list):
+        filtered.append(entry)
+        continue
+    kept = [
+        item
+        for item in entry["hooks"]
+        if not (isinstance(item, dict) and item.get("command") == command)
+    ]
+    if len(kept) != len(entry["hooks"]):
+        if not kept:
+            continue
+        entry = dict(entry)
+        entry["hooks"] = kept
+    filtered.append(entry)
+entries = filtered
+
+if action == "add":
+    entries.append({"matcher": matcher, "hooks": [{"type": "command", "command": command}]})
+
+if entries:
+    hooks["PostToolUse"] = entries
+else:
+    hooks.pop("PostToolUse", None)
+if hooks:
+    data["hooks"] = hooks
+else:
+    data.pop("hooks", None)
+
+serialized = json.dumps(data, indent=2) + "\n"
+if serialized != original:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(serialized)
+PY
+
 # Tell Claude Code that it can configure Home Assistant over the Core API via the shipped
 # `ha-cli` helper (no /config filesystem mount needed). Managed, idempotent block appended to
 # the user's global CLAUDE.md; removed when the helper is disabled. Mirrors the headroom block.
