@@ -1,3 +1,5 @@
+## 1.28 (16-07-2026)
+- Minor bugs fixed
 ## 1.27 (15-07-2026)
 
 - Route Claude Desktop cowork/local-agent-mode sessions through the Headroom proxy. Desktop spawns its bundled Claude Code binary at an absolute path (bypassing the add-on's PATH wrapper) with `ANTHROPIC_BASE_URL` pinned to the production endpoint, so those sessions never produced proxy savings. The add-on now manages `env.ANTHROPIC_BASE_URL` in `~/.claude/settings.json` — settings `env` entries replace inherited environment values at CLI startup — gated on `headroom_wrap_claude_code` and never overwriting a user-customized endpoint.
