@@ -39,7 +39,6 @@ options:
   data_location: /data/data
   additional_apps: ""
   additional_pip: ""
-  auto_update: true
   github_email: ""
   enable_ha_mcp: false
   ha_mcp_url: http://homeassistant:8123/api/mcp
@@ -111,5 +110,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.31"
+version: "1.32"
 video: true

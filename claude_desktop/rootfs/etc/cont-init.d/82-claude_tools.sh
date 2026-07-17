@@ -3,19 +3,125 @@
 set -e
 set -o pipefail
 
-# 20-folders.sh already remapped abc to the effective runtime identity (never root in bypass
-# mode), so follow abc instead of re-reading the raw PUID/PGID options here.
-RUNTIME_UID="$(id -u abc)"
-RUNTIME_GID="$(id -g abc)"
 mkdir -p "$HOME/.claude"
+CLAUDE_MD="$HOME/.claude/CLAUDE.md"
 
 run_as_runtime_user() {
     s6-setuidgid abc env HOME="$HOME" "$@"
 }
 
-CLAUDE_DESKTOP_COMMAND_FILE="/tmp/claude-desktop-command"
-DEFAULT_CLAUDE_DESKTOP_COMMAND='claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret'
-printf '%s\n' "$DEFAULT_CLAUDE_DESKTOP_COMMAND" > "$CLAUDE_DESKTOP_COMMAND_FILE"
+# Managed, idempotent guidance block in the user's global CLAUDE.md, delimited by
+# "<!-- BEGIN/END <name> (managed by claude_desktop addon) -->" markers. `add` appends the
+# block (body on stdin) unless the marker is already present; `remove` strips the whole
+# block, surrounding blank padding included, and leaves everything else untouched.
+manage_claude_md_block() {
+    local name="$1" action="$2"
+    local begin="<!-- BEGIN ${name} (managed by claude_desktop addon) -->"
+    if [ "$action" = "add" ]; then
+        if ! { [ -f "$CLAUDE_MD" ] && grep -qF "$begin" "$CLAUDE_MD"; }; then
+            bashio::log.info "Adding ${name} guidance to CLAUDE.md"
+            mkdir -p "$(dirname "$CLAUDE_MD")"
+            {
+                [ -s "$CLAUDE_MD" ] && printf '\n'
+                printf '%s\n' "$begin"
+                cat
+                printf '%s\n' "<!-- END ${name} (managed by claude_desktop addon) -->"
+            } >> "$CLAUDE_MD"
+        fi
+    elif [ -f "$CLAUDE_MD" ] && grep -qF "$begin" "$CLAUDE_MD"; then
+        bashio::log.info "Removing ${name} guidance from CLAUDE.md"
+        CLAUDE_MD="$CLAUDE_MD" BLOCK_NAME="$name" python3 - <<'PY' || bashio::log.warning "Unable to remove the ${name} guidance automatically"
+import os
+import re
+from pathlib import Path
+
+path = Path(os.environ["CLAUDE_MD"])
+name = re.escape(os.environ["BLOCK_NAME"])
+text = path.read_text(encoding="utf-8")
+pattern = re.compile(
+    rf"\n*<!-- BEGIN {name} \(managed by claude_desktop addon\) -->.*?"
+    rf"<!-- END {name} \(managed by claude_desktop addon\) -->\n?",
+    re.DOTALL,
+)
+new = pattern.sub("", text)
+if new != text:
+    path.write_text(new, encoding="utf-8")
+PY
+    fi
+}
+
+# Managed hook entry in ~/.claude/settings.json (settings hooks apply to terminal, cowork,
+# dispatch and cron sessions alike). The managed command is stripped everywhere first and
+# re-appended when adding, so one pass handles removal, de-duplication, and matcher migration
+# on upgrades; hooks owned by other tools (e.g. tokensave's own entries) are preserved, and
+# the final text comparison keeps the write idempotent across boots.
+manage_settings_hook() {
+    # manage_settings_hook <event> <matcher> <command> <add|remove>
+    HOOK_EVENT="$1" HOOK_MATCHER="$2" HOOK_COMMAND="$3" HOOK_ACTION="$4" \
+        python3 - <<'PY' || bashio::log.warning "Unable to update the $1 hook for '$3'"
+import json
+import os
+from pathlib import Path
+
+event = os.environ["HOOK_EVENT"]
+matcher = os.environ["HOOK_MATCHER"]
+command = os.environ["HOOK_COMMAND"]
+action = os.environ["HOOK_ACTION"]
+
+path = Path.home() / ".claude" / "settings.json"
+original = path.read_text() if path.exists() else None
+if original is None and action != "add":
+    raise SystemExit(0)
+try:
+    data = json.loads(original) if original is not None else {}
+    if not isinstance(data, dict):
+        data = {}
+except Exception:
+    if action != "add":
+        raise SystemExit(0)
+    path.rename(path.with_suffix(path.suffix + ".bak"))
+    original = None
+    data = {}
+
+hooks = data.get("hooks") if isinstance(data.get("hooks"), dict) else {}
+entries = hooks.get(event) if isinstance(hooks.get(event), list) else []
+
+filtered = []
+for entry in entries:
+    if not isinstance(entry, dict) or not isinstance(entry.get("hooks"), list):
+        filtered.append(entry)
+        continue
+    kept = [
+        item
+        for item in entry["hooks"]
+        if not (isinstance(item, dict) and item.get("command") == command)
+    ]
+    if len(kept) != len(entry["hooks"]):
+        if not kept:
+            continue
+        entry = dict(entry)
+        entry["hooks"] = kept
+    filtered.append(entry)
+entries = filtered
+
+if action == "add":
+    entries.append({"matcher": matcher, "hooks": [{"type": "command", "command": command}]})
+
+if entries:
+    hooks[event] = entries
+else:
+    hooks.pop(event, None)
+if hooks:
+    data["hooks"] = hooks
+else:
+    data.pop("hooks", None)
+
+serialized = json.dumps(data, indent=2) + "\n"
+if serialized != original:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(serialized)
+PY
+}
 
 # Headroom's proxy routing works by setting ANTHROPIC_BASE_URL, which the Claude Desktop
 # Electron app force-overrides to the production endpoint (headroom #869). Desktop therefore
@@ -55,6 +161,136 @@ elif command -v tokensave &> /dev/null; then
     bashio::log.info "Removing the tokensave Claude Code integration"
     run_as_runtime_user tokensave uninstall --agent claude \
         || bashio::log.warning "tokensave Claude Code integration removal failed"
+fi
+
+# Initialize or incrementally sync only explicitly configured repositories. TokenSave deliberately
+# requires one-time per-project opt-in; an empty list therefore has no startup or storage cost.
+# Runs before the MCP registration merge below on purpose: a first-time `tokensave init` also
+# rewrites ~/.claude.json itself (at default permissions), and the merge afterwards reconciles
+# the managed entries and re-tightens the file mode around the stored HA token.
+if $TOKENSAVE_ENABLED; then
+    declare -A TOKENSAVE_REPOS_SEEN=()
+    # Capture the list BEFORE looping: bashio::config's internals trip the errexit that
+    # process substitution inherits from the bashio wrapper (a `read -d ''` that always
+    # returns non-zero), so `done < <(bashio::config ...)` silently fed the loop an EMPTY
+    # list — the startup index/sync never ran. Command substitution runs without errexit
+    # (inherit_errexit is off), making this form reliable. bashio::config prints list
+    # entries one per line, without a trailing newline and as "null" when the key is absent
+    # (bashio::config.array only exists in the repo's standalone bashio, not the real one
+    # here); the `|| [ -n ... ]` test keeps the final unterminated record in the loop.
+    TOKENSAVE_PROJECT_PATHS="$(bashio::config 'tokensave_project_paths')"
+    while IFS= read -r configured_path || [ -n "$configured_path" ]; do
+        # Trim surrounding whitespace while preserving spaces inside paths.
+        configured_path="${configured_path#"${configured_path%%[![:space:]]*}"}"
+        configured_path="${configured_path%"${configured_path##*[![:space:]]}"}"
+        if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
+            continue
+        fi
+
+        case "$configured_path" in
+            /*) ;;
+            *)
+                bashio::log.warning "Skipping non-absolute tokensave_project_paths entry: ${configured_path}"
+                continue
+                ;;
+        esac
+        if [ ! -d "$configured_path" ]; then
+            bashio::log.warning "Skipping missing TokenSave project path: ${configured_path}"
+            continue
+        fi
+
+        # The one-shot safe.directory override is used only to discover the repository root.
+        repo_root="$(run_as_runtime_user git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
+        if [ -z "$repo_root" ] || [ "$repo_root" = "/" ]; then
+            bashio::log.warning "Skipping TokenSave path that is not a supported Git repository: ${configured_path}"
+            continue
+        fi
+        if [[ -n "${TOKENSAVE_REPOS_SEEN[$repo_root]:-}" ]]; then
+            continue
+        fi
+        TOKENSAVE_REPOS_SEEN[$repo_root]=1
+
+        # Persist the resolved root in the runtime user's Git config so the sync/init below,
+        # tokensave's git hooks, and Claude sessions all pass Git's dubious-ownership check.
+        if ! run_as_runtime_user git config --global --get-all safe.directory \
+            | grep -Fxq -- "$repo_root"; then
+            run_as_runtime_user git config --global --add safe.directory "$repo_root"
+            bashio::log.info "Marked TokenSave repository as safe for Git: ${repo_root}"
+        fi
+
+        bashio::log.info "Preparing TokenSave index: ${repo_root}"
+        # Prepare the per-repo semantic graph defensively so a hard add-on stop or storage
+        # hiccup can never leave a broken index that fails every subsequent boot:
+        #   * a startup-scoped flock serializes against an overlapping restart (and any git
+        #     post-commit/checkout sync hook that fires mid-boot); waits up to 60s for the
+        #     other writer to finish rather than silently skipping, since a held lock clears
+        #     itself the moment its holder exits or dies (the kernel releases flock on exit);
+        #   * an existing index is refreshed with a cheap incremental `sync`, retried a few
+        #     times because SQLITE_BUSY under lock contention is transient, not corruption;
+        #   * quarantine is reserved for sync failures whose stderr actually names database
+        #     corruption (SQLite's own "malformed"/"not a database"/"disk image" wording) or
+        #     a half-written index from an interrupted `init` (sentinel-flagged). Any other
+        #     failure (permissions, disk full, missing binary, ...) leaves the existing index
+        #     untouched and simply retries on the next start — corruption should self-heal,
+        #     a transient environment problem should not nuke a healthy graph;
+        #   * `init` is bracketed by a sentinel file so an interrupted full build is detected
+        #     as incomplete on the next start and rebuilt rather than trusted.
+        # All file operations run as the abc runtime user because the repo `.tokensave`
+        # directory is not covered by the startup ownership pass.
+        # shellcheck disable=SC2016  # single-quoted on purpose: $1/$db/etc. expand in the abc shell
+        run_as_runtime_user bash -c '
+            set -o pipefail
+            repo_root="$1"
+            ts_dir="$repo_root/.tokensave"
+            db="$ts_dir/tokensave.db"
+            lock="$ts_dir/.startup.lock"
+            initflag="$ts_dir/.init-incomplete"
+            mkdir -p "$ts_dir"
+            exec 9>"$lock"
+            if ! flock -w 60 9; then
+                echo "TokenSave: index still locked for $repo_root after 60s; skipping startup sync" >&2
+                exit 0
+            fi
+            is_corruption() {
+                printf "%s" "$1" | grep -qiE "malformed|not a database|file is encrypted|disk image|database.*corrupt"
+            }
+            quarantine() {
+                stamp="$(date +%Y%m%d-%H%M%S)"
+                bdir="$ts_dir/corrupt-$stamp"
+                mkdir -p "$bdir"
+                for f in "$db" "$db-wal" "$db-shm"; do
+                    [ -e "$f" ] && mv -f "$f" "$bdir/" 2>/dev/null || true
+                done
+                echo "TokenSave: quarantined suspect index to $bdir" >&2
+            }
+            if [ -f "$db" ] && [ ! -f "$initflag" ]; then
+                attempt=1
+                while :; do
+                    sync_err="$(tokensave sync "$repo_root" 2>&1 1>/dev/null)" && exit 0
+                    [ "$attempt" -ge 3 ] && break
+                    echo "TokenSave: sync attempt $attempt failed for $repo_root; retrying" >&2
+                    attempt=$((attempt + 1))
+                    sleep 2
+                done
+                if is_corruption "$sync_err"; then
+                    echo "TokenSave: sync failed after retries for $repo_root (corruption detected); rebuilding index" >&2
+                    quarantine
+                else
+                    echo "TokenSave: sync failed after retries for $repo_root (no corruption signature); leaving index in place, will retry next start" >&2
+                    echo "TokenSave: last sync error: $sync_err" >&2
+                    exit 1
+                fi
+            elif [ -f "$db" ]; then
+                echo "TokenSave: previous init did not finish for $repo_root; rebuilding index" >&2
+                quarantine
+            fi
+            : > "$initflag"
+            tokensave init "$repo_root" && { rm -f "$initflag"; exit 0; }
+            echo "TokenSave: init failed for $repo_root; will retry on next start" >&2
+            exit 1
+        ' _ "$repo_root" \
+            || bashio::log.warning "TokenSave preparation failed for ${repo_root}"
+    done <<< "$TOKENSAVE_PROJECT_PATHS"
 fi
 
 HA_MCP_ENABLED=false
@@ -157,144 +393,24 @@ for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_C
         elif existing is not None and is_managed(name, existing):
             del servers[name]
             changed = True
-    if not changed:
-        continue
-    if servers:
-        data["mcpServers"] = servers
-    else:
-        data.pop("mcpServers", None)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2) + "\n")
-    # The Home Assistant long-lived access token is stored here in clear text.
-    path.chmod(0o600)
+    if changed:
+        if servers:
+            data["mcpServers"] = servers
+        else:
+            data.pop("mcpServers", None)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(data, indent=2) + "\n")
+    # The Home Assistant long-lived access token is stored here in clear text. Enforced even
+    # on no-change boots because tokensave's own writes can recreate the file with default
+    # permissions between merges.
+    if path.exists():
+        path.chmod(0o600)
 PY
 
-# Initialize or incrementally sync only explicitly configured repositories. TokenSave deliberately
-# requires one-time per-project opt-in; an empty list therefore has no startup or storage cost.
-if $TOKENSAVE_ENABLED; then
-    declare -A TOKENSAVE_REPOS_SEEN=()
-    # bashio::config prints its result without a trailing newline, so the last record arrives
-    # with read returning non-zero; the extra test keeps that final path in the loop.
-    while IFS= read -r configured_path || [ -n "$configured_path" ]; do
-        # Trim surrounding whitespace while preserving spaces inside paths.
-        configured_path="${configured_path#"${configured_path%%[![:space:]]*}"}"
-        configured_path="${configured_path%"${configured_path##*[![:space:]]}"}"
-        if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
-            continue
-        fi
-
-        case "$configured_path" in
-            /*) ;;
-            *)
-                bashio::log.warning "Skipping non-absolute tokensave_project_paths entry: ${configured_path}"
-                continue
-                ;;
-        esac
-        if [ ! -d "$configured_path" ]; then
-            bashio::log.warning "Skipping missing TokenSave project path: ${configured_path}"
-            continue
-        fi
-
-        repo_root="$(git -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
-        if [ -z "$repo_root" ] || [ "$repo_root" = "/" ]; then
-            bashio::log.warning "Skipping TokenSave path that is not a supported Git repository: ${configured_path}"
-            continue
-        fi
-        if [[ -n "${TOKENSAVE_REPOS_SEEN[$repo_root]:-}" ]]; then
-            continue
-        fi
-        TOKENSAVE_REPOS_SEEN[$repo_root]=1
-
-        bashio::log.info "Preparing TokenSave index: ${repo_root}"
-        # Prepare the per-repo semantic graph defensively so a hard add-on stop or storage
-        # hiccup can never leave a broken index that fails every subsequent boot:
-        #   * a startup-scoped flock serializes against an overlapping restart (and any git
-        #     post-commit/checkout sync hook that fires mid-boot); waits up to 60s for the
-        #     other writer to finish rather than silently skipping, since a held lock clears
-        #     itself the moment its holder exits or dies (the kernel releases flock on exit);
-        #   * an existing index is refreshed with a cheap incremental `sync`, retried a few
-        #     times because SQLITE_BUSY under lock contention is transient, not corruption;
-        #   * quarantine is reserved for sync failures whose stderr actually names database
-        #     corruption (SQLite's own "malformed"/"not a database"/"disk image" wording) or
-        #     a half-written index from an interrupted `init` (sentinel-flagged). Any other
-        #     failure (permissions, disk full, missing binary, ...) leaves the existing index
-        #     untouched and simply retries on the next start — corruption should self-heal,
-        #     a transient environment problem should not nuke a healthy graph;
-        #   * `init` is bracketed by a sentinel file so an interrupted full build is detected
-        #     as incomplete on the next start and rebuilt rather than trusted.
-        # All file operations run as the abc runtime user because the repo `.tokensave`
-        # directory is not covered by this script's final ownership pass.
-        # shellcheck disable=SC2016  # single-quoted on purpose: $1/$db/etc. expand in the abc shell
-        run_as_runtime_user bash -c '
-            set -o pipefail
-            repo_root="$1"
-            ts_dir="$repo_root/.tokensave"
-            db="$ts_dir/tokensave.db"
-            lock="$ts_dir/.startup.lock"
-            initflag="$ts_dir/.init-incomplete"
-            mkdir -p "$ts_dir"
-            exec 9>"$lock"
-            if ! flock -w 60 9; then
-                echo "TokenSave: index still locked for $repo_root after 60s; skipping startup sync" >&2
-                exit 0
-            fi
-            is_corruption() {
-                printf "%s" "$1" | grep -qiE "malformed|not a database|file is encrypted|disk image|database.*corrupt"
-            }
-            quarantine() {
-                stamp="$(date +%Y%m%d-%H%M%S)"
-                bdir="$ts_dir/corrupt-$stamp"
-                mkdir -p "$bdir"
-                for f in "$db" "$db-wal" "$db-shm"; do
-                    [ -e "$f" ] && mv -f "$f" "$bdir/" 2>/dev/null || true
-                done
-                echo "TokenSave: quarantined suspect index to $bdir" >&2
-            }
-            if [ -f "$db" ] && [ ! -f "$initflag" ]; then
-                attempt=1
-                while :; do
-                    sync_err="$(tokensave sync "$repo_root" 2>&1 1>/dev/null)" && exit 0
-                    [ "$attempt" -ge 3 ] && break
-                    echo "TokenSave: sync attempt $attempt failed for $repo_root; retrying" >&2
-                    attempt=$((attempt + 1))
-                    sleep 2
-                done
-                if is_corruption "$sync_err"; then
-                    echo "TokenSave: sync failed after retries for $repo_root (corruption detected); rebuilding index" >&2
-                    quarantine
-                else
-                    echo "TokenSave: sync failed after retries for $repo_root (no corruption signature); leaving index in place, will retry next start" >&2
-                    echo "TokenSave: last sync error: $sync_err" >&2
-                    exit 1
-                fi
-            elif [ -f "$db" ]; then
-                echo "TokenSave: previous init did not finish for $repo_root; rebuilding index" >&2
-                quarantine
-            fi
-            : > "$initflag"
-            tokensave init "$repo_root" && { rm -f "$initflag"; exit 0; }
-            echo "TokenSave: init failed for $repo_root; will retry on next start" >&2
-            exit 1
-        ' _ "$repo_root" \
-            || bashio::log.warning "TokenSave preparation failed for ${repo_root}"
-    # bashio::config prints list options one entry per line ("null" when the key is absent);
-    # bashio::config.array only exists in the repo's standalone bashio, not in the real bashio here.
-    done < <(bashio::config 'tokensave_project_paths')
-fi
-
 # Guide Claude to actually use the Headroom compression tools so the MCP integration produces
-# real savings when transparent proxying is unavailable. Managed, idempotent block appended to
-# the user's global CLAUDE.md; removed when Headroom is disabled.
-CLAUDE_MD="$HOME/.claude/CLAUDE.md"
-HEADROOM_GUIDE_BEGIN="<!-- BEGIN headroom (managed by claude_desktop addon) -->"
+# real savings when transparent proxying is unavailable.
 if $HEADROOM_ENABLED; then
-    mkdir -p "$(dirname "$CLAUDE_MD")"
-    if ! { [ -f "$CLAUDE_MD" ] && grep -qF "$HEADROOM_GUIDE_BEGIN" "$CLAUDE_MD"; }; then
-        bashio::log.info "Adding headroom usage guidance to CLAUDE.md"
-        {
-            [ -s "$CLAUDE_MD" ] && printf '\n'
-            cat <<'MD'
-<!-- BEGIN headroom (managed by claude_desktop addon) -->
+    manage_claude_md_block headroom add <<'MD'
 ## Headroom context compression
 
 A local Headroom proxy (127.0.0.1:8787) backs the `headroom` MCP tools. To save context tokens:
@@ -304,28 +420,9 @@ search results, JSON/config dumps, big command outputs, roughly >500 tokens — 
 the raw content. Call `mcp__headroom__headroom_retrieve` with that hash when you need the full
 original back. Skip compression for error/stack-trace output (Headroom deliberately protects it)
 and for small or one-off content. Use `mcp__headroom__headroom_stats` to check savings.
-<!-- END headroom (managed by claude_desktop addon) -->
 MD
-        } >> "$CLAUDE_MD"
-    fi
-elif [ -f "$CLAUDE_MD" ] && grep -qF "$HEADROOM_GUIDE_BEGIN" "$CLAUDE_MD"; then
-    bashio::log.info "Removing headroom usage guidance from CLAUDE.md"
-    CLAUDE_MD="$CLAUDE_MD" python3 - <<'PY' || bashio::log.warning "Unable to remove headroom guidance automatically"
-import os
-import re
-from pathlib import Path
-
-path = Path(os.environ["CLAUDE_MD"])
-text = path.read_text()
-pattern = re.compile(
-    r"\n*<!-- BEGIN headroom \(managed by claude_desktop addon\) -->.*?"
-    r"<!-- END headroom \(managed by claude_desktop addon\) -->\n?",
-    re.DOTALL,
-)
-new = pattern.sub("", text)
-if new != text:
-    path.write_text(new)
-PY
+else
+    manage_claude_md_block headroom remove
 fi
 
 # Route every Claude Code session through the Headroom proxy via the `env` block in the user's
@@ -386,8 +483,7 @@ if changed:
 PY
 
 # Compress large tool outputs automatically in every Claude Code session via a managed
-# PostToolUse hook (settings.json hooks apply to terminal, cowork, dispatch and cron sessions
-# alike). Desktop-spawned sessions pin ANTHROPIC_BASE_URL to the production endpoint
+# PostToolUse hook. Desktop-spawned sessions pin ANTHROPIC_BASE_URL to the production endpoint
 # (headroom #869) so the proxy never sees their traffic, and the CLAUDE.md guidance above only
 # helps when the model remembers to call the MCP tools. The hook closes that gap: outputs over
 # ~4000 chars from Bash/Grep/Glob/WebFetch are compressed with Headroom's rule-based pipeline
@@ -405,84 +501,12 @@ if $HEADROOM_ENABLED && bashio::config.true 'headroom_auto_compress'; then
         bashio::log.warning "headroom-posttooluse-compress.py --self-test failed; not registering the auto-compression hook"
     fi
 fi
-HEADROOM_HOOK_ACTION="$HEADROOM_HOOK_ACTION" HEADROOM_HOOK_CMD="$HEADROOM_HOOK_CMD" \
-    HEADROOM_HOOK_MATCHER="Bash|Grep|Glob|WebFetch" \
-    python3 - <<'PY' || bashio::log.warning "Unable to manage the Headroom auto-compression hook"
-import json
-import os
-from pathlib import Path
-
-action = os.environ["HEADROOM_HOOK_ACTION"]
-command = os.environ["HEADROOM_HOOK_CMD"]
-matcher = os.environ["HEADROOM_HOOK_MATCHER"]
-
-path = Path.home() / ".claude" / "settings.json"
-original = path.read_text() if path.exists() else None
-try:
-    data = json.loads(original) if original is not None else {}
-    if not isinstance(data, dict):
-        data = {}
-except Exception:
-    if action != "add":
-        raise SystemExit(0)
-    path.rename(path.with_suffix(path.suffix + ".bak"))
-    original = None
-    data = {}
-
-hooks = data.get("hooks") if isinstance(data.get("hooks"), dict) else {}
-entries = hooks.get("PostToolUse") if isinstance(hooks.get("PostToolUse"), list) else []
-
-# Strip the managed command everywhere first, then re-append when enabled: the same pass
-# handles removal, de-duplication, and matcher migration on version upgrades. The final
-# text comparison keeps the write idempotent across boots.
-filtered = []
-for entry in entries:
-    if not isinstance(entry, dict) or not isinstance(entry.get("hooks"), list):
-        filtered.append(entry)
-        continue
-    kept = [
-        item
-        for item in entry["hooks"]
-        if not (isinstance(item, dict) and item.get("command") == command)
-    ]
-    if len(kept) != len(entry["hooks"]):
-        if not kept:
-            continue
-        entry = dict(entry)
-        entry["hooks"] = kept
-    filtered.append(entry)
-entries = filtered
-
-if action == "add":
-    entries.append({"matcher": matcher, "hooks": [{"type": "command", "command": command}]})
-
-if entries:
-    hooks["PostToolUse"] = entries
-else:
-    hooks.pop("PostToolUse", None)
-if hooks:
-    data["hooks"] = hooks
-else:
-    data.pop("hooks", None)
-
-serialized = json.dumps(data, indent=2) + "\n"
-if serialized != original:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(serialized)
-PY
+manage_settings_hook PostToolUse "Bash|Grep|Glob|WebFetch" "$HEADROOM_HOOK_CMD" "$HEADROOM_HOOK_ACTION"
 
 # Tell Claude Code that it can configure Home Assistant over the Core API via the shipped
-# `ha-cli` helper (no /config filesystem mount needed). Managed, idempotent block appended to
-# the user's global CLAUDE.md; removed when the helper is disabled. Mirrors the headroom block.
-HA_HELPER_GUIDE_BEGIN="<!-- BEGIN ha-api-helper (managed by claude_desktop addon) -->"
+# `ha-cli` helper (no /config filesystem mount needed).
 if bashio::config.true 'enable_ha_api_helper'; then
-    mkdir -p "$(dirname "$CLAUDE_MD")"
-    if ! { [ -f "$CLAUDE_MD" ] && grep -qF "$HA_HELPER_GUIDE_BEGIN" "$CLAUDE_MD"; }; then
-        bashio::log.info "Adding Home Assistant API helper guidance to CLAUDE.md"
-        {
-            [ -s "$CLAUDE_MD" ] && printf '\n'
-            cat <<'MD'
-<!-- BEGIN ha-api-helper (managed by claude_desktop addon) -->
+    manage_claude_md_block ha-api-helper add <<'MD'
 ## Configuring Home Assistant
 
 You can configure this Home Assistant instance through its Core API using the `ha-cli`
@@ -502,120 +526,25 @@ Rules: run `ha-cli config` first to confirm connectivity; **read the current obj
 the user the intended change, then wait for confirmation** before any create/update/delete or
 any state-changing `call`; after writing, read the object back and reload if needed
 (e.g. `ha-cli call automation.reload`).
-<!-- END ha-api-helper (managed by claude_desktop addon) -->
 MD
-        } >> "$CLAUDE_MD"
-    fi
-elif [ -f "$CLAUDE_MD" ] && grep -qF "$HA_HELPER_GUIDE_BEGIN" "$CLAUDE_MD"; then
-    bashio::log.info "Removing Home Assistant API helper guidance from CLAUDE.md"
-    CLAUDE_MD="$CLAUDE_MD" python3 - <<'PY' || bashio::log.warning "Unable to remove Home Assistant API helper guidance automatically"
-import os
-import re
-from pathlib import Path
-
-path = Path(os.environ["CLAUDE_MD"])
-text = path.read_text(encoding="utf-8")
-pattern = re.compile(
-    r"\n*<!-- BEGIN ha-api-helper \(managed by claude_desktop addon\) -->.*?"
-    r"<!-- END ha-api-helper \(managed by claude_desktop addon\) -->\n?",
-    re.DOTALL,
-)
-new = pattern.sub("", text)
-if new != text:
-    path.write_text(new, encoding="utf-8")
-PY
+else
+    manage_claude_md_block ha-api-helper remove
 fi
 
 if bashio::config.true 'install_rtk'; then
     if command -v rtk &> /dev/null; then
         bashio::log.info "Configuring rtk Claude Code integration"
+        # `rtk init -g` writes ~/.claude/RTK.md and its @RTK.md include in CLAUDE.md, but in
+        # non-interactive mode it deliberately refuses to patch settings.json, so the hook
+        # entry that actually rewrites Bash commands is registered here.
         run_as_runtime_user env RTK_NONINTERACTIVE=1 rtk init -g \
             || bashio::log.warning "rtk global files configuration failed"
-        python3 - <<'PY' || bashio::log.warning "Unable to configure rtk hook automatically"
-import json
-from pathlib import Path
-
-path = Path.home() / ".claude" / "settings.json"
-try:
-    data = json.loads(path.read_text()) if path.exists() else {}
-    if not isinstance(data, dict):
-        data = {}
-except Exception:
-    if path.exists():
-        path.rename(path.with_suffix(path.suffix + ".bak"))
-    data = {}
-hooks = data.setdefault("hooks", {})
-pre = hooks.setdefault("PreToolUse", [])
-rtk_entry = {"matcher": "Bash", "hooks": [{"type": "command", "command": "rtk hook claude"}]}
-if not any("rtk hook claude" in json.dumps(entry) for entry in pre if isinstance(entry, dict)):
-    pre.append(rtk_entry)
-path.parent.mkdir(parents=True, exist_ok=True)
-path.write_text(json.dumps(data, indent=2) + "\n")
-PY
+        manage_settings_hook PreToolUse Bash "rtk hook claude" add
     else
         bashio::log.warning "rtk is not available"
     fi
-elif [ -f "$HOME/.claude/settings.json" ]; then
-    bashio::log.info "Removing the add-on-managed rtk Claude Code hook"
-    python3 - <<'PY' || bashio::log.warning "Unable to remove rtk hook automatically"
-import json
-from pathlib import Path
-
-path = Path.home() / ".claude" / "settings.json"
-data = json.loads(path.read_text())
-if not isinstance(data, dict):
-    raise TypeError("Claude settings must contain a JSON object")
-
-hooks = data.get("hooks")
-if not isinstance(hooks, dict):
-    raise SystemExit(0)
-
-entries = hooks.get("PreToolUse")
-if not isinstance(entries, list):
-    raise SystemExit(0)
-
-changed = False
-filtered_entries = []
-for entry in entries:
-    if not isinstance(entry, dict) or entry.get("matcher") != "Bash":
-        filtered_entries.append(entry)
-        continue
-
-    commands = entry.get("hooks")
-    if not isinstance(commands, list):
-        filtered_entries.append(entry)
-        continue
-
-    filtered_commands = [
-        command
-        for command in commands
-        if not (
-            isinstance(command, dict)
-            and command.get("type") == "command"
-            and command.get("command") == "rtk hook claude"
-        )
-    ]
-    if len(filtered_commands) == len(commands):
-        filtered_entries.append(entry)
-        continue
-
-    changed = True
-    if filtered_commands:
-        updated_entry = dict(entry)
-        updated_entry["hooks"] = filtered_commands
-        filtered_entries.append(updated_entry)
-
-if changed:
-    if filtered_entries:
-        hooks["PreToolUse"] = filtered_entries
-    else:
-        hooks.pop("PreToolUse", None)
-    if hooks:
-        data["hooks"] = hooks
-    else:
-        data.pop("hooks", None)
-    path.write_text(json.dumps(data, indent=2) + "\n")
-PY
+else
+    manage_settings_hook PreToolUse Bash "rtk hook claude" remove
 fi
 
 if bashio::config.true 'install_caveman'; then
@@ -631,10 +560,5 @@ else
     find "$HOME/.claude" -maxdepth 4 -iname '*caveman*' -exec rm -rf {} + 2> /dev/null || true
 fi
 
-# Startup configuration runs as root, while Claude Desktop runs as abc. Return managed
-# persistent files to the effective runtime UID/GID after all writes complete.
-for managed_path in "$HOME/.claude" "$HOME/.claude.json" "$HOME/.config/Claude"; do
-    if [ -e "$managed_path" ]; then
-        chown -R -- "${RUNTIME_UID}:${RUNTIME_GID}" "$managed_path" || bashio::log.warning "Unable to set ownership on $managed_path"
-    fi
-done
+# Ownership of everything written above is reconciled by 84-claude_runtime_ownership.sh after
+# the remaining Claude configuration scripts have run.

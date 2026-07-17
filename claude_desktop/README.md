@@ -70,7 +70,8 @@ Git synchronization hooks. A repository is indexed only when it is listed in
   approval, or explicit full bypass for trusted installations.
 - Automatic non-root runtime enforcement for bypass mode, including root-console
   wrapper launches.
-- Optional runtime Claude Desktop updates from Anthropic's apt repository.
+- Best-effort Claude Desktop update from Anthropic's apt repository at every
+  startup (skipped silently when offline).
 - Optional extra apt and pip package installation (pip installs use `uv`).
 - Baked-in `git`, GitHub CLI (`gh`), `ripgrep`, `jq`, `shellcheck`, `yamllint`,
   `hadolint`, and `actionlint`.
@@ -95,7 +96,6 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `PASSWORD` | | Optional password for direct Selkies ports. |
 | `DRINODE` | | Optional GPU device override for Selkies. |
 | `DNS_server` | `8.8.8.8` | DNS server used by the standard DNS module. |
-| `auto_update` | `true` | Upgrade `claude-desktop` from Anthropic's apt repository at startup. |
 | `permission_mode` | `auto` | Claude Code permission policy: `strict`, `auto`, or `bypass`. |
 | `install_headroom` | `true` | Register Headroom MCP and run the supervised local proxy. |
 | `headroom_wrap_claude_code` | `true` | Route PATH-based Claude Code launches through the already-running Headroom proxy. |

@@ -11,7 +11,7 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG RTK_VERSION="v0.43.0"
 ARG RTK_COMMIT="5a7880d404db8364d602f2ecdc41dd790f64013f"
-ARG TOKENSAVE_VERSION="7.2.0"
+ARG TOKENSAVE_VERSION="7.4.0"
 
 # The upstream aarch64 release is cross-built on ubuntu-latest and requires
 # GLIBC 2.39. Build the pinned source on Bookworm instead so it is compatible
