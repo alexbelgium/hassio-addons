@@ -130,6 +130,19 @@ upgrade. The old Firefox profile is retained and is never deleted.
 The external noVNC port remains `6080`, although the standalone remaster image
 normally uses port `7080`.
 
+## Upstream update policy
+
+The image is built from an explicit upstream commit in the Dockerfile. This
+keeps amd64 and aarch64 images reproducible and prevents an upstream branch or
+container tag from changing without an add-on review and version bump.
+
+The repository updater is intentionally paused for this add-on because the
+add-on uses its own `2.x` version series while the replacement upstream uses a
+`1.x` version series. An automatic replacement would risk a Home Assistant
+version regression and would not safely update the pinned commit. A maintainer
+upstream update must therefore update `UPSTREAM_REF`, `upstream_version`, the
+add-on version, and `CHANGELOG.md` together.
+
 ## Installation
 
 1. Add this add-on repository to the Home Assistant add-on store.
