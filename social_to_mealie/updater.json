@@ -1,10 +1,10 @@
 {
   "dockerhub_by_date": true,
   "dockerhub_list_size": 2,
-  "last_update": "2026-07-13",
+  "last_update": "2026-07-18",
   "repository": "alexbelgium/hassio-addons",
   "slug": "social_to_mealie",
   "source": "github",
   "upstream_repo": "GerardPolloRebozado/social-to-mealie",
-  "upstream_version": "1.7.1"
+  "upstream_version": "1.7.2"
 }
