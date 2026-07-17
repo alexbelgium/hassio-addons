@@ -8,6 +8,7 @@ FROM ${BUILD_FROM}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+ARG DEBIAN_FRONTEND="noninteractive"
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
@@ -18,8 +19,7 @@ ARG BUILD_VERSION
 ARG UPSTREAM_REPOSITORY="P-Adamiec/Free-Games-Claimer-Remaster"
 ARG UPSTREAM_REF="cca4992354215cef8807b748575af797606627f4"
 
-ENV DEBIAN_FRONTEND="noninteractive" \
-    S6_CMD_WAIT_FOR_SERVICES="1" \
+ENV S6_CMD_WAIT_FOR_SERVICES="1" \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME="0" \
     S6_SERVICES_GRACETIME="0" \
     VNC_PORT="5900" \
@@ -27,7 +27,10 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     WIDTH="1280" \
     HEIGHT="720" \
     DEPTH="24" \
-    SHOW="1"
+    SHOW="1" \
+    COMMIT="${UPSTREAM_REF}" \
+    BRANCH="main" \
+    NOW="${BUILD_DATE}"
 
 # Install the dependencies used by Free Games Claimer Remaster. The upstream
 # Dockerfile supports both amd64 (Google Chrome) and arm64 (Chromium), so the
