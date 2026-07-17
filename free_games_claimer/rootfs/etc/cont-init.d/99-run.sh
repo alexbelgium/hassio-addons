@@ -2,7 +2,10 @@
 # shellcheck shell=bash
 set -eo pipefail
 
-CONFIG_FILE="$(bashio::config 'CONFIG_LOCATION')"
+CONFIG_FILE="/config/config.env"
+if bashio::config.has_value 'CONFIG_LOCATION'; then
+    CONFIG_FILE="$(bashio::config 'CONFIG_LOCATION')"
+fi
 CONFIG_DIR="$(dirname "${CONFIG_FILE}")"
 RUNTIME_CONFIG="/data/config.env"
 
@@ -98,11 +101,17 @@ legacy_commands_to_stores() {
 
 # A non-empty STORES add-on option takes priority. Otherwise retain a STORES
 # value from config.env, then fall back to translating the legacy commands.
-STORES_OPTION="$(bashio::config 'STORES')"
+STORES_OPTION=""
+if bashio::config.has_value 'STORES'; then
+    STORES_OPTION="$(bashio::config 'STORES')"
+fi
 if [ -n "${STORES_OPTION}" ]; then
     export STORES="${STORES_OPTION}"
 elif [ -z "${STORES:-}" ]; then
-    CMD_ARGUMENTS="$(bashio::config 'CMD_ARGUMENTS')"
+    CMD_ARGUMENTS=""
+    if bashio::config.has_value 'CMD_ARGUMENTS'; then
+        CMD_ARGUMENTS="$(bashio::config 'CMD_ARGUMENTS')"
+    fi
     STORES="$(legacy_commands_to_stores "${CMD_ARGUMENTS}")"
     export STORES="${STORES:-epic,prime,gog}"
 fi
@@ -114,7 +123,11 @@ bashio::log.info "Enabled stores: ${STORES:-epic,prime,gog}"
 /usr/local/bin/migrate_vogler_data.py
 
 APP_COMMAND=(python3 /fgc/main.py)
-if bashio::config.true 'RUN_ONCE'; then
+RUN_ONCE="true"
+if bashio::config.has_value 'RUN_ONCE' && ! bashio::config.true 'RUN_ONCE'; then
+    RUN_ONCE="false"
+fi
+if [ "${RUN_ONCE}" = "true" ]; then
     APP_COMMAND+=(--once)
     bashio::log.info "Starting a single claiming run (legacy-compatible mode)"
 
