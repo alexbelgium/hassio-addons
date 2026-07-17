@@ -93,6 +93,21 @@ jobs:
       - name: ↩️ Checkout
         uses: actions/checkout@v7
 
+      - name: Copy templates into addon build context
+        env:
+          ADDON: ${{ matrix.addon }}
+        run: |
+          set -euo pipefail
+          TEMPLATES_DIR=".templates"
+          ADDON_DIR="./$ADDON"
+
+          # Keep PR builds aligned with the production builder.
+          for script in ha_automodules.sh ha_autoapps.sh ha_entrypoint.sh bashio-standalone.sh ha_lsio.sh; do
+            if [ -f "$TEMPLATES_DIR/$script" ]; then
+              cp "$TEMPLATES_DIR/$script" "$ADDON_DIR/$script"
+            fi
+          done
+
       - name: ℹ️ Gather addon info
         id: information
         uses: frenck/action-addon-information@v1.4

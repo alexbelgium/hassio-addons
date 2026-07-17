@@ -1,3 +1,10 @@
+## 2.0.1 (2026-07-17)
+
+- Aligned the pull-request build context with the production builder by copying
+  the shared Home Assistant helper scripts before building the add-on.
+- Fixed aarch64 and amd64 PR validation failing on unresolved Dockerfile
+  `COPY` instructions. Runtime and migration behavior are unchanged.
+
 ## 2.0.0 (2026-07-17)
 
 - Replaced the abandoned `vogler/free-games-claimer` upstream with
