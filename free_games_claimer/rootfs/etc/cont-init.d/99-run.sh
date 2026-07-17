@@ -75,13 +75,13 @@ legacy_commands_to_stores() {
     for command in "${command_list[@]}"; do
         normalized="${command,,}"
         case "${normalized}" in
-            *epic-games*|*epicgames*|*" epic "*)
+            *epic-games*|*epicgames*|*" epic"*|epic*)
                 selected="$(append_store "epic" "${selected}")"
                 ;;
-            *prime-gaming*|*primegaming*|*" prime "*|*" amazon "*)
+            *prime-gaming*|*primegaming*|*" prime"*|prime*|*" amazon"*|amazon*)
                 selected="$(append_store "prime" "${selected}")"
                 ;;
-            *steam-games*|*" steam "*)
+            *steam-games*|*" steam"*|steam*)
                 selected="$(append_store "steam" "${selected}")"
                 ;;
             *gamerpower*)
