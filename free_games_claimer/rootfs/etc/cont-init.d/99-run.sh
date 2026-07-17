@@ -1,6 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
-set -euo pipefail
+set -eo pipefail
 
 CONFIG_FILE="$(bashio::config 'CONFIG_LOCATION')"
 CONFIG_DIR="$(dirname "${CONFIG_FILE}")"
