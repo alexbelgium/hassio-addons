@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] qbittorrent (opened 2025-10-11)](https://github.com/alexbelgium/hassio-addons/issues/2139) by [@nyok92](https://github.com/nyok92)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
