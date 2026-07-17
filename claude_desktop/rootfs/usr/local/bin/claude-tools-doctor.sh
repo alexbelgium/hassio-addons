@@ -56,7 +56,6 @@ else:
         print(f"permissions.defaultMode: {permissions.get('defaultMode', '<upstream default>')}")
     else:
         print("permissions: INVALID")
-print(f"managed-state marker: {(Path.home() / '.claude/.addon-permission-mode.json').exists()}")
 PY
 
 section "MCP registrations (environment values redacted)"
@@ -149,6 +148,9 @@ section "TokenSave"
 if bashio::config.true 'install_tokensave'; then
     tokensave doctor --agent claude || true
     tokensave gain --all --range 30d || true
+    # Capture before looping — see the matching comment in 82-claude_tools.sh: feeding the
+    # loop straight from `< <(bashio::config ...)` yields an empty list under errexit.
+    TOKENSAVE_PROJECT_PATHS="$(bashio::config 'tokensave_project_paths')"
     while IFS= read -r configured_path || [ -n "$configured_path" ]; do
         if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
             continue
@@ -161,7 +163,7 @@ if bashio::config.true 'install_tokensave'; then
         else
             echo "${repo_root}: NOT INITIALIZED"
         fi
-    done < <(bashio::config 'tokensave_project_paths')
+    done <<< "$TOKENSAVE_PROJECT_PATHS"
 else
     echo "disabled"
 fi
