@@ -45,7 +45,7 @@ export VNC_PORT="5900"
 # replacement uses Chromium profiles and must start with a separate directory.
 if [ "${BROWSER_DIR:-}" = "/data/data/browser" ]; then
     bashio::log.warning "Remapping legacy Firefox BROWSER_DIR to the remaster Chromium profile directory"
-    export BROWSER_DIR="/fgc/data/browser"
+    export BROWSER_DIR="data/browser"
 fi
 if [ "${SCREENSHOTS_DIR:-}" = "/data/data/screenshots" ]; then
     export SCREENSHOTS_DIR="/fgc/data/screenshots"
