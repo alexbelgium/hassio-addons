@@ -1,20 +1,51 @@
-- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+## 2.0.0 (2026-07-17)
+
+- Replaced the abandoned `vogler/free-games-claimer` upstream with
+  `P-Adamiec/Free-Games-Claimer-Remaster`.
+- Reworked the image build for the remaster's Python, Chromium, TurboVNC, and
+  noVNC runtime on both amd64 and aarch64.
+- Preserved the previous default one-shot behavior and Epic, Prime Gaming, and
+  GOG store selection.
+- Kept noVNC on port 6080 for upgrade compatibility.
+- Added `RUN_ONCE` and `STORES` options while retaining `CMD_ARGUMENTS` as a
+  deprecated compatibility input.
+- Added an automatic, idempotent migration of legacy Epic, Prime Gaming, and
+  GOG JSON claim history into the remaster SQLite database.
+- Preserved legacy files for rollback and documented the required one-time
+  Chromium login when a Firefox session cannot be migrated.
+- Updated the configuration template, upstream metadata, and documentation.
+- Added support for configuring extra environment variables via the `env_vars`
+  add-on option.
 
 ## 1.8 (2025-05-17)
-- Update to latest version from vogler/free-games-claimer (changelog : https://github.com/vogler/free-games-claimer/releases)
+
+- Update to latest version from vogler/free-games-claimer (changelog: https://github.com/vogler/free-games-claimer/releases)
 
 ## 1.7 (2025-03-08)
-- Update to latest version from vogler/free-games-claimer (changelog : https://github.com/vogler/free-games-claimer/releases)
+
+- Update to latest version from vogler/free-games-claimer (changelog: https://github.com/vogler/free-games-claimer/releases)
+
 ## 1.6-6 (2024-12-29)
+
 - Minor bugs fixed
+
 ## 1.6-5 (2024-12-13)
+
 - Minor bugs fixed
+
 ## 1.6-4 (2024-12-07)
-- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/free_games_claimer in a folder only accessible from my Filebrowser addon called /addon_configs/db21ed7f_free_games_claimer. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+
+- Major change: switch to the new Home Assistant add-on configuration logic.
+  Configuration files were migrated from
+  `/config/hassio_addons/free_games_claimer` to the private add-on configuration
+  directory available through compatible file browser add-ons.
 
 ## 1.6-3 (2024-12-05)
+
 - Minor bugs fixed
+
 ## 1.6-2 (2024-12-05)
+
 - Minor bugs fixed
 
 ## 1.6 (2023-12-30)
@@ -28,18 +59,23 @@
 ## 1.4 (2023-05-27)
 
 - Update to latest version from vogler/free-games-claimer
+
 ## 1.4-5 (2023-05-26)
 
 - Minor bugs fixed
+
 ## 1.4-4 (2023-05-26)
 
 - Minor bugs fixed
+
 ## 1.4-3 (2023-05-26)
 
 - Minor bugs fixed
+
 ## 1.4-2 (2023-05-25)
 
 - Minor bugs fixed
+
 ## NOT_WORKING (2023-05-22)
 
 - Minor bugs fixed
