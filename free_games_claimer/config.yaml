@@ -1,9 +1,10 @@
+# Free Games Claimer Remaster add-on (pinned source)
 arch:
   - aarch64
   - amd64
-description:
-  automatically claims free games on the Epic Games Store, Amazon Prime
-  Gaming and GOG
+description: >-
+  Automatically claims free games from Epic Games Store, Amazon Prime Gaming,
+  GOG, Steam, and optional GamerPower-supported stores.
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -73,25 +74,29 @@ init: false
 map:
   - addon_config:rw
   - homeassistant_config:rw
-name: Free Games Claimer (NoVNC not working)
+name: Free Games Claimer
 options:
   env_vars: []
   CMD_ARGUMENTS: node epic-games ; node prime-gaming ; node gog
+  STORES: ""
+  RUN_ONCE: true
   CONFIG_LOCATION: /config/config.env
 ports:
   5900/tcp: null
   6080/tcp: 6080
 ports_description:
   5900/tcp: VNC port
-  6080/tcp: NOVNC port
+  6080/tcp: noVNC web interface
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
-  CMD_ARGUMENTS: str
+  CMD_ARGUMENTS: str?
+  STORES: str?
+  RUN_ONCE: bool
   CONFIG_LOCATION: str
 slug: free_games_claimer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.8"
+version: "2.0.0"
 webui: "[PROTO:ssl]://[HOST]:[PORT:6080]"
