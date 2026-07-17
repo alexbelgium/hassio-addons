@@ -1,3 +1,6 @@
+ 
+## kali-version-9ad48e7a (2026-07-18)
+- Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 ## 1.32 (17-07-2026)
 
 - Bump `tokensave` from 7.2.0 to 7.4.0 (`rtk` was already pinned to its current latest GitHub release, `v0.43.0`; `headroom-ai` is intentionally installed unpinned from PyPI, so it already tracks latest at every build and had nothing to bump). Reviewed the intervening 7.3.0/7.4.0 release notes against every tokensave surface this add-on drives (`install --agent claude --git-hook yes`, `uninstall --agent claude`, `sync`, `init`, `doctor --agent claude`, `gain --all --range 30d`, and the `mcp__tokensave__*` tool set granted in `settings.json`): no flag, output shape, or MCP tool name used here changed. Directly relevant fixes carried along: `tokensave sync` auto-migrates a v12 database (missing the trait-dispatch caller cache) to v13 as a normal part of syncing, which the add-on's corruption-quarantine logic won't mistake for corruption since the schema migration doesn't produce a "malformed"/"not a database" error; and `install`/`uninstall`'s JSON writer now resolves a symlinked `~/.claude/settings.json` before its atomic rename instead of replacing the symlink with a plain file, so a dotfiles-managed settings file survives untouched.
