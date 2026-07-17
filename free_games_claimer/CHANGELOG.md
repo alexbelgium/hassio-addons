@@ -13,7 +13,7 @@
   GOG JSON claim history into the remaster SQLite database.
 - Preserved legacy files for rollback and documented the required one-time
   Chromium login when a Firefox session cannot be migrated.
-- Pinned the reviewed upstream source commit and paused automatic upstream
+- Pinned the reviewed upstream source commit and paused generic automatic
   updates so the add-on's independent `2.x` version cannot regress to `1.x`.
 - Updated the configuration template, upstream metadata, and documentation.
 - Added support for configuring extra environment variables via the `env_vars`
