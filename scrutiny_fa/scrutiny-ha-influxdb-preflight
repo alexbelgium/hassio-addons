@@ -105,19 +105,25 @@ validate_existing_marker() {
             expected_checksum="$(marker_value backup_sha256)"
             if [[ -z "$expected_checksum" ]] || ! validate_archive "$backup_file"; then
                 log error "legacy backup marker exists but its archive cannot be verified"
-                return 2
+                return 1
             fi
             actual_checksum="$(sha256sum "$backup_file" | awk '{print $1}')"
             if [[ "$actual_checksum" != "$expected_checksum" ]]; then
                 log error "legacy backup checksum does not match the migration marker"
-                return 2
+                return 1
             fi
             log info "verified legacy InfluxDB backup and migration marker"
             return 0
             ;;
         *)
-            log warning "legacy or incomplete migration marker detected; rebuilding verified state"
-            return 1
+            if ! validate_archive "$backup_file"; then
+                log error "legacy migration marker exists but no verified backup archive is available"
+                return 1
+            fi
+            actual_checksum="$(sha256sum "$backup_file" | awk '{print $1}')"
+            write_marker legacy-backup "$actual_checksum"
+            log warning "upgraded legacy migration marker with the existing backup checksum"
+            return 0
             ;;
     esac
 }
@@ -125,19 +131,10 @@ validate_existing_marker() {
 mkdir -p "$data_dir"
 
 if [[ -f "$marker_file" ]]; then
-    marker_status=0
-    validate_existing_marker || marker_status=$?
-    case "$marker_status" in
-        0)
-            exit 0
-            ;;
-        1)
-            rm -f "$marker_file"
-            ;;
-        *)
-            exit 1
-            ;;
-    esac
+    if validate_existing_marker; then
+        exit 0
+    fi
+    exit 1
 fi
 
 if ! has_existing_data; then
