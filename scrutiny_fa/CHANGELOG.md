@@ -1,4 +1,7 @@
  
+## v1.67.0-8 (2026-07-18)
+- Verify every backup file checksum and symbolic-link target, record the content-validation method in the migration marker, atomically preserve the previous archive until replacement validation succeeds, and remove the blocking synthetic FIFO test fixture.
+
 ## v1.67.0-7 (2026-07-18)
 - Address all review findings: restore the initialization-only s6 stage-two hook, verify complete InfluxDB backup manifests and checksums, preserve legacy migration backups, default to `/share/scrutiny_fa`, and harden custom scheduling, ingress path handling, and collector configuration migration.
 
