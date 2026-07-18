@@ -15,6 +15,11 @@ if [ -d /opt/scrutiny/influxdb ]; then rm -r /opt/scrutiny/influxdb; fi
 ln -s "$DATABASELOCATION"/config /opt/scrutiny
 ln -s "$DATABASELOCATION"/influxdb /opt/scrutiny
 
+# Upstream 1.67 upgrades InfluxDB from 2.2 to 2.9 and requires a confirmed
+# offline backup before starting against existing data. Services have not
+# started yet, so this is the safe point to create and verify that backup.
+/usr/local/bin/scrutiny-ha-influxdb-preflight
+
 ###############################
 # Migrating previous database #
 ###############################
