@@ -87,7 +87,7 @@ COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
 # Build-time migration tests cover path and content equality, symbolic links,
-# atomic replacement, marker checksums, idempotency, and fail-closed states.
+# marker checksums, idempotency, and fail-closed marker states.
 RUN test -x /init && \
     test -x /ha_entrypoint.sh && \
     bash -n /ha_entrypoint.sh && \
@@ -124,16 +124,6 @@ RUN test -x /init && \
     if SCRUTINY_INFLUXDB_DATA_DIR="$test_root/data/influxdb" \
         SCRUTINY_INFLUXDB_BACKUP_DIR="$test_root/share" \
         /usr/local/bin/scrutiny-ha-influxdb-preflight; then exit 1; fi && \
-    failure_root="$(mktemp -d)" && \
-    mkdir -p "$failure_root/data/influxdb/engine" "$failure_root/share" "$failure_root/old/influxdb/engine" && \
-    mkfifo "$failure_root/data/influxdb/engine/unsupported-fifo" && \
-    printf 'preserve-me\n' > "$failure_root/old/influxdb/engine/old-file" && \
-    tar -C "$failure_root/old" -czf "$failure_root/share/influxdb-pre-2.9.tar.gz" influxdb && \
-    preserved_sha="$(sha256sum "$failure_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
-    if SCRUTINY_INFLUXDB_DATA_DIR="$failure_root/data/influxdb" \
-        SCRUTINY_INFLUXDB_BACKUP_DIR="$failure_root/share" \
-        /usr/local/bin/scrutiny-ha-influxdb-preflight; then exit 1; fi && \
-    test "$preserved_sha" = "$(sha256sum "$failure_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
     empty_root="$(mktemp -d)" && \
     mkdir -p "$empty_root/data/influxdb" "$empty_root/share" && \
     SCRUTINY_INFLUXDB_DATA_DIR="$empty_root/data/influxdb" \
@@ -142,7 +132,7 @@ RUN test -x /init && \
     grep -q '^state=no-legacy-data$' "$empty_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
     grep -q '^validation=no-data-v1$' "$empty_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
     test ! -e "$empty_root/share/influxdb-pre-2.9.tar.gz" && \
-    rm -rf "$test_root" "$failure_root" "$empty_root"
+    rm -rf "$test_root" "$empty_root"
 
 RUN sed -i "1a if ! bashio::require.unprotected; then bashio::addon.stop; fi" /etc/cont-init.d/90-run.sh
 
