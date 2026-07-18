@@ -1,4 +1,7 @@
  
+## v1.67.0-3 (2026-07-18)
+- Restore upstream s6 supervision for all Scrutiny services and automatically create a verified offline InfluxDB backup in `/share/scrutiny` before the 2.9 migration.
+
 ## v1.67.0-2 (2026-07-18)
 - Fix startup with the Home Assistant entrypoint by removing the upstream collector's unsupported s6 service wait. The collector still waits for the Scrutiny API health endpoint before running.
 
