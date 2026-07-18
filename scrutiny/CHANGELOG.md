@@ -1,4 +1,7 @@
  
+## v1.67.0-5 (2026-07-18)
+- Address all review findings: restore the initialization-only s6 stage-two hook, verify complete InfluxDB backup manifests and checksums, preserve legacy migration backups, and harden custom scheduling, ingress path handling, and collector configuration migration.
+
 ## v1.67.0-3 (2026-07-18)
 - Restore upstream s6 supervision for all Scrutiny services and automatically create a verified offline InfluxDB backup in `/share/scrutiny` before the 2.9 migration.
 

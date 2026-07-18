@@ -1,4 +1,7 @@
  
+## v1.67.0-6 (2026-07-18)
+- Address all review findings: restore the initialization-only s6 stage-two hook, verify complete InfluxDB backup manifests and checksums, preserve legacy migration backups, default to `/share/scrutiny_fa`, and harden custom scheduling, ingress path handling, and collector configuration migration.
+
 ## v1.67.0-5 (2026-07-18)
 - Replace the legacy cross-directory `rootfs` symlink with a materialized Full Access overlay so the complete add-on builds reproducibly on aarch64 and amd64.
 
