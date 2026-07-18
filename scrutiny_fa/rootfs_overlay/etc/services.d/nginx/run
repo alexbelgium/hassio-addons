@@ -3,7 +3,7 @@
 set -e
 # ==============================================================================
 
-# Wait for transmission to become available
+# Wait for Scrutiny to become available
 bashio::net.wait_for 8080 localhost 900
 
 bashio::log.info "Starting NGinx..."
