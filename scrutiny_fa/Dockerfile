@@ -32,8 +32,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # 3 Install apps #
 ##################
 
-# Add rootfs
+# Add rootfs. scrutiny_fa/rootfs is shared with scrutiny, while the new helper
+# is copied explicitly so BuildKit does not depend on resolving that symlink.
 COPY rootfs/ /
+COPY scrutiny-ha-influxdb-preflight /usr/local/bin/scrutiny-ha-influxdb-preflight
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \; && \
     chmod 0755 /usr/local/bin/scrutiny-ha-influxdb-preflight && \
     if [ -d /command ]; then ln -sf /command/* /usr/bin/; fi
