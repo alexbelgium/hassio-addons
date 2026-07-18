@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# shellcheck shell=bash
+set -euo pipefail
+
+addon_slug="${SCRUTINY_HA_ADDON_SLUG:-scrutiny}"
+data_dir="${SCRUTINY_INFLUXDB_DATA_DIR:-/data/influxdb}"
+backup_dir="${SCRUTINY_INFLUXDB_BACKUP_DIR:-/share/${addon_slug}}"
+marker_file="${data_dir}/.scrutiny-influxdb-2.9-preflight-complete"
+backup_file="${backup_dir}/influxdb-pre-2.9.tar.gz"
+temporary_backup="${backup_file}.tmp"
+
+log() {
+    local level="$1"
+    local message="$2"
+    printf 'time="%s" level=%s msg="%s" type=ha-influxdb-upgrade-preflight\n' \
+        "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" "$level" "$message"
+}
+
+has_existing_data() {
+    if [[ -e "${data_dir}/influxd.bolt" || -e "${data_dir}/influxd.sqlite" ]]; then
+        return 0
+    fi
+
+    if [[ -d "${data_dir}/engine" ]] && find "${data_dir}/engine" -mindepth 1 -print -quit | grep -q .; then
+        return 0
+    fi
+
+    return 1
+}
+
+validate_backup() {
+    [[ -s "$backup_file" ]] || return 1
+    gzip -t "$backup_file" >/dev/null 2>&1 || return 1
+    tar -tzf "$backup_file" >/dev/null 2>&1
+}
+
+mkdir -p "$data_dir"
+
+if [[ -f "$marker_file" ]]; then
+    exit 0
+fi
+
+if ! has_existing_data; then
+    log info "no existing InfluxDB data detected; automatic backup is not required"
+    exit 0
+fi
+
+mkdir -p "$backup_dir"
+
+if validate_backup; then
+    log info "using existing verified InfluxDB backup at ${backup_file}"
+else
+    if [[ -e "$backup_file" ]]; then
+        log warning "existing InfluxDB backup is invalid and will be replaced"
+        rm -f "$backup_file"
+    fi
+
+    rm -f "$temporary_backup"
+    trap 'rm -f "$temporary_backup"' EXIT
+
+    log warning "existing InfluxDB data detected; creating offline backup at ${backup_file}"
+    tar -C "$(dirname "$data_dir")" -czf "$temporary_backup" "$(basename "$data_dir")"
+    gzip -t "$temporary_backup"
+    tar -tzf "$temporary_backup" >/dev/null
+    mv "$temporary_backup" "$backup_file"
+
+    trap - EXIT
+    log info "InfluxDB backup created and verified at ${backup_file}"
+fi
+
+touch "$marker_file"
+log info "InfluxDB 2.9 upgrade preflight marker created after verified backup"
