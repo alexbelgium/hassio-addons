@@ -6,9 +6,12 @@ addon_slug="${SCRUTINY_HA_ADDON_SLUG:-scrutiny}"
 data_dir="${SCRUTINY_INFLUXDB_DATA_DIR:-/data/influxdb}"
 backup_dir="${SCRUTINY_INFLUXDB_BACKUP_DIR:-/share/${addon_slug}}"
 marker_file="${data_dir}/.scrutiny-influxdb-2.9-preflight-complete"
+marker_tmp="${marker_file}.tmp"
 backup_file="${backup_dir}/influxdb-pre-2.9.tar.gz"
 temporary_backup="${backup_file}.tmp"
 archive_root="$(basename "$data_dir")"
+source_manifest=""
+archive_manifest=""
 
 log() {
     local level="$1"
@@ -16,6 +19,13 @@ log() {
     printf 'time="%s" level=%s msg="%s" type=ha-influxdb-upgrade-preflight\n' \
         "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" "$level" "$message"
 }
+
+cleanup() {
+    rm -f "$temporary_backup" "$marker_tmp"
+    if [[ -n "$source_manifest" ]]; then rm -f "$source_manifest"; fi
+    if [[ -n "$archive_manifest" ]]; then rm -f "$archive_manifest"; fi
+}
+trap cleanup EXIT
 
 has_existing_data() {
     if [[ -e "${data_dir}/influxd.bolt" || -e "${data_dir}/influxd.sqlite" ]]; then
@@ -29,65 +39,135 @@ has_existing_data() {
     return 1
 }
 
-validate_backup() {
-    [[ -s "$backup_file" ]] || return 1
-    gzip -t "$backup_file" >/dev/null 2>&1 || return 1
-    tar -tzf "$backup_file" >/dev/null 2>&1 || return 1
+validate_archive() {
+    local archive="$1"
+    [[ -s "$archive" ]] || return 1
+    gzip -t "$archive" >/dev/null 2>&1 || return 1
+    tar -tzf "$archive" >/dev/null 2>&1
+}
 
-    if [[ -e "${data_dir}/influxd.bolt" ]] && \
-        ! tar -tzf "$backup_file" "${archive_root}/influxd.bolt" >/dev/null 2>&1; then
+validate_backup_against_source() {
+    local archive="$1"
+
+    validate_archive "$archive" || return 1
+    source_manifest="$(mktemp)"
+    archive_manifest="$(mktemp)"
+
+    (
+        cd "$data_dir"
+        find . -mindepth 1 -print | sed -e 's#^\./##' -e 's#/$##' | LC_ALL=C sort
+    ) > "$source_manifest"
+
+    tar -tzf "$archive" | \
+        sed -e "s#^${archive_root}/##" -e '/^$/d' -e 's#/$##' | \
+        LC_ALL=C sort > "$archive_manifest"
+
+    if ! cmp -s "$source_manifest" "$archive_manifest"; then
+        rm -f "$source_manifest" "$archive_manifest"
+        source_manifest=""
+        archive_manifest=""
         return 1
     fi
 
-    if [[ -e "${data_dir}/influxd.sqlite" ]] && \
-        ! tar -tzf "$backup_file" "${archive_root}/influxd.sqlite" >/dev/null 2>&1; then
-        return 1
-    fi
+    rm -f "$source_manifest" "$archive_manifest"
+    source_manifest=""
+    archive_manifest=""
+}
 
-    if [[ -d "${data_dir}/engine" ]] && find "${data_dir}/engine" -mindepth 1 -print -quit | grep -q .; then
-        tar -tzf "$backup_file" --wildcards "${archive_root}/engine/*" >/dev/null 2>&1 || return 1
-    fi
+marker_value() {
+    local key="$1"
+    awk -F= -v key="$key" '$1 == key {sub(/^[^=]*=/, ""); print; exit}' "$marker_file"
+}
+
+write_marker() {
+    local state="$1"
+    local checksum="${2:-}"
+
+    {
+        printf 'state=%s\n' "$state"
+        if [[ -n "$checksum" ]]; then
+            printf 'backup_sha256=%s\n' "$checksum"
+        fi
+    } > "$marker_tmp"
+    mv "$marker_tmp" "$marker_file"
+}
+
+validate_existing_marker() {
+    local state expected_checksum actual_checksum
+
+    state="$(marker_value state)"
+    case "$state" in
+        no-legacy-data)
+            log info "verified no-legacy-data migration marker"
+            return 0
+            ;;
+        legacy-backup)
+            expected_checksum="$(marker_value backup_sha256)"
+            if [[ -z "$expected_checksum" ]] || ! validate_archive "$backup_file"; then
+                log error "legacy backup marker exists but its archive cannot be verified"
+                return 2
+            fi
+            actual_checksum="$(sha256sum "$backup_file" | awk '{print $1}')"
+            if [[ "$actual_checksum" != "$expected_checksum" ]]; then
+                log error "legacy backup checksum does not match the migration marker"
+                return 2
+            fi
+            log info "verified legacy InfluxDB backup and migration marker"
+            return 0
+            ;;
+        *)
+            log warning "legacy or incomplete migration marker detected; rebuilding verified state"
+            return 1
+            ;;
+    esac
 }
 
 mkdir -p "$data_dir"
 
 if [[ -f "$marker_file" ]]; then
-    exit 0
+    marker_status=0
+    validate_existing_marker || marker_status=$?
+    case "$marker_status" in
+        0)
+            exit 0
+            ;;
+        1)
+            rm -f "$marker_file"
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
 fi
 
 if ! has_existing_data; then
-    log info "no existing InfluxDB data detected; automatic backup is not required"
+    write_marker no-legacy-data
+    log info "no existing InfluxDB data detected; recorded no-legacy-data migration state"
     exit 0
 fi
 
 mkdir -p "$backup_dir"
 
-if validate_backup; then
-    log info "using existing verified InfluxDB backup at ${backup_file}"
+if [[ -e "$backup_file" ]] && validate_backup_against_source "$backup_file"; then
+    log info "using existing complete InfluxDB backup at ${backup_file}"
 else
     if [[ -e "$backup_file" ]]; then
-        log warning "existing InfluxDB backup is invalid and will be replaced"
+        log warning "existing InfluxDB backup is incomplete or invalid and will be replaced"
         rm -f "$backup_file"
     fi
 
-    rm -f "$temporary_backup"
-    trap 'rm -f "$temporary_backup"' EXIT
-
     log warning "existing InfluxDB data detected; creating offline backup at ${backup_file}"
     tar -C "$(dirname "$data_dir")" -czf "$temporary_backup" "$archive_root"
-    gzip -t "$temporary_backup"
-    tar -tzf "$temporary_backup" >/dev/null
-    mv "$temporary_backup" "$backup_file"
 
-    trap - EXIT
-
-    if ! validate_backup; then
-        log error "created InfluxDB backup did not pass validation"
+    if ! validate_backup_against_source "$temporary_backup"; then
+        log error "created InfluxDB backup does not contain the complete source tree"
         exit 1
     fi
 
+    mv "$temporary_backup" "$backup_file"
     log info "InfluxDB backup created and verified at ${backup_file}"
 fi
 
-touch "$marker_file"
-log info "InfluxDB 2.9 upgrade preflight marker created after verified backup"
+backup_checksum="$(sha256sum "$backup_file" | awk '{print $1}')"
+write_marker legacy-backup "$backup_checksum"
+log info "InfluxDB 2.9 migration marker created with verified backup checksum"
