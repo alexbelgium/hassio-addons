@@ -1,5 +1,5 @@
  
-## v1.67.0-6 (2026-07-18)
+## v1.67.0-7 (2026-07-18)
 - Address all review findings: restore the initialization-only s6 stage-two hook, verify complete InfluxDB backup manifests and checksums, preserve legacy migration backups, default to `/share/scrutiny_fa`, and harden custom scheduling, ingress path handling, and collector configuration migration.
 
 ## v1.67.0-5 (2026-07-18)
