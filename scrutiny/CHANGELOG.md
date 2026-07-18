@@ -1,4 +1,7 @@
  
+## v1.67.0-2 (2026-07-18)
+- Fix startup with the Home Assistant entrypoint by removing the upstream collector's unsupported s6 service wait. The collector still waits for the Scrutiny API health endpoint before running.
+
 ## v1.67.0 (2026-07-18)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
  
