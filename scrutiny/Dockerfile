@@ -26,6 +26,7 @@ FROM ${BUILD_FROM}
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0 \
+    S6_STAGE2_HOOK="/ha_entrypoint.sh" \
     SCRUTINY_HA_ADDON_SLUG="scrutiny"
 
 ##################
@@ -65,30 +66,63 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 # 4 Entrypoint #
 ################
 
+# Keep the repository initialization hook, but return after it has prepared the
+# cont-init scripts. Upstream s6 remains responsible for supervising services.
+COPY ha_entrypoint.sh /ha_entrypoint.sh
+RUN chmod 0755 /ha_entrypoint.sh && \
+    awk '!inserted && $0 == "if $PID1; then" { \
+        print "if ! $PID1; then"; \
+        print "  echo \"Initialization hook complete\""; \
+        print "  exit 0"; \
+        print "fi"; \
+        inserted=1 \
+    } { print }' /ha_entrypoint.sh > /ha_entrypoint.sh.tmp && \
+    mv /ha_entrypoint.sh.tmp /ha_entrypoint.sh && \
+    chmod 0755 /ha_entrypoint.sh
+
 # Install bashio
 COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
-# Build-time migration test: create a representative InfluxDB 2.2 data tree,
-# verify the archive and marker, then confirm a second run is idempotent.
+# Build-time migration tests cover complete archive manifests, marker checksums,
+# idempotency, the no-data state, and fail-closed handling of a corrupt backup.
 RUN test -x /init && \
+    test -x /ha_entrypoint.sh && \
+    bash -n /ha_entrypoint.sh && \
+    grep -q 'Initialization hook complete' /ha_entrypoint.sh && \
     bash -n /usr/local/bin/scrutiny-ha-influxdb-preflight && \
     test_root="$(mktemp -d)" && \
-    mkdir -p "$test_root/data/influxdb/engine" "$test_root/share" && \
+    mkdir -p "$test_root/data/influxdb/engine/nested" "$test_root/share" "$test_root/partial/influxdb/engine" && \
     printf 'bolt-test\n' > "$test_root/data/influxdb/influxd.bolt" && \
-    printf 'shard-test\n' > "$test_root/data/influxdb/engine/shard" && \
+    printf 'shard-one\n' > "$test_root/data/influxdb/engine/shard-one" && \
+    printf 'shard-two\n' > "$test_root/data/influxdb/engine/nested/shard-two" && \
+    cp "$test_root/data/influxdb/influxd.bolt" "$test_root/partial/influxdb/" && \
+    cp "$test_root/data/influxdb/engine/shard-one" "$test_root/partial/influxdb/engine/" && \
+    tar -C "$test_root/partial" -czf "$test_root/share/influxdb-pre-2.9.tar.gz" influxdb && \
     SCRUTINY_INFLUXDB_DATA_DIR="$test_root/data/influxdb" \
     SCRUTINY_INFLUXDB_BACKUP_DIR="$test_root/share" \
         /usr/local/bin/scrutiny-ha-influxdb-preflight && \
-    test -s "$test_root/share/influxdb-pre-2.9.tar.gz" && \
-    test -f "$test_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
-    tar -tzf "$test_root/share/influxdb-pre-2.9.tar.gz" | grep -q '^influxdb/influxd.bolt$' && \
+    tar -tzf "$test_root/share/influxdb-pre-2.9.tar.gz" | grep -q '^influxdb/engine/shard-one$' && \
+    tar -tzf "$test_root/share/influxdb-pre-2.9.tar.gz" | grep -q '^influxdb/engine/nested/shard-two$' && \
+    grep -q '^state=legacy-backup$' "$test_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
     backup_sha="$(sha256sum "$test_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
+    grep -q "^backup_sha256=${backup_sha}$" "$test_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
     SCRUTINY_INFLUXDB_DATA_DIR="$test_root/data/influxdb" \
     SCRUTINY_INFLUXDB_BACKUP_DIR="$test_root/share" \
         /usr/local/bin/scrutiny-ha-influxdb-preflight && \
     test "$backup_sha" = "$(sha256sum "$test_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
-    rm -rf "$test_root"
+    printf 'corrupt\n' > "$test_root/share/influxdb-pre-2.9.tar.gz" && \
+    if SCRUTINY_INFLUXDB_DATA_DIR="$test_root/data/influxdb" \
+        SCRUTINY_INFLUXDB_BACKUP_DIR="$test_root/share" \
+        /usr/local/bin/scrutiny-ha-influxdb-preflight; then exit 1; fi && \
+    empty_root="$(mktemp -d)" && \
+    mkdir -p "$empty_root/data/influxdb" "$empty_root/share" && \
+    SCRUTINY_INFLUXDB_DATA_DIR="$empty_root/data/influxdb" \
+    SCRUTINY_INFLUXDB_BACKUP_DIR="$empty_root/share" \
+        /usr/local/bin/scrutiny-ha-influxdb-preflight && \
+    grep -q '^state=no-legacy-data$' "$empty_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
+    test ! -e "$empty_root/share/influxdb-pre-2.9.tar.gz" && \
+    rm -rf "$test_root" "$empty_root"
 
 # Scrutiny's image already includes s6-overlay and defines all services under
 # /etc/services.d. Keep /init as PID 1 so service readiness and s6-svc calls work.
