@@ -1,4 +1,7 @@
  
+## v1.67.0-4 (2026-07-18)
+- Include the InfluxDB migration helper directly in the Full Access build context so both supported architectures receive and test it reliably.
+
 ## v1.67.0-3 (2026-07-18)
 - Restore upstream s6 supervision for all Scrutiny services and automatically create a verified offline InfluxDB backup in `/share/scrutiny_fa` before the 2.9 migration.
 
