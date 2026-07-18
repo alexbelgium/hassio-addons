@@ -9,15 +9,15 @@ set -e
 if bashio::config.true "expose_collector"; then
     bashio::log.info "collector.yaml exposed in /share/scrutiny"
     mkdir -p /share/scrutiny
-    if [ -f /data/config/collector.yaml ]; then
-        if cp -rnf /data/config/collector.yaml /share/scrutiny; then
+    if [ -f /data/config/collector.yaml ] && [ ! -L /data/config/collector.yaml ]; then
+        if cp -n /data/config/collector.yaml /share/scrutiny; then
             rm -f /data/config/collector.yaml
         else
             bashio::log.warning "Could not copy /data/config/collector.yaml; keeping the source file"
         fi
     fi
-    if [ -f /opt/scrutiny/config/collector.yaml ]; then
-        if cp -rnf /opt/scrutiny/config/collector.yaml /share/scrutiny; then
+    if [ -f /opt/scrutiny/config/collector.yaml ] && [ ! -L /opt/scrutiny/config/collector.yaml ]; then
+        if cp -n /opt/scrutiny/config/collector.yaml /share/scrutiny; then
             rm -f /opt/scrutiny/config/collector.yaml
         else
             bashio::log.warning "Could not copy /opt/scrutiny/config/collector.yaml; keeping the source file"
