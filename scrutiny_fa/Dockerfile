@@ -32,9 +32,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # 3 Install apps #
 ##################
 
-# Add rootfs. scrutiny_fa/rootfs is shared with scrutiny, while the new helper
-# is copied explicitly so BuildKit does not depend on resolving that symlink.
-COPY rootfs/ /
+# Add the materialized Home Assistant overlay. Keeping it inside this add-on's
+# build context avoids Docker/BuildKit following the legacy cross-directory symlink.
+COPY rootfs_overlay/ /
 COPY scrutiny-ha-influxdb-preflight /usr/local/bin/scrutiny-ha-influxdb-preflight
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \; && \
     chmod 0755 /usr/local/bin/scrutiny-ha-influxdb-preflight && \
