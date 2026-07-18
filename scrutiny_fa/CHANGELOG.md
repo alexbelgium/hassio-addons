@@ -1,4 +1,7 @@
  
+## v1.67.0-5 (2026-07-18)
+- Replace the legacy cross-directory `rootfs` symlink with a materialized Full Access overlay so the complete add-on builds reproducibly on aarch64 and amd64.
+
 ## v1.67.0-4 (2026-07-18)
 - Include the InfluxDB migration helper directly in the Full Access build context so both supported architectures receive and test it reliably.
 
