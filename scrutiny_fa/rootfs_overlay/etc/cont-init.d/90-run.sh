@@ -10,12 +10,18 @@ if bashio::config.true "expose_collector"; then
     bashio::log.info "collector.yaml exposed in /share/scrutiny"
     mkdir -p /share/scrutiny
     if [ -f /data/config/collector.yaml ]; then
-        cp -rnf /data/config/collector.yaml /share/scrutiny || true
-        rm -R /data/config/collector.yaml
+        if cp -rnf /data/config/collector.yaml /share/scrutiny; then
+            rm -f /data/config/collector.yaml
+        else
+            bashio::log.warning "Could not copy /data/config/collector.yaml; keeping the source file"
+        fi
     fi
     if [ -f /opt/scrutiny/config/collector.yaml ]; then
-        cp -rnf /opt/scrutiny/config/collector.yaml /share/scrutiny || true
-        rm /opt/scrutiny/config/collector.yaml
+        if cp -rnf /opt/scrutiny/config/collector.yaml /share/scrutiny; then
+            rm -f /opt/scrutiny/config/collector.yaml
+        else
+            bashio::log.warning "Could not copy /opt/scrutiny/config/collector.yaml; keeping the source file"
+        fi
     fi
     touch /share/scrutiny/collector.yaml
     ln -sf /share/scrutiny/collector.yaml /data/config || true
@@ -31,9 +37,9 @@ fi
 if [[ "$(bashio::config "Mode")" == Collector ]]; then
     # Clean services
     bashio::log.warning "Collector only mode. WebUI and Influxdb will be disabled"
-    rm -r /etc/services.d/influxdb
-    rm -r /etc/services.d/scrutiny
-    rm -r /etc/services.d/nginx
+    rm -rf /etc/services.d/influxdb
+    rm -rf /etc/services.d/scrutiny
+    rm -rf /etc/services.d/nginx
     sed -i "/wait/d" /etc/services.d/collector-once/run
     sed -i "/scrutiny api not ready/d" /etc/services.d/collector-once/run
 
