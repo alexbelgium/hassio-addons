@@ -25,7 +25,8 @@ FROM ${BUILD_FROM}
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
+    S6_SERVICES_GRACETIME=0 \
+    SCRUTINY_HA_ADDON_SLUG="scrutiny_fa"
 
 ##################
 # 3 Install apps #
@@ -33,13 +34,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Add rootfs
 COPY rootfs/ /
-RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
-
-# The Home Assistant entrypoint starts services directly instead of running s6.
-# Scrutiny's collector already waits for the API health endpoint, so remove its s6-only wait.
-RUN if grep -q 's6-svwait -u /run/service/scrutiny' /etc/services.d/collector-once/run; then \
-        sed -i '\|s6-svwait -u /run/service/scrutiny|d' /etc/services.d/collector-once/run; \
-    fi
+RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \; && \
+    chmod 0755 /usr/local/bin/scrutiny-ha-influxdb-preflight && \
+    if [ -d /command ]; then ln -sf /command/* /usr/bin/; fi
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
@@ -57,6 +54,7 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 ENV PACKAGES="jq \
     curl \
     cifs-utils \
+    gzip \
     nginx"
 
 # Automatic apps & bashio
@@ -67,19 +65,36 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 # 4 Entrypoint #
 ################
 
-# Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-COPY ha_entrypoint.sh /ha_entrypoint.sh
-RUN chmod 777 /ha_entrypoint.sh
-
 # Install bashio
 COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
+# Build-time migration test: create a representative InfluxDB 2.2 data tree,
+# verify the archive and marker, then confirm a second run is idempotent.
+RUN test -x /init && \
+    bash -n /usr/local/bin/scrutiny-ha-influxdb-preflight && \
+    test_root="$(mktemp -d)" && \
+    mkdir -p "$test_root/data/influxdb/engine" "$test_root/share" && \
+    printf 'bolt-test\n' > "$test_root/data/influxdb/influxd.bolt" && \
+    printf 'shard-test\n' > "$test_root/data/influxdb/engine/shard" && \
+    SCRUTINY_INFLUXDB_DATA_DIR="$test_root/data/influxdb" \
+    SCRUTINY_INFLUXDB_BACKUP_DIR="$test_root/share" \
+        /usr/local/bin/scrutiny-ha-influxdb-preflight && \
+    test -s "$test_root/share/influxdb-pre-2.9.tar.gz" && \
+    test -f "$test_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
+    tar -tzf "$test_root/share/influxdb-pre-2.9.tar.gz" | grep -q '^influxdb/influxd.bolt$' && \
+    backup_sha="$(sha256sum "$test_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
+    SCRUTINY_INFLUXDB_DATA_DIR="$test_root/data/influxdb" \
+    SCRUTINY_INFLUXDB_BACKUP_DIR="$test_root/share" \
+        /usr/local/bin/scrutiny-ha-influxdb-preflight && \
+    test "$backup_sha" = "$(sha256sum "$test_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
+    rm -rf "$test_root"
+
 RUN sed -i "1a if ! bashio::require.unprotected; then bashio::addon.stop; fi" /etc/cont-init.d/90-run.sh
 
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+# Scrutiny's image already includes s6-overlay and defines all services under
+# /etc/services.d. Keep /init as PID 1 so service readiness and s6-svc calls work.
+ENTRYPOINT [ "/init" ]
 
 ############
 # 5 Labels #
