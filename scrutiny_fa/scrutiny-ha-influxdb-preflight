@@ -1,0 +1,228 @@
+#!/usr/bin/env bash
+# shellcheck shell=bash
+set -euo pipefail
+
+addon_slug="${SCRUTINY_HA_ADDON_SLUG:-scrutiny_fa}"
+data_dir="${SCRUTINY_INFLUXDB_DATA_DIR:-/data/influxdb}"
+backup_dir="${SCRUTINY_INFLUXDB_BACKUP_DIR:-/share/${addon_slug}}"
+marker_file="${data_dir}/.scrutiny-influxdb-2.9-preflight-complete"
+marker_tmp="${marker_file}.tmp"
+backup_file="${backup_dir}/influxdb-pre-2.9.tar.gz"
+temporary_backup="${backup_file}.tmp"
+archive_root="$(basename "$data_dir")"
+validation_method="content-sha256-v1"
+source_manifest=""
+archive_manifest=""
+
+log() {
+    local level="$1"
+    local message="$2"
+    printf 'time="%s" level=%s msg="%s" type=ha-influxdb-upgrade-preflight\n' \
+        "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" "$level" "$message"
+}
+
+cleanup() {
+    rm -f "$temporary_backup" "$marker_tmp"
+    if [[ -n "$source_manifest" ]]; then rm -f "$source_manifest"; fi
+    if [[ -n "$archive_manifest" ]]; then rm -f "$archive_manifest"; fi
+}
+trap cleanup EXIT
+
+has_existing_data() {
+    if [[ -e "${data_dir}/influxd.bolt" || -e "${data_dir}/influxd.sqlite" ]]; then
+        return 0
+    fi
+
+    if [[ -d "${data_dir}/engine" ]] && find "${data_dir}/engine" -mindepth 1 -print -quit | grep -q .; then
+        return 0
+    fi
+
+    return 1
+}
+
+validate_archive() {
+    local archive="$1"
+    [[ -s "$archive" ]] || return 1
+    gzip -t "$archive" >/dev/null 2>&1 || return 1
+    tar -tzf "$archive" >/dev/null 2>&1
+}
+
+reset_manifests() {
+    rm -f "$source_manifest" "$archive_manifest"
+    source_manifest=""
+    archive_manifest=""
+}
+
+validate_backup_against_source() {
+    local archive="$1"
+    local relative_path
+    local source_path
+    local archive_member
+    local listing
+    local source_checksum
+    local archive_checksum
+    local source_target
+    local archive_target
+
+    validate_archive "$archive" || return 1
+    source_manifest="$(mktemp)"
+    archive_manifest="$(mktemp)"
+
+    (
+        cd "$data_dir"
+        find . -mindepth 1 -print | sed -e 's#^\./##' -e 's#/$##' | LC_ALL=C sort
+    ) > "$source_manifest"
+
+    tar -tzf "$archive" | \
+        sed -e "s#^${archive_root}/##" -e '/^$/d' -e 's#/$##' | \
+        LC_ALL=C sort > "$archive_manifest"
+
+    if ! cmp -s "$source_manifest" "$archive_manifest"; then
+        reset_manifests
+        return 1
+    fi
+
+    while IFS= read -r relative_path; do
+        source_path="${data_dir}/${relative_path}"
+        archive_member="${archive_root}/${relative_path}"
+        listing="$(tar -tvzf "$archive" -- "$archive_member" 2>/dev/null)" || {
+            reset_manifests
+            return 1
+        }
+
+        if [[ -L "$source_path" ]]; then
+            [[ "${listing:0:1}" == "l" ]] || {
+                reset_manifests
+                return 1
+            }
+            source_target="$(readlink "$source_path")"
+            archive_target="${listing##* -> }"
+            [[ "$source_target" == "$archive_target" ]] || {
+                reset_manifests
+                return 1
+            }
+        elif [[ -f "$source_path" ]]; then
+            [[ "${listing:0:1}" == "-" || "${listing:0:1}" == "h" ]] || {
+                reset_manifests
+                return 1
+            }
+            source_checksum="$(sha256sum "$source_path" | awk '{print $1}')"
+            archive_checksum="$(tar -xOzf "$archive" -- "$archive_member" | sha256sum | awk '{print $1}')"
+            [[ "$source_checksum" == "$archive_checksum" ]] || {
+                reset_manifests
+                return 1
+            }
+        elif [[ -d "$source_path" ]]; then
+            [[ "${listing:0:1}" == "d" ]] || {
+                reset_manifests
+                return 1
+            }
+        else
+            reset_manifests
+            return 1
+        fi
+    done < "$source_manifest"
+
+    reset_manifests
+}
+
+marker_value() {
+    local key="$1"
+    awk -F= -v key="$key" '$1 == key {sub(/^[^=]*=/, ""); print; exit}' "$marker_file"
+}
+
+write_marker() {
+    local state="$1"
+    local checksum="${2:-}"
+    local validation="${3:-}"
+
+    {
+        printf 'state=%s\n' "$state"
+        if [[ -n "$validation" ]]; then printf 'validation=%s\n' "$validation"; fi
+        if [[ -n "$checksum" ]]; then printf 'backup_sha256=%s\n' "$checksum"; fi
+    } > "$marker_tmp"
+    mv "$marker_tmp" "$marker_file"
+}
+
+validate_existing_marker() {
+    local state
+    local validation
+    local expected_checksum
+    local actual_checksum
+
+    state="$(marker_value state)"
+    validation="$(marker_value validation)"
+
+    case "$state" in
+        no-legacy-data)
+            if [[ -n "$validation" && "$validation" != "no-data-v1" ]]; then
+                log error "no-data migration marker uses an unknown validation method"
+                return 1
+            fi
+            if [[ -z "$validation" ]]; then
+                write_marker no-legacy-data "" no-data-v1
+                log warning "upgraded no-data migration marker with explicit validation state"
+            fi
+            return 0
+            ;;
+        legacy-backup)
+            if [[ "$validation" != "$validation_method" ]]; then
+                log error "legacy backup marker lacks content-level validation proof"
+                return 1
+            fi
+            expected_checksum="$(marker_value backup_sha256)"
+            if [[ -z "$expected_checksum" ]] || ! validate_archive "$backup_file"; then
+                log error "legacy backup marker exists but its archive cannot be verified"
+                return 1
+            fi
+            actual_checksum="$(sha256sum "$backup_file" | awk '{print $1}')"
+            if [[ "$actual_checksum" != "$expected_checksum" ]]; then
+                log error "legacy backup checksum does not match the migration marker"
+                return 1
+            fi
+            return 0
+            ;;
+        *)
+            log error "legacy migration marker lacks content-level validation proof"
+            return 1
+            ;;
+    esac
+}
+
+mkdir -p "$data_dir"
+
+if [[ -f "$marker_file" ]]; then
+    if validate_existing_marker; then exit 0; fi
+    exit 1
+fi
+
+if ! has_existing_data; then
+    write_marker no-legacy-data "" no-data-v1
+    log info "no existing InfluxDB data detected; recorded no-data migration state"
+    exit 0
+fi
+
+mkdir -p "$backup_dir"
+
+if [[ -e "$backup_file" ]] && validate_backup_against_source "$backup_file"; then
+    log info "using existing content-verified InfluxDB backup at ${backup_file}"
+else
+    if [[ -e "$backup_file" ]]; then
+        log warning "existing InfluxDB backup is stale, incomplete, or invalid and will be atomically replaced"
+    fi
+
+    log warning "creating offline InfluxDB backup at ${backup_file}"
+    tar -C "$(dirname "$data_dir")" -czf "$temporary_backup" "$archive_root"
+
+    if ! validate_backup_against_source "$temporary_backup"; then
+        log error "created InfluxDB backup failed content-level validation"
+        exit 1
+    fi
+
+    mv -f "$temporary_backup" "$backup_file"
+    log info "InfluxDB backup created and content-verified at ${backup_file}"
+fi
+
+backup_checksum="$(sha256sum "$backup_file" | awk '{print $1}')"
+write_marker legacy-backup "$backup_checksum" "$validation_method"
+log info "InfluxDB 2.9 migration marker created with content-validation method and backup checksum"
