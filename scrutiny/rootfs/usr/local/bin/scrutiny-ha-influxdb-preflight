@@ -8,6 +8,7 @@ backup_dir="${SCRUTINY_INFLUXDB_BACKUP_DIR:-/share/${addon_slug}}"
 marker_file="${data_dir}/.scrutiny-influxdb-2.9-preflight-complete"
 backup_file="${backup_dir}/influxdb-pre-2.9.tar.gz"
 temporary_backup="${backup_file}.tmp"
+archive_root="$(basename "$data_dir")"
 
 log() {
     local level="$1"
@@ -29,9 +30,23 @@ has_existing_data() {
 }
 
 validate_backup() {
+    local contents
+
     [[ -s "$backup_file" ]] || return 1
     gzip -t "$backup_file" >/dev/null 2>&1 || return 1
-    tar -tzf "$backup_file" >/dev/null 2>&1
+    contents="$(tar -tzf "$backup_file")" || return 1
+
+    if [[ -e "${data_dir}/influxd.bolt" ]] && ! grep -Fxq "${archive_root}/influxd.bolt" <<< "$contents"; then
+        return 1
+    fi
+
+    if [[ -e "${data_dir}/influxd.sqlite" ]] && ! grep -Fxq "${archive_root}/influxd.sqlite" <<< "$contents"; then
+        return 1
+    fi
+
+    if [[ -d "${data_dir}/engine" ]] && find "${data_dir}/engine" -mindepth 1 -print -quit | grep -q .; then
+        grep -q "^${archive_root}/engine/" <<< "$contents" || return 1
+    fi
 }
 
 mkdir -p "$data_dir"
@@ -59,12 +74,18 @@ else
     trap 'rm -f "$temporary_backup"' EXIT
 
     log warning "existing InfluxDB data detected; creating offline backup at ${backup_file}"
-    tar -C "$(dirname "$data_dir")" -czf "$temporary_backup" "$(basename "$data_dir")"
+    tar -C "$(dirname "$data_dir")" -czf "$temporary_backup" "$archive_root"
     gzip -t "$temporary_backup"
     tar -tzf "$temporary_backup" >/dev/null
     mv "$temporary_backup" "$backup_file"
 
     trap - EXIT
+
+    if ! validate_backup; then
+        log error "created InfluxDB backup did not pass validation"
+        exit 1
+    fi
+
     log info "InfluxDB backup created and verified at ${backup_file}"
 fi
 
