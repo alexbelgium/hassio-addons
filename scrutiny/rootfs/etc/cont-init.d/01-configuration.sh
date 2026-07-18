@@ -89,6 +89,15 @@ case "$FREQUENCY" in
                 fi
                 ;;
 
+            *d) # Matches intervals in days, like "10d"
+                days="${interval%d}"
+                if [[ "$days" -gt 0 && "$days" -le 31 ]]; then
+                    cron_schedule="0 0 */$days * *"
+                else
+                    bashio::log.error "Invalid day interval: $interval"
+                fi
+                ;;
+
             *w) # Matches intervals in weeks, like "1w"
                 weeks="${interval%w}"
                 if [[ "$weeks" -gt 0 && "$weeks" -le 4 ]]; then
