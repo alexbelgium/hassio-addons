@@ -35,6 +35,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
 
+# The Home Assistant entrypoint starts services directly instead of running s6.
+# Scrutiny's collector already waits for the API health endpoint, so remove its s6-only wait.
+RUN if grep -q 's6-svwait -u /run/service/scrutiny' /etc/services.d/collector-once/run; then \
+        sed -i '\|s6-svwait -u /run/service/scrutiny|d' /etc/services.d/collector-once/run; \
+    fi
+
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
