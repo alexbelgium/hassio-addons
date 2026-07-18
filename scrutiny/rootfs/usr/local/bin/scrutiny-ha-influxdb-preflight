@@ -30,22 +30,22 @@ has_existing_data() {
 }
 
 validate_backup() {
-    local contents
-
     [[ -s "$backup_file" ]] || return 1
     gzip -t "$backup_file" >/dev/null 2>&1 || return 1
-    contents="$(tar -tzf "$backup_file")" || return 1
+    tar -tzf "$backup_file" >/dev/null 2>&1 || return 1
 
-    if [[ -e "${data_dir}/influxd.bolt" ]] && ! grep -Fxq "${archive_root}/influxd.bolt" <<< "$contents"; then
+    if [[ -e "${data_dir}/influxd.bolt" ]] && \
+        ! tar -tzf "$backup_file" "${archive_root}/influxd.bolt" >/dev/null 2>&1; then
         return 1
     fi
 
-    if [[ -e "${data_dir}/influxd.sqlite" ]] && ! grep -Fxq "${archive_root}/influxd.sqlite" <<< "$contents"; then
+    if [[ -e "${data_dir}/influxd.sqlite" ]] && \
+        ! tar -tzf "$backup_file" "${archive_root}/influxd.sqlite" >/dev/null 2>&1; then
         return 1
     fi
 
     if [[ -d "${data_dir}/engine" ]] && find "${data_dir}/engine" -mindepth 1 -print -quit | grep -q .; then
-        grep -q "^${archive_root}/engine/" <<< "$contents" || return 1
+        tar -tzf "$backup_file" --wildcards "${archive_root}/engine/*" >/dev/null 2>&1 || return 1
     fi
 }
 
