@@ -1,4 +1,7 @@
  
+## v1.67.0-8 (2026-07-18)
+- Keep content-level backup validation and atomic replacement tests while removing a blocking synthetic FIFO test fixture from cross-architecture builds.
+
 ## v1.67.0-7 (2026-07-18)
 - Verify every backup file checksum and symbolic-link target, record the content-validation method in the migration marker, and preserve the previous archive until a validated replacement is atomically ready.
 
