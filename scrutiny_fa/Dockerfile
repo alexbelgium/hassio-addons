@@ -86,8 +86,8 @@ RUN chmod 0755 /ha_entrypoint.sh && \
 COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
-# Build-time migration tests cover complete archive manifests, marker checksums,
-# idempotency, the no-data state, and fail-closed handling of a corrupt backup.
+# Build-time migration tests cover path and content equality, symbolic links,
+# atomic replacement, marker checksums, idempotency, and fail-closed states.
 RUN test -x /init && \
     test -x /ha_entrypoint.sh && \
     bash -n /ha_entrypoint.sh && \
@@ -95,20 +95,26 @@ RUN test -x /init && \
     bash -n /usr/local/bin/scrutiny-ha-influxdb-preflight && \
     grep -q 'SCRUTINY_HA_ADDON_SLUG:-scrutiny_fa' /usr/local/bin/scrutiny-ha-influxdb-preflight && \
     test_root="$(mktemp -d)" && \
-    mkdir -p "$test_root/data/influxdb/engine/nested" "$test_root/share" "$test_root/partial/influxdb/engine" && \
+    mkdir -p "$test_root/data/influxdb/engine/nested" "$test_root/share" "$test_root/stale/influxdb/engine/nested" && \
     printf 'bolt-test\n' > "$test_root/data/influxdb/influxd.bolt" && \
     printf 'shard-one\n' > "$test_root/data/influxdb/engine/shard-one" && \
     printf 'shard-two\n' > "$test_root/data/influxdb/engine/nested/shard-two" && \
-    cp "$test_root/data/influxdb/influxd.bolt" "$test_root/partial/influxdb/" && \
-    cp "$test_root/data/influxdb/engine/shard-one" "$test_root/partial/influxdb/engine/" && \
-    tar -C "$test_root/partial" -czf "$test_root/share/influxdb-pre-2.9.tar.gz" influxdb && \
+    ln -s nested/shard-two "$test_root/data/influxdb/engine/current-link" && \
+    printf 'stale-bolt\n' > "$test_root/stale/influxdb/influxd.bolt" && \
+    printf 'stale-one\n' > "$test_root/stale/influxdb/engine/shard-one" && \
+    printf 'shard-two\n' > "$test_root/stale/influxdb/engine/nested/shard-two" && \
+    ln -s shard-one "$test_root/stale/influxdb/engine/current-link" && \
+    tar -C "$test_root/stale" -czf "$test_root/share/influxdb-pre-2.9.tar.gz" influxdb && \
+    stale_sha="$(sha256sum "$test_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
     SCRUTINY_INFLUXDB_DATA_DIR="$test_root/data/influxdb" \
     SCRUTINY_INFLUXDB_BACKUP_DIR="$test_root/share" \
         /usr/local/bin/scrutiny-ha-influxdb-preflight && \
-    tar -tzf "$test_root/share/influxdb-pre-2.9.tar.gz" | grep -q '^influxdb/engine/shard-one$' && \
-    tar -tzf "$test_root/share/influxdb-pre-2.9.tar.gz" | grep -q '^influxdb/engine/nested/shard-two$' && \
-    grep -q '^state=legacy-backup$' "$test_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
     backup_sha="$(sha256sum "$test_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
+    test "$stale_sha" != "$backup_sha" && \
+    test "$(tar -xOzf "$test_root/share/influxdb-pre-2.9.tar.gz" influxdb/engine/shard-one)" = "shard-one" && \
+    tar -tvzf "$test_root/share/influxdb-pre-2.9.tar.gz" influxdb/engine/current-link | grep -q ' -> nested/shard-two$' && \
+    grep -q '^state=legacy-backup$' "$test_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
+    grep -q '^validation=content-sha256-v1$' "$test_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
     grep -q "^backup_sha256=${backup_sha}$" "$test_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
     SCRUTINY_INFLUXDB_DATA_DIR="$test_root/data/influxdb" \
     SCRUTINY_INFLUXDB_BACKUP_DIR="$test_root/share" \
@@ -118,14 +124,25 @@ RUN test -x /init && \
     if SCRUTINY_INFLUXDB_DATA_DIR="$test_root/data/influxdb" \
         SCRUTINY_INFLUXDB_BACKUP_DIR="$test_root/share" \
         /usr/local/bin/scrutiny-ha-influxdb-preflight; then exit 1; fi && \
+    failure_root="$(mktemp -d)" && \
+    mkdir -p "$failure_root/data/influxdb/engine" "$failure_root/share" "$failure_root/old/influxdb/engine" && \
+    mkfifo "$failure_root/data/influxdb/engine/unsupported-fifo" && \
+    printf 'preserve-me\n' > "$failure_root/old/influxdb/engine/old-file" && \
+    tar -C "$failure_root/old" -czf "$failure_root/share/influxdb-pre-2.9.tar.gz" influxdb && \
+    preserved_sha="$(sha256sum "$failure_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
+    if SCRUTINY_INFLUXDB_DATA_DIR="$failure_root/data/influxdb" \
+        SCRUTINY_INFLUXDB_BACKUP_DIR="$failure_root/share" \
+        /usr/local/bin/scrutiny-ha-influxdb-preflight; then exit 1; fi && \
+    test "$preserved_sha" = "$(sha256sum "$failure_root/share/influxdb-pre-2.9.tar.gz" | awk '{print $1}')" && \
     empty_root="$(mktemp -d)" && \
     mkdir -p "$empty_root/data/influxdb" "$empty_root/share" && \
     SCRUTINY_INFLUXDB_DATA_DIR="$empty_root/data/influxdb" \
     SCRUTINY_INFLUXDB_BACKUP_DIR="$empty_root/share" \
         /usr/local/bin/scrutiny-ha-influxdb-preflight && \
     grep -q '^state=no-legacy-data$' "$empty_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
+    grep -q '^validation=no-data-v1$' "$empty_root/data/influxdb/.scrutiny-influxdb-2.9-preflight-complete" && \
     test ! -e "$empty_root/share/influxdb-pre-2.9.tar.gz" && \
-    rm -rf "$test_root" "$empty_root"
+    rm -rf "$test_root" "$failure_root" "$empty_root"
 
 RUN sed -i "1a if ! bashio::require.unprotected; then bashio::addon.stop; fi" /etc/cont-init.d/90-run.sh
 
