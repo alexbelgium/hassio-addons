@@ -19,11 +19,20 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v7
+        with:
+          # Need the merge commit's parents resolvable (HEAD^1 below): a depth-1 shallow
+          # checkout truncates parent refs entirely at the boundary commit.
+          fetch-depth: 2
       - name: Find changed addon directories
         id: find_addons
         run: |
-          git fetch origin "${{ github.event.before }}" || true
-          changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
+          # github.event.pull_request.base.sha is a snapshot from event-trigger time and can be
+          # stale if master advances before checkout; HEAD^1 is the actual base this merge
+          # commit was built against, so it's always correct.
+          base_sha=$(git rev-parse HEAD^1)
+          git fetch origin "$base_sha"
+          diff_files=$(git diff --name-only "$base_sha" "${{ github.sha }}")
+          changed_config_files=$(printf '%s\n' "$diff_files" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "Changed config files:"
           echo "$changed_config_files"
           changed_addons=$(printf '%s' "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
@@ -32,11 +41,17 @@ jobs:
       - name: Find changelog
         id: changed-files
         run: |
-          git fetch origin "${{ github.event.before }}" || true
-          changed_changelog_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -iE '^([^/]+/)?changelog\.(md|txt|ya?ml|json)$' || true)
+          base_sha=$(git rev-parse HEAD^1)
+          git fetch origin "$base_sha"
+          diff_files=$(git diff --name-only "$base_sha" "${{ github.sha }}")
+          changed_changelog_files=$(printf '%s\n' "$diff_files" | grep -iE '^([^/]+/)?changelog\.(md|txt|ya?ml|json)$' || true)
           echo "$changed_changelog_files"
-          echo "changelogs_files=$changed_changelog_files" >> "$GITHUB_OUTPUT"
-          changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
+          {
+            echo "changelogs_files<<EOF_CHANGELOG_FILES"
+            echo "$changed_changelog_files"
+            echo "EOF_CHANGELOG_FILES"
+          } >> "$GITHUB_OUTPUT"
+          changed_config_files=$(printf '%s\n' "$diff_files" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "$changed_config_files"
           all_changed_files=$(echo -e "$changed_config_files\n$changed_changelog_files" | sort -u)
           changed_addons=$(printf '%s' "$all_changed_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
