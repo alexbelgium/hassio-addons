@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_UPSTREAM="8.19.19"
+ARG BUILD_UPSTREAM="8.19.18"
 FROM elasticsearch:$BUILD_UPSTREAM
 
 # The base image ends as USER 1000:0 with a root-owned, read-only (0555)
