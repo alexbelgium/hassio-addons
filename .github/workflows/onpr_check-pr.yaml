@@ -22,8 +22,12 @@ jobs:
       - name: Find changed addon directories
         id: find_addons
         run: |
-          git fetch origin "${{ github.event.pull_request.base.sha }}"
-          diff_files=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}")
+          # github.event.pull_request.base.sha is a snapshot from event-trigger time and can be
+          # stale if master advances before checkout; HEAD^1 is the actual base this merge
+          # commit was built against, so it's always correct.
+          base_sha=$(git rev-parse HEAD^1)
+          git fetch origin "$base_sha"
+          diff_files=$(git diff --name-only "$base_sha" "${{ github.sha }}")
           changed_config_files=$(printf '%s\n' "$diff_files" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "Changed config files:"
           echo "$changed_config_files"
@@ -33,8 +37,9 @@ jobs:
       - name: Find changelog
         id: changed-files
         run: |
-          git fetch origin "${{ github.event.pull_request.base.sha }}"
-          diff_files=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}")
+          base_sha=$(git rev-parse HEAD^1)
+          git fetch origin "$base_sha"
+          diff_files=$(git diff --name-only "$base_sha" "${{ github.sha }}")
           changed_changelog_files=$(printf '%s\n' "$diff_files" | grep -iE '^([^/]+/)?changelog\.(md|txt|ya?ml|json)$' || true)
           echo "$changed_changelog_files"
           {
