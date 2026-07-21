@@ -19,6 +19,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v7
+        with:
+          # Need the merge commit's parents resolvable (HEAD^1 below): a depth-1 shallow
+          # checkout truncates parent refs entirely at the boundary commit.
+          fetch-depth: 2
       - name: Find changed addon directories
         id: find_addons
         run: |
