@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] qbittorrent (opened 2025-10-11)](https://github.com/alexbelgium/hassio-addons/issues/2139) by [@nyok92](https://github.com/nyok92)
 ## &#9888; Open Request : [✨ [REQUEST] transmission, document where torrent files are stored (opened 2026-07-14)](https://github.com/alexbelgium/hassio-addons/issues/2852) by [@bilogic](https://github.com/bilogic)
 # Hass.io Add-ons: Tor with bridges
 
