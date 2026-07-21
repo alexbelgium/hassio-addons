@@ -15,7 +15,11 @@
 #################
 
 ARG BUILD_UPSTREAM="8.19.19"
-FROM elasticsearch:$BUILD_UPSTREAM
+# Pull from Elastic's own registry (multi-arch, published atomically with the
+# GitHub release the updater tracks) rather than the Docker Hub "library"
+# mirror, whose arm64/aarch64 tag lags hours behind and breaks the aarch64
+# build right after an update (e.g. elasticsearch:8.19.19 arm64 missing).
+FROM docker.elastic.co/elasticsearch/elasticsearch:$BUILD_UPSTREAM
 
 # The base image ends as USER 1000:0 with a root-owned, read-only (0555)
 # entrypoint; switch back to root for the remaining build steps (entrypoint
