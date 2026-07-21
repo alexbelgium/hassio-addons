@@ -22,8 +22,8 @@ jobs:
       - name: Find changed addon directories
         id: find_addons
         run: |
-          git fetch origin "${{ github.event.before }}" || true
-          changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
+          git fetch origin "${{ github.event.pull_request.base.sha }}" || true
+          changed_config_files=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "Changed config files:"
           echo "$changed_config_files"
           changed_addons=$(printf '%s' "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
@@ -32,11 +32,11 @@ jobs:
       - name: Find changelog
         id: changed-files
         run: |
-          git fetch origin "${{ github.event.before }}" || true
-          changed_changelog_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -iE '^([^/]+/)?changelog\.(md|txt|ya?ml|json)$' || true)
+          git fetch origin "${{ github.event.pull_request.base.sha }}" || true
+          changed_changelog_files=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" | grep -iE '^([^/]+/)?changelog\.(md|txt|ya?ml|json)$' || true)
           echo "$changed_changelog_files"
           echo "changelogs_files=$changed_changelog_files" >> "$GITHUB_OUTPUT"
-          changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
+          changed_config_files=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "$changed_config_files"
           all_changed_files=$(echo -e "$changed_config_files\n$changed_changelog_files" | sort -u)
           changed_addons=$(printf '%s' "$all_changed_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
