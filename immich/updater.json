@@ -1,10 +1,10 @@
 {
   "github_beta": "false",
   "github_exclude": "",
-  "last_update": "2026-07-22",
+  "last_update": "2026-07-04",
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich",
   "source": "github",
   "upstream_repo": "immich-app/immich",
-  "upstream_version": "3.0.3"
+  "upstream_version": "3.0.1"
 }
