@@ -407,20 +407,25 @@ jobs:
           fetch-depth: 0
 
       - name: Revert commits from this failed push
+        env:
+          BEFORE: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
 
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git fetch origin
-          git checkout master
-          git pull --ff-only origin master
+          git fetch origin master
 
-          before="${{ github.event.before }}"
-          if [ -n "$before" ] && [ "$before" != "0000000000000000000000000000000000000000" ]; then
-            mapfile -t commits < <(git rev-list "${before}..HEAD")
+          # Revert exactly the commits THIS push introduced (before..HEAD_SHA).
+          # Do not diff against the live master tip: concurrent pushes (e.g. the
+          # updater bot committing one addon per push) can land on master while
+          # this job is running, and a moving HEAD would sweep their unrelated,
+          # successful commits into the revert too.
+          if [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            mapfile -t commits < <(git rev-list "${BEFORE}..${HEAD_SHA}")
           else
-            commits=("${{ github.sha }}")
+            commits=("$HEAD_SHA")
           fi
 
           if [ "${#commits[@]}" -eq 0 ]; then
@@ -428,8 +433,21 @@ jobs:
             exit 0
           fi
 
+          git checkout -B master origin/master
           for commit in "${commits[@]}"; do
             git revert --no-edit "$commit"
           done
 
-          git push origin HEAD:master
+          # Master may have moved again since we fetched (e.g. another
+          # concurrent updater push), so retry the push with a rebase.
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:master; then
+              exit 0
+            fi
+            echo "Push rejected, rebasing onto latest master (attempt ${attempt})"
+            git fetch origin master
+            git rebase origin/master
+          done
+
+          echo "Failed to push reverts after retries" >&2
+          exit 1
