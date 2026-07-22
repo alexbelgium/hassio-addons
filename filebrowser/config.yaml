@@ -126,4 +126,4 @@ schema:
 slug: filebrowser
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.63.18.3"
+version: "2.63.18.4"
