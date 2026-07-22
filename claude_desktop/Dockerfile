@@ -164,10 +164,10 @@ RUN set -eux; \
 # image. This makes an ABI mismatch fail the image build instead of surfacing at runtime.
 COPY --from=rtk-builder /out/rtk /usr/local/bin/rtk
 COPY --from=tokensave-builder /out/bin/tokensave /usr/local/bin/tokensave
-COPY --from=virtiofsd-builder /out/bin/virtiofsd /usr/local/bin/virtiofsd
+COPY --from=virtiofsd-builder /out/bin/virtiofsd /usr/bin/virtiofsd
 RUN /usr/local/bin/rtk --version && \
     /usr/local/bin/tokensave --version && \
-    /usr/local/bin/virtiofsd --version
+    /usr/bin/virtiofsd --version
 
 # Install only the Headroom proxy, code-compression, and MCP features used by this add-on,
 # plus mcp-proxy (stdio->HTTP bridge for the Home Assistant MCP server) and uv (fast
@@ -235,7 +235,6 @@ ENV BUILD_VERSION="${BUILD_VERSION}"
 LABEL \
     io.hass.name="${BUILD_NAME}" \
     io.hass.description="${BUILD_DESCRIPTION}" \
-    io.hass.arch="${BUILD_ARCH}" \
     io.hass.type="addon" \
     io.hass.version=${BUILD_VERSION} \
     maintainer="alexbelgium (https://github.com/alexbelgium)" \
