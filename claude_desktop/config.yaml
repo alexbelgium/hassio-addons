@@ -9,6 +9,8 @@ devices:
   - /dev/dri/card1
   - /dev/dri/renderD128
   - /dev/fuse
+  - /dev/kvm
+  - /dev/vhost-vsock
 environment:
   AUTO_GPU: "1"
   FM_HOME: /data/data
