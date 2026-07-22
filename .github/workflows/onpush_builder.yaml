@@ -55,6 +55,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      sanitizeCommitted: ${{ steps.sanitize_commit.outputs.committed }}
+      sanitizeCommitSha: ${{ steps.sanitize_commit.outputs.commit_long_sha }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -90,6 +93,7 @@ jobs:
         uses: ymwymw/check-mixed-line-endings@v2
 
       - name: Commit sanitize changes
+        id: sanitize_commit
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         uses: EndBug/add-and-commit@v10
         with:
@@ -407,20 +411,36 @@ jobs:
           fetch-depth: 0
 
       - name: Revert commits from this failed push
+        env:
+          BEFORE: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+          SANITIZE_COMMITTED: ${{ needs.prebuild-sanitize.outputs.sanitizeCommitted }}
+          SANITIZE_SHA: ${{ needs.prebuild-sanitize.outputs.sanitizeCommitSha }}
         run: |
           set -euo pipefail
 
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git fetch origin
-          git checkout master
-          git pull --ff-only origin master
+          git fetch origin master
 
-          before="${{ github.event.before }}"
-          if [ -n "$before" ] && [ "$before" != "0000000000000000000000000000000000000000" ]; then
-            mapfile -t commits < <(git rev-list "${before}..HEAD")
+          # Revert exactly the commits THIS push introduced (before..HEAD_SHA).
+          # Do not diff against the live master tip: concurrent pushes (e.g. the
+          # updater bot committing one addon per push) can land on master while
+          # this job is running, and a moving HEAD would sweep their unrelated,
+          # successful commits into the revert too.
+          if [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            mapfile -t commits < <(git rev-list "${BEFORE}..${HEAD_SHA}")
           else
-            commits=("${{ github.sha }}")
+            commits=("$HEAD_SHA")
+          fi
+
+          # The prebuild-sanitize job may have pushed its own [nobuild] commit
+          # on top of HEAD_SHA earlier in this same run. It's still this push's
+          # own fallout (not a neighboring push's), so revert it explicitly by
+          # SHA rather than widening the range to "whatever is on master now."
+          # It must be reverted first, since it sits on top of HEAD_SHA.
+          if [ "$SANITIZE_COMMITTED" = "true" ] && [ -n "$SANITIZE_SHA" ]; then
+            commits=("$SANITIZE_SHA" "${commits[@]}")
           fi
 
           if [ "${#commits[@]}" -eq 0 ]; then
@@ -428,8 +448,27 @@ jobs:
             exit 0
           fi
 
+          git checkout -B master origin/master
           for commit in "${commits[@]}"; do
             git revert --no-edit "$commit"
           done
 
-          git push origin HEAD:master
+          # Master may have moved again since we fetched (e.g. another
+          # concurrent updater push), so retry the push with a rebase.
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:master; then
+              exit 0
+            fi
+            echo "Push rejected, rebasing onto latest master (attempt ${attempt})"
+            git fetch origin master
+            if ! git rebase origin/master; then
+              git rebase --abort
+              echo "Rebase hit a real conflict against latest master; aborting" \
+                   "rather than pushing a partial/broken revert. This needs a" \
+                   "human to look at it." >&2
+              exit 1
+            fi
+          done
+
+          echo "Failed to push reverts after retries" >&2
+          exit 1
