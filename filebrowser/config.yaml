@@ -95,6 +95,7 @@ options:
   NoAuth: true
   certfile: fullchain.pem
   disable_thumbnails: true
+  follow_external_symlinks: true
   keyfile: privkey.pem
   ssl: false
 panel_admin: false
@@ -117,6 +118,7 @@ schema:
   cifspassword: str?
   cifsusername: str?
   disable_thumbnails: bool?
+  follow_external_symlinks: bool?
   keyfile: str
   localdisks: str?
   networkdisks: str?
@@ -124,4 +126,4 @@ schema:
 slug: filebrowser
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.63.18"
+version: "2.63.18.2"
