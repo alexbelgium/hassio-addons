@@ -1,3 +1,4 @@
+- New flag added : follow_external_symlinks
  
 ## 2.63.18 (2026-07-04)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
