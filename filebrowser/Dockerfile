@@ -134,4 +134,4 @@ HEALTHCHECK \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD if [ "$ssl" = "true" ]; then curl -f -k https://127.0.01:${HEALTH_PORT}${HEALTH_URL}; else curl -f http://127.0.01:${HEALTH_PORT}${HEALTH_URL}/; fi
+    CMD if [ "$ssl" = "true" ]; then curl -f -k https://127.0.01:${HEALTH_PORT}${HEALTH_URL}; else curl -f http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}/; fi
