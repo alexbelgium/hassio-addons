@@ -12,6 +12,7 @@ ARG BUILD_VERSION
 ARG RTK_VERSION="v0.43.0"
 ARG RTK_COMMIT="5a7880d404db8364d602f2ecdc41dd790f64013f"
 ARG TOKENSAVE_VERSION="7.4.0"
+ARG VIRTIOFSD_VERSION="1.14.0"
 
 # The upstream aarch64 release is cross-built on ubuntu-latest and requires
 # GLIBC 2.39. Build the pinned source on Bookworm instead so it is compatible
@@ -33,8 +34,27 @@ ARG TOKENSAVE_VERSION
 RUN cargo install tokensave --version "${TOKENSAVE_VERSION}" --locked --root /out && \
     /out/bin/tokensave --version
 
+# virtiofsd is only packaged for Debian trixie/sid, not Bookworm or bookworm-backports;
+# installing the trixie .deb on the Bookworm runtime would pull a binary linked against a
+# newer GLIBC. Build the pinned crates.io release from source on Bookworm so the daemon's
+# ABI matches the add-on runtime (same rationale as the rtk and tokensave builders above).
+# Cowork shares the workspace into its qemu microVM through virtiofsd.
+FROM rust:1.91-bookworm AS virtiofsd-builder
+ARG VIRTIOFSD_VERSION
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        libseccomp-dev \
+        libcap-ng-dev \
+        pkg-config \
+        clang \
+        libclang-dev && \
+    cargo install virtiofsd --version "${VIRTIOFSD_VERSION}" --locked --root /out && \
+    /out/bin/virtiofsd --version && \
+    rm -rf /var/lib/apt/lists/*
+
 FROM ${BUILD_FROM}
 ARG BUILD_ARCH
+ARG TARGETARCH
 
 ##################
 # 2 Modify Image #
@@ -85,6 +105,13 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
 # Install Claude Desktop, Claude Code, Python tooling, and lightweight local validators.
 # gnome-keyring provides the Secret Service backend Electron safeStorage needs to persist
 # sign-in and dispatch grants.
+# The cowork virtualization stack (qemu-system-x86 + ovmf firmware) lets Claude Code launch
+# its sandbox microVM; libseccomp2 and libcap-ng0 are the shared libraries the source-built
+# virtiofsd daemon links against at runtime. Docker itself is NOT installed here: this base
+# image already ships Docker-in-Docker (docker-ce + containerd.io from Docker's own apt repo,
+# started via the pre-existing START_DOCKER env var) — installing Debian's docker.io package
+# on top pulls in Debian's own containerd/runc, which apt refuses because they Conflict with
+# the base image's already-installed containerd.io.
 RUN install -d -m 0755 /etc/apt/keyrings && \
     curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
     curl -fsSLo /etc/apt/keyrings/claude-code.asc https://downloads.claude.ai/keys/claude-code.asc && \
@@ -102,7 +129,11 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
         ripgrep \
         jq \
         shellcheck \
-        yamllint && \
+        yamllint \
+        qemu-system-x86 \
+        ovmf \
+        libseccomp2 \
+        libcap-ng0 && \
     test -x /usr/bin/claude && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -112,10 +143,10 @@ ARG HADOLINT_VERSION=v2.14.0
 ARG ACTIONLINT_VERSION=v1.7.12
 
 RUN set -eux; \
-    case "${BUILD_ARCH}" in \
+    case "${TARGETARCH}" in \
         amd64) hadolint_arch="x86_64"; actionlint_arch="amd64" ;; \
-        aarch64) hadolint_arch="arm64"; actionlint_arch="arm64" ;; \
-        *) echo "Unsupported validation-tools architecture: ${BUILD_ARCH}" >&2; exit 1 ;; \
+        arm64) hadolint_arch="arm64"; actionlint_arch="arm64" ;; \
+        *) echo "Unsupported validation-tools architecture: ${TARGETARCH}" >&2; exit 1 ;; \
     esac; \
     curl -fsSL --retry 3 --retry-delay 2 \
         -o /usr/local/bin/hadolint \
@@ -134,7 +165,10 @@ RUN set -eux; \
 # image. This makes an ABI mismatch fail the image build instead of surfacing at runtime.
 COPY --from=rtk-builder /out/rtk /usr/local/bin/rtk
 COPY --from=tokensave-builder /out/bin/tokensave /usr/local/bin/tokensave
-RUN /usr/local/bin/rtk --version && /usr/local/bin/tokensave --version
+COPY --from=virtiofsd-builder /out/bin/virtiofsd /usr/bin/virtiofsd
+RUN /usr/local/bin/rtk --version && \
+    /usr/local/bin/tokensave --version && \
+    /usr/bin/virtiofsd --version
 
 # Install only the Headroom proxy, code-compression, and MCP features used by this add-on,
 # plus mcp-proxy (stdio->HTTP bridge for the Home Assistant MCP server) and uv (fast

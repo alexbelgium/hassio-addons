@@ -9,6 +9,8 @@ devices:
   - /dev/dri/card1
   - /dev/dri/renderD128
   - /dev/fuse
+  - /dev/kvm
+  - /dev/vhost-vsock
 environment:
   AUTO_GPU: "1"
   FM_HOME: /data/data
@@ -110,5 +112,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "ubunturesolute-version-8208e985"
+version: "1.33"
 video: true
