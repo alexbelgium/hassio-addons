@@ -1,4 +1,9 @@
  
+## 1.27.0 (2026-07-22)
+- Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
+## 1.27 (15-07-2026)
+- Fix the Gitea add-on HEALTHCHECK to work correctly when SSL is enabled, so Home Assistant can accurately report the add-on's health status regardless of whether the instance uses HTTP or HTTPS.
+ 
 ## 1.26.4 (2026-06-23)
 - Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
 ## 1.26.2-3 (19-06-2026)

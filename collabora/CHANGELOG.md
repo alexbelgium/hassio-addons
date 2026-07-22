@@ -1,4 +1,7 @@
  
+## 1.3.0 (2026-07-16)
+- Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
+ 
 ## 1.2.2 (2026-07-04)
 - Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
  

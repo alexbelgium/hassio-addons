@@ -4,7 +4,10 @@ Two related sign-in problems when Claude Desktop runs inside the LinuxServer Sel
 streamed desktop.
 
 **Status:**
-- **Shipped:** Problem B (keyring persistence) is implemented in v1.4 (Dockerfile + `rootfs/defaults/autostart`).
+- **Shipped:** Problem B (keyring persistence) — the `autostart` bootstrap landed in v1.4, but
+  the `gnome-keyring` package itself was missing from the image until v1.17 (the bootstrap
+  silently no-oped and Electron logged "safeStorage encryption is not available"). Fixed in
+  v1.17: the Dockerfile now installs `gnome-keyring`.
 - **Planned only:** Problem A (in-desktop browser for OAuth) is intentionally not implemented.
   The image ships no browser; complete the login with the user-side workaround below.
 
@@ -50,8 +53,9 @@ magic link into the in-session Chromium (not a phone).
 ### User-side workaround (no rebuild)
 - Add-on Configuration → `additional_apps: chromium`, restart (installed by
   `rootfs/etc/cont-init.d/80-configuration.sh`).
-- Run the two `xdg-settings`/`xdg-mime` commands once in an in-session terminal, or add them
-  to the custom script `/addon_configs/db21ed7f_claude-desktop/claude-desktop.sh`.
+- Add the two `xdg-settings`/`xdg-mime` commands to the custom script
+  `/addon_configs/db21ed7f_claude-desktop/claude_desktop.sh` (the image ships no standalone
+  terminal).
 
 ---
 
@@ -94,14 +98,14 @@ Claude Desktop uses. No extra `dbus-launch` is needed.
      then exposes the Secret Service and exports `GNOME_KEYRING_CONTROL`/`SSH_AUTH_SOCK`.
    - `--password-store=gnome-libsecret` forces Electron to use the libsecret backend instead
      of falling back to plaintext.
-3. Persistence: the keyring DB lives in `$HOME/.local/share/keyrings/` and `HOME=/config/data`
+3. Persistence: the keyring DB lives in `$HOME/.local/share/keyrings/` and `HOME=/data/data`
    (persistent add-on storage), so the empty-password login keyring survives restarts and is
    re-unlocked automatically each boot by the same `autostart` line — the sign-in then sticks.
 
 ### User-side workaround (no rebuild)
 - Add-on Configuration → `additional_apps: gnome-keyring, libsecret-1-0, dbus-x11`, restart.
 - Add the keyring-start lines above to the custom script
-  `/addon_configs/db21ed7f_claude-desktop/claude-desktop.sh`, and relaunch Claude Desktop
+  `/addon_configs/db21ed7f_claude-desktop/claude_desktop.sh`, and relaunch Claude Desktop
   with `--password-store=gnome-libsecret` (e.g. edit the in-session openbox autostart).
 
 ---

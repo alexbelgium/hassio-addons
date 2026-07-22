@@ -1,128 +1,164 @@
-## &#9888; VNC not working on several machines. Please use config.env to execute the script
+# Home Assistant add-on: Free Games Claimer
 
-# Home assistant add-on: Free Games Claimer
-
-
-I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
-
-If this add-on saves you time or makes your setup easier, I would be very grateful for your support!
+I maintain this and other Home Assistant add-ons in my free time. Keeping up
+with upstream changes, Home Assistant changes, and testing on real hardware
+takes a significant amount of time.
 
 [![Buy me a coffee][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate via PayPal][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
 
-## Addon informations
+## Add-on information
 
 ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffree_games_claimer%2Fconfig.yaml)
-![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffree_games_claimer%2Fconfig.yaml)
 ![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffree_games_claimer%2Fconfig.yaml)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
 [![GitHub Super-Linter](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/weekly-supelinter.yaml?label=Lint%20code%20base)](https://github.com/alexbelgium/hassio-addons/actions/workflows/weekly-supelinter.yaml)
 [![Builder](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/onpush_builder.yaml?label=Builder)](https://github.com/alexbelgium/hassio-addons/actions/workflows/onpush_builder.yaml)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 [paypal-badge]: https://img.shields.io/badge/Donate%20via%20PayPal-0070BA?logo=paypal&style=flat&logoColor=white
 
-_Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
-
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
-
-![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/free_games_claimer/stats.png)
-
 ## About
 
-[Free Games Claimer](https://github.com/vogler/free-games-claimer) : Claims free games periodically on
+This add-on is based on
+[Free Games Claimer Remaster](https://github.com/P-Adamiec/Free-Games-Claimer-Remaster).
+It can claim free games from:
 
 - Epic Games Store
 - Amazon Prime Gaming
 - GOG
-- Live Games with Gold - planned
+- Steam
+- GamerPower-supported stores, when explicitly enabled
 
-This addon is based on the docker image https://github.com/vogler/free-games-claimer
+For compatibility with previous add-on releases, the default store selection
+remains Epic Games, Prime Gaming, and GOG.
 
-## Configuration
+## Web interface
 
-Webui can be found at <http://homeassistant:6080> (NoVNC interface - currently has issues on some machines).
+The noVNC interface remains available on port `6080`:
 
-### Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `CMD_ARGUMENTS` | str | `node epic-games ; node prime-gaming ; node gog` | Commands to run for claiming games |
-| `CONFIG_LOCATION` | str | `/config/config.env` | Location of the configuration file |
-
-### Example Configuration
-
-```yaml
-CMD_ARGUMENTS: "node epic-games ; node prime-gaming ; node gog"
-CONFIG_LOCATION: "/config/config.env"
+```text
+http://homeassistant:6080
 ```
 
-### Environment Configuration
+It can be used for initial sign-in, CAPTCHA handling, or other manual browser
+interaction. Set `VNC_PASSWORD` in `config.env` to protect the VNC session.
 
-All main configuration is done via the `config.env` file located at `/config/addons_config/free_games_claimer/config.env`.
+## Add-on options
 
-If this file doesn't exist, it will be created at first boot with default settings.
+| Option | Default | Description |
+|--------|---------|-------------|
+| `CONFIG_LOCATION` | `/config/config.env` | Persistent environment configuration file |
+| `RUN_ONCE` | `true` | Run all selected claimers once, then stop the add-on as previous releases did |
+| `STORES` | empty | Optional comma-separated override, such as `epic,prime,gog,steam` |
+| `CMD_ARGUMENTS` | `node epic-games ; node prime-gaming ; node gog` | Deprecated compatibility option; recognized legacy command names are converted to `STORES` |
+| `env_vars` | `[]` | Additional environment variables passed to the add-on |
 
-### Required Environment Variables
+### Run modes
 
-Add these to your `config.env` file:
+With `RUN_ONCE: true`, the add-on performs one claiming pass and stops. This is
+the default and preserves the behavior of the former vogler-based add-on.
+
+With `RUN_ONCE: false`, the remaster remains running and uses its internal
+scheduler. Set `SCHEDULER_HOURS` in `config.env` to control the interval.
+
+## Environment configuration
+
+The add-on keeps its configuration in `CONFIG_LOCATION`, which defaults to
+`/config/config.env`. From Home Assistant this is stored in the add-on's
+private `addon_configs` directory and can be edited with a compatible file
+browser add-on.
+
+A template is created on first start. Common examples are:
 
 ```env
-# Epic Games Store
+# Preserve the former default selection
+STORES=epic,prime,gog
+
+# Epic Games
 EG_EMAIL=your-email@example.com
 EG_PASSWORD=your-password
+EG_OTPKEY=
 
 # Amazon Prime Gaming
 PG_EMAIL=your-amazon-email@example.com
-PG_PASSWORD=your-amazon-password
+PG_PASSWORD=your-password
+PG_OTPKEY=
 
-# GOG (optional)
+# GOG
 GOG_EMAIL=your-gog-email@example.com
-GOG_PASSWORD=your-gog-password
+GOG_PASSWORD=your-password
 
-# Notifications (optional)
-EMAIL_SMTP_HOST=smtp.gmail.com
-EMAIL_SMTP_PORT=587
-EMAIL_USER=notifications@example.com
-EMAIL_PASS=your-app-password
-EMAIL_TO=recipient@example.com
+# Optional Steam support
+STEAM_USERNAME=your-steam-username
+STEAM_PASSWORD=your-password
+
+# Optional notifications
+NOTIFY=tgram://bot-token/chat-id
+# DISCORD_WEBHOOK=https://discord.com/api/webhooks/...
 ```
 
-### Additional Options
+Existing variables such as `EG_EMAIL`, `EG_PASSWORD`, `PG_EMAIL`,
+`PG_PASSWORD`, `PG_OTPKEY`, `GOG_EMAIL`, `GOG_PASSWORD`, `SHOW`, `WIDTH`,
+`HEIGHT`, `TIMEOUT`, `LOGIN_TIMEOUT`, `DRYRUN`, and `NOTIFY` remain compatible.
+See the
+[upstream configuration reference](https://github.com/P-Adamiec/Free-Games-Claimer-Remaster#configuration)
+for all available settings.
 
-For complete configuration options and advanced settings, see: https://github.com/vogler/free-games-claimer#configuration--options
+## Upgrade from version 1.8
 
-### Important Notes
+Version 2.0 changes the application engine from
+`vogler/free-games-claimer` (Node.js, Playwright, and Firefox) to
+`P-Adamiec/Free-Games-Claimer-Remaster` (Python, nodriver, and Chromium).
+The add-on performs the following migration automatically on first start:
 
-- **VNC Issues**: The NoVNC web interface is currently not working reliably on several machines
-- **Recommended**: Use the `config.env` file for configuration instead of the web interface
-- **Security**: Store credentials securely and consider using app-specific passwords where available
+1. The existing `config.env` remains at the same configured location.
+2. Legacy `epic-games.json`, `prime-gaming.json`, and `gog.json` claim history
+   is imported into the remaster SQLite database at `/data/fgc.db`.
+3. Existing database rows are detected and are not duplicated if migration is
+   retried.
+4. A pre-migration database backup is created when an existing `fgc.db` is
+   present.
+5. All old files remain under `/data/data` for rollback or manual recovery.
 
-### Custom Scripts and Environment Variables
+Browser sessions cannot be converted because the old add-on used a shared
+Firefox profile while the remaster uses separate Chromium profiles per store.
+Credentials remain available through `config.env`, but accounts that require
+interactive authentication may need a one-time login through noVNC after the
+upgrade. The old Firefox profile is retained and is never deleted.
 
-This addon supports custom scripts and environment variables through the `addon_config` mapping:
+The external noVNC port remains `6080`, although the standalone remaster image
+normally uses port `7080`.
 
-- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
-- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+## Upstream update policy
+
+The image is built from an explicit upstream commit in the Dockerfile. This
+keeps amd64 and aarch64 images reproducible and prevents an upstream branch or
+container tag from changing without an add-on review and version bump.
+
+The repository updater is intentionally paused for this add-on because the
+add-on uses its own `2.x` version series while the replacement upstream uses a
+`1.x` version series. An automatic replacement would risk a Home Assistant
+version regression and would not safely update the pinned commit. A maintainer
+upstream update must therefore update `UPSTREAM_REF`, `upstream_version`, the
+add-on version, and `CHANGELOG.md` together.
 
 ## Installation
 
-The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
+1. Add this add-on repository to the Home Assistant add-on store.
+2. Install **Free Games Claimer**.
+3. Configure the add-on options as needed.
+4. Start the add-on and review its log.
+5. Open noVNC if an account needs manual authentication.
 
-1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
-   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
-1. Install this add-on.
-1. Click the `Save` button to store your configuration.
-1. Set the add-on options to your preferences
-1. Start the add-on.
-1. Check the logs of the add-on to see if everything went well.
-1. Open the webUI and adapt the software options
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+
+## Custom scripts and environment variables
+
+- [Running custom scripts in add-ons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- [Passing environment variables to an add-on](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2)
 
 ## Support
 
-Create an issue on github
-
-[repository]: https://github.com/alexbelgium/hassio-addons
-
-
+Open an issue in the
+[add-on repository](https://github.com/alexbelgium/hassio-addons/issues).

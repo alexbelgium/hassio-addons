@@ -3,9 +3,35 @@
 # shellcheck disable=SC2046
 set -e
 
-# Define user
-PUID=$(bashio::config "PUID")
-PGID=$(bashio::config "PGID")
+# Align the shared desktop user (abc) with the configured PUID/PGID before any storage is
+# chowned and before any service or s6-setuidgid call resolves abc. The base image's
+# init-adduser applies the same remap, but it runs after cont-init, so doing it here first is
+# what lets the tokensave/rtk/git setup in the 8x scripts run under the final identity.
+PUID="$(if bashio::config.has_value 'PUID'; then bashio::config 'PUID'; else echo '1000'; fi)"
+PGID="$(if bashio::config.has_value 'PGID'; then bashio::config 'PGID'; else echo '1000'; fi)"
+
+# Claude Code refuses bypass-permissions mode under an effective root UID, so bypass mode
+# always needs a non-root desktop user.
+if [ "$(bashio::config 'permission_mode')" = "bypass" ] && [ "$PUID" -eq 0 ]; then
+    bashio::log.warning "permission_mode: bypass cannot run Claude Code as root; using UID 1000 instead of the configured PUID 0"
+    PUID=1000
+fi
+
+groupmod -o -g "$PGID" abc 2> /dev/null || true
+usermod -o -u "$PUID" abc 2> /dev/null || true
+if [ "$(id -u abc)" -ne "$PUID" ] || [ "$(id -g abc)" -ne "$PGID" ]; then
+    PUID="$(id -u abc)"
+    PGID="$(id -g abc)"
+    bashio::log.warning "Unable to remap the abc desktop user; continuing with its current identity ${PUID}:${PGID}"
+fi
+
+# The base image's init-adduser reads PUID/PGID from the raw add-on options (default 0) and
+# runs mid-startup, racing the services. Pin it to the effective identity chosen above so it
+# can never remap abc away from the ownership applied below.
+ADDUSER_RUN="/etc/s6-overlay/s6-rc.d/init-adduser/run"
+if [ -f "$ADDUSER_RUN" ]; then
+    sed -i "s|^PUID=.*|PUID=${PUID}|;s|^PGID=.*|PGID=${PGID}|" "$ADDUSER_RUN"
+fi
 
 # Check data location
 LOCATION="$(bashio::config 'data_location')"
@@ -59,16 +85,34 @@ printf "%s" "$LOCATION" > "$S6_ENVDIR/HOME"
 printf "%s" "$LOCATION" > "$S6_ENVDIR/FM_HOME"
 printf "%s" "/tmp/cache" > "$S6_ENVDIR/XDG_CACHE_HOME"
 printf "%s" "$XDG_RUNTIME_DIR" > "$S6_ENVDIR/XDG_RUNTIME_DIR"
-grep -qxF "export HOME=\"$LOCATION\"" ~/.bashrc 2>/dev/null || {
+# Re-derived on every boot rather than gated on a "does it already say $LOCATION" grep: that
+# guard only ever recognized the CURRENT $LOCATION, so a user who changed data_location and
+# later changed it back left two stale HOME/FM_HOME exports in ~/.bashrc, with the last one
+# (not necessarily the correct one) winning for every interactive shell. The marker makes this
+# idempotent regardless of how many times $LOCATION has changed: strip any previously managed
+# block, then append one that reflects the current value.
+BASHRC_HOME_BEGIN="# --- BEGIN ADDON HOME (managed) ---"
+BASHRC_HOME_END="# --- END ADDON HOME (managed) ---"
+if [ -f ~/.bashrc ]; then
+    sed -i "/^${BASHRC_HOME_BEGIN}\$/,/^${BASHRC_HOME_END}\$/d" ~/.bashrc
+fi
+{
+    printf "%s\n" "$BASHRC_HOME_BEGIN"
     printf "%s\n" "export HOME=\"$LOCATION\""
     printf "%s\n" "export FM_HOME=\"$LOCATION\""
     printf "%s\n" "export XDG_CACHE_HOME=\"/tmp/cache\""
+    printf "%s\n" "$BASHRC_HOME_END"
 } >> ~/.bashrc
 
 bashio::log.info "Creating $LOCATION"
 mkdir -p "$LOCATION" /tmp/cache "$XDG_RUNTIME_DIR"
 chmod 755 /tmp/cache
 chmod 700 "$XDG_RUNTIME_DIR"
+
+# /tmp is a tmpfs and Xorg runs as the non-root abc user, which cannot create the X11 socket
+# directory itself (_XSERVTransmkdir: euid != 0). Pre-create it with the standard sticky mode.
+mkdir -p /tmp/.X11-unix
+chmod 1777 /tmp/.X11-unix
 
 # Pre-create the Selkies joystick log so the base image's "chmod 777 /tmp/selkies*"
 # calls (in init-selkies-config and svc-de) never fail on an empty glob.
@@ -81,7 +125,7 @@ fi
 ln -sfn /tmp/cache "$LOCATION/.cache"
 
 bashio::log.info "Setting ownership to $PUID:$PGID"
-chown -R "$PUID":"$PGID" "$LOCATION" /tmp/cache "$XDG_RUNTIME_DIR"
+chown -R "${PUID}:${PGID}" "$LOCATION" /tmp/cache "$XDG_RUNTIME_DIR" /data
 chmod -R 700 "$LOCATION"
 
 # The base init-selkies-config script overrides XDG_RUNTIME_DIR to $HOME/.XDG, which lands

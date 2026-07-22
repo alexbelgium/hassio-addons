@@ -2,7 +2,7 @@ arch:
   - aarch64
   - amd64
 audio: true
-description: Claude Desktop streamed through a browser with LinuxServer Selkies
+description: "Claude Desktop with Headroom, RTK, and TokenSave optimization"
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -13,8 +13,8 @@ environment:
   AUTO_GPU: "1"
   FM_HOME: /data/data
   HOME: /data/data
-  PGID: "0"
-  PUID: "0"
+  PGID: "1000"
+  PUID: "1000"
   SELKIES_FRAMERATE: "30"
   START_DOCKER: "false"
   TITLE: Claude Desktop
@@ -34,30 +34,37 @@ name: Claude Desktop
 options:
   env_vars: []
   DNS_server: 8.8.8.8
+  PGID: 1000
+  PUID: 1000
   data_location: /data/data
-  PGID: 0
-  PUID: 0
   additional_apps: ""
   additional_pip: ""
-  auto_update: true
   github_email: ""
-  ha_smart_context: true
-  enable_ha_mcp: true
-  dangerously_skip_permissions: false
+  enable_ha_mcp: false
+  ha_mcp_url: http://homeassistant:8123/api/mcp
+  ha_mcp_token: ""
+  enable_ha_api_helper: true
   github_token: ""
   github_username: ""
-  install_caveman: true
+  enable_tools_health_report: true
+  expose_headroom_dashboard: false
+  headroom_auto_compress: true
+  headroom_wrap_claude_code: true
+  install_caveman: false
   install_github_cli: true
   install_headroom: true
   install_rtk: true
+  install_tokensave: true
+  permission_mode: auto
+  tokensave_project_paths: []
 panel_admin: false
 panel_icon: mdi:robot-happy
 ports:
   3001/tcp: null
-  8787/tcp: 8787
+  8787/tcp: null
 ports_description:
-  3001/tcp: Web interface https
-  8787/tcp: Headroom dashboard and proxy
+  3001/tcp: Claude Desktop web interface
+  8787/tcp: Optional Headroom dashboard and proxy
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
@@ -75,20 +82,33 @@ schema:
   TZ: match([A-Z][a-z]*./[A-Z][a-z]*.)?
   additional_apps: str?
   additional_pip: str?
-  auto_update: bool?
+  cifsdomain: str?
+  cifspassword: str?
+  cifsusername: str?
+  localdisks: str?
+  networkdisks: str?
   github_email: str?
-  ha_smart_context: bool?
   enable_ha_mcp: bool?
-  dangerously_skip_permissions: bool?
+  ha_mcp_url: str?
+  ha_mcp_token: password?
+  enable_ha_api_helper: bool?
   github_token: password?
   github_username: str?
+  enable_tools_health_report: bool
+  expose_headroom_dashboard: bool
+  headroom_auto_compress: bool?
+  headroom_wrap_claude_code: bool
   install_caveman: bool
   install_github_cli: bool
   install_headroom: bool
   install_rtk: bool
+  install_tokensave: bool
+  permission_mode: list(strict|auto|bypass)
+  tokensave_project_paths:
+    - str
 slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.12"
+version: "ubunturesolute-version-8208e985"
 video: true

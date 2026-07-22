@@ -1,0 +1,10 @@
+{
+  "github_fulltag": false,
+  "github_tagfilter": "v8.19",
+  "last_update": "2026-07-21",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "elasticsearch",
+  "source": "github",
+  "upstream_repo": "elastic/elasticsearch",
+  "upstream_version": "8.19.19"
+}

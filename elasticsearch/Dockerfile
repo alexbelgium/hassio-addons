@@ -14,8 +14,17 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_UPSTREAM="7.17.9"
-FROM elasticsearch:$BUILD_UPSTREAM
+ARG BUILD_UPSTREAM="8.19.19"
+# Pull from Elastic's own registry (multi-arch, published atomically with the
+# GitHub release the updater tracks) rather than the Docker Hub "library"
+# mirror, whose arm64/aarch64 tag lags hours behind and breaks the aarch64
+# build right after an update (e.g. elasticsearch:8.19.19 arm64 missing).
+FROM docker.elastic.co/elasticsearch/elasticsearch:$BUILD_UPSTREAM
+
+# The base image ends as USER 1000:0 with a root-owned, read-only (0555)
+# entrypoint; switch back to root for the remaining build steps (entrypoint
+# patch, package install, chmod), then restore the Elasticsearch user below
+USER root
 
 ##################
 # 2 Modify Image #
@@ -26,20 +35,15 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# Expose the upstream version to the add-on init script (migration guard)
+ARG BUILD_UPSTREAM
+ENV UPSTREAM_VERSION="$BUILD_UPSTREAM"
 
-# Data persistence
-# hadolint ignore=SC2016
-RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts..."' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a chown -R $(id -u):$(id -g) $HOME' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a done' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a ln -s $NEWHOME/$file /usr/share/elasticsearch || true' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a rm -r /usr/share/elasticsearch/$file || true' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a cp -rn /usr/share/elasticsearch/$file $NEWHOME || true' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a for file in "data" "config"; do' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a mkdir -p $NEWHOME' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a NEWHOME="/data"' /usr/local/bin/docker-entrypoint.sh \
-    # Install plugins
-    && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
+# Data persistence & migration: source the add-on init script at the top of
+# the official entrypoint (pattern-anchored; ingest-attachment is bundled
+# since ES 8.0 so no plugin install is needed anymore)
+RUN sed -i '/^set -e$/a . /usr/local/bin/addon-init.sh' /usr/local/bin/docker-entrypoint.sh \
+    && grep -q "addon-init.sh" /usr/local/bin/docker-entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -62,7 +66,7 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES=""
+ENV PACKAGES="jq"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
@@ -140,3 +144,11 @@ HEALTHCHECK \
     --start-period=30s \
     --timeout=25s \
     CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
+
+# Start as root: addon-init.sh needs it to chown/move pre-existing /data
+# content that may be owned by root from earlier installs. It drops to
+# uid 1000 itself (via chroot --userspec) before Elasticsearch actually
+# starts, since Elasticsearch refuses to run as root and the upstream 8.x
+# entrypoint no longer does that drop on its own (7.x's did). This matches
+# the addon's own AppArmor profile (chown, setuid, setgid, sys_chroot,
+# mount capabilities).

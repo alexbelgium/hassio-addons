@@ -1,0 +1,236 @@
+#!/usr/bin/env python3
+"""ha-cli — talk to the local Home Assistant Core API from inside the add-on.
+
+Lets Claude Code configure Home Assistant (automations, scripts, scenes,
+helpers, dashboards, areas/labels, service calls) through the API, without any
+`/config` filesystem mount. `secrets.yaml` and other add-ons' credentials are
+therefore never reachable.
+
+Authentication and the base URL are resolved automatically, in this order:
+
+  1. $HA_BASE_URL + $HA_TOKEN               explicit override (advanced/scoped)
+  2. `ha_mcp_token` in /data/options.json   scoped user long-lived token -> :8123
+  3. $SUPERVISOR_TOKEN                       Supervisor Core-API proxy fallback
+                                             (admin-equivalent; needs
+                                             homeassistant_api: true, which this
+                                             add-on sets — zero setup)
+
+The scoped token is checked before the Supervisor fallback so setting
+`ha_mcp_token` actually narrows access instead of being shadowed by the
+always-present admin-equivalent Supervisor token.
+
+Subcommands:
+  ha-cli get    <path>                 GET   e.g. get config/automation/config/1700000000
+  ha-cli post   <path> [BODY]          POST  BODY = inline JSON, @file, or - (stdin)
+  ha-cli delete <path>                 DELETE
+  ha-cli call   <domain.service> [BODY] call a service (BODY = JSON service data)
+  ha-cli states [entity_id]            all states, or one entity
+  ha-cli config                        GET /config (sanity check / core info)
+  ha-cli ws     <BODY>                 one WebSocket command (BODY = JSON, @file, or -)
+
+`<path>` is relative to the REST API root; a leading slash and/or `api/` prefix
+are optional. Responses are printed as formatted JSON. Exit code is non-zero on
+HTTP or API errors.
+
+Use the WebSocket subcommand for things the REST API does not expose:
+  ha-cli ws '{"type":"config/area_registry/list"}'
+  ha-cli ws '{"type":"input_boolean/create","name":"Guest mode","icon":"mdi:account"}'
+  ha-cli ws '{"type":"lovelace/config","url_path":null}'
+"""
+
+import json
+import os
+import sys
+import urllib.error
+import urllib.request
+
+
+def _load_option(name):
+    """Read a single option from the add-on's /data/options.json, if present."""
+    try:
+        with open("/data/options.json", encoding="utf-8") as handle:
+            return json.load(handle).get(name)
+    except (OSError, ValueError):
+        return None
+
+
+def _helper_enabled():
+    """Mirror config.yaml's enable_ha_api_helper default (true) when unset."""
+    value = _load_option("enable_ha_api_helper")
+    return value is not False
+
+
+def resolve_endpoint():
+    """Return (rest_base, ws_url, token) for the best available auth path."""
+    base = os.environ.get("HA_BASE_URL")
+    token = os.environ.get("HA_TOKEN")
+    if base and token:
+        rest = base.rstrip("/")
+        if not rest.endswith("/api"):
+            rest += "/api"
+        ws = rest.replace("http", "ws", 1).rsplit("/api", 1)[0] + "/api/websocket"
+        return rest, ws, token
+
+    # Checked before SUPERVISOR_TOKEN: this add-on always sets homeassistant_api,
+    # so the admin-equivalent Supervisor token is otherwise always present and
+    # would shadow a user's deliberately scoped-down ha_mcp_token.
+    token = _load_option("ha_mcp_token")
+    if token:
+        return (
+            "http://homeassistant:8123/api",
+            "ws://homeassistant:8123/api/websocket",
+            token,
+        )
+
+    token = os.environ.get("SUPERVISOR_TOKEN")
+    if token:
+        return "http://supervisor/core/api", "ws://supervisor/core/websocket", token
+
+    sys.exit(
+        "ha-cli: no credentials. Expected ha_mcp_token in the add-on options "
+        "(scoped user), $SUPERVISOR_TOKEN (admin-equivalent fallback, default "
+        "inside the add-on), or an explicit $HA_BASE_URL+$HA_TOKEN override."
+    )
+
+
+def _url(base, path):
+    path = path.lstrip("/")
+    if path.startswith("api/"):
+        path = path[len("api/"):]
+    return base.rstrip("/") + "/" + path
+
+
+def _read_body(arg):
+    """Resolve an inline-JSON / @file / - (stdin) body argument to a dict/list."""
+    if arg is None:
+        return None
+    if arg == "-":
+        raw = sys.stdin.read()
+    elif arg.startswith("@"):
+        with open(arg[1:], encoding="utf-8") as handle:
+            raw = handle.read()
+    else:
+        raw = arg
+    raw = raw.strip()
+    if not raw:
+        return None
+    try:
+        return json.loads(raw)
+    except ValueError as exc:
+        sys.exit(f"ha-cli: body is not valid JSON: {exc}")
+
+
+def _print(obj):
+    if isinstance(obj, (dict, list)):
+        print(json.dumps(obj, indent=2, ensure_ascii=False))
+    elif obj not in (None, ""):
+        print(obj)
+
+
+def rest(method, base, token, path, body=None):
+    data = None
+    headers = {"Authorization": f"Bearer {token}"}
+    if body is not None:
+        data = json.dumps(body).encode("utf-8")
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(_url(base, path), data=data, method=method, headers=headers)
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            text = resp.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", "replace").strip()
+        sys.exit(f"ha-cli: HTTP {exc.code} {exc.reason} on {method} {path}\n{detail}")
+    except urllib.error.URLError as exc:
+        sys.exit(f"ha-cli: cannot reach Home Assistant ({exc.reason}) on {method} {path}")
+    try:
+        return json.loads(text) if text.strip() else None
+    except ValueError:
+        return text
+
+
+def ws_command(ws_url, token, command):
+    try:
+        import asyncio
+
+        import websockets
+    except ImportError:
+        sys.exit(
+            "ha-cli: the 'websockets' Python package is required for the ws "
+            "subcommand. REST subcommands work without it."
+        )
+
+    async def run():
+        async with websockets.connect(ws_url, max_size=None) as sock:
+            hello = json.loads(await sock.recv())
+            if hello.get("type") != "auth_required":
+                raise SystemExit(f"ha-cli: unexpected WS greeting: {hello}")
+            await sock.send(json.dumps({"type": "auth", "access_token": token}))
+            if json.loads(await sock.recv()).get("type") != "auth_ok":
+                raise SystemExit("ha-cli: WebSocket authentication failed")
+            payload = dict(command)
+            payload["id"] = 1
+            await sock.send(json.dumps(payload))
+            while True:
+                msg = json.loads(await sock.recv())
+                if msg.get("id") == 1 and msg.get("type") == "result":
+                    return msg
+
+    result = asyncio.run(run())
+    if not result.get("success", True):
+        _print(result.get("error", result))
+        sys.exit(1)
+    return result.get("result", result)
+
+
+def main(argv):
+    if not argv or argv[0] in ("-h", "--help", "help"):
+        print(__doc__)
+        return 0
+
+    if not _helper_enabled():
+        sys.exit(
+            "ha-cli: disabled (enable_ha_api_helper is false in the add-on "
+            "options). Enable it there to let Claude configure Home Assistant."
+        )
+
+    rest_base, ws_url, token = resolve_endpoint()
+    cmd, args = argv[0], argv[1:]
+
+    if cmd == "get":
+        if len(args) != 1:
+            sys.exit("usage: ha-cli get <path>")
+        _print(rest("GET", rest_base, token, args[0]))
+    elif cmd == "post":
+        if not args:
+            sys.exit("usage: ha-cli post <path> [BODY]")
+        body = _read_body(args[1]) if len(args) > 1 else None
+        _print(rest("POST", rest_base, token, args[0], body))
+    elif cmd == "delete":
+        if len(args) != 1:
+            sys.exit("usage: ha-cli delete <path>")
+        _print(rest("DELETE", rest_base, token, args[0]))
+    elif cmd == "call":
+        if not args or "." not in args[0]:
+            sys.exit("usage: ha-cli call <domain.service> [BODY]")
+        domain, service = args[0].split(".", 1)
+        body = _read_body(args[1]) if len(args) > 1 else None
+        _print(rest("POST", rest_base, token, f"services/{domain}/{service}", body or {}))
+    elif cmd == "states":
+        path = f"states/{args[0]}" if args else "states"
+        _print(rest("GET", rest_base, token, path))
+    elif cmd == "config":
+        _print(rest("GET", rest_base, token, "config"))
+    elif cmd == "ws":
+        if len(args) != 1:
+            sys.exit("usage: ha-cli ws <BODY>")
+        command = _read_body(args[0])
+        if not isinstance(command, dict) or "type" not in command:
+            sys.exit('ha-cli: ws BODY must be a JSON object with a "type" field')
+        _print(ws_command(ws_url, token, command))
+    else:
+        sys.exit(f"ha-cli: unknown subcommand '{cmd}' (try: ha-cli --help)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

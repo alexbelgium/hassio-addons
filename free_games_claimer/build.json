@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/vogler/free-games-claimer:latest",
-    "amd64": "ghcr.io/vogler/free-games-claimer:latest"
+    "aarch64": "debian:bookworm-slim",
+    "amd64": "debian:bookworm-slim"
   }
 }

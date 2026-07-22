@@ -1,4 +1,4 @@
-# Hourly rtk + headroom token-savings report to the add-on log (heartbeat + gains).
+# Hourly RTK + Headroom + TokenSave savings report to the add-on log.
 # Seeded to /data/data/crontabs/root by init-crontab-config and run by svc-cron; edit the
 # persistent copy to customize. Output goes to /proc/1/fd/1 so it shows in the add-on log.
 0 * * * * /usr/local/bin/claude-gains-report.sh > /proc/1/fd/1 2>&1

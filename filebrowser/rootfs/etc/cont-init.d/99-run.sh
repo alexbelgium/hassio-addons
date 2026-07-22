@@ -105,6 +105,12 @@ else
     DISABLE_THUMBNAILS=""
 fi
 
+# Disable thumbnails
+if bashio::config.true 'follow_external_symlinks'; then
+    FOLLOW_SYMLINKS="--followExternalSymlinks"
+else
+    FOLLOW_SYMLINKS=""
+fi
 # Remove configuration file
 if [ -f /.filebrowser.json ]; then
     rm /.filebrowser.json
@@ -113,7 +119,7 @@ fi
 bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
-/./bin/filebrowser --disablePreviewResize --disableTypeDetectionByHeader --cacheDir="/cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/filebrowser.dB ${NOAUTH:+$NOAUTH} ${DISABLE_THUMBNAILS:+$DISABLE_THUMBNAILS} &
+/./bin/filebrowser --disablePreviewResize --disableTypeDetectionByHeader --cacheDir="/cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/filebrowser.dB ${FOLLOW_SYMLINKS:+$FOLLOW_SYMLINKS} ${NOAUTH:+$NOAUTH} ${DISABLE_THUMBNAILS:+$DISABLE_THUMBNAILS} &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 nginx || bashio::log.fatal "Nginx failed"

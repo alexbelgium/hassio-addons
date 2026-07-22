@@ -9,7 +9,32 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
+ARG RTK_VERSION="v0.43.0"
+ARG RTK_COMMIT="5a7880d404db8364d602f2ecdc41dd790f64013f"
+ARG TOKENSAVE_VERSION="7.4.0"
+
+# The upstream aarch64 release is cross-built on ubuntu-latest and requires
+# GLIBC 2.39. Build the pinned source on Bookworm instead so it is compatible
+# with the add-on runtime on both supported architectures.
+FROM rust:1.91-bookworm AS rtk-builder
+ARG RTK_VERSION
+ARG RTK_COMMIT
+RUN git clone --depth 1 --branch "${RTK_VERSION}" https://github.com/rtk-ai/rtk.git /src/rtk && \
+    test "$(git -C /src/rtk rev-parse HEAD)" = "${RTK_COMMIT}" && \
+    cd /src/rtk && \
+    cargo build --release --locked && \
+    install -D -m 0755 target/release/rtk /out/rtk && \
+    /out/rtk --version
+
+# tokensave ships no Bookworm-compatible prebuilt binary either; build the pinned
+# crates.io release from source so GLIBC matches the add-on runtime.
+FROM rust:1.91-bookworm AS tokensave-builder
+ARG TOKENSAVE_VERSION
+RUN cargo install tokensave --version "${TOKENSAVE_VERSION}" --locked --root /out && \
+    /out/bin/tokensave --version
+
 FROM ${BUILD_FROM}
+ARG BUILD_ARCH
 
 ##################
 # 2 Modify Image #
@@ -31,46 +56,95 @@ RUN \
     usermod --home /data/data abc && \
     if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
+ARG TEMPLATE_BASE_URL="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates"
+
 # Global LSIO modifications
-COPY ha_lsio.sh /ha_lsio.sh
 ARG CONFIGLOCATION="/data/data"
-RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
+RUN curl -fsSL --retry 3 --retry-delay 2 \
+        -o /ha_lsio.sh "${TEMPLATE_BASE_URL}/ha_lsio.sh" && \
+    chmod 744 /ha_lsio.sh && \
+    if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && \
+    rm /ha_lsio.sh
 
 ##################
 # 3 Install apps #
 ##################
 
-# Add rootfs
+# Add rootfs. Only the directories this add-on ships scripts in are traversed, so the chmod
+# cannot alter executables elsewhere in the image.
 COPY rootfs/ /
-RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
+RUN find /etc/cont-init.d /etc/s6-overlay /defaults /usr/local/bin -type f \
+        \( -name "*.sh" -o -name "run" -o -name "finish" -o -name "ha-cli" \) -print -exec chmod +x {} \; && \
+    chmod +x /usr/local/bin/claude
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
-# Install Claude Desktop and Python tooling
-RUN curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
+# Install Claude Desktop, Claude Code, Python tooling, and lightweight local validators.
+# gnome-keyring provides the Secret Service backend Electron safeStorage needs to persist
+# sign-in and dispatch grants.
+RUN install -d -m 0755 /etc/apt/keyrings && \
+    curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
+    curl -fsSLo /etc/apt/keyrings/claude-code.asc https://downloads.claude.ai/keys/claude-code.asc && \
     echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" > /etc/apt/sources.list.d/claude-desktop.list && \
+    echo "deb [signed-by=/etc/apt/keyrings/claude-code.asc] https://downloads.claude.ai/claude-code/apt/stable stable main" > /etc/apt/sources.list.d/claude-code.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         claude-desktop \
+        claude-code \
         python3-pip \
         libsecret-1-0 \
         dbus-x11 \
-        git gh && \
+        git \
+        gh \
+        ripgrep \
+        jq \
+        shellcheck \
+        yamllint && \
+    test -x /usr/bin/claude && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install token-optimization tool prerequisites and binaries at build time
+# Install the current upstream hadolint and actionlint releases for both supported
+ARG HADOLINT_VERSION=v2.14.0
+ARG ACTIONLINT_VERSION=v1.7.12
+
+RUN set -eux; \
+    case "${BUILD_ARCH}" in \
+        amd64) hadolint_arch="x86_64"; actionlint_arch="amd64" ;; \
+        aarch64) hadolint_arch="arm64"; actionlint_arch="arm64" ;; \
+        *) echo "Unsupported validation-tools architecture: ${BUILD_ARCH}" >&2; exit 1 ;; \
+    esac; \
+    curl -fsSL --retry 3 --retry-delay 2 \
+        -o /usr/local/bin/hadolint \
+        "https://github.com/hadolint/hadolint/releases/download/${HADOLINT_VERSION}/hadolint-linux-${hadolint_arch}"; \
+    chmod 0755 /usr/local/bin/hadolint; \
+    curl -fsSL --retry 3 --retry-delay 2 \
+        -o /tmp/actionlint.tar.gz \
+        "https://github.com/rhysd/actionlint/releases/download/${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION#v}_linux_${actionlint_arch}.tar.gz"; \
+    tar -xzf /tmp/actionlint.tar.gz -C /tmp actionlint; \
+    install -m 0755 /tmp/actionlint /usr/local/bin/actionlint; \
+    rm -f /tmp/actionlint /tmp/actionlint.tar.gz; \
+    hadolint --version; \
+    actionlint -version
+
+# Copy the pinned Bookworm-built RTK and tokensave binaries and execute them in the final
+# image. This makes an ABI mismatch fail the image build instead of surfacing at runtime.
+COPY --from=rtk-builder /out/rtk /usr/local/bin/rtk
+COPY --from=tokensave-builder /out/bin/tokensave /usr/local/bin/tokensave
+RUN /usr/local/bin/rtk --version && /usr/local/bin/tokensave --version
+
+# Install only the Headroom proxy, code-compression, and MCP features used by this add-on,
+# plus mcp-proxy (stdio->HTTP bridge for the Home Assistant MCP server) and uv (fast
+# installer used for the additional_pip option). The `proxy` extra already ships the ONNX
+# runtime + transformers needed by the Kompress compressor — the `ml` extra (full PyTorch,
+# ~5 GB with CUDA wheels) is deliberately NOT installed; svc-headroom pre-warms the ONNX
+# model into the persistent HF cache instead.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
-    pip3 install --break-system-packages "headroom-ai[all]" && \
-    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh -o /tmp/rtk-install.sh && \
-    HOME=/root sh /tmp/rtk-install.sh && \
-    rm /tmp/rtk-install.sh && \
-    if [ -x /root/.local/bin/rtk ] && [ ! -x /usr/local/bin/rtk ]; then mv /root/.local/bin/rtk /usr/local/bin/rtk; fi && \
-    if [ -x /usr/local/bin/rtk ]; then chmod +x /usr/local/bin/rtk; else echo "rtk binary was not installed on PATH"; exit 1; fi && \
+    pip3 install --break-system-packages "headroom-ai[proxy,code,mcp]" mcp-proxy uv websockets && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /root/.cache
 
@@ -83,27 +157,33 @@ RUN if [ -f /etc/s6-overlay/s6-rc.d/svc-selkies/run ]; then \
 ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-dns_set.sh"
 
 # Automatic modules download
-COPY ha_automodules.sh /ha_automodules.sh
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+RUN curl -fsSL --retry 3 --retry-delay 2 \
+        -o /ha_automodules.sh "${TEMPLATE_BASE_URL}/ha_automodules.sh" && \
+    chmod 744 /ha_automodules.sh && \
+    /ha_automodules.sh "$MODULES" && \
+    rm /ha_automodules.sh
 
 # Manual apps
 ENV PACKAGES="nginx"
 
 # Automatic apps & bashio
-COPY ha_autoapps.sh /ha_autoapps.sh
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+RUN curl -fsSL --retry 3 --retry-delay 2 \
+        -o /ha_autoapps.sh "${TEMPLATE_BASE_URL}/ha_autoapps.sh" && \
+    chmod 744 /ha_autoapps.sh && \
+    /ha_autoapps.sh "$PACKAGES" && \
+    rm /ha_autoapps.sh
 
 ################
 # 4 Entrypoint #
 ################
 
-# Add entrypoint
-COPY ha_entrypoint.sh /ha_entrypoint.sh
-RUN chmod 777 /ha_entrypoint.sh
-
-# Install bashio
-COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
-RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
+# Add entrypoint and standalone bashio compatibility
+RUN curl -fsSL --retry 3 --retry-delay 2 \
+        -o /ha_entrypoint.sh "${TEMPLATE_BASE_URL}/ha_entrypoint.sh" && \
+    curl -fsSL --retry 3 --retry-delay 2 \
+        -o /usr/local/lib/bashio-standalone.sh "${TEMPLATE_BASE_URL}/bashio-standalone.sh" && \
+    chmod 0777 /ha_entrypoint.sh && \
+    chmod 0755 /usr/local/lib/bashio-standalone.sh
 
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
@@ -112,7 +192,6 @@ CMD [ "/ha_entrypoint.sh" ]
 # 5 Labels #
 ############
 
-ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
 ARG BUILD_NAME

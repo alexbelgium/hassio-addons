@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-06-20",
+  "last_update": "2026-07-11",
   "repository": "alexbelgium/hassio-addons",
   "slug": "cleanuparr",
   "source": "github",
   "upstream_repo": "Cleanuparr/Cleanuparr",
-  "upstream_version": "2.9.14"
+  "upstream_version": "2.9.16"
 }

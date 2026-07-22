@@ -1,4 +1,28 @@
  
+## v1.67.0-8 (2026-07-18)
+- Verify every backup file checksum and symbolic-link target, record the content-validation method in the migration marker, atomically preserve the previous archive until replacement validation succeeds, and remove the blocking synthetic FIFO test fixture.
+
+## v1.67.0-7 (2026-07-18)
+- Address all review findings: restore the initialization-only s6 stage-two hook, verify complete InfluxDB backup manifests and checksums, preserve legacy migration backups, default to `/share/scrutiny_fa`, and harden custom scheduling, ingress path handling, and collector configuration migration.
+
+## v1.67.0-5 (2026-07-18)
+- Replace the legacy cross-directory `rootfs` symlink with a materialized Full Access overlay so the complete add-on builds reproducibly on aarch64 and amd64.
+
+## v1.67.0-4 (2026-07-18)
+- Include the InfluxDB migration helper directly in the Full Access build context so both supported architectures receive and test it reliably.
+
+## v1.67.0-3 (2026-07-18)
+- Restore upstream s6 supervision for all Scrutiny services and automatically create a verified offline InfluxDB backup in `/share/scrutiny_fa` before the 2.9 migration.
+
+## v1.67.0-2 (2026-07-18)
+- Fix startup with the Home Assistant entrypoint by removing the upstream collector's unsupported s6 service wait. The collector still waits for the Scrutiny API health endpoint before running.
+
+## v1.67.0 (2026-07-18)
+- Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
+ 
+## v1.66.0 (2026-07-13)
+- Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
+ 
 ## v1.65.0 (2026-07-04)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
  

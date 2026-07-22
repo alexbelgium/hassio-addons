@@ -1,4 +1,7 @@
  
+## 26.7.0 (2026-07-22)
+- Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
+ 
 ## 26.6.2 (2026-06-23)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
  
