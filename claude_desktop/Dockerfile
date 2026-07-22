@@ -104,9 +104,13 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
 # Install Claude Desktop, Claude Code, Python tooling, and lightweight local validators.
 # gnome-keyring provides the Secret Service backend Electron safeStorage needs to persist
 # sign-in and dispatch grants.
-# The cowork virtualization stack (qemu-system-x86 + ovmf firmware + docker.io) lets Claude
-# Code launch its sandbox microVM; libseccomp2 and libcap-ng0 are the shared libraries the
-# source-built virtiofsd daemon links against at runtime.
+# The cowork virtualization stack (qemu-system-x86 + ovmf firmware) lets Claude Code launch
+# its sandbox microVM; libseccomp2 and libcap-ng0 are the shared libraries the source-built
+# virtiofsd daemon links against at runtime. Docker itself is NOT installed here: this base
+# image already ships Docker-in-Docker (docker-ce + containerd.io from Docker's own apt repo,
+# started via the pre-existing START_DOCKER env var) — installing Debian's docker.io package
+# on top pulls in Debian's own containerd/runc, which apt refuses because they Conflict with
+# the base image's already-installed containerd.io.
 RUN install -d -m 0755 /etc/apt/keyrings && \
     curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
     curl -fsSLo /etc/apt/keyrings/claude-code.asc https://downloads.claude.ai/keys/claude-code.asc && \
@@ -127,7 +131,6 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
         yamllint \
         qemu-system-x86 \
         ovmf \
-        docker.io \
         libseccomp2 \
         libcap-ng0 && \
     test -x /usr/bin/claude && \
