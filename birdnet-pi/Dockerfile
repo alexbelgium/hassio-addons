@@ -241,6 +241,11 @@ RUN \
 # Health-check the actual WebUI port. In standalone Docker (no Supervisor) nginx
 # is disabled and Caddy serves the UI on 8081; nothing listens on port 80 when
 # ssl=false, which made the container report "unhealthy" even though it worked.
+# Select https when ssl is enabled (92-ssl.sh switches Caddy to https://:8081),
+# and use -k since the probe hits 127.0.0.1 rather than the cert's real name.
+# Note: the shell form's CMD runs under /bin/sh (dash here, not bash), so this
+# avoids "&>" (a bash-only redirection dash parses as background + no-op,
+# which silently discarded curl's exit status and made the check always pass).
 ENV HEALTH_PORT="8081" \
     HEALTH_URL=""
 HEALTHCHECK \
@@ -248,4 +253,4 @@ HEALTHCHECK \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
+    CMD scheme=http; case "${ssl:-false}" in true|TRUE|True|1|yes|YES|Yes|on|ON|On) scheme=https ;; esac; curl -A "HealthCheck: Docker/1.0" -s -k -f "${scheme}://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" >/dev/null 2>&1 || exit 1
