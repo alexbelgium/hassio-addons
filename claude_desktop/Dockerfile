@@ -145,7 +145,7 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
 RUN if [[ "${TARGETARCH}" == "amd64" ]]; then \
         apt-get update && \
         apt-get install -y --no-install-recommends \
-            intel-media-va-driver \
+            intel-media-va-driver-non-free \
             libgl1-mesa-dri \
             mesa-vulkan-drivers \
             vainfo && \
