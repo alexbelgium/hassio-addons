@@ -1,3 +1,0 @@
-# BirdNET-Pi's upstream restart_services.sh is executed by the LinuxServer abc user.
-# Permit only the container-local systemctl replacement required to manage BirdNET services.
-abc ALL=(root) NOPASSWD: /bin/systemctl, /usr/bin/systemctl

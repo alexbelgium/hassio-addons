@@ -238,7 +238,10 @@ RUN \
         mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf; \
     fi
 
-ENV HEALTH_PORT="80" \
+# Health-check the actual WebUI port. In standalone Docker (no Supervisor) nginx
+# is disabled and Caddy serves the UI on 8081; nothing listens on port 80 when
+# ssl=false, which made the container report "unhealthy" even though it worked.
+ENV HEALTH_PORT="8081" \
     HEALTH_URL=""
 HEALTHCHECK \
     --interval=5s \
