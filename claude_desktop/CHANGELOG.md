@@ -1,4 +1,7 @@
  
+## 1.33 (22-07-2026)
+- Add cowork virtualization support: `qemu-system-x86`, `ovmf`, and `docker.io` (Bookworm main, installed via apt) plus `virtiofsd` for sharing the workspace into the sandbox microVM. `virtiofsd` is only packaged for Debian trixie/sid, not Bookworm or bookworm-backports, and its trixie `.deb` links a newer GLIBC than this add-on's Bookworm runtime — so it now gets built from the pinned crates.io release (`1.14.0`) in a dedicated `virtiofsd-builder` stage, the same GLIBC-safe pattern already used for `rtk` and `tokensave`. Its build deps (`libseccomp-dev`, `libcap-ng-dev`, `pkg-config`, `clang`, `libclang-dev`) live only in that builder stage; only the runtime shared libs (`libseccomp2`, `libcap-ng0`) ship in the final image. The built binary is validated with `--version` at build time alongside `rtk`/`tokensave`, so a GLIBC/ABI mismatch fails the image build instead of surfacing at container start.
+ 
 ## ubunturesolute-version-8208e985 (2026-07-21)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
  

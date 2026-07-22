@@ -92,10 +92,12 @@ The `env_vars` schema key enables the env-var passthrough mechanism. At runtime 
 Add-on versions in `config.yaml` closely follow the upstream release tag and do not conform to a single fixed format. Common patterns include:
 
 - `X.Y.Z` – plain upstream semver (e.g. `0.137.0`)
-- `X.Y.Z-N` – upstream version with a local patch counter (e.g. `0.6.26-2`)
+- `X.Y.Z.N` – upstream version with a local patch counter (e.g. `0.6.26.2`)
 - LSIO-style tags (e.g. `1.43.1.10611-1e34174b1-ls301`)
 - Date-based versions (e.g. `2026.02.28`)
 - Nightly builds (e.g. `nightly-20260321-397`)
+
+For the local patch counter, use a dot (`X.Y.Z.N`), not a hyphen. `X.Y.Z-N` parses as a semver pre-release tag, which Home Assistant Supervisor treats as *older* than plain `X.Y.Z` — it will not offer the update. New and updated add-ons should use `.N`; existing `-N` versions should be migrated to `.N` opportunistically (e.g. when that add-on is next touched), not as a standalone repo-wide sweep.
 
 When an upstream version is bumped, update `version` in `config.yaml`. If the add-on's `Dockerfile` contains an `ARG BUILD_UPSTREAM` line, update that value too — it is the canonical place that records the upstream version at build time (it is **not** stored in `build.json`/`build.yaml`). Some add-ons do not use `BUILD_UPSTREAM` at all. The `updater.json` file tracks which upstream source/repo to monitor and records the last seen version.
 
