@@ -54,6 +54,7 @@ RUN apt-get update && \
 
 FROM ${BUILD_FROM}
 ARG BUILD_ARCH
+ARG TARGETARCH
 
 ##################
 # 2 Modify Image #
@@ -142,10 +143,10 @@ ARG HADOLINT_VERSION=v2.14.0
 ARG ACTIONLINT_VERSION=v1.7.12
 
 RUN set -eux; \
-    case "${BUILD_ARCH}" in \
+    case "${TARGETARCH}" in \
         amd64) hadolint_arch="x86_64"; actionlint_arch="amd64" ;; \
-        aarch64) hadolint_arch="arm64"; actionlint_arch="arm64" ;; \
-        *) echo "Unsupported validation-tools architecture: ${BUILD_ARCH}" >&2; exit 1 ;; \
+        arm64) hadolint_arch="arm64"; actionlint_arch="arm64" ;; \
+        *) echo "Unsupported validation-tools architecture: ${TARGETARCH}" >&2; exit 1 ;; \
     esac; \
     curl -fsSL --retry 3 --retry-delay 2 \
         -o /usr/local/bin/hadolint \
