@@ -1,3 +1,6 @@
+ 
+## 3.0.3 (2026-07-22)
+- Update to latest version from immich-app/immich (changelog : https://github.com/immich-app/immich/releases)
 ## 3.0.1-2 (04-07-2026)
 - Minor bugs fixed
 ## 3.0.1 (2026-07-04)
