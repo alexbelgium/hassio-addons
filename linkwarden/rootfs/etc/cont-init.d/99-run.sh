@@ -92,4 +92,4 @@ prisma migrate deploy --schema="/data_linkwarden/packages/prisma/schema.prisma"
 
 exec concurrently -k -n web,worker \
     "cd /data_linkwarden/apps/web && exec next start" \
-    "cd /data_linkwarden/apps/worker && exec tsx index.ts"
+    "cd /data_linkwarden/apps/worker && exec tsx worker.ts"
