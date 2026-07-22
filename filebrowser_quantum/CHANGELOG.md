@@ -1,3 +1,6 @@
+ 
+## 1.5.0 (2026-07-22)
+- Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
 ## 1.4.0-2 (16-07-2026)
 - Minor bugs fixed
  
