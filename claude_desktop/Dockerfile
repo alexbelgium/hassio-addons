@@ -138,6 +138,25 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# The Intel N150/Twin Lake iGPU uses the host's i915 kernel driver through the mapped
+# /dev/dri nodes. Explicitly install the amd64 userspace stack needed for accelerated
+# OpenGL rendering, VA-API video encoding, and Vulkan, then fail the build if any driver
+# payload is missing. Keep aarch64 unchanged because these Intel packages are amd64-only.
+RUN if [[ "${TARGETARCH}" == "amd64" ]]; then \
+        apt-get update && \
+        apt-get install -y --no-install-recommends \
+            intel-media-va-driver \
+            libgl1-mesa-dri \
+            mesa-vulkan-drivers \
+            vainfo && \
+        test -f /usr/lib/x86_64-linux-gnu/dri/iHD_drv_video.so && \
+        test -f /usr/lib/x86_64-linux-gnu/dri/iris_dri.so && \
+        test -f /usr/share/vulkan/icd.d/intel_icd.x86_64.json && \
+        command -v vainfo > /dev/null; \
+    fi && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install the current upstream hadolint and actionlint releases for both supported
 ARG HADOLINT_VERSION=v2.14.0
 ARG ACTIONLINT_VERSION=v1.7.12
