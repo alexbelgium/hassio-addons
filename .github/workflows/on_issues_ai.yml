@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Detect mapped add-on submitter
         id: submitter
@@ -62,6 +64,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Ensure AI labels exist
         env:
@@ -161,17 +165,41 @@ jobs:
 
           category="$(jq -r '.category' "$RUNNER_TEMP/triage.json")"
           addon="$(jq -r '.addon // ""' "$RUNNER_TEMP/triage.json")"
+          confidence="$(jq -r '.confidence' "$RUNNER_TEMP/triage.json")"
+          risk="$(jq -r '.risk' "$RUNNER_TEMP/triage.json")"
+
+          case "$category" in
+              question | missing_information | bug | improvement | new_addon_request | unsupported | spam) ;;
+              *) echo "Invalid triage category: $category" >&2; exit 1 ;;
+          esac
+          case "$risk" in
+              low | medium | high) ;;
+              *) echo "Invalid triage risk: $risk" >&2; exit 1 ;;
+          esac
+
           existing_addon=false
-          if [[ -n "$addon" && "$addon" != */* && "$addon" != "." && "$addon" != ".." ]] &&
-              [[ -f "$addon/config.yaml" || -f "$addon/config.json" ]]; then
+          if [[ -n "$addon" ]] &&
+              jq -e --arg addon "$addon" 'index($addon) != null' <<< "$addon_catalog" > /dev/null; then
               existing_addon=true
+          else
+              addon=""
           fi
 
-          echo "addon=$addon" >> "$GITHUB_OUTPUT"
-          echo "category=$category" >> "$GITHUB_OUTPUT"
-          echo "confidence=$(jq -r '.confidence' "$RUNNER_TEMP/triage.json")" >> "$GITHUB_OUTPUT"
-          echo "existing_addon=$existing_addon" >> "$GITHUB_OUTPUT"
-          echo "risk=$(jq -r '.risk' "$RUNNER_TEMP/triage.json")" >> "$GITHUB_OUTPUT"
+          write_output() {
+              local name="$1"
+              local value="$2"
+              if [[ "$value" == *$'\n'* || "$value" == *$'\r'* ]]; then
+                  echo "Refusing multiline GitHub output '$name'." >&2
+                  exit 1
+              fi
+              printf '%s=%s\n' "$name" "$value" >> "$GITHUB_OUTPUT"
+          }
+
+          write_output addon "$addon"
+          write_output category "$category"
+          write_output confidence "$confidence"
+          write_output existing_addon "$existing_addon"
+          write_output risk "$risk"
 
       - name: Publish triage result
         if: github.event.action == 'opened' || github.event.action == 'reopened'
@@ -408,7 +436,6 @@ jobs:
           output-file: codex-result.md
           sandbox: workspace-write
           safety-strategy: drop-sudo
-          allow-users: "*"
           model: ${{ vars.OPENAI_FIX_MODEL }}
           effort: high
 
