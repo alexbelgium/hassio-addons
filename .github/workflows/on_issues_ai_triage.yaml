@@ -3,9 +3,10 @@
 #
 # Tier 1. Fires on every new issue, costs cents, finishes in ~2 minutes.
 # Classifies, de-duplicates, asks for missing info, answers simple questions,
-# and applies the `ai-triage` label that tier 2 (weekly_ai_fix.yaml) picks up.
+# and applies the `ai-triage` label that tier 2 (daily_ai_fix.yaml) picks up.
 #
-# Required secret: ANTHROPIC_API_KEY  (or swap to claude_code_oauth_token)
+# Auth: Claude Pro/Max subscription via the CR_PAT GitHub Environment, which
+# holds the CLAUDE_CODE_OAUTH_TOKEN secret (generate with `claude setup-token`).
 
 name: AI issue triage
 
@@ -34,6 +35,7 @@ jobs:
       !contains(github.event.issue.labels.*.name, 'no-ai')
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    environment: CR_PAT
 
     steps:
       # on_issues_ping_submitter.yml has to land first: the classifier reads
@@ -63,7 +65,7 @@ jobs:
       - name: Classify
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
             Read /tmp/ai-triage/context.md, then follow the instructions in
             .github/prompts/issue-classify.md exactly.

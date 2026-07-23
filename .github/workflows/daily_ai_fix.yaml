@@ -1,12 +1,15 @@
 ---
-# Destination: .github/workflows/weekly_ai_fix.yaml
+# Destination: .github/workflows/daily_ai_fix.yaml
 #
 # Tier 2. One Opus 4.8 run at xhigh over the whole batch of `ai-triage` issues,
 # grouped by add-on, so it can spot the cross-issue patterns a per-issue run
-# never sees ("these four reports are all the same base image bump").
+# never sees ("these four reports are all the same base image bump"). Runs
+# daily rather than weekly, so batches (default limit 8) stay small and any
+# one day's failure doesn't block a week's worth of issues.
 #
-# Required secrets:
-#   ANTHROPIC_API_KEY
+# Auth:
+#   Claude Pro/Max subscription via the CR_PAT GitHub Environment, which
+#   holds the CLAUDE_CODE_OAUTH_TOKEN secret (generate with `claude setup-token`).
 #   AI_PR_TOKEN  — GitHub App token or PAT (repo scope). NOT GITHUB_TOKEN:
 #                  pull requests created with GITHUB_TOKEN do not trigger
 #                  other workflows, so your PR Check Build would never run.
@@ -15,7 +18,7 @@ name: AI fix sweep
 
 on:
   schedule:
-    - cron: "0 3 * * SUN"
+    - cron: "0 3 * * *"
   workflow_dispatch:
     inputs:
       issue:
@@ -39,6 +42,7 @@ jobs:
   sweep:
     runs-on: ubuntu-latest
     timeout-minutes: 180
+    environment: CR_PAT
 
     steps:
       - uses: actions/checkout@v5
@@ -77,7 +81,7 @@ jobs:
         if: steps.batch.outputs.count != '0'
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
             The batch of issues to work through is /tmp/ai-fix/batch.json.
             Follow .github/prompts/issue-fix.md exactly. Do not deviate from
