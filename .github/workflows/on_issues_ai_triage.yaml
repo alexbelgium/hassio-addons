@@ -13,6 +13,11 @@ name: AI issue triage
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: "Issue number to (re-)triage manually"
+        required: true
 
 permissions:
   contents: read
@@ -20,7 +25,7 @@ permissions:
   id-token: write  # claude-code-action fetches a GitHub OIDC token to auth the OAuth flow
 
 concurrency:
-  group: ai-triage-${{ github.event.issue.number }}
+  group: ai-triage-${{ github.event.issue.number || inputs.issue }}
   cancel-in-progress: false
 
 env:
@@ -28,9 +33,13 @@ env:
 
 jobs:
   classify:
+    # Manual dispatch is a deliberate override: skip the auto-trigger guards
+    # (don't self-triage the maintainer's own issues; honour the no-ai
+    # opt-out) that only make sense for the fire-on-every-open path.
     if: >-
-      github.event.issue.user.login != 'alexbelgium' &&
-      !contains(github.event.issue.labels.*.name, 'no-ai')
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.issue.user.login != 'alexbelgium' &&
+       !contains(github.event.issue.labels.*.name, 'no-ai'))
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: CR_PAT
@@ -41,7 +50,10 @@ jobs:
       # Both workflows fire on the same issues.opened event and race. The
       # submitter ping completes in 6-11s of job time across recent runs; 60s
       # leaves a generous margin for runner-queue skew between the two jobs.
+      # A manual dispatch runs against an existing issue whose ping (if any)
+      # landed long ago, so there is nothing to wait for.
       - name: Wait for ping_submitter
+        if: github.event_name == 'issues'
         run: sleep 60
 
       - name: Checkout tooling
@@ -57,7 +69,7 @@ jobs:
       - name: Build context bundle
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue }}
           REPO: ${{ github.repository }}
         run: bash .github/scripts/ai_triage_context.sh
 
@@ -83,7 +95,7 @@ jobs:
       - name: Apply verdict
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE: ${{ github.event.issue.number }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
