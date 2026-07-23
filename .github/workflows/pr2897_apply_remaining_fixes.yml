@@ -1,0 +1,146 @@
+---
+name: Apply remaining PR 2897 fixes
+
+on:
+  push:
+    branches: [agent/ai-issue-triage-fixes]
+    paths: [.github/workflows/pr2897_apply_remaining_fixes.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Apply exact fixes
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          import re
+          from pathlib import Path
+
+          path = Path('.github/workflows/on_issues_ai.yml')
+          text = path.read_text()
+
+          checkout = """      - name: Checkout repository
+                  uses: actions/checkout@v7
+          """
+          hardened_checkout = """      - name: Checkout repository
+                  uses: actions/checkout@v7
+                  with:
+                    persist-credentials: false
+          """
+          if text.count(checkout) < 2:
+              raise SystemExit('Could not locate both read-only checkout steps')
+          text = text.replace(checkout, hardened_checkout, 2)
+
+          if '          allow-users: "*"\n' not in text:
+              raise SystemExit('Could not locate wildcard allow-users input')
+          text = text.replace('          allow-users: "*"\n', '', 1)
+
+          pattern = re.compile(
+              r'''          category="\$\(jq -r '\.category' "\$RUNNER_TEMP/triage\.json"\)"\n'''
+              r'''          addon="\$\(jq -r '\.addon // ""' "\$RUNNER_TEMP/triage\.json"\)"\n'''
+              r'''          existing_addon=false\n'''
+              r'''          if \[\[ -n "\$addon" && "\$addon" != \*/\* && "\$addon" != "\." && "\$addon" != "\.\." \]\] &&\n'''
+              r'''              \[\[ -f "\$addon/config\.yaml" \|\| -f "\$addon/config\.json" \]\]; then\n'''
+              r'''              existing_addon=true\n'''
+              r'''          fi\n\n'''
+              r'''          echo "addon=\$addon" >> "\$GITHUB_OUTPUT"\n'''
+              r'''          echo "category=\$category" >> "\$GITHUB_OUTPUT"\n'''
+              r'''          echo "confidence=\$\(jq -r '\.confidence' "\$RUNNER_TEMP/triage\.json"\)" >> "\$GITHUB_OUTPUT"\n'''
+              r'''          echo "existing_addon=\$existing_addon" >> "\$GITHUB_OUTPUT"\n'''
+              r'''          echo "risk=\$\(jq -r '\.risk' "\$RUNNER_TEMP/triage\.json"\)" >> "\$GITHUB_OUTPUT"\n'''
+          )
+          replacement = '''          category="$(jq -r '.category' "$RUNNER_TEMP/triage.json")"
+                    addon="$(jq -r '.addon // ""' "$RUNNER_TEMP/triage.json")"
+                    confidence="$(jq -r '.confidence' "$RUNNER_TEMP/triage.json")"
+                    risk="$(jq -r '.risk' "$RUNNER_TEMP/triage.json")"
+
+                    case "$category" in
+                        question | missing_information | bug | improvement | new_addon_request | unsupported | spam) ;;
+                        *) echo "Invalid triage category: $category" >&2; exit 1 ;;
+                    esac
+                    case "$risk" in
+                        low | medium | high) ;;
+                        *) echo "Invalid triage risk: $risk" >&2; exit 1 ;;
+                    esac
+
+                    existing_addon=false
+                    if [[ -n "$addon" ]] &&
+                        jq -e --arg addon "$addon" 'index($addon) != null' <<< "$addon_catalog" > /dev/null; then
+                        existing_addon=true
+                    else
+                        addon=""
+                    fi
+
+                    write_output() {
+                        local name="$1"
+                        local value="$2"
+                        if [[ "$value" == *$'\\n'* || "$value" == *$'\\r'* ]]; then
+                            echo "Refusing multiline GitHub output '$name'." >&2
+                            exit 1
+                        fi
+                        printf '%s=%s\\n' "$name" "$value" >> "$GITHUB_OUTPUT"
+                    }
+
+                    write_output addon "$addon"
+                    write_output category "$category"
+                    write_output confidence "$confidence"
+                    write_output existing_addon "$existing_addon"
+                    write_output risk "$risk"
+          '''
+          text, count = pattern.subn(replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'Expected one triage output block, replaced {count}')
+          path.write_text(text)
+
+          readme_path = Path('.github/ai/README.md')
+          readme = readme_path.read_text()
+          old = '''The validator independently rejects new top-level add-on directories and Codex
+          never merges pull requests.
+          '''
+          new = '''The validator independently rejects new top-level add-on directories and Codex
+          never merges pull requests. The Codex Action keeps its default authorization,
+          so only users with repository write access can trigger it; external issue
+          authors cannot run it merely by opening an issue.
+          '''
+          if old not in readme:
+              raise SystemExit('Could not locate README security paragraph')
+          readme_path.write_text(readme.replace(old, new, 1))
+          PY
+
+      - name: Validate
+        run: |
+          set -euo pipefail
+          ruby -e 'require "yaml"; YAML.safe_load(File.read(ARGV.fetch(0)), aliases: true)' .github/workflows/on_issues_ai.yml
+          ruby <<'RUBY'
+          require "yaml"
+          workflow = YAML.safe_load(File.read('.github/workflows/on_issues_ai.yml'), aliases: true)
+          workflow.fetch('jobs').each do |job_name, job|
+            job.fetch('steps', []).each_with_index do |step, index|
+              next unless step['run']
+              file = "/tmp/#{job_name}-#{index}.sh"
+              File.write(file, step['run'])
+              abort("bash -n failed: #{job_name}/#{index}") unless system('bash', '-n', file)
+            end
+          end
+          RUBY
+          test "$(grep -c 'persist-credentials: false' .github/workflows/on_issues_ai.yml)" -eq 4
+          ! grep -q 'allow-users: "\*"' .github/workflows/on_issues_ai.yml
+          grep -q 'Refusing multiline GitHub output' .github/workflows/on_issues_ai.yml
+
+      - name: Commit and remove helper
+        run: |
+          set -euo pipefail
+          rm .github/workflows/pr2897_apply_remaining_fixes.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: address remaining AI workflow review findings"
+          git push origin HEAD:agent/ai-issue-triage-fixes
