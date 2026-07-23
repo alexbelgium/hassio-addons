@@ -74,7 +74,9 @@ jobs:
         run: bash .github/scripts/ai_triage_context.sh
 
       - name: Classify
-        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
+        id: classify
+        continue-on-error: true
+        uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
