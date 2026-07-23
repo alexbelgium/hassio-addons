@@ -1,0 +1,144 @@
+---
+# Destination: .github/workflows/on_issues_ai_triage.yaml
+#
+# Tier 1. Fires on every new issue, costs cents, finishes in ~2 minutes.
+# Classifies, de-duplicates, asks for missing info, answers simple questions,
+# and applies the `ai-triage` label that tier 2 (daily_ai_fix.yaml) picks up.
+#
+# Auth: Claude Pro/Max subscription via the CR_PAT GitHub Environment, which
+# holds the CLAUDE_CODE_OAUTH_TOKEN secret (generate with `claude setup-token`).
+
+name: AI issue triage
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: ai-triage-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+env:
+  MAINTAINER: alexbelgium
+  # Leave "true" for the first couple of weeks. The verdict is printed in the
+  # job log and nothing is written to the issue. Flip when it looks right.
+  DRY_RUN: "true"
+
+jobs:
+  classify:
+    if: >-
+      github.event.issue.user.login != 'alexbelgium' &&
+      !contains(github.event.issue.labels.*.name, 'no-ai')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: CR_PAT
+
+    steps:
+      # on_issues_ping_submitter.yml has to land first: the classifier reads
+      # the existing comments and bails out if someone already owns the issue.
+      # Both workflows fire on the same issues.opened event and race. The
+      # submitter ping completes in 6-11s of job time across recent runs; 60s
+      # leaves a generous margin for runner-queue skew between the two jobs.
+      - name: Wait for ping_submitter
+        run: sleep 60
+
+      - name: Checkout tooling
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: |
+            .github/prompts
+            .github/scripts
+          sparse-checkout-cone-mode: false
+
+      - name: Build context bundle
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: bash .github/scripts/ai_triage_context.sh
+
+      - name: Classify
+        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Read /tmp/ai-triage/context.md, then follow the instructions in
+            .github/prompts/issue-classify.md exactly.
+
+            Write your verdict as a single JSON object to
+            /tmp/ai-triage/verdict.json and write nothing else anywhere.
+            Do NOT comment on or label the issue yourself.
+          claude_args: |
+            --model claude-sonnet-5
+            --effort low
+            --max-turns 12
+            --allowedTools "Read,Write,Glob,Grep,Bash(gh issue list:*),Bash(gh search issues:*)"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Apply verdict
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          F=/tmp/ai-triage/verdict.json
+          if [ ! -s "$F" ] || ! jq -e . "$F" >/dev/null 2>&1; then
+            echo "::warning::no usable verdict produced, leaving issue untouched"
+            exit 0
+          fi
+
+          echo "--- verdict ---"; jq . "$F"; echo "---------------"
+
+          VERDICT=$(jq -r '.verdict // "unknown"' "$F")
+          CONF=$(jq -r '.confidence // "low"' "$F")
+          COMMENT=$(jq -r '.comment // ""' "$F")
+          # Model-supplied labels are cosmetic only (e.g. "bug"). ai-triage /
+          # ai:classified / ai:needs-human are workflow-owned control labels;
+          # strip anything in that namespace so a verdict can't self-trigger
+          # tier 2 (the deterministic add below is the only legitimate source
+          # of ai-triage).
+          mapfile -t LABELS < <(jq -r '.labels[]? // empty' "$F" | grep -vE '^ai[:-]' || true)
+
+          # Someone already owns this one: ping_submitter did its job.
+          if [ "$VERDICT" = "owned" ]; then
+            echo "issue already has an owner, nothing to do"; exit 0
+          fi
+
+          # Low confidence never speaks. It just flags for a human.
+          if [ "$CONF" = "low" ]; then
+            LABELS=("ai:needs-human"); COMMENT=""
+          fi
+
+          [ "$VERDICT" = "addon-bug" ] && LABELS+=("ai-triage")
+          LABELS+=("ai:classified")
+
+          if [ "${DRY_RUN:-true}" = "true" ]; then
+            echo "DRY_RUN: would apply labels: ${LABELS[*]}"
+            echo "DRY_RUN: would post comment:"; printf '%s\n' "$COMMENT"
+            exit 0
+          fi
+
+          for l in "${LABELS[@]}"; do
+            gh label create "$l" --repo "$REPO" --color ededed --force >/dev/null 2>&1 || true
+          done
+          gh issue edit "$ISSUE" --repo "$REPO" \
+            "${LABELS[@]/#/--add-label=}"
+
+          if [ -n "$COMMENT" ]; then
+            {
+              printf '%s\n\n' "$COMMENT"
+              printf -- '---\n'
+              printf '<sub>Automated triage. Not verified by a human yet '
+              # shellcheck disable=SC2016  # backticks are literal Markdown, not a subshell
+              printf -- '— @%s will confirm. Add the `no-ai` label to opt out.</sub>\n' "$MAINTAINER"
+            } > /tmp/ai-triage/comment.md
+            gh issue comment "$ISSUE" --repo "$REPO" --body-file /tmp/ai-triage/comment.md
+          fi

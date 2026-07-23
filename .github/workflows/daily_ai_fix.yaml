@@ -1,0 +1,170 @@
+---
+# Destination: .github/workflows/daily_ai_fix.yaml
+#
+# Tier 2. One Opus 4.8 run at xhigh over the whole batch of `ai-triage` issues,
+# grouped by add-on, so it can spot the cross-issue patterns a per-issue run
+# never sees ("these four reports are all the same base image bump"). Runs
+# daily rather than weekly, so batches (default limit 8) stay small and any
+# one day's failure doesn't block a week's worth of issues.
+#
+# Auth:
+#   Claude Pro/Max subscription via the CR_PAT GitHub Environment, which
+#   holds the CLAUDE_CODE_OAUTH_TOKEN secret (generate with `claude setup-token`).
+#   AI_PR_TOKEN  — GitHub App token or PAT (repo scope). NOT GITHUB_TOKEN:
+#                  pull requests created with GITHUB_TOKEN do not trigger
+#                  other workflows, so your PR Check Build would never run.
+
+name: AI fix sweep
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: "Single issue number (blank = all ai-triage issues)"
+        required: false
+      limit:
+        description: "Max issues in the batch"
+        required: false
+        default: "8"
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: ai-fix-sweep
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    environment: CR_PAT
+
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.AI_PR_TOKEN }}
+
+      - name: Collect batch
+        id: batch
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+          # workflow_dispatch inputs land here instead of being interpolated
+          # directly into the script below — expanding "${{ }}" inline would
+          # splice attacker/typo-controlled text into the shell source itself
+          # rather than passing it as data.
+          ISSUE_INPUT: ${{ inputs.issue }}
+          LIMIT_INPUT: ${{ inputs.limit || '8' }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/ai-fix
+          [[ "$LIMIT_INPUT" =~ ^[1-9][0-9]*$ ]] || { echo "::error::limit must be a positive integer, got '$LIMIT_INPUT'"; exit 1; }
+          if [ -n "$ISSUE_INPUT" ]; then
+            [[ "$ISSUE_INPUT" =~ ^[0-9]+$ ]] || { echo "::error::issue must be a number, got '$ISSUE_INPUT'"; exit 1; }
+            gh issue view "$ISSUE_INPUT" --repo "$REPO" \
+              --json number,title,body,labels,comments \
+              | jq '[.]' > /tmp/ai-fix/batch.json
+          else
+            gh issue list --repo "$REPO" --state open \
+              --label ai-triage --limit "$LIMIT_INPUT" \
+              --json number,title,body,labels,comments > /tmp/ai-fix/batch.json
+          fi
+          N=$(jq 'length' /tmp/ai-fix/batch.json)
+          echo "count=$N" >> "$GITHUB_OUTPUT"
+          echo "batch size: $N"
+
+      - name: Configure git
+        if: steps.batch.outputs.count != '0'
+        run: |
+          git config user.name  "claude-ai-fix[bot]"
+          git config user.email "claude-ai-fix[bot]@users.noreply.github.com"
+
+      # Created up front so issue-fix.md's per-issue relabel never has to
+      # improvise a color or retry a "label does not exist" error — that's a
+      # wasted turn multiplied by every issue in the batch.
+      - name: Ensure relabel targets exist
+        if: steps.batch.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          for l in ai:fixed ai:upstream ai:needs-human; do
+            gh label create "$l" --repo "$REPO" --color ededed --force >/dev/null 2>&1 || true
+          done
+
+      - name: Analyse and fix
+        if: steps.batch.outputs.count != '0'
+        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            The batch of issues to work through is /tmp/ai-fix/batch.json.
+            Follow .github/prompts/issue-fix.md exactly. Do not deviate from
+            the path restrictions in that file under any circumstances.
+          claude_args: |
+            --model claude-opus-4-8
+            --effort xhigh
+            --max-turns 300
+            --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(gh:*),Bash(shellcheck:*),Bash(yamllint:*),Bash(docker build:*)"
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+
+      # Belt and braces. issue-fix.md instructs Claude to drop the ai-triage
+      # label off every issue it finishes with (hard limit 6), so tomorrow's
+      # sweep never re-selects and re-spends a full read-and-fix pass on
+      # work that's already done. Enforce it here in case a turn or timeout
+      # budget runs out before the relabel step of the last issue or two.
+      - name: Guard against repeat processing
+        if: always() && steps.batch.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mapfile -t ISSUES < <(jq -r '.[].number' /tmp/ai-fix/batch.json)
+          for n in "${ISSUES[@]}"; do
+            STILL=$(gh issue view "$n" --repo "$REPO" --json labels \
+                    --jq '[.labels[].name] | index("ai-triage") != null' 2>/dev/null) || {
+              echo "::warning::could not re-check issue #$n (deleted or transferred?), skipping"
+              continue
+            }
+            if [ "$STILL" = "true" ]; then
+              echo "::warning::issue #$n still carries ai-triage after the sweep, forcing it out of tomorrow's batch"
+              gh issue edit "$n" --repo "$REPO" \
+                --remove-label ai-triage --add-label ai:needs-human
+            fi
+          done
+
+      # Belt and braces. The prompt forbids these paths; this enforces it.
+      - name: Guard forbidden paths
+        if: always() && steps.batch.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          # gh pr list applies --limit before the headRefName filter below, so
+          # a low cap could silently drop older ai-fix/ PRs from the check
+          # once total open PRs (of any kind) grow past it. 300 is far above
+          # anything this repo runs today; gh paginates to satisfy it.
+          PRS=$(gh pr list --repo "$REPO" --state open --limit 300 \
+                --json number,headRefName \
+                --jq '.[] | select(.headRefName|startswith("ai-fix/")) | .number')
+          for pr in $PRS; do
+            BAD=$(gh pr diff "$pr" --repo "$REPO" --name-only \
+                  | grep -E '^(\.github/|\.templates/)' || true)
+            if [ -n "$BAD" ]; then
+              echo "::error::PR #$pr touches protected paths:"; echo "$BAD"
+              gh pr ready "$pr" --repo "$REPO" --undo || true
+              gh pr edit "$pr" --repo "$REPO" --add-label "ai:blocked"
+              gh pr comment "$pr" --repo "$REPO" --body \
+                "Blocked automatically: this PR modifies shared infrastructure (\`.github/\` or \`.templates/\`), which is inherited by every add-on in the repo. Needs manual review before it goes anywhere."
+            fi
+          done
