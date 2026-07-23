@@ -24,6 +24,22 @@ anything that violates them gets blocked and flagged.
 5. If the fix requires changing more than roughly 60 lines, or touching more
    than three files, stop. Post the analysis, open no pull request, and say
    plainly that the change is too large for an unattended fix.
+6. **Relabel every issue before moving to the next one.** This sweep runs
+   daily over the same `ai-triage`-labelled backlog. An issue you have
+   already finished with must drop that label immediately — otherwise
+   tomorrow's sweep re-selects it, opens a second competing branch, and
+   burns another full read-the-source-and-fix pass on work that is already
+   done. Do this as your last action on the issue, right after commenting,
+   not batched at the end: `gh issue edit <n> --remove-label ai-triage
+   --add-label <replacement>`, where `<replacement>` is exactly one of:
+   - `ai:fixed` — you opened a draft pull request for it.
+   - `ai:upstream` — you reversed tier 1's call and the fault is upstream,
+     so no pull request.
+   - `ai:needs-human` — too large for an unattended fix (rule 5), or you
+     found no fix and are reporting what you ruled out.
+   A workflow step checks this after you finish and force-corrects to
+   `ai:needs-human` for anything still carrying `ai-triage` — treat that as
+   a bug in your run, not a safety net to lean on.
 
 ## Per add-on, do this in order
 
@@ -52,11 +68,13 @@ change. Add a `CHANGELOG.md` entry in the add-on's existing format.
 and line, what the change does, how you verified it (or an explicit statement
 that you could not verify it), and `Closes #<n>`.
 
-**6. Comment on the issue.** Root cause, the fix in one or two sentences, and
-the pull request link. Plain language — the reader is a Home Assistant user,
-not a Go developer. If you found no fix, say what you ruled out and what you
-would need to go further. Close with a note that this is automated analysis
-pending Alex's review.
+**6. Comment on the issue, then relabel it (hard limit 6).** Root cause, the
+fix in one or two sentences, and the pull request link. Plain language — the
+reader is a Home Assistant user, not a Go developer. If you found no fix, say
+what you ruled out and what you would need to go further. Close with a note
+that this is automated analysis pending Alex's review. Then remove
+`ai-triage` and add the one replacement label that matches the outcome,
+before starting the next issue.
 
 ## Meta-findings
 

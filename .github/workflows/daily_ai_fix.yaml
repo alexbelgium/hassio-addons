@@ -77,6 +77,20 @@ jobs:
           git config user.name  "claude-ai-fix[bot]"
           git config user.email "claude-ai-fix[bot]@users.noreply.github.com"
 
+      # Created up front so issue-fix.md's per-issue relabel never has to
+      # improvise a color or retry a "label does not exist" error — that's a
+      # wasted turn multiplied by every issue in the batch.
+      - name: Ensure relabel targets exist
+        if: steps.batch.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          for l in ai:fixed ai:upstream ai:needs-human; do
+            gh label create "$l" --repo "$REPO" --color ededed --force >/dev/null 2>&1 || true
+          done
+
       - name: Analyse and fix
         if: steps.batch.outputs.count != '0'
         uses: anthropics/claude-code-action@v1
@@ -93,6 +107,32 @@ jobs:
             --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(gh:*),Bash(shellcheck:*),Bash(yamllint:*),Bash(docker build:*)"
         env:
           GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+
+      # Belt and braces. issue-fix.md instructs Claude to drop the ai-triage
+      # label off every issue it finishes with (hard limit 6), so tomorrow's
+      # sweep never re-selects and re-spends a full read-and-fix pass on
+      # work that's already done. Enforce it here in case a turn or timeout
+      # budget runs out before the relabel step of the last issue or two.
+      - name: Guard against repeat processing
+        if: always() && steps.batch.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mapfile -t ISSUES < <(jq -r '.[].number' /tmp/ai-fix/batch.json)
+          for n in "${ISSUES[@]}"; do
+            STILL=$(gh issue view "$n" --repo "$REPO" --json labels \
+                    --jq '[.labels[].name] | index("ai-triage") != null' 2>/dev/null) || {
+              echo "::warning::could not re-check issue #$n (deleted or transferred?), skipping"
+              continue
+            }
+            if [ "$STILL" = "true" ]; then
+              echo "::warning::issue #$n still carries ai-triage after the sweep, forcing it out of tomorrow's batch"
+              gh issue edit "$n" --repo "$REPO" \
+                --remove-label ai-triage --add-label ai:needs-human
+            fi
+          done
 
       # Belt and braces. The prompt forbids these paths; this enforces it.
       - name: Guard forbidden paths
