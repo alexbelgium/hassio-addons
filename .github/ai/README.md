@@ -34,10 +34,20 @@ never merges pull requests.
   workflow uses `GITHUB_TOKEN`. GitHub may require manual approval before CI
   runs on pull requests created with `GITHUB_TOKEN`.
 
+## Model selection
+
+Automated repository fixes default to `gpt-5.6` with high reasoning effort via
+`.codex/config.toml`.
+
+The `OPENAI_FIX_MODEL` repository variable remains an optional explicit
+override. When it is set, the workflow passes that model directly to
+`openai/codex-action`; when it is empty, Codex uses the repository default from
+`.codex/config.toml`.
+
 ## Optional repository variables
 
 - `OPENAI_TRIAGE_MODEL`: defaults to `gpt-5-mini`.
-- `OPENAI_FIX_MODEL`: when empty, Codex uses its current default model.
+- `OPENAI_FIX_MODEL`: optional override for the default `gpt-5.6` fix model.
 - `AI_MIN_CONFIDENCE`: defaults to `0.80`.
 - `AI_MAX_CHANGED_FILES`: defaults to `25`.
 - `AI_MAX_CHANGED_LINES`: defaults to `2000`.
