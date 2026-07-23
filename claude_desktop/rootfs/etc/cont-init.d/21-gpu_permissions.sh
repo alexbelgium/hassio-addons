@@ -34,7 +34,15 @@ for node in "${dri_nodes[@]}"; do
     # the group when the GID is unnamed) but early enough that the s6-setuidgid at service
     # start picks the membership up.
     gid="$(stat -c '%g' "$node")"
-    gname="$(getent group "$gid" | awk -F: '{print $1}')"
+    # getent exits 2 when the gid has no named group, which is the common case here: this
+    # script deliberately runs before the base image's init-video/init-adduser have named the
+    # passed-through /dev/dri gids. Under bashio's `set -o pipefail` + this script's `set -e`,
+    # an unguarded pipeline would abort right here on that exit 2 — before the `-z "$gname"`
+    # fallback below (which exists precisely to handle an unnamed gid) ever runs. Confirmed by
+    # bashio manually re-running this script post-boot always "worked": by then the base
+    # image's own init-video oneshot had already named the group, so getent no longer hit its
+    # exit-2 path.
+    gname="$(getent group "$gid" | awk -F: '{print $1}')" || gname=""
     if [ -z "$gname" ]; then
         gname="dri${gid}"
         groupadd -o -g "$gid" "$gname" 2> /dev/null || true
