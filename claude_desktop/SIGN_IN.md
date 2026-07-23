@@ -107,7 +107,9 @@ entirely.
    `--password-store=basic` instead of `gnome-libsecret`. `basic` is Electron's built-in
    fixed-key store: `isEncryptionAvailable()` is always `true`, no daemon, no prompt. Secrets
    land under `$HOME/.config/Claude`, and `HOME=/data/data` is persistent add-on storage, so
-   the session survives restarts.
+   the session survives restarts. `basic` trades away OS-backed at-rest protection: unlike
+   `gnome-libsecret`, its encryption key isn't gated by a keyring daemon, so any process able
+   to read the persistent `$HOME/.config/Claude` profile can recover the saved credentials.
 2. A passwordless keyring was considered instead (keeps libsecret encryption-at-rest without
    a prompt) and rejected: the keyring DB would live in the same persistent volume as the
    ciphertext it's "protecting," so it adds ~no real confidentiality in this single-user

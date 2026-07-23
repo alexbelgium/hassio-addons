@@ -42,7 +42,14 @@ for node in "${dri_nodes[@]}"; do
     # bashio manually re-running this script post-boot always "worked": by then the base
     # image's own init-video oneshot had already named the group, so getent no longer hit its
     # exit-2 path.
-    gname="$(getent group "$gid" | awk -F: '{print $1}')" || gname=""
+    if gname="$(getent group "$gid" | awk -F: '{print $1}')"; then
+        rc=0
+    else
+        rc=$?
+        if [ "$rc" -ne 2 ]; then
+            bashio::log.warning "getent group ${gid} failed unexpectedly (exit ${rc}); falling back to a synthetic group"
+        fi
+    fi
     if [ -z "$gname" ]; then
         gname="dri${gid}"
         groupadd -o -g "$gid" "$gname" 2> /dev/null || true
