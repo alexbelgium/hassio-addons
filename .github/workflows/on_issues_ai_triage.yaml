@@ -17,6 +17,7 @@ on:
 permissions:
   contents: read
   issues: write
+  id-token: write  # claude-code-action fetches a GitHub OIDC token to auth the OAuth flow
 
 concurrency:
   group: ai-triage-${{ github.event.issue.number }}

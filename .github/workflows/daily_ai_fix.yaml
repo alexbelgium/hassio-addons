@@ -33,6 +33,7 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
+  id-token: write  # claude-code-action fetches a GitHub OIDC token to auth the OAuth flow
 
 concurrency:
   group: ai-fix-sweep
