@@ -16,42 +16,42 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Ping mapped submitter when add-on is mentioned
+      - name: Detect mapped submitters
+        id: submitter
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
+        run: bash .github/scripts/find_addon_submitter.sh
+
+      - name: Ping mapped submitters
+        if: steps.submitter.outputs.matched == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
+          MATCHES_JSON: ${{ steps.submitter.outputs.matches_json }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
 
-          TEXT="${ISSUE_TITLE} ${ISSUE_BODY}"
-          TEXT_LOWER="$(printf '%s' "$TEXT" | tr '[:upper:]' '[:lower:]')"
-
-          while IFS= read -r addon; do
-            ADDON_LOWER="$(printf '%s' "$addon" | tr '[:upper:]' '[:lower:]')"
-            [ -z "$ADDON_LOWER" ] && continue
-
-            if [[ " $TEXT_LOWER " == *" $ADDON_LOWER "* ]]; then
-              user="$(jq -r --arg addon "$addon" '.[$addon]' .github/addon_submitters.json)"
-              if [ -z "$user" ] || [ "$user" = "null" ]; then
-                continue
-              fi
-
+          while IFS= read -r match; do
+              addon="$(jq -r '.addon' <<< "$match")"
+              user="$(jq -r '.submitter' <<< "$match")"
               marker="<!-- addon-submitter-ping:${addon} -->"
-              comments_url="https://api.github.com/repos/${REPO}/issues/${ISSUE_NUMBER}/comments"
 
-              export GH_TOKEN="${GITHUB_TOKEN}"
-              existing="$(gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json comments | jq --arg marker "$marker" '[.comments[] | select(.body | contains($marker))] | length')"
+              existing="$(
+                  gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json comments |
+                      jq --arg marker "$marker" \
+                      '[.comments[] | select(.body | contains($marker))] | length'
+              )"
 
-              if [ "$existing" -eq 0 ]; then
-                body=$(jq -cn --arg marker "$marker" --arg addon "$addon" --arg user "$user" '{body: ($marker + "\nHeads up @" + $user + ": this issue appears to mention `" + $addon + "`.")}')
-                curl -sS -X POST \
-                  -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                  -H 'Accept: application/vnd.github+json' \
-                  "$comments_url" \
-                  -d "$body" > /dev/null
+              if [[ "$existing" -eq 0 ]]; then
+                  body="$(
+                      jq -nr \
+                          --arg marker "$marker" \
+                          --arg addon "$addon" \
+                          --arg user "$user" \
+                          '$marker + "\nHeads up @" + $user + ": this issue appears to mention `" + $addon + "`."'
+                  )"
+                  gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$body"
               fi
-            fi
-          done < <(jq -r 'keys[]' .github/addon_submitters.json)
+          done < <(jq -c '.[]' <<< "$MATCHES_JSON")
