@@ -87,15 +87,19 @@ jobs:
 
       # Created up front so issue-fix.md's per-issue relabel never has to
       # improvise a color or retry a "label does not exist" error — that's a
-      # wasted turn multiplied by every issue in the batch.
-      - name: Ensure relabel targets exist
+      # wasted turn multiplied by every issue in the batch. Also covers
+      # ai:blocked, which the forbidden-paths guard applies later in this
+      # same job: with set -euo pipefail, `gh pr edit --add-label` on a
+      # label that doesn't exist yet fails and aborts that step's loop
+      # entirely, silently skipping every remaining PR behind it.
+      - name: Ensure control labels exist
         if: steps.batch.outputs.count != '0'
         env:
           GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          for l in ai:fixed ai:upstream ai:needs-human; do
+          for l in ai:fixed ai:upstream ai:needs-human ai:blocked; do
             gh label create "$l" --repo "$REPO" --color ededed --force >/dev/null 2>&1 || true
           done
 

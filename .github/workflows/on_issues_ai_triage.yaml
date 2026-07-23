@@ -24,9 +24,6 @@ concurrency:
 
 env:
   MAINTAINER: alexbelgium
-  # Leave "true" for the first couple of weeks. The verdict is printed in the
-  # job log and nothing is written to the issue. Flip when it looks right.
-  DRY_RUN: "true"
 
 jobs:
   classify:
@@ -119,12 +116,6 @@ jobs:
 
           [ "$VERDICT" = "addon-bug" ] && LABELS+=("ai-triage")
           LABELS+=("ai:classified")
-
-          if [ "${DRY_RUN:-true}" = "true" ]; then
-            echo "DRY_RUN: would apply labels: ${LABELS[*]}"
-            echo "DRY_RUN: would post comment:"; printf '%s\n' "$COMMENT"
-            exit 0
-          fi
 
           for l in "${LABELS[@]}"; do
             gh label create "$l" --repo "$REPO" --color ededed --force >/dev/null 2>&1 || true
