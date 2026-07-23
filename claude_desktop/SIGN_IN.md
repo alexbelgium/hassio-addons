@@ -4,10 +4,16 @@ Two related sign-in problems when Claude Desktop runs inside the LinuxServer Sel
 streamed desktop.
 
 **Status:**
-- **Shipped:** Problem B (keyring persistence) — the `autostart` bootstrap landed in v1.4, but
-  the `gnome-keyring` package itself was missing from the image until v1.17 (the bootstrap
-  silently no-oped and Electron logged "safeStorage encryption is not available"). Fixed in
-  v1.17: the Dockerfile now installs `gnome-keyring`.
+- **Shipped:** Problem B (sign-in persistence) — the `autostart` bootstrap landed in v1.4, and
+  the `gnome-keyring` package itself was added in v1.17. That approach was later reverted:
+  v1.24-ish removed `gnome-keyring` again because it prompts for a keyring password on first
+  boot, which blocked Claude Desktop from ever launching — but the launch flag was left
+  forcing the now-daemonless libsecret backend, so `safeStorage` silently went unavailable
+  again (recurring "sign in again", and — new in this round — the Claude app's dispatch tab
+  showing the desktop as offline until a fresh sign-in was done from a computer). Fixed in
+  v1.35: switched to `--password-store=basic` (Electron's built-in store, no keyring
+  involved at all) plus a cont-init script that re-syncs the persistent openbox `autostart`
+  from the image on every boot, so the fix reaches existing installs, not just fresh ones.
 - **Planned only:** Problem A (in-desktop browser for OAuth) is intentionally not implemented.
   The image ships no browser; complete the login with the user-side workaround below.
 
@@ -59,64 +65,77 @@ magic link into the in-session Chromium (not a phone).
 
 ---
 
-## Problem B — "Your sign-in won't be saved on this device"
+## Problem B — "Your sign-in won't be saved on this device" / recurring re-auth / dispatch shows offline
 
-Symptom:
-> Install and unlock a system keyring (such as GNOME Keyring), then restart the app.
+Symptoms (all three are the same root cause):
+- > Install and unlock a system keyring (such as GNOME Keyring), then restart the app.
+- Periodic **"For your security, sign in again to keep using Claude."**
+- The Claude app's dispatch tab shows this desktop as **not online**, even though the
+  process is running — until a fresh sign-in is completed from a computer.
 
-### Root cause
+### Root cause (history)
 Claude Desktop (Electron) persists its auth token with `safeStorage`, which on Linux
 encrypts via the **Secret Service API** (`org.freedesktop.secrets`) provided by
-gnome-keyring/kwallet. The Selkies base runs only a **system** D-Bus
-(`svc-dbus` → `dbus-daemon --system`) and has **no keyring daemon**, so `safeStorage` is
-unavailable and the token cannot be stored → the app warns and forgets the session on
-restart.
+gnome-keyring/kwallet. `--password-store=gnome-libsecret` **forces** that backend.
 
-Note: the desktop itself already runs under a **session** bus —
-`root/defaults/startwm.sh` launches `dbus-launch --exit-with-session openbox-session`, so
-apps started from the openbox `autostart` inherit `DBUS_SESSION_BUS_ADDRESS`. The keyring
-must be started **inside that session** so it registers the secrets service on the same bus
-Claude Desktop uses. No extra `dbus-launch` is needed.
+This was fixed once (v1.17: `gnome-keyring` added to the Dockerfile) and then regressed:
+`gnome-keyring` was later removed again because, on first boot, it prompts for a keyring
+password and **blocks Claude Desktop from launching at all** — a worse failure than a lost
+session. The launch flag was left forcing libsecret, so with no daemon running
+`safeStorage.isEncryptionAvailable()` is `false`. Confirmed from a live install's
+`~/.config/Claude/logs/main.log`:
+```
+[safeStorage] isEncryptionAvailable=false ... (backend=gnome_libsecret) — session will not persist; app secrets fall back to plaintext
+Electron safeStorage encryption is not available on this system, cannot store allowlist cache
+```
+The un-persisted session goes stale and then fails the elevated-access OAuth check the
+cowork/dispatch bridge needs:
+```
+permission_error: "Session is not fresh enough to grant elevated access. Sign in again to continue." (session_stale_relogin)
+[sessions-bridge] Cowork OAuth stale-session (session_stale_relogin); parking bridge until re-login
+```
+That "parked" bridge is exactly what the Claude app surfaces as this desktop being
+**offline** in the dispatch tab — a fresh sign-in (only completable from a computer, see
+Problem A) un-parks it, which is why "open from a computer first" appeared to fix it.
 
-### Fix (image level)
-1. `claude_desktop/Dockerfile`: install
-   `gnome-keyring libsecret-1-0 dbus-x11` (dbus-x11 provides `dbus-launch`, already used by
-   startwm; libsecret-1-0 is the backend Electron dlopens).
-2. `claude_desktop/rootfs/defaults/autostart`: start & unlock an empty-password keyring
-   before launching the app, and force the libsecret backend. Proposed content:
-   ```sh
-   # Start + unlock a gnome-keyring secrets service so Claude Desktop can persist sign-in.
-   # Runs inside the openbox session's dbus (startwm.sh: dbus-launch --exit-with-session).
-   eval "$(printf '' | gnome-keyring-daemon --login)" 2>/dev/null || true
-   eval "$(gnome-keyring-daemon --start --components=secrets)" 2>/dev/null || true
-   dbus-update-activation-environment --all >/dev/null 2>&1 || true
+Re-adding gnome-keyring would just reintroduce the original launch-blocking prompt, so it's
+a dead end without also solving *that* — hence the shipped fix below avoids keyring
+entirely.
 
-   claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=gnome-libsecret
-   ```
-   - `--login` reads the password from stdin (empty here), creating and unlocking the login
-     keyring on first run and starting the daemon in login mode; `--start --components=secrets`
-     then exposes the Secret Service and exports `GNOME_KEYRING_CONTROL`/`SSH_AUTH_SOCK`.
-   - `--password-store=gnome-libsecret` forces Electron to use the libsecret backend instead
-     of falling back to plaintext.
-3. Persistence: the keyring DB lives in `$HOME/.local/share/keyrings/` and `HOME=/data/data`
-   (persistent add-on storage), so the empty-password login keyring survives restarts and is
-   re-unlocked automatically each boot by the same `autostart` line — the sign-in then sticks.
+### Fix (shipped, v1.35)
+1. `claude_desktop/rootfs/defaults/autostart` launches with
+   `--password-store=basic` instead of `gnome-libsecret`. `basic` is Electron's built-in
+   fixed-key store: `isEncryptionAvailable()` is always `true`, no daemon, no prompt. Secrets
+   land under `$HOME/.config/Claude`, and `HOME=/data/data` is persistent add-on storage, so
+   the session survives restarts. `basic` trades away OS-backed at-rest protection: unlike
+   `gnome-libsecret`, its encryption key isn't gated by a keyring daemon, so any process able
+   to read the persistent `$HOME/.config/Claude` profile can recover the saved credentials.
+2. A passwordless keyring was considered instead (keeps libsecret encryption-at-rest without
+   a prompt) and rejected: the keyring DB would live in the same persistent volume as the
+   ciphertext it's "protecting," so it adds ~no real confidentiality in this single-user
+   self-hosted setup, for more moving parts than `basic`.
+3. `claude_desktop/rootfs/etc/cont-init.d/85-openbox_autostart.sh` (new): the app is actually
+   launched from the **persistent** `$HOME/.config/openbox/autostart`, which the base image's
+   `init-selkies-config` oneshot only seeds from `/defaults/autostart` when the persistent
+   copy is *missing*. Editing `/defaults/autostart` alone therefore never reaches an existing
+   install's copy. This script re-syncs the persistent copy from the image on every boot (as
+   root, before any s6-rc service starts), so this fix — and any future `autostart` change —
+   reaches upgrades, not just fresh installs.
+4. `gnome-keyring` stays out of the Dockerfile.
 
-### User-side workaround (no rebuild)
-- Add-on Configuration → `additional_apps: gnome-keyring, libsecret-1-0, dbus-x11`, restart.
-- Add the keyring-start lines above to the custom script
-  `/addon_configs/db21ed7f_claude-desktop/claude_desktop.sh`, and relaunch Claude Desktop
-  with `--password-store=gnome-libsecret` (e.g. edit the in-session openbox autostart).
+### One-time step after upgrading
+The previously-stored session is already stale. Complete **one** sign-in from a computer
+(mobile still can't finish the OAuth flow itself, per Problem A) — the session then persists
+normally and dispatch stays online regardless of which device connects first afterward.
 
 ---
 
-## Files this plan would touch (when implemented)
-- `claude_desktop/Dockerfile` — install `chromium`, `gnome-keyring`, `libsecret-1-0`,
-  `dbus-x11`; set default browser + scheme handlers.
-- `claude_desktop/rootfs/defaults/autostart` — keyring bootstrap + `--password-store` flag.
-- `claude_desktop/CHANGELOG.md` / `config.yaml` version bump.
+## Files this plan touched
+- `claude_desktop/rootfs/defaults/autostart` — drop the keyring bootstrap; launch with
+  `--password-store=basic`.
+- `claude_desktop/rootfs/etc/cont-init.d/85-openbox_autostart.sh` — new; syncs the persistent
+  autostart from the image on every boot.
+- `claude_desktop/Dockerfile` — corrected stale comment (gnome-keyring is not installed).
+- `claude_desktop/CHANGELOG.md` / `config.yaml` — v1.35.
 
-## Open questions before implementing
-- Bundle **chromium** vs **firefox-esr** as the in-image browser?
-- Empty-password keyring (fully unattended) vs. reuse the add-on `PASSWORD` option to lock
-  the keyring with the same password?
+Problem A (in-desktop browser for OAuth) remains planned-only; not touched by this change.

@@ -103,8 +103,9 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
 # Install Claude Desktop, Claude Code, Python tooling, and lightweight local validators.
-# gnome-keyring provides the Secret Service backend Electron safeStorage needs to persist
-# sign-in and dispatch grants.
+# gnome-keyring is intentionally NOT installed: it prompts for a keyring password on first
+# boot, which blocks Claude Desktop from launching. Sign-in persistence instead uses Electron's
+# built-in --password-store=basic (rootfs/defaults/autostart) — no daemon, no prompt.
 # The cowork virtualization stack (qemu-system-x86 + ovmf firmware) lets Claude Code launch
 # its sandbox microVM; libseccomp2 and libcap-ng0 are the shared libraries the source-built
 # virtiofsd daemon links against at runtime. Docker itself is NOT installed here: this base
