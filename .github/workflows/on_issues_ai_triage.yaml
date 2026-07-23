@@ -117,9 +117,15 @@ jobs:
           # of ai-triage).
           mapfile -t LABELS < <(jq -r '.labels[]? // empty' "$F" | grep -vE '^ai[:-]' || true)
 
-          # Someone already owns this one: ping_submitter did its job.
+          # Someone already owns this one: ping_submitter did its job. Best-
+          # effort clear of a manual re-triage's stale control labels (e.g. a
+          # prior addon-bug run) — nothing to do if they were never set.
           if [ "$VERDICT" = "owned" ]; then
-            echo "issue already has an owner, nothing to do"; exit 0
+            echo "issue already has an owner, nothing to do"
+            gh issue edit "$ISSUE" --repo "$REPO" \
+              --remove-label=ai-triage --remove-label=ai:classified --remove-label=ai:needs-human \
+              >/dev/null 2>&1 || true
+            exit 0
           fi
 
           # Low confidence never speaks. It just flags for a human.
@@ -148,6 +154,21 @@ jobs:
           done
           gh issue edit "$ISSUE" --repo "$REPO" \
             "${LABELS[@]/#/--add-label=}"
+
+          # Manual re-triage can flip the verdict (e.g. a prior addon-bug
+          # re-run now comes back needs-info/upstream-bug): clear whichever
+          # of tier 1's own control labels this run did NOT re-apply, so a
+          # stale ai-triage doesn't keep the issue in tomorrow's fix sweep.
+          # Separate, best-effort call — must not block the add above.
+          declare -A FRESH=()
+          for l in "${LABELS[@]}"; do FRESH["$l"]=1; done
+          STALE=()
+          for l in ai-triage ai:classified ai:needs-human; do
+            [ -z "${FRESH[$l]:-}" ] && STALE+=("$l")
+          done
+          if [ "${#STALE[@]}" -gt 0 ]; then
+            gh issue edit "$ISSUE" --repo "$REPO" "${STALE[@]/#/--remove-label=}" >/dev/null 2>&1 || true
+          fi
 
           if [ -n "$COMMENT" ]; then
             {
