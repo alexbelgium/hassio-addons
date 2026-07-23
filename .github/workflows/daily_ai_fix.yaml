@@ -45,7 +45,7 @@ jobs:
     environment: CR_PAT
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5
         with:
           fetch-depth: 0
           token: ${{ secrets.AI_PR_TOKEN }}
@@ -55,16 +55,24 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
           REPO: ${{ github.repository }}
+          # workflow_dispatch inputs land here instead of being interpolated
+          # directly into the script below — expanding "${{ }}" inline would
+          # splice attacker/typo-controlled text into the shell source itself
+          # rather than passing it as data.
+          ISSUE_INPUT: ${{ inputs.issue }}
+          LIMIT_INPUT: ${{ inputs.limit || '8' }}
         run: |
           set -euo pipefail
           mkdir -p /tmp/ai-fix
-          if [ -n "${{ inputs.issue }}" ]; then
-            gh issue view "${{ inputs.issue }}" --repo "$REPO" \
+          [[ "$LIMIT_INPUT" =~ ^[1-9][0-9]*$ ]] || { echo "::error::limit must be a positive integer, got '$LIMIT_INPUT'"; exit 1; }
+          if [ -n "$ISSUE_INPUT" ]; then
+            [[ "$ISSUE_INPUT" =~ ^[0-9]+$ ]] || { echo "::error::issue must be a number, got '$ISSUE_INPUT'"; exit 1; }
+            gh issue view "$ISSUE_INPUT" --repo "$REPO" \
               --json number,title,body,labels,comments \
               | jq '[.]' > /tmp/ai-fix/batch.json
           else
             gh issue list --repo "$REPO" --state open \
-              --label ai-triage --limit "${{ inputs.limit || '8' }}" \
+              --label ai-triage --limit "$LIMIT_INPUT" \
               --json number,title,body,labels,comments > /tmp/ai-fix/batch.json
           fi
           N=$(jq 'length' /tmp/ai-fix/batch.json)
@@ -93,7 +101,7 @@ jobs:
 
       - name: Analyse and fix
         if: steps.batch.outputs.count != '0'
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
@@ -142,7 +150,11 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          PRS=$(gh pr list --repo "$REPO" --state open --limit 50 \
+          # gh pr list applies --limit before the headRefName filter below, so
+          # a low cap could silently drop older ai-fix/ PRs from the check
+          # once total open PRs (of any kind) grow past it. 300 is far above
+          # anything this repo runs today; gh paginates to satisfy it.
+          PRS=$(gh pr list --repo "$REPO" --state open --limit 300 \
                 --json number,headRefName \
                 --jq '.[] | select(.headRefName|startswith("ai-fix/")) | .number')
           for pr in $PRS; do

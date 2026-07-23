@@ -47,9 +47,10 @@ jobs:
         run: sleep 60
 
       - name: Checkout tooling
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5
         with:
           fetch-depth: 1
+          persist-credentials: false
           sparse-checkout: |
             .github/prompts
             .github/scripts
@@ -63,7 +64,7 @@ jobs:
         run: bash .github/scripts/ai_triage_context.sh
 
       - name: Classify
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
@@ -99,7 +100,12 @@ jobs:
           VERDICT=$(jq -r '.verdict // "unknown"' "$F")
           CONF=$(jq -r '.confidence // "low"' "$F")
           COMMENT=$(jq -r '.comment // ""' "$F")
-          mapfile -t LABELS < <(jq -r '.labels[]? // empty' "$F")
+          # Model-supplied labels are cosmetic only (e.g. "bug"). ai-triage /
+          # ai:classified / ai:needs-human are workflow-owned control labels;
+          # strip anything in that namespace so a verdict can't self-trigger
+          # tier 2 (the deterministic add below is the only legitimate source
+          # of ai-triage).
+          mapfile -t LABELS < <(jq -r '.labels[]? // empty' "$F" | grep -vE '^ai[:-]' || true)
 
           # Someone already owns this one: ping_submitter did its job.
           if [ "$VERDICT" = "owned" ]; then
