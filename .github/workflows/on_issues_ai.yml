@@ -1,0 +1,707 @@
+# yamllint disable rule:line-length
+---
+name: AI issue triage and draft fix
+
+on:
+  issues:
+    types: [opened, reopened, labeled]
+
+concurrency:
+  group: ai-issue-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+env:
+  TRIAGE_MODEL: ${{ vars.OPENAI_TRIAGE_MODEL || 'gpt-5-mini' }}
+  MIN_CONFIDENCE: ${{ vars.AI_MIN_CONFIDENCE || '0.80' }}
+
+jobs:
+  detect_submitter:
+    if: >-
+      github.event.action != 'labeled' ||
+      github.event.label.name == 'ai: fix-approved'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      matched: ${{ steps.submitter.outputs.matched }}
+      addon: ${{ steps.submitter.outputs.addon }}
+      submitter: ${{ steps.submitter.outputs.submitter }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Detect mapped add-on submitter
+        id: submitter
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: bash .github/scripts/find_addon_submitter.sh
+
+  triage:
+    if: >-
+      needs.detect_submitter.outputs.matched != 'true' &&
+      (
+        github.event.action == 'opened' ||
+        github.event.action == 'reopened' ||
+        (
+          github.event.action == 'labeled' &&
+          github.event.label.name == 'ai: fix-approved'
+        )
+      )
+    needs: detect_submitter
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    outputs:
+      addon: ${{ steps.result.outputs.addon }}
+      category: ${{ steps.result.outputs.category }}
+      confidence: ${{ steps.result.outputs.confidence }}
+      existing_addon: ${{ steps.result.outputs.existing_addon }}
+      risk: ${{ steps.result.outputs.risk }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Ensure AI labels exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh label create "ai: triaged" --repo "$REPO" --color "1d76db" --description "Issue classified by AI" --force
+          gh label create "ai: answered" --repo "$REPO" --color "0e8a16" --description "Question answered automatically" --force
+          gh label create "ai: needs-info" --repo "$REPO" --color "fbca04" --description "AI requested essential information" --force
+          gh label create "ai: fix-proposed" --repo "$REPO" --color "c5def5" --description "AI recommends repository analysis" --force
+          gh label create "ai: fix-approved" --repo "$REPO" --color "5319e7" --description "Maintainer approved an automated fix attempt" --force
+          gh label create "ai: fixing" --repo "$REPO" --color "0052cc" --description "Automated fix attempt is running" --force
+          gh label create "ai: pr-created" --repo "$REPO" --color "0e8a16" --description "Automated draft pull request created" --force
+          gh label create "ai: maintainer-review" --repo "$REPO" --color "d93f0b" --description "Maintainer review is required" --force
+          gh label create "ai: new-addon-request" --repo "$REPO" --color "ededed" --description "New add-on request; never implemented automatically" --force
+          gh label create "ai-generated" --repo "$REPO" --color "bfdadc" --description "Changes generated with AI assistance" --force
+
+      - name: Triage issue with structured output
+        id: result
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          set -euo pipefail
+          test -n "$OPENAI_API_KEY"
+
+          issue_body="${ISSUE_BODY:0:20000}"
+          addon_catalog="$(
+              find . -mindepth 2 -maxdepth 2 -type f \
+                  \( -name config.yaml -o -name config.json \) -printf '%h\n' |
+                  sed 's#^./##' | sort -u |
+                  jq -Rsc 'split("\n") | map(select(length > 0))'
+          )"
+
+          jq -n \
+              --arg model "$TRIAGE_MODEL" \
+              --arg instructions "$(cat .github/ai/triage-prompt.md)" \
+              --arg author "$ISSUE_AUTHOR" \
+              --arg body "$issue_body" \
+              --arg number "$ISSUE_NUMBER" \
+              --arg title "$ISSUE_TITLE" \
+              --argjson addon_catalog "$addon_catalog" \
+              --slurpfile schema .github/ai/triage-schema.json \
+              '{
+                  model: $model,
+                  store: false,
+                  max_output_tokens: 1200,
+                  reasoning: {effort: "low"},
+                  instructions: $instructions,
+                  input: (
+                      "Repository issue #" + $number + "\n" +
+                      "Author: " + $author + "\n" +
+                      "Title: " + $title + "\n\n" +
+                      "Existing add-on directories:\n" +
+                      ($addon_catalog | tojson) + "\n\n" +
+                      "Body:\n" + $body
+                  ),
+                  text: {
+                      format: {
+                          type: "json_schema",
+                          name: "issue_triage",
+                          strict: true,
+                          schema: $schema[0]
+                      }
+                  }
+              }' > "$RUNNER_TEMP/openai-request.json"
+
+          curl --fail-with-body --retry 3 --max-time 120 \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -H "Content-Type: application/json" \
+              https://api.openai.com/v1/responses \
+              --data-binary "@$RUNNER_TEMP/openai-request.json" \
+              > "$RUNNER_TEMP/openai-response.json"
+
+          jq -r '
+              [
+                  .output[]? |
+                  select(.type == "message") |
+                  .content[]? |
+                  select(.type == "output_text") |
+                  .text
+              ] | join("")
+          ' "$RUNNER_TEMP/openai-response.json" > "$RUNNER_TEMP/triage.json"
+
+          jq -e '
+              (.category | type == "string") and
+              (.confidence | type == "number") and
+              (.risk | type == "string") and
+              (.summary | type == "string") and
+              (.response | type == "string") and
+              (.missing_information | type == "array")
+          ' "$RUNNER_TEMP/triage.json" > /dev/null
+
+          category="$(jq -r '.category' "$RUNNER_TEMP/triage.json")"
+          addon="$(jq -r '.addon // ""' "$RUNNER_TEMP/triage.json")"
+          confidence="$(jq -r '.confidence' "$RUNNER_TEMP/triage.json")"
+          risk="$(jq -r '.risk' "$RUNNER_TEMP/triage.json")"
+
+          case "$category" in
+              question | missing_information | bug | improvement | new_addon_request | unsupported | spam) ;;
+              *) echo "Invalid triage category: $category" >&2; exit 1 ;;
+          esac
+          case "$risk" in
+              low | medium | high) ;;
+              *) echo "Invalid triage risk: $risk" >&2; exit 1 ;;
+          esac
+
+          existing_addon=false
+          if [[ -n "$addon" ]] &&
+              jq -e --arg addon "$addon" 'index($addon) != null' <<< "$addon_catalog" > /dev/null; then
+              existing_addon=true
+          else
+              addon=""
+          fi
+
+          write_output() {
+              local name="$1"
+              local value="$2"
+              if [[ "$value" == *$'\n'* || "$value" == *$'\r'* ]]; then
+                  echo "Refusing multiline GitHub output '$name'." >&2
+                  exit 1
+              fi
+              printf '%s=%s\n' "$name" "$value" >> "$GITHUB_OUTPUT"
+          }
+
+          write_output addon "$addon"
+          write_output category "$category"
+          write_output confidence "$confidence"
+          write_output existing_addon "$existing_addon"
+          write_output risk "$risk"
+
+      - name: Publish triage result
+        if: github.event.action == 'opened' || github.event.action == 'reopened'
+        env:
+          EXISTING_ADDON: ${{ steps.result.outputs.existing_addon }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_ACTION: ${{ github.event.action }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_UPDATED_AT: ${{ github.event.issue.updated_at }}
+          REPO: ${{ github.repository }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+
+          marker="<!-- ai-triage:${ISSUE_UPDATED_AT} -->"
+          existing="$(
+              gh issue view "$ISSUE_NUMBER" --repo "$REPO" --json comments |
+                  jq --arg marker "$marker" \
+                      '[.comments[] | select(.body | contains($marker))] | length'
+          )"
+          [[ "$existing" -eq 0 ]] || exit 0
+
+          category="$(jq -r '.category' "$RUNNER_TEMP/triage.json")"
+          confidence="$(jq -r '.confidence' "$RUNNER_TEMP/triage.json")"
+          risk="$(jq -r '.risk' "$RUNNER_TEMP/triage.json")"
+          summary="$(jq -r '.summary' "$RUNNER_TEMP/triage.json")"
+          response="$(jq -r '.response' "$RUNNER_TEMP/triage.json")"
+
+          confident=false
+          if awk -v confidence="$confidence" -v minimum="$MIN_CONFIDENCE" \
+              'BEGIN { exit !(confidence >= minimum) }'; then
+              confident=true
+          fi
+
+          labels=("ai: triaged")
+          heading="### AI triage"
+          body="$response"
+
+          if [[ "$confident" != true ]]; then
+              labels+=("ai: maintainer-review")
+              body="**Low-confidence assessment (${confidence}):** ${summary}
+
+          A maintainer should review this issue before any automated action."
+          else
+              case "$category" in
+                  question)
+                      if [[ "$(jq -r '.safe_to_answer_automatically' "$RUNNER_TEMP/triage.json")" == true ]]; then
+                          labels+=("ai: answered")
+                      else
+                          labels+=("ai: maintainer-review")
+                      fi
+                      ;;
+                  missing_information)
+                      heading="### Additional information required"
+                      labels+=("ai: needs-info")
+                      missing="$(
+                          jq -r '
+                              if (.missing_information | length) == 0 then
+                                  ""
+                              else
+                                  "\n\n**Needed:**\n" +
+                                  (.missing_information | map("- " + .) | join("\n"))
+                              end
+                          ' "$RUNNER_TEMP/triage.json"
+                      )"
+                      body="${response}${missing}"
+                      ;;
+                  bug)
+                      labels+=("bug" "ai: fix-proposed")
+                      body="**Assessment:** ${summary}
+
+          **Estimated risk:** ${risk}
+
+          ${response}"
+                      if [[ "$ISSUE_AUTHOR" == "$REPOSITORY_OWNER" ]]; then
+                          labels+=("ai: fixing")
+                          body="${body}
+
+          Repository analysis and a draft fix attempt will start automatically because the issue was opened by the repository owner."
+                      else
+                          body="${body}
+
+          A maintainer can approve repository analysis and an automated draft fix attempt by adding the \`ai: fix-approved\` label."
+                      fi
+                      ;;
+                  improvement)
+                      labels+=("enhancement")
+                      if [[ "$EXISTING_ADDON" == true ]]; then
+                          labels+=("ai: fix-proposed")
+                          body="**Assessment:** ${summary}
+
+          **Estimated risk:** ${risk}
+
+          ${response}"
+                          if [[ "$ISSUE_AUTHOR" == "$REPOSITORY_OWNER" ]]; then
+                              labels+=("ai: fixing")
+                              body="${body}
+
+          This targets an existing add-on, so repository analysis and a validated draft fix attempt will start automatically because the issue was opened by the repository owner."
+                          else
+                              body="${body}
+
+          This targets an existing add-on. A maintainer can approve repository analysis and an automated draft fix attempt by adding the \`ai: fix-approved\` label."
+                          fi
+                      else
+                          labels+=("ai: maintainer-review")
+                          body="${response}
+
+          The referenced add-on directory could not be verified, so no automated implementation will start."
+                      fi
+                      ;;
+                  new_addon_request)
+                      labels+=("enhancement" "ai: new-addon-request" "ai: maintainer-review")
+                      body="${response}
+
+          New add-on requests are never accepted or implemented automatically by this workflow. A maintainer must review the proposal manually."
+                      ;;
+                  unsupported | spam)
+                      labels+=("ai: maintainer-review")
+                      ;;
+              esac
+          fi
+
+          body="${marker}
+          ${heading}
+
+          ${body}
+
+          <sub>Automated classification using \`${TRIAGE_MODEL}\`; confidence ${confidence}.</sub>"
+
+          for label in "${labels[@]}"; do
+              if ! gh issue edit "$ISSUE_NUMBER" --repo "$REPO" --add-label "$label"; then
+                  if [[ "$label" == "bug" || "$label" == "enhancement" ]]; then
+                      echo "Optional repository label '$label' does not exist; continuing." >&2
+                  else
+                      exit 1
+                  fi
+              fi
+          done
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$body"
+
+  codex_fix:
+    if: >-
+      always() &&
+      needs.detect_submitter.result == 'success' &&
+      needs.detect_submitter.outputs.matched != 'true' &&
+      needs.triage.result == 'success' &&
+      fromJSON(needs.triage.outputs.confidence) >=
+        fromJSON(vars.AI_MIN_CONFIDENCE || '0.80') &&
+      (
+        (
+          needs.triage.outputs.category == 'improvement' &&
+          needs.triage.outputs.existing_addon == 'true'
+        ) ||
+        needs.triage.outputs.category == 'bug'
+      ) &&
+      (
+        (
+          github.event.action == 'labeled' &&
+          github.event.label.name == 'ai: fix-approved'
+        ) ||
+        (
+          (github.event.action == 'opened' || github.event.action == 'reopened') &&
+          github.event.issue.user.login == github.repository_owner
+        )
+      )
+    needs: [detect_submitter, triage]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+    outputs:
+      addon: ${{ steps.prepare.outputs.addon }}
+      branch: ${{ steps.prepare.outputs.branch }}
+      category: ${{ steps.prepare.outputs.category }}
+      existing_pr: ${{ steps.prepare.outputs.existing_pr }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check for an existing pull request
+        id: prepare
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+          TRIAGE_ADDON: ${{ needs.triage.outputs.addon }}
+          TRIAGE_CATEGORY: ${{ needs.triage.outputs.category }}
+        run: |
+          set -euo pipefail
+          branch="ai/issue-${ISSUE_NUMBER}"
+          existing_pr="$(
+              gh pr list --repo "$REPO" --state open --head "$branch" \
+                  --json url --jq '.[0].url // ""'
+          )"
+          echo "addon=$TRIAGE_ADDON" >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+          echo "category=$TRIAGE_CATEGORY" >> "$GITHUB_OUTPUT"
+          echo "existing_pr=$existing_pr" >> "$GITHUB_OUTPUT"
+
+      - name: Build isolated issue context
+        if: steps.prepare.outputs.existing_pr == ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+          TRIAGE_ADDON: ${{ needs.triage.outputs.addon }}
+          TRIAGE_CATEGORY: ${{ needs.triage.outputs.category }}
+          TRIAGE_RISK: ${{ needs.triage.outputs.risk }}
+        run: |
+          set -euo pipefail
+          gh issue view "$ISSUE_NUMBER" --repo "$REPO" \
+              --json number,title,body,author,comments,labels,url |
+              jq \
+                  --arg addon "$TRIAGE_ADDON" \
+                  --arg category "$TRIAGE_CATEGORY" \
+                  --arg risk "$TRIAGE_RISK" \
+                  '. + {automation_triage: {addon: $addon, category: $category, risk: $risk}}' \
+                  > ai-issue-context.json
+          cp .github/ai/fix-prompt.md codex-prompt.md
+
+      - name: Run Codex
+        id: codex
+        if: steps.prepare.outputs.existing_pr == ''
+        uses: openai/codex-action@52fe01ec70a42f454c9d2ebd47598f9fd6893d56  # v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: codex-prompt.md
+          output-file: codex-result.md
+          sandbox: workspace-write
+          safety-strategy: drop-sudo
+          model: ${{ vars.OPENAI_FIX_MODEL }}
+          effort: high
+
+      - name: Package proposed patch
+        if: steps.prepare.outputs.existing_pr == ''
+        run: |
+          set -euo pipefail
+          test -f codex-result.md
+          cp codex-result.md "$RUNNER_TEMP/codex-result.md"
+          rm -f ai-issue-context.json codex-prompt.md codex-result.md
+          git add -A
+          git diff --cached --binary --full-index > "$RUNNER_TEMP/ai.patch"
+          git reset
+          cp "$RUNNER_TEMP/ai.patch" ai.patch
+          cp "$RUNNER_TEMP/codex-result.md" codex-result.md
+
+      - name: Upload proposed patch
+        if: steps.prepare.outputs.existing_pr == ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-issue-${{ github.event.issue.number }}-${{ github.run_id }}
+          path: |
+            ai.patch
+            codex-result.md
+          if-no-files-found: error
+          retention-days: 3
+
+  report_codex_failure:
+    if: always() && needs.codex_fix.result == 'failure'
+    needs: codex_fix
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Report failed automated analysis
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          for label in "ai: fix-approved" "ai: fix-proposed" "ai: fixing"; do
+              gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+                  --remove-label "$label" || true
+          done
+          gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+              --add-label "ai: maintainer-review"
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body \
+              "### Automated analysis failed
+
+          The automated repository analysis did not complete, so no pull request was created. A maintainer should review the issue and the [workflow run](${RUN_URL})."
+
+  publish_fix:
+    if: >-
+      always() &&
+      needs.codex_fix.result == 'success' &&
+      needs.codex_fix.outputs.existing_pr == ''
+    needs: codex_fix
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Download proposed patch
+        uses: actions/download-artifact@v4
+        with:
+          name: ai-issue-${{ github.event.issue.number }}-${{ github.run_id }}
+
+      - name: Apply patch
+        run: |
+          set -euo pipefail
+          if [[ -s ai.patch ]]; then
+              git apply --index --3way ai.patch
+          fi
+          rm -f ai.patch codex-result.md
+
+      - name: Restore Codex report
+        uses: actions/download-artifact@v4
+        with:
+          name: ai-issue-${{ github.event.issue.number }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/ai-result
+
+      - name: Ensure publication labels exist
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh label create "ai: maintainer-review" --repo "$REPO" --color "d93f0b" --description "Maintainer review is required" --force
+          gh label create "ai: pr-created" --repo "$REPO" --color "0e8a16" --description "Automated draft pull request created" --force
+          gh label create "ai-generated" --repo "$REPO" --color "bfdadc" --description "Changes generated with AI assistance" --force
+
+      - name: Validate proposed patch
+        id: validation
+        env:
+          AI_EXPECTED_ADDON: ${{ needs.codex_fix.outputs.addon }}
+          AI_MAX_CHANGED_FILES: ${{ vars.AI_MAX_CHANGED_FILES || '25' }}
+          AI_MAX_CHANGED_LINES: ${{ vars.AI_MAX_CHANGED_LINES || '2000' }}
+          AI_REQUEST_CATEGORY: ${{ needs.codex_fix.outputs.category }}
+        run: |
+          set -o pipefail
+          bash .github/scripts/validate_ai_patch.sh origin/master 2>&1 |
+              tee "$RUNNER_TEMP/ai-validation.log"
+
+      - name: Report validation failure
+        if: failure() && steps.validation.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          report="$(cat "$RUNNER_TEMP/ai-result/codex-result.md" 2>/dev/null || true)"
+          validation="$(tail -n 80 "$RUNNER_TEMP/ai-validation.log" 2>/dev/null || true)"
+          body="### Automated fix blocked by validation
+
+          ${report}
+
+          <details>
+          <summary>Validation output</summary>
+
+          \`\`\`text
+          ${validation}
+          \`\`\`
+          </details>
+
+          [Open the workflow run](${RUN_URL})"
+          for label in "ai: fix-approved" "ai: fix-proposed" "ai: fixing"; do
+              gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+                  --remove-label "$label" || true
+          done
+          gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+              --add-label "ai: maintainer-review"
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$body"
+
+      - name: Report no safe change
+        if: steps.validation.outputs.has_changes == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          report="$(cat "$RUNNER_TEMP/ai-result/codex-result.md")"
+          body="### Automated repository analysis
+
+          ${report}
+
+          No draft pull request was created because Codex produced no repository change."
+          for label in "ai: fix-approved" "ai: fix-proposed" "ai: fixing"; do
+              gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+                  --remove-label "$label" || true
+          done
+          gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+              --add-label "ai: maintainer-review"
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$body"
+
+      - name: Commit and push validated patch
+        if: steps.validation.outputs.has_changes == 'true'
+        env:
+          BRANCH: ${{ needs.codex_fix.outputs.branch }}
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH:refs/remotes/origin/$BRANCH" || true
+          git checkout -B "$BRANCH"
+          git add -A
+          git commit -m "fix: address issue #${ISSUE_NUMBER}"
+          gh auth setup-git
+          git push --force-with-lease --set-upstream origin "$BRANCH"
+
+      - name: Create draft pull request
+        id: pr
+        if: steps.validation.outputs.has_changes == 'true'
+        env:
+          BRANCH: ${{ needs.codex_fix.outputs.branch }}
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          report="$(cat "$RUNNER_TEMP/ai-result/codex-result.md")"
+          cat > "$RUNNER_TEMP/pr-body.md" <<EOF
+          ## Summary
+
+          Automated analysis and validated minimal fix for #${ISSUE_NUMBER}.
+
+          ${report}
+
+          ## Safety and review
+
+          - The issue content was treated as untrusted input.
+          - Codex had no repository write token.
+          - A fresh job applied and validated the patch.
+          - This pull request is intentionally a draft and will not be merged automatically.
+
+          Closes #${ISSUE_NUMBER}
+          EOF
+
+          pr_url="$(
+              gh pr create \
+                  --repo "$REPO" \
+                  --base master \
+                  --head "$BRANCH" \
+                  --draft \
+                  --title "fix: address issue #${ISSUE_NUMBER}" \
+                  --body-file "$RUNNER_TEMP/pr-body.md"
+          )"
+          echo "url=$pr_url" >> "$GITHUB_OUTPUT"
+
+          pr_number="${pr_url##*/}"
+          gh pr edit "$pr_number" --repo "$REPO" --add-label "ai-generated"
+
+      - name: Update issue with analysis and pull request
+        if: steps.validation.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          PR_URL: ${{ steps.pr.outputs.url }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          report="$(cat "$RUNNER_TEMP/ai-result/codex-result.md")"
+          body="### Automated fix prepared
+
+          ${report}
+
+          **Draft pull request:** ${PR_URL}
+
+          The pull request remains in draft pending human review and CI."
+          for label in "ai: fix-approved" "ai: fix-proposed" "ai: fixing"; do
+              gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+                  --remove-label "$label" || true
+          done
+          gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+              --add-label "ai: pr-created"
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$body"
+
+      - name: Report publication failure
+        if: failure() && steps.validation.outcome != 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          for label in "ai: fix-approved" "ai: fix-proposed" "ai: fixing"; do
+              gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+                  --remove-label "$label" || true
+          done
+          gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+              --add-label "ai: maintainer-review" || true
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body \
+              "### Automated publication failed
+
+          A patch was generated but could not be published (applying, pushing, or opening the draft pull request failed), so no pull request was created. A maintainer should review the [workflow run](${RUN_URL})."
