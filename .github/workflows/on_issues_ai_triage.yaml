@@ -127,11 +127,24 @@ jobs:
             LABELS=("ai:needs-human"); COMMENT=""
           fi
 
-          [ "$VERDICT" = "addon-bug" ] && LABELS+=("ai-triage")
+          # ai-triage is the tier-2 trigger, so it must never be added to a
+          # low-confidence verdict — Rule 2 of issue-classify.md says an
+          # uncertain addon/upstream call should only flag a human, not enter
+          # the unattended fix pass. (Above, low confidence already reset
+          # LABELS to ai:needs-human; this guard keeps ai-triage from being
+          # appended right back.)
+          if [ "$VERDICT" = "addon-bug" ] && [ "$CONF" != "low" ]; then
+            LABELS+=("ai-triage")
+          fi
           LABELS+=("ai:classified")
 
+          # No --force: an existing label (e.g. a model-supplied cosmetic
+          # "bug") must be left as-is. --force would update it, recoloring
+          # every such label to ededed as a side effect of triage. Without it,
+          # create fails harmlessly on labels that already exist (|| true),
+          # and still creates the workflow-owned ones the first time.
           for l in "${LABELS[@]}"; do
-            gh label create "$l" --repo "$REPO" --color ededed --force >/dev/null 2>&1 || true
+            gh label create "$l" --repo "$REPO" --color ededed >/dev/null 2>&1 || true
           done
           gh issue edit "$ISSUE" --repo "$REPO" \
             "${LABELS[@]/#/--add-label=}"
