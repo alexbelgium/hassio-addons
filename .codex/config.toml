@@ -1,4 +1,0 @@
-# Default model for automated repository fixes.
-# The OPENAI_FIX_MODEL repository variable passed by the workflow overrides this value.
-model = "gpt-5.6"
-model_reasoning_effort = "high"
