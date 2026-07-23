@@ -13,26 +13,33 @@ name: AI issue triage
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: "Issue number to (re-)triage manually"
+        required: true
 
 permissions:
   contents: read
   issues: write
+  id-token: write  # claude-code-action fetches a GitHub OIDC token to auth the OAuth flow
 
 concurrency:
-  group: ai-triage-${{ github.event.issue.number }}
+  group: ai-triage-${{ github.event.issue.number || inputs.issue }}
   cancel-in-progress: false
 
 env:
   MAINTAINER: alexbelgium
-  # Leave "true" for the first couple of weeks. The verdict is printed in the
-  # job log and nothing is written to the issue. Flip when it looks right.
-  DRY_RUN: "true"
 
 jobs:
   classify:
+    # Manual dispatch is a deliberate override: skip the auto-trigger guards
+    # (don't self-triage the maintainer's own issues; honour the no-ai
+    # opt-out) that only make sense for the fire-on-every-open path.
     if: >-
-      github.event.issue.user.login != 'alexbelgium' &&
-      !contains(github.event.issue.labels.*.name, 'no-ai')
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.issue.user.login != 'alexbelgium' &&
+       !contains(github.event.issue.labels.*.name, 'no-ai'))
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: CR_PAT
@@ -43,7 +50,10 @@ jobs:
       # Both workflows fire on the same issues.opened event and race. The
       # submitter ping completes in 6-11s of job time across recent runs; 60s
       # leaves a generous margin for runner-queue skew between the two jobs.
+      # A manual dispatch runs against an existing issue whose ping (if any)
+      # landed long ago, so there is nothing to wait for.
       - name: Wait for ping_submitter
+        if: github.event_name == 'issues'
         run: sleep 60
 
       - name: Checkout tooling
@@ -59,7 +69,7 @@ jobs:
       - name: Build context bundle
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue }}
           REPO: ${{ github.repository }}
         run: bash .github/scripts/ai_triage_context.sh
 
@@ -85,7 +95,7 @@ jobs:
       - name: Apply verdict
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE: ${{ github.event.issue.number }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
@@ -107,9 +117,15 @@ jobs:
           # of ai-triage).
           mapfile -t LABELS < <(jq -r '.labels[]? // empty' "$F" | grep -vE '^ai[:-]' || true)
 
-          # Someone already owns this one: ping_submitter did its job.
+          # Someone already owns this one: ping_submitter did its job. Best-
+          # effort clear of a manual re-triage's stale control labels (e.g. a
+          # prior addon-bug run) — nothing to do if they were never set.
           if [ "$VERDICT" = "owned" ]; then
-            echo "issue already has an owner, nothing to do"; exit 0
+            echo "issue already has an owner, nothing to do"
+            gh issue edit "$ISSUE" --repo "$REPO" \
+              --remove-label=ai-triage --remove-label=ai:classified --remove-label=ai:needs-human \
+              >/dev/null 2>&1 || true
+            exit 0
           fi
 
           # Low confidence never speaks. It just flags for a human.
@@ -117,20 +133,42 @@ jobs:
             LABELS=("ai:needs-human"); COMMENT=""
           fi
 
-          [ "$VERDICT" = "addon-bug" ] && LABELS+=("ai-triage")
+          # ai-triage is the tier-2 trigger, so it must never be added to a
+          # low-confidence verdict — Rule 2 of issue-classify.md says an
+          # uncertain addon/upstream call should only flag a human, not enter
+          # the unattended fix pass. (Above, low confidence already reset
+          # LABELS to ai:needs-human; this guard keeps ai-triage from being
+          # appended right back.)
+          if [ "$VERDICT" = "addon-bug" ] && [ "$CONF" != "low" ]; then
+            LABELS+=("ai-triage")
+          fi
           LABELS+=("ai:classified")
 
-          if [ "${DRY_RUN:-true}" = "true" ]; then
-            echo "DRY_RUN: would apply labels: ${LABELS[*]}"
-            echo "DRY_RUN: would post comment:"; printf '%s\n' "$COMMENT"
-            exit 0
-          fi
-
+          # No --force: an existing label (e.g. a model-supplied cosmetic
+          # "bug") must be left as-is. --force would update it, recoloring
+          # every such label to ededed as a side effect of triage. Without it,
+          # create fails harmlessly on labels that already exist (|| true),
+          # and still creates the workflow-owned ones the first time.
           for l in "${LABELS[@]}"; do
-            gh label create "$l" --repo "$REPO" --color ededed --force >/dev/null 2>&1 || true
+            gh label create "$l" --repo "$REPO" --color ededed >/dev/null 2>&1 || true
           done
           gh issue edit "$ISSUE" --repo "$REPO" \
             "${LABELS[@]/#/--add-label=}"
+
+          # Manual re-triage can flip the verdict (e.g. a prior addon-bug
+          # re-run now comes back needs-info/upstream-bug): clear whichever
+          # of tier 1's own control labels this run did NOT re-apply, so a
+          # stale ai-triage doesn't keep the issue in tomorrow's fix sweep.
+          # Separate, best-effort call — must not block the add above.
+          declare -A FRESH=()
+          for l in "${LABELS[@]}"; do FRESH["$l"]=1; done
+          STALE=()
+          for l in ai-triage ai:classified ai:needs-human; do
+            [ -z "${FRESH[$l]:-}" ] && STALE+=("$l")
+          done
+          if [ "${#STALE[@]}" -gt 0 ]; then
+            gh issue edit "$ISSUE" --repo "$REPO" "${STALE[@]/#/--remove-label=}" >/dev/null 2>&1 || true
+          fi
 
           if [ -n "$COMMENT" ]; then
             {
