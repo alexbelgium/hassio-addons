@@ -12,10 +12,10 @@ maintainer.
 3. Reports missing essential evidence receive focused questions.
 4. New add-on requests are marked for maintainer review and are never
    implemented by this automation.
-5. High-confidence improvements to existing add-ons proceed automatically to a
-   draft fix attempt.
-6. Bugs opened by the repository owner proceed directly to Codex analysis;
-   other bugs wait for a maintainer to add `ai: fix-approved`.
+5. High-confidence bugs and existing-add-on improvements opened by the
+   repository owner proceed directly to Codex analysis; those opened by anyone
+   else wait for a maintainer to add `ai: fix-approved`.
+6. New add-on requests never enter Codex, regardless of who opens them.
 7. Codex edits an isolated checkout without repository write permissions.
 8. A fresh job applies and validates the patch, pushes a branch, opens a draft
    pull request, and posts the root-cause report and pull-request URL.

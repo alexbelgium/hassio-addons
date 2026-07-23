@@ -261,14 +261,22 @@ jobs:
                   improvement)
                       labels+=("enhancement")
                       if [[ "$EXISTING_ADDON" == true ]]; then
-                          labels+=("ai: fix-proposed" "ai: fixing")
+                          labels+=("ai: fix-proposed")
                           body="**Assessment:** ${summary}
 
           **Estimated risk:** ${risk}
 
-          ${response}
+          ${response}"
+                          if [[ "$ISSUE_AUTHOR" == "$REPOSITORY_OWNER" ]]; then
+                              labels+=("ai: fixing")
+                              body="${body}
 
-          This targets an existing add-on, so repository analysis and a validated draft fix attempt will start automatically."
+          This targets an existing add-on, so repository analysis and a validated draft fix attempt will start automatically because the issue was opened by the repository owner."
+                          else
+                              body="${body}
+
+          This targets an existing add-on. A maintainer can approve repository analysis and an automated draft fix attempt by adding the \`ai: fix-approved\` label."
+                          fi
                       else
                           labels+=("ai: maintainer-review")
                           body="${response}
@@ -319,18 +327,16 @@ jobs:
           needs.triage.outputs.category == 'improvement' &&
           needs.triage.outputs.existing_addon == 'true'
         ) ||
+        needs.triage.outputs.category == 'bug'
+      ) &&
+      (
         (
-          needs.triage.outputs.category == 'bug' &&
-          (
-            (
-              github.event.action == 'labeled' &&
-              github.event.label.name == 'ai: fix-approved'
-            ) ||
-            (
-              (github.event.action == 'opened' || github.event.action == 'reopened') &&
-              github.event.issue.user.login == github.repository_owner
-            )
-          )
+          github.event.action == 'labeled' &&
+          github.event.label.name == 'ai: fix-approved'
+        ) ||
+        (
+          (github.event.action == 'opened' || github.event.action == 'reopened') &&
+          github.event.issue.user.login == github.repository_owner
         )
       )
     needs: [detect_submitter, triage]
@@ -395,7 +401,7 @@ jobs:
       - name: Run Codex
         id: codex
         if: steps.prepare.outputs.existing_pr == ''
-        uses: openai/codex-action@v1
+        uses: openai/codex-action@52fe01ec70a42f454c9d2ebd47598f9fd6893d56  # v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           prompt-file: codex-prompt.md
@@ -652,3 +658,23 @@ jobs:
           gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
               --add-label "ai: pr-created"
           gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body "$body"
+
+      - name: Report publication failure
+        if: failure() && steps.validation.outcome != 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          for label in "ai: fix-approved" "ai: fix-proposed" "ai: fixing"; do
+              gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+                  --remove-label "$label" || true
+          done
+          gh issue edit "$ISSUE_NUMBER" --repo "$REPO" \
+              --add-label "ai: maintainer-review" || true
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body \
+              "### Automated publication failed
+
+          A patch was generated but could not be published (applying, pushing, or opening the draft pull request failed), so no pull request was created. A maintainer should review the [workflow run](${RUN_URL})."

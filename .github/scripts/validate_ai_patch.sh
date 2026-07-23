@@ -84,6 +84,11 @@ for file in "${changed_files[@]}"; do
             echo "Creating a new top-level directory is not permitted: $top" >&2
             exit 1
         fi
+    else
+        if ! git cat-file -e "$base_ref:$file" 2>/dev/null; then
+            echo "Creating a new top-level file is not permitted: $file" >&2
+            exit 1
+        fi
     fi
 
     if [[ "$request_category" == "improvement" && -n "$expected_addon" && "$file" != "$expected_addon/"* ]]; then
