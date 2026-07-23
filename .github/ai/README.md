@@ -21,7 +21,9 @@ maintainer.
    pull request, and posts the root-cause report and pull-request URL.
 
 The validator independently rejects new top-level add-on directories and Codex
-never merges pull requests.
+never merges pull requests. The Codex Action keeps its default authorization,
+so only users with repository write access can trigger it; external issue
+authors cannot run it merely by opening an issue.
 
 ## Required secret
 
