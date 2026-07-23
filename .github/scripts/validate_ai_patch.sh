@@ -31,9 +31,21 @@ read_version() {
     esac
 }
 
-mapfile -t changed_files < <(
-    git diff --cached --name-only --diff-filter=ACMRDTUXB "$base_ref" -- |
-        sed '/^$/d'
+version_is_greater() {
+    local old_version="$1"
+    local new_version="$2"
+
+    ruby -e '
+        require "rubygems"
+        old_version = Gem::Version.new(ARGV.fetch(0))
+        new_version = Gem::Version.new(ARGV.fetch(1))
+        exit(new_version > old_version ? 0 : 1)
+    ' "$old_version" "$new_version"
+}
+
+mapfile -d '' -t changed_files < <(
+    git diff --cached --no-renames --name-only -z \
+        --diff-filter=ACMRDTUXB "$base_ref" --
 )
 
 if [[ "${#changed_files[@]}" -eq 0 ]]; then
@@ -47,7 +59,7 @@ if [[ "${#changed_files[@]}" -gt "$max_files" ]]; then
 fi
 
 changed_lines="$(
-    git diff --cached --numstat "$base_ref" -- |
+    git diff --cached --no-renames --numstat "$base_ref" -- |
         awk '
             $1 == "-" || $2 == "-" { binary = 1; next }
             { total += $1 + $2 }
@@ -147,7 +159,14 @@ for addon in "${!changed_addons[@]}"; do
         exit 1
     fi
 
-    if ! printf '%s\n' "${changed_files[@]}" | grep -Fxq "$addon/CHANGELOG.md"; then
+    changelog_changed=false
+    for file in "${changed_files[@]}"; do
+        if [[ "$file" == "$addon/CHANGELOG.md" ]]; then
+            changelog_changed=true
+            break
+        fi
+    done
+    if [[ "$changelog_changed" != true ]]; then
         echo "Changed add-on '$addon' must update CHANGELOG.md." >&2
         exit 1
     fi
@@ -176,8 +195,13 @@ for addon in "${!changed_addons[@]}"; do
     old_version="$(read_version "$base_ref" "$config_file")"
     new_version="$(read_version WORKTREE "$config_file")"
 
-    if [[ -z "$new_version" || "$old_version" == "$new_version" ]]; then
-        echo "Changed add-on '$addon' must change its version value." >&2
+    if [[ -z "$old_version" || -z "$new_version" ]]; then
+        echo "Changed add-on '$addon' must have readable old and new version values." >&2
+        exit 1
+    fi
+
+    if ! version_is_greater "$old_version" "$new_version"; then
+        echo "Changed add-on '$addon' must increase its version value ($old_version -> $new_version)." >&2
         exit 1
     fi
 done
