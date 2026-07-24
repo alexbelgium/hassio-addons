@@ -1,0 +1,77 @@
+---
+# Destination: .github/workflows/on_claude_mention.yml
+#
+# Interactive @claude — the maintainer's manual override, always taking
+# precedence over the automated tiers. Mention @claude in an issue, an issue
+# comment, or a PR review/comment and Claude acts on that thread: answer a
+# question, investigate, make a small change and open a PR. Runs on Sonnet-low
+# to stay cheap; for anything large or uncertain it hands off to the ai:approved
+# / tier-2 path rather than grinding.
+#
+# Hard-gated to @alexbelgium: only the maintainer's mentions trigger it. This is
+# the official claude-code-action "tag mode" (no `prompt:` input).
+#
+# Auth: CR_PAT environment (CLAUDE_CODE_OAUTH_TOKEN) + AI_PR_TOKEN as github_token
+# so any PR/push it makes triggers onpr_check-pr.yaml.
+# Kill switch: repo variable AI_DISABLED=true pauses this (and every AI workflow).
+
+name: Claude interactive
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, assigned]
+
+jobs:
+  claude:
+    # Fire only on a @claude mention authored by the maintainer. The author
+    # field differs per event type, hence the four branches.
+    if: >-
+      vars.AI_DISABLED != 'true' &&
+      (
+        (github.event_name == 'issue_comment' &&
+         contains(github.event.comment.body, '@claude') &&
+         github.event.comment.user.login == 'alexbelgium') ||
+        (github.event_name == 'pull_request_review_comment' &&
+         contains(github.event.comment.body, '@claude') &&
+         github.event.comment.user.login == 'alexbelgium') ||
+        (github.event_name == 'pull_request_review' &&
+         contains(github.event.review.body, '@claude') &&
+         github.event.review.user.login == 'alexbelgium') ||
+        (github.event_name == 'issues' &&
+         (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) &&
+         github.event.issue.user.login == 'alexbelgium')
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: CR_PAT
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read  # let Claude read CI results on PRs
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # AI_PR_TOKEN, not GITHUB_TOKEN, so a PR Claude opens triggers CI.
+          github_token: ${{ secrets.AI_PR_TOKEN }}
+          claude_args: |
+            --model claude-sonnet-5
+            --effort low
+            --max-turns 30
+            --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(gh:*),Bash(shellcheck:*),Bash(yamllint:*),Bash(docker build:*)"
+            --system-prompt "You are @claude on alexbelgium/hassio-addons, invoked manually by the maintainer, so you take precedence over the automated triage tiers. Each add-on is a thin wrapper around an upstream app. For a small, confident change: make the edit on a branch ai-fix/<addon>-<issue>, run shellcheck on any shell, add a CHANGELOG.md entry, and open a ready PR that Closes the issue. For anything large or uncertain: do NOT grind on it here on Sonnet — post your analysis and recommend applying the ai:approved label (if a tier-2 plan exists) or dispatching the AI fix sweep. Never modify .github/ or .templates/. Never touch the version or upstream fields in config.yaml. Never merge or enable auto-merge."

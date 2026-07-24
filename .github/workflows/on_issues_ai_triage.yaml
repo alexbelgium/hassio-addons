@@ -1,9 +1,23 @@
 ---
 # Destination: .github/workflows/on_issues_ai_triage.yaml
 #
-# Tier 1. Fires on every new issue, costs cents, finishes in ~2 minutes.
-# Classifies, de-duplicates, asks for missing info, answers simple questions,
-# and applies the `ai-triage` label that tier 2 (daily_ai_fix.yaml) picks up.
+# Tier 1 of the AI triage system. Fires on every new issue, costs cents,
+# finishes in ~2 minutes on Sonnet-low. Classifies, de-duplicates, asks for
+# missing info, answers simple questions, and applies the `ai-triage` label
+# that tier 2 (daily_ai_fix.yaml) picks up.
+#
+# Runs once per issue, with exactly one automatic re-run: when it asks the
+# reporter for info (`ai:needs-info`), the reporter's reply re-triggers a single
+# fresh classification (issue_comment path below). A daily 03:30 catch-up job
+# also re-dispatches any issue that never got triaged (e.g. a failed run).
+#
+# Full tier map:
+#   Tier 1  on_issues_ai_triage.yaml (this)  Sonnet-low  classify on issue open
+#   Tier 2  daily_ai_fix.yaml                Opus-xhigh  daily fix/plan sweep
+#   Tier 3  on_issue_approved.yaml           Opus-high   execute an approved plan
+#   @claude on_claude_mention.yml            Sonnet-low  maintainer-only interactive
+#   PR      on_pr_coderabbit.yml             Sonnet-low  one-shot CodeRabbit follow-up
+# Kill switch: set repo variable AI_DISABLED=true to pause every AI workflow.
 #
 # Auth: Claude Pro/Max subscription via the CR_PAT GitHub Environment, which
 # holds the CLAUDE_CODE_OAUTH_TOKEN secret (generate with `claude setup-token`).
@@ -13,6 +27,11 @@ name: AI issue triage
 on:
   issues:
     types: [opened]
+  issue_comment:
+    types: [created]
+  schedule:
+    # 03:30 — half an hour after the tier-2 sweep, so its relabels have settled.
+    - cron: "30 3 * * *"
   workflow_dispatch:
     inputs:
       issue:
@@ -25,7 +44,7 @@ permissions:
   id-token: write  # claude-code-action fetches a GitHub OIDC token to auth the OAuth flow
 
 concurrency:
-  group: ai-triage-${{ github.event.issue.number || inputs.issue }}
+  group: ai-triage-${{ github.event.issue.number || inputs.issue || github.run_id }}
   cancel-in-progress: false
 
 env:
@@ -33,18 +52,45 @@ env:
 
 jobs:
   classify:
-    # Manual dispatch is a deliberate override: skip the auto-trigger guards
-    # (don't self-triage the maintainer's own issues; honour the no-ai
-    # opt-out) that only make sense for the fire-on-every-open path.
+    # Three entry paths:
+    #  * issues.opened   — the normal fire-on-every-open path, with the guards
+    #    that keep it from self-triaging the maintainer's own issues or issues
+    #    that opted out with `no-ai`.
+    #  * issue_comment   — the ONE automatic re-run: the reporter replied to a
+    #    needs-info request (issue carries `ai:needs-info`, commenter is the
+    #    issue author, not the maintainer). Re-classifies with the new info.
+    #  * workflow_dispatch — a deliberate manual/catch-up override that skips
+    #    the open-path guards.
+    # The 03:30 schedule does NOT run this job; it runs `catchup` below.
     if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.issue.user.login != 'alexbelgium' &&
-       !contains(github.event.issue.labels.*.name, 'no-ai'))
+      vars.AI_DISABLED != 'true' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        (github.event_name == 'issues' &&
+         github.event.issue.user.login != 'alexbelgium' &&
+         !contains(github.event.issue.labels.*.name, 'no-ai')) ||
+        (github.event_name == 'issue_comment' &&
+         github.event.comment.user.login == github.event.issue.user.login &&
+         github.event.comment.user.login != 'alexbelgium' &&
+         contains(github.event.issue.labels.*.name, 'ai:needs-info') &&
+         !contains(github.event.issue.labels.*.name, 'no-ai'))
+      )
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: CR_PAT
 
     steps:
+      # The reply that re-triggered this run consumes the needs-info flag, so a
+      # later comment on the same thread cannot re-run tier 1 again. apply-verdict
+      # re-adds it only if the issue still lacks the info (one more round).
+      - name: Consume needs-info flag
+        if: github.event_name == 'issue_comment'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: gh issue edit "$ISSUE" --repo "$REPO" --remove-label ai:needs-info || true
+
       # on_issues_ping_submitter.yml has to land first: the classifier reads
       # the existing comments and bails out if someone already owns the issue.
       # Both workflows fire on the same issues.opened event and race. The
@@ -76,7 +122,7 @@ jobs:
       - name: Classify
         id: classify
         continue-on-error: true
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           show_full_output: true
@@ -126,7 +172,8 @@ jobs:
           if [ "$VERDICT" = "owned" ]; then
             echo "issue already has an owner, nothing to do"
             gh issue edit "$ISSUE" --repo "$REPO" \
-              --remove-label=ai-triage --remove-label=ai:classified --remove-label=ai:needs-human \
+              --remove-label=ai-triage --remove-label=ai:classified \
+              --remove-label=ai:needs-human --remove-label=ai:needs-info \
               >/dev/null 2>&1 || true
             exit 0
           fi
@@ -144,6 +191,14 @@ jobs:
           # appended right back.)
           if [ "$VERDICT" = "addon-bug" ] && [ "$CONF" != "low" ]; then
             LABELS+=("ai-triage")
+          fi
+
+          # needs-info flags the thread so the reporter's reply re-triggers one
+          # more classification (see the issue_comment path). Only on a
+          # confident needs-info — a low-confidence verdict already became
+          # ai:needs-human above, which is a human hand-off, not an info wait.
+          if [ "$VERDICT" = "needs-info" ] && [ "$CONF" != "low" ]; then
+            LABELS+=("ai:needs-info")
           fi
           LABELS+=("ai:classified")
 
@@ -166,7 +221,7 @@ jobs:
           declare -A FRESH=()
           for l in "${LABELS[@]}"; do FRESH["$l"]=1; done
           STALE=()
-          for l in ai-triage ai:classified ai:needs-human; do
+          for l in ai-triage ai:classified ai:needs-human ai:needs-info; do
             [ -z "${FRESH[$l]:-}" ] && STALE+=("$l")
           done
           if [ "${#STALE[@]}" -gt 0 ]; then
@@ -183,3 +238,44 @@ jobs:
             } > /tmp/ai-triage/comment.md
             gh issue comment "$ISSUE" --repo "$REPO" --body-file /tmp/ai-triage/comment.md
           fi
+
+  # Self-healing catch-up. Tier 1 fires on issue-open, but a run can fail
+  # (Claude overload, a transient error) and leave the issue untriaged forever.
+  # Once a day, re-dispatch classification for any open issue that never got an
+  # ai:* label — cheap pure shell, no Claude in this job.
+  catchup:
+    if: ${{ github.event_name == 'schedule' && vars.AI_DISABLED != 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: CR_PAT
+    steps:
+      - name: Re-dispatch untriaged issues
+        env:
+          # AI_PR_TOKEN (repo scope) can dispatch workflows; GITHUB_TOKEN would
+          # need actions:write added to the whole workflow.
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          NOW=$(date -u +%s)
+          gh issue list --repo "$REPO" --state open --limit 100 \
+            --json number,createdAt,author,labels > /tmp/catchup.json
+          # Untriaged = no ai:* / ai-triage / no-ai label, not the maintainer's
+          # own issue, and older than 2h (so a just-opened issue whose tier-1
+          # run is still in flight is not double-dispatched). Cap 5 per day.
+          jq -r --argjson now "$NOW" '
+            .[]
+            | select(.author.login != "alexbelgium")
+            | select((.createdAt | fromdateiso8601) < ($now - 7200))
+            | select([.labels[].name]
+                | any(. == "no-ai" or . == "ai-triage" or startswith("ai:")) | not)
+            | .number' /tmp/catchup.json | head -n 5 > /tmp/todo.txt
+
+          COUNT=$(grep -c . /tmp/todo.txt || true)
+          echo "untriaged issues to re-dispatch: $COUNT"
+          while IFS= read -r n; do
+            [ -n "$n" ] || continue
+            echo "re-dispatching tier 1 for #$n"
+            gh workflow run "AI issue triage" --repo "$REPO" -f issue="$n" || \
+              echo "::warning::could not dispatch classify for #$n"
+          done < /tmp/todo.txt

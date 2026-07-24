@@ -1,0 +1,164 @@
+---
+# Destination: .github/workflows/on_issue_approved.yaml
+#
+# Tier 3 of the AI triage system — the approval executor.
+#
+# Tier 2 (daily_ai_fix.yaml) posts a full `<!-- ai-plan -->` plan on any issue
+# it is not confident enough to fix unattended, and labels it `ai:plan-pending`.
+# When @alexbelgium reviews that plan and applies the `ai:approved` label, this
+# workflow fires within a minute and executes the plan on Opus, opening a
+# ready-for-review pull request — no waiting for the next daily sweep.
+#
+# Manual precedence: the label is the maintainer's explicit go-ahead, so this
+# runs regardless of `no-ai`. Only @alexbelgium may approve; a label applied by
+# anyone else is stripped and ignored (revoke job below).
+#
+# Auth: CR_PAT environment (CLAUDE_CODE_OAUTH_TOKEN) + AI_PR_TOKEN (so the PR
+# triggers onpr_check-pr.yaml, which GITHUB_TOKEN-authored PRs would not).
+# Kill switch: repo variable AI_DISABLED=true pauses this (and every AI workflow).
+
+name: AI approved-plan executor
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: "Issue number whose approved plan to execute"
+        required: true
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write  # claude-code-action fetches a GitHub OIDC token to auth the OAuth flow
+
+concurrency:
+  group: ai-approve-${{ github.event.issue.number || inputs.issue }}
+  cancel-in-progress: false
+
+jobs:
+  # A non-maintainer applied ai:approved: strip it and do nothing else. Only
+  # users with triage rights can label at all, so this is belt-and-braces.
+  revoke:
+    if: >-
+      github.event_name == 'issues' &&
+      github.event.label.name == 'ai:approved' &&
+      github.event.sender.login != 'alexbelgium'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Remove unauthorised approval
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          set -euo pipefail
+          gh issue edit "$ISSUE" --repo "$REPO" --remove-label ai:approved || true
+          gh issue comment "$ISSUE" --repo "$REPO" --body \
+            "The \`ai:approved\` label only takes effect when applied by @alexbelgium; removing it."
+
+  execute:
+    if: >-
+      vars.AI_DISABLED != 'true' &&
+      ( github.event_name == 'workflow_dispatch' ||
+        ( github.event.label.name == 'ai:approved' &&
+          github.event.sender.login == 'alexbelgium' ) )
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: CR_PAT
+
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.AI_PR_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name  "claude-ai-fix[bot]"
+          git config user.email "claude-ai-fix[bot]@users.noreply.github.com"
+
+      - name: Ensure control labels exist
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          for l in ai:fixed ai:plan-pending ai:approved ai:needs-human ai:blocked; do
+            gh label create "$l" --repo "$REPO" --color ededed --force >/dev/null 2>&1 || true
+          done
+
+      - name: Bundle the approved plan
+        id: bundle
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/ai-exec
+          gh issue view "$ISSUE" --repo "$REPO" \
+            --json number,title,body,author,labels,comments > /tmp/ai-exec/issue.json
+          # The plan is the most recent comment carrying the ai-plan marker.
+          jq -r '[.comments[] | select(.body | contains("<!-- ai-plan -->"))]
+                 | last | .body // ""' /tmp/ai-exec/issue.json > /tmp/ai-exec/plan.md
+          if [ ! -s /tmp/ai-exec/plan.md ]; then
+            echo "has_plan=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::no <!-- ai-plan --> comment on issue #$ISSUE; nothing to execute"
+            gh issue comment "$ISSUE" --repo "$REPO" --body \
+              "No AI plan (\`<!-- ai-plan -->\`) was found on this issue, so \`ai:approved\` has nothing to execute. Run the tier-2 sweep on it first (\`AI fix sweep\` → issue $ISSUE)."
+          else
+            echo "has_plan=true" >> "$GITHUB_OUTPUT"
+            echo "plan: $(wc -c < /tmp/ai-exec/plan.md) bytes"
+          fi
+
+      - name: Execute the plan
+        if: steps.bundle.outputs.has_plan == 'true'
+        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          track_progress: true
+          prompt: |
+            The approved plan is /tmp/ai-exec/plan.md and the issue it belongs
+            to is /tmp/ai-exec/issue.json. Follow .github/prompts/issue-execute-plan.md
+            exactly. Do not deviate from the path restrictions under any
+            circumstances.
+          claude_args: |
+            --model claude-opus-4-8
+            --effort high
+            --max-turns 200
+            --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(gh:*),Bash(shellcheck:*),Bash(yamllint:*),Bash(docker build:*)"
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+
+      # Consume the approval no matter how the run ended, so a stuck label can
+      # never re-fire this workflow, and flag a human if nothing shipped.
+      - name: Guard against repeat processing
+        if: always() && steps.bundle.outputs.has_plan == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number || inputs.issue }}
+        run: |
+          set -euo pipefail
+          gh issue edit "$ISSUE" --repo "$REPO" \
+            --remove-label ai:approved --remove-label ai:plan-pending >/dev/null 2>&1 || true
+          NOW=$(gh issue view "$ISSUE" --repo "$REPO" --json labels --jq '[.labels[].name]')
+          if ! echo "$NOW" | jq -e 'index("ai:fixed")!=null' >/dev/null \
+             && ! echo "$NOW" | jq -e 'index("ai:upstream")!=null' >/dev/null; then
+            echo "::warning::issue #$ISSUE produced no PR/upstream outcome, flagging for a human"
+            gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-human >/dev/null 2>&1 || true
+          fi
+
+      # The plan should never touch shared infra, but enforce it on the PR just
+      # as the tier-2 sweep does — same script, single source of truth.
+      - name: Guard forbidden paths
+        if: always() && steps.bundle.outputs.has_plan == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: bash .github/scripts/ai_guard_paths.sh

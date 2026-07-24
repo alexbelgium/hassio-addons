@@ -139,6 +139,30 @@ Other automation workflows:
 
 Adding `[nobuild]` anywhere in a commit message skips the builder workflow.
 
+### AI issue triage
+
+A tiered, Claude-powered pipeline triages and fixes add-on issues. It escalates
+from cheap classification to a maintainer-approved automated fix, always leaving
+manual actions with precedence. Prompts live in `.github/prompts/`, shared shell
+in `.github/scripts/`.
+
+| Workflow | Model | Trigger | Role |
+|---|---|---|---|
+| `on_issues_ai_triage.yaml` | Sonnet-low | issue opened (+ author reply, daily catch-up) | Tier 1: classify, dedupe, answer, ask for info; label `ai-triage` for real add-on bugs |
+| `daily_ai_fix.yaml` | Opus-xhigh | daily 03:00 | Tier 2: diagnose the `ai-triage` batch; small+confident → ready PR (`ai:fixed`); else write a plan (`ai:plan-pending`) |
+| `on_issue_approved.yaml` | Opus-high | maintainer adds `ai:approved` | Tier 3: execute the approved plan → ready PR |
+| `on_claude_mention.yml` | Sonnet-low | `@claude` by @alexbelgium | Manual interactive override on any issue/PR |
+| `on_pr_coderabbit.yml` | Sonnet-low | CodeRabbit reviews an `ai-fix/*` PR | Once: fix or reply to review comments |
+
+Control labels (`ai:*`) are workflow-owned. Key ones: `ai-triage` (queued for
+the sweep), `ai:plan-pending` (plan posted, awaiting `ai:approved`), `ai:fixed`,
+`ai:upstream`, `ai:needs-info` (a reporter reply re-runs tier 1 once),
+`ai:needs-human`, `ai:blocked` (touched protected paths). `no-ai` opts an issue
+out of the automated tiers but not the manual ones. **Kill switch:** set the
+repo variable `AI_DISABLED=true` to pause every AI workflow with no file edits.
+AI fixes must never touch `.github/` or `.templates/` (enforced by
+`ai_guard_paths.sh`) or the `version`/`upstream` fields in `config.yaml`.
+
 ## Linting Rules
 
 | Tool | Config | Key ignores |

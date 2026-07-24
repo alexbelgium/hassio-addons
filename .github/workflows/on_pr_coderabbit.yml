@@ -1,0 +1,106 @@
+---
+# Destination: .github/workflows/on_pr_coderabbit.yml
+#
+# One-shot CodeRabbit follow-up. CodeRabbit already reviews every PR, so instead
+# of a second AI self-review, this reacts to CodeRabbit's review of an AI-opened
+# PR (branch `ai-fix/*`): once, on Sonnet-low, Claude reads the review and either
+# fixes each actionable comment (commit + push to the PR branch) or replies
+# saying why it doesn't apply.
+#
+# Fires on the `pull_request_review` submitted event from coderabbitai[bot] —
+# i.e. exactly when the review lands, which is inherently "after the PR is in
+# review". Runs a single time per PR: the `ai:cr-addressed` label is claimed
+# before any work, so CodeRabbit's re-review of the pushed fix does not loop.
+#
+# Auth: CR_PAT environment (CLAUDE_CODE_OAUTH_TOKEN) + AI_PR_TOKEN so pushes
+# re-trigger CI. Kill switch: repo variable AI_DISABLED=true pauses it.
+
+name: AI CodeRabbit follow-up
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write  # claude-code-action fetches a GitHub OIDC token to auth the OAuth flow
+
+concurrency:
+  group: ai-coderabbit-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  address:
+    if: >-
+      vars.AI_DISABLED != 'true' &&
+      github.event.review.user.login == 'coderabbitai[bot]' &&
+      startsWith(github.event.pull_request.head.ref, 'ai-fix/') &&
+      !contains(github.event.pull_request.labels.*.name, 'ai:cr-addressed')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: CR_PAT
+
+    steps:
+      # Claim the run against the LIVE label set, not the (possibly stale) event
+      # payload: concurrency serializes duplicate review events, so a queued
+      # second run sees the label the first one set and bails here.
+      - name: Claim once
+        id: claim
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          LABELS=$(gh pr view "$PR" --repo "$REPO" --json labels --jq '[.labels[].name]')
+          if echo "$LABELS" | jq -e 'index("ai:cr-addressed")!=null' >/dev/null; then
+            echo "PR #$PR already has ai:cr-addressed, skipping"
+            echo "go=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          gh label create "ai:cr-addressed" --repo "$REPO" --color ededed >/dev/null 2>&1 || true
+          gh pr edit "$PR" --repo "$REPO" --add-label "ai:cr-addressed"
+          echo "go=true" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout PR branch
+        if: steps.claim.outputs.go == 'true'
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+          token: ${{ secrets.AI_PR_TOKEN }}
+
+      - name: Configure git
+        if: steps.claim.outputs.go == 'true'
+        run: |
+          git config user.name  "claude-ai-fix[bot]"
+          git config user.email "claude-ai-fix[bot]@users.noreply.github.com"
+
+      - name: Address CodeRabbit comments
+        if: steps.claim.outputs.go == 'true'
+        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            CodeRabbit has reviewed pull request #${{ github.event.pull_request.number }}
+            on ${{ github.repository }}. You are on that PR's branch. Follow
+            .github/prompts/pr-coderabbit.md exactly. Do not deviate from the
+            path restrictions under any circumstances.
+          claude_args: |
+            --model claude-sonnet-5
+            --effort low
+            --max-turns 40
+            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(git:*),Bash(gh:*),Bash(shellcheck:*)"
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+
+      # A CodeRabbit "fix" must not smuggle in a protected-path edit either.
+      - name: Guard forbidden paths
+        if: always() && steps.claim.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: bash .github/scripts/ai_guard_paths.sh
