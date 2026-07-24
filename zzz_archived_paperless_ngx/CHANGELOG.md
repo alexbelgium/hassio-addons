@@ -1,3 +1,6 @@
+ 
+## 3.0.2 (2026-07-25)
+- Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 ## 2.20.15 (2026-06-05)
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 - Realign the add-on with upstream's s6-overlay v3 init system: upstream removed the legacy `/sbin/docker-entrypoint.sh`, so initialization is now injected through the s6 stage-2 hook (`S6_STAGE2_HOOK=/ha_entrypoint.sh`) and runtime variables are exported to the s6 container environment that feeds the supervised services (svc-webserver, svc-worker, svc-scheduler, svc-consumer)

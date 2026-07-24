@@ -130,5 +130,5 @@ slug: paperless_ng
 stage: deprecated
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 2.20.15
+version: "3.0.2"
 webui: http://[HOST]:[PORT:8000]
