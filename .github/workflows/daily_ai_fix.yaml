@@ -178,4 +178,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
           REPO: ${{ github.repository }}
-        run: bash .github/scripts/ai_guard_paths.sh
+        run: |
+          set -euo pipefail
+          # Run the guard from the trusted default-branch copy, never the in-tree
+          # copy the model could have modified in this same job.
+          DEFAULT=$(gh api "repos/${REPO}" --jq '.default_branch' 2>/dev/null || echo master)
+          if git fetch --depth=1 origin "$DEFAULT" >/dev/null 2>&1 \
+             && git cat-file -e "FETCH_HEAD:.github/scripts/ai_guard_paths.sh" 2>/dev/null; then
+            git show "FETCH_HEAD:.github/scripts/ai_guard_paths.sh" | bash
+          else
+            echo "::warning::trusted guard copy unavailable, using in-tree copy"
+            bash .github/scripts/ai_guard_paths.sh
+          fi

@@ -62,9 +62,13 @@ jobs:
             "The \`ai:approved\` label only takes effect when applied by @alexbelgium; removing it."
 
   execute:
+    # workflow_dispatch is a maintainer override, so it must also be gated to
+    # @alexbelgium — otherwise any collaborator with run-workflow rights could
+    # execute a Tier 3 plan without the approval label or sender check.
     if: >-
       vars.AI_DISABLED != 'true' &&
-      ( github.event_name == 'workflow_dispatch' ||
+      ( ( github.event_name == 'workflow_dispatch' &&
+          github.actor == 'alexbelgium' ) ||
         ( github.event.label.name == 'ai:approved' &&
           github.event.sender.login == 'alexbelgium' ) )
     runs-on: ubuntu-latest
@@ -103,14 +107,28 @@ jobs:
           mkdir -p /tmp/ai-exec
           gh issue view "$ISSUE" --repo "$REPO" \
             --json number,title,body,author,labels,comments > /tmp/ai-exec/issue.json
-          # The plan is the most recent comment carrying the ai-plan marker.
-          jq -r '[.comments[] | select(.body | contains("<!-- ai-plan -->"))]
+          # The plan is the most recent ai-plan comment FROM A TRUSTED AUTHOR.
+          # The marker alone is not proof of origin: any reporter can paste
+          # "<!-- ai-plan -->" into a comment, and picking it by marker+last
+          # would let them swap in a plan that then executes on approval.
+          # Tier 2 posts under AI_PR_TOKEN, whose identity is a repo OWNER/
+          # MEMBER/COLLABORATOR; a reporter is never one of those. (If you
+          # switch AI_PR_TOKEN to a GitHub App, add its bot login here.)
+          jq -r '[.comments[]
+                  | select((.body | contains("<!-- ai-plan -->"))
+                           and (.authorAssociation == "OWNER"
+                                or .authorAssociation == "MEMBER"
+                                or .authorAssociation == "COLLABORATOR"))]
                  | last | .body // ""' /tmp/ai-exec/issue.json > /tmp/ai-exec/plan.md
           if [ ! -s /tmp/ai-exec/plan.md ]; then
             echo "has_plan=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::no <!-- ai-plan --> comment on issue #$ISSUE; nothing to execute"
+            echo "::warning::no trusted <!-- ai-plan --> comment on issue #$ISSUE; nothing to execute"
+            # Consume the approval here too, so a later real plan can be
+            # re-approved (re-adding ai:approved to an issue that still carries
+            # it would not fire a fresh labeled event).
+            gh issue edit "$ISSUE" --repo "$REPO" --remove-label ai:approved >/dev/null 2>&1 || true
             gh issue comment "$ISSUE" --repo "$REPO" --body \
-              "No AI plan (\`<!-- ai-plan -->\`) was found on this issue, so \`ai:approved\` has nothing to execute. Run the tier-2 sweep on it first (\`AI fix sweep\` → issue $ISSUE)."
+              "No AI plan (\`<!-- ai-plan -->\`) from the triage bot was found on this issue, so \`ai:approved\` has nothing to execute (removed). Run the tier-2 sweep on it first (\`AI fix sweep\` → issue $ISSUE), then approve the plan it posts."
           else
             echo "has_plan=true" >> "$GITHUB_OUTPUT"
             echo "plan: $(wc -c < /tmp/ai-exec/plan.md) bytes"
@@ -161,4 +179,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
           REPO: ${{ github.repository }}
-        run: bash .github/scripts/ai_guard_paths.sh
+        run: |
+          set -euo pipefail
+          # Run the guard from the trusted default-branch copy, never the in-tree
+          # copy the model could have modified in this same job.
+          DEFAULT=$(gh api "repos/${REPO}" --jq '.default_branch' 2>/dev/null || echo master)
+          if git fetch --depth=1 origin "$DEFAULT" >/dev/null 2>&1 \
+             && git cat-file -e "FETCH_HEAD:.github/scripts/ai_guard_paths.sh" 2>/dev/null; then
+            git show "FETCH_HEAD:.github/scripts/ai_guard_paths.sh" | bash
+          else
+            echo "::warning::trusted guard copy unavailable, using in-tree copy"
+            bash .github/scripts/ai_guard_paths.sh
+          fi

@@ -80,16 +80,33 @@ jobs:
     environment: CR_PAT
 
     steps:
-      # The reply that re-triggered this run consumes the needs-info flag, so a
-      # later comment on the same thread cannot re-run tier 1 again. apply-verdict
-      # re-adds it only if the issue still lacks the info (one more round).
-      - name: Consume needs-info flag
+      # A reporter reply re-triggered this run. Multiple replies can each pass
+      # the job `if` before the first run clears the flag; cancel-in-progress
+      # is false, so without this they would each run a full classification.
+      # Re-check the LIVE label inside the serialized job and consume it here:
+      # the first queued run finds it present and proceeds (go=true); any run
+      # behind it finds it already gone and skips every downstream step.
+      # apply-verdict re-adds the flag if the issue still needs info (one more
+      # round), or restores it if no verdict was produced (so a later reply can
+      # still retry instead of the issue silently dropping out).
+      - name: Claim needs-info reply
+        id: claim
         if: github.event_name == 'issue_comment'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE: ${{ github.event.issue.number }}
           REPO: ${{ github.repository }}
-        run: gh issue edit "$ISSUE" --repo "$REPO" --remove-label ai:needs-info || true
+        run: |
+          set -euo pipefail
+          HAS=$(gh issue view "$ISSUE" --repo "$REPO" --json labels \
+                --jq '[.labels[].name] | index("ai:needs-info") != null')
+          if [ "$HAS" != "true" ]; then
+            echo "ai:needs-info already consumed by an earlier queued run; skipping"
+            echo "go=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          gh issue edit "$ISSUE" --repo "$REPO" --remove-label ai:needs-info || true
+          echo "go=true" >> "$GITHUB_OUTPUT"
 
       # on_issues_ping_submitter.yml has to land first: the classifier reads
       # the existing comments and bails out if someone already owns the issue.
@@ -102,7 +119,11 @@ jobs:
         if: github.event_name == 'issues'
         run: sleep 60
 
+      # Skip everything below for a needs-info reply that was already consumed
+      # by an earlier queued run (steps.claim.go == false). Non-comment events
+      # (issues.opened, dispatch) never set claim, so they always proceed.
       - name: Checkout tooling
+        if: github.event_name != 'issue_comment' || steps.claim.outputs.go == 'true'
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5
         with:
           fetch-depth: 1
@@ -113,6 +134,7 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: Build context bundle
+        if: github.event_name != 'issue_comment' || steps.claim.outputs.go == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue }}
@@ -121,6 +143,7 @@ jobs:
 
       - name: Classify
         id: classify
+        if: github.event_name != 'issue_comment' || steps.claim.outputs.go == 'true'
         continue-on-error: true
         uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
         with:
@@ -142,15 +165,23 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Apply verdict
+        if: github.event_name != 'issue_comment' || steps.claim.outputs.go == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE: ${{ github.event.issue.number || inputs.issue }}
           REPO: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           set -euo pipefail
           F=/tmp/ai-triage/verdict.json
           if [ ! -s "$F" ] || ! jq -e . "$F" >/dev/null 2>&1; then
             echo "::warning::no usable verdict produced, leaving issue untouched"
+            # A reporter reply consumed ai:needs-info in the claim step above.
+            # With no verdict we would otherwise leave the issue with the flag
+            # gone, so the next reply could never re-trigger — restore it.
+            if [ "${EVENT_NAME:-}" = "issue_comment" ]; then
+              gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-info >/dev/null 2>&1 || true
+            fi
             exit 0
           fi
 
@@ -258,17 +289,21 @@ jobs:
         run: |
           set -euo pipefail
           NOW=$(date -u +%s)
-          gh issue list --repo "$REPO" --state open --limit 100 \
-            --json number,createdAt,author,labels > /tmp/catchup.json
-          # Untriaged = no ai:* / ai-triage / no-ai label, not the maintainer's
-          # own issue, and older than 2h (so a just-opened issue whose tier-1
-          # run is still in flight is not double-dispatched). Cap 5 per day.
+          # Filter untriaged issues SERVER-SIDE so the total open-issue count is
+          # irrelevant (a plain --limit would silently drop everything past the
+          # cap, and gh lists newest-first). The search excludes every ai:* /
+          # ai-triage / no-ai label, so what comes back is already the candidate
+          # set; newest 50 is far more than the daily cap of 5.
+          gh issue list --repo "$REPO" --limit 50 \
+            --search 'is:open sort:created-desc -label:ai-triage -label:"ai:classified" -label:"ai:needs-info" -label:"ai:needs-human" -label:"ai:plan-pending" -label:"ai:approved" -label:"ai:fixed" -label:"ai:upstream" -label:no-ai' \
+            --json number,createdAt,author > /tmp/catchup.json
+          # Not the maintainer's own issue, and older than 2h (so a just-opened
+          # issue whose tier-1 run is still in flight is not double-dispatched).
+          # Cap 5 per day.
           jq -r --argjson now "$NOW" '
             .[]
             | select(.author.login != "alexbelgium")
             | select((.createdAt | fromdateiso8601) < ($now - 7200))
-            | select([.labels[].name]
-                | any(. == "no-ai" or . == "ai-triage" or startswith("ai:")) | not)
             | .number' /tmp/catchup.json | head -n 5 > /tmp/todo.txt
 
           COUNT=$(grep -c . /tmp/todo.txt || true)
