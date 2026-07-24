@@ -1,11 +1,28 @@
 ---
 # Destination: .github/workflows/daily_ai_fix.yaml
 #
-# Tier 2. One Opus 4.8 run at xhigh over the whole batch of `ai-triage` issues,
-# grouped by add-on, so it can spot the cross-issue patterns a per-issue run
-# never sees ("these four reports are all the same base image bump"). Runs
-# daily rather than weekly, so batches (default limit 8) stay small and any
-# one day's failure doesn't block a week's worth of issues.
+# Tier 2 of the AI triage system. One Opus 4.8 run at xhigh over the whole
+# batch of `ai-triage` issues, grouped by add-on, so it can spot the cross-issue
+# patterns a per-issue run never sees ("these four reports are all the same base
+# image bump"). Runs daily rather than weekly, so batches (default limit 8) stay
+# small and any one day's failure doesn't block a week's worth of issues.
+#
+# This is the Opus step — root-cause diagnosis and, for anything not clearly a
+# small confident fix, the written plan. Per issue it produces one of:
+#   * high certainty + small change -> a READY-for-review PR      (ai:fixed)
+#   * medium certainty, or too large -> a full plan comment, no PR (ai:plan-pending)
+#       Alex then adds `ai:approved` and on_issue_approved.yaml (tier 3) executes
+#       the plan. This is the "create the full plan, ask for approval only when
+#       not sure" path — cheap to gate, immediate once approved.
+#   * fault is upstream / no fix     -> analysis only             (ai:upstream / ai:needs-human)
+#
+# Full tier map:
+#   Tier 1  on_issues_ai_triage.yaml  Sonnet-low  classify on issue open
+#   Tier 2  daily_ai_fix.yaml (this)  Opus-xhigh  daily fix/plan sweep
+#   Tier 3  on_issue_approved.yaml    Opus-high   execute an approved plan
+#   @claude on_claude_mention.yml     Sonnet-low  maintainer-only interactive
+#   PR      on_pr_coderabbit.yml      Sonnet-low  one-shot CodeRabbit follow-up
+# Kill switch: set repo variable AI_DISABLED=true to pause every AI workflow.
 #
 # Auth:
 #   Claude Pro/Max subscription via the CR_PAT GitHub Environment, which
@@ -41,6 +58,9 @@ concurrency:
 
 jobs:
   sweep:
+    # Global kill switch: set repo variable AI_DISABLED=true to pause the sweep
+    # (and every other AI workflow) without editing any file.
+    if: ${{ vars.AI_DISABLED != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     environment: CR_PAT
@@ -100,7 +120,7 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          for l in ai:fixed ai:upstream ai:needs-human ai:blocked; do
+          for l in ai:fixed ai:plan-pending ai:approved ai:upstream ai:needs-human ai:blocked; do
             gh label create "$l" --repo "$REPO" --color ededed --force >/dev/null 2>&1 || true
           done
 
@@ -109,6 +129,9 @@ jobs:
         uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # One sticky, auto-updating status comment per run instead of the
+          # model narrating its own progress in scattered comments.
+          track_progress: true
           prompt: |
             The batch of issues to work through is /tmp/ai-fix/batch.json.
             Follow .github/prompts/issue-fix.md exactly. Do not deviate from
@@ -147,7 +170,9 @@ jobs:
             fi
           done
 
-      # Belt and braces. The prompt forbids these paths; this enforces it.
+      # Belt and braces. The prompt forbids .github/ and .templates/; this
+      # enforces it over every open ai-fix/ PR (shared by tiers 2, 3 and the
+      # CodeRabbit follow-up, so the rule lives in exactly one place).
       - name: Guard forbidden paths
         if: always() && steps.batch.outputs.count != '0'
         env:
@@ -155,21 +180,13 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          # gh pr list applies --limit before the headRefName filter below, so
-          # a low cap could silently drop older ai-fix/ PRs from the check
-          # once total open PRs (of any kind) grow past it. 300 is far above
-          # anything this repo runs today; gh paginates to satisfy it.
-          PRS=$(gh pr list --repo "$REPO" --state open --limit 300 \
-                --json number,headRefName \
-                --jq '.[] | select(.headRefName|startswith("ai-fix/")) | .number')
-          for pr in $PRS; do
-            BAD=$(gh pr diff "$pr" --repo "$REPO" --name-only \
-                  | grep -E '^(\.github/|\.templates/)' || true)
-            if [ -n "$BAD" ]; then
-              echo "::error::PR #$pr touches protected paths:"; echo "$BAD"
-              gh pr ready "$pr" --repo "$REPO" --undo || true
-              gh pr edit "$pr" --repo "$REPO" --add-label "ai:blocked"
-              gh pr comment "$pr" --repo "$REPO" --body \
-                "Blocked automatically: this PR modifies shared infrastructure (\`.github/\` or \`.templates/\`), which is inherited by every add-on in the repo. Needs manual review before it goes anywhere."
-            fi
-          done
+          # Run the guard from the trusted default-branch copy, never the in-tree
+          # copy the model could have modified in this same job.
+          DEFAULT=$(gh api "repos/${REPO}" --jq '.default_branch' 2>/dev/null || echo master)
+          if git fetch --depth=1 origin "$DEFAULT" >/dev/null 2>&1 \
+             && git cat-file -e "FETCH_HEAD:.github/scripts/ai_guard_paths.sh" 2>/dev/null; then
+            git show "FETCH_HEAD:.github/scripts/ai_guard_paths.sh" | bash
+          else
+            echo "::warning::trusted guard copy unavailable, using in-tree copy"
+            bash .github/scripts/ai_guard_paths.sh
+          fi
