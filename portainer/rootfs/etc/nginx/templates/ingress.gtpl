@@ -4,6 +4,7 @@ server {
   include /etc/nginx/includes/server_params.conf;
   include /etc/nginx/includes/proxy_params.conf;
   client_max_body_size 0;
+  gzip off;
 
   proxy_hide_header X-Frame-Options;
   proxy_hide_header Content-Security-Policy;
