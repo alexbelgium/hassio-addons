@@ -1,7 +1,7 @@
 ---
 # Destination: .github/workflows/daily_ai_fix.yaml
 #
-# Tier 2 of the AI triage system. One Opus 4.8 run at xhigh over the whole
+# Tier 2 of the AI triage system. One Opus 5 run at xhigh over the whole
 # batch of `ai-triage` issues, grouped by add-on, so it can spot the cross-issue
 # patterns a per-issue run never sees ("these four reports are all the same base
 # image bump"). Runs daily rather than weekly, so batches (default limit 8) stay
@@ -18,8 +18,8 @@
 #
 # Full tier map:
 #   Tier 1  on_issues_ai_triage.yaml  Sonnet-low  classify on issue open
-#   Tier 2  daily_ai_fix.yaml (this)  Opus-xhigh  daily fix/plan sweep
-#   Tier 3  on_issue_approved.yaml    Opus-high   execute an approved plan
+#   Tier 2  daily_ai_fix.yaml (this)  Opus 5-xhigh  daily fix/plan sweep
+#   Tier 3  on_issue_approved.yaml    Opus 5-high   execute an approved plan
 #   @claude on_claude_mention.yml     Sonnet-low  maintainer-only interactive
 #   PR      on_pr_coderabbit.yml      Sonnet-low  one-shot CodeRabbit follow-up
 # Kill switch: set repo variable AI_DISABLED=true to pause every AI workflow.
@@ -137,7 +137,7 @@ jobs:
             Follow .github/prompts/issue-fix.md exactly. Do not deviate from
             the path restrictions in that file under any circumstances.
           claude_args: |
-            --model claude-opus-4-8
+            --model claude-opus-5
             --effort xhigh
             --max-turns 300
             --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(gh:*),Bash(shellcheck:*),Bash(yamllint:*),Bash(docker build:*)"

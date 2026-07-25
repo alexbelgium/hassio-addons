@@ -13,8 +13,8 @@
 #
 # Full tier map:
 #   Tier 1  on_issues_ai_triage.yaml (this)  Sonnet-low  classify on issue open
-#   Tier 2  daily_ai_fix.yaml                Opus-xhigh  daily fix/plan sweep
-#   Tier 3  on_issue_approved.yaml           Opus-high   execute an approved plan
+#   Tier 2  daily_ai_fix.yaml                Opus 5-xhigh  daily fix/plan sweep
+#   Tier 3  on_issue_approved.yaml           Opus 5-high   execute an approved plan
 #   @claude on_claude_mention.yml            Sonnet-low  maintainer-only interactive
 #   PR      on_pr_coderabbit.yml             Sonnet-low  one-shot CodeRabbit follow-up
 # Kill switch: set repo variable AI_DISABLED=true to pause every AI workflow.
