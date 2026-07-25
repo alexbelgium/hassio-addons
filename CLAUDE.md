@@ -149,8 +149,8 @@ in `.github/scripts/`.
 | Workflow | Model | Trigger | Role |
 |---|---|---|---|
 | `on_issues_ai_triage.yaml` | Sonnet-low | issue opened (+ author reply, daily catch-up) | Tier 1: classify, dedupe, answer, ask for info; label `ai-triage` for real add-on bugs |
-| `daily_ai_fix.yaml` | Opus-xhigh | daily 03:00 | Tier 2: diagnose the `ai-triage` batch; small+confident → ready PR (`ai:fixed`); else write a plan (`ai:plan-pending`) |
-| `on_issue_approved.yaml` | Opus-high | maintainer adds `ai:approved` | Tier 3: execute the approved plan → ready PR |
+| `daily_ai_fix.yaml` | Opus 5-xhigh | daily 03:00 | Tier 2: diagnose the `ai-triage` batch; small+confident → ready PR (`ai:fixed`); else write a plan (`ai:plan-pending`) |
+| `on_issue_approved.yaml` | Opus 5-high | maintainer adds `ai:approved` | Tier 3: execute the approved plan → ready PR |
 | `on_claude_mention.yml` | Sonnet-low | `@claude` by @alexbelgium | Manual interactive override on any issue/PR |
 | `on_pr_coderabbit.yml` | Sonnet-low | CodeRabbit reviews an `ai-fix/*` PR | Once: fix or reply to review comments |
 
