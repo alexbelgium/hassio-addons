@@ -101,7 +101,7 @@ ENV PACKAGES="ca-certificates cpio findutils fontconfig libcap2-bin libstdc++6 o
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" || true && rm /ha_autoapps.sh
+RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 # Collabora Online payload, taken from the official image. COPY --from keeps the
 # numeric ownership, so /opt/cool and /etc/coolwsd arrive already owned by 1001.
@@ -123,7 +123,7 @@ RUN \
     chown 1001:1001 /var/log/coolwsd.log && \
     # the WOPI proof key must be unique per container, not baked into the image
     rm -rf /etc/coolwsd/proof_key* && \
-    fc-cache /opt/collaboraoffice/share/fonts/truetype > /dev/null 2>&1 || true
+    (fc-cache /opt/collaboraoffice/share/fonts/truetype > /dev/null 2>&1 || true)
 
 # Restore the file capabilities. The official image carries them as extended
 # attributes on two binaries:
@@ -151,9 +151,9 @@ RUN \
     *) echo "coolmount lost its capabilities: ${caps}"; exit 1 ;; \
     esac
 
-# Fail the build rather than ship an image that cannot start: ha_autoapps.sh is
-# invoked with "|| true", and the payload was linked against the libraries of
-# the distroless image, so both are worth proving here.
+# Fail the build rather than ship an image with unresolved runtime dependencies.
+# The payload was linked against the libraries of the distroless image, so each
+# executable and shared library is checked against the Debian runtime.
 #
 # coolwsd itself cannot be executed as a smoke test. It refuses to run as root
 # ("Do not run as root. Please run as cool user.", exit 78), and --version does
