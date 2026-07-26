@@ -51,6 +51,10 @@ if bashio::config.true 'ssl'; then
     ADDON_PROTOCOL=https
 fi
 
+# Expose the protocol to the docker HEALTHCHECK, which runs outside this
+# shell and therefore cannot read the addon options
+echo -n "${ADDON_PROTOCOL}" > /run/health_protocol
+
 #port=$(bashio::addon.port 80)
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)

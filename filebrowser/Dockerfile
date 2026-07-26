@@ -134,4 +134,4 @@ HEALTHCHECK \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD if [ "$ssl" = "true" ]; then curl -A "HealthCheck: Docker/1.0" -s -f -k https://127.0.01:${HEALTH_PORT}${HEALTH_URL}; else curl -A "HealthCheck: Docker/1.0" -s -f http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}/; fi
+    CMD curl -A "HealthCheck: Docker/1.0" -s -f -k "$(cat /run/health_protocol 2>/dev/null || echo http)://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}/" >/dev/null 2>&1 || exit 1
