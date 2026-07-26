@@ -20,10 +20,21 @@ mktemp_safe() {
 }
 
 dotenv_quote() {
-    # For /.env and /etc/environment: double quotes + minimal escaping
+    # For /.env and /etc/environment: double quotes + minimal escaping.
+    #
+    # These files are read back by sourcing them from a shell, so every
+    # character that is still special inside double quotes has to be escaped.
+    # $ and ` used to be left alone, which meant a value was expanded instead of
+    # being read literally: a password like pa$$w0rd came back with the shell
+    # PID spliced into it, and a value containing backticks ran as a command.
+    #
+    # Backslash must be doubled first, so that the backslashes added below are
+    # not doubled in turn.
     local v="$1"
     v="${v//\\/\\\\}"
     v="${v//\"/\\\"}"
+    v="${v//\$/\\\$}"
+    v="${v//\`/\\\`}"
     v="${v//$'\n'/\\n}"
     v="${v//$'\r'/\\r}"
     printf '"%s"' "$v"
@@ -98,30 +109,51 @@ if [[ "${1:-}" == "--self-test" ]]; then
     JSONSOURCE="self-test"
     EXPORT_BODY="$(mktemp_safe)"
     EXPORT_BLOCK="$(mktemp_safe)"
-    trap 'rm -f "$EXPORT_BODY" "$EXPORT_BLOCK"' EXIT
+    self_test_env="$(mktemp_safe)"
+    trap 'rm -f "$EXPORT_BODY" "$EXPORT_BLOCK" "$self_test_env"' EXIT
+    self_test_rc=0
 
+    self_test_check() {
+        # $1 name of the variable that was read back, $2 expected value, $3 how
+        local self_test_got="${!1}"
+        [[ "$self_test_got" == "$2" ]] && return 0
+        printf 'FAIL (%s): <%s> came back as <%s>\n' "$3" "$2" "$self_test_got"
+        self_test_rc=1
+    }
+
+    # 1. The export block, sourced the way an injected run script would
     for self_test_i in "${!self_test_values[@]}"; do
         append_export "SELFTEST_${self_test_i}" "${self_test_values[$self_test_i]}"
     done
     compose_export_block
-
-    # Source the generated block the way an injected run script would
     # shellcheck source=/dev/null
     . "$EXPORT_BLOCK"
-
-    self_test_rc=0
     for self_test_i in "${!self_test_values[@]}"; do
-        self_test_name="SELFTEST_${self_test_i}"
-        if [[ "${!self_test_name}" != "${self_test_values[$self_test_i]}" ]]; then
-            printf 'FAIL: <%s> came back as <%s> via %s\n' \
-                "${self_test_values[$self_test_i]}" "${!self_test_name}" \
-                "$(shell_quote "${self_test_values[$self_test_i]}")"
-            self_test_rc=1
-        fi
+        self_test_check "SELFTEST_${self_test_i}" "${self_test_values[$self_test_i]}" "export block"
     done
 
+    # 2. /.env, sourced the way browserless_chrome and wger read it back.
+    # Values holding a newline are out of scope: dotenv_quote writes them as a
+    # literal \n, which a dotenv parser unescapes but a shell does not.
+    for self_test_i in "${!self_test_values[@]}"; do
+        printf 'DOTENVTEST_%s=%s\n' \
+            "$self_test_i" "$(dotenv_quote "${self_test_values[$self_test_i]}")"
+    done > "$self_test_env"
+    if ! bash -n "$self_test_env" 2>/dev/null; then
+        # An unescaped backtick or quote leaves the file unparseable, which would
+        # abort the sourcing shell instead of just yielding a wrong value.
+        echo "FAIL (dotenv): generated env file is not valid shell"
+        self_test_rc=1
+    else
+        # shellcheck source=/dev/null
+        . "$self_test_env"
+        for self_test_i in "${!self_test_values[@]}"; do
+            self_test_check "DOTENVTEST_${self_test_i}" "${self_test_values[$self_test_i]}" "dotenv"
+        done
+    fi
+
     [[ "$self_test_rc" -eq 0 ]] &&
-        echo "export block: ${#self_test_values[@]} values round-tripped unchanged"
+        echo "${#self_test_values[@]} values round-tripped unchanged (export block + dotenv)"
     exit "$self_test_rc"
 fi
 
