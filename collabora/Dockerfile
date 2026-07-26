@@ -20,6 +20,16 @@ ARG BUILD_VERSION
 ###############################################################################
 # Get Collabora Online from the official image (BUILD_FROM, see build.json)
 #
+# build.json pins the architecture explicitly, collabora/code:latest-amd64 and
+# collabora/code:latest-arm64, rather than the multi-arch collabora/code:latest.
+# The builder never passes --platform: it runs the amd64 build on a native amd64
+# runner and the aarch64 build on a native arm runner, so the only thing that
+# decides which Collabora binaries end up in the add-on is this tag. With the
+# multi-arch tag that happens to resolve correctly, but only for as long as the
+# runner architecture keeps matching the target, and a mismatch would silently
+# produce an image full of foreign-architecture binaries. The per-arch tags are
+# published in lockstep with latest, so nothing is lost by naming them.
+#
 # Upstream rebuilt collabora/code as a Nix-based distroless image: /bin and
 # /sbin are empty, so it can no longer be the base of the add-on itself, as s6,
 # bashio and every RUN need a shell. It stays the tracked upstream image, and
@@ -38,8 +48,12 @@ FROM ${BUILD_FROM} AS collabora
 ###############################################################################
 FROM ghcr.io/hassio-addons/debian-base:9.3.0
 
-# Inherited from the base, but declared explicitly: the linkage check below
-# relies on pipefail to notice a failing ldd.
+# Inherited from the base, declared here so it is visible to hadolint and to
+# anyone adding a pipe below. Note that the linkage check does NOT pipe into
+# grep: with pipefail an ldd that exits non-zero (a binary it cannot handle at
+# all) would make the pipeline fail even though grep matched, and "if" would
+# then read that as "no unresolved libraries" -- the one case worth catching.
+# Capturing the output and matching it with case avoids the question entirely.
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ##################
@@ -111,18 +125,55 @@ RUN \
     rm -rf /etc/coolwsd/proof_key* && \
     fc-cache /opt/collaboraoffice/share/fonts/truetype > /dev/null 2>&1 || true
 
-# Fail the build rather than ship an image that cannot start. ha_autoapps.sh is
-# invoked with "|| true", so a missing package would go unnoticed, and the
-# binaries were built inside the upstream Nix image against a different libc.
-# ldd is the right check here: it resolves every NEEDED library against this
-# base without booting Collabora, which would try to build a jail.
+# Restore the file capabilities. The official image carries them as extended
+# attributes on two binaries:
+#   coolforkit-caps  cap_chown,cap_fowner,cap_sys_chroot=ep
+#   coolmount        cap_sys_admin=ep
+# COPY --from does not transfer extended attributes, so both arrive stripped.
+# Nothing about the build notices: coolwsd starts and serves the admin console,
+# but every document fails to open because it cannot chroot a kit process. Set
+# them again and check they stuck, so a builder without xattr support fails here
+# instead of shipping an add-on that only looks like it works.
+#
+# cap_sys_admin on coolmount only takes effect if the container is given
+# SYS_ADMIN, which the add-on does not request; without it Collabora copies its
+# child roots instead of bind-mounting them, which is slower but works.
+RUN \
+    setcap "cap_chown,cap_fowner,cap_sys_chroot=ep" /usr/bin/coolforkit-caps && \
+    setcap "cap_sys_admin=ep" /usr/bin/coolmount && \
+    caps="$(getcap /usr/bin/coolforkit-caps /usr/bin/coolmount)" && \
+    case "$caps" in \
+    *cap_sys_chroot*) ;; \
+    *) echo "coolforkit-caps lost its capabilities: ${caps}"; exit 1 ;; \
+    esac && \
+    case "$caps" in \
+    *cap_sys_admin*) ;; \
+    *) echo "coolmount lost its capabilities: ${caps}"; exit 1 ;; \
+    esac
+
+# Fail the build rather than ship an image that cannot start: ha_autoapps.sh is
+# invoked with "|| true", and the payload was linked against the libraries of
+# the distroless image, so both are worth proving here.
+#
+# coolwsd itself cannot be executed as a smoke test. It refuses to run as root
+# ("Do not run as root. Please run as cool user.", exit 78), and --version does
+# not exit either -- the official entrypoint passes it to the long-running
+# server to get the version into the log. Checking that every binary resolves
+# its libraries proves the same thing and terminates.
 RUN \
     command -v openssl > /dev/null && \
     command -v su > /dev/null && \
-    for binary in /usr/bin/coolwsd /usr/bin/coolforkit-ns /usr/bin/coolmount; do \
-    if ldd "$binary" | grep "not found"; then \
-    echo "unresolved shared libraries in $binary" && exit 1; \
-    fi; \
+    for binary in \
+    /usr/bin/coolwsd \
+    /usr/bin/coolforkit-caps \
+    /usr/bin/coolforkit-ns \
+    /usr/bin/coolmount \
+    /opt/collaboraoffice/program/soffice.bin \
+    /opt/collaboraoffice/program/libmergedlo.so; do \
+    libs="$(ldd "$binary" 2>&1)"; \
+    case "$libs" in \
+    *"not found"*) echo "Unresolved libraries in ${binary}:"; echo "$libs"; exit 1 ;; \
+    esac; \
     done
 
 ################

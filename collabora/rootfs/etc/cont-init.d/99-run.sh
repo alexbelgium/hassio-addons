@@ -94,16 +94,21 @@ if bashio::config.true 'ssl'; then
         bashio::log.error "Key file /ssl/${keyfile} not found"
         exit 1
     fi
+    # Point Collabora at the copies rather than at /ssl. coolwsd runs as uid
+    # 1001 and /ssl is mounted read-only with whatever ownership the certificate
+    # tooling left behind, which for a private key is commonly root-only. These
+    # copies are picked up by the chown below, so they are readable regardless.
     cp -f "/ssl/${keyfile}" /etc/coolwsd/key.pem
     cp -f "/ssl/${certfile}" /etc/coolwsd/cert.pem
     cp -f "/ssl/${certfile}" /etc/coolwsd/ca-chain.cert.pem
+    chmod 600 /etc/coolwsd/key.pem
     extra_params="${extra_params/--o:ssl.enable=false/}"
     extra_params="${extra_params} \
          --o:ssl.enable=true \
          --o:ssl.termination=false \
-         --o:ssl.cert_file_path=/ssl/${certfile} \
-         --o:ssl.key_file_path=/ssl/${keyfile} \
-         --o:ssl.ca_file_path=/ssl/${certfile}"
+         --o:ssl.cert_file_path=/etc/coolwsd/cert.pem \
+         --o:ssl.key_file_path=/etc/coolwsd/key.pem \
+         --o:ssl.ca_file_path=/etc/coolwsd/ca-chain.cert.pem"
 elif [[ "$extra_params" != *ssl.termination* ]]; then
     # coolwsd defaults ssl.termination to false, so with ssl disabled it builds
     # http:// and ws:// URLs even when the browser reached it over https through
