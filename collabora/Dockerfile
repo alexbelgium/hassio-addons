@@ -107,13 +107,19 @@ RUN \
     rm -rf /etc/coolwsd/proof_key* && \
     fc-cache /opt/collaboraoffice/share/fonts/truetype > /dev/null 2>&1 || true
 
-# Fail the build rather than ship an image that cannot start: ha_autoapps.sh is
-# invoked with "|| true", and coolwsd comes from an image built against a
-# different libc, so both are worth proving here. coolwsd refuses to run as
-# root, so this runs it exactly the way 99-run.sh does.
+# Fail the build rather than ship an image that cannot start. ha_autoapps.sh is
+# invoked with "|| true", so a missing package would go unnoticed, and the
+# binaries were built inside the upstream Nix image against a different libc.
+# ldd is the right check here: it resolves every NEEDED library against this
+# base without booting Collabora, which would try to build a jail.
 RUN \
     command -v openssl > /dev/null && \
-    su -s /bin/bash cool -c "/usr/bin/coolwsd --version"
+    command -v su > /dev/null && \
+    for binary in /usr/bin/coolwsd /usr/bin/coolforkit-ns /usr/bin/coolmount; do \
+    if ldd "$binary" | grep "not found"; then \
+    echo "unresolved shared libraries in $binary" && exit 1; \
+    fi; \
+    done
 
 ################
 # 4 Entrypoint #
