@@ -16,7 +16,45 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+
+###############################################################################
+# Get Collabora Online from the official image (BUILD_FROM, see build.json)
+#
+# build.json pins the architecture explicitly, collabora/code:latest-amd64 and
+# collabora/code:latest-arm64, rather than the multi-arch collabora/code:latest.
+# The builder never passes --platform: it runs the amd64 build on a native amd64
+# runner and the aarch64 build on a native arm runner, so the only thing that
+# decides which Collabora binaries end up in the add-on is this tag. With the
+# multi-arch tag that happens to resolve correctly, but only for as long as the
+# runner architecture keeps matching the target, and a mismatch would silently
+# produce an image full of foreign-architecture binaries. The per-arch tags are
+# published in lockstep with latest, so nothing is lost by naming them.
+#
+# Upstream rebuilt collabora/code as a Nix-based distroless image: /bin and
+# /sbin are empty, so it can no longer be the base of the add-on itself, as s6,
+# bashio and every RUN need a shell. It stays the tracked upstream image, and
+# only the Collabora payload is copied out of it onto a Debian runtime.
+#
+# Copy only what belongs to Collabora. Do NOT copy /etc or /nix: in that image
+# /etc/resolv.conf, /etc/hosts, /etc/passwd, /etc/group and /etc/nsswitch.conf
+# are symlinks into /nix/store, and importing them breaks DNS resolution and
+# wipes the base image users.
+###############################################################################
+# hadolint ignore=DL3006
+FROM ${BUILD_FROM} AS collabora
+
+###############################################################################
+# Build the actual add-on on a base that has a shell
+###############################################################################
+FROM ghcr.io/hassio-addons/debian-base:9.3.0
+
+# Inherited from the base, declared here so it is visible to hadolint and to
+# anyone adding a pipe below. Note that the linkage check does NOT pipe into
+# grep: with pipefail an ldd that exits non-zero (a binary it cannot handle at
+# all) would make the pipeline fail even though grep matched, and "if" would
+# then read that as "no unresolved libraries" -- the one case worth catching.
+# Capturing the output and matching it with case avoids the question entirely.
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ##################
 # 2 Modify Image #
@@ -55,11 +93,88 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES=""
+# coolwsd itself only needs glibc/libstdc++ (max GLIBCXX_3.4.22); the office
+# engine bundles its own cairo, fontconfig, curl, icu and fonts under
+# /opt/collaboraoffice/program. openssl is used to generate the self-signed
+# certificate when the ssl option is off, cpio and findutils by the jail setup.
+ENV PACKAGES="ca-certificates cpio findutils fontconfig libcap2-bin libstdc++6 openssl tzdata"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" || true && rm /ha_autoapps.sh
+RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+
+# Collabora Online payload, taken from the official image. COPY --from keeps the
+# numeric ownership, so /opt/cool and /etc/coolwsd arrive already owned by 1001.
+COPY --from=collabora /usr/bin/coolwsd /usr/bin/coolforkit-caps /usr/bin/coolforkit-ns /usr/bin/coolmount /usr/bin/
+COPY --from=collabora /usr/share/coolwsd /usr/share/coolwsd
+COPY --from=collabora /etc/coolwsd /etc/coolwsd
+COPY --from=collabora /opt/collaboraoffice /opt/collaboraoffice
+COPY --from=collabora /opt/cool /opt/cool
+
+# Recreate the runtime user the official image declares (uid/gid 1001), and the
+# per-container state upstream sets up in its own final build stage.
+RUN \
+    groupadd --gid 1001 cool && \
+    useradd --uid 1001 --gid 1001 --no-create-home --home-dir /opt/cool --shell /usr/sbin/nologin cool && \
+    mkdir -p /opt/cool/child-roots /opt/cool/cache && \
+    chown -R 1001:1001 /opt/cool /etc/coolwsd && \
+    chmod 640 /etc/coolwsd/coolwsd.xml && \
+    touch /var/log/coolwsd.log && \
+    chown 1001:1001 /var/log/coolwsd.log && \
+    # the WOPI proof key must be unique per container, not baked into the image
+    rm -rf /etc/coolwsd/proof_key* && \
+    (fc-cache /opt/collaboraoffice/share/fonts/truetype > /dev/null 2>&1 || true)
+
+# Restore the file capabilities. The official image carries them as extended
+# attributes on two binaries:
+#   coolforkit-caps  cap_chown,cap_fowner,cap_sys_chroot=ep
+#   coolmount        cap_sys_admin=ep
+# COPY --from does not transfer extended attributes, so both arrive stripped.
+# Nothing about the build notices: coolwsd starts and serves the admin console,
+# but every document fails to open because it cannot chroot a kit process. Set
+# them again and check they stuck, so a builder without xattr support fails here
+# instead of shipping an add-on that only looks like it works.
+#
+# cap_sys_admin on coolmount only takes effect if the container is given
+# SYS_ADMIN, which the add-on does not request; without it Collabora copies its
+# child roots instead of bind-mounting them, which is slower but works.
+RUN \
+    setcap "cap_chown,cap_fowner,cap_sys_chroot=ep" /usr/bin/coolforkit-caps && \
+    setcap "cap_sys_admin=ep" /usr/bin/coolmount && \
+    caps="$(getcap /usr/bin/coolforkit-caps /usr/bin/coolmount)" && \
+    case "$caps" in \
+    *cap_sys_chroot*) ;; \
+    *) echo "coolforkit-caps lost its capabilities: ${caps}"; exit 1 ;; \
+    esac && \
+    case "$caps" in \
+    *cap_sys_admin*) ;; \
+    *) echo "coolmount lost its capabilities: ${caps}"; exit 1 ;; \
+    esac
+
+# Fail the build rather than ship an image with unresolved runtime dependencies.
+# The payload was linked against the libraries of the distroless image, so each
+# executable and shared library is checked against the Debian runtime.
+#
+# coolwsd itself cannot be executed as a smoke test. It refuses to run as root
+# ("Do not run as root. Please run as cool user.", exit 78), and --version does
+# not exit either -- the official entrypoint passes it to the long-running
+# server to get the version into the log. Checking that every binary resolves
+# its libraries proves the same thing and terminates.
+RUN \
+    command -v openssl > /dev/null && \
+    command -v su > /dev/null && \
+    for binary in \
+    /usr/bin/coolwsd \
+    /usr/bin/coolforkit-caps \
+    /usr/bin/coolforkit-ns \
+    /usr/bin/coolmount \
+    /opt/collaboraoffice/program/soffice.bin \
+    /opt/collaboraoffice/program/libmergedlo.so; do \
+    libs="$(ldd "$binary" 2>&1)"; \
+    case "$libs" in \
+    *"not found"*) echo "Unresolved libraries in ${binary}:"; echo "$libs"; exit 1 ;; \
+    esac; \
+    done
 
 ################
 # 4 Entrypoint #

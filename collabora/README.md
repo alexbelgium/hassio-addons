@@ -52,22 +52,63 @@ Webui can be found at `https://homeassistant:9980/browser/dist/admin/admin.html`
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `aliasgroup1` | str | | Nextcloud external domain with escaped dots using two \ (e.g. `nextcloud_domain\\.com`) |
-| `domain1` | str | | Collabora external domain with escaped dots using two \ (e.g. `code_domain\\.com`) |
+| `aliasgroup1` | str | | External address of the **Nextcloud** server allowed to use this Collabora (e.g. `https://nextcloud_domain\.com:443`) |
+| `aliasgroup2` | str | | A second Nextcloud server, same format as `aliasgroup1` |
+| `aliasgroup3` | str | | A third Nextcloud server, same format as `aliasgroup1` |
+| `server_name` | str | | External hostname (and port) of **this Collabora** server, as the browser reaches it (e.g. `code_domain.com:9980`). Set it when Collabora sits behind a reverse proxy |
+| `ssl_termination` | bool | `false` | Set to `true` when `ssl` is `false` but the browser reaches Collabora over `https` through a reverse proxy |
 | `extra_params` | str | | Extra parameters passed to the Collabora start script |
 | `ssl` | bool | `false` | Enable SSL using certificates from /ssl |
 | `certfile` | str | `fullchain.pem` | Certificate file name located in /ssl |
 | `keyfile` | str | `privkey.pem` | Private key file name located in /ssl |
+| `cert_domain` | str | | Common name of the self-signed certificate generated when `ssl` is `false` |
 | `username` | str | | Username for the Collabora admin console |
 | `password` | str | | Password for the Collabora admin console |
 | `dictionaries` | str | | Space-separated list of dictionary languages to install |
+| `domain1` | str | | **Deprecated**, use `server_name` instead |
+
+#### About the escaped dots in `aliasgroup*`
+
+Collabora matches the `aliasgroup*` addresses as **regular expressions**, so a dot
+has to be escaped with a **single** backslash: `next\.duckdns\.org`, not
+`next\\.duckdns\\.org`. A doubled backslash means "a literal backslash followed by
+any character", which never matches a real hostname, and Collabora then rejects the
+Nextcloud server.
+
+Earlier versions of this page asked for two backslashes, which was wrong. The add-on
+now normalises whatever you type, so `next.duckdns.org`, `next\.duckdns\.org` and
+`next\\.duckdns\\.org` all end up as the same correct pattern. The value that is
+really handed to Collabora is printed in the add-on log at startup:
+
+```text
+Allowed Nextcloud host aliasgroup1: https://next\.duckdns\.org:443
+```
+
+Values containing other regex characters (`*`, `|`, `(`, `[`, …) are left untouched,
+so hand-written patterns keep working.
+
+`server_name` is **not** a regular expression: write it as a plain hostname, without
+backslashes.
 
 ### Example configuration
 
+Nextcloud on `https://next.duckdns.org` and Collabora reachable on
+`https://code.duckdns.org:9980`, with a reverse proxy handling the certificates:
+
 ```yaml
-aliasgroup1: nextcloud_domain\\.com
-domain1: code_domain\\.com
-extra_params: ""
+aliasgroup1: https://next\.duckdns\.org:443
+server_name: code.duckdns.org:9980
+ssl_termination: true
+ssl: false
+username: admin
+password: changeme
+```
+
+Same setup, but letting the add-on serve the certificates itself from `/ssl`:
+
+```yaml
+aliasgroup1: https://next\.duckdns\.org:443
+server_name: code.duckdns.org:9980
 ssl: true
 certfile: fullchain.pem
 keyfile: privkey.pem
@@ -81,7 +122,19 @@ password: changeme
 1. Start the add-on and expose the Collabora server to an external domain.
 1. Install and configure the Nextcloud add-on.
 1. Inside Nextcloud, install the **Nextcloud Office** app.
-1. In Nextcloud **Administration Settings → Office**, set the Collabora server URL to `https://yourdomain:9980` and enable **Disable certificate validation**.
+1. In Nextcloud **Administration Settings → Office**, set the Collabora server URL to
+   the **Collabora** address, not the Nextcloud one — with the example above that is
+   `https://code.duckdns.org:9980` — and enable **Disable certificate validation** if
+   the add-on serves a self-signed certificate.
+1. Add both hostnames to the Nextcloud `trusted_domains`.
+
+The two hostnames have different roles, and swapping them is the most common cause of
+`Could not establish connection to the Collabora Online server`:
+
+- `aliasgroup1` is the **Nextcloud** address, it tells Collabora which server is
+  allowed to ask it to open documents.
+- `server_name` is the **Collabora** address, it tells Collabora which URL to hand
+  back to the browser.
 
 ### Custom Scripts and Environment Variables
 

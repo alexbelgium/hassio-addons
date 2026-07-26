@@ -1,4 +1,19 @@
  
+## 26.04.2.4.1 (2026-07-26)
+- Rebuild on a Debian base: upstream turned collabora/code into a distroless image with no shell, which broke the addon build entirely. collabora/code stays the tracked upstream image in build.json, but is now a build stage whose payload is copied onto ghcr.io/hassio-addons/debian-base, and the addon ships its own launcher in place of the removed /start-collabora-online.sh
+- build.json names the architecture explicitly again (`collabora/code:latest-amd64` and `collabora/code:latest-arm64`). The builder never passes `--platform`, so the tag is the only thing that decides which binaries land in the addon
+- Restore the file capabilities on `coolforkit-caps` and `coolmount`. The official image carries them as extended attributes, which `COPY --from` does not transfer, and without them Collabora starts but cannot open any document
+- The certificates for `ssl: true` are read from the copies in /etc/coolwsd rather than from /ssl directly, which Collabora could not read as uid 1001 when the private key is root-only
+- Make the `ssl` option authoritative even when `extra_params` is empty or customized. `ssl: false` now always disables Collabora's internal HTTPS instead of silently falling back to its default self-signed TLS
+- Fix version numbering: releases on CollaboraOnline/online are now Helm charts only, which had renumbered the addon from 25.4.9.2 down to 1.3.0 and hid updates. The version is tracked from the collabora/code Docker Hub tags again
+- `server_name` is now passed to Collabora, fixing `Your browser has been unable to connect to the Collabora server` behind a reverse proxy
+- `domain1` was never passed to Collabora at all (the script read a `domain` option that does not exist, and recent Collabora releases dropped that variable). It is now deprecated and applied as `server_name`
+- `aliasgroup*` values are normalised: unescaped, escaped and double-escaped dots all produce the correct regex, and the value handed to Collabora is printed in the log
+- Added `ssl_termination`, needed when `ssl` is false but Collabora is reached over https through a reverse proxy
+- Added `aliasgroup2` and `aliasgroup3` for additional Nextcloud servers
+- `cert_domain` is now a string (it is a certificate common name) and is passed to Collabora
+- Documented the above, and corrected the README which asked for two backslashes where Collabora expects one
+ 
 ## 1.3.0 (2026-07-16)
 - Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
  
