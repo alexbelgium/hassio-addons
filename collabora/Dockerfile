@@ -38,6 +38,10 @@ FROM ${BUILD_FROM} AS collabora
 ###############################################################################
 FROM ghcr.io/hassio-addons/debian-base:9.3.0
 
+# Inherited from the base, but declared explicitly: the linkage check below
+# relies on pipefail to notice a failing ldd.
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 ##################
 # 2 Modify Image #
 ##################
