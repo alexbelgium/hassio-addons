@@ -81,6 +81,12 @@ if bashio::config.has_value 'extra_params'; then
     extra_params="$(bashio::config 'extra_params')"
 fi
 
+# The add-on ssl option is authoritative. coolwsd defaults ssl.enable to true,
+# so merely clearing extra_params used to re-enable its self-signed HTTPS even
+# when ssl was false, which breaks reverse proxies expecting plain HTTP.
+extra_params="${extra_params//--o:ssl.enable=false/}"
+extra_params="${extra_params//--o:ssl.enable=true/}"
+
 if bashio::config.true 'ssl'; then
     export DONT_GEN_SSL_CERT=true
     bashio::config.require.ssl
@@ -102,21 +108,22 @@ if bashio::config.true 'ssl'; then
     cp -f "/ssl/${certfile}" /etc/coolwsd/cert.pem
     cp -f "/ssl/${certfile}" /etc/coolwsd/ca-chain.cert.pem
     chmod 600 /etc/coolwsd/key.pem
-    extra_params="${extra_params/--o:ssl.enable=false/}"
     extra_params="${extra_params} \
          --o:ssl.enable=true \
          --o:ssl.termination=false \
          --o:ssl.cert_file_path=/etc/coolwsd/cert.pem \
          --o:ssl.key_file_path=/etc/coolwsd/key.pem \
          --o:ssl.ca_file_path=/etc/coolwsd/ca-chain.cert.pem"
-elif [[ "$extra_params" != *ssl.termination* ]]; then
-    # coolwsd defaults ssl.termination to false, so with ssl disabled it builds
-    # http:// and ws:// URLs even when the browser reached it over https through
-    # a reverse proxy, and the browser then refuses the connection.
-    if bashio::config.true 'ssl_termination'; then
-        extra_params="${extra_params} --o:ssl.termination=true"
-    elif ! bashio::config.has_value 'ssl_termination'; then
-        bashio::log.notice "If Collabora is reached over https through a reverse proxy, set ssl_termination to true"
+else
+    extra_params="${extra_params} --o:ssl.enable=false"
+    if [[ "$extra_params" != *ssl.termination* ]]; then
+        # With SSL disabled, termination must be enabled when a reverse proxy
+        # exposes Collabora over https, otherwise it advertises http/ws URLs.
+        if bashio::config.true 'ssl_termination'; then
+            extra_params="${extra_params} --o:ssl.termination=true"
+        elif ! bashio::config.has_value 'ssl_termination'; then
+            bashio::log.notice "If Collabora is reached over https through a reverse proxy, set ssl_termination to true"
+        fi
     fi
 fi
 
