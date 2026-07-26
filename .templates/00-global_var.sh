@@ -4,6 +4,128 @@
 set -e
 
 ################################################################################
+# Block markers, temp helper, quoting and export-block builders
+#
+# Everything here is free of side effects and defined before the Supervisor
+# guard, so that the self-test below can exercise the whole value path outside a
+# container, where bashio is not available.
+################################################################################
+BLOCK_BEGIN="# --- BEGIN ADDON ENV (generated) ---"
+BLOCK_END="# --- END ADDON ENV (generated) ---"
+
+mktemp_safe() {
+    local tmpdir="${TMPDIR:-/tmp}"
+    mkdir -p "$tmpdir"
+    mktemp "$tmpdir/tmp.XXXXXXXXXX"
+}
+
+dotenv_quote() {
+    # For /.env and /etc/environment: double quotes + minimal escaping
+    local v="$1"
+    v="${v//\\/\\\\}"
+    v="${v//\"/\\\"}"
+    v="${v//$'\n'/\\n}"
+    v="${v//$'\r'/\\r}"
+    printf '"%s"' "$v"
+}
+
+shell_quote() {
+    # Single-quote for safe injection into shell code.
+    #
+    # Inside single quotes every character is literal, so the only thing a value
+    # needs escaping for is the quote character itself: close the quote, emit an
+    # escaped quote, reopen it. Backslashes must be left untouched.
+    #
+    # This used to double every backslash and to replace ' with '"'"' followed by
+    # a stray space. The stray space corrupted every value containing a quote
+    # (O'Brien pass arrived as O' Brien pass); the doubling was undone further
+    # down the path by the "awk -v" in append_export, so backslashes survived by
+    # accident. Both halves are fixed together -- see the note in append_export.
+    local s="$1"
+    printf "'%s'" "${s//\'/\'\\\'\'}"
+}
+
+append_export() {
+    # Plain append, deliberately not awk: "awk -v q=$value" runs the value
+    # through awk's escape processing, which turns \t into a tab, \b into a
+    # backspace and \\ into a single backslash. That used to be cancelled out by
+    # shell_quote doubling every backslash, so the two bugs hid each other --
+    # fixing only one of them corrupts the value.
+    printf 'export %s=%s\n' "$1" "$(shell_quote "$2")" >> "$EXPORT_BODY"
+}
+
+compose_export_block() {
+    {
+        echo "$BLOCK_BEGIN"
+        echo "# Generated from $JSONSOURCE"
+        cat "$EXPORT_BODY"
+        echo "$BLOCK_END"
+    } > "$EXPORT_BLOCK"
+}
+
+################################################################################
+# Self-test: bash .templates/00-global_var.sh --self-test
+#
+# Builds a real export block and sources it, which is exactly what happens once
+# the block is injected at the top of a service run script, then checks that
+# every value came back byte for byte. Testing the whole path matters: the two
+# defects this guards against (shell_quote doubling backslashes and append_export
+# passing values through "awk -v") cancelled each other out, so a test of either
+# helper alone reported success while the pair was wrong.
+#
+# Runs before the Supervisor guard and exits, so it never affects startup.
+################################################################################
+if [[ "${1:-}" == "--self-test" ]]; then
+    # Literal test data: the single quotes and metacharacters are the point.
+    # shellcheck disable=SC2016
+    self_test_values=(
+        'plain.host'
+        'next\.duckdns\.org'   # regex, dots escaped once
+        'next\\.duckdns\\.org' # regex, dots escaped twice by the user
+        'C:\Users\bob\share'   # windows path, \U and \b are awk escapes
+        '\\server\share'       # UNC path
+        'col\tsep'             # \t is an awk escape
+        "O'Brien pass"         # embedded quote
+        "it's a 'quoted' word" # several embedded quotes
+        "'leading"
+        "trailing'"
+        'a$b`c"d' # shell metacharacters
+        '*.example.com|^foo\d+$'
+        $'sp ace\ttab'
+        ''
+    )
+
+    JSONSOURCE="self-test"
+    EXPORT_BODY="$(mktemp_safe)"
+    EXPORT_BLOCK="$(mktemp_safe)"
+    trap 'rm -f "$EXPORT_BODY" "$EXPORT_BLOCK"' EXIT
+
+    for self_test_i in "${!self_test_values[@]}"; do
+        append_export "SELFTEST_${self_test_i}" "${self_test_values[$self_test_i]}"
+    done
+    compose_export_block
+
+    # Source the generated block the way an injected run script would
+    # shellcheck source=/dev/null
+    . "$EXPORT_BLOCK"
+
+    self_test_rc=0
+    for self_test_i in "${!self_test_values[@]}"; do
+        self_test_name="SELFTEST_${self_test_i}"
+        if [[ "${!self_test_name}" != "${self_test_values[$self_test_i]}" ]]; then
+            printf 'FAIL: <%s> came back as <%s> via %s\n' \
+                "${self_test_values[$self_test_i]}" "${!self_test_name}" \
+                "$(shell_quote "${self_test_values[$self_test_i]}")"
+            self_test_rc=1
+        fi
+    done
+
+    [[ "$self_test_rc" -eq 0 ]] &&
+        echo "export block: ${#self_test_values[@]} values round-tripped unchanged"
+    exit "$self_test_rc"
+fi
+
+################################################################################
 # Guard: only run inside Supervisor-managed add-ons
 ################################################################################
 if ! bashio::supervisor.ping 2>/dev/null; then
@@ -29,15 +151,6 @@ command -v jq >/dev/null || bashio::exit.nok "jq is required"
 
 mkdir -p /etc
 touch "$ETC_ENV_FILE"
-
-################################################################################
-# Temp helper
-################################################################################
-mktemp_safe() {
-    local tmpdir="${TMPDIR:-/tmp}"
-    mkdir -p "$tmpdir"
-    mktemp "$tmpdir/tmp.XXXXXXXXXX"
-}
 
 ################################################################################
 # Secrets support
@@ -69,53 +182,12 @@ resolve_secret() {
 }
 
 ################################################################################
-# Quoting
-################################################################################
-dotenv_quote() {
-    # For /.env and /etc/environment: double quotes + minimal escaping
-    local v="$1"
-    v="${v//\\/\\\\}"
-    v="${v//\"/\\\"}"
-    v="${v//$'\n'/\\n}"
-    v="${v//$'\r'/\\r}"
-    printf '"%s"' "$v"
-}
-
-shell_quote() {
-    # Single-quote for safe injection in shell code
-    local s="$1"
-    s="${s//\\/\\\\}"
-    s="${s//\'/\'\"\'\"\' }"
-    s="${s% }"
-    printf "'%s'" "$s"
-}
-
-################################################################################
 # S6 + script injection block
 ################################################################################
-BLOCK_BEGIN="# --- BEGIN ADDON ENV (generated) ---"
-BLOCK_END="# --- END ADDON ENV (generated) ---"
-
 EXPORT_BLOCK="$(mktemp_safe)"
+EXPORT_BODY="$(mktemp_safe)"
 KV_FILE="$(mktemp_safe)"
-trap 'rm -f "$EXPORT_BLOCK" "$KV_FILE"' EXIT
-
-{
-    echo "$BLOCK_BEGIN"
-    echo "# Generated from $JSONSOURCE"
-    echo "$BLOCK_END"
-} > "$EXPORT_BLOCK"
-
-append_export() {
-    local k="$1" v="$2" q
-    q="$(shell_quote "$v")"
-
-    awk -v k="$k" -v q="$q" -v e="$BLOCK_END" '
-        $0==e { print "export " k "=" q }
-        { print }
-    ' "$EXPORT_BLOCK" > "$EXPORT_BLOCK.tmp"
-    mv "$EXPORT_BLOCK.tmp" "$EXPORT_BLOCK"
-}
+trap 'rm -f "$EXPORT_BLOCK" "$EXPORT_BODY" "$KV_FILE"' EXIT
 
 inject_block() {
     local f="$1" tmp
@@ -235,6 +307,8 @@ cp "$ENV_FILE" "$ETC_ENV_FILE"
 ################################################################################
 # Inject into scripts and shells (best-effort)
 ################################################################################
+compose_export_block
+
 for f in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run /etc/cont-init.d/*.sh /entrypoint.sh /etc/bash.bashrc "${GLOBAL_VAR_FILES:-}"; do
     [[ -f "$f" ]] && inject_block "$f"
 done
