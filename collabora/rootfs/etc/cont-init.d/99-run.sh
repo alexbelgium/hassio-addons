@@ -141,4 +141,9 @@ chown -R 1001 /etc/coolwsd
 chmod -R 755 /opt/cool/systemplate
 
 bashio::log.info "Starting Collabora Online..."
-su -p -s /bin/bash "$(getent passwd 1001 | cut -d: -f1)" -c "/start-collabora-online.sh"
+# coolwsd refuses to run as root. The official image used to ship
+# /start-collabora-online.sh, which is gone since it became distroless, so the
+# add-on provides its own launcher. It reads everything from the environment,
+# which su -p preserves.
+export HOME=/opt/cool
+su -p -s /bin/bash cool -c /usr/local/bin/collabora-run.sh

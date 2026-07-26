@@ -16,6 +16,23 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
+
+###############################################################################
+# Get Collabora Online from the official image
+#
+# Upstream rebuilt collabora/code as a Nix-based distroless image: /bin and
+# /sbin are empty, so it can no longer be used as BUILD_FROM (s6, bashio and
+# every RUN need a shell). Only the Collabora payload is taken from it, on top
+# of a normal Debian base.
+#
+# Copy only what belongs to Collabora. Do NOT copy /etc or /nix: in that image
+# /etc/resolv.conf, /etc/hosts, /etc/passwd, /etc/group and /etc/nsswitch.conf
+# are symlinks into /nix/store, and importing them breaks DNS resolution and
+# wipes the base image users.
+###############################################################################
+FROM collabora/code:latest AS collabora
+
+# hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
 ##################
@@ -55,11 +72,45 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES=""
+# coolwsd itself only needs glibc/libstdc++ (max GLIBCXX_3.4.22); the office
+# engine bundles its own cairo, fontconfig, curl, icu and fonts under
+# /opt/collaboraoffice/program. openssl is used to generate the self-signed
+# certificate when the ssl option is off, cpio and findutils by the jail setup.
+ENV PACKAGES="ca-certificates cpio findutils fontconfig libcap2-bin libstdc++6 openssl tzdata"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" || true && rm /ha_autoapps.sh
+
+# Collabora Online payload, taken from the official image. COPY --from keeps the
+# numeric ownership, so /opt/cool and /etc/coolwsd arrive already owned by 1001.
+COPY --from=collabora /usr/bin/coolwsd /usr/bin/coolforkit-caps /usr/bin/coolforkit-ns /usr/bin/coolmount /usr/bin/
+COPY --from=collabora /usr/share/coolwsd /usr/share/coolwsd
+COPY --from=collabora /etc/coolwsd /etc/coolwsd
+COPY --from=collabora /opt/collaboraoffice /opt/collaboraoffice
+COPY --from=collabora /opt/cool /opt/cool
+
+# Recreate the runtime user the official image declares (uid/gid 1001), and the
+# per-container state upstream sets up in its own final build stage.
+RUN \
+    groupadd --system --gid 1001 cool && \
+    useradd --system --uid 1001 --gid 1001 --home-dir /opt/cool --shell /usr/sbin/nologin cool && \
+    mkdir -p /opt/cool/child-roots /opt/cool/cache && \
+    chown -R 1001:1001 /opt/cool /etc/coolwsd && \
+    chmod 640 /etc/coolwsd/coolwsd.xml && \
+    touch /var/log/coolwsd.log && \
+    chown 1001:1001 /var/log/coolwsd.log && \
+    # the WOPI proof key must be unique per container, not baked into the image
+    rm -rf /etc/coolwsd/proof_key* && \
+    fc-cache /opt/collaboraoffice/share/fonts/truetype > /dev/null 2>&1 || true
+
+# Fail the build rather than ship an image that cannot start: ha_autoapps.sh is
+# invoked with "|| true", and coolwsd comes from an image built against a
+# different libc, so both are worth proving here.
+RUN \
+    command -v openssl > /dev/null && \
+    command -v su > /dev/null && \
+    /usr/bin/coolwsd --version
 
 ################
 # 4 Entrypoint #

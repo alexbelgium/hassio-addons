@@ -1,5 +1,6 @@
  
 ## 26.04.2.4.1 (2026-07-26)
+- Rebuild on a Debian base: upstream turned collabora/code into a distroless image with no shell, which broke the addon build entirely. Collabora is now copied from the official image onto ghcr.io/hassio-addons/debian-base, and the addon ships its own launcher in place of the removed /start-collabora-online.sh
 - Fix version numbering: releases on CollaboraOnline/online are now Helm charts only, which had renumbered the addon from 25.4.9.2 down to 1.3.0 and hid updates. The version is tracked from the collabora/code Docker Hub tags again
 - `server_name` is now passed to Collabora, fixing `Your browser has been unable to connect to the Collabora server` behind a reverse proxy
 - `domain1` was never passed to Collabora at all (the script read a `domain` option that does not exist, and recent Collabora releases dropped that variable). It is now deprecated and applied as `server_name`
