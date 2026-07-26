@@ -52,7 +52,7 @@ elif bashio::config.has_value 'domain1'; then
     export server_name
     bashio::log.warning "domain1 is deprecated, please use server_name instead"
 fi
-if bashio::config.has_value 'server_name' || bashio::config.has_value 'domain1'; then
+if [ -n "${server_name:-}" ]; then
     bashio::log.info "Collabora public hostname (server_name): ${server_name}"
 fi
 
