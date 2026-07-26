@@ -96,8 +96,8 @@ COPY --from=collabora /opt/cool /opt/cool
 # Recreate the runtime user the official image declares (uid/gid 1001), and the
 # per-container state upstream sets up in its own final build stage.
 RUN \
-    groupadd --system --gid 1001 cool && \
-    useradd --system --uid 1001 --gid 1001 --home-dir /opt/cool --shell /usr/sbin/nologin cool && \
+    groupadd --gid 1001 cool && \
+    useradd --uid 1001 --gid 1001 --no-create-home --home-dir /opt/cool --shell /usr/sbin/nologin cool && \
     mkdir -p /opt/cool/child-roots /opt/cool/cache && \
     chown -R 1001:1001 /opt/cool /etc/coolwsd && \
     chmod 640 /etc/coolwsd/coolwsd.xml && \
@@ -109,11 +109,11 @@ RUN \
 
 # Fail the build rather than ship an image that cannot start: ha_autoapps.sh is
 # invoked with "|| true", and coolwsd comes from an image built against a
-# different libc, so both are worth proving here.
+# different libc, so both are worth proving here. coolwsd refuses to run as
+# root, so this runs it exactly the way 99-run.sh does.
 RUN \
     command -v openssl > /dev/null && \
-    command -v su > /dev/null && \
-    /usr/bin/coolwsd --version
+    su -s /bin/bash cool -c "/usr/bin/coolwsd --version"
 
 ################
 # 4 Entrypoint #
