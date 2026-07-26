@@ -18,22 +18,25 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 
 ###############################################################################
-# Get Collabora Online from the official image
+# Get Collabora Online from the official image (BUILD_FROM, see build.json)
 #
 # Upstream rebuilt collabora/code as a Nix-based distroless image: /bin and
-# /sbin are empty, so it can no longer be used as BUILD_FROM (s6, bashio and
-# every RUN need a shell). Only the Collabora payload is taken from it, on top
-# of a normal Debian base.
+# /sbin are empty, so it can no longer be the base of the add-on itself, as s6,
+# bashio and every RUN need a shell. It stays the tracked upstream image, and
+# only the Collabora payload is copied out of it onto a Debian runtime.
 #
 # Copy only what belongs to Collabora. Do NOT copy /etc or /nix: in that image
 # /etc/resolv.conf, /etc/hosts, /etc/passwd, /etc/group and /etc/nsswitch.conf
 # are symlinks into /nix/store, and importing them breaks DNS resolution and
 # wipes the base image users.
 ###############################################################################
-FROM collabora/code:latest AS collabora
-
 # hadolint ignore=DL3006
-FROM ${BUILD_FROM}
+FROM ${BUILD_FROM} AS collabora
+
+###############################################################################
+# Build the actual add-on on a base that has a shell
+###############################################################################
+FROM ghcr.io/hassio-addons/debian-base:9.3.0
 
 ##################
 # 2 Modify Image #
