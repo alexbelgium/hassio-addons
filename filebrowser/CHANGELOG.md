@@ -1,3 +1,5 @@
+## 2.63.18.5 (26-07-2026)
+- Fixed healthcheck log spam when ssl is enabled (#2881)
 ## 2.63.18.4 (22-07-2026)
 - Minor bugs fixed
 ## 2.63.18.3 (22-07-2026)
