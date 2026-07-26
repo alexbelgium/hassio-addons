@@ -2,9 +2,58 @@
 # shellcheck shell=bash
 set -e
 
-if bashio::config.has_value 'domain'; then
-    domain="$(bashio::config 'domain')"
-    export domain
+# coolwsd matches storage.wopi.alias_groups host/alias entries as regular
+# expressions, so every dot has to be escaped with a single backslash. The value
+# is typed by hand in the add-on options, where it is easy to end up with no
+# escaping at all or with doubled backslashes, and a wrong pattern silently
+# never matches: Collabora then refuses the Nextcloud host. Accept all three
+# spellings and always hand coolwsd the canonical single-escaped form.
+REGEX_METACHARACTERS='][(){}|*+?^$'
+normalise_wopi_host() {
+    local value="$1"
+
+    # A value containing regex metacharacters was written by someone who knows
+    # what they are doing, leave it exactly as-is.
+    if [[ "$value" == *["$REGEX_METACHARACTERS"]* ]]; then
+        printf '%s' "$value"
+        return
+    fi
+
+    value="${value//\\/}"   # drop whatever escaping was typed, at any depth
+    value="${value//./\\.}" # re-escape every dot exactly once
+    printf '%s' "$value"
+}
+
+# server_name is a literal "hostname[:port]", not a regex and not a URL
+normalise_server_name() {
+    local value="$1"
+    value="${value//\\/}"  # never escaped, drop backslashes if any were copied over
+    value="${value#*://}"  # strip the scheme
+    value="${value%%/*}"   # strip any path
+    printf '%s' "$value"
+}
+
+for index in 1 2 3; do
+    if bashio::config.has_value "aliasgroup${index}"; then
+        aliasgroup="$(normalise_wopi_host "$(bashio::config "aliasgroup${index}")")"
+        export "aliasgroup${index}=${aliasgroup}"
+        bashio::log.info "Allowed Nextcloud host aliasgroup${index}: ${aliasgroup}"
+    fi
+done
+
+if bashio::config.has_value 'server_name'; then
+    server_name="$(normalise_server_name "$(bashio::config 'server_name')")"
+    export server_name
+elif bashio::config.has_value 'domain1'; then
+    # domain1 predates server_name and was documented as "the Collabora external
+    # domain", which is what server_name means to coolwsd. It was never actually
+    # passed to Collabora, so honour it here rather than keep ignoring it.
+    server_name="$(normalise_server_name "$(bashio::config 'domain1')")"
+    export server_name
+    bashio::log.warning "domain1 is deprecated, please use server_name instead"
+fi
+if bashio::config.has_value 'server_name' || bashio::config.has_value 'domain1'; then
+    bashio::log.info "Collabora public hostname (server_name): ${server_name}"
 fi
 
 if bashio::config.has_value 'username'; then
@@ -17,9 +66,9 @@ if bashio::config.has_value 'password'; then
     export password
 fi
 
-if bashio::config.has_value 'aliasgroup1'; then
-    aliasgroup1="$(bashio::config 'aliasgroup1')"
-    export aliasgroup1
+if bashio::config.has_value 'cert_domain'; then
+    cert_domain="$(bashio::config 'cert_domain')"
+    export cert_domain
 fi
 
 if bashio::config.has_value 'dictionaries'; then
@@ -45,16 +94,25 @@ if bashio::config.true 'ssl'; then
         bashio::log.error "Key file /ssl/${keyfile} not found"
         exit 1
     fi
-    cp -f /ssl/${keyfile} /etc/coolwsd/key.pem
-    cp -f /ssl/${certfile} /etc/coolwsd/cert.pem
-    cp -f /ssl/${certfile} /etc/coolwsd/ca-chain.cert.pem
+    cp -f "/ssl/${keyfile}" /etc/coolwsd/key.pem
+    cp -f "/ssl/${certfile}" /etc/coolwsd/cert.pem
+    cp -f "/ssl/${certfile}" /etc/coolwsd/ca-chain.cert.pem
     extra_params="${extra_params/--o:ssl.enable=false/}"
     extra_params="${extra_params} \
-         --o:ssl.enable=true 
+         --o:ssl.enable=true \
          --o:ssl.termination=false \
          --o:ssl.cert_file_path=/ssl/${certfile} \
          --o:ssl.key_file_path=/ssl/${keyfile} \
          --o:ssl.ca_file_path=/ssl/${certfile}"
+elif [[ "$extra_params" != *ssl.termination* ]]; then
+    # coolwsd defaults ssl.termination to false, so with ssl disabled it builds
+    # http:// and ws:// URLs even when the browser reached it over https through
+    # a reverse proxy, and the browser then refuses the connection.
+    if bashio::config.true 'ssl_termination'; then
+        extra_params="${extra_params} --o:ssl.termination=true"
+    elif ! bashio::config.has_value 'ssl_termination'; then
+        bashio::log.notice "If Collabora is reached over https through a reverse proxy, set ssl_termination to true"
+    fi
 fi
 
 export extra_params

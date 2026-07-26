@@ -15,7 +15,7 @@ options:
   env_vars: []
   aliasgroup1: ""
   certfile: fullchain.pem
-  domain1: ""
+  server_name: ""
   extra_params:
     --o:ssl.enable=false --o:user_interface.use_integration_theme=false
     --o:net.proto=IPv4
@@ -33,7 +33,9 @@ schema:
       value: str?
   TZ: str?
   aliasgroup1: str
-  cert_domain: bool?
+  aliasgroup2: str?
+  aliasgroup3: str?
+  cert_domain: str?
   certfile: str
   dictionaries: str?
   domain1: str?
@@ -42,8 +44,9 @@ schema:
   password: password
   server_name: str?
   ssl: bool
+  ssl_termination: bool?
   username: str
 slug: collabora
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.3.0"
+version: "26.04.2.4.1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:9980]/browser/dist/admin/admin.html"
