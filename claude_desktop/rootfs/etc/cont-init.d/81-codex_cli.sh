@@ -136,7 +136,7 @@ else
             && tar -xzf "$archive" -C "$codex_tmp" \
             && [ -f "$extracted" ] \
             && chmod 0755 "$extracted" \
-            && "$extracted" --version > /dev/null 2>&1 \
+            && run_as_runtime_user "$extracted" --version > /dev/null 2>&1 \
             && mv -f "$extracted" "$CODEX_REAL"; then
             printf '%s' "$CODEX_WANTED" > "$CODEX_STAMP"
             bashio::log.info "Codex CLI installed: $("$CODEX_REAL" --version 2> /dev/null || echo unknown)"
