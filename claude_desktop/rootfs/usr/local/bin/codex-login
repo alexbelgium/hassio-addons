@@ -1,18 +1,19 @@
 #!/usr/bin/with-contenv bashio
 # Activate a ChatGPT subscription on the Codex CLI from inside the add-on.
 #
-# The add-on ships no browser, so the normal `codex login` flow (which serves an OAuth callback
-# on localhost:1455 and expects a local browser) cannot complete here. `codex login --device-auth`
-# is the flow OpenAI documents for exactly this case: it prints a verification URL and a
-# short-lived one-time code, you approve them on any other device, and it polls until done.
-#
-# Run this from the desktop's xterm (openbox right-click menu), from a Claude Code Bash call, or
-# from the container console. The resulting credentials land in $HOME/.codex/auth.json, which is
-# persistent add-on storage, so the sign-in survives restarts and add-on updates.
+# The add-on ships no browser, so the normal `codex login` flow cannot complete here.
+# `codex login --device-auth` prints a verification URL and one-time code that can be
+# approved on another device. Credentials persist in the abc runtime user's home.
 # shellcheck shell=bash
 set -o pipefail
 
 CODEX_BIN="/data/codex/bin/codex"
+RUNTIME_HOME="$(getent passwd abc | cut -d: -f6)"
+if [ -z "$RUNTIME_HOME" ]; then
+    echo "codex-login: unable to resolve the abc runtime home" >&2
+    exit 1
+fi
+export HOME="$RUNTIME_HOME"
 
 if ! bashio::config.true 'install_codex_cli'; then
     echo "codex-login: the install_codex_cli add-on option is disabled" >&2
@@ -24,26 +25,23 @@ if [ ! -x "$CODEX_BIN" ]; then
     exit 1
 fi
 
-# Everything must run as the abc runtime user so ~/.codex/auth.json is not created root-owned —
-# the same failure mode 83-github_cli.sh documents for ~/.gitconfig, where a root-owned file
-# silently broke every later operation by the account that actually runs the tools.
+# Everything runs as abc so auth.json is readable by the same account that launches the MCP
+# server. Explicit HOME handling also makes container-console calls safe when the caller is root.
 if [ "$(id -u)" -eq 0 ]; then
-    exec s6-setuidgid abc env HOME="$HOME" "$0" "$@"
+    exec s6-setuidgid abc env HOME="$RUNTIME_HOME" "$0" "$@"
 fi
 
-# `codex login status` reports on stderr and exits 0 when authenticated, 1 otherwise. Branch on
-# the exit code, not the text: its "Not logged in" message also contains "logged in".
+# The managed Codex config forces `chatgpt` authentication and file credential storage. An
+# inherited API key is removed as defense in depth so this helper cannot activate API billing.
+unset OPENAI_API_KEY
+
+# Branch on the exit code, not the text: "Not logged in" also contains "logged in".
 if "$CODEX_BIN" login status; then
     exit 0
 fi
 
-# On stdout, not stderr: Codex prints the verification URL and code to stdout, and these lines
-# introduce them — keeping them on the same stream means a caller reading only stdout (or a
-# merged log) still gets a coherent message. Failures above stay on stderr.
-echo "codex-login: starting the ChatGPT device-code sign-in."
-echo "codex-login: open the URL below on any device (phone or computer) and enter the code."
+echo "codex-login: starting ChatGPT subscription device-code sign-in."
+echo "codex-login: open the URL below on any device and enter the displayed code."
 
-# Line-buffered so the verification URL and code are flushed while the command is still polling,
-# rather than being held until exit, when this runs without a TTY (a Claude Code Bash call, the
-# add-on log, or a redirect to a file). Verified: the code lands within a few seconds.
+# Line-buffered so the URL and code appear while Codex is still polling in non-TTY callers.
 exec stdbuf -oL -eL "$CODEX_BIN" login --device-auth "$@"
