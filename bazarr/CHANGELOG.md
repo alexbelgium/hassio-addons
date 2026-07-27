@@ -1,4 +1,8 @@
 
+## 1.6.0.2 (2026-07-27)
+
+- Fix base_url sed patterns rewriting *every* `base_url` key in Bazarr's config.yaml (radarr.base_url, sonarr.base_url, and any other configured integration), instead of only Bazarr's own under `general:`. This silently broke the Radarr/Sonarr connections inside Bazarr on every addon restart when ingress was enabled
+
 ## 1.6.0.1 (2026-07-27)
 
 - Fix ingress: nginx rewrote Bazarr's redirects into an absolute `http://<host>:8099/...` URL, which the browser blocked as mixed content when Home Assistant is served over HTTPS. Redirects now stay relative and point at the ingress path

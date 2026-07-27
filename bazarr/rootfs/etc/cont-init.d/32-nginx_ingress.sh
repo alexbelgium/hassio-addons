@@ -35,16 +35,20 @@ if [ -f "$CONFIG_LOCATION" ]; then
         ingress_noauth)
             bashio::log.green "Ingress is enabled, authentication is disabled"
             bashio::log.yellow "WARNING : Make sure that the port is not exposed externally by your router to avoid a security risk !"
-            # Set base_url (must start with / for Flask blueprint registration)
-            sed -i "s|  base_url:.*|  base_url: /$slug|" "$CONFIG_LOCATION"
+            # Set base_url (must start with / for Flask blueprint registration).
+            # Scoped to the general: block only -- config.yaml also carries a
+            # base_url under each configured *arr integration (radarr.base_url,
+            # sonarr.base_url, ...) and those must not be touched.
+            sed -i "/^general:/,/^[^ ]/{ s|  base_url:.*|  base_url: /$slug|; }" "$CONFIG_LOCATION"
             # Disable auth
             sed -i '/^auth:/,/^[^ ]/{ s/  type:.*/  type: null/ }' "$CONFIG_LOCATION"
             ;;
         # Ingress mode, with authentication
         ingress_auth)
             bashio::log.green "Ingress is enabled, and external authentication is enabled"
-            # Set base_url (must start with / for Flask blueprint registration)
-            sed -i "s|  base_url:.*|  base_url: /$slug|" "$CONFIG_LOCATION"
+            # Set base_url (must start with / for Flask blueprint registration).
+            # Scoped to the general: block only -- see note above.
+            sed -i "/^general:/,/^[^ ]/{ s|  base_url:.*|  base_url: /$slug|; }" "$CONFIG_LOCATION"
             # Enable Bazarr auth when leaving ingress_noauth
             sed -i '/^auth:/,/^[^ ]/{ s/  type:.*/  type: form/ }' "$CONFIG_LOCATION"
             ;;
@@ -52,7 +56,8 @@ if [ -f "$CONFIG_LOCATION" ]; then
         noingress_auth)
             bashio::log.green "Disabling ingress and enabling authentication"
             bashio::log.yellow "WARNING : Ingress is disabled so the app won't be available from HA itself !"
-            sed -i "s/  base_url:.*/  base_url: ''/" "$CONFIG_LOCATION"
+            # Scoped to the general: block only -- see note above.
+            sed -i "/^general:/,/^[^ ]/{ s/  base_url:.*/  base_url: ''/; }" "$CONFIG_LOCATION"
             # Enable Bazarr auth when leaving ingress_noauth
             sed -i '/^auth:/,/^[^ ]/{ s/  type:.*/  type: form/ }' "$CONFIG_LOCATION"
             ;;
