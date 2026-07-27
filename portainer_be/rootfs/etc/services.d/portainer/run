@@ -1,0 +1,107 @@
+#!/usr/bin/env bashio
+# shellcheck shell=bash
+set -e
+
+bashio::log.info "Starting Portainer..."
+
+##################
+# DEFINE OPTIONS #
+##################
+declare -a options
+options+=(--data /data)
+options+=(--bind 0.0.0.0:9000)
+#options+=(--templates /opt/portainer/templates.json)
+
+docker_socket="/var/run/docker.sock"
+if [[ ! -S "$docker_socket" ]]; then
+    fallback_socket="/run/docker.sock"
+    if [[ -S "$fallback_socket" ]]; then
+        docker_socket="$fallback_socket"
+        bashio::log.info "Docker socket not found at /var/run/docker.sock, using /run/docker.sock."
+    else
+        bashio::log.error "Docker socket not found at /var/run/docker.sock or /run/docker.sock."
+        exit 1
+    fi
+fi
+
+options+=(--host "unix://${docker_socket}")
+
+##############
+# SSL CONFIG #
+##############
+
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+    bashio::log.info "SSL enabled. If web UI doesn't work, disable SSL or check your certificate paths."
+    CERTFILE="$(bashio::config 'certfile')"
+    KEYFILE="$(bashio::config 'keyfile')"
+    options+=(--sslcert /ssl/"$CERTFILE")
+    options+=(--sslkey /ssl/"$KEYFILE")
+    bashio::log.info "... SSL activated."
+fi
+
+################
+# SET PASSWORD #
+################
+
+# Set up the initial password
+PASSWORD_FILE="/data/portainer_password"
+HIDDEN_FILE="/data/hidden"
+if ! bashio::config.has_value 'password'; then
+    PASSWORD="empty"
+else
+    PASSWORD="$(bashio::config 'password')"
+fi
+
+# Check current password
+CURRENTPASSWORD=""
+touch "$PASSWORD_FILE"
+CURRENTPASSWORD="$(cat "$PASSWORD_FILE")"
+
+# Reset password if not first run
+if bashio::fs.file_exists "$HIDDEN_FILE"; then
+    if [[ "$CURRENTPASSWORD" != "$PASSWORD" ]]; then
+        BACKUPLOCATION="/share/portainer_$(date +%m-%d-%Y)_$RANDOM.backup"
+        mv -f /data/portainer.db "$BACKUPLOCATION" || true
+        rm "$HIDDEN_FILE" || true
+        bashio::log.warning "... password changed, database reset. Previous version stored in $BACKUPLOCATION"
+    fi
+fi
+
+# Define option
+echo -n "$PASSWORD" > "$PASSWORD_FILE"
+if [[ "$PASSWORD" = "empty" ]]; then
+    bashio::log.info "... starting without predefined password."
+    bashio::log.warning "If this is your first boot, you have a 5 minutes time period to perform the initial set-up."
+    bashio::log.warning "If you don't do it, you would be faced with a 404 error and will need to restart the add-on to access the set-up page."
+else
+    options+=(--admin-password-file "$PASSWORD_FILE")
+    bashio::log.info "... password set according to add-on options."
+fi
+
+###################
+# HIDE CONTAINERS #
+###################
+
+# Hide Hassio containers by default, but only enforce on first run
+if ! bashio::fs.file_exists "$HIDDEN_FILE"; then
+    options+=(--hide-label io.hass.type=supervisor)
+    options+=(--hide-label io.hass.type=homeassistant)
+    options+=(--hide-label io.hass.type=base)
+    options+=(--hide-label io.hass.type=core)
+    # options+=(--hide-label io.hass.type=addon)
+    options+=(--hide-label io.hass.type=audio)
+    options+=(--hide-label io.hass.type=cli)
+    options+=(--hide-label io.hass.type=dns)
+    options+=(--hide-label io.hass.type=multicast)
+    options+=(--hide-label io.hass.type=observer)
+    bashio::log.info "... non-addon containers hidden."
+    touch "$HIDDEN_FILE"
+fi
+
+####################
+# LAUNCH PORTAINER #
+####################
+bashio::log.info "... launching Portainer."
+
+exec /opt/portainer/portainer "${options[@]}"
