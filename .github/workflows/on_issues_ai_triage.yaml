@@ -144,7 +144,7 @@ jobs:
         id: classify
         if: github.event_name != 'issue_comment' || steps.claim.outputs.go == 'true'
         continue-on-error: true
-        uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
+        uses: anthropics/claude-code-action@be7b93b1907a4abad570368f3c74b6fe3807510b  # v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # Without this the action falls back to the OIDC -> Claude App token
