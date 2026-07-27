@@ -139,7 +139,7 @@ if [[ "${1:-}" == "--self-test" ]]; then
         printf 'DOTENVTEST_%s=%s\n' \
             "$self_test_i" "$(dotenv_quote "${self_test_values[$self_test_i]}")"
     done > "$self_test_env"
-    if ! bash -n "$self_test_env" 2>/dev/null; then
+    if ! bash -n "$self_test_env"; then
         # An unescaped backtick or quote leaves the file unparseable, which would
         # abort the sourcing shell instead of just yielding a wrong value.
         echo "FAIL (dotenv): generated env file is not valid shell"
