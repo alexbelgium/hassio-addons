@@ -7,6 +7,11 @@ set -o pipefail
 export NO_COLOR=1
 export PATH="/lsiopy/bin:/usr/local/bin:/usr/bin:/bin:${PATH}"
 
+RUNTIME_HOME="$(getent passwd abc | cut -d: -f6)"
+if [ -z "$RUNTIME_HOME" ]; then
+    RUNTIME_HOME="/data/data"
+fi
+
 section() {
     printf '\n=== %s ===\n' "$1"
 }
@@ -29,6 +34,7 @@ done
 section "Runtime identity"
 printf '%-30s %s\n' "configured PUID:PGID" "$(bashio::config 'PUID'):$(bashio::config 'PGID')"
 printf '%-30s %s\n' "effective abc UID:GID" "$(id -u abc):$(id -g abc)"
+printf '%-30s %s\n' "abc runtime home" "$RUNTIME_HOME"
 printf '%-30s %s\n' "current process UID:GID" "$(id -u):$(id -g)"
 if [ "$(bashio::config 'permission_mode')" = "bypass" ]; then
     if [ "$(id -u abc)" -eq 0 ]; then
@@ -39,11 +45,12 @@ if [ "$(bashio::config 'permission_mode')" = "bypass" ]; then
 fi
 
 section "Claude Code permission state"
-python3 - <<'PY'
+RUNTIME_HOME="$RUNTIME_HOME" python3 - <<'PY'
 import json
+import os
 from pathlib import Path
 
-path = Path.home() / ".claude/settings.json"
+path = Path(os.environ["RUNTIME_HOME"]) / ".claude/settings.json"
 try:
     data = json.loads(path.read_text())
 except FileNotFoundError:
@@ -59,13 +66,15 @@ else:
 PY
 
 section "MCP registrations (environment values redacted)"
-python3 - <<'PY'
+RUNTIME_HOME="$RUNTIME_HOME" python3 - <<'PY'
 import json
+import os
 from pathlib import Path
 
+home = Path(os.environ["RUNTIME_HOME"])
 paths = [
-    Path.home() / ".claude.json",
-    Path.home() / ".config/Claude/claude_desktop_config.json",
+    home / ".claude.json",
+    home / ".config/Claude/claude_desktop_config.json",
 ]
 for path in paths:
     print(path)
@@ -95,11 +104,12 @@ for path in paths:
 PY
 
 section "Claude Code hooks"
-python3 - <<'PY'
+RUNTIME_HOME="$RUNTIME_HOME" python3 - <<'PY'
 import json
+import os
 from pathlib import Path
 
-path = Path.home() / ".claude/settings.json"
+path = Path(os.environ["RUNTIME_HOME"]) / ".claude/settings.json"
 try:
     data = json.loads(path.read_text())
 except FileNotFoundError:
@@ -148,18 +158,17 @@ section "TokenSave"
 if bashio::config.true 'install_tokensave'; then
     tokensave doctor --agent claude || true
     tokensave gain --all --range 30d || true
-    # Capture before looping — see the matching comment in 82-claude_tools.sh: feeding the
-    # loop straight from `< <(bashio::config ...)` yields an empty list under errexit.
+    # Capture before looping — see the matching comment in 82-claude_tools.sh.
     TOKENSAVE_PROJECT_PATHS="$(bashio::config 'tokensave_project_paths')"
     while IFS= read -r configured_path || [ -n "$configured_path" ]; do
         if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
             continue
         fi
-        repo_root="$(s6-setuidgid abc env HOME="$HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
+        repo_root="$(s6-setuidgid abc env HOME="$RUNTIME_HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
         if [ -z "$repo_root" ]; then
             echo "${configured_path}: not a Git repository"
         elif [ -f "$repo_root/.tokensave/tokensave.db" ]; then
-            s6-setuidgid abc env HOME="$HOME" tokensave status "$repo_root" --short || true
+            s6-setuidgid abc env HOME="$RUNTIME_HOME" tokensave status "$repo_root" --short || true
         else
             echo "${repo_root}: NOT INITIALIZED"
         fi
@@ -174,9 +183,10 @@ if bashio::config.true 'install_codex_cli'; then
     if [ -x "$codex_bin" ]; then
         printf '%-30s %s\n' "installed" "$("$codex_bin" --version 2> /dev/null || echo 'FAILED TO RUN')"
         printf '%-30s %s\n' "installed version stamp" "$(cat /data/codex/bin/.version 2> /dev/null || echo 'MISSING')"
-        printf '%-30s %s\n' "pinned by image" "${CODEX_VERSION:-<unset>}"
+        printf '%-30s %s\n' "release policy" "latest stable, SHA-256 verified"
+        printf '%-30s %s\n' "authentication policy" "ChatGPT subscription only"
         # login status prints the account/auth mode on stderr, never the token itself.
-        s6-setuidgid abc env HOME="$HOME" "$codex_bin" login status 2>&1 \
+        s6-setuidgid abc env -u OPENAI_API_KEY HOME="$RUNTIME_HOME" "$codex_bin" login status 2>&1 \
             || echo "run 'codex-login' to activate a ChatGPT subscription"
     else
         echo "enabled but ${codex_bin} is MISSING (download failed or add-on not yet restarted)"
