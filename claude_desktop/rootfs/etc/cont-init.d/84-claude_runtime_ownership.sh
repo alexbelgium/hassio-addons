@@ -2,14 +2,22 @@
 # shellcheck shell=bash
 set -e
 
-# Earlier configuration scripts intentionally run as root. 20-folders.sh remapped abc to the
-# effective runtime identity (never root in bypass mode, where Claude Code refuses to run as
-# root). Reconcile ownership with that identity after all Claude configuration writes are
-# complete, as a safety net in case any intermediate step re-owned a managed path.
+# Earlier configuration scripts intentionally run as root. Reconcile the paths written by those
+# scripts with the final abc runtime identity and its configured persistent home.
 RUNTIME_UID="$(id -u abc)"
 RUNTIME_GID="$(id -g abc)"
+RUNTIME_HOME="$(getent passwd abc | cut -d: -f6)"
 
-for managed_path in "$HOME/.claude" "$HOME/.claude.json" "$HOME/.config/Claude"; do
+if [ -z "$RUNTIME_HOME" ]; then
+    bashio::log.warning "Unable to resolve the abc runtime home; skipping runtime ownership reconciliation"
+    exit 0
+fi
+
+for managed_path in \
+    "$RUNTIME_HOME/.claude" \
+    "$RUNTIME_HOME/.claude.json" \
+    "$RUNTIME_HOME/.config/Claude" \
+    "$RUNTIME_HOME/.codex"; do
     if [ -e "$managed_path" ]; then
         chown -R -- "${RUNTIME_UID}:${RUNTIME_GID}" "$managed_path" \
             || bashio::log.warning "Unable to set effective runtime ownership on $managed_path"

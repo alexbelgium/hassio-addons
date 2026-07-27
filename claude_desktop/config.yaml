@@ -59,6 +59,8 @@ options:
   headroom_auto_compress: true
   headroom_wrap_claude_code: true
   install_caveman: false
+  install_codex_cli: false
+  codex_sandbox_mode: workspace-write
   install_github_cli: true
   install_headroom: true
   install_rtk: true
@@ -107,6 +109,8 @@ schema:
   headroom_auto_compress: bool?
   headroom_wrap_claude_code: bool
   install_caveman: bool
+  install_codex_cli: bool
+  codex_sandbox_mode: list(read-only|workspace-write|danger-full-access)
   install_github_cli: bool
   install_headroom: bool
   install_rtk: bool
@@ -118,5 +122,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.35"
+version: "1.36"
 video: true

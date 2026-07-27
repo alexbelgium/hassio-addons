@@ -293,6 +293,20 @@ if $TOKENSAVE_ENABLED; then
     done <<< "$TOKENSAVE_PROJECT_PATHS"
 fi
 
+# Codex CLI is installed by 81-codex_cli.sh into /data/codex/bin — deliberately outside $HOME,
+# because is_managed() below treats any command under $HOME as user-installed.
+CODEX_BIN="/data/codex/bin/codex"
+CODEX_ENABLED=false
+CODEX_SANDBOX_MODE="$(bashio::config 'codex_sandbox_mode' 'workspace-write')"
+if bashio::config.true 'install_codex_cli'; then
+    if [ -x "$CODEX_BIN" ]; then
+        CODEX_ENABLED=true
+        bashio::log.info "codex $("$CODEX_BIN" --version 2> /dev/null || true) available; registering the codex MCP server (sandbox: ${CODEX_SANDBOX_MODE})"
+    else
+        bashio::log.warning "codex is not available"
+    fi
+fi
+
 HA_MCP_ENABLED=false
 HA_MCP_URL=""
 HA_MCP_TOKEN=""
@@ -314,6 +328,7 @@ fi
 HEADROOM_ENABLED="$HEADROOM_ENABLED" HEADROOM_BIN="$(command -v headroom || echo headroom)" \
     HEADROOM_HF_HOME="${HOME}/.headroom/hf" \
     TOKENSAVE_ENABLED="$TOKENSAVE_ENABLED" TOKENSAVE_BIN="$(command -v tokensave || echo tokensave)" \
+    CODEX_ENABLED="$CODEX_ENABLED" CODEX_BIN="$CODEX_BIN" CODEX_SANDBOX_MODE="$CODEX_SANDBOX_MODE" \
     HA_MCP_ENABLED="$HA_MCP_ENABLED" HA_MCP_URL="$HA_MCP_URL" HA_MCP_TOKEN="$HA_MCP_TOKEN" \
     MCP_PROXY_BIN="$(command -v mcp-proxy || echo mcp-proxy)" \
     CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" CLAUDE_CODE_CONFIG="$CLAUDE_CODE_CONFIG" \
@@ -326,6 +341,7 @@ MANAGED_BASENAMES = {
     "headroom": "headroom",
     "tokensave": "tokensave",
     "homeassistant": "mcp-proxy",
+    "codex": "codex",
 }
 
 desired = {}
@@ -341,6 +357,25 @@ if os.environ["HEADROOM_ENABLED"] == "true":
     }
 if os.environ["TOKENSAVE_ENABLED"] == "true":
     desired["tokensave"] = {"command": os.environ["TOKENSAVE_BIN"], "args": ["serve"]}
+if os.environ["CODEX_ENABLED"] == "true":
+    # `codex mcp-server` exposes Codex itself as an stdio MCP server (tools: codex, codex-reply),
+    # which is what lets a Claude session hand a task to ChatGPT Codex. The sandbox/approval
+    # policy is pinned with root-level `-c` overrides, which Codex forwards to the MCP server;
+    # they must precede the subcommand. approval_policy is always "never" because an MCP-driven
+    # run has nobody to answer a prompt. The sandbox defaults to workspace-write; users can opt
+    # into danger-full-access explicitly if the nested sandbox is unavailable in their container.
+    # 81-codex_cli.sh writes the same values into ~/.codex/config.toml so plain terminal `codex`
+    # runs behave identically.
+    desired["codex"] = {
+        "command": os.environ["CODEX_BIN"],
+        "args": [
+            "-c",
+            f'sandbox_mode="{os.environ["CODEX_SANDBOX_MODE"]}"',
+            "-c",
+            'approval_policy="never"',
+            "mcp-server",
+        ],
+    }
 if os.environ["HA_MCP_ENABLED"] == "true":
     # Home Assistant's MCP Server integration speaks stateless Streamable HTTP on /api/mcp;
     # mcp-proxy defaults to SSE, so the transport flags are required.
@@ -529,6 +564,32 @@ any state-changing `call`; after writing, read the object back and reload if nee
 MD
 else
     manage_claude_md_block ha-api-helper remove
+fi
+
+# Registering the MCP server is not enough on its own: without guidance the model rarely reaches
+# for a second agent, the same gap the Headroom block above exists to close.
+if $CODEX_ENABLED; then
+    manage_claude_md_block codex add <<'MD'
+## Delegating to ChatGPT Codex
+
+The `codex` MCP server runs OpenAI's Codex agent locally, signed in with the user's ChatGPT
+subscription. It is a genuinely independent second agent — a different model family, reading the
+files itself — not a search tool. It is slow and costs the user's ChatGPT quota, so use it when a
+second opinion is worth minutes, not for routine lookups.
+
+Good uses: an independent review of a design or a risky change before it lands; a second
+diagnosis of a bug you have a theory about but cannot confirm; a competing implementation of a
+self-contained piece you can then compare against your own.
+
+Call `mcp__codex__codex` with `prompt` and always set `cwd` to the repository being discussed —
+Codex reads the files itself, so it needs the right working directory and enough context in the
+prompt to act without seeing this conversation. Continue an exchange with
+`mcp__codex__codex-reply` (note the hyphen) using the `threadId` it returned, rather than
+starting a fresh `codex` call. Treat its answers as a peer's opinion: verify claims about this
+codebase before acting on them.
+MD
+else
+    manage_claude_md_block codex remove
 fi
 
 if bashio::config.true 'install_rtk'; then

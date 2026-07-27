@@ -1,0 +1,48 @@
+#!/usr/bin/with-contenv bashio
+# Activate a ChatGPT subscription on the Codex CLI from inside the add-on.
+#
+# The add-on ships no browser, so the normal `codex login` flow cannot complete here.
+# `codex login --device-auth` prints a verification URL and one-time code that can be
+# approved on another device. Credentials persist in the abc runtime user's home.
+# shellcheck shell=bash
+set -o pipefail
+
+CODEX_BIN="/data/codex/bin/codex"
+RUNTIME_HOME="$(getent passwd abc | cut -d: -f6)"
+if [ -z "$RUNTIME_HOME" ]; then
+    echo "codex-login: unable to resolve the abc runtime home" >&2
+    exit 1
+fi
+export HOME="$RUNTIME_HOME"
+export CODEX_HOME="$RUNTIME_HOME/.codex"
+
+if ! bashio::config.true 'install_codex_cli'; then
+    echo "codex-login: the install_codex_cli add-on option is disabled" >&2
+    exit 1
+fi
+
+if [ ! -x "$CODEX_BIN" ]; then
+    echo "codex-login: ${CODEX_BIN} is not installed; enable install_codex_cli and restart the add-on" >&2
+    exit 1
+fi
+
+# Everything runs as abc so auth.json is readable by the same account that launches the MCP
+# server. Explicit HOME handling also makes container-console calls safe when the caller is root.
+if [ "$(id -u)" -eq 0 ]; then
+    exec s6-setuidgid abc env -u OPENAI_API_KEY HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" "$0" "$@"
+fi
+
+# The managed Codex config forces `chatgpt` authentication and file credential storage. An
+# inherited API key is removed as defense in depth so this helper cannot activate API billing.
+unset OPENAI_API_KEY
+
+# Branch on the exit code, not the text: "Not logged in" also contains "logged in".
+if "$CODEX_BIN" login status; then
+    exit 0
+fi
+
+echo "codex-login: starting ChatGPT subscription device-code sign-in."
+echo "codex-login: open the URL below on any device and enter the displayed code."
+
+# Line-buffered so the URL and code appear while Codex is still polling in non-TTY callers.
+exec stdbuf -oL -eL "$CODEX_BIN" login --device-auth "$@"

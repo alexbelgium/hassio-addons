@@ -1,18 +1,23 @@
 #!/usr/bin/with-contenv bashio
 # Diagnose installation, registration, routing, indexing, permissions, and recorded savings without
-# printing MCP environment values (which may contain the Home Assistant access token).
+# printing MCP environment values or authentication material.
 # shellcheck shell=bash
 set +e
 set -o pipefail
 export NO_COLOR=1
 export PATH="/lsiopy/bin:/usr/local/bin:/usr/bin:/bin:${PATH}"
 
+RUNTIME_HOME="$(getent passwd abc | cut -d: -f6)"
+if [ -z "$RUNTIME_HOME" ]; then
+    RUNTIME_HOME="/data/data"
+fi
+
 section() {
     printf '\n=== %s ===\n' "$1"
 }
 
 section "Installed binaries"
-for tool in claude claude-desktop headroom rtk tokensave git gh rg jq shellcheck yamllint hadolint actionlint; do
+for tool in claude claude-desktop headroom rtk tokensave codex git gh rg jq shellcheck yamllint hadolint actionlint; do
     resolved="$(command -v "$tool" 2> /dev/null || true)"
     if [ -n "$resolved" ]; then
         printf '%-16s %s\n' "$tool" "$resolved"
@@ -22,13 +27,14 @@ for tool in claude claude-desktop headroom rtk tokensave git gh rg jq shellcheck
 done
 
 section "Configured switches"
-for option in permission_mode install_headroom headroom_wrap_claude_code expose_headroom_dashboard install_rtk install_tokensave install_caveman enable_tools_health_report; do
+for option in permission_mode install_headroom headroom_wrap_claude_code expose_headroom_dashboard install_rtk install_tokensave install_codex_cli codex_sandbox_mode install_caveman enable_tools_health_report; do
     printf '%-30s %s\n' "$option" "$(bashio::config "$option")"
 done
 
 section "Runtime identity"
 printf '%-30s %s\n' "configured PUID:PGID" "$(bashio::config 'PUID'):$(bashio::config 'PGID')"
 printf '%-30s %s\n' "effective abc UID:GID" "$(id -u abc):$(id -g abc)"
+printf '%-30s %s\n' "abc runtime home" "$RUNTIME_HOME"
 printf '%-30s %s\n' "current process UID:GID" "$(id -u):$(id -g)"
 if [ "$(bashio::config 'permission_mode')" = "bypass" ]; then
     if [ "$(id -u abc)" -eq 0 ]; then
@@ -39,11 +45,12 @@ if [ "$(bashio::config 'permission_mode')" = "bypass" ]; then
 fi
 
 section "Claude Code permission state"
-python3 - <<'PY'
+RUNTIME_HOME="$RUNTIME_HOME" python3 - <<'PY'
 import json
+import os
 from pathlib import Path
 
-path = Path.home() / ".claude/settings.json"
+path = Path(os.environ["RUNTIME_HOME"]) / ".claude/settings.json"
 try:
     data = json.loads(path.read_text())
 except FileNotFoundError:
@@ -59,13 +66,15 @@ else:
 PY
 
 section "MCP registrations (environment values redacted)"
-python3 - <<'PY'
+RUNTIME_HOME="$RUNTIME_HOME" python3 - <<'PY'
 import json
+import os
 from pathlib import Path
 
+home = Path(os.environ["RUNTIME_HOME"])
 paths = [
-    Path.home() / ".claude.json",
-    Path.home() / ".config/Claude/claude_desktop_config.json",
+    home / ".claude.json",
+    home / ".config/Claude/claude_desktop_config.json",
 ]
 for path in paths:
     print(path)
@@ -95,11 +104,12 @@ for path in paths:
 PY
 
 section "Claude Code hooks"
-python3 - <<'PY'
+RUNTIME_HOME="$RUNTIME_HOME" python3 - <<'PY'
 import json
+import os
 from pathlib import Path
 
-path = Path.home() / ".claude/settings.json"
+path = Path(os.environ["RUNTIME_HOME"]) / ".claude/settings.json"
 try:
     data = json.loads(path.read_text())
 except FileNotFoundError:
@@ -148,22 +158,60 @@ section "TokenSave"
 if bashio::config.true 'install_tokensave'; then
     tokensave doctor --agent claude || true
     tokensave gain --all --range 30d || true
-    # Capture before looping — see the matching comment in 82-claude_tools.sh: feeding the
-    # loop straight from `< <(bashio::config ...)` yields an empty list under errexit.
+    # Capture before looping — see the matching comment in 82-claude_tools.sh.
     TOKENSAVE_PROJECT_PATHS="$(bashio::config 'tokensave_project_paths')"
     while IFS= read -r configured_path || [ -n "$configured_path" ]; do
         if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
             continue
         fi
-        repo_root="$(s6-setuidgid abc env HOME="$HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
+        repo_root="$(s6-setuidgid abc env HOME="$RUNTIME_HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
         if [ -z "$repo_root" ]; then
             echo "${configured_path}: not a Git repository"
         elif [ -f "$repo_root/.tokensave/tokensave.db" ]; then
-            s6-setuidgid abc env HOME="$HOME" tokensave status "$repo_root" --short || true
+            s6-setuidgid abc env HOME="$RUNTIME_HOME" tokensave status "$repo_root" --short || true
         else
             echo "${repo_root}: NOT INITIALIZED"
         fi
     done <<< "$TOKENSAVE_PROJECT_PATHS"
+else
+    echo "disabled"
+fi
+
+section "Codex"
+if bashio::config.true 'install_codex_cli'; then
+    codex_bin="/data/codex/bin/codex"
+    if [ -x "$codex_bin" ]; then
+        printf '%-30s %s\n' "installed" "$("$codex_bin" --version 2> /dev/null || echo 'FAILED TO RUN')"
+        printf '%-30s %s\n' "installed version stamp" "$(cat /data/codex/bin/.version 2> /dev/null || echo 'MISSING')"
+        printf '%-30s %s\n' "release policy" "latest stable, SHA-256 verified"
+        printf '%-30s %s\n' "authentication policy" "ChatGPT subscription only"
+
+        # Never forward raw `login status` output: non-ChatGPT modes can include masked secret
+        # fragments. Only print explicitly allow-listed states.
+        codex_status="$(
+            s6-setuidgid abc env -u OPENAI_API_KEY \
+                HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" \
+                "$codex_bin" login status 2>&1
+        )"
+        codex_status_rc=$?
+        case "$codex_status" in
+            *"Logged in using ChatGPT"*)
+                echo "Logged in using ChatGPT"
+                ;;
+            *"Not logged in"*)
+                echo "Not logged in; run 'codex-login' to activate a ChatGPT subscription"
+                ;;
+            *)
+                if [ "$codex_status_rc" -eq 0 ]; then
+                    echo "Authenticated with a non-ChatGPT method; run 'codex-login' to enforce subscription authentication"
+                else
+                    echo "Unable to determine Codex login status safely; run 'codex-login'"
+                fi
+                ;;
+        esac
+    else
+        echo "enabled but ${codex_bin} is MISSING (download failed or add-on not yet restarted)"
+    fi
 else
     echo "disabled"
 fi

@@ -94,7 +94,7 @@ RUN curl -fsSL --retry 3 --retry-delay 2 \
 # cannot alter executables elsewhere in the image.
 COPY rootfs/ /
 RUN find /etc/cont-init.d /etc/s6-overlay /defaults /usr/local/bin -type f \
-        \( -name "*.sh" -o -name "run" -o -name "finish" -o -name "ha-cli" \) -print -exec chmod +x {} \; && \
+        \( -name "*.sh" -o -name "run" -o -name "finish" -o -name "ha-cli" -o -name "codex-login" \) -print -exec chmod +x {} \; && \
     chmod +x /usr/local/bin/claude
 
 # Uses /bin for compatibility purposes
