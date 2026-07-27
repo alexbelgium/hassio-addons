@@ -108,7 +108,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `tokensave_project_paths` | `[]` | Explicit absolute Git repository paths to initialize or sync at startup. |
 | `install_caveman` | `false` | Install the third-party Caveman Claude Code plugin at startup. |
 | `install_codex_cli` | `false` | Install the latest stable OpenAI Codex CLI at startup and register its native MCP server so Claude can delegate work to ChatGPT Codex. |
-| `codex_sandbox_mode` | `danger-full-access` | Filesystem scope Codex runs with: `read-only`, `workspace-write`, or `danger-full-access`. |
+| `codex_sandbox_mode` | `workspace-write` | Filesystem scope Codex runs with: `read-only`, `workspace-write`, or `danger-full-access`. |
 | `enable_tools_health_report` | `true` | Write independent Headroom, RTK, and TokenSave gains to the add-on log hourly. |
 | `install_github_cli` | `true` | Enable setup checks for the baked-in `git` and `gh` commands. |
 | `github_token` | | Optional GitHub token used to authenticate `gh` and Git operations. |
@@ -237,9 +237,10 @@ forced_login_method = "chatgpt"
 cli_auth_credentials_store = "file"
 ```
 
-The same values are maintained in `~/.codex/config.toml`. Consequently, the MCP
-server uses the ChatGPT Codex entitlement and cannot silently fall back to
-usage-based OpenAI API-key billing.
+The launcher also removes caller-provided overrides for those two keys before
+starting Codex. The same values are maintained in `~/.codex/config.toml`.
+Consequently, the MCP server uses the ChatGPT Codex entitlement and cannot
+silently fall back to usage-based OpenAI API-key billing.
 
 ### Using Codex from Claude
 
@@ -258,11 +259,12 @@ plan's Codex allowance.
 
 ### Sandbox scope
 
-`codex_sandbox_mode` defaults to `danger-full-access` because Codex's nested
-Linux sandbox may not be available inside a Home Assistant add-on container,
-which is already the outer security boundary. Select `read-only` for reviews or
-`workspace-write` to request write access only inside the supplied workspace;
-the latter still depends on the host kernel supporting Codex's sandbox.
+`codex_sandbox_mode` defaults to `workspace-write`, allowing implementation
+inside the supplied repository without granting unrestricted access to every
+mounted path. Select `read-only` for review-only delegation. Use
+`danger-full-access` only as an explicit fallback when Codex's nested Linux
+sandbox is unavailable in the Home Assistant add-on container and the mounted
+paths are trusted.
 
 `approval_policy` is always `never`, because an MCP-driven Codex process has no
 interactive operator to answer a prompt. Claude Code's own permissions still
@@ -279,8 +281,8 @@ claude-tools-doctor.sh
 The report checks the tool binaries, configuration switches, configured and
 effective runtime identities, redacted MCP registrations, Claude hooks,
 permission mode, Headroom health, TokenSave indexes, routing, and recorded
-savings. It never prints MCP environment values because the Home Assistant MCP
-entry can contain a long-lived token.
+savings. It never prints MCP environment values or raw Codex authentication
+status because either can contain credentials or masked credential fragments.
 
 The hourly report can also be invoked manually:
 
