@@ -133,9 +133,11 @@ jobs:
           # workflow_dispatch by anyone else would 401. AI_PR_TOKEN, not
           # GITHUB_TOKEN, so a PR Claude opens triggers CI.
           github_token: ${{ secrets.AI_PR_TOKEN }}
-          # One sticky, auto-updating status comment per run instead of the
-          # model narrating its own progress in scattered comments.
-          track_progress: true
+          # No track_progress here. It needs an issue or PR to hang its sticky
+          # comment on, and the action hard-fails validation without one; this
+          # workflow only ever runs on schedule/workflow_dispatch. Per-issue
+          # progress still gets reported — issue-fix.md has Claude comment on
+          # each issue directly via gh.
           prompt: |
             The batch of issues to work through is /tmp/ai-fix/batch.json.
             Follow .github/prompts/issue-fix.md exactly. Do not deviate from
