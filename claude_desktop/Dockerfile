@@ -13,7 +13,6 @@ ARG RTK_VERSION="v0.43.0"
 ARG RTK_COMMIT="5a7880d404db8364d602f2ecdc41dd790f64013f"
 ARG TOKENSAVE_VERSION="7.4.0"
 ARG VIRTIOFSD_VERSION="1.14.0"
-ARG CODEX_VERSION="0.145.0"
 
 # The upstream aarch64 release is cross-built on ubuntu-latest and requires
 # GLIBC 2.39. Build the pinned source on Bookworm instead so it is compatible
@@ -56,7 +55,6 @@ RUN apt-get update && \
 FROM ${BUILD_FROM}
 ARG BUILD_ARCH
 ARG TARGETARCH
-ARG CODEX_VERSION
 
 ##################
 # 2 Modify Image #
@@ -66,13 +64,6 @@ ARG CODEX_VERSION
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
-
-# Codex CLI is NOT baked into the image: its Linux release binary is ~310 MB extracted, and the
-# feature is off by default, so paying that in every image (and needing a rebuild to update it)
-# is not worth it. The pinned release is only recorded here; 81-codex_cli.sh downloads it into
-# the add-on's persistent /data volume the first time install_codex_cli is enabled, and
-# re-downloads only when this value changes. The upstream release tag is rust-v${CODEX_VERSION}.
-ENV CODEX_VERSION="${CODEX_VERSION}"
 
 USER root
 
