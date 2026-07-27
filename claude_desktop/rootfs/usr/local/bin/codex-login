@@ -14,6 +14,7 @@ if [ -z "$RUNTIME_HOME" ]; then
     exit 1
 fi
 export HOME="$RUNTIME_HOME"
+export CODEX_HOME="$RUNTIME_HOME/.codex"
 
 if ! bashio::config.true 'install_codex_cli'; then
     echo "codex-login: the install_codex_cli add-on option is disabled" >&2
@@ -28,7 +29,7 @@ fi
 # Everything runs as abc so auth.json is readable by the same account that launches the MCP
 # server. Explicit HOME handling also makes container-console calls safe when the caller is root.
 if [ "$(id -u)" -eq 0 ]; then
-    exec s6-setuidgid abc env HOME="$RUNTIME_HOME" "$0" "$@"
+    exec s6-setuidgid abc env -u OPENAI_API_KEY HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" "$0" "$@"
 fi
 
 # The managed Codex config forces `chatgpt` authentication and file credential storage. An
