@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # Diagnose installation, registration, routing, indexing, permissions, and recorded savings without
-# printing MCP environment values (which may contain the Home Assistant access token).
+# printing MCP environment values or authentication material.
 # shellcheck shell=bash
 set +e
 set -o pipefail
@@ -185,9 +185,30 @@ if bashio::config.true 'install_codex_cli'; then
         printf '%-30s %s\n' "installed version stamp" "$(cat /data/codex/bin/.version 2> /dev/null || echo 'MISSING')"
         printf '%-30s %s\n' "release policy" "latest stable, SHA-256 verified"
         printf '%-30s %s\n' "authentication policy" "ChatGPT subscription only"
-        # login status prints the account/auth mode on stderr, never the token itself.
-        s6-setuidgid abc env -u OPENAI_API_KEY HOME="$RUNTIME_HOME" "$codex_bin" login status 2>&1 \
-            || echo "run 'codex-login' to activate a ChatGPT subscription"
+
+        # Never forward raw `login status` output: non-ChatGPT modes can include masked secret
+        # fragments. Only print explicitly allow-listed states.
+        codex_status="$(
+            s6-setuidgid abc env -u OPENAI_API_KEY \
+                HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" \
+                "$codex_bin" login status 2>&1
+        )"
+        codex_status_rc=$?
+        case "$codex_status" in
+            *"Logged in using ChatGPT"*)
+                echo "Logged in using ChatGPT"
+                ;;
+            *"Not logged in"*)
+                echo "Not logged in; run 'codex-login' to activate a ChatGPT subscription"
+                ;;
+            *)
+                if [ "$codex_status_rc" -eq 0 ]; then
+                    echo "Authenticated with a non-ChatGPT method; run 'codex-login' to enforce subscription authentication"
+                else
+                    echo "Unable to determine Codex login status safely; run 'codex-login'"
+                fi
+                ;;
+        esac
     else
         echo "enabled but ${codex_bin} is MISSING (download failed or add-on not yet restarted)"
     fi
