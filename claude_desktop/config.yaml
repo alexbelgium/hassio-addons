@@ -60,7 +60,7 @@ options:
   headroom_wrap_claude_code: true
   install_caveman: false
   install_codex_cli: false
-  codex_sandbox_mode: danger-full-access
+  codex_sandbox_mode: workspace-write
   install_github_cli: true
   install_headroom: true
   install_rtk: true
