@@ -50,7 +50,6 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
-  id-token: write  # unused while github_token is set below; kept as the fallback auth path
 
 concurrency:
   group: ai-fix-sweep

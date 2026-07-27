@@ -41,7 +41,6 @@ on:
 permissions:
   contents: read
   issues: write
-  id-token: write  # unused while github_token is set below; kept as the fallback auth path
 
 concurrency:
   group: ai-triage-${{ github.event.issue.number || inputs.issue || github.run_id }}

@@ -25,7 +25,6 @@ permissions:
   contents: write
   pull-requests: write
   issues: write
-  id-token: write  # unused while github_token is set below; kept as the fallback auth path
 
 concurrency:
   group: ai-coderabbit-${{ github.event.pull_request.number }}
