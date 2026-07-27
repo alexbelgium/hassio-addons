@@ -1,4 +1,3 @@
-
 #!/usr/bin/execlineb -S0
 # ==============================================================================
 # Take down the S6 supervision tree when Nginx fails

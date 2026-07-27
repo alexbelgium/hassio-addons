@@ -10,7 +10,7 @@ This is the **Business Edition** variant, shipping the `portainer/portainer-ee` 
 - In the configuration panel of the addon, you can change the password
 - In the main page of the addon, disable "Protection mode", then start the addon
 - Login (default name is `admin`, default password is `homeassistant`)
-- Click on `Primary` in the environement (at the center of the page)
+- Click on `Primary` in the environment (at the center of the page)
 - Click on `Containers` in the left menu bar
 - Increase the number of items per page to see all your addons
 - Click on the symbol `>_` next to the name of your selected addon to open the console page

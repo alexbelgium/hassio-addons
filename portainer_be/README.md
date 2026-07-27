@@ -1,7 +1,6 @@
 
 # Home assistant add-on: Portainer Business Edition
 
-
 I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
 
 If this add-on saves you time or makes your setup easier, I would be very grateful for your support!
@@ -73,7 +72,7 @@ The installation of this add-on is pretty straightforward and not different in c
 ## Configuration
 
 Webui can be found at <http://homeassistant:port> or in your sidebar using Ingress.
-The default username is "admin" and the password is described in the startup log.
+The default username is "admin" and the password is the value you set in the add-on `password` option (default `homeassistant`).
 
 ### Options
 
@@ -109,5 +108,3 @@ Create an issue on github
 ---
 
 ![illustration](https://github.com/hassio-addons/addon-portainer/raw/main/images/screenshot.png)
-
-

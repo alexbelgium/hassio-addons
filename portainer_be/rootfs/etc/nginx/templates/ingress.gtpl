@@ -9,7 +9,7 @@ server {
   proxy_hide_header X-Frame-Options;
   proxy_hide_header Content-Security-Policy;
   add_header X-Frame-Options "SAMEORIGIN";
-  add_header Content-Security-Policy "frame-ancestors *";
+  add_header Content-Security-Policy "frame-ancestors 'self'";
 
   location / {
     proxy_pass {{ .protocol }}://backend/;
