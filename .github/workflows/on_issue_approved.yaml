@@ -142,7 +142,10 @@ jobs:
           # github.actor lacks write access. AI_PR_TOKEN, not GITHUB_TOKEN, so
           # a PR Claude opens triggers CI.
           github_token: ${{ secrets.AI_PR_TOKEN }}
-          track_progress: true
+          # Only the `issues` path has a comment thread to track progress in.
+          # On workflow_dispatch there is none, and passing true there fails
+          # the action's input validation outright.
+          track_progress: ${{ github.event_name == 'issues' }}
           prompt: |
             The approved plan is /tmp/ai-exec/plan.md and the issue it belongs
             to is /tmp/ai-exec/issue.json. Follow .github/prompts/issue-execute-plan.md
