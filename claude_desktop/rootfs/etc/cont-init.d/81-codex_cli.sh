@@ -154,32 +154,83 @@ fi
 
 # Every Codex entry point, including the MCP server launched by Claude, goes through this wrapper.
 # This is an execution-time guarantee in addition to the managed config below: API-key billing
-# cannot be selected even if an API key is present in the surrounding environment.
-cat > "$CODEX_BIN" <<'SH'
-#!/bin/sh
+# cannot be selected even if an API key is present in the surrounding environment. Caller-provided
+# overrides for the two authentication guards are stripped before the forced root-level overrides
+# are inserted; root-level -c flags must precede Codex subcommands such as `mcp-server`.
+{
+    printf '#!/usr/bin/env bash\n'
+    printf 'CODEX_REAL=%q\n' "$CODEX_REAL"
+    cat <<'SH'
 RUNTIME_HOME="$(getent passwd abc | cut -d: -f6)"
 if [ -z "$RUNTIME_HOME" ]; then
     echo "codex: unable to resolve the abc runtime home" >&2
     exit 1
 fi
 
+is_managed_override() {
+    local assignment="$1"
+    local key="${assignment%%=*}"
+    key="${key//[[:space:]]/}"
+    case "$key" in
+        forced_login_method | cli_auth_credentials_store) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+filtered_args=()
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        -c | --config)
+            if [ "$#" -lt 2 ]; then
+                filtered_args+=("$1")
+                shift
+                continue
+            fi
+            if is_managed_override "$2"; then
+                shift 2
+                continue
+            fi
+            filtered_args+=("$1" "$2")
+            shift 2
+            ;;
+        --config=*)
+            assignment="${1#--config=}"
+            if ! is_managed_override "$assignment"; then
+                filtered_args+=("$1")
+            fi
+            shift
+            ;;
+        -c*)
+            assignment="${1#-c}"
+            if ! is_managed_override "$assignment"; then
+                filtered_args+=("$1")
+            fi
+            shift
+            ;;
+        *)
+            filtered_args+=("$1")
+            shift
+            ;;
+    esac
+done
+
+forced_args=(
+    -c 'forced_login_method="chatgpt"'
+    -c 'cli_auth_credentials_store="file"'
+)
+
 if [ "$(id -u)" -eq 0 ]; then
     exec s6-setuidgid abc env -u OPENAI_API_KEY \
         HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" \
-        /data/codex/bin/codex-real \
-        -c 'forced_login_method="chatgpt"' \
-        -c 'cli_auth_credentials_store="file"' \
-        "$@"
+        "$CODEX_REAL" "${forced_args[@]}" "${filtered_args[@]}"
 fi
 
 unset OPENAI_API_KEY
 export HOME="$RUNTIME_HOME"
 export CODEX_HOME="$RUNTIME_HOME/.codex"
-exec /data/codex/bin/codex-real \
-    -c 'forced_login_method="chatgpt"' \
-    -c 'cli_auth_credentials_store="file"' \
-    "$@"
+exec "$CODEX_REAL" "${forced_args[@]}" "${filtered_args[@]}"
 SH
+} > "$CODEX_BIN"
 chmod 0755 "$CODEX_BIN"
 
 chown -R -- "$(id -u abc):$(id -g abc)" "$CODEX_ROOT" \
@@ -195,7 +246,7 @@ ln -sfn "$CODEX_BIN" "$CODEX_LINK"
 # The managed block must be first: a bare TOML key after a [table] header belongs to that table.
 # Existing top-level definitions of the managed keys are removed before insertion; retaining them
 # would create duplicate keys and make the entire Codex configuration invalid.
-CODEX_SANDBOX_MODE="$(bashio::config 'codex_sandbox_mode' 'danger-full-access')"
+CODEX_SANDBOX_MODE="$(bashio::config 'codex_sandbox_mode' 'workspace-write')"
 run_as_runtime_user mkdir -p "$RUNTIME_HOME/.codex"
 CODEX_SANDBOX_MODE="$CODEX_SANDBOX_MODE" RUNTIME_HOME="$RUNTIME_HOME" \
     run_as_runtime_user python3 - <<'PY' \
