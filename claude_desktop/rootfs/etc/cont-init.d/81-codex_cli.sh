@@ -25,7 +25,7 @@ if [ -z "$RUNTIME_HOME" ]; then
 fi
 
 run_as_runtime_user() {
-    s6-setuidgid abc env HOME="$RUNTIME_HOME" "$@"
+    s6-setuidgid abc env HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" "$@"
 }
 
 if ! bashio::config.true 'install_codex_cli'; then
@@ -50,7 +50,9 @@ mkdir -p "$CODEX_PREFIX"
 # Migrate the PR's earlier direct-binary layout to the enforced wrapper layout without another
 # download. The real binary is kept separately; `codex` becomes a small launcher that always
 # forces ChatGPT subscription authentication and removes any inherited API key.
-if [ ! -x "$CODEX_REAL" ] && [ -x "$CODEX_BIN" ]; then
+if [ ! -x "$CODEX_REAL" ] \
+    && [ -x "$CODEX_BIN" ] \
+    && run_as_runtime_user "$CODEX_BIN" --version > /dev/null 2>&1; then
     mv -f "$CODEX_BIN" "$CODEX_REAL"
 fi
 
@@ -155,7 +157,24 @@ fi
 # cannot be selected even if an API key is present in the surrounding environment.
 cat > "$CODEX_BIN" <<'SH'
 #!/bin/sh
+RUNTIME_HOME="$(getent passwd abc | cut -d: -f6)"
+if [ -z "$RUNTIME_HOME" ]; then
+    echo "codex: unable to resolve the abc runtime home" >&2
+    exit 1
+fi
+
+if [ "$(id -u)" -eq 0 ]; then
+    exec s6-setuidgid abc env -u OPENAI_API_KEY \
+        HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" \
+        /data/codex/bin/codex-real \
+        -c 'forced_login_method="chatgpt"' \
+        -c 'cli_auth_credentials_store="file"' \
+        "$@"
+fi
+
 unset OPENAI_API_KEY
+export HOME="$RUNTIME_HOME"
+export CODEX_HOME="$RUNTIME_HOME/.codex"
 exec /data/codex/bin/codex-real \
     -c 'forced_login_method="chatgpt"' \
     -c 'cli_auth_credentials_store="file"' \
