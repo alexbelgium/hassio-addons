@@ -22,7 +22,7 @@ jobs:
       changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -59,7 +59,7 @@ jobs:
       sanitizeCommitted: ${{ steps.sanitize_commit.outputs.committed }}
       sanitizeCommitSha: ${{ steps.sanitize_commit.outputs.commit_long_sha }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -112,7 +112,7 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
       - name: Run Home Assistant Add-on Lint
         uses: frenck/action-addon-linter@v2
         with:
@@ -137,7 +137,7 @@ jobs:
           - arch: aarch64
             runner: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
@@ -335,7 +335,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -406,7 +406,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 

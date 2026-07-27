@@ -18,7 +18,7 @@ jobs:
       changedChangelogFiles: ${{ steps.changed-files.outputs.changelogs_files }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           # Need the merge commit's parents resolvable (HEAD^1 below): a depth-1 shallow
           # checkout truncates parent refs entirely at the boundary commit.
@@ -88,7 +88,7 @@ jobs:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
     steps:
       - name: ↩️ Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
 
       - name: 🔎 Run Home Assistant Add-on Lint
         uses: frenck/action-addon-linter@v2
@@ -106,7 +106,7 @@ jobs:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
     steps:
       - name: ↩️ Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
 
       - name: Copy templates into addon build context
         env:
