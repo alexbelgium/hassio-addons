@@ -60,6 +60,13 @@ fi
 # follows upstream updates without pinning a version, while downloading the large asset only when
 # the installed version changes. A metadata outage never replaces or removes a working binary.
 codex_tmp="$(mktemp -d -p "$CODEX_ROOT")"
+# mktemp always creates 0700 root:root here, but the candidate binary is validated by running it
+# as the abc runtime user, which cannot traverse a root-only directory — that made every install
+# fail at the --version step with "unable to exec: Permission denied" (exit 126) and report
+# "Codex is unavailable this boot". Make the staging directory traversable. Nothing secret is
+# staged here: it holds the public release archive and the extracted binary, both of which are
+# world-readable upstream artifacts, and cleanup() removes the directory on exit.
+chmod 0755 "$codex_tmp"
 cleanup() {
     rm -rf "$codex_tmp"
 }

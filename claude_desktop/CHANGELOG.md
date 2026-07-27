@@ -1,4 +1,8 @@
  
+## 1.36.1 (27-07-2026)
+
+- Fix the Codex CLI install failing on every boot with `Verified Codex <version> installation failed; Codex is unavailable this boot`, leaving `install_codex_cli` permanently non-functional. The download, its SHA-256 verification, and the extraction all succeeded; the chain broke at the final step, which validates the candidate binary by running `--version` as the `abc` runtime user. `mktemp -d` creates its directory `0700 root:root`, and `abc` cannot traverse a root-only directory, so executing the staged binary failed with `unable to exec: Permission denied` (exit 126) before it could be moved into place. Reproduced and fixed by making the staging directory traversable (`chmod 0755`) immediately after `mktemp`; verified on a live add-on container, where the same probe goes from exit 126 to success once the mode is widened. Nothing secret is staged there — the public release archive and the extracted binary, both world-readable upstream artifacts — and the existing `cleanup()` trap still removes the directory on exit. The validation deliberately keeps running as `abc` rather than root, so the binary is exercised as the identity that will actually run it.
+
 ## 1.36 (27-07-2026)
 
 - Add optional OpenAI Codex CLI support, so a Claude session in this add-on can delegate work to ChatGPT Codex. Three parts: an `install_codex_cli` switch, a browserless way to activate a ChatGPT subscription on it, and an MCP registration that makes Codex callable as a tool from Claude.
