@@ -78,6 +78,8 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 - Custom script support through the repository standard `claude_desktop.sh`.
 - Bundled optimization tools: Headroom, RTK, and TokenSave; Caveman remains
   available as an opt-in plugin.
+- Optional OpenAI Codex CLI, signed in with a ChatGPT subscription through a
+  browserless device-code flow and reachable from Claude as an MCP server.
 - Optional Home Assistant MCP bridge so Claude can query and control Home
   Assistant.
 - Independent hourly savings reports for Headroom, RTK, and TokenSave.
@@ -105,6 +107,8 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `install_tokensave` | `true` | Install TokenSave's complete global Claude integration. |
 | `tokensave_project_paths` | `[]` | Explicit absolute Git repository paths to initialize or sync at startup. |
 | `install_caveman` | `false` | Install the third-party Caveman Claude Code plugin at startup. |
+| `install_codex_cli` | `false` | Download OpenAI's Codex CLI at startup and register it as an MCP server so Claude can delegate work to ChatGPT Codex. |
+| `codex_sandbox_mode` | `danger-full-access` | Filesystem scope Codex runs with: `read-only`, `workspace-write`, or `danger-full-access`. |
 | `enable_tools_health_report` | `true` | Write independent Headroom, RTK, and TokenSave gains to the add-on log hourly. |
 | `install_github_cli` | `true` | Enable setup checks for the baked-in `git` and `gh` commands. |
 | `github_token` | | Optional GitHub token used to authenticate `gh` and Git operations. |
@@ -194,6 +198,74 @@ The dashboard is disabled externally by default. To expose it:
 
 The dashboard is unauthenticated. Do not publish this port to the public
 internet.
+
+## Codex CLI
+
+Setting `install_codex_cli: true` adds OpenAI's Codex CLI alongside Claude and exposes it to
+Claude as an MCP server, so a Claude session can hand a task to ChatGPT Codex and read its
+answer back.
+
+Codex is **not** baked into the image: its Linux binary is around 310 MB extracted, which is
+not worth carrying in every installation for an off-by-default option. It is downloaded at
+startup instead (about 113 MB) into `/data/codex/bin`, which is persistent add-on storage, so
+the download happens once — not on every restart, and not again after an add-on update unless
+the pinned Codex release itself changed.
+
+### Signing in with a ChatGPT subscription
+
+The add-on has no browser, so Codex's default sign-in (which serves an OAuth callback on
+`localhost:1455` and expects a local browser) cannot complete here. Use the shipped helper,
+which runs OpenAI's **device-code** flow instead:
+
+```bash
+codex-login
+```
+
+Run it from any of:
+
+- the desktop's terminal — right-click the Selkies desktop → **xterm**;
+- a Claude Code session, by asking Claude to run `codex-login`;
+- the container console (`docker exec` on the host).
+
+It prints a verification URL and a short-lived one-time code. Open the URL on any other device,
+enter the code, approve, and the helper finishes on its own. Re-running it when you are already
+signed in just reports the current account and exits.
+
+Credentials are written to `~/.codex/auth.json` (`/data/data/.codex/auth.json`), which is
+persistent, so the sign-in survives restarts and add-on updates. Turning `install_codex_cli`
+back off does not delete it — re-enabling needs neither another download nor another login. If
+you would rather not use the device-code flow at all, the documented alternative is to sign in
+on a machine that has a browser and copy that machine's `~/.codex/auth.json` into
+`/data/data/.codex/auth.json`.
+
+### Using Codex from Claude
+
+When enabled, the add-on registers a `codex` MCP server (`codex mcp-server`) in both Claude Code
+and Claude Desktop, and adds a managed block to `~/.claude/CLAUDE.md` describing when to use it.
+Claude gets two tools:
+
+- `mcp__codex__codex` — start a Codex task. Pass `prompt` and set `cwd` to the repository in
+  question; Codex reads the files itself. Returns a `threadId`.
+- `mcp__codex__codex-reply` — continue that thread with `threadId` and a follow-up `prompt`.
+
+Codex is a separate agent with its own model and its own filesystem access, so it is worth the
+round-trip for an independent review, a second diagnosis, or a competing implementation — not
+for routine lookups. Its usage counts against your ChatGPT plan.
+
+### Sandbox scope
+
+Codex normally confines itself with a Linux OS sandbox (Landlock, or its bundled bubblewrap).
+That is unreliable inside a Home Assistant add-on container, and the container is already the
+security boundary, so `codex_sandbox_mode` defaults to `danger-full-access` — meaning Codex has
+the same reach as any other process in the add-on, across every mapped volume. Set it to
+`read-only` if Codex should only ever review and never write, or `workspace-write` to confine it
+to the working directory it was given (this depends on the container's kernel sandboxing
+actually working; fall back to `danger-full-access` if Codex reports the sandbox as
+unavailable).
+
+The approval policy is always `never`: an MCP-driven Codex run has nobody to answer a prompt.
+Claude Code's own permission prompts still gate the `mcp__codex__*` calls unless
+`permission_mode` is `bypass`.
 
 ## Diagnostics
 
@@ -288,6 +360,9 @@ Persistent state is stored in the configured `data_location` (default
   shared home
 - TokenSave repository indexes: `.tokensave/` inside each explicitly configured
   project
+- Codex CLI sign-in and configuration: `~/.codex` (the binary itself lives
+  outside the configurable home, in the add-on's own `/data/codex/bin`, so it
+  survives a `data_location` change)
 
 Volatile cache data is redirected to `/tmp/cache` through `$XDG_CACHE_HOME` and
 `$HOME/.cache`.

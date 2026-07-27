@@ -12,7 +12,7 @@ section() {
 }
 
 section "Installed binaries"
-for tool in claude claude-desktop headroom rtk tokensave git gh rg jq shellcheck yamllint hadolint actionlint; do
+for tool in claude claude-desktop headroom rtk tokensave codex git gh rg jq shellcheck yamllint hadolint actionlint; do
     resolved="$(command -v "$tool" 2> /dev/null || true)"
     if [ -n "$resolved" ]; then
         printf '%-16s %s\n' "$tool" "$resolved"
@@ -22,7 +22,7 @@ for tool in claude claude-desktop headroom rtk tokensave git gh rg jq shellcheck
 done
 
 section "Configured switches"
-for option in permission_mode install_headroom headroom_wrap_claude_code expose_headroom_dashboard install_rtk install_tokensave install_caveman enable_tools_health_report; do
+for option in permission_mode install_headroom headroom_wrap_claude_code expose_headroom_dashboard install_rtk install_tokensave install_codex_cli codex_sandbox_mode install_caveman enable_tools_health_report; do
     printf '%-30s %s\n' "$option" "$(bashio::config "$option")"
 done
 
@@ -164,6 +164,23 @@ if bashio::config.true 'install_tokensave'; then
             echo "${repo_root}: NOT INITIALIZED"
         fi
     done <<< "$TOKENSAVE_PROJECT_PATHS"
+else
+    echo "disabled"
+fi
+
+section "Codex"
+if bashio::config.true 'install_codex_cli'; then
+    codex_bin="/data/codex/bin/codex"
+    if [ -x "$codex_bin" ]; then
+        printf '%-30s %s\n' "installed" "$("$codex_bin" --version 2> /dev/null || echo 'FAILED TO RUN')"
+        printf '%-30s %s\n' "installed version stamp" "$(cat /data/codex/bin/.version 2> /dev/null || echo 'MISSING')"
+        printf '%-30s %s\n' "pinned by image" "${CODEX_VERSION:-<unset>}"
+        # login status prints the account/auth mode on stderr, never the token itself.
+        s6-setuidgid abc env HOME="$HOME" "$codex_bin" login status 2>&1 \
+            || echo "run 'codex-login' to activate a ChatGPT subscription"
+    else
+        echo "enabled but ${codex_bin} is MISSING (download failed or add-on not yet restarted)"
+    fi
 else
     echo "disabled"
 fi

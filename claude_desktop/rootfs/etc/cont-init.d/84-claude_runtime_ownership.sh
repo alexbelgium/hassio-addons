@@ -9,7 +9,7 @@ set -e
 RUNTIME_UID="$(id -u abc)"
 RUNTIME_GID="$(id -g abc)"
 
-for managed_path in "$HOME/.claude" "$HOME/.claude.json" "$HOME/.config/Claude"; do
+for managed_path in "$HOME/.claude" "$HOME/.claude.json" "$HOME/.config/Claude" "$HOME/.codex"; do
     if [ -e "$managed_path" ]; then
         chown -R -- "${RUNTIME_UID}:${RUNTIME_GID}" "$managed_path" \
             || bashio::log.warning "Unable to set effective runtime ownership on $managed_path"
