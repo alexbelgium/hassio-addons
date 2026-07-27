@@ -1,4 +1,9 @@
 
+## 1.6.0.1 (2026-07-27)
+
+- Fix ingress: nginx rewrote Bazarr's redirects into an absolute `http://<host>:8099/...` URL, which the browser blocked as mixed content when Home Assistant is served over HTTPS. Redirects now stay relative and point at the ingress path
+- Fix fallback base_url in the nginx service script missing its leading `/`, which crashed Bazarr on startup
+
 ## 1.6.0 (2026-07-08)
 
 - Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
