@@ -50,7 +50,6 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
-  id-token: write  # claude-code-action fetches a GitHub OIDC token to auth the OAuth flow
 
 concurrency:
   group: ai-fix-sweep
@@ -129,6 +128,11 @@ jobs:
         uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # Skip the OIDC -> Claude App token exchange. The scheduled path
+          # happens to pass it (github.actor is the maintainer), but
+          # workflow_dispatch by anyone else would 401. AI_PR_TOKEN, not
+          # GITHUB_TOKEN, so a PR Claude opens triggers CI.
+          github_token: ${{ secrets.AI_PR_TOKEN }}
           # One sticky, auto-updating status comment per run instead of the
           # model narrating its own progress in scattered comments.
           track_progress: true

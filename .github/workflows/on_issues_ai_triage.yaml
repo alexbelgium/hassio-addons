@@ -41,7 +41,6 @@ on:
 permissions:
   contents: read
   issues: write
-  id-token: write  # claude-code-action fetches a GitHub OIDC token to auth the OAuth flow
 
 concurrency:
   group: ai-triage-${{ github.event.issue.number || inputs.issue || github.run_id }}
@@ -148,6 +147,12 @@ jobs:
         uses: anthropics/claude-code-action@44423bdec74b97d67543eb16c110546762c110b2  # v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # Without this the action falls back to the OIDC -> Claude App token
+          # exchange, which 401s ("User does not have write access on this
+          # repository") whenever github.actor is the outside reporter who
+          # opened the issue or replied to a needs-info request. Same token the
+          # step already exports as GH_TOKEN; classify only reads.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           show_full_output: true
           prompt: |
             Read /tmp/ai-triage/context.md, then follow the instructions in
