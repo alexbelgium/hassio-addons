@@ -297,7 +297,7 @@ fi
 # because is_managed() below treats any command under $HOME as user-installed.
 CODEX_BIN="/data/codex/bin/codex"
 CODEX_ENABLED=false
-CODEX_SANDBOX_MODE="$(bashio::config 'codex_sandbox_mode' 'danger-full-access')"
+CODEX_SANDBOX_MODE="$(bashio::config 'codex_sandbox_mode' 'workspace-write')"
 if bashio::config.true 'install_codex_cli'; then
     if [ -x "$CODEX_BIN" ]; then
         CODEX_ENABLED=true
@@ -362,10 +362,10 @@ if os.environ["CODEX_ENABLED"] == "true":
     # which is what lets a Claude session hand a task to ChatGPT Codex. The sandbox/approval
     # policy is pinned with root-level `-c` overrides, which Codex forwards to the MCP server;
     # they must precede the subcommand. approval_policy is always "never" because an MCP-driven
-    # run has nobody to answer a prompt, and the sandbox is bypassed by default because Codex's
-    # Landlock/bubblewrap sandbox is unreliable inside the add-on container — which is itself
-    # the security boundary. 81-codex_cli.sh writes the same two values into
-    # ~/.codex/config.toml so plain terminal `codex` runs behave identically.
+    # run has nobody to answer a prompt. The sandbox defaults to workspace-write; users can opt
+    # into danger-full-access explicitly if the nested sandbox is unavailable in their container.
+    # 81-codex_cli.sh writes the same values into ~/.codex/config.toml so plain terminal `codex`
+    # runs behave identically.
     desired["codex"] = {
         "command": os.environ["CODEX_BIN"],
         "args": [
