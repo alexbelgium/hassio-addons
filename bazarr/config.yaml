@@ -112,4 +112,4 @@ schema:
 slug: bazarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/bazarr
-version: "1.6.0"
+version: "1.6.0.1"
