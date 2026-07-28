@@ -40,9 +40,9 @@ var NEEDS_ENCODING = /[:\/?#\[\]@!$'()*,;]/g;
 function encodePart(part) {
     return part
         /* yarl encodes a space as "+"; a literal "+" arrives as "%2B". */
-        .replace(/\+/g, '%20')
+        .replace(/\+/g, "%20")
         .replace(NEEDS_ENCODING, function (c) {
-            return '%' + c.charCodeAt(0).toString(16).toUpperCase();
+            return "%" + c.charCodeAt(0).toString(16).toUpperCase();
         });
 }
 
@@ -52,7 +52,7 @@ function encodePart(part) {
  */
 function uri(r) {
     var raw = r.variables.request_uri;
-    var split = raw.indexOf('?');
+    var split = raw.indexOf("?");
 
     if (split < 0) {
         return raw;
@@ -62,22 +62,22 @@ function uri(r) {
     var args = raw.substring(split + 1);
 
     /* A bare trailing "?" is forwarded as-is, so the URI stays byte-for-byte. */
-    if (args === '') {
+    if (args === "") {
         return raw;
     }
 
     var repaired = args
-        .split('&')
+        .split("&")
         .map(function (pair) {
-            var eq = pair.indexOf('=');
+            var eq = pair.indexOf("=");
             if (eq < 0) {
                 return encodePart(pair);
             }
-            return encodePart(pair.substring(0, eq)) + '=' + encodePart(pair.substring(eq + 1));
+            return encodePart(pair.substring(0, eq)) + "=" + encodePart(pair.substring(eq + 1));
         })
-        .join('&');
+        .join("&");
 
-    return path + '?' + repaired;
+    return path + "?" + repaired;
 }
 
 export default { uri };
