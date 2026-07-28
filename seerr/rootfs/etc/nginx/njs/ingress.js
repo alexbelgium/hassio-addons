@@ -5,8 +5,8 @@
  * (supervisor/api/ingress.py), so aiohttp/yarl re-encodes an already-decoded
  * query string on the way to this add-on. yarl's "safe" set is much wider than
  * the one Seerr's express-openapi-validator will accept: yarl emits a space as
- * "+" and passes ":", "/", "@", "!", "$", "'", "(", ")", "*" and "," through
- * bare, while the validator checks the raw, still-encoded value against
+ * "+" and passes ":", "/", "?", "@", "!", "$", "'", "(", ")", "*" and ","
+ * through bare, while the validator checks the raw, still-encoded value against
  *
  *     RESERVED_CHARS = /[\:\/\?#\[\]@!\$&\'()\*\+,;=]/
  *
@@ -15,6 +15,10 @@
  * "Ocean's Eleven", "Mission: Impossible" - which Seerr's UI reports as a
  * 500. The same requests succeed on the directly published port 5055, which
  * does not pass through Supervisor.
+ *
+ * "?" deserves a note: the validator strips one with `qs.replace('?', '')`
+ * before testing, so a single bare "?" slips through by accident and only a
+ * second one ("Who? What?") produces the 400. It is encoded here regardless.
  *
  * Re-encoding those characters here is lossless, because yarl only ever emits
  * them bare when they were literal characters of the value: anything the user
@@ -25,8 +29,13 @@
  * separators, so a bare one is always structural.
  */
 
-/* Rejected by express-openapi-validator, forwarded bare by yarl. */
-var NEEDS_ENCODING = /[:\/@!$'()*,]/g;
+/*
+ * Every character of the validator's RESERVED_CHARS except "&" and "=", which
+ * are the query string's own separators and are handled above. Deriving the
+ * set from what the validator rejects - rather than from what yarl currently
+ * emits bare - keeps this correct if either side changes its safe set.
+ */
+var NEEDS_ENCODING = /[:\/?#\[\]@!$'()*,;]/g;
 
 function encodePart(part) {
     return part
