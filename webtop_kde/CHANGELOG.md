@@ -1,4 +1,10 @@
  
+## 4.16-r0-ls93.1 (2026-07-28)
+- Fix crash loop on start: make the `init-video` and `init-selkies-config` oneshots
+  tolerant of their best-effort device/permission setup failing in the HA add-on
+  sandbox, so a non-zero exit no longer crash-loops the container and `svc-selkies`
+  (closes #2918)
+ 
 ## 4.16-r0-ls93 (2026-07-21)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
  

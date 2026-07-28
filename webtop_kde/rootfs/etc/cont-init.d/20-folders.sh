@@ -81,3 +81,16 @@ ln -sf /config/.cache /.cache
 bashio::log.info "Setting ownership to $PUID:$PGID"
 chown -R "$PUID":"$PGID" "$LOCATION"
 chmod -R 700 "$LOCATION"
+
+# The Selkies desktop init oneshots do best-effort device/permission setup (mknod
+# /dev/input/*, chmod /tmp/selkies*, /dev/dri perms) that is only partially permitted in the
+# HA add-on sandbox. A non-zero exit from a oneshot fails add-on bringup and crash-loops the
+# container, so make these two tolerant and always report success. Longruns (svc-*) are left
+# untouched so s6 keeps supervising them with their real exit codes.
+for oneshot in init-video init-selkies-config; do
+    run="/etc/s6-overlay/s6-rc.d/$oneshot/run"
+    if [ -f "$run" ] && ! grep -q '^set +e$' "$run"; then
+        sed -i "1a set +e" "$run"
+        printf '\nexit 0\n' >> "$run"
+    fi
+done
