@@ -253,7 +253,7 @@ ln -sfn "$CODEX_BIN" "$CODEX_LINK"
 # The managed block must be first: a bare TOML key after a [table] header belongs to that table.
 # Existing top-level definitions of the managed keys are removed before insertion; retaining them
 # would create duplicate keys and make the entire Codex configuration invalid.
-CODEX_SANDBOX_MODE="$(bashio::config 'codex_sandbox_mode' 'workspace-write')"
+CODEX_SANDBOX_MODE="$(bashio::config 'codex_sandbox_mode' 'danger-full-access')"
 run_as_runtime_user mkdir -p "$RUNTIME_HOME/.codex"
 CODEX_SANDBOX_MODE="$CODEX_SANDBOX_MODE" RUNTIME_HOME="$RUNTIME_HOME" \
     run_as_runtime_user python3 - <<'PY' \
