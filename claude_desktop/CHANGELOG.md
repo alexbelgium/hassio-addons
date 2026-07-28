@@ -7,6 +7,10 @@
   - **One-time step after upgrading.** The previously stored session is already stale, so a single sign-in is still needed once after this update; it then persists across restarts.
 
  
+## 1.36.4 (28-07-2026)
+
+- Fix Selkies dying with a Rust `RuntimeDirNotSet` unwrap panic just after `Data WebSocket Server listening on port 8081`, and the data websocket then being proxied to the wrong port. Upstream relies on s6-rc ordering: `init-selkies-config` publishes `XDG_RUNTIME_DIR` and `CUSTOM_WS_PORT` into the s6 envdir and `svc-selkies` starts afterwards. The add-on entrypoint replaces s6-overlay and starts every `s6-rc.d` run script in parallel with no dependency graph, so Selkies can snapshot the envdir before that oneshot has written to it -- which is why it bound port 8081 (its own default) instead of the 8082 nginx proxies to, and why its Wayland compositor found no runtime directory to bind a socket in. `20-folders.sh` now exports both variables inside each run script, where no start ordering can lose them, and corrects the base image's `$HOME/.XDG` override where that write happens instead of appending a correction after the `exit 0` that the oneshot-tolerance block adds -- which meant the correction never ran on any boot after the first.
+
 ## 1.36.3 (28-07-2026)
 
 - Make the Selkies startup scripts add-on agnostic so `webtop` and `webtop_kde` can share them by symlink instead of carrying their own drifted copies. `20-folders.sh` now derives its default data location from the home directory the Dockerfile baked into the `abc` user (`getent passwd abc`) rather than hardcoding `/data/data`, and the `permission_mode: bypass` root guard is skipped on add-ons that do not declare that option. `80-configuration.sh` falls back to `pip` when the image does not ship `uv`. No behaviour change for Claude Desktop: `getent passwd abc` returns `/data/data`, which is exactly the value that was hardcoded before.
