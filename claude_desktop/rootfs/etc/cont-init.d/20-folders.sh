@@ -108,18 +108,12 @@ SELKIES_WS_PORT="${CUSTOM_WS_PORT:-8082}"
 # Exporting both inside the run scripts puts them in each process's own environment, where no
 # start ordering can lose them, and keeps every service agreeing on one runtime dir -- svc-de
 # otherwise waits forever on a Wayland socket under a directory Selkies never used.
-for file in /etc/s6-overlay/s6-rc.d/*/run; do
-    if [ "$(sed -n '1{/bash/p};q' "$file")" ] && ! grep -q '^export XDG_CACHE_HOME=/tmp/cache$' "$file"; then
-        sed -i "1a export HOME=$LOCATION" "$file"
-        sed -i "1a export FM_HOME=$LOCATION" "$file"
-        sed -i "1a export XDG_CACHE_HOME=/tmp/cache" "$file"
-        sed -i "1a export XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" "$file"
-        sed -i "1a export CUSTOM_WS_PORT=$SELKIES_WS_PORT" "$file"
-    fi
-done
 
 # Rewrite the home path baked into the image to the user-chosen one. No-op when data_location
-# is left at its default.
+# is left at its default. Runs before the exports below are injected, not after: this is a
+# blind textual substitution, so a location *under* the image default (data_location
+# /config/data_kde/foo against a /config/data_kde image) would otherwise rewrite the freshly
+# injected "export HOME=/config/data_kde/foo" into ".../foo/foo".
 if [ "$LOCATION" != "$DEFAULT_LOCATION" ]; then
     for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
         if [ -d "$folders" ]; then
@@ -127,6 +121,17 @@ if [ "$LOCATION" != "$DEFAULT_LOCATION" ]; then
         fi
     done
 fi
+
+# XDG_CACHE_HOME stays unquoted: it doubles as the marker this loop greps for to stay idempotent.
+for file in /etc/s6-overlay/s6-rc.d/*/run; do
+    if [ "$(sed -n '1{/bash/p};q' "$file")" ] && ! grep -q '^export XDG_CACHE_HOME=/tmp/cache$' "$file"; then
+        sed -i "1a export HOME=\"$LOCATION\"" "$file"
+        sed -i "1a export FM_HOME=\"$LOCATION\"" "$file"
+        sed -i "1a export XDG_CACHE_HOME=/tmp/cache" "$file"
+        sed -i "1a export XDG_RUNTIME_DIR=\"$XDG_RUNTIME_DIR\"" "$file"
+        sed -i "1a export CUSTOM_WS_PORT=\"$SELKIES_WS_PORT\"" "$file"
+    fi
+done
 
 sed -i "s|^\(abc:[^:]*:[^:]*:[^:]*:[^:]*:\)[^:]*|\1$LOCATION|" /etc/passwd
 
