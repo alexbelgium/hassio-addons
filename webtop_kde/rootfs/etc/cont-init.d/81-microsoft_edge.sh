@@ -35,6 +35,15 @@ if [ -f /helpers/microsoft-edge-stable ]; then
 fi
 
 # The wrapper and the real binary must be usable by the desktop user, whose identity
-# 20-folders.sh has already settled by the time this runs.
-chown "$(id -u abc):$(id -g abc)" /usr/bin/microsoft-edge*
-chmod +x /usr/bin/microsoft-edge*
+# 20-folders.sh has already settled by the time this runs. Guarded against an empty glob:
+# without nullglob the literal pattern would reach chown, and `set -e` would then abort
+# container startup rather than just skipping a fixup that has nothing to do.
+shopt -s nullglob
+edge_binaries=(/usr/bin/microsoft-edge*)
+shopt -u nullglob
+if [ "${#edge_binaries[@]}" -gt 0 ]; then
+    chown "$(id -u abc):$(id -g abc)" "${edge_binaries[@]}"
+    chmod +x "${edge_binaries[@]}"
+else
+    bashio::log.warning "Edge install reported success but no /usr/bin/microsoft-edge* binary is present"
+fi

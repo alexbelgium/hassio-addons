@@ -21,9 +21,11 @@ for _ in 1 2 3 4 5; do
     for link in "${links[@]}"; do
         target=$(readlink -f "$link" || true)
         if [ -z "$target" ] || [ ! -e "$target" ]; then
-            echo "Removing broken symlink: $link -> $(readlink "$link")"
-            rm -f "$link"
-            continue
+            # Fail rather than drop it. A broken link here means an add-on is missing a file
+            # it expects to ship; silently removing it produces an image that builds fine and
+            # misbehaves at runtime, which is far harder to diagnose than a red build.
+            echo "::error::Broken symlink: $link -> $(readlink "$link")"
+            exit 1
         fi
 
         rm "$link"

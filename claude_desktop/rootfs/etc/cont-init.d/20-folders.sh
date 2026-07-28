@@ -10,7 +10,11 @@ set -e
 # Default data location for this image: whatever the Dockerfile set as abc's home. Read it
 # before anything below rewrites /etc/passwd so the value is the image default, not a
 # previously applied data_location.
-DEFAULT_LOCATION="$(getent passwd abc | cut -d: -f6)"
+#
+# The `|| true` is load-bearing: getent exits 2 when the user does not exist, and under
+# bashio's `set -o pipefail` plus this script's `set -e` that aborts the script at the
+# assignment, before the fallback below can run. Same trap documented in 21-gpu_permissions.sh.
+DEFAULT_LOCATION="$(getent passwd abc 2> /dev/null | cut -d: -f6 || true)"
 if [[ -z "$DEFAULT_LOCATION" || "$DEFAULT_LOCATION" == "/" ]]; then
     DEFAULT_LOCATION="/config/data"
     bashio::log.warning "Could not read the abc home directory from /etc/passwd; defaulting to $DEFAULT_LOCATION"
