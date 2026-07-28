@@ -9,11 +9,12 @@ streamed desktop.
   v1.24-ish removed `gnome-keyring` again because it prompts for a keyring password on first
   boot, which blocked Claude Desktop from ever launching — but the launch flag was left
   forcing the now-daemonless libsecret backend, so `safeStorage` silently went unavailable
-  again (recurring "sign in again", and — new in this round — the Claude app's dispatch tab
-  showing the desktop as offline until a fresh sign-in was done from a computer). Fixed in
-  v1.35: switched to `--password-store=basic` (Electron's built-in store, no keyring
-  involved at all) plus a cont-init script that re-syncs the persistent openbox `autostart`
-  from the image on every boot, so the fix reaches existing installs, not just fresh ones.
+  again (recurring "sign in again", and the Claude app's dispatch tab showing the desktop as
+  offline until a fresh sign-in was done from a computer). v1.35 switched to
+  `--password-store=basic` plus a cont-init script that re-syncs the persistent openbox
+  `autostart` from the image on every boot — **but that flag alone does nothing**, and the bug
+  survived it untouched. Actually fixed in v1.37, which adds the application-side opt-in the
+  `basic` backend requires; see "Why v1.35 did not work" below.
 - **Planned only:** Problem A (in-desktop browser for OAuth) is intentionally not implemented.
   The image ships no browser; complete the login with the user-side workaround below.
 
@@ -102,14 +103,60 @@ Re-adding gnome-keyring would just reintroduce the original launch-blocking prom
 a dead end without also solving *that* — hence the shipped fix below avoids keyring
 entirely.
 
-### Fix (shipped, v1.35)
-1. `claude_desktop/rootfs/defaults/autostart` launches with
-   `--password-store=basic` instead of `gnome-libsecret`. `basic` is Electron's built-in
-   fixed-key store: `isEncryptionAvailable()` is always `true`, no daemon, no prompt. Secrets
-   land under `$HOME/.config/Claude`, and `HOME=/data/data` is persistent add-on storage, so
-   the session survives restarts. `basic` trades away OS-backed at-rest protection: unlike
+### Why v1.35 did not work
+
+v1.35 assumed `--password-store=basic` makes `isEncryptionAvailable()` "always true". It does
+not. On a live install the flag was confirmed on the running process:
+
+```
+$ tr '\0' ' ' < /proc/2247/cmdline
+/usr/lib/claude-desktop/claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=basic
+```
+
+and the app still logged, on every launch:
+
+```
+[warn] safeStorage not available, tokens will not persist
+[warn] Encryption not available, returning empty env vars
+[error] Electron safeStorage encryption is not available on this system, cannot store allowlist cache
+```
+
+Electron deliberately refuses its own `basic_text` backend unless the **application** opts in
+by calling `safeStorage.setUsePlainTextEncryption(true)` before the `ready` event. The symbol
+is present in the shipped Electron binary but absent from `resources/app.asar` — Claude Desktop
+never calls it. So v1.35 replaced one unavailable backend with another.
+
+Confirmed against a standalone Electron of the same generation, all with
+`--password-store=basic`:
+
+| case | `isEncryptionAvailable()` |
+| --- | --- |
+| no opt-in (= Claude Desktop as shipped) | `false` |
+| `setUsePlainTextEncryption(true)` | `true`, `encryptString` works |
+| fresh process, decrypting the earlier process's blob | `true`, plaintext recovered |
+
+The third row is the one that matters: it is the restart survival this add-on needs.
+
+### Fix (shipped, v1.37)
+1. `claude_desktop/rootfs/defaults/autostart` launches with `--password-store=basic` instead of
+   `gnome-libsecret` — Electron's built-in fixed-key store: no daemon, no prompt. Secrets land
+   under `$HOME/.config/Claude`, and `HOME=/data/data` is persistent add-on storage, so the
+   session survives restarts. `basic` trades away OS-backed at-rest protection: unlike
    `gnome-libsecret`, its encryption key isn't gated by a keyring daemon, so any process able
    to read the persistent `$HOME/.config/Claude` profile can recover the saved credentials.
+1b. `claude_desktop/rootfs/etc/cont-init.d/86-claude_safestorage.sh` +
+   `claude_desktop/rootfs/usr/local/bin/claude-safestorage-patch.js` (new) supply the opt-in
+   the flag depends on, by injecting `safeStorage.setUsePlainTextEncryption(true)` into the
+   app's main bundle inside `app.asar`. The injection goes *after* the bundle's leading
+   `"use strict";` — a directive prologue only counts as the first statement, so prepending
+   ahead of it would drop the main process out of strict mode. The archive is rebuilt (asar
+   headers store per-file offsets, so content cannot simply grow in place), preserving
+   `unpacked` and symlink entries and recomputing the per-file SHA-256 `integrity` record for
+   the single changed file; the result is verified and only then renamed over the original.
+   It re-runs every boot after `81-claude_update.sh`, because an apt upgrade of
+   `claude-desktop` ships a fresh unpatched `app.asar`; it is marker-guarded, so an unchanged
+   app is a no-op, and a failure is logged rather than propagated (an unpatched app still
+   runs, it just forgets the sign-in).
 2. A passwordless keyring was considered instead (keeps libsecret encryption-at-rest without
    a prompt) and rejected: the keyring DB would live in the same persistent volume as the
    ciphertext it's "protecting," so it adds ~no real confidentiality in this single-user
@@ -133,9 +180,12 @@ normally and dispatch stays online regardless of which device connects first aft
 ## Files this plan touched
 - `claude_desktop/rootfs/defaults/autostart` — drop the keyring bootstrap; launch with
   `--password-store=basic`.
-- `claude_desktop/rootfs/etc/cont-init.d/85-openbox_autostart.sh` — new; syncs the persistent
-  autostart from the image on every boot.
+- `claude_desktop/rootfs/etc/cont-init.d/85-openbox_autostart.sh` — new in v1.35; syncs the
+  persistent autostart from the image on every boot.
+- `claude_desktop/rootfs/etc/cont-init.d/86-claude_safestorage.sh` and
+  `claude_desktop/rootfs/usr/local/bin/claude-safestorage-patch.js` — new in v1.37; the
+  app-side `safeStorage` opt-in that makes `--password-store=basic` actually take effect.
 - `claude_desktop/Dockerfile` — corrected stale comment (gnome-keyring is not installed).
-- `claude_desktop/CHANGELOG.md` / `config.yaml` — v1.35.
+- `claude_desktop/CHANGELOG.md` / `config.yaml` — v1.35, then v1.37.
 
 Problem A (in-desktop browser for OAuth) remains planned-only; not touched by this change.

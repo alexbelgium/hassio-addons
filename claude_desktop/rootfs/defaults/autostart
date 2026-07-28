@@ -8,9 +8,15 @@
 # surfaced as recurring "sign in again" prompts and (because the stale session also fails the
 # elevated-access OAuth check) the Claude app's dispatch tab showing this desktop as offline.
 #
-# --password-store=basic uses Electron's built-in fixed-key store instead: no daemon, no
-# prompt, and isEncryptionAvailable() is always true. Secrets land under $HOME/.config/Claude,
-# and HOME=/data/data is persistent add-on storage, so the saved sign-in survives restarts.
+# --password-store=basic uses Electron's built-in fixed-key store instead: no daemon and no
+# prompt. Secrets land under $HOME/.config/Claude, and HOME=/data/data is persistent add-on
+# storage, so the saved sign-in survives restarts.
+#
+# This flag is only half of it. Electron refuses the basic backend unless the application opts
+# in via safeStorage.setUsePlainTextEncryption(true), and Claude Desktop never calls it — with
+# the flag alone, isEncryptionAvailable() stays false and the sign-in is still lost on every
+# restart. /etc/cont-init.d/86-claude_safestorage.sh injects that opt-in into app.asar before
+# this runs; do not drop one without the other.
 # Headroom is intentionally not injected into the Desktop process: Claude Desktop
 # force-overrides ANTHROPIC_BASE_URL (headroom #869), so Desktop uses the registered Headroom
 # MCP tools instead.

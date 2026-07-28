@@ -105,7 +105,10 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
 # Install Claude Desktop, Claude Code, Python tooling, and lightweight local validators.
 # gnome-keyring is intentionally NOT installed: it prompts for a keyring password on first
 # boot, which blocks Claude Desktop from launching. Sign-in persistence instead uses Electron's
-# built-in --password-store=basic (rootfs/defaults/autostart) — no daemon, no prompt.
+# built-in --password-store=basic (rootfs/defaults/autostart) — no daemon, no prompt — together
+# with rootfs/etc/cont-init.d/86-claude_safestorage.sh, which patches app.asar to opt into that
+# backend. Electron ignores --password-store=basic without the app-side opt-in, so both are
+# required for the sign-in to survive a restart.
 # The cowork virtualization stack (qemu-system-x86 + ovmf firmware) lets Claude Code launch
 # its sandbox microVM; libseccomp2 and libcap-ng0 are the shared libraries the source-built
 # virtiofsd daemon links against at runtime. Docker itself is NOT installed here: this base
