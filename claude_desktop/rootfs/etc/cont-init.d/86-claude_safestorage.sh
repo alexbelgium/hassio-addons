@@ -31,6 +31,14 @@ if [ ! -f "$PATCHER" ]; then
     exit 0
 fi
 
+# The patcher removes its own temporary archive on every failure path, but `timeout` kills it
+# outright, so a run that hits the cap leaves one behind. Those are archive-sized, and the live
+# archive stays unpatched, so every later boot would retry under a new pid and strand another
+# copy until the container runs out of space.
+cleanup_tmp() {
+    find "$(dirname "$ASAR")" -maxdepth 1 -name ".$(basename "$ASAR").addon-tmp.*" -delete 2>/dev/null || true
+}
+
 if output=$(timeout 120 node "$PATCHER" "$ASAR" 2>&1); then
     bashio::log.info "safeStorage: ${output}"
 else
@@ -41,6 +49,13 @@ else
         bashio::log.warning "safeStorage patch failed (exit ${rc}); the sign-in will not persist."
     fi
     while IFS= read -r line; do
-        [ -n "$line" ] && bashio::log.warning "${line}"
+        if [ -n "$line" ]; then
+            bashio::log.warning "${line}"
+        fi
     done <<< "${output}"
+    cleanup_tmp
 fi
+
+# Explicitly successful: a failed patch is never fatal, so the status of whatever ran last above
+# must not become this script's status and abort the boot.
+exit 0
