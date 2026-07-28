@@ -24,7 +24,15 @@ sed -i '/listen \[::\]/d' "${NGINX_CONFIG}"
 # Adapt ports and upstream paths for Home Assistant ingress
 sed -i "s|3000|$(bashio::addon.ingress_port)|g" "${NGINX_CONFIG}"
 sed -i "s|SUBFOLDER|/|g" "${NGINX_CONFIG}"
-sed -i "s|CWS|8082|g" "${NGINX_CONFIG}"
+# Same value 20-folders.sh exports to the Selkies services; both must move together or nginx
+# proxies the data websocket to a port nothing listens on. That script also normalises it into
+# the s6 envdir, which this one picks up through with-contenv; the check is repeated so a
+# malformed value cannot reach the nginx config if 20-folders.sh did not get that far.
+CWS="${CUSTOM_WS_PORT:-8082}"
+if ! [[ "$CWS" =~ ^[0-9]+$ ]] || [ "$CWS" -lt 1 ] || [ "$CWS" -gt 65535 ]; then
+    CWS=8082
+fi
+sed -i "s|CWS|${CWS}|g" "${NGINX_CONFIG}"
 sed -i "s|REPLACE_HOME|${HOME:-/root}|g" "${NGINX_CONFIG}"
 sed -i "s|REPLACE_DOWNLOADS_PATH|${HOME:-/config}|g" "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a proxy_set_header Accept-Encoding "";' "${NGINX_CONFIG}"
