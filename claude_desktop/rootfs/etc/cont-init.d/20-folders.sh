@@ -94,7 +94,14 @@ chmod 700 "$XDG_RUNTIME_DIR"
 
 # Must agree with the CWS substitution in 90-ingress.sh: nginx proxies the Selkies data
 # websocket to this port, and Selkies only listens on it if CUSTOM_WS_PORT reaches its process.
+# Validated here, once, because the value goes on to be interpolated into generated shell and
+# into a sed replacement in 90-ingress.sh, both of which take the normalised value back out of
+# the envdir written below.
 SELKIES_WS_PORT="${CUSTOM_WS_PORT:-8082}"
+if ! [[ "$SELKIES_WS_PORT" =~ ^[0-9]+$ ]] || [ "$SELKIES_WS_PORT" -lt 1 ] || [ "$SELKIES_WS_PORT" -gt 65535 ]; then
+    bashio::log.warning "CUSTOM_WS_PORT '${CUSTOM_WS_PORT:-}' is not a valid port number; using 8082"
+    SELKIES_WS_PORT=8082
+fi
 
 # Upstream relies on s6-rc ordering: init-selkies-config publishes XDG_RUNTIME_DIR and
 # CUSTOM_WS_PORT into the s6 envdir, and svc-selkies is started afterwards. The add-on
@@ -122,15 +129,29 @@ if [ "$LOCATION" != "$DEFAULT_LOCATION" ]; then
     done
 fi
 
-# XDG_CACHE_HOME stays unquoted: it doubles as the marker this loop greps for to stay idempotent.
+# Re-derived on every boot rather than injected once behind a marker, for the same reason the
+# ~/.bashrc block below is: the run scripts live in the writable layer and survive a restart, so
+# a write-once injection pins whatever PUID and CUSTOM_WS_PORT were in force the first time.
+# Raising PUID would leave every service exporting a /run/user/<old-uid> the remapped abc user
+# cannot use, and clearing a custom CUSTOM_WS_PORT would leave Selkies on the old port while
+# 90-ingress.sh moved nginx back to 8082. Strip whatever a previous boot left -- the marked
+# block, or the bare exports earlier versions wrote -- then write the current values. No
+# upstream run script in these images sets any of these five, so the bare-line sweep only ever
+# removes our own.
+ENV_BLOCK_BEGIN="# --- BEGIN ADDON ENV (managed) ---"
+ENV_BLOCK_END="# --- END ADDON ENV (managed) ---"
 for file in /etc/s6-overlay/s6-rc.d/*/run; do
-    if [ "$(sed -n '1{/bash/p};q' "$file")" ] && ! grep -q '^export XDG_CACHE_HOME=/tmp/cache$' "$file"; then
-        sed -i "1a export HOME=\"$LOCATION\"" "$file"
-        sed -i "1a export FM_HOME=\"$LOCATION\"" "$file"
-        sed -i "1a export XDG_CACHE_HOME=/tmp/cache" "$file"
-        sed -i "1a export XDG_RUNTIME_DIR=\"$XDG_RUNTIME_DIR\"" "$file"
-        sed -i "1a export CUSTOM_WS_PORT=\"$SELKIES_WS_PORT\"" "$file"
-    fi
+    [ -n "$(sed -n '1{/bash/p};q' "$file")" ] || continue
+    sed -i "/^${ENV_BLOCK_BEGIN}\$/,/^${ENV_BLOCK_END}\$/d" "$file"
+    sed -i -E '/^export (HOME|FM_HOME|XDG_CACHE_HOME|XDG_RUNTIME_DIR|CUSTOM_WS_PORT)=/d' "$file"
+    # Each "1a" lands at line 2 and pushes the previous one down, so this reads bottom-up.
+    sed -i "1a $ENV_BLOCK_END" "$file"
+    sed -i "1a export HOME=\"$LOCATION\"" "$file"
+    sed -i "1a export FM_HOME=\"$LOCATION\"" "$file"
+    sed -i "1a export XDG_CACHE_HOME=\"/tmp/cache\"" "$file"
+    sed -i "1a export XDG_RUNTIME_DIR=\"$XDG_RUNTIME_DIR\"" "$file"
+    sed -i "1a export CUSTOM_WS_PORT=\"$SELKIES_WS_PORT\"" "$file"
+    sed -i "1a $ENV_BLOCK_BEGIN" "$file"
 done
 
 sed -i "s|^\(abc:[^:]*:[^:]*:[^:]*:[^:]*:\)[^:]*|\1$LOCATION|" /etc/passwd

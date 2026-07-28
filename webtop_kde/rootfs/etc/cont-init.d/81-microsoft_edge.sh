@@ -16,9 +16,12 @@ fi
 # not hang or kill startup: the desktop is useful without Edge, an add-on stuck before Selkies
 # starts is not. `set -e` would turn any apt or dpkg hiccup into exactly that, so each command
 # is guarded and every failure path warns and exits 0.
+EDGE_DEB=""
 edge_giveup() {
     bashio::log.warning "$1; skipping the Microsoft Edge install"
-    rm -f /tmp/edge.deb
+    if [ -n "$EDGE_DEB" ]; then
+        rm -f "$EDGE_DEB"
+    fi
     exit 0
 }
 
@@ -40,14 +43,19 @@ if [ -z "$EDGE_VERSION" ]; then
     edge_giveup "Could not determine the latest Microsoft Edge version"
 fi
 
-curl -o /tmp/edge.deb -L --fail --connect-timeout 15 --max-time 600 \
+# mktemp rather than a fixed /tmp/edge.deb: this runs as root, and a predictable name in a
+# world-writable tmpfs is something another process could pre-create as a symlink to redirect
+# the download or swap what gets installed.
+EDGE_DEB="$(mktemp -t microsoft-edge.XXXXXXXXXX.deb)" || edge_giveup "Could not create a temporary file"
+
+curl -o "$EDGE_DEB" -L --fail --connect-timeout 15 --max-time 600 \
     "$EDGE_REPO/microsoft-edge-stable_${EDGE_VERSION}_amd64.deb" \
     || edge_giveup "Downloading Microsoft Edge ${EDGE_VERSION} failed"
 
-dpkg -I /tmp/edge.deb || edge_giveup "The downloaded Microsoft Edge package is not a valid .deb"
-apt-get "${APT_TIMEOUTS[@]}" install --no-install-recommends -y /tmp/edge.deb \
+dpkg -I "$EDGE_DEB" || edge_giveup "The downloaded Microsoft Edge package is not a valid .deb"
+apt-get "${APT_TIMEOUTS[@]}" install --no-install-recommends -y "$EDGE_DEB" \
     || edge_giveup "Installing Microsoft Edge ${EDGE_VERSION} failed"
-rm -f /tmp/edge.deb
+rm -f "$EDGE_DEB"
 
 bashio::log.info "Applying edge docker tweaks"
 # Gated on the helper still being in /helpers, which is where the image ships it and where it
