@@ -1,0 +1,1 @@
+../../../../claude_desktop/rootfs/etc/cont-init.d/21-gpu_permissions.sh

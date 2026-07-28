@@ -142,24 +142,7 @@ jobs:
           persist-credentials: false
 
       - name: Resolve symlinks in repository copy
-        run: |
-          set -euo pipefail
-
-          find . -type l | while read -r link; do
-            target=$(readlink -f "$link" || true)
-            if [ -z "$target" ]; then
-              echo "Skipping broken symlink: $link"
-              continue
-            fi
-
-            rm "$link"
-            if [ -d "$target" ]; then
-              mkdir -p "$link"
-              cp -a "$target/." "$link/"
-            else
-              cp "$target" "$link"
-            fi
-          done
+        run: bash .github/scripts/resolve_symlinks.sh
 
       - name: Copy templates into addon build context
         env:

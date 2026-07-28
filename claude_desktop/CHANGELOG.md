@@ -1,3 +1,7 @@
+## 1.36.3 (28-07-2026)
+
+- Make the Selkies startup scripts add-on agnostic so `webtop` and `webtop_kde` can share them by symlink instead of carrying their own drifted copies. `20-folders.sh` now derives its default data location from the home directory the Dockerfile baked into the `abc` user (`getent passwd abc`) rather than hardcoding `/data/data`, and the `permission_mode: bypass` root guard is skipped on add-ons that do not declare that option. `80-configuration.sh` falls back to `pip` when the image does not ship `uv`. No behaviour change for Claude Desktop: `getent passwd abc` returns `/data/data`, which is exactly the value that was hardcoded before.
+
 ## 1.36.2 (28-07-2026)
 - Minor bugs fixed
  
