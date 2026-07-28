@@ -24,7 +24,9 @@ sed -i '/listen \[::\]/d' "${NGINX_CONFIG}"
 # Adapt ports and upstream paths for Home Assistant ingress
 sed -i "s|3000|$(bashio::addon.ingress_port)|g" "${NGINX_CONFIG}"
 sed -i "s|SUBFOLDER|/|g" "${NGINX_CONFIG}"
-sed -i "s|CWS|8082|g" "${NGINX_CONFIG}"
+# Same default as the CUSTOM_WS_PORT that 20-folders.sh exports to the Selkies services; both
+# must move together or nginx proxies the data websocket to a port nothing listens on.
+sed -i "s|CWS|${CUSTOM_WS_PORT:-8082}|g" "${NGINX_CONFIG}"
 sed -i "s|REPLACE_HOME|${HOME:-/root}|g" "${NGINX_CONFIG}"
 sed -i "s|REPLACE_DOWNLOADS_PATH|${HOME:-/config}|g" "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a proxy_set_header Accept-Encoding "";' "${NGINX_CONFIG}"

@@ -92,11 +92,29 @@ XDG_RUNTIME_DIR="/run/user/$PUID"
 mkdir -p "$XDG_RUNTIME_DIR"
 chmod 700 "$XDG_RUNTIME_DIR"
 
+# Must agree with the CWS substitution in 90-ingress.sh: nginx proxies the Selkies data
+# websocket to this port, and Selkies only listens on it if CUSTOM_WS_PORT reaches its process.
+SELKIES_WS_PORT="${CUSTOM_WS_PORT:-8082}"
+
+# Upstream relies on s6-rc ordering: init-selkies-config publishes XDG_RUNTIME_DIR and
+# CUSTOM_WS_PORT into the s6 envdir, and svc-selkies is started afterwards. The add-on
+# entrypoint replaces s6-overlay and launches every s6-rc.d run script in parallel, with no
+# dependency graph, so a longrun can snapshot the envdir (with-contenv reads it once, at exec)
+# before the oneshot has written to it. Selkies is where that shows: it comes up with
+# CUSTOM_WS_PORT unset and binds its data websocket on the 8081 default while nginx proxies
+# 8082, and on the PIXELFLUX_WAYLAND images it reaches the compositor with no XDG_RUNTIME_DIR
+# and panics with `RuntimeDirNotSet` binding the Wayland socket.
+#
+# Exporting both inside the run scripts puts them in each process's own environment, where no
+# start ordering can lose them, and keeps every service agreeing on one runtime dir -- svc-de
+# otherwise waits forever on a Wayland socket under a directory Selkies never used.
 for file in /etc/s6-overlay/s6-rc.d/*/run; do
     if [ "$(sed -n '1{/bash/p};q' "$file")" ] && ! grep -q '^export XDG_CACHE_HOME=/tmp/cache$' "$file"; then
         sed -i "1a export HOME=$LOCATION" "$file"
         sed -i "1a export FM_HOME=$LOCATION" "$file"
         sed -i "1a export XDG_CACHE_HOME=/tmp/cache" "$file"
+        sed -i "1a export XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR" "$file"
+        sed -i "1a export CUSTOM_WS_PORT=$SELKIES_WS_PORT" "$file"
     fi
 done
 
@@ -116,6 +134,7 @@ printf "%s" "$LOCATION" > "$S6_ENVDIR/HOME"
 printf "%s" "$LOCATION" > "$S6_ENVDIR/FM_HOME"
 printf "%s" "/tmp/cache" > "$S6_ENVDIR/XDG_CACHE_HOME"
 printf "%s" "$XDG_RUNTIME_DIR" > "$S6_ENVDIR/XDG_RUNTIME_DIR"
+printf "%s" "$SELKIES_WS_PORT" > "$S6_ENVDIR/CUSTOM_WS_PORT"
 # Re-derived on every boot rather than gated on a "does it already say $LOCATION" grep: that
 # guard only ever recognized the CURRENT $LOCATION, so a user who changed data_location and
 # later changed it back left two stale HOME/FM_HOME exports in ~/.bashrc, with the last one
@@ -159,13 +178,16 @@ bashio::log.info "Setting ownership to $PUID:$PGID"
 chown -R "${PUID}:${PGID}" "$LOCATION" /tmp/cache "$XDG_RUNTIME_DIR" /data
 chmod -R 700 "$LOCATION"
 
-# The base init-selkies-config script overrides XDG_RUNTIME_DIR to $HOME/.XDG, which lands
-# on persistent storage and conflicts with the tmpfs runtime dir set above. Re-assert the
-# tmpfs value at the end of that oneshot so the app and desktop agree on one valid dir.
+# The base init-selkies-config script overrides XDG_RUNTIME_DIR to $HOME/.XDG, which lands on
+# persistent storage and conflicts with the tmpfs runtime dir set above. Correct that write
+# where it happens rather than re-asserting the value at the end of the oneshot: the tolerance
+# block below appends `exit 0`, so on every boot after the first an appended correction sits
+# past it and never runs.
 SELKIES_CONFIG_RUN="/etc/s6-overlay/s6-rc.d/init-selkies-config/run"
 if [ -f "$SELKIES_CONFIG_RUN" ]; then
+    # Drop the trailing correction earlier versions appended, now applied at the source.
     sed -i '/^# XDG_RUNTIME_DIR override reconciled$/,+1d' "$SELKIES_CONFIG_RUN"
-    printf '\n# XDG_RUNTIME_DIR override reconciled\nprintf "%%s" "%s" > /run/s6/container_environment/XDG_RUNTIME_DIR\n' "$XDG_RUNTIME_DIR" >> "$SELKIES_CONFIG_RUN"
+    sed -i "s|^.*> */run/s6/container_environment/XDG_RUNTIME_DIR *\$|printf '%s' '$XDG_RUNTIME_DIR' > /run/s6/container_environment/XDG_RUNTIME_DIR|" "$SELKIES_CONFIG_RUN"
 fi
 
 # The Selkies desktop init oneshots do best-effort device/permission setup (mknod
