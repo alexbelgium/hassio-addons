@@ -15,12 +15,27 @@ bashio::log.info "Adding microsoft edge"
 apt-get update
 apt-get install --no-install-recommends -y ca-certificates
 
+# Both requests are bounded and non-fatal. cont-init.d blocks the whole add-on, so an
+# unreachable or stalled packages.microsoft.com must not hang or kill startup: the desktop is
+# useful without Edge, an add-on stuck before Selkies starts is not.
+EDGE_REPO="https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable"
+
 if [ -z ${EDGE_VERSION+x} ]; then
-    EDGE_VERSION=$(curl -sL https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/ \
-        | awk -F'(<a href="microsoft-edge-stable_|_amd64.deb\")' '/href=/ {print $2}' | sort --version-sort | tail -1)
+    EDGE_VERSION=$(curl -sL --fail --connect-timeout 15 --max-time 120 "$EDGE_REPO/" \
+        | awk -F'(<a href="microsoft-edge-stable_|_amd64.deb\")' '/href=/ {print $2}' | sort --version-sort | tail -1 || true)
 fi
 
-curl -o /tmp/edge.deb -L "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_${EDGE_VERSION}_amd64.deb"
+if [ -z "$EDGE_VERSION" ]; then
+    bashio::log.error "Could not determine the latest Microsoft Edge version; skipping the Edge install"
+    exit 0
+fi
+
+if ! curl -o /tmp/edge.deb -L --fail --connect-timeout 15 --max-time 600 \
+    "$EDGE_REPO/microsoft-edge-stable_${EDGE_VERSION}_amd64.deb"; then
+    bashio::log.error "Downloading Microsoft Edge ${EDGE_VERSION} failed; skipping the Edge install"
+    exit 0
+fi
+
 dpkg -I /tmp/edge.deb
 apt-get install --no-install-recommends -y /tmp/edge.deb
 

@@ -7,14 +7,24 @@ set -e
 # symlink; keep it add-on agnostic. The only per-add-on input is the home directory baked into
 # the image by the Dockerfile's `usermod --home <dir> abc`, read back below.
 
-# Default data location for this image: whatever the Dockerfile set as abc's home. Read it
-# before anything below rewrites /etc/passwd so the value is the image default, not a
-# previously applied data_location.
+# Default data location for this image: whatever the Dockerfile set as abc's home.
 #
-# The `|| true` is load-bearing: getent exits 2 when the user does not exist, and under
-# bashio's `set -o pipefail` plus this script's `set -e` that aborts the script at the
-# assignment, before the fallback below can run. Same trap documented in 21-gpu_permissions.sh.
-DEFAULT_LOCATION="$(getent passwd abc 2> /dev/null | cut -d: -f6 || true)"
+# Cached in a marker file rather than read from /etc/passwd on every boot, because this script
+# rewrites that entry further down to the *selected* location. On a restart that reuses the
+# container's writable layer, re-reading /etc/passwd would hand back the previous selection as
+# the "image default", so clearing data_location would strand the user on their old custom path
+# instead of restoring the built-in one. The marker shares its lifetime with the /etc/passwd
+# edit it compensates for: both live in the writable layer, so a rebuilt or recreated container
+# starts from a pristine /etc/passwd and regenerates the marker correctly.
+#
+# The `|| true` is load-bearing: getent exits 2 when the user does not exist, and under bashio's
+# `set -o pipefail` plus this script's `set -e` that aborts the script at the assignment, before
+# the fallback below can run. Same trap documented in 21-gpu_permissions.sh.
+DEFAULT_LOCATION_MARKER="/etc/.addon_image_home"
+if [ ! -s "$DEFAULT_LOCATION_MARKER" ]; then
+    getent passwd abc 2> /dev/null | cut -d: -f6 > "$DEFAULT_LOCATION_MARKER" || true
+fi
+DEFAULT_LOCATION="$(cat "$DEFAULT_LOCATION_MARKER" 2> /dev/null || true)"
 if [[ -z "$DEFAULT_LOCATION" || "$DEFAULT_LOCATION" == "/" ]]; then
     DEFAULT_LOCATION="/config/data"
     bashio::log.warning "Could not read the abc home directory from /etc/passwd; defaulting to $DEFAULT_LOCATION"
