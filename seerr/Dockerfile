@@ -56,7 +56,7 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="nginx"
+ENV PACKAGES="nginx nginx-mod-http-js"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
