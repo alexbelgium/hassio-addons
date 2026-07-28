@@ -108,6 +108,9 @@ jobs:
       - name: ↩️ Checkout
         uses: actions/checkout@v7.0.1
 
+      - name: Resolve symlinks in repository copy
+        run: bash .github/scripts/resolve_symlinks.sh
+
       - name: Copy templates into addon build context
         env:
           ADDON: ${{ matrix.addon }}

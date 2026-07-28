@@ -3,6 +3,19 @@
 # shellcheck disable=SC2046
 set -e
 
+# Shared by every Selkies-based add-on in this repo (claude_desktop, webtop, webtop_kde) via a
+# symlink; keep it add-on agnostic. The only per-add-on input is the home directory baked into
+# the image by the Dockerfile's `usermod --home <dir> abc`, read back below.
+
+# Default data location for this image: whatever the Dockerfile set as abc's home. Read it
+# before anything below rewrites /etc/passwd so the value is the image default, not a
+# previously applied data_location.
+DEFAULT_LOCATION="$(getent passwd abc | cut -d: -f6)"
+if [[ -z "$DEFAULT_LOCATION" || "$DEFAULT_LOCATION" == "/" ]]; then
+    DEFAULT_LOCATION="/config/data"
+    bashio::log.warning "Could not read the abc home directory from /etc/passwd; defaulting to $DEFAULT_LOCATION"
+fi
+
 # Align the shared desktop user (abc) with the configured PUID/PGID before any storage is
 # chowned and before any service or s6-setuidgid call resolves abc. The base image's
 # init-adduser applies the same remap, but it runs after cont-init, so doing it here first is
@@ -11,8 +24,8 @@ PUID="$(if bashio::config.has_value 'PUID'; then bashio::config 'PUID'; else ech
 PGID="$(if bashio::config.has_value 'PGID'; then bashio::config 'PGID'; else echo '1000'; fi)"
 
 # Claude Code refuses bypass-permissions mode under an effective root UID, so bypass mode
-# always needs a non-root desktop user.
-if [ "$(bashio::config 'permission_mode')" = "bypass" ] && [ "$PUID" -eq 0 ]; then
+# always needs a non-root desktop user. Add-ons without a permission_mode option skip this.
+if bashio::config.has_value 'permission_mode' && [ "$(bashio::config 'permission_mode')" = "bypass" ] && [ "$PUID" -eq 0 ]; then
     bashio::log.warning "permission_mode: bypass cannot run Claude Code as root; using UID 1000 instead of the configured PUID 0"
     PUID=1000
 fi
@@ -37,7 +50,7 @@ fi
 LOCATION="$(bashio::config 'data_location')"
 
 if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
-    LOCATION="/data/data"
+    LOCATION="$DEFAULT_LOCATION"
 else
     LOCATIONOK=""
     for location in "/share" "/config" "/data" "/mnt"; do
@@ -47,7 +60,7 @@ else
     done
 
     if [ -z "$LOCATIONOK" ]; then
-        LOCATION="/data/data"
+        LOCATION="$DEFAULT_LOCATION"
         bashio::log.fatal "Your data_location value can only be set in /share, /config, /data or /mnt. It will be reset to the default location : $LOCATION"
     fi
 fi
@@ -73,11 +86,15 @@ for file in /etc/s6-overlay/s6-rc.d/*/run; do
     fi
 done
 
-for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
-    if [ -d "$folders" ]; then
-        find "$folders" -type f -exec sed -i "s|/data/data|$LOCATION|g" {} + &> /dev/null || true
-    fi
-done
+# Rewrite the home path baked into the image to the user-chosen one. No-op when data_location
+# is left at its default.
+if [ "$LOCATION" != "$DEFAULT_LOCATION" ]; then
+    for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
+        if [ -d "$folders" ]; then
+            find "$folders" -type f -exec sed -i "s|$DEFAULT_LOCATION|$LOCATION|g" {} + &> /dev/null || true
+        fi
+    done
+fi
 
 sed -i "s|^\(abc:[^:]*:[^:]*:[^:]*:[^:]*:\)[^:]*|\1$LOCATION|" /etc/passwd
 

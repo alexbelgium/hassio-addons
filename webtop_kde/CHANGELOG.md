@@ -1,3 +1,7 @@
+## 4.16-r0-ls93.1 (28-07-2026)
+
+- Share the Selkies startup scripts with the `claude_desktop` add-on by symlink (`20-folders.sh`, `21-gpu_permissions.sh`, `80-configuration.sh`, `90-ingress.sh` and the nginx includes), so the fixes made there now apply here too. This brings in: GPU render-node permissions granted before the graphical services start (fixes `libEGL warning: failed to open /dev/dri/card0: Permission denied` and the resulting "waiting for stream" hang); the s6 envdir and `XDG_RUNTIME_DIR` created up front; the cache redirected to tmpfs; `/tmp/.X11-unix` pre-created so Xorg can bind its socket as a non-root user; the `init-video` and `init-selkies-config` oneshots made non-fatal so a partially permitted device setup no longer crash-loops the add-on; and an ingress config that keeps the correct (non-SSL) nginx server block. The Microsoft Edge install moves to its own webtop-only `81-microsoft_edge.sh`, which also picks up the ownership fixup that previously ran in `20-folders.sh` before Edge was installed and so never matched anything.
+
  
 ## 4.16-r0-ls93 (2026-07-21)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)

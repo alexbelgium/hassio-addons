@@ -2,7 +2,11 @@
 # shellcheck shell=bash
 set -e
 
-# The image is Debian-based (apt) and always ships uv, so those are the only installers used.
+# Shared by every Selkies-based add-on in this repo (claude_desktop, webtop, webtop_kde) via a
+# symlink; keep it add-on agnostic. Every option read here is guarded, so an add-on that does
+# not declare a given option simply skips that block.
+#
+# All three images are Debian/Ubuntu-based, so apt is the only system package manager used.
 if bashio::config.has_value 'additional_apps'; then
     bashio::log.info "Installing additional apps :"
     apt-get update -o Acquire::http::Timeout=10 -o Acquire::https::Timeout=10 &> /dev/null || bashio::log.warning "Unable to update apt package lists"
@@ -13,9 +17,14 @@ if bashio::config.has_value 'additional_apps'; then
 fi
 
 if bashio::config.has_value 'additional_pip'; then
+    if command -v uv &> /dev/null; then
+        pip_install=(uv pip install --system --break-system-packages)
+    else
+        pip_install=(pip install --break-system-packages)
+    fi
     for p in $(bashio::config 'additional_pip' | tr ',' ' '); do
         bashio::log.green "... pip: $p"
-        uv pip install --system --break-system-packages "$p" || bashio::log.fatal "Error: pip package $p failed"
+        "${pip_install[@]}" "$p" || bashio::log.fatal "Error: pip package $p failed"
     done
 fi
 
