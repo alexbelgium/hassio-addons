@@ -1,9 +1,9 @@
 {
   "github_exclude": "-",
-  "last_update": "2026-07-27",
+  "last_update": "2026-08-01",
   "repository": "alexbelgium/hassio-addons",
   "slug": "portainer_be",
   "source": "dockerhub",
   "upstream_repo": "portainer/portainer-ee",
-  "upstream_version": "2.43.0"
+  "upstream_version": "sts"
 }
