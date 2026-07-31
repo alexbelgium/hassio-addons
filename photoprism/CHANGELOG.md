@@ -1,3 +1,6 @@
+ 
+## ubuntu-2026-07-28 (2026-07-28)
+- Update to latest version from photoprism/photoprism
 ## ubuntu-2026-06-01 (2026-06-01)
 - Update to latest version from photoprism/photoprism
 
