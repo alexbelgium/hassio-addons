@@ -1,4 +1,7 @@
  
+## 2.44.0 (2026-08-01)
+- Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
+ 
 ## 2.43.0.1 (2026-07-24)
 - Ingress: disable nginx gzip re-compression of proxied responses so Home Assistant relays them via the buffered path (addresses 502 Bad Gateway via ingress, #2766)
 
