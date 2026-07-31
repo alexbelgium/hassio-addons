@@ -1,3 +1,6 @@
+ 
+## kali-version-e963b19b (2026-08-01)
+- Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 ## 1.37 (28-07-2026)
 
 - Fix the recurring "For your security, sign in again to keep using Claude." prompt for real. The v1.35 fix was ineffective: `--password-store=basic` was reaching the process (confirmed on a live install's `/proc/<pid>/cmdline`), yet the app kept logging `safeStorage not available, tokens will not persist` and `Encryption not available, returning empty env vars` on every launch. The missing half is an application-side opt-in — Electron refuses its built-in `basic_text` backend unless the app calls `safeStorage.setUsePlainTextEncryption(true)` before `ready`, and Claude Desktop never calls it (the symbol is present in the Electron binary but absent from `resources/app.asar`). So `isEncryptionAvailable()` stayed `false` and the auth token was never persisted, exactly as when the keyring backend was forced without a keyring daemon. Verified against a standalone Electron of the same generation: with `--password-store=basic` and no opt-in `isEncryptionAvailable()` is `false`; with the opt-in it is `true`, and a *separate later process* decrypts a blob written by an earlier one — which is the restart survival this add-on needs.
