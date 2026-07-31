@@ -1,3 +1,6 @@
+ 
+## 0.147.1 (2026-08-01)
+- Update to latest version from manyfold3d/manyfold (changelog : https://github.com/manyfold3d/manyfold/releases)
 ## 0.146.1-3 (2026-07-08)
 - Fix forced HTTPS redirect loop on the plain-HTTP UI by re-adding the `assume_ssl` disable workaround.
 - Export `PUBLIC_PORT` alongside `public_hostname` so generated links point at port 3214.
