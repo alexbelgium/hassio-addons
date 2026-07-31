@@ -1,7 +1,4 @@
  
-## v1.68.0 (2026-08-01)
-- Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
 ## v1.67.0-8 (2026-07-18)
 - Verify every backup file checksum and symbolic-link target, record the content-validation method in the migration marker, atomically preserve the previous archive until replacement validation succeeds, and remove the blocking synthetic FIFO test fixture.
 
