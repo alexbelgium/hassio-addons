@@ -1,3 +1,6 @@
+ 
+## v5.4.2 (2026-08-01)
+- Update to latest version from haugene/docker-transmission-openvpn (changelog : https://github.com/haugene/docker-transmission-openvpn/releases)
 
 ## v5.4.1 (2026-03-28)
 - Update to latest version from haugene/docker-transmission-openvpn (changelog : https://github.com/haugene/docker-transmission-openvpn/releases)
