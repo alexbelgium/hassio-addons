@@ -1,3 +1,6 @@
+ 
+## 2.63.23 (2026-08-01)
+- Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
 ## 2.63.18.5 (26-07-2026)
 - Fixed healthcheck log spam when ssl is enabled (#2881)
 ## 2.63.18.4 (22-07-2026)
