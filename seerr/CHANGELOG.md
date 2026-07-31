@@ -1,3 +1,6 @@
+ 
+## 3.4.1 (2026-08-01)
+- Update to latest version from seerr-team/seerr (changelog : https://github.com/seerr-team/seerr/releases)
 ## 3.3.0.1 (2026-07-28)
 
 - Fixed searches failing through ingress with `500 Internal Server Error` (#2906, #2646). Home Assistant's ingress proxy re-encodes the query string and passes a space as `+`, along with a bare `:` `/` `?` `@` `!` `$` `'` `(` `)` `*` `,` - all of which Seerr's OpenAPI validator rejects as reserved characters. Nginx now re-encodes them before proxying, so titles such as `Monsters, Inc.`, `Ocean's Eleven`, `Mission: Impossible` and `Who? What?` search correctly. Only ingress was affected; the directly published port 5055 always worked.
