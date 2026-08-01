@@ -1,3 +1,7 @@
+## v26.2.256 (2026-08-01)
+
+- Version renamed from `v26.2-ls256`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
+
  
 ## v26.2-ls256 (2026-08-01)
 - Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)

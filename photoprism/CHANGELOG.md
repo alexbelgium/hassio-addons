@@ -1,3 +1,7 @@
+## 2026.07.28 (2026-08-01)
+
+- Version renamed from `ubuntu-2026-07-28`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
+
  
 ## ubuntu-2026-07-28 (2026-07-28)
 - Update to latest version from photoprism/photoprism

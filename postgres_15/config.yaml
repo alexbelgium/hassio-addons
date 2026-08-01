@@ -34,4 +34,4 @@ schema:
 slug: postgres
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/postgres
-version: 15.7-47
+version: "15.7.47"
