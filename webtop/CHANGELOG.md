@@ -1,3 +1,7 @@
+## 4.16.0.95.7 (2026-08-01)
+
+- Version renamed from `4.16-r0-ls95-7`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
+
 ## 4.16-r0-ls95-7 (28-07-2026)
 
 - Fix Selkies dying with a Rust `RuntimeDirNotSet` unwrap panic just after `Data WebSocket Server listening on port 8081`, and the data websocket then being proxied to the wrong port. Upstream relies on s6-rc ordering: `init-selkies-config` publishes `XDG_RUNTIME_DIR` and `CUSTOM_WS_PORT` into the s6 envdir and `svc-selkies` starts afterwards. The add-on entrypoint replaces s6-overlay and starts every `s6-rc.d` run script in parallel with no dependency graph, so Selkies can snapshot the envdir before that oneshot has written to it -- which is why it bound port 8081 (its own default) instead of the 8082 nginx proxies to, and why its Wayland compositor found no runtime directory to bind a socket in. `20-folders.sh` now exports both variables inside each run script, where no start ordering can lose them, and corrects the base image's `$HOME/.XDG` override where that write happens instead of appending a correction after the `exit 0` that the oneshot-tolerance block adds -- which meant the correction never ran on any boot after the first.

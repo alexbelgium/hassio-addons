@@ -1,3 +1,7 @@
+## 2.6.1.5509.8 (2026-08-01)
+
+- Version renamed from `nightly-2.6.1.5509-ls8`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
+
  
 ## nightly-2.6.1.5509-ls8 (2026-08-01)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)

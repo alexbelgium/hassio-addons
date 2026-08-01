@@ -1,3 +1,7 @@
+## 2.6.3 (2026-08-01)
+
+- Version renamed from `2.6-dev-3`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
+
 ## 2.6-dev-3 (2026-06-16)
 - Fix fresh-install startup by making the persistent `/data/static` and `/data/media` directories writable by the `wger` user without recursively changing all of `/data`.
 - Preserve existing persistent data by reusing `/data/database.sqlite` when present, and migrating a legacy `/home/wger/db/database.sqlite` only if no persistent database exists yet.

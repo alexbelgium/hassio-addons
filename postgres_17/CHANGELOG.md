@@ -1,3 +1,7 @@
+## 17.4.13 (2026-08-01)
+
+- Version renamed from `17.4-13`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
+
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 17.4-13 (2025-08-22)
