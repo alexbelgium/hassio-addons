@@ -1,3 +1,7 @@
+ 
+## 2026.08.01.1 (2026-08-01)
+- Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)
+- Upstream tag : version-e2e1ec9c
 ## 2026.08.01 (2026-08-01)
 
 - Version renamed from `version-bf9e0b4f`, which Home Assistant could not order and therefore could not reliably offer as an update: the previous version held no number that could order it, so the date of this change is used. The addon itself and the upstream version it tracks are unchanged
