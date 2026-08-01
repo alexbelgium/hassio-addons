@@ -45,7 +45,25 @@ DOTTED_NUMBER = re.compile(r"^(?P<prefix>v?)(?P<number>\d+(?:\.\d+)*)$")
 NAMED_NUMBER = re.compile(r"^[A-Za-z]*(\d+(?:\.\d+)*)$")
 # Words holding a number that says nothing about the release.
 NOT_A_NUMBER = frozenset(
-    ("amd64", "arm64", "aarch64", "armv7", "armhf", "i386", "x86", "x64")
+    (
+        "aarch64",
+        "amd64",
+        "arm64",
+        "armhf",
+        "armv6",
+        "armv7",
+        "i386",
+        "i486",
+        "i586",
+        "i686",
+        "mips64",
+        "ppc64",
+        "riscv64",
+        "win32",
+        "win64",
+        "x64",
+        "x86",
+    )
 )
 
 # Upper bound for the ".1", ".2", ... local rebuild counters.
@@ -94,12 +112,15 @@ def is_year(section: str) -> bool:
 
 
 def is_date_like(number: str) -> bool:
-    """Return True for "YYYY.MM.DD", with or without a counter."""
+    """Return True for a real "YYYY.MM.DD", with or without a counter."""
     parts = number.split(".")
     if len(parts) < 3 or not is_year(parts[0]):
         return False
-    month, day = (int(part) for part in parts[1:3])
-    return 1 <= month <= 12 and 1 <= day <= 31
+    try:
+        date(*(int(part) for part in parts[:3]))
+    except ValueError:
+        return False
+    return True
 
 
 def increment(number: str) -> str:
@@ -225,6 +246,12 @@ SELFTESTS = (
     ("20260801", "nightly-20260801-2", "20260801.2"),
     # A word holding a number that is not part of the release is left out.
     ("5.3.2025.11.08", "5.3-amd64-2025-11-09", "5.3.2025.11.09"),
+    ("1.2.3", "nightly-1.2.4-i686", "1.2.4"),
+    ("1.2.3", "nightly-1.2.4-armv6", "1.2.4"),
+    # A date that does not exist is a number like any other.
+    ("2026.02.31", "version-1a2b3c4d", "2026.02.32"),
+    ("2026.02.29", "version-1a2b3c4d", "2026.02.30"),
+    ("2028.02.29", "version-1a2b3c4d", "2028.02.29.1"),
     # Dockerhub tags dated by the updater itself.
     ("1.2.3.2026.07.25", "1.2.3-2026-08-01", "1.2.3.2026.08.01"),
     # The same, dated the other way round: the date cannot order the
