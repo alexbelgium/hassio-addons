@@ -41,8 +41,12 @@ MARKER = re.compile(r"^(v?\d+(?:\.\d+)*)(?:alpha|beta|rc|a|b)(\d+)(?=$|-)")
 PRERELEASE = re.compile(r"^(v?\d+(?:\.\d+)*)-(\d+(?:\.\d+)*)$")
 # A version made of numbers only, e.g. "1.37" or "v2026.07.10.2".
 DOTTED_NUMBER = re.compile(r"^(?P<prefix>v?)(?P<number>\d+(?:\.\d+)*)$")
-# The first dotted number inside a tag, e.g. "26.2" in "v26.2-ls255".
-EMBEDDED_NUMBER = re.compile(r"\d+(?:\.\d+)+")
+# A number carrying a name, e.g. "ls256", "r0" or the bare "2026".
+NAMED_NUMBER = re.compile(r"^[A-Za-z]*(\d+(?:\.\d+)*)$")
+# Words holding a number that says nothing about the release.
+NOT_A_NUMBER = frozenset(
+    ("amd64", "arm64", "aarch64", "armv7", "armhf", "i386", "x86", "x64")
+)
 
 # Upper bound for the ".1", ".2", ... local rebuild counters.
 MAX_COUNTER = 100
@@ -84,13 +88,18 @@ def is_acceptable(candidate: str, current: str) -> bool:
     return is_sortable(candidate) and is_newer(candidate, current)
 
 
+def is_year(section: str) -> bool:
+    """Return True for a section that can only be a year."""
+    return len(section) == 4 and 2000 <= int(section) <= 2999
+
+
 def is_date_like(number: str) -> bool:
     """Return True for "YYYY.MM.DD", with or without a counter."""
     parts = number.split(".")
-    if len(parts) < 3 or len(parts[0]) != 4:
+    if len(parts) < 3 or not is_year(parts[0]):
         return False
-    year, month, day = (int(part) for part in parts[:3])
-    return 2000 <= year <= 2999 and 1 <= month <= 12 and 1 <= day <= 31
+    month, day = (int(part) for part in parts[1:3])
+    return 1 <= month <= 12 and 1 <= day <= 31
 
 
 def increment(number: str) -> str:
@@ -106,15 +115,32 @@ def counters(base: str) -> Iterator[str]:
         yield f"{base}.{counter}"
 
 
+def skeleton(version: str) -> str:
+    """Return every number of a tag, in order, as dotted sections.
+
+    "v26.2-ls256" -> "v26.2.256", "nightly-2.6.1.5509-ls8" ->
+    "2.6.1.5509.8", "4.16-r0-ls94" -> "4.16.0.94". Words carrying no
+    number and anything else, a commit hash in particular, are dropped.
+    """
+    numbers = []
+    for word in re.split(r"[-/]", normalise(version)):
+        if word.lower() in NOT_A_NUMBER:
+            continue
+        named = NAMED_NUMBER.match(word)
+        if named:
+            numbers.append(named.group(1))
+    if not numbers:
+        return ""
+    prefix = "v" if version.startswith("v") else ""
+    return prefix + ".".join(numbers)
+
+
 def upstream_candidates(upstream: str) -> Iterator[str]:
-    """Yield the upstream tag, then the release number hidden in it."""
-    normalised = normalise(upstream)
-    yield normalised
-    # "v26.3-ls256" -> "26.3": the upstream release number of a tag Home
-    # Assistant cannot sort still beats a number of our own making.
-    embedded = EMBEDDED_NUMBER.search(normalised)
-    if embedded:
-        yield embedded.group(0)
+    """Yield the upstream tag, then the numbers hidden in it."""
+    yield normalise(upstream)
+    # "v26.3-ls256" -> "v26.3.256": the numbers of a tag Home Assistant
+    # cannot sort still order the addon better than one of our making.
+    yield skeleton(upstream)
 
 
 def local_candidates(current: str, today: date, release: str) -> Iterator[str]:
@@ -137,16 +163,20 @@ def local_candidates(current: str, today: date, release: str) -> Iterator[str]:
             yield dotted.group("prefix") + increment(dotted.group("number"))
         yield from counters(normalised)
     elif dotted:
-        # "1.37" -> "1.38": the number already in use simply moves on.
-        yield dotted.group("prefix") + increment(dotted.group("number"))
+        # "1.37" -> "1.38": the number already in use simply moves on,
+        # unless it ends on a year, which belongs to a date the addon
+        # does not choose.
+        if not is_year(dotted.group("number").split(".")[-1]):
+            yield dotted.group("prefix") + increment(dotted.group("number"))
         yield from counters(normalised)
     else:
         # Nothing sortable to build on, e.g. "version-bf9e0b4f": keep the
-        # release number when the tag has one, else switch to calendar
+        # numbers when the version has some, else switch to calendar
         # versioning, which is ordered and never runs out of numbers.
-        embedded = EMBEDDED_NUMBER.search(normalised)
-        if embedded:
-            yield from counters(embedded.group(0))
+        numbers = skeleton(normalised)
+        if numbers:
+            yield numbers
+            yield from counters(numbers)
         yield calver
         yield from counters(calver)
 
@@ -156,9 +186,7 @@ def resolve(current: str, upstream: str, today: date) -> str:
     for candidate in upstream_candidates(upstream):
         if is_acceptable(candidate, current):
             return candidate
-    embedded = EMBEDDED_NUMBER.search(normalise(upstream))
-    release = embedded.group(0) if embedded else ""
-    for candidate in local_candidates(current, today, release):
+    for candidate in local_candidates(current, today, skeleton(upstream)):
         if is_acceptable(candidate, current):
             return candidate
     return ""
@@ -179,6 +207,7 @@ SELFTESTS = (
     ("1.2.3.2", "1.2.3-3", "1.2.3.3"),
     ("1.2.3", "1.2.3+4", "1.2.3.4"),
     ("1.2.3.4", "1.2.3+5", "1.2.3.5"),
+    ("1.2.4", "1.2.3", "1.2.5"),
     # Pre-release markers become a section of their own, so that the
     # number they carry keeps ordering the addon versions.
     ("5.0.0b5-3", "5.0.0b5", "5.0.0.5"),
@@ -187,31 +216,33 @@ SELFTESTS = (
     ("1.2.3", "1.2.4rc2", "1.2.4.2"),
     ("1.2.3", "2.0.0beta1", "2.0.0.1"),
     ("1.2.3", "1.2.4a1-2", "1.2.4.1.2"),
-    ("1.2.4", "1.2.3", "1.2.5"),
-    # Unsortable tags: the release number in the tag comes first...
-    ("v26.2-ls255", "v26.3-ls256", "26.3"),
-    ("26.3", "v26.3-ls257", "26.3.1"),
-    ("26.3.1", "v26.3-ls258", "26.3.2"),
-    ("v1.67.0.8", "nightly-2.6.0.5494-ls8", "2.6.0.5494"),
-    # ... and the addon number moves on when the tag has none.
+    # Tags Home Assistant cannot order keep every number they carry.
+    ("v26.2-ls255", "v26.3-ls256", "v26.3.256"),
+    ("v26.3.256", "v26.3-ls257", "v26.3.257"),
+    ("v1.67.0.8", "nightly-2.6.1.5509-ls8", "2.6.1.5509.8"),
+    ("4.16.0.93", "4.16-r0-ls94", "4.16.0.94"),
+    ("1.43.3.10828.315", "1.43.3.10828-00f62d37d-ls316", "1.43.3.10828.316"),
+    ("2026.06.01", "ubuntu-2026-07-01", "2026.07.01"),
+    ("20260729.1", "nightly-20260801", "20260801"),
+    ("20260801", "nightly-20260801-2", "20260801.2"),
+    # A word holding a number that is not part of the release is left out.
+    ("5.3.2025.11.08", "5.3-amd64-2025-11-09", "5.3.2025.11.09"),
+    # Dockerhub tags dated by the updater itself.
+    ("1.2.3.2026.07.25", "1.2.3-2026-08-01", "1.2.3.2026.08.01"),
+    # The same, dated the other way round: the date cannot order the
+    # addon, so a local counter does.
+    ("1.2.3.25.07.2026", "1.2.3-01-08-2026", "1.2.3.25.07.2026.1"),
+    # Tags holding no number at all: the addon number moves on...
     ("1.37", "ubunturesolute-version-8208e985", "1.38"),
     ("1.4", "sha-2b71a1c", "1.5"),
     ("2025.12-6", "alpine-sts", "2026.08.01"),
     ("version-bf9e0b4f", "version-1a2b3c4d", "2026.08.01"),
-    ("ubuntu-2026-06-01", "ubuntu-2026-07-01", "2026.08.01"),
-    # Dockerhub tags dated by the updater itself, which awesomeversion
-    # reads as a semver pre-release and never sorts as newer.
-    ("1.2.3-2026-07-25", "1.2.3-2026-08-01", "1.2.3"),
-    ("1.2.3", "1.2.3-2026-08-02", "1.2.3.1"),
-    ("1.2.3.1", "1.2.3-2026-08-03", "1.2.3.2"),
-    # Calendar versions, including several updates on the same day.
-    ("2026.07.31", "nightly-20260801", "2026.08.01"),
-    ("2026.08.01", "nightly-20260801-2", "2026.08.01.1"),
-    ("2026.08.01.1", "nightly-20260801-3", "2026.08.01.2"),
-    # A calendar version with a counter still moves to the current date.
-    ("2026.07.30.2", "nightly-20260801", "2026.08.01"),
+    # ... and calendar versions count up on the same day.
+    ("2026.08.01", "version-1a2b3c4d", "2026.08.01.1"),
+    ("2026.08.01.1", "version-2b3c4d5e", "2026.08.01.2"),
+    ("2026.07.30.2", "version-3c4d5e6f", "2026.08.01"),
     # A version dated in the future is never downgraded.
-    ("2026.09.15", "nightly-20260801", "2026.09.15.1"),
+    ("2026.09.15", "version-4d5e6f70", "2026.09.15.1"),
     # Switching between schemes, in both directions.
     ("version-bf9e0b4f", "3.0.4", "3.0.4"),
     ("3.0.4", "version-bf9e0b4f", "3.0.5"),
