@@ -73,6 +73,22 @@ You can add the following tags in the file :
 - dockerhub_by_date: in dockerhub, uses the last_update date instead of the version
 - dockerhub_list_size: in dockerhub, how many containers to consider for latest version
 
+### Addon version numbering
+
+The `version` written in the addon `config.yaml` is the one Home Assistant compares to decide whether an update is available. Home Assistant hides the update when it can order both versions and the new one is not strictly newer (`1.2.3` -> `1.2.3-2` is a semver pre-release, so it is *older*), and it cannot order tags such as `version-bf9e0b4f` or `ubuntu-2026-06-01` at all.
+
+The addon version is therefore derived from the upstream tag:
+
+- a tag Home Assistant can order and that is newer is used as it is
+- `1.2.3-4` and `1.2.3+4` become `1.2.3.4`
+- a pre-release marker becomes a section of its own, so the number it carries keeps ordering the addon: `5.0.0b5` -> `5.0.0.5`
+- a tag it cannot order keeps every number it carries, in order: `v26.2-ls256` -> `v26.2.256`, `nightly-2.6.1.5509-ls8` -> `2.6.1.5509.8`, `4.16-r0-ls94` -> `4.16.0.94`, `ubuntu-2026-07-28` -> `2026.07.28`. Words holding no number, an architecture, and anything else such as a commit hash are left out
+- a tag holding no number at all (`version-bf9e0b4f`, `sts`) increments the current addon version (`1.37` -> `1.38`), or uses the date when there is nothing to increment (`2026.08.01`, then `2026.08.01.1` for a second update the same day)
+
+`updater.json` always keeps the raw upstream tag, so the next run still compares upstream with upstream and a single upstream release never triggers two addon updates. The raw tag is also kept in the Dockerfile and the build files, and is added to the changelog entry when it differs from the addon version.
+
+These rules are checked by `python3 /usr/bin/ha_version.py --selftest`, which can be run from a terminal in the addon container.
+
 ### Addon configuration
 
 Here you define the values that will allow the addon to connect to your repository.

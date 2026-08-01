@@ -56,6 +56,11 @@ ENV PACKAGES=""
 COPY ha_autoapps.sh /ha_autoapps.sh
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
+# Library used by Home Assistant to order addon versions, so that the version
+# published by the updater is one Home Assistant offers as an update. Keep the
+# pin aligned with the Supervisor requirements.txt
+RUN pip install --no-cache-dir awesomeversion==25.8.0
+
 ################
 # 4 Entrypoint #
 ################
