@@ -20,6 +20,29 @@ else
     DATE_FORMAT="+%d-%m-%Y"
 fi
 
+# Version published in the addon configuration, which is the one Home
+# Assistant compares ; the upstream tag lives in updater.json instead
+function config_version() {
+    local folder="$1"
+    if [ -f "$folder/config.json" ]; then
+        jq -r '.version // empty' "$folder/config.json"
+    elif [ -f "$folder/config.yaml" ]; then
+        sed -n 's/^version:[[:space:]]*//p' "$folder/config.yaml" \
+            | head -n 1 \
+            | sed -e 's/[[:space:]]*#.*$//' -e 's/^"//' -e 's/"$//' \
+            | sed -e "s/^'//" -e "s/'$//"
+    fi
+}
+
+# Escape a version so that sed treats it as plain text on both sides
+function sed_pattern() {
+    printf '%s' "$1" | sed -e 's/[]\/$*.^[]/\\&/g'
+}
+
+function sed_replacement() {
+    printf '%s' "$1" | sed -e 's/[\/&]/\\&/g'
+}
+
 #Defining github value
 LOGINFO="... github authentification" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
@@ -315,10 +338,6 @@ for f in */; do
         # Add brackets
         LASTVERSION='"'${LASTVERSION}'"'
 
-        # Avoid characters incompatible with HomeAssistant version name
-        LASTVERSION2=${LASTVERSION//+/-}
-        CURRENT2=${CURRENT//+/-}
-
         # Skip if current or last version is empty (would corrupt files by replacing all "" occurrences)
         if [ "${CURRENT}" = '""' ] || [ "${LASTVERSION}" = '""' ]; then
             bashio::log.warning "... $SLUG : skipping update due to empty version string (current=${CURRENT}, latest=${LASTVERSION})"
@@ -326,43 +345,88 @@ for f in */; do
         fi
 
         # Update if needed
-        if [ "${CURRENT2}" != "${LASTVERSION2}" ]; then
+        if [ "${CURRENT}" != "${LASTVERSION}" ]; then
             LOGINFO="... $SLUG : update from ${CURRENT} to ${LASTVERSION}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
-            #Change all instances of version
+            ADDONFOLDER="/data/${BASENAME}/${SLUG}"
+
+            # Version currently published, before any file is touched
+            CONFIGVERSION="$(config_version "$ADDONFOLDER" || true)"
+            if [ -z "$CONFIGVERSION" ]; then
+                bashio::log.error "... $SLUG : no version found in the addon config, skipping"
+                continue
+            fi
+
+            # Home Assistant hides an update when it can compare both
+            # versions and the new one is not strictly newer, and cannot
+            # order tags such as "version-bf9e0b4f" at all. The addon
+            # version is therefore derived from the upstream tag, which
+            # stays untouched in updater.json so that the same upstream
+            # release is never published twice
+            if ! ADDONVERSION="$(python3 /usr/bin/ha_version.py --current "$CONFIGVERSION" --upstream "${LASTVERSION//\"/}")"; then
+                bashio::log.error "... $SLUG : no Home Assistant compliant version derived from ${LASTVERSION}, skipping"
+                continue
+            fi
+
+            if [ "$ADDONVERSION" != "${LASTVERSION//\"/}" ]; then
+                bashio::log.blue "... $SLUG : Home Assistant would not offer ${LASTVERSION//\"/} as an update of $CONFIGVERSION, addon version set to $ADDONVERSION"
+            fi
+
+            #Change all instances of version, the addon config excluded as
+            #its version can now differ from the upstream tag
             LOGINFO="... $SLUG : updating files" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-            for files in "config.json" "config.yaml" "Dockerfile" "build.json" "build.yaml"; do
-                if [ -f /data/"${BASENAME}"/"${SLUG}"/$files ]; then
-                    sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/"${BASENAME}"/"${SLUG}"/"$files"
+            CURRENTPATTERN="$(sed_pattern "$CURRENT")"
+            LASTVERSIONTEXT="$(sed_replacement "$LASTVERSION")"
+            for files in "Dockerfile" "build.json" "build.yaml"; do
+                if [ -f "$ADDONFOLDER/$files" ]; then
+                    sed -i "s/${CURRENTPATTERN}/${LASTVERSIONTEXT}/g" "$ADDONFOLDER/$files"
                 fi
             done
 
             # Remove " and modify version
             LASTVERSION=${LASTVERSION//\"/}
             CURRENT=${CURRENT//\"/}
-            if [ -f /data/"${BASENAME}"/"${SLUG}"/config.json ]; then
-                jq --arg variable "$LASTVERSION" '.version = $variable' /data/"${BASENAME}"/"${SLUG}"/config.json | sponge /data/"${BASENAME}"/"${SLUG}"/config.json # Replace version tag
-            elif [ -f /data/"${BASENAME}"/"${SLUG}"/config.yaml ]; then
-                sed -i "/version:/c\version: \"$LASTVERSION\"" /data/"${BASENAME}"/"${SLUG}"/config.yaml
+            if [ -f "$ADDONFOLDER/config.json" ]; then
+                jq --arg variable "$ADDONVERSION" '.version = $variable' "$ADDONFOLDER/config.json" | sponge "$ADDONFOLDER/config.json" # Replace version tag
+            elif [ -f "$ADDONFOLDER/config.yaml" ]; then
+                sed -i "/^version:/c\version: \"$ADDONVERSION\"" "$ADDONFOLDER/config.yaml"
             fi
-            jq --arg variable "$LASTVERSION" '.upstream_version = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace upstream tag
-            jq --arg variable "$DATE" '.last_update = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json             # Replace date tag
+
+            # Leave the addon untouched rather than committing a version
+            # Home Assistant would not offer
+            if [ "$(config_version "$ADDONFOLDER")" != "$ADDONVERSION" ]; then
+                bashio::log.error "... $SLUG : version $ADDONVERSION could not be written in the addon config, reverting"
+                git checkout -- "$ADDONFOLDER"
+                continue
+            fi
+
+            # Replace upstream tag and date, keeping the file intact if jq
+            # fails as a truncated updater.json would lose the addon source
+            if ! UPDATERJSON="$(jq --arg version "$LASTVERSION" --arg date "$DATE" '.upstream_version = $version | .last_update = $date' "$ADDONFOLDER/updater.json")"; then
+                bashio::log.error "... $SLUG : updater.json could not be updated, reverting"
+                git checkout -- "$ADDONFOLDER"
+                continue
+            fi
+            printf '%s\n' "$UPDATERJSON" > "$ADDONFOLDER/updater.json"
 
             #Update changelog
-            touch "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
-            if [[ "$SOURCE" == *"github"* ]]; then
-                sed -i "1i - Update to latest version from $UPSTREAM (changelog : https://github.com/${UPSTREAM%/}/releases)" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
-            else
-                sed -i "1i - Update to latest version from $UPSTREAM" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
+            touch "$ADDONFOLDER/CHANGELOG.md"
+            if [ "$ADDONVERSION" != "$LASTVERSION" ]; then
+                sed -i "1i - Upstream tag : $LASTVERSION" "$ADDONFOLDER/CHANGELOG.md"
             fi
-            sed -i "1i ## ${LASTVERSION} (${DATE})" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
-            sed -i "1i\ " "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
+            if [[ "$SOURCE" == *"github"* ]]; then
+                sed -i "1i - Update to latest version from $UPSTREAM (changelog : https://github.com/${UPSTREAM%/}/releases)" "$ADDONFOLDER/CHANGELOG.md"
+            else
+                sed -i "1i - Update to latest version from $UPSTREAM" "$ADDONFOLDER/CHANGELOG.md"
+            fi
+            sed -i "1i ## ${ADDONVERSION} (${DATE})" "$ADDONFOLDER/CHANGELOG.md"
+            sed -i "1i\ " "$ADDONFOLDER/CHANGELOG.md"
             LOGINFO="... $SLUG : files updated" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
             #Git commit and push
             git add -A # add all modified files
 
-            git commit -m "Updater bot : $SLUG updated to ${LASTVERSION}" > /dev/null
+            git commit -m "Updater bot : $SLUG updated to ${ADDONVERSION} (upstream ${LASTVERSION})" > /dev/null
 
             LOGINFO="... $SLUG : push to github" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
@@ -374,7 +438,7 @@ for f in */; do
             fi
 
             #Log
-            bashio::log.yellow "... $SLUG updated from ${CURRENT} to ${LASTVERSION}"
+            bashio::log.yellow "... $SLUG updated to ${ADDONVERSION} (upstream ${CURRENT} to ${LASTVERSION})"
 
         else
             bashio::log.green "... $SLUG is up-to-date ${CURRENT}"

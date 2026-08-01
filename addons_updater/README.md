@@ -73,6 +73,20 @@ You can add the following tags in the file :
 - dockerhub_by_date: in dockerhub, uses the last_update date instead of the version
 - dockerhub_list_size: in dockerhub, how many containers to consider for latest version
 
+### Addon version numbering
+
+The `version` written in the addon `config.yaml` is the one Home Assistant compares to decide whether an update is available. Home Assistant hides the update when it can order both versions and the new one is not strictly newer (`1.2.3` -> `1.2.3-2` is a semver pre-release, so it is *older*), and it cannot order tags such as `version-bf9e0b4f` or `ubuntu-2026-06-01` at all.
+
+The addon version is therefore derived from the upstream tag:
+
+- a tag Home Assistant can order and that is newer is used as it is
+- `1.2.3-4` and `1.2.3+4` become `1.2.3.4`
+- for a tag it cannot order, the release number inside the tag is used (`v26.3-ls256` -> `26.3`), else the current addon version is incremented (`1.37` -> `1.38`), else the date is used (`2026.08.01`, then `2026.08.01.1` for a second update the same day)
+
+`updater.json` always keeps the raw upstream tag, so the next run still compares upstream with upstream and a single upstream release never triggers two addon updates. The raw tag is also kept in the Dockerfile, the build files and the changelog entry.
+
+These rules are checked by `python3 /usr/bin/ha_version.py --selftest`, which can be run from a terminal in the addon container.
+
 ### Addon configuration
 
 Here you define the values that will allow the addon to connect to your repository.
