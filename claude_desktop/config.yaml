@@ -122,5 +122,5 @@ slug: claude_desktop
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "kali-version-e963b19b"
+version: "ubunturesolute-version-3a10bef7"
 video: true

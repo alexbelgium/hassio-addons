@@ -1,4 +1,7 @@
  
+## ubunturesolute-version-3a10bef7 (2026-08-01)
+- Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
+ 
 ## kali-version-e963b19b (2026-08-01)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 ## 1.37 (28-07-2026)
