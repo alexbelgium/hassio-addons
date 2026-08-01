@@ -81,6 +81,7 @@ The addon version is therefore derived from the upstream tag:
 
 - a tag Home Assistant can order and that is newer is used as it is
 - `1.2.3-4` and `1.2.3+4` become `1.2.3.4`
+- a pre-release marker becomes a section of its own, so the number it carries keeps ordering the addon: `5.0.0b5` -> `5.0.0.5`
 - for a tag it cannot order, the release number inside the tag is used (`v26.3-ls256` -> `26.3`), else the current addon version is incremented (`1.37` -> `1.38`), else the date is used (`2026.08.01`, then `2026.08.01.1` for a second update the same day)
 
 `updater.json` always keeps the raw upstream tag, so the next run still compares upstream with upstream and a single upstream release never triggers two addon updates. The raw tag is also kept in the Dockerfile and the build files, and is added to the changelog entry when it differs from the addon version.

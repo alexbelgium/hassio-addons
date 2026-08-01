@@ -33,6 +33,9 @@ from awesomeversion import (
     AwesomeVersionStrategy,
 )
 
+# "5.0.0b5" -> "5.0.0.5": a pre-release marker is not a version section,
+# so it is turned into one rather than left for Home Assistant to guess.
+MARKER = re.compile(r"^(v?\d+(?:\.\d+)*)(?:alpha|beta|rc|a|b)(\d+)(?=$|-)")
 # "1.2.3-4" -> "1.2.3.4": a numeric suffix behind a dash is a semver
 # pre-release and sorts before the version it is meant to supersede.
 PRERELEASE = re.compile(r"^(v?\d+(?:\.\d+)*)-(\d+(?:\.\d+)*)$")
@@ -50,7 +53,8 @@ def normalise(version: str) -> str:
     version = version.strip()
     # Build metadata is ignored by semver precedence, a section is not.
     version = version.replace("+", ".")
-    # Group 1 is the release, group 2 the counter behind the dash.
+    # In both, group 1 is the release and group 2 the number to keep.
+    version = MARKER.sub(r"\1.\2", version)
     return PRERELEASE.sub(r"\1.\2", version)
 
 
@@ -175,6 +179,14 @@ SELFTESTS = (
     ("1.2.3.2", "1.2.3-3", "1.2.3.3"),
     ("1.2.3", "1.2.3+4", "1.2.3.4"),
     ("1.2.3.4", "1.2.3+5", "1.2.3.5"),
+    # Pre-release markers become a section of their own, so that the
+    # number they carry keeps ordering the addon versions.
+    ("5.0.0b5-3", "5.0.0b5", "5.0.0.5"),
+    ("5.0.0.5", "5.0.0b6", "5.0.0.6"),
+    ("5.0.0.6", "5.0.0", "5.0.0.7"),
+    ("1.2.3", "1.2.4rc2", "1.2.4.2"),
+    ("1.2.3", "2.0.0beta1", "2.0.0.1"),
+    ("1.2.3", "1.2.4a1-2", "1.2.4.1.2"),
     ("1.2.4", "1.2.3", "1.2.5"),
     # Unsortable tags: the release number in the tag comes first...
     ("v26.2-ls255", "v26.3-ls256", "26.3"),
