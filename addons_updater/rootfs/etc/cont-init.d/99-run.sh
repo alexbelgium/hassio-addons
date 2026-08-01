@@ -21,7 +21,7 @@ else
 fi
 
 # Version published in the addon configuration, which is the one Home
-# Assistant compares ; the upstream tag lives in updater.json instead
+# Assistant compares; the upstream tag lives in updater.json instead
 function config_version() {
     local folder="$1"
     if [ -f "$folder/config.json" ]; then
@@ -387,7 +387,10 @@ for f in */; do
             LASTVERSION=${LASTVERSION//\"/}
             CURRENT=${CURRENT//\"/}
             if [ -f "$ADDONFOLDER/config.json" ]; then
-                jq --arg variable "$ADDONVERSION" '.version = $variable' "$ADDONFOLDER/config.json" | sponge "$ADDONFOLDER/config.json" # Replace version tag
+                # Piping jq into sponge would empty the file if jq fails
+                if CONFIGJSON="$(jq --arg variable "$ADDONVERSION" '.version = $variable' "$ADDONFOLDER/config.json")"; then
+                    printf '%s\n' "$CONFIGJSON" > "$ADDONFOLDER/config.json" # Replace version tag
+                fi
             elif [ -f "$ADDONFOLDER/config.yaml" ]; then
                 sed -i "/^version:/c\version: \"$ADDONVERSION\"" "$ADDONFOLDER/config.yaml"
             fi

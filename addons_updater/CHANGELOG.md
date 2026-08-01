@@ -1,4 +1,5 @@
 ## 2026.08 (2026-08-01)
+
 - Addon versions written in config.yaml now always comply with Home Assistant versioning: an upstream tag Home Assistant cannot order (`version-bf9e0b4f`, `ubuntu-2026-06-01`, ...) or would sort as older (`1.2.3-2`, `1.2.3+4`) no longer lands in config.yaml. The addon number is incremented instead, while the raw upstream tag stays in updater.json so the same release is never published twice
 - Upstream tags are escaped before being replaced in Dockerfile/build files
 

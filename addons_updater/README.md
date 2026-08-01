@@ -83,7 +83,7 @@ The addon version is therefore derived from the upstream tag:
 - `1.2.3-4` and `1.2.3+4` become `1.2.3.4`
 - for a tag it cannot order, the release number inside the tag is used (`v26.3-ls256` -> `26.3`), else the current addon version is incremented (`1.37` -> `1.38`), else the date is used (`2026.08.01`, then `2026.08.01.1` for a second update the same day)
 
-`updater.json` always keeps the raw upstream tag, so the next run still compares upstream with upstream and a single upstream release never triggers two addon updates. The raw tag is also kept in the Dockerfile, the build files and the changelog entry.
+`updater.json` always keeps the raw upstream tag, so the next run still compares upstream with upstream and a single upstream release never triggers two addon updates. The raw tag is also kept in the Dockerfile and the build files, and is added to the changelog entry when it differs from the addon version.
 
 These rules are checked by `python3 /usr/bin/ha_version.py --selftest`, which can be run from a terminal in the addon container.
 

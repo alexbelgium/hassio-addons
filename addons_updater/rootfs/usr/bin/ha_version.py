@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
-"""Compute a Home Assistant compliant add-on version.
+"""Compute a Home Assistant compliant addon version."""
 
-Home Assistant orders add-on versions with ``awesomeversion``. Its update
-entity hides the update whenever the two versions *can* be compared and
-the new one is not strictly newer, and it cannot order a version at all
-when the string follows no known scheme. Whatever lands in the add-on
-``config.yaml`` must therefore be recognisable and strictly greater than
-the version users already have installed.
-
-Upstream tags do not always cooperate:
-
-* ``1.2.3-4`` is a semver pre-release, i.e. *older* than ``1.2.3``;
-* ``1.2.3+4`` only differs by build metadata, which semver ignores;
-* ``version-bf9e0b4f`` or ``ubuntu-2026-06-01`` follow no scheme at all.
-
-This helper therefore decides what to write in ``config.yaml``, while the
-raw upstream tag stays in ``updater.json``: the next run keeps comparing
-upstream with upstream, so a single upstream release never triggers two
-add-on updates.
-"""
+# Home Assistant orders addon versions with awesomeversion. Its update
+# entity hides the update whenever the two versions *can* be compared and
+# the new one is not strictly newer, and it cannot order a version at all
+# when the string follows no known scheme. Whatever lands in the addon
+# config.yaml must therefore be recognisable and strictly greater than the
+# version users already have installed.
+#
+# Upstream tags do not always cooperate:
+#
+# * "1.2.3-4" is a semver pre-release, i.e. older than "1.2.3"
+# * "1.2.3+4" only differs by build metadata, which semver ignores
+# * "version-bf9e0b4f" or "ubuntu-2026-06-01" follow no scheme at all
+#
+# This helper therefore decides what to write in config.yaml, while the raw
+# upstream tag stays in updater.json: the next run keeps comparing upstream
+# with upstream, so a single upstream release never triggers two addon
+# updates.
 
 from __future__ import annotations
 
@@ -63,12 +62,7 @@ def is_sortable(version: str) -> bool:
 
 
 def is_newer(candidate: str, current: str) -> bool:
-    """Return True when Home Assistant would offer *candidate*.
-
-    A version that cannot be compared to the installed one is accepted:
-    Home Assistant shows the update in that case, and it is the only way
-    out for an add-on whose current version follows no known scheme.
-    """
+    """Return True when Home Assistant would offer the candidate."""
     if not candidate or candidate == current:
         return False
     if not current:
@@ -76,20 +70,22 @@ def is_newer(candidate: str, current: str) -> bool:
     try:
         return AwesomeVersion(candidate) > AwesomeVersion(current)
     except AwesomeVersionCompareException:
+        # Home Assistant shows the update when it cannot compare, and it
+        # is the only way out of a version following no known scheme.
         return True
 
 
 def is_acceptable(candidate: str, current: str) -> bool:
-    """Return True for a version safe to write in the add-on config."""
+    """Return True for a version safe to write in the addon config."""
     return is_sortable(candidate) and is_newer(candidate, current)
 
 
 def is_date_like(number: str) -> bool:
-    """Return True for a "YYYY.MM.DD" calendar version."""
+    """Return True for "YYYY.MM.DD", with or without a counter."""
     parts = number.split(".")
-    if len(parts) != 3 or len(parts[0]) != 4:
+    if len(parts) < 3 or len(parts[0]) != 4:
         return False
-    year, month, day = (int(part) for part in parts)
+    year, month, day = (int(part) for part in parts[:3])
     return 2000 <= year <= 2999 and 1 <= month <= 12 and 1 <= day <= 31
 
 
@@ -118,24 +114,23 @@ def upstream_candidates(upstream: str) -> Iterator[str]:
 
 
 def local_candidates(current: str, today: date, release: str) -> Iterator[str]:
-    """Yield sortable versions derived from the current add-on version.
-
-    *release* is the upstream release number the current version was
-    built from, when it is known. An upstream that rebuilds the same
-    release, such as "v26.3-ls257" after "v26.3-ls256", gets a local
-    counter ("26.3.1") instead of a release number it never published.
-    """
+    """Yield sortable versions derived from the current addon version."""
     calver = today.strftime("%Y.%m.%d")
     normalised = normalise(current)
     dotted = DOTTED_NUMBER.match(normalised)
 
+    # An upstream that rebuilds the release the current version was built
+    # from, such as "v26.3-ls257" after "v26.3-ls256", gets a local
+    # counter ("26.3.1") instead of a release it never published.
     if release and normalised.startswith(release):
         yield from counters(release)
 
     if dotted and is_date_like(dotted.group("number")):
-        # Calendar versioned add-on: move to today, then count up when
+        # Calendar versioned addon: move to today, then count up when
         # several upstream releases land on the same day.
         yield calver
+        if dotted.group("number").count(".") > 2:
+            yield dotted.group("prefix") + increment(dotted.group("number"))
         yield from counters(normalised)
     elif dotted:
         # "1.37" -> "1.38": the number already in use simply moves on.
@@ -153,7 +148,7 @@ def local_candidates(current: str, today: date, release: str) -> Iterator[str]:
 
 
 def resolve(current: str, upstream: str, today: date) -> str:
-    """Return the version to write in the add-on configuration."""
+    """Return the version to write in the addon configuration."""
     for candidate in upstream_candidates(upstream):
         if is_acceptable(candidate, current):
             return candidate
@@ -164,6 +159,9 @@ def resolve(current: str, upstream: str, today: date) -> str:
             return candidate
     return ""
 
+
+# Date the expectations below are written against.
+SELFTEST_DATE = date(2026, 8, 1)
 
 SELFTESTS = (
     # (current, upstream, expected)
@@ -183,7 +181,7 @@ SELFTESTS = (
     ("26.3", "v26.3-ls257", "26.3.1"),
     ("26.3.1", "v26.3-ls258", "26.3.2"),
     ("v1.67.0.8", "nightly-2.6.0.5494-ls8", "2.6.0.5494"),
-    # ... and the add-on number moves on when the tag has none.
+    # ... and the addon number moves on when the tag has none.
     ("1.37", "ubunturesolute-version-8208e985", "1.38"),
     ("1.4", "sha-2b71a1c", "1.5"),
     ("2025.12-6", "alpine-sts", "2026.08.01"),
@@ -198,6 +196,8 @@ SELFTESTS = (
     ("2026.07.31", "nightly-20260801", "2026.08.01"),
     ("2026.08.01", "nightly-20260801-2", "2026.08.01.1"),
     ("2026.08.01.1", "nightly-20260801-3", "2026.08.01.2"),
+    # A calendar version with a counter still moves to the current date.
+    ("2026.07.30.2", "nightly-20260801", "2026.08.01"),
     # A version dated in the future is never downgraded.
     ("2026.09.15", "nightly-20260801", "2026.09.15.1"),
     # Switching between schemes, in both directions.
@@ -216,7 +216,7 @@ SELFTESTS = (
 
 
 def selftest(today: date) -> int:
-    """Check the rules above against known add-on version histories."""
+    """Check the rules above against known addon version histories."""
     failures = 0
     for current, upstream, expected in SELFTESTS:
         result = resolve(current, upstream, today)
@@ -242,10 +242,14 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    today = date.fromisoformat(args.today) if args.today else date.today()
-
     if args.selftest:
-        return selftest(today)
+        # The expectations above are written against a fixed date, so the
+        # checks keep passing whenever they are run.
+        if args.today:
+            return selftest(date.fromisoformat(args.today))
+        return selftest(SELFTEST_DATE)
+
+    today = date.fromisoformat(args.today) if args.today else date.today()
 
     if not args.upstream:
         parser.error("--upstream is required")
