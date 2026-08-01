@@ -116,12 +116,10 @@ def counters(base: str) -> Iterator[str]:
 
 
 def skeleton(version: str) -> str:
-    """Return every number of a tag, in order, as dotted sections.
-
-    "v26.2-ls256" -> "v26.2.256", "nightly-2.6.1.5509-ls8" ->
-    "2.6.1.5509.8", "4.16-r0-ls94" -> "4.16.0.94". Words carrying no
-    number and anything else, a commit hash in particular, are dropped.
-    """
+    """Return every number of a tag, in order, as dotted sections."""
+    # "v26.2-ls256" -> "v26.2.256", "nightly-2.6.1.5509-ls8" ->
+    # "2.6.1.5509.8", "4.16-r0-ls94" -> "4.16.0.94". Words carrying no
+    # number and anything else, a commit hash in particular, are dropped.
     numbers = []
     for word in re.split(r"[-/]", normalise(version)):
         if word.lower() in NOT_A_NUMBER:
