@@ -35,7 +35,6 @@ if bashio::config.true 'install_headroom'; then
             HEADROOM_BACKEND_HOST=127.0.0.1 \
             HEADROOM_BACKEND_PORT="$backend_port" \
             HEADROOM_IDLE_TIMEOUT_SECONDS="${HEADROOM_IDLE_TIMEOUT_SECONDS:-900}" \
-            HEADROOM_BACKEND_LOG="${HOME}/.headroom/proxy.log" \
             HF_HOME="$HF_HOME" \
             /lsiopy/bin/python3 /usr/local/bin/headroom-proxy-gate.py
     fi
