@@ -19,6 +19,10 @@ ARG BUILD_UPSTREAM="0.0.101"
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
+# The upstream image now defaults to an unprivileged user, while this add-on
+# needs root during image customization and for its S6-managed services.
+USER root
+
 ##################
 # 2 Modify Image #
 ##################
