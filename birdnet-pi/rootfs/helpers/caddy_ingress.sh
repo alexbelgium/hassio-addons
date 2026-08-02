@@ -6,6 +6,13 @@ set +u
 # shellcheck disable=SC1091
 source /etc/birdnet/birdnet.conf
 
+# Nothing to do if the ingress site is already there. This script runs both from
+# cont-init and from update_caddyfile.sh, and a duplicate ":8082" site address
+# makes caddy refuse to start.
+if grep -qE '^[[:space:]]*:8082[[:space:]]*\{' /etc/caddy/Caddyfile 2> /dev/null; then
+    exit 0
+fi
+
 # Create ingress configuration for Caddyfile
 cat << EOF >> /etc/caddy/Caddyfile
 :8082 {

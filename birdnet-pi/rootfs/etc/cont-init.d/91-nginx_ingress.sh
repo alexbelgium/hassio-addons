@@ -26,6 +26,10 @@ ingress_entry=$(bashio::addon.ingress_entry)
 if [[ "$ingress_entry" != "/api"* ]]; then
     bashio::log.info "Ingress entry is not set, exiting configuration."
     sed -i "1a sleep infinity" /custom-services.d/02-nginx.sh
+    # This script re-runs from /etc/scripts-init on an add-on restart, so drop
+    # any marker left by an earlier run: it is what 02-caddy.sh reads to decide
+    # whether the ingress site belongs in the Caddyfile.
+    rm -f /ingress_url
     exit 0
 fi
 
@@ -68,9 +72,23 @@ sed -i "s|localhost|localhost:8082|g" "$HOME/BirdNET-Pi/scripts/utils/notificati
 
 # Update the Caddyfile if update script exists
 caddy_update_script="$HOME/BirdNET-Pi/scripts/update_caddyfile.sh"
-if [ -f "$caddy_update_script" ]; then
-    sed -i "/sudo caddy fmt --overwrite/i /helpers/caddy_ingress.sh" "$caddy_update_script"
-else
+if [ ! -f "$caddy_update_script" ]; then
     bashio::log.error "Caddy update script not found: $caddy_update_script"
     exit 1
+fi
+
+# update_caddyfile.sh rewrites /etc/caddy/Caddyfile from scratch, which drops
+# the ingress site added just above. 02-caddy.sh runs it right before starting
+# caddy, so the hook below has to re-add the site from inside that script, just
+# before it formats and reloads the config.
+# The anchor must not require "sudo": the Dockerfile strips it from every
+# BirdNET-Pi script at build time, so the shipped line is "caddy fmt --overwrite".
+if ! grep -qF "/helpers/caddy_ingress.sh" "$caddy_update_script"; then
+    sed -i -E "/^[[:space:]]*(sudo[[:space:]]+)?caddy[[:space:]]+fmt[[:space:]]+--overwrite/i /helpers/caddy_ingress.sh" "$caddy_update_script"
+fi
+
+# sed is silent when the anchor is missing; make sure the hook is really there
+if ! grep -qF "/helpers/caddy_ingress.sh" "$caddy_update_script"; then
+    bashio::log.warning "Could not anchor the ingress site in $caddy_update_script, appending it instead"
+    printf '\n/helpers/caddy_ingress.sh\n' >> "$caddy_update_script"
 fi
