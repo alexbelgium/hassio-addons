@@ -121,5 +121,5 @@ schema:
 slug: claude_desktop
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "ubunturesolute-version-3a10bef7"
+version: "2026.08.02"
 video: true
