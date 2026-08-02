@@ -232,7 +232,6 @@ class ProxyGate:
             if (
                 process is not None
                 and process.returncode is None
-                and self._active_connections == 0
                 and idle_for >= IDLE_TIMEOUT
             ):
                 await self.stop_backend(f"idle for {int(idle_for)}s")
@@ -258,7 +257,7 @@ class ProxyGate:
 
     async def handle_client(self, client_reader: asyncio.StreamReader, client_writer: asyncio.StreamWriter) -> None:
         self._active_connections += 1
-        self.touch()
+        real_traffic = False
         peer = client_writer.get_extra_info("peername")
         try:
             try:
@@ -277,6 +276,8 @@ class ProxyGate:
                 await client_writer.drain()
                 return
 
+            real_traffic = True
+            self.touch()
             try:
                 await self.ensure_backend()
                 backend_reader, backend_writer = await asyncio.wait_for(
@@ -306,7 +307,8 @@ class ProxyGate:
                 await backend_writer.wait_closed()
         finally:
             self._active_connections = max(0, self._active_connections - 1)
-            self.touch()
+            if real_traffic:
+                self.touch()
             client_writer.close()
             with contextlib.suppress(Exception):
                 await client_writer.wait_closed()
