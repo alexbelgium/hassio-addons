@@ -19,6 +19,22 @@ if [ -z "$REAL_HEADROOM" ]; then
     exit 0
 fi
 
+# The adapter intentionally uses a small, stable subset of the upstream MCP
+# server. Since Headroom is installed unpinned at image build time, verify that
+# subset before replacing the command. A future incompatible Headroom release
+# therefore keeps its native MCP server instead of breaking Claude startup.
+if ! /lsiopy/bin/python3 - <<'PY'
+from headroom.ccr.mcp_server import HeadroomMCPServer
+
+for name in ("run_stdio", "cleanup", "_compress_content"):
+    if not callable(getattr(HeadroomMCPServer, name, None)):
+        raise SystemExit(f"HeadroomMCPServer.{name} is unavailable")
+PY
+then
+    bashio::log.warning "Installed Headroom is incompatible with the single-runtime MCP adapter; preserving the native MCP server"
+    exit 0
+fi
+
 wrapper="$(mktemp /usr/local/bin/.headroom-wrapper.XXXXXX)"
 cleanup() {
     rm -f "$wrapper"
