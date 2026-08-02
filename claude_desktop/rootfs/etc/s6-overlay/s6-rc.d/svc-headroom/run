@@ -1,32 +1,44 @@
 #!/usr/bin/with-contenv bashio
-# Headroom optimization proxy — local backend for Claude Desktop MCP and Claude Code.
+# Headroom optimization proxy — lazy backend for Claude Desktop MCP and Claude Code.
 declare port=8787
+declare backend_port=8789
 declare host=127.0.0.1
 
-# The dashboard is unauthenticated. Keep it container-local by default and bind all
-# interfaces only when the user explicitly opts in and maps port 8787.
+# The dashboard is unauthenticated. Keep the gate container-local by default and
+# bind all interfaces only when the user explicitly opts in and maps port 8787.
 if bashio::config.true 'expose_headroom_dashboard'; then
     host=0.0.0.0
 fi
 
-if bashio::config.true 'install_headroom' && command -v headroom > /dev/null 2>&1; then
-    # Kompress (the ONNX compression engine) needs its model in the local HF cache: the
-    # proxy's startup preload is deliberately cache-only, and the default HF cache lands
-    # under ~/.cache, which the add-on points at tmpfs (/tmp/cache) — wiped on every
-    # restart. Without a warm persistent cache the proxy ran forever in "deferred" mode
-    # and recorded zero compression savings. Point the cache at persistent storage;
-    # nothing else is needed here — the proxy's own request path already downloads a
-    # missing model in the background on first use (ensure_background_load) and passes
-    # requests through uncompressed until it lands, so this self-heals within a couple of
-    # requests on the first boot and loads instantly (eager preload) on every boot after.
-    # A synchronous pre-warm was tried here and removed: it blocked the port bind for up
-    # to the download's duration, which left the settings-managed ANTHROPIC_BASE_URL
-    # (see 82-claude_tools.sh) pointing at a proxy that wasn't listening yet.
-    export HF_HOME="${HOME}/.headroom/hf"
-    mkdir -p "$HF_HOME"
-    chown abc:abc "$HF_HOME" 2> /dev/null || true
-    bashio::log.info "svc-headroom: starting local Headroom proxy on ${host}:${port}"
-    exec s6-setuidgid abc headroom proxy --host "${host}" --port "${port}" --code-aware
+if bashio::config.true 'install_headroom'; then
+    real_headroom=""
+    for candidate in /usr/bin/headroom /lsiopy/bin/headroom; do
+        if [ -x "$candidate" ]; then
+            real_headroom="$candidate"
+            break
+        fi
+    done
+    if [ -n "$real_headroom" ]; then
+        # Keep model artifacts persistent, but do not import Headroom or load the
+        # model in this longrun. The standard-library gate starts the real proxy
+        # on the first request and terminates it after the idle timeout, releasing
+        # Python/ONNX/model allocations. HEADROOM_IDLE_TIMEOUT_SECONDS is
+        # overridable through env_vars; 900 seconds is the default.
+        export HF_HOME="${HOME}/.headroom/hf"
+        mkdir -p "$HF_HOME" "${HOME}/.headroom"
+        chown -R abc:abc "${HOME}/.headroom" 2> /dev/null || true
+        bashio::log.info "svc-headroom: starting lazy gate on ${host}:${port} (backend ${backend_port}, idle timeout ${HEADROOM_IDLE_TIMEOUT_SECONDS:-900}s)"
+        exec s6-setuidgid abc env \
+            HEADROOM_REAL_BIN="$real_headroom" \
+            HEADROOM_GATE_HOST="$host" \
+            HEADROOM_GATE_PORT="$port" \
+            HEADROOM_BACKEND_HOST=127.0.0.1 \
+            HEADROOM_BACKEND_PORT="$backend_port" \
+            HEADROOM_IDLE_TIMEOUT_SECONDS="${HEADROOM_IDLE_TIMEOUT_SECONDS:-900}" \
+            HEADROOM_BACKEND_LOG="${HOME}/.headroom/proxy.log" \
+            HF_HOME="$HF_HOME" \
+            /lsiopy/bin/python3 /usr/local/bin/headroom-proxy-gate.py
+    fi
 fi
 
 bashio::log.info "svc-headroom: install_headroom disabled or headroom not found; idling"
