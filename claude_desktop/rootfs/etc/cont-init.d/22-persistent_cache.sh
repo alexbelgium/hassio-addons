@@ -22,7 +22,7 @@ mkdir -p "$CACHE_DIR"
 chown "$(id -u abc):$(id -g abc)" "$CACHE_DIR"
 chmod 700 "$CACHE_DIR"
 
-CACHE_DIR="$CACHE_DIR" python3 - <<'PY'
+CACHE_DIR="$CACHE_DIR" LOCATION="$LOCATION" python3 - <<'PY'
 import os
 import re
 from pathlib import Path
@@ -40,7 +40,7 @@ for path in Path("/etc/s6-overlay/s6-rc.d").glob("*/run"):
     if updated != text:
         path.write_text(updated)
 
-bashrc = Path.home() / ".bashrc"
+bashrc = Path(os.environ["LOCATION"]) / ".bashrc"
 if bashrc.exists():
     text = bashrc.read_text()
     updated = re.sub(r"^export XDG_CACHE_HOME=.*$", replacement, text, flags=re.MULTILINE)
