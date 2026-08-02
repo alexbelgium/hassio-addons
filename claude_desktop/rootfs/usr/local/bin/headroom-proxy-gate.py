@@ -21,7 +21,6 @@ import socket
 import sys
 import time
 from pathlib import Path
-from typing import BinaryIO
 
 
 def _int_env(name: str, default: int, minimum: int = 1) -> int:
@@ -40,7 +39,6 @@ HEADROOM_BIN = os.environ.get("HEADROOM_REAL_BIN", "/usr/bin/headroom")
 IDLE_TIMEOUT = _int_env("HEADROOM_IDLE_TIMEOUT_SECONDS", 900)
 START_TIMEOUT = _int_env("HEADROOM_START_TIMEOUT_SECONDS", 60)
 STOP_TIMEOUT = _int_env("HEADROOM_STOP_TIMEOUT_SECONDS", 10)
-LOG_PATH = Path(os.environ.get("HEADROOM_BACKEND_LOG", str(Path.home() / ".headroom/proxy.log")))
 HF_HOME = os.environ.get("HF_HOME", str(Path.home() / ".headroom/hf"))
 MAX_HEADER_BYTES = 128 * 1024
 COPY_CHUNK = 64 * 1024
@@ -59,7 +57,6 @@ class ProxyGate:
     def __init__(self) -> None:
         self._lock = asyncio.Lock()
         self._process: asyncio.subprocess.Process | None = None
-        self._log_handle: BinaryIO | None = None
         self._last_activity = time.monotonic()
         self._active_connections = 0
         self._stopping = False
@@ -119,10 +116,7 @@ class ProxyGate:
             if not os.path.isfile(HEADROOM_BIN) or not os.access(HEADROOM_BIN, os.X_OK):
                 raise BackendUnavailable(f"Headroom executable is unavailable: {HEADROOM_BIN}")
 
-            LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
             Path(HF_HOME).mkdir(parents=True, exist_ok=True)
-            self._close_log_handle()
-            self._log_handle = open(LOG_PATH, "ab", buffering=0)
 
             environment = os.environ.copy()
             environment.update(
@@ -145,13 +139,10 @@ class ProxyGate:
                 self._process = await asyncio.create_subprocess_exec(
                     *command,
                     env=environment,
-                    stdout=self._log_handle,
-                    stderr=asyncio.subprocess.STDOUT,
                     start_new_session=True,
                 )
             except Exception as exc:
                 self._process = None
-                self._close_log_handle()
                 raise BackendUnavailable(f"unable to start Headroom: {exc}") from exc
 
             self._watch_task = asyncio.create_task(self._watch_backend(self._process))
@@ -169,13 +160,15 @@ class ProxyGate:
             if process is not None and process.returncode is not None:
                 raise BackendUnavailable(
                     f"Headroom exited during startup with status {process.returncode}; "
-                    f"see {LOG_PATH}"
+                    "see the add-on log"
                 )
             if await self._backend_healthy():
                 log("backend is ready")
                 return
             await asyncio.sleep(0.25)
-        raise BackendUnavailable(f"Headroom did not become ready within {START_TIMEOUT}s; see {LOG_PATH}")
+        raise BackendUnavailable(
+            f"Headroom did not become ready within {START_TIMEOUT}s; see the add-on log"
+        )
 
     async def _watch_backend(self, process: asyncio.subprocess.Process) -> None:
         returncode = await process.wait()
@@ -183,7 +176,6 @@ class ProxyGate:
             was_current = self._process is process
             if was_current:
                 self._process = None
-                self._close_log_handle()
         if not self._stopping and was_current:
             log(f"backend exited with status {returncode}")
 
@@ -194,11 +186,9 @@ class ProxyGate:
     async def _terminate_backend_locked(self, reason: str) -> None:
         process = self._process
         if process is None:
-            self._close_log_handle()
             return
         if process.returncode is not None:
             self._process = None
-            self._close_log_handle()
             return
 
         log(f"stopping backend ({reason})")
@@ -215,13 +205,6 @@ class ProxyGate:
             with contextlib.suppress(Exception):
                 await process.wait()
         self._process = None
-        self._close_log_handle()
-
-    def _close_log_handle(self) -> None:
-        if self._log_handle is not None:
-            with contextlib.suppress(Exception):
-                self._log_handle.close()
-            self._log_handle = None
 
     async def idle_monitor(self) -> None:
         interval = max(5, min(30, IDLE_TIMEOUT // 4))
@@ -255,14 +238,24 @@ class ProxyGate:
             + body
         )
 
-    async def handle_client(self, client_reader: asyncio.StreamReader, client_writer: asyncio.StreamWriter) -> None:
+    async def handle_client(
+        self,
+        client_reader: asyncio.StreamReader,
+        client_writer: asyncio.StreamWriter,
+    ) -> None:
         self._active_connections += 1
         real_traffic = False
         peer = client_writer.get_extra_info("peername")
         try:
             try:
-                initial = await asyncio.wait_for(client_reader.readuntil(b"\r\n\r\n"), timeout=15.0)
-            except (asyncio.IncompleteReadError, asyncio.LimitOverrunError, asyncio.TimeoutError):
+                initial = await asyncio.wait_for(
+                    client_reader.readuntil(b"\r\n\r\n"), timeout=15.0
+                )
+            except (
+                asyncio.IncompleteReadError,
+                asyncio.LimitOverrunError,
+                asyncio.TimeoutError,
+            ):
                 return
             if len(initial) > MAX_HEADER_BYTES:
                 await self._send_error(client_writer, 431, "request headers too large")
@@ -300,7 +293,11 @@ class ProxyGate:
             for task in pending:
                 task.cancel()
             for task in done | pending:
-                with contextlib.suppress(asyncio.CancelledError, ConnectionError, OSError):
+                with contextlib.suppress(
+                    asyncio.CancelledError,
+                    ConnectionError,
+                    OSError,
+                ):
                     await task
             backend_writer.close()
             with contextlib.suppress(Exception):
@@ -313,7 +310,11 @@ class ProxyGate:
             with contextlib.suppress(Exception):
                 await client_writer.wait_closed()
 
-    async def _pipe(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+    async def _pipe(
+        self,
+        reader: asyncio.StreamReader,
+        writer: asyncio.StreamWriter,
+    ) -> None:
         while True:
             data = await reader.read(COPY_CHUNK)
             if not data:
@@ -325,8 +326,16 @@ class ProxyGate:
             self.touch()
 
     @staticmethod
-    async def _send_error(writer: asyncio.StreamWriter, status: int, detail: str) -> None:
-        reason = "Service Unavailable" if status == 503 else "Request Header Fields Too Large"
+    async def _send_error(
+        writer: asyncio.StreamWriter,
+        status: int,
+        detail: str,
+    ) -> None:
+        reason = (
+            "Service Unavailable"
+            if status == 503
+            else "Request Header Fields Too Large"
+        )
         body = json.dumps({"error": detail}).encode()
         response = (
             f"HTTP/1.1 {status} {reason}\r\n"
@@ -361,7 +370,7 @@ async def async_main() -> None:
     addresses = ", ".join(str(sock.getsockname()) for sock in server.sockets or [])
     log(
         f"listening on {addresses}; backend is lazy and stops after {IDLE_TIMEOUT}s idle; "
-        f"status endpoint: /gate/status"
+        "status endpoint: /gate/status"
     )
     monitor = asyncio.create_task(gate.idle_monitor())
     async with server:
