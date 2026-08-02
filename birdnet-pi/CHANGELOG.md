@@ -1,3 +1,7 @@
+## 2026.08.02 (02-08-2026)
+- Fix: ingress returned "502 Bad Gateway" because Caddy never listened on :8082. `91-nginx_ingress.sh` hooked the ingress site into `update_caddyfile.sh` with a sed anchored on `sudo caddy fmt --overwrite`, but 2026.07.10-1 strips `sudo` from every BirdNET-Pi script at build time, so the anchor stopped matching. `update_caddyfile.sh` then rewrote the Caddyfile from scratch just before Caddy started, dropping the ingress site
+- Fix: `caddy_ingress.sh` no longer appends a second `:8082` block when it runs twice (a duplicate site address makes Caddy refuse to start)
+- Fix: `02-caddy.sh` re-adds the ingress site if it is missing from the Caddyfile just before starting Caddy
 ## 2026.07.22 (22-07-2026)
 - Fix: health-check the WebUI port (8081) instead of port 80, so the standalone Docker container no longer reports "unhealthy" when ssl=false
 - Fix: health-check now probes https when ssl is enabled, and no longer silently reports "healthy" regardless of the actual result (the previous check's `&>` redirection is a bash-ism that dash, the image's /bin/sh, parses as background + no-op, discarding curl's exit status)
