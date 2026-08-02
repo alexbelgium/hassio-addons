@@ -26,7 +26,7 @@ if bashio::config.true 'install_headroom'; then
         # overridable through env_vars; 900 seconds is the default.
         export HF_HOME="${HOME}/.headroom/hf"
         mkdir -p "$HF_HOME" "${HOME}/.headroom"
-        chown -R abc:abc "${HOME}/.headroom" 2> /dev/null || true
+        chown abc:abc "${HOME}/.headroom" "$HF_HOME" 2> /dev/null || true
         bashio::log.info "svc-headroom: starting lazy gate on ${host}:${port} (backend ${backend_port}, idle timeout ${HEADROOM_IDLE_TIMEOUT_SECONDS:-900}s)"
         exec s6-setuidgid abc env \
             HEADROOM_REAL_BIN="$real_headroom" \
