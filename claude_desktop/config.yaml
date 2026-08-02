@@ -119,8 +119,7 @@ schema:
   tokensave_project_paths:
     - str
 slug: claude_desktop
-tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "ubunturesolute-version-3a10bef7"
+version: "1.38"
 video: true
