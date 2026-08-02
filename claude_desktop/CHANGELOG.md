@@ -1,3 +1,9 @@
+## 1.38 (02-08-2026)
+
+- Reduce Claude Desktop add-on RAM use in three places without removing Headroom, RTK, TokenSave, Cowork, Dispatch, or the streamed desktop. Headroom's heavy HTTP proxy is no longer started at container boot: a standard-library TCP gate stays on port 8787, starts the real proxy on the first request, and stops it after 15 minutes without traffic (`HEADROOM_IDLE_TIMEOUT_SECONDS` remains overridable through `env_vars`). This releases the proxy's Python, ONNX Runtime, tokenizer, and Kompress model allocations while the add-on is idle; a later request starts a clean backend transparently.
+- Prevent Headroom from loading a second Kompress model inside every Claude Desktop/Claude Code MCP process. The add-on now intercepts `headroom mcp serve` with a lightweight adapter that retains upstream MCP retrieval/statistics behavior but delegates `headroom_compress` to the shared proxy's loopback `/v1/compress` endpoint. The MCP process explicitly disables local Kompress and never imports `headroom.compress`, so only the proxy backend can own the ML runtime.
+- Remove the add-on-wide `tmpfs: true` mount and undo the shared Selkies script's `/tmp/cache` redirection for this add-on. Electron/Chromium, Mesa, and application caches now live under the selected persistent home (`$HOME/.cache`) as reclaimable filesystem cache instead of RAM-backed cgroup shmem. Runtime sockets and XDG runtime state remain under `/run`.
+
  
 ## ubunturesolute-version-3a10bef7 (2026-08-01)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
