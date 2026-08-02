@@ -61,7 +61,7 @@ magic link into the in-session Chromium (not a phone).
 - Add-on Configuration → `additional_apps: chromium`, restart (installed by
   `rootfs/etc/cont-init.d/80-configuration.sh`).
 - Add the two `xdg-settings`/`xdg-mime` commands to the custom script
-  `/addon_configs/db21ed7f_claude-desktop/claude_desktop.sh` (the image ships no standalone
+  `/app_configs/db21ed7f_claude-desktop/claude_desktop.sh` (the image ships no standalone
   terminal).
 
 ---

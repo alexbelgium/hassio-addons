@@ -1,5 +1,6 @@
  
 ## 3.21.1 (2026-08-02)
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
  
 ## 3.21.0 (2026-08-01)

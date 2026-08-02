@@ -1,5 +1,6 @@
 ## 2026.08.01 (2026-08-01)
 
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Version renamed from `sts`, which Home Assistant could not order and therefore could not reliably offer as an update: the previous version held no number that could order it, so the date of this change is used. The addon itself and the upstream version it tracks are unchanged
 
  

@@ -1,5 +1,6 @@
 
 ## 0.8.3 (2026-03-21)
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from gabe565/CastSponsorSkip (changelog : https://github.com/gabe565/CastSponsorSkip/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 

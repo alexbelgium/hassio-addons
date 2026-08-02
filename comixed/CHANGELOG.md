@@ -2,6 +2,7 @@
 
 ## 1.3 (2024-03-11)
 
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Minor bugs fixed
 ## 1.1 (2024-03-09)
 

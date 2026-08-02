@@ -1,5 +1,6 @@
  
 ## 0.22.0 (2026-07-04)
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from varun-raj/immich-power-tools (changelog : https://github.com/varun-raj/immich-power-tools/releases)
 
 ## 0.21.4 (2026-05-22)

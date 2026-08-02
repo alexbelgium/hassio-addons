@@ -1,4 +1,5 @@
 ## 5.14.26.1-2024-08-29-2 (2025-11-18)
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Minor bugs fixed
 
 ## 5.14.26.1-2024-08-29-1 (2025-11-18)

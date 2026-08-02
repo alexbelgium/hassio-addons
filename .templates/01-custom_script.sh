@@ -174,7 +174,7 @@ slug="${slug#*_}"
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
   CONFIGLOCATION="/config"
-  CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/$slug.sh"
+  CONFIGFILEBROWSER="/app_configs/${HOSTNAME/-/_}/$slug.sh"
 else
   CONFIGLOCATION="/config/addons_autoscripts"
   CONFIGFILEBROWSER="/homeassistant/addons_autoscripts/$slug.sh"

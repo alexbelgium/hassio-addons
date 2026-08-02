@@ -1,4 +1,5 @@
 ## 2026.02.28 (28-02-2026)
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Minor bugs fixed
 ## 2026.02.25-2 (25-02-2026)
 - Minor bugs fixed

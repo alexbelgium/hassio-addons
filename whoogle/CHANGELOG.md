@@ -1,5 +1,6 @@
 
 ## 1.2.4 (2026-04-23)
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from benbusby/whoogle-search (changelog : https://github.com/benbusby/whoogle-search/releases)
 
 ## 1.2.3 (2026-03-28)
@@ -15,7 +16,7 @@
 ## 1.1.0 (2025-10-11)
 - Update to latest version from benbusby/whoogle-search (changelog : https://github.com/benbusby/whoogle-search/releases)
 ## 0.9.4-2 (2025-09-30)
-- Applied new homeassistant config logic, which will allow in the future all Mealie data to be backuped with the addon. All data (+ config) is moved to /addon_configs/db21ed7f_whoogle_search
+- Applied new homeassistant config logic, which will allow in the future all Mealie data to be backuped with the addon. All data (+ config) is moved to /app_configs/db21ed7f_whoogle_search
 
 ## 0.9.4 (2025-09-20)
 - Update to latest version from benbusby/whoogle-search (changelog : https://github.com/benbusby/whoogle-search/releases)
