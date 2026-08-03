@@ -26,7 +26,10 @@ if [ -z "$MAX_RESOLUTION" ]; then
     exit 0
 fi
 
-if ! printf '%s' "$MAX_RESOLUTION" | grep -qE '^[0-9]{1,5}x[0-9]{1,5}$'; then
+# Matched with bash's own =~ rather than grep: grep anchors per *line*, so a multi-line value
+# such as "1920x1080\n640x480" satisfies ^...$ on its first line and would be passed through to
+# Xvfb verbatim. Bash anchors the whole string, so an embedded newline is rejected.
+if [[ ! "$MAX_RESOLUTION" =~ ^[0-9]{1,5}x[0-9]{1,5}$ ]]; then
     bashio::log.warning "max_resolution '${MAX_RESOLUTION}' is not WIDTHxHEIGHT; leaving the base image default"
     exit 0
 fi
@@ -45,10 +48,19 @@ fi
 
 # cont-init.d completes before any s6-rc service starts, so svc-xorg picks this up on the same
 # boot. Both paths are written because the base image's scripts read the legacy /var/run alias.
+written=0
 for envdir in /var/run/s6/container_environment /run/s6/container_environment; do
     if [ -d "$envdir" ]; then
         printf '%s' "$MAX_RESOLUTION" > "${envdir}/MAX_RES"
+        written=1
     fi
 done
+
+# Claiming success after writing nothing would send someone hunting for a cap that svc-xorg
+# never saw.
+if [ "$written" -eq 0 ]; then
+    bashio::log.warning "No s6 environment directory found; leaving the base image's default virtual screen size"
+    exit 0
+fi
 
 bashio::log.info "Virtual screen capped at ${MAX_RESOLUTION} (Selkies still resizes dynamically below this)"
