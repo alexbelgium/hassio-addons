@@ -5,7 +5,7 @@ set -e
 ###############################################################################
 # Home Assistant Addon entrypoint for Cleanuparr
 # The .NET app uses /app/config as its data directory.
-# We symlink /app/config → /app_configs/cleanuparr (HA persistent storage)
+# We symlink /app/config → /config (HA persistent app_config storage)
 # and start ./Cleanuparr directly, bypassing the original /entrypoint.sh
 # which would trigger the /config Docker VOLUME mount.
 ###############################################################################
@@ -26,7 +26,7 @@ if [ -d /etc/cont-init.d ]; then
 fi
 
 # ─── Setup persistent data directory ─────────────────────────────────────────
-HA_DATA_DIR="/app_configs/cleanuparr"
+HA_DATA_DIR="/config"
 echo "[Cleanuparr] Setting up data directory: $HA_DATA_DIR"
 mkdir -p "$HA_DATA_DIR"
 
