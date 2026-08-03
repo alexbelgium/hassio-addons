@@ -308,10 +308,13 @@ if bashio::config.true 'install_codex_cli'; then
 fi
 
 HA_MCP_ENABLED=false
-HA_MCP_URL=""
 HA_MCP_TOKEN=""
+# Read unconditionally, even when enable_ha_mcp is off. Home Assistant keeps an option's value
+# when its toggle is disabled, and the reconciliation below needs this URL to recognise the
+# HTTP entry it previously wrote so that it can be removed — together with the bearer token
+# inside it — rather than orphaned in ~/.claude.json.
+HA_MCP_URL="$(bashio::config 'ha_mcp_url' 'http://homeassistant:8123/api/mcp')"
 if bashio::config.true 'enable_ha_mcp'; then
-    HA_MCP_URL="$(bashio::config 'ha_mcp_url' 'http://homeassistant:8123/api/mcp')"
     if bashio::config.has_value 'ha_mcp_token'; then
         HA_MCP_TOKEN="$(bashio::config 'ha_mcp_token')"
     fi
@@ -325,12 +328,73 @@ if bashio::config.true 'enable_ha_mcp'; then
     fi
 fi
 
+# Which of the managed MCP servers each client gets.
+#
+# Every stdio MCP server is a separate process *per client*, and Claude Desktop starts another
+# full set for each Claude Code session it hosts — so a server registered in both clients is
+# paid for several times over. Measured on a live add-on with three sets running, the private
+# (non-shared) resident cost was roughly 54 MB per extra `headroom mcp serve`, 45 MB per extra
+# `mcp-proxy`, and only ~11 MB and ~2 MB for `codex` and `tokensave`, which share most of their
+# pages. Registering a server only where it is actually used is therefore the cheapest lever
+# available; these two options expose that choice.
+#
+# Defaults keep every enabled server in both clients, i.e. the pre-existing behaviour.
+MCP_ALL_SERVERS="headroom tokensave homeassistant codex"
+
+mcp_client_list() {
+    local option="$1"
+    local selected=() entry raw rc=0
+
+    # An option that is absent entirely — i.e. an existing install upgrading from a config that
+    # predates these options — keeps the previous behaviour of registering every enabled server.
+    # bashio distinguishes this from an explicitly empty list: an unset key yields the literal
+    # "null", while `[]` yields an empty string. Those must not be conflated, because an empty
+    # list is a legitimate way to say "no MCP servers in this client" and defaulting it back to
+    # all four would silently ignore the user.
+    if ! bashio::config.exists "$option"; then
+        echo "$MCP_ALL_SERVERS"
+        return 0
+    fi
+
+    # Capture first: reading a bashio list straight into `while read` via process substitution
+    # silently yields nothing under this script's errexit. The exit status is kept separately
+    # so that a failed read is not mistaken for a deliberate empty selection.
+    raw="$(bashio::config "$option" 2> /dev/null)" || rc=$?
+    if [ "$rc" -ne 0 ]; then
+        bashio::log.warning "Could not read '${option}'; registering every enabled MCP server for this client"
+        echo "$MCP_ALL_SERVERS"
+        return 0
+    fi
+
+    while read -r entry; do
+        [ -n "$entry" ] || continue
+        # Reconciliation deletes any managed server not named here, so an unrecognised value
+        # must never be treated as an authoritative selection.
+        case " $MCP_ALL_SERVERS " in
+            *" $entry "*) selected+=("$entry") ;;
+            *)
+                bashio::log.warning "Ignoring unknown MCP server '${entry}' in '${option}'; registering every enabled server for this client"
+                echo "$MCP_ALL_SERVERS"
+                return 0
+                ;;
+        esac
+    done <<< "$raw"
+
+    echo "${selected[@]:-}"
+}
+
+MCP_SERVERS_DESKTOP="$(mcp_client_list 'mcp_servers_desktop')"
+MCP_SERVERS_CODE="$(mcp_client_list 'mcp_servers_code')"
+bashio::log.info "MCP servers for Claude Desktop: ${MCP_SERVERS_DESKTOP}"
+bashio::log.info "MCP servers for Claude Code: ${MCP_SERVERS_CODE}"
+
 HEADROOM_ENABLED="$HEADROOM_ENABLED" HEADROOM_BIN="$(command -v headroom || echo headroom)" \
     HEADROOM_HF_HOME="${HOME}/.headroom/hf" \
     TOKENSAVE_ENABLED="$TOKENSAVE_ENABLED" TOKENSAVE_BIN="$(command -v tokensave || echo tokensave)" \
     CODEX_ENABLED="$CODEX_ENABLED" CODEX_BIN="$CODEX_BIN" CODEX_SANDBOX_MODE="$CODEX_SANDBOX_MODE" \
     HA_MCP_ENABLED="$HA_MCP_ENABLED" HA_MCP_URL="$HA_MCP_URL" HA_MCP_TOKEN="$HA_MCP_TOKEN" \
     MCP_PROXY_BIN="$(command -v mcp-proxy || echo mcp-proxy)" \
+    MCP_SERVERS_DESKTOP="$MCP_SERVERS_DESKTOP" MCP_SERVERS_CODE="$MCP_SERVERS_CODE" \
     CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" CLAUDE_CODE_CONFIG="$CLAUDE_CODE_CONFIG" \
     python3 - <<'PY' || bashio::log.warning "Unable to update the MCP server registrations automatically"
 import json
@@ -385,6 +449,23 @@ if os.environ["HA_MCP_ENABLED"] == "true":
         "env": {"API_ACCESS_TOKEN": os.environ["HA_MCP_TOKEN"]},
     }
 
+# Claude Code speaks Streamable HTTP MCP natively, so pointing it straight at Home Assistant
+# removes the mcp-proxy bridge process entirely — it exists only to translate stdio to the HTTP
+# transport Home Assistant already serves. That bridge was the most expensive duplicate
+# measured (~45 MB of private RSS per copy, one per Claude Code session).
+#
+# Claude Desktop keeps the stdio bridge. Its bundled MCP SDK does contain a remote transport,
+# but the shape `claude_desktop_config.json` accepts for a remote entry — and whether it
+# persists a static bearer header — could not be confirmed, and a wrong guess would silently
+# break Home Assistant access in Desktop. Revisit once that schema is verified upstream.
+HA_MCP_CODE_ENTRY = None
+if os.environ["HA_MCP_ENABLED"] == "true":
+    HA_MCP_CODE_ENTRY = {
+        "type": "http",
+        "url": os.environ["HA_MCP_URL"],
+        "headers": {"Authorization": "Bearer " + os.environ["HA_MCP_TOKEN"]},
+    }
+
 # An entry is add-on-managed when its command is one of our binaries living outside the
 # persistent home. Matching on the basename (rather than the exact path recorded at write
 # time) keeps entries updatable when a base-image upgrade moves the binary, while commands
@@ -392,17 +473,77 @@ if os.environ["HA_MCP_ENABLED"] == "true":
 HOME_PREFIX = os.path.expanduser("~") + os.sep
 
 
-def is_managed(name, entry):
+# Ownership record for the HTTP Home Assistant entry.
+#
+# The stdio entries can be recognised on sight, because their `command` points at a binary this
+# image installs outside $HOME. An HTTP entry has no such tell: it is just a URL plus a bearer
+# header, and a user who configured `homeassistant` by hand — very plausibly at the same default
+# http://homeassistant:8123/api/mcp — would be indistinguishable from ours. Inferring ownership
+# from shape or URL would let this script delete or overwrite that entry, including their token.
+#
+# So ownership is recorded rather than guessed: the URL of an entry this script actually wrote is
+# remembered here, and only an entry matching that record is ever modified or removed. Anything
+# this script did not write is untouchable, whatever it looks like. The file holds no secrets —
+# just the endpoint — but is written 0600 to match the configs it describes.
+STATE_PATH = Path(os.path.expanduser("~")) / ".config" / "claude_desktop_addon" / "managed-mcp.json"
+
+
+def load_state():
+    try:
+        state = json.loads(STATE_PATH.read_text())
+        return state if isinstance(state, dict) else {}
+    except Exception:
+        return {}
+
+
+def save_state(state):
+    try:
+        STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        STATE_PATH.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n")
+        STATE_PATH.chmod(0o600)
+    except Exception:
+        # Losing the record only costs us the ability to clean up later; never fail the boot.
+        pass
+
+
+def is_managed_http_ha(entry, owned_url):
+    """True only for an HTTP entry this script previously wrote."""
+    return (
+        bool(owned_url)
+        and entry.get("url") == owned_url
+        and set(entry) == {"type", "url", "headers"}
+        and entry.get("type") == "http"
+        and isinstance(entry.get("headers"), dict)
+        and set(entry["headers"]) == {"Authorization"}
+    )
+
+
+def is_managed(name, entry, owned_url):
     if not isinstance(entry, dict):
         return False
     command = entry.get("command")
     if not isinstance(command, str) or command.startswith(HOME_PREFIX):
+        # A commandless entry is ours only when it is an HTTP Home Assistant registration this
+        # script recorded writing. Anything else — including a user's own remote server that
+        # reuses the name, even on the same URL — is left alone.
+        if command is None and name == "homeassistant":
+            return is_managed_http_ha(entry, owned_url)
         return False
     return os.path.basename(command) == MANAGED_BASENAMES[name]
 
 
+SELECTED = {
+    "CLAUDE_DESKTOP_CONFIG": set(os.environ["MCP_SERVERS_DESKTOP"].split()),
+    "CLAUDE_CODE_CONFIG": set(os.environ["MCP_SERVERS_CODE"].split()),
+}
+
+state = load_state()
+state_changed = False
+
 for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_CONFIG", True)):
     path = Path(os.environ[config_var])
+    selected = SELECTED[config_var]
+    owned_url = state.get(str(path), {}).get("homeassistant_http_url", "")
     try:
         data = json.loads(path.read_text()) if path.exists() else {}
         if not isinstance(data, dict):
@@ -417,17 +558,35 @@ for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_C
     changed = False
     for name in MANAGED_BASENAMES:
         existing = servers.get(name)
-        if name in desired:
-            entry = dict(desired[name])
-            if stdio_type:
-                entry["type"] = "stdio"
-            if existing is None or is_managed(name, existing):
+        if name in desired and name in selected:
+            if stdio_type and name == "homeassistant" and HA_MCP_CODE_ENTRY is not None:
+                # Claude Code talks to Home Assistant over HTTP directly; no bridge process.
+                entry = dict(HA_MCP_CODE_ENTRY)
+            else:
+                entry = dict(desired[name])
+                if stdio_type:
+                    entry["type"] = "stdio"
+            # An entry we did not write is never overwritten, so a user's own HTTP
+            # `homeassistant` survives even when it sits on the configured URL.
+            claimable = existing is None or is_managed(name, existing, owned_url)
+            if claimable:
                 if existing != entry:
                     servers[name] = entry
                     changed = True
-        elif existing is not None and is_managed(name, existing):
+                if name == "homeassistant" and entry.get("type") == "http":
+                    if owned_url != entry["url"]:
+                        state.setdefault(str(path), {})["homeassistant_http_url"] = entry["url"]
+                        owned_url = entry["url"]
+                        state_changed = True
+        elif existing is not None and is_managed(name, existing, owned_url):
+            # Covers both "feature disabled" and "deselected for this client".
             del servers[name]
             changed = True
+            if name == "homeassistant" and state.get(str(path), {}).pop(
+                "homeassistant_http_url", None
+            ):
+                owned_url = ""
+                state_changed = True
     if changed:
         if servers:
             data["mcpServers"] = servers
@@ -440,6 +599,9 @@ for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_C
     # permissions between merges.
     if path.exists():
         path.chmod(0o600)
+
+if state_changed:
+    save_state(state)
 PY
 
 # Guide Claude to actually use the Headroom compression tools so the MCP integration produces

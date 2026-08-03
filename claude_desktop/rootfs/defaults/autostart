@@ -20,4 +20,67 @@
 # Headroom is intentionally not injected into the Desktop process: Claude Desktop
 # force-overrides ANTHROPIC_BASE_URL (headroom #869), so Desktop uses the registered Headroom
 # MCP tools instead.
-exec claude-desktop --no-sandbox --disable-dev-shm-usage --password-store=basic
+
+# GPU acceleration.
+#
+# Under Xvfb, Chromium probes GLX, finds only Xvfb's indirect/software path, and falls back to
+# rendering everything on the CPU (`--use-gl=disabled` on the GPU process, and
+# `--disable-gpu-compositing` on the renderer). On a small Home Assistant host that is the
+# add-on's single largest CPU consumer.
+#
+# Routing Chromium through ANGLE's OpenGL backend over EGL uses the real render node instead.
+# The flags are only added when /usr/local/bin/claude-gpu-probe confirms that Claude Desktop's
+# own bundled ANGLE can create a hardware GL context here, because forcing them on a host with
+# no render node (or one where Mesa falls back to llvmpipe) trades a working software desktop
+# for a black window or a GPU-process crash loop. Any probe failure leaves the command line
+# untouched, i.e. exactly the pre-existing software-rendering behaviour.
+#
+# `--use-angle=gles-egl` is deliberately not used: Mesa rejects it with "Intel or NVIDIA
+# OpenGL ES drivers are not supported".
+#
+# /run/claude-desktop-gpu-mode is written each boot by /etc/cont-init.d/85-openbox_autostart.sh
+# from the `gpu_acceleration` add-on option (auto|on|off).
+GPU_FLAGS=""
+GPU_MODE="auto"
+if [ -r /run/claude-desktop-gpu-mode ]; then
+    GPU_MODE="$(cat /run/claude-desktop-gpu-mode)"
+fi
+case "$GPU_MODE" in
+    off)
+        echo "claude-desktop: gpu_acceleration=off; using software rendering" >&2
+        ;;
+    on)
+        # Escape hatch for hosts where the probe is wrong in either direction.
+        GPU_FLAGS="--ozone-platform=x11 --use-gl=angle --use-angle=gl-egl"
+        echo "claude-desktop: gpu_acceleration=on; forcing ANGLE/EGL without probing" >&2
+        ;;
+    *)
+        # Bounded: this sits in the desktop's startup path, and a driver that wedges during
+        # EGL init must not leave the user staring at an empty screen. A timeout is treated
+        # exactly like a failed probe, i.e. software rendering.
+        if timeout 15 claude-gpu-probe; then
+            GPU_FLAGS="--ozone-platform=x11 --use-gl=angle --use-angle=gl-egl"
+        fi
+        ;;
+esac
+
+# Shared memory.
+#
+# --disable-dev-shm-usage exists because Docker's default /dev/shm is 64 MB, which is not
+# enough for Chromium's renderers and produced a crash loop here (see the 1.3 changelog entry).
+# Home Assistant ignores the add-on's shm_size, so the size cannot be set from this repo and
+# genuinely varies between installs — it is 7.7 GB on some hosts and the 64 MB default on
+# others. Hardcoding either answer is wrong, so ask the kernel: keep the workaround when
+# /dev/shm is small, and drop it when there is plenty, where it would otherwise push Chromium's
+# shared memory into ordinary files for no benefit. If the size cannot be determined, keep the
+# flag — the crash it prevents is worse than the overhead it costs.
+SHM_FLAGS="--disable-dev-shm-usage"
+SHM_KB="$(df -k /dev/shm 2> /dev/null | awk 'NR==2 {print $2}')"
+if [ -n "$SHM_KB" ] && [ "$SHM_KB" -ge 262144 ]; then
+    SHM_FLAGS=""
+fi
+
+# GPU_FLAGS and SHM_FLAGS must stay unquoted so they expand to separate arguments, or to
+# nothing at all.
+# shellcheck disable=SC2086
+exec claude-desktop --no-sandbox --password-store=basic $SHM_FLAGS $GPU_FLAGS

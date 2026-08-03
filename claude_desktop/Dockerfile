@@ -146,7 +146,19 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
 # /dev/dri nodes. Explicitly install the amd64 userspace stack needed for accelerated
 # OpenGL rendering, VA-API video encoding, and Vulkan, then fail the build if any driver
 # payload is missing. Keep aarch64 unchanged because these Intel packages are amd64-only.
-RUN if [[ "${TARGETARCH}" == "amd64" ]]; then \
+#
+# Gate on BUILD_ARCH, not TARGETARCH. TARGETARCH is a BuildKit-provided platform ARG; the
+# repo's builder (.github/workflows/onpush_builder.yaml) passes BUILD_ARCH explicitly and
+# that is the contract this repo can rely on. This block previously used TARGETARCH and
+# silently never ran: the shipped amd64 image has no `vainfo` and no
+# `intel-media-va-driver-non-free`, and its apt history contains no matching install — so
+# the "fail the build if a payload is missing" guarantee below had never once executed.
+#
+# The Vulkan ICD payload is checked via the driver directory rather than a single
+# distro-specific filename: the previous `test -f intel_icd.x86_64.json` named a file Debian
+# does not ship (it installs `intel_icd.json`), so restoring the guard without this change
+# would have turned dead code straight into a failing build.
+RUN if [[ "${BUILD_ARCH}" == "amd64" ]]; then \
         apt-get update && \
         apt-get install -y --no-install-recommends \
             intel-media-va-driver-non-free \
@@ -155,7 +167,7 @@ RUN if [[ "${TARGETARCH}" == "amd64" ]]; then \
             vainfo && \
         test -f /usr/lib/x86_64-linux-gnu/dri/iHD_drv_video.so && \
         test -f /usr/lib/x86_64-linux-gnu/dri/iris_dri.so && \
-        test -f /usr/share/vulkan/icd.d/intel_icd.x86_64.json && \
+        ls /usr/share/vulkan/icd.d/intel_icd*.json > /dev/null && \
         command -v vainfo > /dev/null; \
     fi && \
     apt-get clean && \
