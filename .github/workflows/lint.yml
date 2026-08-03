@@ -86,10 +86,10 @@ jobs:
           new_mealie_path = "/addon_configs/db21ed7f_mealie"
           old_count = mealie_text.count(old_mealie_path)
           if old_count:
-              if old_count != 4:
-                  raise SystemExit(f"mealie/CHANGELOG.md: expected 4 historical paths, found {old_count}")
+              if old_count != 5:
+                  raise SystemExit(f"mealie/CHANGELOG.md: expected 5 historical paths, found {old_count}")
               mealie_text = mealie_text.replace(old_mealie_path, new_mealie_path)
-          elif mealie_text.count(new_mealie_path) < 4:
+          elif mealie_text.count(new_mealie_path) < 5:
               raise SystemExit("mealie/CHANGELOG.md: historical path correction not found")
           mealie_text = mealie_text.replace("backuped", "backed up").replace("occured", "occurred")
           mealie.write_text(mealie_text)
