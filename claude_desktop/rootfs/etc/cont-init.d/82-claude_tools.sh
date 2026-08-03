@@ -473,22 +473,44 @@ if os.environ["HA_MCP_ENABLED"] == "true":
 HOME_PREFIX = os.path.expanduser("~") + os.sep
 
 
-def is_managed_http_ha(entry):
-    """Recognise the HTTP Home Assistant entry this script writes.
+# Ownership record for the HTTP Home Assistant entry.
+#
+# The stdio entries can be recognised on sight, because their `command` points at a binary this
+# image installs outside $HOME. An HTTP entry has no such tell: it is just a URL plus a bearer
+# header, and a user who configured `homeassistant` by hand — very plausibly at the same default
+# http://homeassistant:8123/api/mcp — would be indistinguishable from ours. Inferring ownership
+# from shape or URL would let this script delete or overwrite that entry, including their token.
+#
+# So ownership is recorded rather than guessed: the URL of an entry this script actually wrote is
+# remembered here, and only an entry matching that record is ever modified or removed. Anything
+# this script did not write is untouchable, whatever it looks like. The file holds no secrets —
+# just the endpoint — but is written 0600 to match the configs it describes.
+STATE_PATH = Path(os.path.expanduser("~")) / ".config" / "claude_desktop_addon" / "managed-mcp.json"
 
-    Ownership requires *both* the exact shape this script generates and the currently
-    configured ha_mcp_url. Shape alone is far too weak — a hand-written remote server named
-    "homeassistant" with a bearer header has exactly that shape and would be deleted.
 
-    HA_MCP_URL is therefore read even when enable_ha_mcp is off, so that turning the
-    integration off still removes the entry (and the token in it) instead of orphaning it.
-    A user who both disables the integration and clears ha_mcp_url keeps a stale entry; that
-    is the deliberate trade, and it errs towards never touching something that is not ours.
-    """
-    configured_url = os.environ.get("HA_MCP_URL", "")
+def load_state():
+    try:
+        state = json.loads(STATE_PATH.read_text())
+        return state if isinstance(state, dict) else {}
+    except Exception:
+        return {}
+
+
+def save_state(state):
+    try:
+        STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        STATE_PATH.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n")
+        STATE_PATH.chmod(0o600)
+    except Exception:
+        # Losing the record only costs us the ability to clean up later; never fail the boot.
+        pass
+
+
+def is_managed_http_ha(entry, owned_url):
+    """True only for an HTTP entry this script previously wrote."""
     return (
-        bool(configured_url)
-        and entry.get("url") == configured_url
+        bool(owned_url)
+        and entry.get("url") == owned_url
         and set(entry) == {"type", "url", "headers"}
         and entry.get("type") == "http"
         and isinstance(entry.get("headers"), dict)
@@ -496,16 +518,16 @@ def is_managed_http_ha(entry):
     )
 
 
-def is_managed(name, entry):
+def is_managed(name, entry, owned_url):
     if not isinstance(entry, dict):
         return False
     command = entry.get("command")
     if not isinstance(command, str) or command.startswith(HOME_PREFIX):
-        # A commandless entry is ours only when it is the HTTP Home Assistant registration we
-        # write. Anything else — including a user's own remote server that happens to reuse
-        # the name — is left alone.
+        # A commandless entry is ours only when it is an HTTP Home Assistant registration this
+        # script recorded writing. Anything else — including a user's own remote server that
+        # reuses the name, even on the same URL — is left alone.
         if command is None and name == "homeassistant":
-            return is_managed_http_ha(entry)
+            return is_managed_http_ha(entry, owned_url)
         return False
     return os.path.basename(command) == MANAGED_BASENAMES[name]
 
@@ -515,9 +537,13 @@ SELECTED = {
     "CLAUDE_CODE_CONFIG": set(os.environ["MCP_SERVERS_CODE"].split()),
 }
 
+state = load_state()
+state_changed = False
+
 for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_CONFIG", True)):
     path = Path(os.environ[config_var])
     selected = SELECTED[config_var]
+    owned_url = state.get(str(path), {}).get("homeassistant_http_url", "")
     try:
         data = json.loads(path.read_text()) if path.exists() else {}
         if not isinstance(data, dict):
@@ -540,14 +566,27 @@ for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_C
                 entry = dict(desired[name])
                 if stdio_type:
                     entry["type"] = "stdio"
-            if existing is None or is_managed(name, existing):
+            # An entry we did not write is never overwritten, so a user's own HTTP
+            # `homeassistant` survives even when it sits on the configured URL.
+            claimable = existing is None or is_managed(name, existing, owned_url)
+            if claimable:
                 if existing != entry:
                     servers[name] = entry
                     changed = True
-        elif existing is not None and is_managed(name, existing):
+                if name == "homeassistant" and entry.get("type") == "http":
+                    if owned_url != entry["url"]:
+                        state.setdefault(str(path), {})["homeassistant_http_url"] = entry["url"]
+                        owned_url = entry["url"]
+                        state_changed = True
+        elif existing is not None and is_managed(name, existing, owned_url):
             # Covers both "feature disabled" and "deselected for this client".
             del servers[name]
             changed = True
+            if name == "homeassistant" and state.get(str(path), {}).pop(
+                "homeassistant_http_url", None
+            ):
+                owned_url = ""
+                state_changed = True
     if changed:
         if servers:
             data["mcpServers"] = servers
@@ -560,6 +599,9 @@ for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_C
     # permissions between merges.
     if path.exists():
         path.chmod(0o600)
+
+if state_changed:
+    save_state(state)
 PY
 
 # Guide Claude to actually use the Headroom compression tools so the MCP integration produces

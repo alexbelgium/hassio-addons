@@ -23,10 +23,14 @@
   no `intel-media-va-driver-non-free`. It now uses `BUILD_ARCH`, and its Vulkan ICD check no
   longer names `intel_icd.x86_64.json`, a file Debian does not ship.
 - Fix: stale Home Assistant MCP registrations (and the bearer token in them) are now removed
-  from Claude Code's config when `enable_ha_mcp` is turned off.
-- Removed `--disable-dev-shm-usage` from the Claude Desktop command line. It is a workaround for
-  containers with a 64 MB `/dev/shm`; this image has 7.7 GB, so the flag only pushed Chromium's
-  shared memory into ordinary files.
+  from Claude Code's config when `enable_ha_mcp` is turned off. Ownership of an HTTP entry is
+  recorded when the add-on writes it, so a manually configured `homeassistant` server is never
+  claimed, overwritten, or deleted — not even when it sits on the default URL.
+- `--disable-dev-shm-usage` is now applied only when `/dev/shm` is actually small (under
+  256 MB). It is a workaround for Docker's 64 MB default, but Home Assistant ignores the add-on's
+  `shm_size` so the real size varies per install; the size is now read at startup, keeping the
+  crash workaround where it is needed and dropping it where it only pushed Chromium's shared
+  memory into ordinary files. If the size cannot be determined, the flag is kept.
 
 ## 2026.08.02 (02-08-2026)
 - Minor bugs fixed

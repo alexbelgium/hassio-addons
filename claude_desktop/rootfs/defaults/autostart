@@ -64,10 +64,23 @@ case "$GPU_MODE" in
         ;;
 esac
 
-# --disable-dev-shm-usage is deliberately absent: it is a workaround for containers with a
-# 64 MB /dev/shm, and this image has a 7.7 GB one. Setting it pushes Chromium's shared memory
-# into ordinary files under /tmp for no benefit.
+# Shared memory.
 #
-# GPU_FLAGS must stay unquoted so it expands to separate arguments (or to nothing at all).
+# --disable-dev-shm-usage exists because Docker's default /dev/shm is 64 MB, which is not
+# enough for Chromium's renderers and produced a crash loop here (see the 1.3 changelog entry).
+# Home Assistant ignores the add-on's shm_size, so the size cannot be set from this repo and
+# genuinely varies between installs — it is 7.7 GB on some hosts and the 64 MB default on
+# others. Hardcoding either answer is wrong, so ask the kernel: keep the workaround when
+# /dev/shm is small, and drop it when there is plenty, where it would otherwise push Chromium's
+# shared memory into ordinary files for no benefit. If the size cannot be determined, keep the
+# flag — the crash it prevents is worse than the overhead it costs.
+SHM_FLAGS="--disable-dev-shm-usage"
+SHM_KB="$(df -k /dev/shm 2> /dev/null | awk 'NR==2 {print $2}')"
+if [ -n "$SHM_KB" ] && [ "$SHM_KB" -ge 262144 ]; then
+    SHM_FLAGS=""
+fi
+
+# GPU_FLAGS and SHM_FLAGS must stay unquoted so they expand to separate arguments, or to
+# nothing at all.
 # shellcheck disable=SC2086
-exec claude-desktop --no-sandbox --password-store=basic $GPU_FLAGS
+exec claude-desktop --no-sandbox --password-store=basic $SHM_FLAGS $GPU_FLAGS

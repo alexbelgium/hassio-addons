@@ -130,9 +130,9 @@ schema:
   install_tokensave: bool
   max_resolution: str?
   mcp_servers_desktop:
-    - list(headroom|tokensave|homeassistant|codex)?
+    - list(headroom|tokensave|homeassistant|codex)
   mcp_servers_code:
-    - list(headroom|tokensave|homeassistant|codex)?
+    - list(headroom|tokensave|homeassistant|codex)
   permission_mode: list(strict|auto|bypass)
   tokensave_project_paths:
     - str
