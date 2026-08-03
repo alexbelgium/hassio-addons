@@ -97,6 +97,8 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `KEYBOARD` | | Optional Selkies keyboard layout. |
 | `PASSWORD` | | Optional password for direct Selkies ports. |
 | `DRINODE` | | Optional GPU device override for Selkies. |
+| `gpu_acceleration` | `auto` | Whether Claude Desktop renders on the GPU. `auto` adds Chromium's ANGLE/EGL flags only when a probe confirms a hardware GL context is available, `on` forces them without probing, `off` keeps software rendering. Use `on` with care: it skips every safety check, so on a host that cannot actually drive those flags the desktop can come up black — set the option back to `auto` or `off` to recover. |
+| `max_resolution` | `1920x1080` | Caps the virtual screen. Selkies still resizes dynamically below this; raise it only if you drive the desktop from a larger display. |
 | `DNS_server` | `8.8.8.8` | DNS server used by the standard DNS module. |
 | `permission_mode` | `auto` | Claude Code permission policy: `strict`, `auto`, or `bypass`. |
 | `install_headroom` | `true` | Register Headroom MCP and run the supervised local proxy. |
@@ -106,6 +108,8 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `install_rtk` | `true` | Configure RTK's Claude Code `PreToolUse` Bash hook. |
 | `install_tokensave` | `true` | Install TokenSave's complete global Claude integration. |
 | `tokensave_project_paths` | `[]` | Explicit absolute Git repository paths to initialize or sync at startup. |
+| `mcp_servers_desktop` | all | Which managed MCP servers Claude Desktop registers (`headroom`, `tokensave`, `homeassistant`, `codex`). |
+| `mcp_servers_code` | all | Which managed MCP servers Claude Code registers. Each stdio server is a separate process per client, and Desktop starts another set per Claude Code session it hosts, so trimming this is the cheapest way to cut memory. |
 | `install_caveman` | `false` | Install the third-party Caveman Claude Code plugin at startup. |
 | `install_codex_cli` | `false` | Install the latest stable OpenAI Codex CLI at startup and register its native MCP server so Claude can delegate work to ChatGPT Codex. |
 | `codex_sandbox_mode` | `workspace-write` | Filesystem scope Codex runs with: `read-only`, `workspace-write`, or `danger-full-access`. |

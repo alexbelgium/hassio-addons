@@ -1,3 +1,33 @@
+## 2026.08.03 (03-08-2026)
+- Performance: Claude Desktop now uses the GPU instead of rendering on the CPU.
+  Under Xvfb, Chromium probed GLX, found only Xvfb's software path, and fell back to
+  `--use-gl=disabled` + `--disable-gpu-compositing`, making the renderer the add-on's largest
+  CPU consumer. It is now launched with `--ozone-platform=x11 --use-gl=angle --use-angle=gl-egl`,
+  but only when the new `claude-gpu-probe` confirms Claude Desktop's own bundled ANGLE can
+  create a hardware GL context on this host. New `gpu_acceleration` option (`auto`/`on`/`off`,
+  default `auto`); any probe failure keeps the previous software rendering unchanged.
+- Performance: new `max_resolution` option (default `1920x1080`) caps the virtual screen via the
+  base image's `MAX_RES`. Xvfb previously ran at 15360x8640, so Xvfb and the Selkies capture
+  loop tracked damage over a 133-megapixel area continuously, even with no browser connected.
+  Selkies still resizes dynamically below the cap.
+- Performance: Claude Code now talks to the Home Assistant MCP server over its native HTTP
+  transport instead of through the `mcp-proxy` stdio bridge, removing one Python process per
+  Claude Code session (~45 MB of private resident memory each). Claude Desktop keeps the
+  bridge, as the config schema for a remote entry there is not confirmed.
+- Performance: new `mcp_servers_desktop` / `mcp_servers_code` options select which MCP servers
+  each client registers. Every stdio MCP server is a separate process per client, and Desktop
+  starts another full set per Claude Code session it hosts. Defaults register all of them in
+  both clients, i.e. the previous behaviour.
+- Fix: the Dockerfile's Intel graphics block was dead code. It was gated on `TARGETARCH`, which
+  the repo's builder does not pass, so it never ran: the shipped amd64 image has no `vainfo` and
+  no `intel-media-va-driver-non-free`. It now uses `BUILD_ARCH`, and its Vulkan ICD check no
+  longer names `intel_icd.x86_64.json`, a file Debian does not ship.
+- Fix: stale Home Assistant MCP registrations (and the bearer token in them) are now removed
+  from Claude Code's config when `enable_ha_mcp` is turned off.
+- Removed `--disable-dev-shm-usage` from the Claude Desktop command line. It is a workaround for
+  containers with a 64 MB `/dev/shm`; this image has 7.7 GB, so the flag only pushed Chromium's
+  shared memory into ordinary files.
+
 ## 2026.08.02 (02-08-2026)
 - Minor bugs fixed
  

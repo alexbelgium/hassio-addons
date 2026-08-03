@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+"""Decide whether Claude Desktop can render on the GPU on this host.
+
+Claude Desktop is Electron/Chromium. Left to itself under Xvfb it probes GLX, finds
+only the indirect/software path Xvfb offers, and gives up: the GPU process ends up
+running `--use-gl=disabled` and the renderer `--disable-gpu-compositing`, so every
+frame is rastered and composited on the CPU. On a small Home Assistant host that is
+the single largest CPU consumer the add-on has.
+
+The fix is to point Chromium at ANGLE's OpenGL backend over EGL instead of GLX, but
+those flags are only safe where they actually work — forcing them on a host with no
+render node, or where Mesa falls back to a software rasterizer, trades a working
+software desktop for a black window or a GPU-process crash loop.
+
+So rather than guessing from the presence of /dev/dri, this probe exercises the exact
+code path Chromium will use: it loads Claude Desktop's *own bundled ANGLE* libEGL,
+initializes the OpenGL backend, creates a real pbuffer context, and reads GL_RENDERER
+back. Exit 0 means Chromium's GL stack is known-good here; any other exit means the
+caller must leave Chromium alone and keep today's software rendering.
+
+Notes for future readers:
+  * ANGLE's OpenGL backend needs a reachable X display, so this must run after Xorg is
+    up (i.e. from the openbox autostart, not from cont-init.d).
+  * `gles-egl` is deliberately not attempted: Mesa reports "Intel or NVIDIA OpenGL ES
+    drivers are not supported" and ANGLE refuses to initialize.
+  * A renderer string naming SwiftShader/llvmpipe/softpipe is a *failure* here. That is
+    software rendering wearing a GL hat, and forcing the flags for it would add ANGLE
+    translation overhead on top of the CPU rasterization we are trying to avoid.
+"""
+
+import ctypes
+import os
+import sys
+
+LIBDIR = "/usr/lib/claude-desktop"
+
+# EGL/ANGLE constants (see ANGLE's eglext.h); hardcoded to avoid a build dependency.
+EGL_NONE = 0x3038
+EGL_PLATFORM_ANGLE_ANGLE = 0x3202
+EGL_PLATFORM_ANGLE_TYPE_ANGLE = 0x3203
+EGL_PLATFORM_ANGLE_TYPE_OPENGL_ANGLE = 0x320D
+EGL_OPENGL_ES_API = 0x30A0
+EGL_SURFACE_TYPE = 0x3033
+EGL_PBUFFER_BIT = 0x0001
+EGL_RENDERABLE_TYPE = 0x3040
+EGL_OPENGL_ES2_BIT = 0x0004
+EGL_WIDTH = 0x3057
+EGL_HEIGHT = 0x3056
+EGL_CONTEXT_CLIENT_VERSION = 0x3098
+GL_VENDOR = 0x1F00
+GL_RENDERER = 0x1F01
+
+SOFTWARE_MARKERS = ("swiftshader", "llvmpipe", "softpipe", "lavapipe", "software rasterizer")
+
+
+def log(message):
+    sys.stderr.write("claude-gpu-probe: %s\n" % message)
+
+
+def main():
+    if not os.environ.get("DISPLAY"):
+        log("no DISPLAY; ANGLE's OpenGL backend needs an X server")
+        return 1
+
+    egl_path = os.path.join(LIBDIR, "libEGL.so")
+    gles_path = os.path.join(LIBDIR, "libGLESv2.so")
+    if not (os.path.exists(egl_path) and os.path.exists(gles_path)):
+        log("bundled ANGLE libraries not found under %s" % LIBDIR)
+        return 1
+
+    try:
+        egl = ctypes.CDLL(egl_path, mode=ctypes.RTLD_GLOBAL)
+        gles = ctypes.CDLL(gles_path, mode=ctypes.RTLD_GLOBAL)
+    except OSError as err:
+        log("could not load bundled ANGLE: %s" % err)
+        return 1
+
+    egl.eglGetProcAddress.restype = ctypes.c_void_p
+    egl.eglGetError.restype = ctypes.c_int
+    egl.eglInitialize.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int)]
+    egl.eglCreatePbufferSurface.restype = ctypes.c_void_p
+    egl.eglCreateContext.restype = ctypes.c_void_p
+    gles.glGetString.restype = ctypes.c_char_p
+    gles.glGetString.argtypes = [ctypes.c_uint]
+
+    addr = egl.eglGetProcAddress(b"eglGetPlatformDisplayEXT")
+    if not addr:
+        log("bundled ANGLE has no eglGetPlatformDisplayEXT")
+        return 1
+    get_platform_display = ctypes.CFUNCTYPE(
+        ctypes.c_void_p, ctypes.c_uint, ctypes.c_void_p, ctypes.POINTER(ctypes.c_int)
+    )(addr)
+
+    attrs = (ctypes.c_int * 3)(
+        EGL_PLATFORM_ANGLE_TYPE_ANGLE, EGL_PLATFORM_ANGLE_TYPE_OPENGL_ANGLE, EGL_NONE
+    )
+    display = get_platform_display(EGL_PLATFORM_ANGLE_ANGLE, None, attrs)
+    if not display:
+        log("no ANGLE OpenGL display (egl error 0x%x)" % egl.eglGetError())
+        return 1
+
+    major, minor = ctypes.c_int(), ctypes.c_int()
+    if not egl.eglInitialize(ctypes.c_void_p(display), ctypes.byref(major), ctypes.byref(minor)):
+        log("ANGLE OpenGL backend failed to initialize (egl error 0x%x)" % egl.eglGetError())
+        return 1
+
+    # Initialization alone is not proof: bring up a real context so GL_RENDERER reports the
+    # driver Chromium would actually get.
+    egl.eglBindAPI(EGL_OPENGL_ES_API)
+    config = ctypes.c_void_p()
+    count = ctypes.c_int()
+    config_attrs = (ctypes.c_int * 5)(
+        EGL_SURFACE_TYPE, EGL_PBUFFER_BIT, EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, EGL_NONE
+    )
+    if not egl.eglChooseConfig(
+        ctypes.c_void_p(display), config_attrs, ctypes.byref(config), 1, ctypes.byref(count)
+    ) or count.value == 0:
+        log("no usable EGL config (egl error 0x%x)" % egl.eglGetError())
+        return 1
+
+    surface_attrs = (ctypes.c_int * 5)(EGL_WIDTH, 64, EGL_HEIGHT, 64, EGL_NONE)
+    surface = egl.eglCreatePbufferSurface(ctypes.c_void_p(display), config, surface_attrs)
+    if not surface:
+        log("could not create pbuffer surface (egl error 0x%x)" % egl.eglGetError())
+        return 1
+
+    context_attrs = (ctypes.c_int * 3)(EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE)
+    context = egl.eglCreateContext(ctypes.c_void_p(display), config, None, context_attrs)
+    if not context:
+        log("could not create GL context (egl error 0x%x)" % egl.eglGetError())
+        return 1
+
+    if not egl.eglMakeCurrent(
+        ctypes.c_void_p(display),
+        ctypes.c_void_p(surface),
+        ctypes.c_void_p(surface),
+        ctypes.c_void_p(context),
+    ):
+        log("could not make the GL context current (egl error 0x%x)" % egl.eglGetError())
+        return 1
+
+    renderer = (gles.glGetString(GL_RENDERER) or b"").decode(errors="replace")
+    vendor = (gles.glGetString(GL_VENDOR) or b"").decode(errors="replace")
+    if not renderer:
+        log("GL context reported no renderer")
+        return 1
+
+    lowered = renderer.lower()
+    if any(marker in lowered for marker in SOFTWARE_MARKERS):
+        log("software renderer (%s); leaving Chromium on its own software path" % renderer)
+        return 1
+
+    log("hardware GL available: %s | %s" % (renderer, vendor))
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except Exception as err:  # never let a probe failure block the desktop from starting
+        log("probe error: %s" % err)
+        sys.exit(1)
