@@ -194,7 +194,7 @@
 
 ## 1.4.5-2 (2024-03-28)
 
-- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/fireflyiii_date_importer in a folder only accessible from my Filebrowser addon called /app_configs/db21ed7f_fireflyiii_date_importer. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/fireflyiii_date_importer in a folder only accessible from my Filebrowser addon called /app_configs/db21ed7f_fireflyiii_date_importer. This prevents the add-on from modifying your Home Assistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
 ## 1.4.5 (2024-03-23)
 

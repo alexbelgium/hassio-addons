@@ -177,7 +177,7 @@
 
 ## v2.0-beta5 (2024-10-15)
 
-- Applied new homeassistant config logic, which will allow in the future all Mealie data to be backuped with the addon. All data (+ config) is moved to /app_configs/db21ed7f_mealie ; the initial data currently in /homeassistant/addons_config/mealie_data and config in /homeassistant/addons_config/mealie will not be moved but a "migrated" file will be added to those folders to show that migration occured. From now on, only data in /app_configs/db21ed7f_mealie will be used.
+- Applied new homeassistant config logic, which will allow in the future all Mealie data to be backed up with the addon. All data (+ config) is moved to /addon_configs/db21ed7f_mealie ; the initial data currently in /homeassistant/addons_config/mealie_data and config in /homeassistant/addons_config/mealie will not be moved but a "migrated" file will be added to those folders to show that migration occurred. From now on, only data in /addon_configs/db21ed7f_mealie will be used.
 - If it doesn't load, there was perhaps an issue with the migration with a previous version. The solution : go in the Filebrowser addon, open the path /config/db21ed7f_mealie, move everything there in a new folder named old. Go then in the path /homeassistant/addons_config/mealie_data and remove the file named migrated. Restart the addon, and the migration will occur again
 
 - Logic change in terms of files :
@@ -201,9 +201,9 @@
     - Injector script: /config/mealie.sh
     - Env file : /config/config.yaml
   - Paths from HA (for example with Filebrowser) :
-    - Data: /app_configs/db21ed7f_mealie
-    - Injector script: /app_configs/db21ed7f_mealie/mealie.sh
-    - Env file : /app_configs/db21ed7f_mealie/config.yaml
+    - Data: /addon_configs/db21ed7f_mealie
+    - Injector script: /addon_configs/db21ed7f_mealie/mealie.sh
+    - Env file : /addon_configs/db21ed7f_mealie/config.yaml
   - Previous files backup (will not be used anymore thanks to the "Migrated file" that is now in their folder) :
     - Data: /homeassistant/addons_config/mealie_data
     - Injector script: /homeassistant/addons_autoscripts/mealie.sh
@@ -232,7 +232,7 @@
   - Copy the /homeassistant/addons_config/mealie_data folder from your backup to the same path in homeassistant
 - Wait for the addon to move back to 2.0 to use your database that was upgraded...
 
-If you have neither, alas Mealie has no way to way back from the upgrade that occurred... For info, I've improved the system to make sure that the data is backuped in the future (this function did not exist when I created the addon) but this doesn't help for this specific issue.
+If you have neither, alas Mealie has no way to way back from the upgrade that occurred... For info, I've improved the system to make sure that the data is backed up in the future (this function did not exist when I created the addon) but this doesn't help for this specific issue.
 
 ## v1.12.0 (2024-08-24)
 
