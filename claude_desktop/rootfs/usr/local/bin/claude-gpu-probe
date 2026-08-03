@@ -53,40 +53,47 @@ GL_RENDERER = 0x1F01
 SOFTWARE_MARKERS = ("swiftshader", "llvmpipe", "softpipe", "lavapipe", "software rasterizer")
 
 
+class ProbeFailure(Exception):
+    """Raised when this host cannot give Chromium a hardware GL context."""
+
+
 def log(message):
-    sys.stderr.write("claude-gpu-probe: %s\n" % message)
+    """Write a probe diagnostic to stderr, where it lands in the add-on log."""
+    sys.stderr.write(f"claude-gpu-probe: {message}\n")
 
 
-def main():
-    if not os.environ.get("DISPLAY"):
-        log("no DISPLAY; ANGLE's OpenGL backend needs an X server")
-        return 1
-
+def load_angle():
+    """Load Claude Desktop's bundled ANGLE and declare the signatures we call."""
     egl_path = os.path.join(LIBDIR, "libEGL.so")
     gles_path = os.path.join(LIBDIR, "libGLESv2.so")
     if not (os.path.exists(egl_path) and os.path.exists(gles_path)):
-        log("bundled ANGLE libraries not found under %s" % LIBDIR)
-        return 1
+        raise ProbeFailure(f"bundled ANGLE libraries not found under {LIBDIR}")
 
     try:
         egl = ctypes.CDLL(egl_path, mode=ctypes.RTLD_GLOBAL)
         gles = ctypes.CDLL(gles_path, mode=ctypes.RTLD_GLOBAL)
     except OSError as err:
-        log("could not load bundled ANGLE: %s" % err)
-        return 1
+        raise ProbeFailure(f"could not load bundled ANGLE: {err}") from err
 
     egl.eglGetProcAddress.restype = ctypes.c_void_p
     egl.eglGetError.restype = ctypes.c_int
-    egl.eglInitialize.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int)]
+    egl.eglInitialize.argtypes = [
+        ctypes.c_void_p,
+        ctypes.POINTER(ctypes.c_int),
+        ctypes.POINTER(ctypes.c_int),
+    ]
     egl.eglCreatePbufferSurface.restype = ctypes.c_void_p
     egl.eglCreateContext.restype = ctypes.c_void_p
     gles.glGetString.restype = ctypes.c_char_p
     gles.glGetString.argtypes = [ctypes.c_uint]
+    return egl, gles
 
+
+def open_angle_display(egl):
+    """Initialize ANGLE's OpenGL backend and return its EGL display."""
     addr = egl.eglGetProcAddress(b"eglGetPlatformDisplayEXT")
     if not addr:
-        log("bundled ANGLE has no eglGetPlatformDisplayEXT")
-        return 1
+        raise ProbeFailure("bundled ANGLE has no eglGetPlatformDisplayEXT")
     get_platform_display = ctypes.CFUNCTYPE(
         ctypes.c_void_p, ctypes.c_uint, ctypes.c_void_p, ctypes.POINTER(ctypes.c_int)
     )(addr)
@@ -96,39 +103,43 @@ def main():
     )
     display = get_platform_display(EGL_PLATFORM_ANGLE_ANGLE, None, attrs)
     if not display:
-        log("no ANGLE OpenGL display (egl error 0x%x)" % egl.eglGetError())
-        return 1
+        raise ProbeFailure(f"no ANGLE OpenGL display (egl error 0x{egl.eglGetError():x})")
 
     major, minor = ctypes.c_int(), ctypes.c_int()
     if not egl.eglInitialize(ctypes.c_void_p(display), ctypes.byref(major), ctypes.byref(minor)):
-        log("ANGLE OpenGL backend failed to initialize (egl error 0x%x)" % egl.eglGetError())
-        return 1
+        raise ProbeFailure(
+            f"ANGLE OpenGL backend failed to initialize (egl error 0x{egl.eglGetError():x})"
+        )
+    return display
 
-    # Initialization alone is not proof: bring up a real context so GL_RENDERER reports the
-    # driver Chromium would actually get.
+
+def make_current_context(egl, display):
+    """Bring up a real pbuffer context.
+
+    Initialization alone is not proof of anything: only a current context makes
+    GL_RENDERER report the driver Chromium would actually be handed.
+    """
     egl.eglBindAPI(EGL_OPENGL_ES_API)
     config = ctypes.c_void_p()
     count = ctypes.c_int()
     config_attrs = (ctypes.c_int * 5)(
         EGL_SURFACE_TYPE, EGL_PBUFFER_BIT, EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, EGL_NONE
     )
-    if not egl.eglChooseConfig(
+    chosen = egl.eglChooseConfig(
         ctypes.c_void_p(display), config_attrs, ctypes.byref(config), 1, ctypes.byref(count)
-    ) or count.value == 0:
-        log("no usable EGL config (egl error 0x%x)" % egl.eglGetError())
-        return 1
+    )
+    if not chosen or count.value == 0:
+        raise ProbeFailure(f"no usable EGL config (egl error 0x{egl.eglGetError():x})")
 
     surface_attrs = (ctypes.c_int * 5)(EGL_WIDTH, 64, EGL_HEIGHT, 64, EGL_NONE)
     surface = egl.eglCreatePbufferSurface(ctypes.c_void_p(display), config, surface_attrs)
     if not surface:
-        log("could not create pbuffer surface (egl error 0x%x)" % egl.eglGetError())
-        return 1
+        raise ProbeFailure(f"could not create pbuffer surface (egl error 0x{egl.eglGetError():x})")
 
     context_attrs = (ctypes.c_int * 3)(EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE)
     context = egl.eglCreateContext(ctypes.c_void_p(display), config, None, context_attrs)
     if not context:
-        log("could not create GL context (egl error 0x%x)" % egl.eglGetError())
-        return 1
+        raise ProbeFailure(f"could not create GL context (egl error 0x{egl.eglGetError():x})")
 
     if not egl.eglMakeCurrent(
         ctypes.c_void_p(display),
@@ -136,27 +147,50 @@ def main():
         ctypes.c_void_p(surface),
         ctypes.c_void_p(context),
     ):
-        log("could not make the GL context current (egl error 0x%x)" % egl.eglGetError())
-        return 1
+        raise ProbeFailure(
+            f"could not make the GL context current (egl error 0x{egl.eglGetError():x})"
+        )
 
+
+def describe_renderer(gles):
+    """Return (renderer, vendor), rejecting software rasterizers."""
     renderer = (gles.glGetString(GL_RENDERER) or b"").decode(errors="replace")
     vendor = (gles.glGetString(GL_VENDOR) or b"").decode(errors="replace")
     if not renderer:
-        log("GL context reported no renderer")
-        return 1
+        raise ProbeFailure("GL context reported no renderer")
 
     lowered = renderer.lower()
     if any(marker in lowered for marker in SOFTWARE_MARKERS):
-        log("software renderer (%s); leaving Chromium on its own software path" % renderer)
+        raise ProbeFailure(
+            f"software renderer ({renderer}); leaving Chromium on its own software path"
+        )
+    return renderer, vendor
+
+
+def main():
+    """Exit 0 only when Chromium's GL stack is known-good on this host."""
+    if not os.environ.get("DISPLAY"):
+        log("no DISPLAY; ANGLE's OpenGL backend needs an X server")
         return 1
 
-    log("hardware GL available: %s | %s" % (renderer, vendor))
+    try:
+        egl, gles = load_angle()
+        display = open_angle_display(egl)
+        make_current_context(egl, display)
+        renderer, vendor = describe_renderer(gles)
+    except ProbeFailure as err:
+        log(str(err))
+        return 1
+    # A probe is advisory: whatever goes wrong in these native calls, the desktop must still
+    # start. Any unexpected failure is reported and treated as "no GPU".
+    # pylint: disable=broad-exception-caught
+    except Exception as err:
+        log(f"unexpected probe error: {err}")
+        return 1
+
+    log(f"hardware GL available: {renderer} | {vendor}")
     return 0
 
 
 if __name__ == "__main__":
-    try:
-        sys.exit(main())
-    except Exception as err:  # never let a probe failure block the desktop from starting
-        log("probe error: %s" % err)
-        sys.exit(1)
+    sys.exit(main())
