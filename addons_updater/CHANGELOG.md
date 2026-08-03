@@ -1,5 +1,6 @@
 ## 2026.08 (2026-08-01)
 
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Addon versions written in config.yaml now always comply with Home Assistant versioning: an upstream tag Home Assistant cannot order (`version-bf9e0b4f`, `ubuntu-2026-06-01`, ...) or would sort as older (`1.2.3-2`, `1.2.3+4`) no longer lands in config.yaml. The addon number is incremented instead, while the raw upstream tag stays in updater.json so the same release is never published twice
 - Pre-release markers become a version section, `5.0.0b5` is published as `5.0.0.5`
 - A tag Home Assistant cannot order keeps every number it carries, `v26.2-ls256` is published as `v26.2.256`
@@ -31,7 +32,7 @@
 
 ## 3.19
 
-- New HA config logic implemented. Files are now located in the addon config file, that can be accessed from the addon_configs folder from my filebrowser or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- New HA config logic implemented. Files are now located in the addon config file, that can be accessed from the app_configs folder from my filebrowser or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 - Feat : if there is no releases in a github repo, check if there is a valid package and get the highest tag https://github.com/alexbelgium/hassio-addons/issues/1168
 - Feat : github_exclude applies to dockerhub
 

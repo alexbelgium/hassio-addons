@@ -49,7 +49,7 @@ Fill the add-on options:
 
 Use the add-on `env_vars` option to pass any extra upstream environment variables (for example Tidal, SLSKD, Lidarr or Plex settings). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-The configuration and cache are stored in the add-on config folder (`/addon_configs/<slug>`), so they survive restarts and updates.
+The configuration and cache are stored in the add-on config folder (`/app_configs/<hostname>`), so they survive restarts and updates.
 
 Webui can be found at `<your-ip>:9030`.
 

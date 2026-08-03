@@ -1,5 +1,6 @@
 ## 5.0.0.5.3 (2026-08-01)
 
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Version renamed from `5.0.0b5-3`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
 
 ## 5.0.0b5-3 (2026-05-10)

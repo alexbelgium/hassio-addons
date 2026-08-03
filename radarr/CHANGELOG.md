@@ -1,5 +1,6 @@
  
 ## 6.3.0.10514 (2026-07-13)
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
  
 ## 6.2.1.10461 (2026-06-11)
@@ -11,7 +12,7 @@
 - Minor bugs fixed
 
 ## 6.0.4.10291-1 (2026-01-08)
-- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/radarr to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-radarr_nas. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/radarr to a folder only accessible from my Filebrowser addon called /app_configs/xxx-radarr_nas. This prevents the add-on from modifying your Home Assistant configuration folder, and allows to backup the options. Migration of data should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
 ## 6.0.4.10291 (2025-11-22)
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)

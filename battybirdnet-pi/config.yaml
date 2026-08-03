@@ -64,7 +64,7 @@ ingress: true
 ingress_stream: true
 init: false
 map:
-  - addon_config:rw
+  - app_config:rw
   - media:rw
   - share:rw
   - ssl

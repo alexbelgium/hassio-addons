@@ -1,5 +1,6 @@
  
 ## 2.16.0 (2026-08-01)
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from linkwarden/linkwarden (changelog : https://github.com/linkwarden/linkwarden/releases)
 ## 2.15.1.2 (2026-07-22)
 - **Potential breaking change:** Create a full Home Assistant backup before upgrading. This release changes the Linkwarden application startup and database migration invocation.

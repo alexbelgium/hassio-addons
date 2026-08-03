@@ -78,7 +78,7 @@ init: false
 map:
   - media:rw
   - share:rw
-  - addon_config:rw
+  - app_config:rw
   - homeassistant_config:rw
   - ssl
 name: Calibre

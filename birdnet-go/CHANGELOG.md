@@ -1,5 +1,6 @@
  
 ## 20260716 (2026-07-16)
+- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
  
 ## 20260712 (2026-07-13)
