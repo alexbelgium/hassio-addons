@@ -63,16 +63,16 @@ ROOT_URL: "http://homeassistant.local:3000"
 
 ### Direct app.ini Access
 
-The Gitea `app.ini` configuration file is exposed in the add-on's config folder (`/app_configs/gitea/app.ini` on the host), making it directly editable via the HA file editor or Studio Code add-on.
+The Gitea `app.ini` configuration file is exposed in the add-on's config folder (`/addon_configs/gitea/app.ini` on the host), making it directly editable via the HA file editor or Studio Code add-on.
 
-- **On first run**: complete the Gitea setup wizard, then restart the add-on. The generated `app.ini` will be copied to the app_config folder automatically.
-- **On subsequent runs**: edit `/app_configs/gitea/app.ini` directly for any Gitea setting not covered by the options above. The add-on options (SSL, DOMAIN, ROOT_URL, APP_NAME) are still applied on top of your file each restart.
+- **On first run**: complete the Gitea setup wizard, then restart the add-on. The generated `app.ini` will be copied to the addon_config folder automatically.
+- **On subsequent runs**: edit `/addon_configs/gitea/app.ini` directly for any Gitea setting not covered by the options above. The add-on options (SSL, DOMAIN, ROOT_URL, APP_NAME) are still applied on top of your file each restart.
 
 See the [Gitea configuration cheat sheet](https://docs.gitea.com/administration/config-cheat-sheet) for all available options.
 
 ### Custom Scripts and Environment Variables
 
-This addon supports custom scripts and environment variables through the `app_config` mapping:
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.

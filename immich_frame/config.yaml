@@ -6,7 +6,7 @@ hassio_api: true
 image: ghcr.io/alexbelgium/immich_frame-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
 name: Immich Frame
 options:
   Accounts: []

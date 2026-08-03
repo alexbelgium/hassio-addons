@@ -7,7 +7,7 @@ host_network: true
 image: ghcr.io/alexbelgium/sponsorblockcast-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
 name: Castsponsorskip
 options:
   env_vars: []

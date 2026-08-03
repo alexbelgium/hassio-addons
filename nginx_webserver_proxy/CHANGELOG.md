@@ -1,7 +1,6 @@
 # Changelog
 
 ## 2.14.1-1 (11-07-2026)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Persist Let's Encrypt certificates across restarts by symlinking /etc/letsencrypt to /data/letsencrypt (#2828) — thanks to @crazyrokr for reporting and suggesting the fix
 
 ## 2.14.1 (19-06-2026)

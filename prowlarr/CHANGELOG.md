@@ -1,6 +1,5 @@
  
 ## 2.6.2.5517.9 (2026-08-02)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.2.5517-ls9
 ## 2.6.1.5509.8 (2026-08-01)
@@ -101,7 +100,7 @@
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 
 ## develop-2.3.2.5245-ls249-1 (2026-01-08)
-- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/prowlarr to a folder only accessible from my Filebrowser addon called /app_configs/xxx-prowlarr. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/prowlarr to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-prowlarr. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
 ## develop-2.3.2.5245-ls249 (2026-01-08)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)

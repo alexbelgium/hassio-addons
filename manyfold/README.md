@@ -7,7 +7,7 @@ Documentation: [manyfold.app/get-started](https://manyfold.app/get-started/)
 ## Features
 
 - Runs Manyfold on port `3214`.
-- Persists app data, database, cache, and settings under `/config` (`app_config`).
+- Persists app data, database, cache, and settings under `/config` (`addon_config`).
 - Uses a configurable library path on Home Assistant host storage.
 - Refuses startup if configured paths resolve outside `/share`, `/media`, or `/config`.
 - No external PostgreSQL or Redis required.
@@ -163,14 +163,14 @@ If you are reinstalling this addon or moving from another Manyfold addon (e.g. a
 2. Copy the database and secret to the new addon config directory:
 
 ```bash
-cp /app_configs/<old_slug>/manyfold.sqlite3 /app_configs/<new_slug>/manyfold.sqlite3
-cp /app_configs/<old_slug>/secret_key_base /app_configs/<new_slug>/secret_key_base
-chown 1000:1000 /app_configs/<new_slug>/manyfold.sqlite3 /app_configs/<new_slug>/secret_key_base
-chown 1000:1000 /app_configs/<new_slug>/
-chmod 600 /app_configs/<new_slug>/secret_key_base
+cp /addon_configs/<old_slug>/manyfold.sqlite3 /addon_configs/<new_slug>/manyfold.sqlite3
+cp /addon_configs/<old_slug>/secret_key_base /addon_configs/<new_slug>/secret_key_base
+chown 1000:1000 /addon_configs/<new_slug>/manyfold.sqlite3 /addon_configs/<new_slug>/secret_key_base
+chown 1000:1000 /addon_configs/<new_slug>/
+chmod 600 /addon_configs/<new_slug>/secret_key_base
 ```
 
-Replace `<old_slug>` and `<new_slug>` with the actual directory names (e.g. `db21ed7f_manyfold` and `088d77ac_manyfold_solo`). List them with `ls /app_configs/`.
+Replace `<old_slug>` and `<new_slug>` with the actual directory names (e.g. `db21ed7f_manyfold` and `088d77ac_manyfold_solo`). List them with `ls /addon_configs/`.
 
 3. Start the new addon — it will pick up the existing database and secret automatically.
 

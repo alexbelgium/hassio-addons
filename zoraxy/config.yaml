@@ -19,7 +19,7 @@ ports_description:
   443/tcp: HTTPS traffic for reverse-proxied hosts
   8000/tcp: Management Web UI
 map:
-  - app_config:rw
+  - addon_config:rw
   - share:rw
   - ssl
 privileged:

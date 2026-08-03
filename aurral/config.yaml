@@ -21,7 +21,7 @@ ports_description:
 webui: http://[HOST]:[PORT:3001]
 
 map:
-  - app_config:rw
+  - addon_config:rw
   - share:rw
   - media:rw
 

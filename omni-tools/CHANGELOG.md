@@ -1,6 +1,5 @@
 
 ## 0.6.1 (2025-11-18)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Added `env_vars` option to allow passing custom environment variables from the add-on configuration.
 
 ## 0.6.0 (2025-10-04)

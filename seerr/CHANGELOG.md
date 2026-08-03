@@ -1,6 +1,5 @@
  
 ## 3.4.1 (2026-08-01)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from seerr-team/seerr (changelog : https://github.com/seerr-team/seerr/releases)
 ## 3.3.0.1 (2026-07-28)
 

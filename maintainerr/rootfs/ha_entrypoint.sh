@@ -21,7 +21,7 @@ fi
 # The upstream app hardcodes /opt/data for its database and logs.
 # The Dockerfile rewrites all /opt/data references to /config/data at build time.
 # At runtime we copy any seed data from /opt/data to /config/data (persistent
-# via app_config:rw) without overwriting existing files.
+# via addon_config:rw) without overwriting existing files.
 DATA_DIR="/config/data"
 echo "[Maintainerr] Setting up data directory: $DATA_DIR"
 mkdir -p "$DATA_DIR" "$DATA_DIR/logs"

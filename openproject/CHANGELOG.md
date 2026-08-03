@@ -1,6 +1,5 @@
  
 ## 17.6.0 (2026-07-18)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
  
 ## 17.5.1 (2026-06-17)

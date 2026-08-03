@@ -1,6 +1,5 @@
  
 ## v1.68.0 (2026-08-01)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
  
 ## v1.67.0-8 (2026-07-18)

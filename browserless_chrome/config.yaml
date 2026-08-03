@@ -69,7 +69,7 @@ environment:
 image: ghcr.io/alexbelgium/browserless_chrome-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
 name: Browserless Chromium
 options:
   env_vars: []

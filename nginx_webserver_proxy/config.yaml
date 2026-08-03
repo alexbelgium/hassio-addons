@@ -18,7 +18,7 @@ ports_description:
   443/tcp: "HTTPS (NPM proxy hosts)"
 webui: "http://[HOST]:[PORT:81]"
 map:
-  - app_config:rw
+  - addon_config:rw
   - share:rw
   - media:rw
 options:

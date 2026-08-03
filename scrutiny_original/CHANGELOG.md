@@ -1,6 +1,5 @@
  
 ## v0.9.2 (2026-06-20)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from analogj/scrutiny (changelog : https://github.com/analogj/scrutiny/releases)
  
 ## v1.63.0 (2026-06-13)

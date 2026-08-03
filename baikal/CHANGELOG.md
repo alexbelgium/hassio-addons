@@ -1,7 +1,6 @@
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
 ## 0.10.1-hafix4 (2025-11-18)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Minor bugs fixed
 ## 0.10.1-hafix3 (2025-11-18)
 - Added support for configuring extra environment variables via the `env_vars` option alongside config.yaml.
@@ -22,7 +21,7 @@
 ## 0.9.5 (2024-04-27)
 - Update to latest version from ckulka/baikal-docker (changelog : https://github.com/ckulka/baikal-docker/releases)
 ## 0.9.4-3 (2024-04-26)
-- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/baikal to a folder only accessible from my Filebrowser addon called /app_configs/something-baikal. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/baikal to a folder only accessible from my Filebrowser addon called /addon_configs/something-baikal. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
 ## 0.9.4-2 (2024-01-14)
 

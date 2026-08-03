@@ -86,7 +86,7 @@ image: ghcr.io/alexbelgium/nextcloud_ocr-{arch}
 ingress_port: 0
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
   - homeassistant_config:rw
   - share:rw
   - media:rw

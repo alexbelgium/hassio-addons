@@ -65,7 +65,7 @@ image: ghcr.io/alexbelgium/codex-{arch}
 ingress: true
 ingress_stream: true
 map:
-  - app_config:rw
+  - addon_config:rw
   - media:rw
   - share:rw
 name: Codex

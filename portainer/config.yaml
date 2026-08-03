@@ -13,7 +13,7 @@ ingress_port: 1337
 ingress_stream: true
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
   - share:rw
   - ssl
 name: Portainer

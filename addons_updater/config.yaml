@@ -8,7 +8,7 @@ environment:
 image: ghcr.io/alexbelgium/addons_updater-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
 name: Repository Updater
 options:
   date_iso8601: true

@@ -7,7 +7,7 @@ environment:
 image: ghcr.io/alexbelgium/spotify_to_plex-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
 name: Spotify to Plex
 options:
   env_vars: []

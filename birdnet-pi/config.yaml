@@ -61,7 +61,7 @@ image: ghcr.io/alexbelgium/birdnet-pi-{arch}
 ingress: true
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
   - media:rw
   - share:rw
   - ssl

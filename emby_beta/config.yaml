@@ -79,7 +79,7 @@ ingress_port: 0
 ingress_stream: true
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
   - homeassistant_config:rw
   - share:rw
   - media:rw

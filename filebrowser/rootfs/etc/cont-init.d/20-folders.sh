@@ -35,7 +35,7 @@ fi
 # Create symlinks with legacy folders
 if [ -d /homeassistant/addons_config ]; then
     ln -s /homeassistant/addons_config /config
-    find /app_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*filebrowser*" -exec ln -s {} /config/addons_config/ \;
+    find /addon_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*filebrowser*" -exec ln -s {} /config/addons_config/ \;
 fi
 if [ -d /homeassistant/addons_autoscripts ]; then
     ln -s /homeassistant/addons_autoscripts /config

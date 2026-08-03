@@ -34,7 +34,7 @@ hassio_role: manager
 homeassistant_api: true
 auth_api: true
 map:
-  - app_config:rw
+  - addon_config:rw
   - share:rw
   - media:rw
   - ssl

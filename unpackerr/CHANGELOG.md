@@ -1,6 +1,5 @@
 
 ## v0.15.2-2 (2026-04-06)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Fix environment variables not being passed into the container (e.g. VPN_AUTO_PORT_FORWARD, VPN_ENABLED)
 - Disable VPN port forwarder service when no VPN provider is configured
 
@@ -37,13 +36,13 @@
 ## 0.12.0-3 (2023-12-31)
 
 - Minor bugs fixed
-- Deprecated options watch_path and extraction_path to avoid breakage of the configuration file. Any modifications need to be done manually using (for example) the Filebrowser addon in /app_configs/db21ed7f_unpackerr/unpackerr.conf. This also means you'll have to make sure the PUID/PGID specified really correspond to your actual permissions (the app doesn't allow to run as root)
+- Deprecated options watch_path and extraction_path to avoid breakage of the configuration file. Any modifications needs to be done manually using (for example) the Filebrowser addon in /addon_configs/db21ed7f_unpackerr/unpackerr.conf. This also means you'll have to make sure the PUID/PGID specified really correspond to your actual permissions (the app doesn't allow to run as root)
 
 ## 0.12.0 (2023-12-30)
 
 - Update to latest version from Unpackerr/unpackerr
 
-- &#9888; MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config to a folder only accessible from my Filebrowser addon called /app_configs/db21ed7f_unpackerr. This prevents the add-on from modifying your Home Assistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- &#9888; MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config to a folder only accessible from my Filebrowser addon called /addon_configs/db21ed7f_unpackerr. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
 ## testing-e916f00-9-linux-arm64-2023-09-17 (2023-09-17)
 

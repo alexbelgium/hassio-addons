@@ -70,7 +70,7 @@ version: "X.Y.Z"          # upstream version (format varies; see Versioning sect
 ingress: true/false
 ingress_port: 8000
 map:
-  - app_config:rw        # /app_configs/<hostname>/
+  - addon_config:rw        # /addon_configs/<hostname>/
   - share:rw
   - media:rw
   - ssl

@@ -76,7 +76,7 @@ environment:
 image: ghcr.io/alexbelgium/ente-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
 name: Ente
 options:
   env_vars: []

@@ -108,12 +108,12 @@ This addon supports mounting both local drives and remote SMB shares:
 
 ### Custom Scripts and Environment Variables
 
-This addon supports custom script execution and environment variable injection through the `app_config` mapping:
+This addon supports custom script execution and environment variable injection through the `addon_config` mapping:
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-In /app_configs/db21ed7f_unpackerr/unpackerr.conf you can set all variables according to this list of environment variables : https://github.com/davidnewhall/unpackerr
+In /addon_configs/db21ed7f_unpackerr/unpackerr.conf you can set all variables according to this list of environment variables : https://github.com/davidnewhall/unpackerr
 
 ## Support
 

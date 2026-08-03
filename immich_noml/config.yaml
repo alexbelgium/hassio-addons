@@ -84,7 +84,7 @@ hassio_api: true
 image: ghcr.io/alexbelgium/immich_noml-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
   - backup:rw
   - homeassistant_config:rw
   - media:rw

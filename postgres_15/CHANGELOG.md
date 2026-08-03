@@ -1,6 +1,5 @@
 ## 15.7.47 (2026-08-01)
 
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Version renamed from `15.7-47`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
 
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
@@ -90,7 +89,7 @@
 
 - &#9888; PLEASE BACKUP before updating! Non reversible changes
 - &#9888; WARNING : addition of pgvecto.rs extension, potentially breaking change ! Be sure to backup prior to update
-- &#9888; Database location changed from /data to /app_configs/xxx-postgres : no expected user impact other that all configuration files will also be located in this folder accessible with addons such as Filebrowser
+- &#9888; Database location changed from /data to /addon_configs/xxx-postgres : no expected user impact other that all configuration files will also be located in this folder accessible with addons such as Filebrowser
 
 ## 15.5 (2023-11-11)
 

@@ -1,6 +1,5 @@
  
 ## 2.0.3 (2026-08-01)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
  
 ## 2.0.2 (2026-08-01)

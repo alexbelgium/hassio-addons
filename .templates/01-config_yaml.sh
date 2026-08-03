@@ -19,7 +19,7 @@ slug="${slug#*_}"
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
     # New config location
     CONFIGLOCATION="/config"
-    CONFIGFILEBROWSER="/app_configs/${HOSTNAME/-/_}/config.yaml"
+    CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/config.yaml"
 else
     # Legacy config location
     CONFIGLOCATION="/config/addons_config/${slug}"

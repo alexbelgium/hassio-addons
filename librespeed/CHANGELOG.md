@@ -1,6 +1,5 @@
  
 ## 6.2.0 (2026-07-25)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from linuxserver/docker-librespeed (changelog : https://github.com/linuxserver/docker-librespeed/releases)
 
 ## 6.1.0 (2026-04-23)

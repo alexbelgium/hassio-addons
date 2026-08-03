@@ -1,6 +1,5 @@
  
 ## 3.0.5 (2026-08-02)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
  
 ## 3.0.4 (2026-08-01)
@@ -93,15 +92,15 @@
 - Minor bugs fixed
 Migration (thanks @eikeja) :
 - Install the new addon
-- Make a backup of the old Paperless directory. In my case "/app_configs/db21ed7f_paperless_ng"
+- Make a backup of the old Paperless directory. In my case "/addon_configs/db21ed7f_paperless_ng"
 - View the folder structure of the new instance, assign files from the old instance to the folders of the new instance.
 
 Start new Paperless - all data is there!
 
 Folder assignment:
-/app_configs/db21ed7f_paperless_ng/data → /app_configs/ca5234a0_paperless-ngx/data
+/addon_configs/db21ed7f_paperless_ng/data → /addon_configs/ca5234a0_paperless-ngx/data
 
-/app_configs/db21ed7f_paperless_ng/media → /share/paperless
+/addon_configs/db21ed7f_paperless_ng/media → /share/paperless
 
 ## 2.6.2 (2024-03-09)
 
@@ -187,7 +186,7 @@ Folder assignment:
 - Automatically changes config.yaml addon option to new location
 - Restore local and smb disks scripts
 - Update to latest version from paperless-ngx/paperless-ngx
-- MAJOR CHANGE : new HA config logic implemented. Files are now located in the addon config file, that can be accessed from the app_configs folder from my filebrowser or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- MAJOR CHANGE : new HA config logic implemented. Files are now located in the addon config file, that can be accessed from the addon_configs folder from my filebrowser or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 - Update to new official image
 - Enable beta channel
 

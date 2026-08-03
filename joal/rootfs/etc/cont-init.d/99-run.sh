@@ -39,7 +39,7 @@ slug=joal
 if [ -d "/homeassistant/addons_config/$slug" ] \
     && [ ! -f "/homeassistant/addons_config/$slug/migrated" ] \
     && [ -n "$(find "/homeassistant/addons_config/$slug" -mindepth 1 -maxdepth 1 -print -quit)" ]; then
-    bashio::log.info "Migrating /homeassistant/addons_config/$slug to /app_configs/xxx-$slug"
+    bashio::log.info "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
     cp -rnf /homeassistant/addons_config/"$slug"/* /config/ || true
     mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi

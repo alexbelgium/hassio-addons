@@ -1,6 +1,5 @@
  
 ## 2026.08.01.1 (2026-08-01)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)
 - Upstream tag : version-e2e1ec9c
 ## 2026.08.01 (2026-08-01)

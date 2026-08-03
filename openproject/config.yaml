@@ -11,7 +11,7 @@ environment:
 image: ghcr.io/alexbelgium/openproject-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
   - share:rw
 name: Openproject
 options:

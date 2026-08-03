@@ -66,7 +66,7 @@ devices:
   - /dev/nvme2
 image: ghcr.io/alexbelgium/baikal-{arch}
 map:
-  - app_config:rw
+  - addon_config:rw
   - homeassistant_config:rw
   - share:rw
   - ssl:ro

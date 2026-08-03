@@ -48,9 +48,9 @@ TZ: Europe/London
 Seerr is compatible with Overseerr's data format. To migrate your existing configuration:
 
 1. Stop the **Overseerr** add-on.
-2. Install and start the **Seerr** add-on once to create its config directory (`/app_configs/db21ed7f_seerr/`), then stop it.
-3. Open the **[Filebrowser](https://github.com/alexbelgium/hassio-addons/tree/master/filebrowser)** add-on (or any file manager with access to `/app_configs/`).
-4. Navigate to `/app_configs/db21ed7f_overseerr/` and copy all files into `/app_configs/db21ed7f_seerr/`.
+2. Install and start the **Seerr** add-on once to create its config directory (`/addon_configs/db21ed7f_seerr/`), then stop it.
+3. Open the **[Filebrowser](https://github.com/alexbelgium/hassio-addons/tree/master/filebrowser)** add-on (or any file manager with access to `/addon_configs/`).
+4. Navigate to `/addon_configs/db21ed7f_overseerr/` and copy all files into `/addon_configs/db21ed7f_seerr/`.
 5. Start the **Seerr** add-on. Your existing settings, users, and requests will be preserved.
 
 ---
@@ -60,9 +60,9 @@ Seerr is compatible with Overseerr's data format. To migrate your existing confi
 Seerr is compatible with Jellyseerr's data format. To migrate your existing configuration:
 
 1. Stop the **Jellyseerr** add-on.
-2. Install and start the **Seerr** add-on once to create its config directory (`/app_configs/db21ed7f_seerr/`), then stop it.
-3. Open the **[Filebrowser](https://github.com/alexbelgium/hassio-addons/tree/master/filebrowser)** add-on (or any file manager with access to `/app_configs/`).
-4. Navigate to `/app_configs/db21ed7f_jellyseerr/` and copy all files into `/app_configs/db21ed7f_seerr/`.
+2. Install and start the **Seerr** add-on once to create its config directory (`/addon_configs/db21ed7f_seerr/`), then stop it.
+3. Open the **[Filebrowser](https://github.com/alexbelgium/hassio-addons/tree/master/filebrowser)** add-on (or any file manager with access to `/addon_configs/`).
+4. Navigate to `/addon_configs/db21ed7f_jellyseerr/` and copy all files into `/addon_configs/db21ed7f_seerr/`.
 5. Start the **Seerr** add-on. Your existing settings, users, and requests will be preserved.
 
 ---

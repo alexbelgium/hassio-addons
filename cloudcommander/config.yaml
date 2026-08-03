@@ -69,8 +69,8 @@ image: ghcr.io/alexbelgium/cloudcommander-{arch}
 ingress: true
 ingress_stream: true
 map:
-  - app_config:rw
-  - all_app_configs:rw
+  - addon_config:rw
+  - all_addon_configs:rw
   - homeassistant_config:rw
   - ssl:rw
   - share:rw

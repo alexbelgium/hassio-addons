@@ -18,7 +18,7 @@ environment:
 image: ghcr.io/alexbelgium/linkwarden-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
 name: Linkwarden
 options:
   env_vars: []

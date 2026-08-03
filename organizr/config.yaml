@@ -66,7 +66,7 @@ devices:
   - /dev/nvme2
 image: ghcr.io/alexbelgium/organizr-{arch}
 map:
-  - app_config:rw
+  - addon_config:rw
   - ssl
 name: Organizr
 options:

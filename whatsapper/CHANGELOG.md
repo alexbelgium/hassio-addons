@@ -1,5 +1,4 @@
 ## 1.2.0 (2026-02-03)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases/tag/1.2.0)
 
 ## 1.1.2 (2026-01-31)

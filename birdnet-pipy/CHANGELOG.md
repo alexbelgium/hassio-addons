@@ -1,6 +1,5 @@
  
 ## 0.8.5 (2026-08-01)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
  
 ## 0.8.4 (2026-07-13)

@@ -1,6 +1,5 @@
  
 ## 2.10.2 (2026-08-01)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
  
 ## 2.9.16 (2026-07-11)

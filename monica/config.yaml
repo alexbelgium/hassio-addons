@@ -77,7 +77,7 @@ options:
   env_vars: []
   database: sqlite
 map:
-  - type: app_config
+  - type: addon_config
     read_only: false
 name: Monica
 ports:

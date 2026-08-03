@@ -20,7 +20,7 @@ ports_description:
 webui: "http://[HOST]:[PORT:3214]"
 
 map:
-  - app_config:rw
+  - addon_config:rw
   - share:rw
   - media:rw
 

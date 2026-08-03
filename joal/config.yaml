@@ -7,7 +7,7 @@ image: ghcr.io/alexbelgium/joal-{arch}
 ingress: true
 ingress_entry: entry
 map:
-  - app_config:rw
+  - addon_config:rw
   - homeassistant_config:rw
 name: Joal
 options:

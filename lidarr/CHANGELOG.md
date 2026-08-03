@@ -1,11 +1,10 @@
 ## 3.1.0.4875.1 (2026-08-01)
 
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Version renamed from `3.1.0.4875-1`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
 
 
 ## 3.1.0.4875-1 (2026-01-08)
-- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/lidarr to a folder only accessible from my Filebrowser addon called /app_configs/xxx-lidarr_nas. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/lidarr to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-lidarr_nas. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
 ## 3.1.0.4875 (2025-11-22)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)

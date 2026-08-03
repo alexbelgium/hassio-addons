@@ -12,7 +12,7 @@ ingress_stream: true
 init: false
 full_access: true
 map:
-  - app_config:rw
+  - addon_config:rw
 name: NetAlertX Full Access
 panel_icon: mdi:wifi-check
 ports:

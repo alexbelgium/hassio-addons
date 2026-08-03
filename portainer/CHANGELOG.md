@@ -1,6 +1,5 @@
  
 ## 2.44.0 (2026-08-01)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
  
 ## 2.43.0.1 (2026-07-24)

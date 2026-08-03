@@ -66,7 +66,7 @@ scheduler. Set `SCHEDULER_HOURS` in `config.env` to control the interval.
 
 The add-on keeps its configuration in `CONFIG_LOCATION`, which defaults to
 `/config/config.env`. From Home Assistant this is stored in the add-on's
-private `app_configs` directory and can be edited with a compatible file
+private `addon_configs` directory and can be edited with a compatible file
 browser add-on.
 
 A template is created on first start. Common examples are:

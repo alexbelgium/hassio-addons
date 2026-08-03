@@ -72,7 +72,7 @@ environment:
   TZ: Etc/UTC
 image: ghcr.io/alexbelgium/omada-{arch}
 map:
-  - app_config:rw
+  - addon_config:rw
   - ssl:ro
 name: "Omada (obsolete)"
 options:

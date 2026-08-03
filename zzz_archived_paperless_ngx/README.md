@@ -4,15 +4,15 @@
 
 Migration (thanks @eikeja) :
 - Install the new addon
-- Make a backup of the old Paperless directory. In my case "/app_configs/db21ed7f_paperless_ng"
+- Make a backup of the old Paperless directory. In my case "/addon_configs/db21ed7f_paperless_ng"
 - View the folder structure of the new instance, assign files from the old instance to the folders of the new instance.
 
 Start new Paperless - all data is there!
 
 Folder assignment:
-/app_configs/db21ed7f_paperless_ng/data → /app_configs/ca5234a0_paperless-ngx/data
+/addon_configs/db21ed7f_paperless_ng/data → /addon_configs/ca5234a0_paperless-ngx/data
 
-/app_configs/db21ed7f_paperless_ng/media → /share/paperless
+/addon_configs/db21ed7f_paperless_ng/media → /share/paperless
 
 
 I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons

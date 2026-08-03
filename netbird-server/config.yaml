@@ -5,7 +5,7 @@ description: "\U0001F426 NetBird self-hosted server stack (management, signal, r
 image: ghcr.io/alexbelgium/netbird-server-{arch}
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
 name: NetBird Server
 options:
   domain: netbird.example.com

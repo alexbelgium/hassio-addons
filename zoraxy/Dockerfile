@@ -42,7 +42,7 @@ RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -e
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
-# Persist Zoraxy data in /config (app_config) instead of the ephemeral
+# Persist Zoraxy data in /config (addon_config) instead of the ephemeral
 # upstream working directory, so the configuration survives add-on updates.
 RUN sed -i 's#/opt/zoraxy/config#/config#g' /opt/zoraxy/entrypoint.py
 

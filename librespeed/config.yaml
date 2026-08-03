@@ -72,7 +72,7 @@ ingress_port: 80
 ingress_stream: true
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
 name: LibreSpeed
 options:
   env_vars: []

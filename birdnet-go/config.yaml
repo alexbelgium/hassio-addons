@@ -81,7 +81,7 @@ ingress_entry: "ui/dashboard"
 ingress_stream: true
 init: false
 map:
-  - app_config:rw
+  - addon_config:rw
   - media:rw
   - share:rw
 name: Birdnet-go

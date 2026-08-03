@@ -77,7 +77,7 @@ image: ghcr.io/alexbelgium/photoprism-{arch}
 ingress: true
 ingress_stream: true
 map:
-  - app_config:rw
+  - addon_config:rw
   - homeassistant_config:rw
   - media:rw
   - share:rw

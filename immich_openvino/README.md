@@ -124,7 +124,7 @@ data_location: "/mnt/sda1/immich"
 
 ### Custom Scripts and Environment Variables
 
-This addon supports custom scripts and environment variables through the `app_config` mapping:
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.

@@ -1,6 +1,5 @@
  
 ## 34.0.2 (2026-07-25)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
  
 ## 34.0.1 (2026-06-27)
@@ -127,7 +126,7 @@
 ## 30.0.3 (2024-12-07)
 
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
-- Use /app_configs for config.yaml and nextcloud-ocr.sh to backup them with nextcloud
+- Use /addon_configs for config.yaml and nextcloud-ocr.sh to backup them with nextcloud
 - Use /config/data as default folder instead of /config/data for initial set-up
 
 ## 30.0.2 (2024-11-09)

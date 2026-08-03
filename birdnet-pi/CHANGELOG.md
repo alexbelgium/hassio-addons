@@ -1,5 +1,4 @@
 ## 2026.08.02 (02-08-2026)
-- Migrate deprecated Home Assistant map names to their app equivalents.
 - Fix: ingress returned "502 Bad Gateway" because Caddy never listened on :8082. `91-nginx_ingress.sh` hooked the ingress site into `update_caddyfile.sh` with a sed anchored on `sudo caddy fmt --overwrite`, but 2026.07.10-1 strips `sudo` from every BirdNET-Pi script at build time, so the anchor stopped matching. `update_caddyfile.sh` then rewrote the Caddyfile from scratch just before Caddy started, dropping the ingress site
 - Fix: `caddy_ingress.sh` no longer appends a second `:8082` block when it runs twice (a duplicate site address makes Caddy refuse to start)
 - Fix: `02-caddy.sh` re-adds the ingress site if it is missing from the Caddyfile just before starting Caddy
@@ -153,7 +152,7 @@
 - [ALL] Fix non-avx2 cpu support
 
 ## 2025.02.23 (2025-02-16)
-- WARNING 2025.02.14/16 was buggy. If you installed it you need to restore a backup or delete manually your /app_configs/xxx-birdnet-pi/birdnet.conf file and recreate it
+- WARNING 2025.02.14/16 was buggy. If you installed it you need to restore a backup or delete manually your /addon_configs/xxx-birdnet-pi/birdnet.conf file and recreate it
 - Allow usage as a standalone container (thanks @gotschi) https://github.com/mcguirepr89/BirdNET-Pi/issues/211#issuecomment-2650095952
 - Corrected a bug preventing to create db
 - Corrected a bug to ensure the the most up-to-date birdnet.conf on fresh start

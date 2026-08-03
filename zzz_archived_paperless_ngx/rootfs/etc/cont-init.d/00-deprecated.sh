@@ -18,14 +18,14 @@ echo ""
 
 echo "Migration (thanks @eikeja) : 
 - Install the new addon
-- Make a backup of the old Paperless directory. In my case '/app_configs/db21ed7f_paperless_ng'
+- Make a backup of the old Paperless directory. In my case '/addon_configs/db21ed7f_paperless_ng'
 - View the folder structure of the new instance, assign files from the old instance to the folders of the new instance.
 
 Start new Paperless - all data is there!
 
 Folder assignment:
-/app_configs/db21ed7f_paperless_ng/data → /app_configs/ca5234a0_paperless-ngx/data
+/addon_configs/db21ed7f_paperless_ng/data → /addon_configs/ca5234a0_paperless-ngx/data
 
-/app_configs/db21ed7f_paperless_ng/media → /share/paperless"
+/addon_configs/db21ed7f_paperless_ng/media → /share/paperless"
 
 sleep 5
