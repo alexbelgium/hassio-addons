@@ -78,11 +78,15 @@ resolve)
             --jq '.data.repository.pullRequest.reviewThreads.nodes[] | select(.isResolved==false) | .id')
     fi
     [ -z "$ids" ] && { echo "nothing unresolved"; exit 0; }
+    rfail=0
     for id in $ids; do
         r=$(gh api graphql -f query="mutation{resolveReviewThread(input:{threadId:\"$id\"}){thread{isResolved}}}" \
             --jq '.data.resolveReviewThread.thread.isResolved' 2>&1)
         echo "  $id -> $r"
+        [ "$r" = "true" ] || rfail=1
     done
+    # exiting 0 on a failed mutation would let a session believe threads were resolved
+    exit "$rfail"
     ;;
 watch)
     MINS="${3:-180}"   # the addon build alone has taken ~3h; 20 was far too short
@@ -95,9 +99,14 @@ watch)
             sleep 60; continue
         fi
         echo "[$i] $c"
-        case "$c" in *pending*) sleep 60 ;; *) echo "settled"; break ;; esac
+        case "$c" in
+        *pending*) sleep 60 ;;
+        *fail* | *error* | *cancel*) echo "settled — with FAILURES (see above)"; wfail=1; break ;;
+        *) echo "settled — all passing"; break ;;
+        esac
     done
     echo "note: long queues here are usually account runner contention, not your diff."
+    exit "${wfail:-0}"
     ;;
 *) echo "unknown: $CMD"; exit 1 ;;
 esac

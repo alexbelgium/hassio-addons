@@ -54,13 +54,14 @@ command -v hadolint > /dev/null 2>&1 && [ -f "$ADDON/Dockerfile" ] && {
 }
 
 if [ -f "$ADDON/config.yaml" ]; then
-    python3 -c "
+    # path passed as argv, never interpolated into Python source
+    python3 - "$ADDON/config.yaml" <<'PY' || { note "config.yaml" "FAIL parse"; fail=1; }
 import yaml,sys
-d=yaml.safe_load(open('$ADDON/config.yaml'))
+d=yaml.safe_load(open(sys.argv[1]))
 print('  %-13s ok (version=%s, %d options)' % ('config.yaml', d.get('version'), len(d.get('options') or {})))
 missing=[k for k in (d.get('options') or {}) if k not in (d.get('schema') or {})]
 if missing: print('  %-13s options with no schema entry: %s' % ('WARN', missing)); sys.exit(0)
-" || { note "config.yaml" "FAIL parse"; fail=1; }
+PY
     command -v yamllint > /dev/null 2>&1 && {
         yl=$(yamllint -f parsable "$ADDON/config.yaml" 2>&1 | grep -c .)
         note "yamllint" "$yl finding(s) (compare with --vs-master)"
