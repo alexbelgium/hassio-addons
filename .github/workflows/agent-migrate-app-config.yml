@@ -1,0 +1,112 @@
+---
+name: Migrate add-on config map names
+
+on:
+  pull_request:
+    branches:
+      - agent/support-app-config-linter
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Replace legacy map names
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import subprocess
+          from pathlib import Path
+
+          LEGACY = b"addon_config"
+          CURRENT = b"app_config"
+          HELPER = Path(".github/workflows/agent-migrate-app-config.yml")
+          CHANGELOG_NOTE = "- Migrate legacy add-on configuration map names to current app configuration terminology.\n"
+
+
+          def tracked_paths() -> list[Path]:
+              output = subprocess.check_output(["git", "ls-files", "-z"])
+              return [Path(value.decode()) for value in output.split(b"\0") if value]
+
+
+          paths = tracked_paths()
+          affected_addons: set[str] = set()
+          for path in paths:
+              if len(path.parts) != 2 or path.name not in {
+                  "config.json",
+                  "config.yaml",
+                  "config.yml",
+              }:
+                  continue
+              if path.is_symlink() or not path.is_file():
+                  continue
+              if LEGACY in path.read_bytes():
+                  affected_addons.add(path.parts[0])
+
+          if not affected_addons:
+              raise SystemExit("No add-on manifests containing addon_config were found")
+
+          for addon in sorted(affected_addons):
+              changelog = Path(addon) / "CHANGELOG.md"
+              if not changelog.is_file():
+                  raise SystemExit(f"Missing required changelog: {changelog}")
+              text = changelog.read_text(encoding="utf-8")
+              if CHANGELOG_NOTE.strip() not in text:
+                  changelog.write_text(CHANGELOG_NOTE + text, encoding="utf-8")
+
+          replaced_files: list[Path] = []
+          for path in paths:
+              if path == HELPER or path.is_symlink() or not path.is_file():
+                  continue
+              data = path.read_bytes()
+              if LEGACY not in data or b"\0" in data:
+                  continue
+              path.write_bytes(data.replace(LEGACY, CURRENT))
+              replaced_files.append(path)
+
+          print(f"Affected add-ons: {len(affected_addons)}")
+          print(f"Files with terminology replacements: {len(replaced_files)}")
+          print("Affected add-ons:")
+          for addon in sorted(affected_addons):
+              print(f"- {addon}")
+          PY
+
+          git diff --check
+
+          if git grep -n addon_config -- ':!.github/workflows/agent-migrate-app-config.yml'; then
+            echo "Legacy addon_config references remain outside the temporary migration workflow" >&2
+            exit 1
+          fi
+
+          changed_configs=$(git diff --name-only -- '*config.json' '*config.yaml' '*config.yml' | wc -l)
+          if [ "$changed_configs" -eq 0 ]; then
+            echo "No add-on manifests changed" >&2
+            exit 1
+          fi
+          echo "Changed manifests: $changed_configs"
+
+      - name: Commit migration
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -u
+          git diff --cached --check
+          git commit -m "Migrate legacy addon_config maps to app_config"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
