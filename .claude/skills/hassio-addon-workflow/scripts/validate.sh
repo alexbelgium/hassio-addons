@@ -40,7 +40,7 @@ done < <(find "$ADDON" -type f \( -name '*.sh' -o -name 'run' -o -name 'finish' 
 [ "$fail" -eq 0 ] && note "bash -n" "ok"
 
 if command -v shellcheck > /dev/null 2>&1; then
-    sc=$(find "$ADDON" -type f \( -name '*.sh' -o -name 'autostart' \) -print0 2> /dev/null |
+    sc=$(find "$ADDON" -type f \( -name '*.sh' -o -name 'autostart' -o -name 'run' -o -name 'finish' \) -print0 2> /dev/null |
         xargs -0 -r shellcheck -x -f gcc 2>&1)
     if [ -n "$sc" ]; then
         note "shellcheck" "$(printf '%s\n' "$sc" | grep -c .) finding(s)"
@@ -99,10 +99,19 @@ if $VS_MASTER; then
     tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
     git diff --name-only origin/master...HEAD -- "$ADDON" 2> /dev/null | while IFS= read -r f; do
         git show "origin/master:$f" > "$tmp/base" 2> /dev/null || continue
+        # A missing linter must be a visible skip, not a silent "no new findings":
+        # its "command not found" error is identical for base and head, so comm would
+        # cancel it out and report a false clean.
         case "$f" in
-            *.sh | *autostart | */run | */finish) cmd() { shellcheck -x -f gcc "$1" 2>&1 | sed 's/^[^:]*:[0-9]*:[0-9]*://'; } ;;
-            *.yaml | *.yml) cmd() { yamllint -f parsable "$1" 2>&1 | sed 's/^[^:]*//; s/^:[0-9]*:[0-9]*//'; } ;;
-            *Dockerfile) cmd() { hadolint "$1" 2>&1 | sed 's/^[^:]*//; s/^:[0-9]*//'; } ;;
+            *.sh | *autostart | */run | */finish)
+                command -v shellcheck > /dev/null 2>&1 || { echo "  $f: SKIPPED (shellcheck not installed)"; continue; }
+                cmd() { shellcheck -x -f gcc "$1" 2>&1 | sed 's/^[^:]*:[0-9]*:[0-9]*://'; } ;;
+            *.yaml | *.yml)
+                command -v yamllint > /dev/null 2>&1 || { echo "  $f: SKIPPED (yamllint not installed)"; continue; }
+                cmd() { yamllint -f parsable "$1" 2>&1 | sed 's/^[^:]*//; s/^:[0-9]*:[0-9]*//'; } ;;
+            *Dockerfile)
+                command -v hadolint > /dev/null 2>&1 || { echo "  $f: SKIPPED (hadolint not installed)"; continue; }
+                cmd() { hadolint "$1" 2>&1 | sed 's/^[^:]*//; s/^:[0-9]*//'; } ;;
             *) continue ;;
         esac
         cp "$tmp/base" "$tmp/base_f"; b=$(cmd "$tmp/base_f" | sort)

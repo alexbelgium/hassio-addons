@@ -43,10 +43,13 @@ repo — the examples throughout are real, not illustrative.
 | **Verify before declaring done** | "This should work" — and it doesn't |
 | **Calibrate and report** | Verified and assumed presented as the same thing |
 
-**Where things are.** The repo is `alexbelgium/hassio-addons`, checked out at
-`/data/claude/hassio-addons`; each add-on is a top-level directory (`claude_desktop/`,
-`birdnet-go/`, …). This skill's scripts live beside this file — invoke them by absolute path,
-e.g. `bash ~/.claude/skills/hassio-addon-workflow/scripts/preflight.sh`.
+**Where things are.** The repo is `alexbelgium/hassio-addons`; each add-on is a top-level
+directory (`claude_desktop/`, `birdnet-go/`, …). This skill and its scripts are checked into
+the repo at `.claude/skills/hassio-addon-workflow/` — invoke scripts from the repo root, e.g.
+`bash "$(git rev-parse --show-toplevel)/.claude/skills/hassio-addon-workflow/scripts/preflight.sh"`.
+(In the claude_desktop add-on environment the checkout lives at `/data/claude/hassio-addons`;
+a copy of this skill may also exist under `~/.claude/skills/` — the checked-in copy is
+canonical.)
 
 **Three facts to know before you touch anything**, because each is silent when violated:
 
@@ -247,8 +250,11 @@ reader spots one-level-too-deep framing far more easily than the person who just
 
 ## 7. Open the PR
 
-What CI actually gates: **`CHANGELOG.md` updated** (the single hard `exit 1`) and the **add-on
-image build**. Lint runs `continue-on-error`, and nothing checks the version bump — but bump it
+What CI actually gates on a PR: **`CHANGELOG.md` updated** (hard `exit 1`), the **HA add-on
+linter** (`frenck/action-addon-linter` in `onpr_check-pr.yaml`, no `continue-on-error` — a
+config.yaml schema error blocks the PR), and the **add-on image build**. The non-blocking lint
+is the *weekly Super-Linter*, not the PR checks — don't confuse the two. Nothing checks the
+version bump — but bump it
 anyway (`X.Y.Z.N`, never `X.Y.Z-N`, see `references/traps.md#versioning`), because Supervisor will
 not offer a rebuild without it, and update `README.md` if you added options. Match the existing
 CHANGELOG heading format, `## X.Y (DD-MM-YYYY)`.

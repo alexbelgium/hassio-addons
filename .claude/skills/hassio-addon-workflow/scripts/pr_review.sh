@@ -5,7 +5,7 @@
 #   pr_review.sh list    <PR>                  every inline comment, grouped
 #   pr_review.sh status  <PR>                  checks + unresolved thread count
 #   pr_review.sh reply   <PR> <COMMENT_ID> <text|@file>
-#   pr_review.sh resolve <PR> [THREAD_ID...]   omit ids to resolve all unresolved
+#   pr_review.sh resolve <PR> <THREAD_ID...|--all>   --all = every unresolved, asks first
 #   pr_review.sh watch   <PR> [minutes]        poll checks (run this backgrounded)
 #
 # Reviewers seen here: coderabbitai (deepest; reviews ~9 min after open, or on

@@ -71,10 +71,16 @@ echo "== CPU over ${SAMPLE}s (idle unless you are driving the UI) =="
 # number rather than failing.
 jiffies() { awk -F') ' '{n=split($NF,a," "); print a[12]+a[13]}' "/proc/$1/stat" 2>/dev/null; }
 
+# jiffies are USER_HZ units — almost always 100, but read it rather than assume it
+HZ=$(getconf CLK_TCK 2>/dev/null) && [ "$HZ" -gt 0 ] 2>/dev/null || HZ=100
+
+# Sample EVERY readable process, not the top-N of ps.txt: that list is sorted by RSS,
+# and the busiest process is not necessarily a big one.
 declare -A t0
-while read -r pid _; do
-    [ -r "/proc/$pid/stat" ] && t0[$pid]=$(jiffies "$pid")
-done < <(awk 'NR>1 && NR<=25 {print $1}' "$OUT/ps.txt")
+for d in /proc/[0-9]*; do
+    pid=${d#/proc/}
+    [ -r "$d/stat" ] && t0[$pid]=$(jiffies "$pid")
+done
 sleep "$SAMPLE"
 for pid in "${!t0[@]}"; do
     [ -r "/proc/$pid/stat" ] || continue
@@ -82,7 +88,7 @@ for pid in "${!t0[@]}"; do
     [ -n "$t1" ] && [ -n "${t0[$pid]}" ] || continue
     delta=$(( t1 - ${t0[$pid]} ))
     [ "$delta" -gt 0 ] || continue
-    pct=$(awk -v d="$delta" -v s="$SAMPLE" 'BEGIN{printf "%.2f", d/s}')
+    pct=$(awk -v d="$delta" -v s="$SAMPLE" -v hz="$HZ" 'BEGIN{printf "%.2f", d*100/(hz*s)}')
     comm=$(tr -d '\0' < "/proc/$pid/comm" 2>/dev/null)
     echo "$pct $pid $comm"
 done | sort -rn | head -12 | awk '{printf "  %6s%%  %-8s %s\n", $1, $2, $3}'

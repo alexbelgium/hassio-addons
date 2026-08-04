@@ -25,7 +25,8 @@ fi
 
 echo
 echo "== repo =="
-if [ ! -d "$REPO/.git" ]; then
+# git-aware check: in a worktree .git is a file, not a directory
+if ! git -C "$REPO" rev-parse --git-dir > /dev/null 2>&1; then
     echo "  no git repo at $REPO"
     exit 0
 fi

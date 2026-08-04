@@ -28,6 +28,11 @@ set -uo pipefail
 
 VAR="${1:?usage: env_trace.sh <VAR> [process-name-or-pid]}"
 TARGET="${2:-}"
+# VAR is interpolated into grep/sed patterns below — restrict it to a valid env var name
+case "$VAR" in
+    [A-Za-z_]*) [ -z "${VAR//[A-Za-z0-9_]/}" ] || { echo "invalid env var name: $VAR" >&2; exit 1; } ;;
+    *) echo "invalid env var name: $VAR" >&2; exit 1 ;;
+esac
 
 echo "== tracing ${VAR} =="
 echo
