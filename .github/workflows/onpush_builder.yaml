@@ -114,7 +114,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Run Home Assistant Add-on Lint
-        uses: ./.github/actions/addon-linter
+        uses: frenck/action-addon-linter@f6bef06a4cee6c67924b0a70be643aacb8500a43
         with:
           path: "./${{ matrix.addon }}"
 
