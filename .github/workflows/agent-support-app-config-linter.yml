@@ -45,36 +45,55 @@ jobs:
       - name: Run normalizer unit tests
         run: python3 .github/scripts/test_prepare_addon_lint_config.py
 
-      - name: Create current-schema linter fixture
+      - name: Create current-schema linter fixtures
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p .tmp-addon-linter-fixture
-          cat > .tmp-addon-linter-fixture/config.yaml <<'FIXTURE'
+          mkdir -p .tmp-addon-linter-short .tmp-addon-linter-long
+
+          cat > .tmp-addon-linter-short/config.yaml <<'SHORT_FIXTURE'
           ---
-          name: App Config Compatibility Fixture
+          name: App Config Short Form Fixture
           version: "1.0.0"
-          slug: app_config_fixture
-          description: Validates current Home Assistant app configuration map names
+          slug: app_config_short_fixture
+          description: Validates current Home Assistant short-form app map names
           arch:
             - amd64
           map:
             - app_config:rw
             - all_app_configs:ro
+          SHORT_FIXTURE
+
+          cat > .tmp-addon-linter-long/config.yaml <<'LONG_FIXTURE'
+          ---
+          name: App Config Long Form Fixture
+          version: "1.0.0"
+          slug: app_config_long_fixture
+          description: Validates current Home Assistant long-form app map names
+          arch:
+            - amd64
+          map:
             - type: app_config
               read_only: false
-          FIXTURE
+            - type: all_app_configs
+              read_only: true
+          LONG_FIXTURE
 
-      - name: Verify current map names through upstream linter
+      - name: Verify current short-form map names through upstream linter
         uses: ./.github/actions/addon-linter
         with:
-          path: ./.tmp-addon-linter-fixture
+          path: ./.tmp-addon-linter-short
+
+      - name: Verify current long-form map names through upstream linter
+        uses: ./.github/actions/addon-linter
+        with:
+          path: ./.tmp-addon-linter-long
 
       - name: Commit compatibility implementation
         shell: bash
         run: |
           set -euo pipefail
-          rm -rf .tmp-addon-linter-fixture .addon-lint
+          rm -rf .tmp-addon-linter-short .tmp-addon-linter-long .addon-lint
           rm .github/workflows/agent-support-app-config-linter.yml
 
           git config user.name "github-actions[bot]"
