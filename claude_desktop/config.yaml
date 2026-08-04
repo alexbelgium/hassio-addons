@@ -56,7 +56,6 @@ options:
   github_username: ""
   enable_tools_health_report: true
   expose_headroom_dashboard: false
-  gpu_acceleration: auto
   headroom_auto_compress: true
   headroom_wrap_claude_code: true
   install_caveman: false
@@ -66,7 +65,6 @@ options:
   install_headroom: true
   install_rtk: true
   install_tokensave: true
-  max_resolution: 1920x1080
   mcp_servers_desktop:
     - headroom
     - tokensave
@@ -98,6 +96,7 @@ schema:
   data_location: str?
   DRINODE: list(/dev/dri/card0|/dev/dri/card1|/dev/dri/card2|/dev/dri/renderD128|/dev/dri/renderD129|)?
   KEYBOARD: list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?
+  MAX_RES: match(^[1-9][0-9]{2,3}x[1-9][0-9]{2,3}$)?
   PASSWORD: str?
   PGID: int
   PUID: int
@@ -118,7 +117,6 @@ schema:
   github_username: str?
   enable_tools_health_report: bool
   expose_headroom_dashboard: bool
-  gpu_acceleration: list(auto|on|off)?
   headroom_auto_compress: bool?
   headroom_wrap_claude_code: bool
   install_caveman: bool
@@ -128,7 +126,6 @@ schema:
   install_headroom: bool
   install_rtk: bool
   install_tokensave: bool
-  max_resolution: str?
   mcp_servers_desktop:
     - list(headroom|tokensave|homeassistant|codex)
   mcp_servers_code:
@@ -139,5 +136,5 @@ schema:
 slug: claude_desktop
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2026.08.03"
+version: "2026.08.04"
 video: true
