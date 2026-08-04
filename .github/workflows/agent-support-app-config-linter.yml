@@ -2,326 +2,30 @@
 name: Prepare app_config linter compatibility
 
 on:
-  push:
+  pull_request:
     branches:
-      - agent/support-app-config-linter
+      - master
 
 permissions:
   contents: write
 
 jobs:
   prepare:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch
+      - name: Checkout pull-request branch
         uses: actions/checkout@v7.0.1
         with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
-      - name: Add compatibility action, normalizer, and tests
+      - name: Switch repository workflows to compatibility action
         shell: bash
         run: |
           set -euo pipefail
-
-          mkdir -p .github/actions/addon-linter .github/scripts
-
-          cat > .github/actions/addon-linter/action.yml <<'EOF_ACTION'
-          ---
-          name: Home Assistant add-on linter compatibility
-          description: Normalize current app_config map names for the upstream add-on linter
-
-          inputs:
-            path:
-              description: Path to the add-on directory
-              required: true
-            community:
-              description: Enable upstream community checks
-              required: false
-              default: "false"
-
-          runs:
-            using: composite
-            steps:
-              - name: Prepare manifest for upstream linter
-                shell: bash
-                env:
-                  SOURCE_PATH: ${{ inputs.path }}
-                  DESTINATION_PATH: ${{ github.workspace }}/.addon-lint
-                run: |
-                  set -euo pipefail
-                  python3 "$GITHUB_ACTION_PATH/../../scripts/prepare_addon_lint_config.py" \
-                    "$SOURCE_PATH" \
-                    "$DESTINATION_PATH"
-
-              - name: Run upstream Home Assistant add-on linter
-                uses: frenck/action-addon-linter@v2
-                with:
-                  path: ./.addon-lint
-                  community: ${{ inputs.community }}
-          EOF_ACTION
-
-          cat > .github/scripts/prepare_addon_lint_config.py <<'EOF_PYTHON'
-          #!/usr/bin/env python3
-          """Prepare an add-on copy compatible with the current upstream linter schema."""
-
-          from __future__ import annotations
-
-          import json
-          import re
-          import shutil
-          import sys
-          from pathlib import Path
-          from typing import Any
-
-
-          MAP_ALIASES = {
-              "app_config": "addon_config",
-              "all_app_configs": "all_addon_configs",
-          }
-          MAP_TOKEN_PATTERN = re.compile(
-              r"(?<![A-Za-z0-9_])(all_app_configs|app_config)(?![A-Za-z0-9_])"
-          )
-
-
-          def _normalize_map_string(value: str) -> str:
-              base, separator, mode = value.partition(":")
-              replacement = MAP_ALIASES.get(base)
-              if replacement is None:
-                  return value
-              if separator and mode not in {"ro", "rw"}:
-                  return value
-              return f"{replacement}{separator}{mode}"
-
-
-          def _normalize_json_config(path: Path) -> bool:
-              configuration: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
-              entries = configuration.get("map")
-              if not isinstance(entries, list):
-                  return False
-
-              changed = False
-              for index, entry in enumerate(entries):
-                  if isinstance(entry, str):
-                      normalized = _normalize_map_string(entry)
-                      if normalized != entry:
-                          entries[index] = normalized
-                          changed = True
-                  elif isinstance(entry, dict) and isinstance(entry.get("type"), str):
-                      normalized = MAP_ALIASES.get(entry["type"])
-                      if normalized is not None:
-                          entry["type"] = normalized
-                          changed = True
-
-              if changed:
-                  path.write_text(
-                      json.dumps(configuration, indent=2, ensure_ascii=False) + "\n",
-                      encoding="utf-8",
-                  )
-              return changed
-
-
-          def _replace_map_tokens(value: str) -> str:
-              return MAP_TOKEN_PATTERN.sub(lambda match: MAP_ALIASES[match.group(1)], value)
-
-
-          def _normalize_yaml_config(path: Path) -> bool:
-              original = path.read_text(encoding="utf-8")
-              lines = original.splitlines(keepends=True)
-              map_indent: int | None = None
-
-              for index, line in enumerate(lines):
-                  body = line.rstrip("\r\n")
-                  newline = line[len(body) :]
-                  stripped = body.lstrip(" ")
-                  indent = len(body) - len(stripped)
-
-                  if (
-                      map_indent is not None
-                      and stripped
-                      and not stripped.startswith("#")
-                      and indent <= map_indent
-                  ):
-                      map_indent = None
-
-                  map_match = re.match(r"^(\s*)map\s*:(.*)$", body)
-                  if map_match and indent == 0:
-                      remainder = map_match.group(2)
-                      if remainder.strip() and not remainder.lstrip().startswith("#"):
-                          body = _replace_map_tokens(body)
-                      else:
-                          map_indent = indent
-                  elif map_indent is not None:
-                      body = _replace_map_tokens(body)
-
-                  lines[index] = body + newline
-
-              normalized = "".join(lines)
-              if normalized == original:
-                  return False
-              path.write_text(normalized, encoding="utf-8")
-              return True
-
-
-          def prepare_addon(source: Path, destination: Path) -> Path:
-              source = source.resolve()
-              destination = destination.resolve()
-
-              if not source.is_dir():
-                  raise FileNotFoundError(f"Add-on directory not found: {source}")
-              if destination == source or source in destination.parents:
-                  raise ValueError("Destination must not be the source directory or inside it")
-
-              if destination.exists():
-                  shutil.rmtree(destination)
-              shutil.copytree(source, destination, symlinks=True)
-
-              config_path = next(
-                  (
-                      destination / filename
-                      for filename in ("config.json", "config.yaml", "config.yml")
-                      if (destination / filename).is_file()
-                  ),
-                  None,
-              )
-              if config_path is None:
-                  raise FileNotFoundError(f"No add-on config file found in {source}")
-
-              if config_path.suffix == ".json":
-                  changed = _normalize_json_config(config_path)
-              else:
-                  changed = _normalize_yaml_config(config_path)
-
-              status = "normalized current map aliases" if changed else "no aliases to normalize"
-              print(f"Prepared {source} at {destination}: {status}")
-              return config_path
-
-
-          def main() -> int:
-              if len(sys.argv) != 3:
-                  print(
-                      "Usage: prepare_addon_lint_config.py SOURCE_ADDON DESTINATION",
-                      file=sys.stderr,
-                  )
-                  return 2
-
-              try:
-                  prepare_addon(Path(sys.argv[1]), Path(sys.argv[2]))
-              except (FileNotFoundError, OSError, ValueError, json.JSONDecodeError) as error:
-                  print(f"error: {error}", file=sys.stderr)
-                  return 1
-              return 0
-
-
-          if __name__ == "__main__":
-              raise SystemExit(main())
-          EOF_PYTHON
-
-          cat > .github/scripts/test_prepare_addon_lint_config.py <<'EOF_TEST'
-          #!/usr/bin/env python3
-          """Tests for the add-on linter map-name compatibility normalizer."""
-
-          from __future__ import annotations
-
-          import importlib.util
-          import json
-          import tempfile
-          import unittest
-          from pathlib import Path
-
-
-          SCRIPT_PATH = Path(__file__).with_name("prepare_addon_lint_config.py")
-          SPEC = importlib.util.spec_from_file_location("prepare_addon_lint_config", SCRIPT_PATH)
-          if SPEC is None or SPEC.loader is None:
-              raise RuntimeError(f"Unable to load {SCRIPT_PATH}")
-          MODULE = importlib.util.module_from_spec(SPEC)
-          SPEC.loader.exec_module(MODULE)
-
-
-          class PrepareAddonLintConfigTest(unittest.TestCase):
-              def test_yaml_map_aliases_are_normalized_only_inside_map(self) -> None:
-                  with tempfile.TemporaryDirectory() as temp_dir:
-                      root = Path(temp_dir)
-                      source = root / "source"
-                      destination = root / "destination"
-                      source.mkdir()
-                      original = """name: Fixture
-          version: \"1.0.0\"
-          slug: fixture
-          description: app_config remains documentation here
-          arch:
-            - amd64
-          map:
-            - app_config:rw
-            - all_app_configs:ro
-            - addon_config:rw
-            - type: app_config
-              read_only: false
-          options:
-            note: all_app_configs remains here too
-          """
-                      (source / "config.yaml").write_text(original, encoding="utf-8")
-
-                      MODULE.prepare_addon(source, destination)
-
-                      normalized = (destination / "config.yaml").read_text(encoding="utf-8")
-                      self.assertIn("description: app_config remains documentation here", normalized)
-                      self.assertIn("note: all_app_configs remains here too", normalized)
-                      self.assertIn("- addon_config:rw", normalized)
-                      self.assertIn("- all_addon_configs:ro", normalized)
-                      self.assertIn("- type: addon_config", normalized)
-                      self.assertNotIn("- app_config:rw", normalized)
-                      self.assertEqual(
-                          (source / "config.yaml").read_text(encoding="utf-8"), original
-                      )
-
-              def test_json_map_aliases_and_modes_are_normalized(self) -> None:
-                  with tempfile.TemporaryDirectory() as temp_dir:
-                      root = Path(temp_dir)
-                      source = root / "source"
-                      destination = root / "destination"
-                      source.mkdir()
-                      configuration = {
-                          "name": "Fixture",
-                          "version": "1.0.0",
-                          "slug": "fixture",
-                          "description": "app_config remains documentation here",
-                          "arch": ["amd64"],
-                          "map": [
-                              "app_config:rw",
-                              "all_app_configs:ro",
-                              "addon_config:rw",
-                              {"type": "app_config", "read_only": False},
-                          ],
-                      }
-                      (source / "config.json").write_text(
-                          json.dumps(configuration), encoding="utf-8"
-                      )
-
-                      MODULE.prepare_addon(source, destination)
-
-                      normalized = json.loads(
-                          (destination / "config.json").read_text(encoding="utf-8")
-                      )
-                      self.assertEqual(
-                          normalized["map"],
-                          [
-                              "addon_config:rw",
-                              "all_addon_configs:ro",
-                              "addon_config:rw",
-                              {"type": "addon_config", "read_only": False},
-                          ],
-                      )
-                      self.assertEqual(
-                          normalized["description"],
-                          "app_config remains documentation here",
-                      )
-
-
-          if __name__ == "__main__":
-              unittest.main()
-          EOF_TEST
-
-          python3 - <<'EOF_PATCH'
+          python3 - <<'PY'
           from pathlib import Path
 
           replacement = "uses: ./.github/actions/addon-linter"
@@ -336,7 +40,7 @@ jobs:
               if count != 1:
                   raise SystemExit(f"Expected one {needle!r} in {filename}, found {count}")
               path.write_text(content.replace(needle, replacement), encoding="utf-8")
-          EOF_PATCH
+          PY
 
       - name: Run normalizer unit tests
         run: python3 .github/scripts/test_prepare_addon_lint_config.py
@@ -346,7 +50,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .tmp-addon-linter-fixture
-          cat > .tmp-addon-linter-fixture/config.yaml <<'EOF_FIXTURE'
+          cat > .tmp-addon-linter-fixture/config.yaml <<'FIXTURE'
           ---
           name: App Config Compatibility Fixture
           version: "1.0.0"
@@ -359,7 +63,7 @@ jobs:
             - all_app_configs:ro
             - type: app_config
               read_only: false
-          EOF_FIXTURE
+          FIXTURE
 
       - name: Verify current map names through upstream linter
         uses: ./.github/actions/addon-linter
@@ -375,12 +79,9 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/actions/addon-linter/action.yml \
-            .github/scripts/prepare_addon_lint_config.py \
-            .github/scripts/test_prepare_addon_lint_config.py \
-            .github/workflows/onpr_check-pr.yaml \
+          git add .github/workflows/onpr_check-pr.yaml \
             .github/workflows/onpush_builder.yaml \
             .github/workflows/agent-support-app-config-linter.yml
           git diff --cached --check
-          git commit -m "Support app_config in add-on linting"
-          git push origin HEAD:agent/support-app-config-linter
+          git commit -m "Use app_config-compatible add-on linter"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
