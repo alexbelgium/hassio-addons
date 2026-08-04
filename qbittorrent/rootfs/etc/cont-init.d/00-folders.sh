@@ -19,8 +19,8 @@ if [ -f /homeassistant/addons_config/qBittorrent/qBittorrent.conf ] && [ ! -f /h
     cp -rnp /homeassistant/addons_config/qBittorrent/* /config/qBittorrent/ &> /dev/null || true
     if [ -d /config/qBittorrent/addons_config ]; then rm -r /config/qBittorrent/addons_config; fi
     if [ -d /config/qBittorrent/qBittorrent ]; then rm -r /config/qBittorrent/qBittorrent; fi
-    echo "Files moved to /app_configs/$HOSTNAME/openvpn" > /homeassistant/addons_config/qBittorrent/migrated
-    bashio::log.yellow "... moved files from /config/addons_config/qBittorrent to /app_configs/$HOSTNAME/qBitorrent (must be accessed with my Filebrowser addon)"
+    echo "Files moved to /app_configs/$HOSTNAME/qBittorrent" > /homeassistant/addons_config/qBittorrent/migrated
+    bashio::log.yellow "... moved files from /config/addons_config/qBittorrent to /app_configs/$HOSTNAME/qBittorrent (must be accessed with my Filebrowser addon)"
     MIGRATED=true
 fi
 
