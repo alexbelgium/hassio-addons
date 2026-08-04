@@ -7,7 +7,7 @@ on:
       - master
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   prepare:
@@ -89,18 +89,21 @@ jobs:
         with:
           path: ./.tmp-addon-linter-long
 
-      - name: Commit compatibility implementation
+      - name: Check prepared workflow changes
         shell: bash
         run: |
           set -euo pipefail
-          rm -rf .tmp-addon-linter-short .tmp-addon-linter-long .addon-lint
-          rm .github/workflows/agent-support-app-config-linter.yml
+          git diff --check
+          git diff --exit-code -- .github/actions/addon-linter/action.yml \
+            .github/scripts/prepare_addon_lint_config.py \
+            .github/scripts/test_prepare_addon_lint_config.py
+          test "$(git diff --name-only -- .github/workflows/onpr_check-pr.yaml .github/workflows/onpush_builder.yaml | wc -l)" -eq 2
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/workflows/onpr_check-pr.yaml \
-            .github/workflows/onpush_builder.yaml \
-            .github/workflows/agent-support-app-config-linter.yml
-          git diff --cached --check
-          git commit -m "Use app_config-compatible add-on linter"
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+      - name: Export validated workflow files
+        uses: actions/upload-artifact@v6
+        with:
+          name: app-config-workflows
+          path: |
+            .github/workflows/onpr_check-pr.yaml
+            .github/workflows/onpush_builder.yaml
+          if-no-files-found: error
