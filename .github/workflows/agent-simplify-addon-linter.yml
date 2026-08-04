@@ -1,0 +1,50 @@
+---
+name: Prepare upstream add-on linter update
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    if: ${{ github.event.pull_request.head.ref == 'agent/support-app-config-linter' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pull-request branch
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Replace local wrapper with upstream linter commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          old = "uses: ./.github/actions/addon-linter"
+          new = "uses: frenck/action-addon-linter@f6bef06a4cee6c67924b0a70be643aacb8500a43"
+          for filename in (
+              ".github/workflows/onpr_check-pr.yaml",
+              ".github/workflows/onpush_builder.yaml",
+          ):
+              path = Path(filename)
+              text = path.read_text(encoding="utf-8")
+              if text.count(old) != 1:
+                  raise SystemExit(f"Expected exactly one local linter reference in {filename}")
+              path.write_text(text.replace(old, new), encoding="utf-8")
+          PY
+          git diff --check
+
+      - name: Export updated workflows
+        uses: actions/upload-artifact@v7
+        with:
+          name: upstream-addon-linter-workflows
+          path: |
+            .github/workflows/onpr_check-pr.yaml
+            .github/workflows/onpush_builder.yaml
