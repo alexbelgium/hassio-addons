@@ -97,8 +97,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `KEYBOARD` | | Optional Selkies keyboard layout. |
 | `PASSWORD` | | Optional password for direct Selkies ports. |
 | `DRINODE` | | Optional GPU device override for Selkies. |
-| `gpu_acceleration` | `auto` | Whether Claude Desktop renders on the GPU. `auto` adds Chromium's ANGLE/EGL flags only when a probe confirms a hardware GL context is available, `on` forces them without probing, `off` keeps software rendering. Use `on` with care: it skips every safety check, so on a host that cannot actually drive those flags the desktop can come up black — set the option back to `auto` or `off` to recover. |
-| `max_resolution` | `1920x1080` | Caps the virtual screen. Selkies still resizes dynamically below this; raise it only if you drive the desktop from a larger display. |
+| `MAX_RES` | _(unset)_ | Optional cap on the virtual screen, as `WIDTHxHEIGHT` (100-9999 per axis). Unset means the base image default, 15360x8640 — Selkies resizes dynamically below whatever the cap is, so this only sets the ceiling. Named `MAX_RES` because that is the environment variable the base image's Xvfb service reads. Setting it lowers the area Xvfb and the Selkies capture loop track for damage; the framebuffer itself is lazily populated, so this is a CPU saving, not a memory one. |
 | `DNS_server` | `8.8.8.8` | DNS server used by the standard DNS module. |
 | `permission_mode` | `auto` | Claude Code permission policy: `strict`, `auto`, or `bypass`. |
 | `install_headroom` | `true` | Register Headroom MCP and run the supervised local proxy. |
