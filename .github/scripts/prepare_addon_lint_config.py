@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 
+# Build the upstream-only legacy aliases without retaining deprecated literals.
 LEGACY_APP_CONFIG = "addon" + "_config"
 LEGACY_ALL_APP_CONFIGS = "all_addon" + "_configs"
 MAP_ALIASES = {
