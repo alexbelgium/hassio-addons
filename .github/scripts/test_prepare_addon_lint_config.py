@@ -25,7 +25,9 @@ class PrepareAddonLintConfigTest(unittest.TestCase):
             source = root / "source"
             destination = root / "destination"
             source.mkdir()
-            original = """name: Fixture
+            legacy = MODULE.LEGACY_APP_CONFIG
+            legacy_all = MODULE.LEGACY_ALL_APP_CONFIGS
+            original = f"""name: Fixture
 version: \"1.0.0\"
 slug: fixture
 description: app_config remains documentation here
@@ -34,7 +36,7 @@ arch:
 map:
   - app_config:rw
   - all_app_configs:ro
-  - app_config:rw
+  - {legacy}:rw
   - type: app_config
     read_only: false
 options:
@@ -47,9 +49,9 @@ options:
             normalized = (destination / "config.yaml").read_text(encoding="utf-8")
             self.assertIn("description: app_config remains documentation here", normalized)
             self.assertIn("note: all_app_configs remains here too", normalized)
-            self.assertIn("- app_config:rw", normalized)
-            self.assertIn("- all_app_configs:ro", normalized)
-            self.assertIn("- type: app_config", normalized)
+            self.assertIn(f"- {legacy}:rw", normalized)
+            self.assertIn(f"- {legacy_all}:ro", normalized)
+            self.assertIn(f"- type: {legacy}", normalized)
             self.assertNotIn("- app_config:rw", normalized)
             self.assertEqual(
                 (source / "config.yaml").read_text(encoding="utf-8"), original
@@ -61,6 +63,8 @@ options:
             source = root / "source"
             destination = root / "destination"
             source.mkdir()
+            legacy = MODULE.LEGACY_APP_CONFIG
+            legacy_all = MODULE.LEGACY_ALL_APP_CONFIGS
             configuration = {
                 "name": "Fixture",
                 "version": "1.0.0",
@@ -70,7 +74,7 @@ options:
                 "map": [
                     "app_config:rw",
                     "all_app_configs:ro",
-                    "app_config:rw",
+                    f"{legacy}:rw",
                     {"type": "app_config", "read_only": False},
                 ],
             }
@@ -86,10 +90,10 @@ options:
             self.assertEqual(
                 normalized["map"],
                 [
-                    "app_config:rw",
-                    "all_app_configs:ro",
-                    "app_config:rw",
-                    {"type": "app_config", "read_only": False},
+                    f"{legacy}:rw",
+                    f"{legacy_all}:ro",
+                    f"{legacy}:rw",
+                    {"type": legacy, "read_only": False},
                 ],
             )
             self.assertEqual(
