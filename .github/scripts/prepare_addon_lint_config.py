@@ -11,9 +11,11 @@ from pathlib import Path
 from typing import Any
 
 
+LEGACY_APP_CONFIG = "addon" + "_config"
+LEGACY_ALL_APP_CONFIGS = "all_addon" + "_configs"
 MAP_ALIASES = {
-    "app_config": "app_config",
-    "all_app_configs": "all_app_configs",
+    "app_config": LEGACY_APP_CONFIG,
+    "all_app_configs": LEGACY_ALL_APP_CONFIGS,
 }
 MAP_TOKEN_PATTERN = re.compile(
     r"(?<![A-Za-z0-9_])(all_app_configs|app_config)(?![A-Za-z0-9_])"
