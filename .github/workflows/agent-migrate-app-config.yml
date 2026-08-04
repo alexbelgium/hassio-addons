@@ -33,19 +33,19 @@ jobs:
             exit 1
           fi
 
-          changed_configs=$(git diff --name-only "${{ github.event.pull_request.base.sha }}...HEAD" -- '*config.json' '*config.yaml' '*config.yml' | wc -l)
-          changed_changelogs=$(git diff --name-only "${{ github.event.pull_request.base.sha }}...HEAD" -- '*/CHANGELOG.md' | wc -l)
+          changed_configs=$(git diff --name-only "${{ github.event.pull_request.base.sha }}...HEAD" | grep -Ec '^[^/]+/config\.(json|ya?ml)$' || true)
+          changed_changelogs=$(git diff --name-only "${{ github.event.pull_request.base.sha }}...HEAD" | grep -Ec '^[^/]+/CHANGELOG\.md$' || true)
           if [ "$changed_configs" -eq 0 ]; then
             echo "No add-on manifests changed" >&2
             exit 1
           fi
           if [ "$changed_changelogs" -lt "$changed_configs" ]; then
-            echo "Fewer changelogs than changed manifests: $changed_changelogs < $changed_configs" >&2
+            echo "Fewer changelogs than changed add-on manifests: $changed_changelogs < $changed_configs" >&2
             exit 1
           fi
 
-          echo "Changed manifests: $changed_configs"
-          echo "Changed changelogs: $changed_changelogs"
+          echo "Changed add-on manifests: $changed_configs"
+          echo "Changed add-on changelogs: $changed_changelogs"
 
       - name: Run compatibility normalizer unit tests
         run: python3 .github/scripts/test_prepare_addon_lint_config.py
