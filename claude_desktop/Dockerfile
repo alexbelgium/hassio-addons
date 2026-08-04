@@ -74,7 +74,7 @@ VOLUME [ "/sys/fs/cgroup" ]
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
     usermod --home /data/data abc && \
-    if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
+    if [ -d /etc/services.d ] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
 ARG TEMPLATE_BASE_URL="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates"
 
@@ -142,36 +142,29 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# The Intel N150/Twin Lake iGPU uses the host's i915 kernel driver through the mapped
-# /dev/dri nodes. Explicitly install the amd64 userspace stack needed for accelerated
-# OpenGL rendering, VA-API video encoding, and Vulkan, then fail the build if any driver
-# payload is missing. Keep aarch64 unchanged because these Intel packages are amd64-only.
+# No bespoke GPU driver install. The LSIO base image already provides the userspace stack that
+# hardware rendering actually uses, and it does so at a newer version than adding it here would:
+# libgl1-mesa-dri and mesa-vulkan-drivers come from bookworm-backports Mesa 25.0.7, where a
+# plain `apt-get install` of the same names is at best a no-op.
 #
-# Gate on BUILD_ARCH, not TARGETARCH. TARGETARCH is a BuildKit-provided platform ARG; the
-# repo's builder (.github/workflows/onpush_builder.yaml) passes BUILD_ARCH explicitly and
-# that is the contract this repo can rely on. This block previously used TARGETARCH and
-# silently never ran: the shipped amd64 image has no `vainfo` and no
-# `intel-media-va-driver-non-free`, and its apt history contains no matching install — so
-# the "fail the build if a payload is missing" guarantee below had never once executed.
+# There used to be an amd64 block here installing intel-media-va-driver-non-free, libgl1-mesa-dri,
+# mesa-vulkan-drivers and vainfo. It never ran in any release: it was guarded by
+# `if [[ ... ]]`, and with no SHELL directive RUN executes under /bin/sh — dash, which has no
+# `[[`. dash printed `[[: not found`, the condition was false, and the RUN still exited 0, so
+# every build silently skipped it and still passed. (An earlier fix corrected the gate variable
+# from TARGETARCH to BUILD_ARCH but left the `[[`, so it stayed dead.) Confirmed in the shipped
+# 2026.08.03 amd64 image: no vainfo, no intel-media-va-driver-non-free, no matching apt history.
 #
-# The Vulkan ICD payload is checked via the driver directory rather than a single
-# distro-specific filename: the previous `test -f intel_icd.x86_64.json` named a file Debian
-# does not ship (it installs `intel_icd.json`), so restoring the guard without this change
-# would have turned dead code straight into a failing build.
-RUN if [[ "${BUILD_ARCH}" == "amd64" ]]; then \
-        apt-get update && \
-        apt-get install -y --no-install-recommends \
-            intel-media-va-driver-non-free \
-            libgl1-mesa-dri \
-            mesa-vulkan-drivers \
-            vainfo && \
-        test -f /usr/lib/x86_64-linux-gnu/dri/iHD_drv_video.so && \
-        test -f /usr/lib/x86_64-linux-gnu/dri/iris_dri.so && \
-        ls /usr/share/vulkan/icd.d/intel_icd*.json > /dev/null && \
-        command -v vainfo > /dev/null; \
-    fi && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# It was removed rather than repaired, because measurement showed it had nothing to add:
+#   - Hardware OpenGL already works without it. In the shipped image the Chromium GPU process
+#     loads the Mesa gallium megadriver over DRI3 and holds 8 fds on /dev/dri/renderD128, with
+#     no swrast/llvmpipe in the GL path.
+#   - The only genuinely new payload, intel-media-va-driver-non-free, does not fix anything
+#     here. Installed live alongside vainfo on the running add-on, VA-API failed identically to
+#     the free driver — `iHD_drv_video.so init failed` on both /dev/dri/renderD128 and card0,
+#     with both 23.1.1 builds. The failure is below the add-on, in the host i915/GuC stack.
+# Repairing the guard would therefore have turned dead code into an untested apt transaction
+# that swaps a base-image package for no measured benefit.
 
 # Install the current upstream hadolint and actionlint releases for both supported
 ARG HADOLINT_VERSION=v2.14.0

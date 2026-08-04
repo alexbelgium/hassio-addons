@@ -1,3 +1,50 @@
+## 2026.08.04 (04-08-2026)
+- Fix: reverted the GPU acceleration added in 2026.08.03. It did not just fail to help — it was
+  what disabled the GPU. `--use-gl=angle --use-angle=gl-egl` forces Mesa's EGL X11 platform,
+  which offers no window-capable EGLConfig under this Xvfb, so the GPU process logged
+  `gl_surface_egl.cc:262 No suitable EGL configs found`, abandoned GL, and was relaunched with
+  `--use-gl=disabled` while every renderer got `--disable-gpu-compositing`.
+  Chromium already renders on the GPU here with no flags at all, because LSIO's Xvfb runs with
+  `-vfbdevice /dev/dri/renderD128` and its GLX is therefore backed by the real render node —
+  the premise that Xvfb offers only a software path was wrong for this base image. Measured
+  three times, including at the production 15360x8640 screen: with the flags the GPU process
+  loads `libEGL_mesa` and holds 1 fd on the render node; without them it loads `libGLX_mesa`,
+  holds 8, and no renderer carries `--disable-gpu-compositing`.
+  Removes `claude-gpu-probe` and the `gpu_acceleration` option. The probe was not wrong about
+  the hardware, it was answering the wrong question: it exercised ANGLE's default GLX path,
+  which works, and so it passed while the flags it gated disabled the GPU.
+- Fix: `max_resolution` never did anything; the option is renamed to `MAX_RES`. It wrote
+  `MAX_RES` into the s6 `container_environment`, but the base image's `svc-xorg` starts
+  `#!/usr/bin/env bashio` rather than `with-contenv` and never reads that directory, so Xvfb
+  kept starting at 15360x8640. Naming the option `MAX_RES` makes the add-on env layer inject
+  it directly into every service `run` script, which is how `DRINODE` already reaches Xvfb.
+  `MAX_RES` ships with no default, so nothing changes for anyone until it is set: the screen
+  stays at the base image's 15360x8640. The old `max_resolution` default of `1920x1080` is
+  deliberately not carried over — it had never taken effect, so shipping it now would have
+  silently shrunk every existing desktop, including on 4K displays. Home Assistant drops
+  options that are no longer in the schema (it logs a warning), so a saved `max_resolution`
+  is discarded rather than migrated. The schema bounds each axis to 100-9999, which keeps the
+  worst case (~400 MB of framebuffer) below the 15360x8640 default it replaces.
+  Removes `22-display_tuning.sh`.
+- Removed the amd64 GPU driver install, which has never run in any release. The 2026.08.03
+  build corrected its gate variable but the guard is `if [[ ... ]]` and there is no `SHELL`
+  directive, so it runs under dash, which has no `[[` — the condition was false and the `RUN`
+  still exited 0. Verified in the shipped 2026.08.03 image: no `vainfo`, no
+  `intel-media-va-driver-non-free`, and no matching install in its apt history.
+  It was deleted rather than repaired, because it had nothing to add. Hardware OpenGL already
+  works without it: the GPU process loads the Mesa gallium megadriver over DRI3 and holds 8
+  fds on `/dev/dri/renderD128`, with no swrast/llvmpipe in the GL path. `libgl1-mesa-dri` and
+  `mesa-vulkan-drivers` already come from the LSIO base at a newer backports version (Mesa
+  25.0.7) than reinstalling them would give. And `intel-media-va-driver-non-free`, the one
+  genuinely new payload, was installed live on the running add-on and changed nothing: VA-API
+  failed identically to the free driver (`iHD_drv_video.so init failed`) on both
+  `/dev/dri/renderD128` and `card0`. That failure is below the add-on, in the host i915 stack.
+  Repairing the guard would have turned dead code into an untested apt transaction that swaps
+  a base-image package for no measured benefit.
+- A `[[` in the Dockerfile's legacy `/etc/services.d` shim is corrected to `[` for the same
+  dash reason; that directory does not exist on this s6-overlay v3 base, so it is
+  behaviour-neutral here.
+
 ## 2026.08.03 (03-08-2026)
 - Performance: Claude Desktop now uses the GPU instead of rendering on the CPU.
   Under Xvfb, Chromium probed GLX, found only Xvfb's software path, and fell back to

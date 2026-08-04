@@ -21,48 +21,28 @@
 # force-overrides ANTHROPIC_BASE_URL (headroom #869), so Desktop uses the registered Headroom
 # MCP tools instead.
 
-# GPU acceleration.
+# GPU acceleration: deliberately no flags. Do not add ANGLE/EGL flags here.
 #
-# Under Xvfb, Chromium probes GLX, finds only Xvfb's indirect/software path, and falls back to
-# rendering everything on the CPU (`--use-gl=disabled` on the GPU process, and
-# `--disable-gpu-compositing` on the renderer). On a small Home Assistant host that is the
-# add-on's single largest CPU consumer.
+# Chromium already renders on the GPU on this base image, because LSIO's Xvfb is started with
+# `-vfbdevice /dev/dri/renderD128` — so GLX here is backed by the real render node, not the
+# indirect/software path. Left alone, Chromium picks Mesa's GLX (libGLX_mesa), initialises the
+# GPU process, and composites on the GPU.
 #
-# Routing Chromium through ANGLE's OpenGL backend over EGL uses the real render node instead.
-# The flags are only added when /usr/local/bin/claude-gpu-probe confirms that Claude Desktop's
-# own bundled ANGLE can create a hardware GL context here, because forcing them on a host with
-# no render node (or one where Mesa falls back to llvmpipe) trades a working software desktop
-# for a black window or a GPU-process crash loop. Any probe failure leaves the command line
-# untouched, i.e. exactly the pre-existing software-rendering behaviour.
+# Passing `--use-gl=angle --use-angle=gl-egl` actively *broke* that. It forces Mesa's EGL X11
+# platform, which offers no window-capable EGLConfig under this Xvfb, so the GPU process logged
+#   ui/gl/gl_surface_egl.cc:262  No suitable EGL configs found.
+# gave up on GL entirely, and Chromium relaunched it with `--use-gl=disabled` while stamping
+# `--disable-gpu-compositing` on every renderer — i.e. the flags caused the CPU rendering they
+# were meant to remove. Measured three times, including at the production 15360x8640 screen:
+# with the flags the GPU process loads libEGL_mesa and holds 1 fd on the render node; with no
+# flags it loads libGLX_mesa and holds 8, and no renderer carries --disable-gpu-compositing.
 #
-# `--use-angle=gles-egl` is deliberately not used: Mesa rejects it with "Intel or NVIDIA
-# OpenGL ES drivers are not supported".
+# A standalone ANGLE probe is not evidence for any of this: Claude Desktop's bundled ANGLE
+# happily creates a hardware context here via its default (GLX) path, which is why the probe
+# that used to gate these flags passed while the flags themselves disabled the GPU.
 #
-# /run/claude-desktop-gpu-mode is written each boot by /etc/cont-init.d/85-openbox_autostart.sh
-# from the `gpu_acceleration` add-on option (auto|on|off).
-GPU_FLAGS=""
-GPU_MODE="auto"
-if [ -r /run/claude-desktop-gpu-mode ]; then
-    GPU_MODE="$(cat /run/claude-desktop-gpu-mode)"
-fi
-case "$GPU_MODE" in
-    off)
-        echo "claude-desktop: gpu_acceleration=off; using software rendering" >&2
-        ;;
-    on)
-        # Escape hatch for hosts where the probe is wrong in either direction.
-        GPU_FLAGS="--ozone-platform=x11 --use-gl=angle --use-angle=gl-egl"
-        echo "claude-desktop: gpu_acceleration=on; forcing ANGLE/EGL without probing" >&2
-        ;;
-    *)
-        # Bounded: this sits in the desktop's startup path, and a driver that wedges during
-        # EGL init must not leave the user staring at an empty screen. A timeout is treated
-        # exactly like a failed probe, i.e. software rendering.
-        if timeout 15 claude-gpu-probe; then
-            GPU_FLAGS="--ozone-platform=x11 --use-gl=angle --use-angle=gl-egl"
-        fi
-        ;;
-esac
+# `--use-angle=gl` also works, but it only reproduces what Chromium already chooses by itself,
+# so it is not passed either.
 
 # Shared memory.
 #
@@ -80,7 +60,6 @@ if [ -n "$SHM_KB" ] && [ "$SHM_KB" -ge 262144 ]; then
     SHM_FLAGS=""
 fi
 
-# GPU_FLAGS and SHM_FLAGS must stay unquoted so they expand to separate arguments, or to
-# nothing at all.
+# SHM_FLAGS must stay unquoted so it expands to a separate argument, or to nothing at all.
 # shellcheck disable=SC2086
-exec claude-desktop --no-sandbox --password-store=basic $SHM_FLAGS $GPU_FLAGS
+exec claude-desktop --no-sandbox --password-store=basic $SHM_FLAGS
