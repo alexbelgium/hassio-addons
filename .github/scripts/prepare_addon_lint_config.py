@@ -12,8 +12,8 @@ from typing import Any
 
 
 MAP_ALIASES = {
-    "app_config": "addon_config",
-    "all_app_configs": "all_addon_configs",
+    "app_config": "app_config",
+    "all_app_configs": "all_app_configs",
 }
 MAP_TOKEN_PATTERN = re.compile(
     r"(?<![A-Za-z0-9_])(all_app_configs|app_config)(?![A-Za-z0-9_])"

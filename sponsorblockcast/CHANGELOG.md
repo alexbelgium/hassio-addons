@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 
 ## 0.8.3 (2026-03-21)
 - Update to latest version from gabe565/CastSponsorSkip (changelog : https://github.com/gabe565/CastSponsorSkip/releases)

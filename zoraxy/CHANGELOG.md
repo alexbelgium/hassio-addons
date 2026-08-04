@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 3.3.3 (2026-06-19)
 - Initial release
 - Zoraxy reverse proxy with web management UI (port 8000) for Home Assistant

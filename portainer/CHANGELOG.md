@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 2.44.0 (2026-08-01)
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)

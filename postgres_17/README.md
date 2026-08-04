@@ -56,7 +56,7 @@ By default `postgresql.conf` is stored in volume accessible by other addons and 
 
 ### Custom Scripts and Environment Variables
 
-This addon supports custom scripts and environment variables through the `addon_config` mapping:
+This addon supports custom scripts and environment variables through the `app_config` mapping:
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
@@ -77,7 +77,7 @@ The installation of this add-on is pretty straightforward and not different in c
 Migration from postgres 15 :
 
 - stop the postgres 15 addon
-- use the Filebrowser addon to copy the database folder from /addon_configs/xxx-postgres to /addon_configs/xxx-postgres_latest
+- use the Filebrowser addon to copy the database folder from /app_configs/xxx-postgres to /app_configs/xxx-postgres_latest
 - start the postgres 17 addon. Upgrade of the database should proceed. In case it doesn't, your data is anyway safe in the postgres 15 addon
 
 ## Security

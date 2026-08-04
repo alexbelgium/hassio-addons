@@ -6,7 +6,7 @@ description:
   No ads, no tracking, just fast, accessible utilities right from your browser
 image: ghcr.io/alexbelgium/omni-tools-{arch}
 map:
-  - addon_config:rw
+  - app_config:rw
 name: Omni Tools
 options:
   env_vars: []

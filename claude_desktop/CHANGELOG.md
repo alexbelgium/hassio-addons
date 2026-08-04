@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2026.08.03 (03-08-2026)
 - Performance: Claude Desktop now uses the GPU instead of rendering on the CPU.
   Under Xvfb, Chromium probed GLX, found only Xvfb's software path, and fell back to

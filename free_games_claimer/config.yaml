@@ -70,7 +70,7 @@ environment:
 image: ghcr.io/alexbelgium/free_games_claimer-{arch}
 init: false
 map:
-  - addon_config:rw
+  - app_config:rw
   - homeassistant_config:rw
 name: Free Games Claimer
 options:

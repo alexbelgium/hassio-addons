@@ -34,7 +34,7 @@ arch:
 map:
   - app_config:rw
   - all_app_configs:ro
-  - addon_config:rw
+  - app_config:rw
   - type: app_config
     read_only: false
 options:
@@ -47,9 +47,9 @@ options:
             normalized = (destination / "config.yaml").read_text(encoding="utf-8")
             self.assertIn("description: app_config remains documentation here", normalized)
             self.assertIn("note: all_app_configs remains here too", normalized)
-            self.assertIn("- addon_config:rw", normalized)
-            self.assertIn("- all_addon_configs:ro", normalized)
-            self.assertIn("- type: addon_config", normalized)
+            self.assertIn("- app_config:rw", normalized)
+            self.assertIn("- all_app_configs:ro", normalized)
+            self.assertIn("- type: app_config", normalized)
             self.assertNotIn("- app_config:rw", normalized)
             self.assertEqual(
                 (source / "config.yaml").read_text(encoding="utf-8"), original
@@ -70,7 +70,7 @@ options:
                 "map": [
                     "app_config:rw",
                     "all_app_configs:ro",
-                    "addon_config:rw",
+                    "app_config:rw",
                     {"type": "app_config", "read_only": False},
                 ],
             }
@@ -86,10 +86,10 @@ options:
             self.assertEqual(
                 normalized["map"],
                 [
-                    "addon_config:rw",
-                    "all_addon_configs:ro",
-                    "addon_config:rw",
-                    {"type": "addon_config", "read_only": False},
+                    "app_config:rw",
+                    "all_app_configs:ro",
+                    "app_config:rw",
+                    {"type": "app_config", "read_only": False},
                 ],
             )
             self.assertEqual(

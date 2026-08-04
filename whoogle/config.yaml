@@ -70,7 +70,7 @@ image: ghcr.io/alexbelgium/whoogle-search-{arch}
 ingress: true
 ingress_stream: true
 map:
-  - addon_config:rw
+  - app_config:rw
 name: Whoogle Search
 options:
   env_vars: []

@@ -148,7 +148,7 @@ For more configuration options, see the [ImmichFrame documentation](https://immi
 
 ### Custom Scripts and Environment Variables
 
-This addon supports custom scripts and environment variables through the `addon_config` mapping:
+This addon supports custom scripts and environment variables through the `app_config` mapping:
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra ImmichFrame settings not available in the addon UI. Environment variables are automatically classified as General or Account-level settings and written to `Settings.yaml`. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.

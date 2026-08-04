@@ -83,7 +83,7 @@ options:
   keyfile: privkey.pem
   ssl: false
 map:
-  - type: addon_config
+  - type: app_config
     read_only: false
   - type: ssl
     read_only: true
