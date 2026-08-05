@@ -56,10 +56,15 @@ rm -r /var2/www/webtrees/modules_v4
 ln -sf "/config/modules_v4" /var2/www/webtrees/modules_v4
 
 # Update permissions on target directories
+# /docker-entrypoint.py renumbers www-data to PUID:PGID (usermod/groupmod) after this
+# script has run, and then only re-chowns its DATA_DIR. Chowning by name here would
+# therefore leave everything else -- notably /config/modules_v4 -- owned by the image's
+# original www-data uid (33), which the running Apache/PHP process can no longer write to.
+# Chown by the numeric ids the app will actually run as instead.
 echo "... update permissions"
-chown -R www-data:www-data "$DATA_LOCATION"
+chown -R "${PUID:-1000}:${PGID:-1000}" "$DATA_LOCATION"
 chmod -R 755 "$DATA_LOCATION"
-chown -R www-data:www-data "/config"
+chown -R "${PUID:-1000}:${PGID:-1000}" "/config"
 chmod -R 755 "/config"
 
 # Remove /data/data

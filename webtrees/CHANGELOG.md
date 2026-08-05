@@ -1,4 +1,7 @@
 
+## 2.2.6.1 (2026-08-05)
+- Fix custom modules failing to install from the webtrees UI (e.g. with the Custom Module Manager plugin) : /config/modules_v4 was left owned by the base image's original www-data uid (33) while the app runs as PUID:PGID, so it was not writable (https://github.com/alexbelgium/hassio-addons/issues/2940)
+
 ## 2.2.6 (2026-05-09)
 - Update to latest version from nathanvaughn/webtrees-docker (changelog : https://github.com/nathanvaughn/webtrees-docker/releases)
 
