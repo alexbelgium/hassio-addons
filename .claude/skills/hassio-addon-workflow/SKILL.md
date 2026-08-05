@@ -1,17 +1,12 @@
 ---
 name: hassio-addon-workflow
 description: >-
-  End-to-end workflow for alexbelgium/hassio-addons add-on work — scope the change, diagnose
-  against the live add-on with real measurements, get an independent Codex (gpt-5.6-sol) review
-  of the plan, implement, have Codex review the code adversarially, open a PR, resolve the
-  CodeRabbit / Copilot / Codex-connector review comments, and verify the merged result actually
-  works. Use this whenever the task touches a Home Assistant add-on in this repo — fixing a bug
-  or reported issue, tuning RAM, CPU or performance, editing a Dockerfile, config.yaml,
-  cont-init.d script or s6 service, bumping an add-on version, or opening and iterating a PR
-  against hassio-addons. Also use it when asked to "check with codex", "verify with chatgpt", or
-  to resolve bot review comments on an add-on PR. Small tasks (typo fixes, version bumps,
-  one-file tweaks, simple coding questions) route through a light path that skips measurement
-  and Codex reviews — invoking this skill is cheap for small asks too.
+  Workflow for alexbelgium/hassio-addons Home Assistant add-on work: diagnose with real
+  measurements, independent Codex review, implement, open a PR, resolve CodeRabbit / Copilot /
+  Codex bot review comments, verify in production. Use for any task touching an add-on in this
+  repo — bugs, RAM/CPU/performance tuning, Dockerfile, config.yaml, cont-init.d or s6 changes,
+  version bumps, opening or iterating PRs — and when asked to "check with codex", "verify with
+  chatgpt", or resolve bot comments. Cheap for small asks: a light path skips the heavy steps.
 ---
 
 # Home Assistant add-on workflow
@@ -47,7 +42,6 @@ bash "$SKILL/scripts/preflight.sh"        # and likewise for the other scripts
 - Docker build cannot be tested locally (no dockerd) — CI is the only gate.
 - Never `git stash` under `/data/claude` — `refs/stash` is shared across worktrees.
 - Work in a worktree under `/data`, not `/tmp` (`/tmp` is noexec).
-- Read `references/traps.md` before implementing, on **both** paths — traps bite one-liners too.
 
 **Delegate heavy output to a subagent.** Codex reviews and multi-thread PR triage produce output
 you don't need verbatim in your own context. For Codex's plan review (step 3), Codex's code
@@ -91,15 +85,26 @@ Rank mechanisms, pick the lowest (simplest) one that solves it, and state the ch
 Levels 4-6 need a reason that survives being said out loud ("upstream has no knob for this, and I
 checked" is one; "it felt cleaner" is not) and mean full loop.
 
-Full loop only, before writing code: get Codex's independent read on the plan, delegated to a
-subagent per the rule above. Invocation, prompt guidance, and the "attack your own plan"
-checklist: `references/codex-review.md`.
+Attack your own plan before implementing:
+- What does this do on a host **unlike this one** — no GPU, small `/dev/shm`, aarch64, a VM?
+- What happens on **upgrade** to someone who configured this by hand?
+- What is the **blast radius** if the assumption underneath it is wrong?
+- What am I **inferring** that I could instead **detect at runtime** or **record explicitly**?
+  Highest-yield question here — see `references/evidence.md`'s failure-mode section.
+
+Full loop only, before writing code: get Codex's independent read on the plan. Spawn a subagent
+whose prompt includes the path `references/codex-review.md` and tells it to follow that file's
+invocation, then report back only Codex's objections and an assessment of each — not the raw
+transcript.
 
 ## 4. Implement
 
-Read `references/traps.md` first — bashio, s6-env, arch-guard and versioning traps are all live.
-Validate with `scripts/validate.sh <addon> --vs-master`. Write behavioural tests for anything with
-branches, targeting **the regression a reviewer described**, not just the happy path.
+Touching a shell script, Dockerfile, or env option? Read `references/traps.md` first — skim the
+headings, read the sections you're about to touch; the bashio, s6-env, arch-guard and versioning
+traps are all live. (The light-path facts it holds — versioning format, CHANGELOG heading — are
+already inline in step 7.) Validate with `scripts/validate.sh <addon> --vs-master`. Write
+behavioural tests for anything with branches, targeting **the regression a reviewer described**,
+not just the happy path.
 
 ## 5. Simplify
 
@@ -158,20 +163,5 @@ Risk + rollback                 — the riskiest hunk and how to revert it alone
 Lead with anything that did not work — a merged PR that achieved nothing is the single most
 important sentence in the report. Give confidence per claim, not one blanket number.
 
----
-
-## Bundled files
-
-| File | Use |
-|---|---|
-| `scripts/preflight.sh` | Tools, live-add-on check, revision-vs-running-image check. Exits 2 on mismatch |
-| `scripts/measure.sh` | RAM (PSS/private) + CPU snapshot; reserved vs resident. Sample ≥20 s |
-| `scripts/env_trace.sh` | Trace one env var through all four plumbing stages — for "my option did nothing" |
-| `scripts/validate.sh` | Local linters + CI gates; `--vs-master` shows only findings your diff added |
-| `scripts/pr_review.sh` | Fetch / reply to / resolve PR review threads; watch checks |
-| `references/traps.md` | Repo-specific traps — read before implementing |
-| `references/evidence.md` | Measurement methodology, host-generalization failures, merged-and-inert examples |
-| `references/codex-review.md` | Codex CLI invocation, prompt guidance, plan-attack checklist |
-| `references/simplify.md` | Mechanism-ladder case studies and diff self-checks |
-
-Each script's header explains its reasoning; read the script when you use it.
+Scripts are meant to be **run, not read** — each is cited at its point of use above; read one
+only if its output surprises you.

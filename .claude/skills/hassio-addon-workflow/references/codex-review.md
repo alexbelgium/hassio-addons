@@ -39,11 +39,3 @@ codex exec --model gpt-5.6-sol --sandbox read-only --skip-git-repo-check \
 **Codex agrees with confident premises.** It has confirmed a wrong conclusion stated too
 confidently, and separately caught a genuine methodology error in the same review. Treat its
 confirmations with the same scepticism as its objections — especially about the build.
-
-## Attack your own plan too (before implementing)
-
-- What does this do on a host **unlike this one** — no GPU, small `/dev/shm`, aarch64, a VM?
-- What happens on **upgrade** to someone who configured this by hand?
-- What is the **blast radius** if the assumption underneath it is wrong?
-- What am I **inferring** that I could instead **detect at runtime** or **record explicitly**?
-  This is the highest-yield question here — see `references/evidence.md`'s failure-mode section.
