@@ -180,12 +180,18 @@ cannot be determined, because the crash it prevents is worse than its overhead.
 
 ## CI and review bots
 
-**What CI actually gates** — checked against the workflows, because assuming costs a cycle:
+**What CI actually gates** — checked against the workflows, because assuming costs a cycle.
 
-- **CHANGELOG updated** — the only hard gate (`onpr_check-pr.yaml`, its single `exit 1`).
-- **Add-on image build** — real, and slow; one run took ~3 h.
-- **Lint** — `lint.yml` runs super-linter with `continue-on-error: true` at both call sites, so
-  it *cannot* fail a PR. Fix real findings anyway, but do not treat lint as a blocker.
+All three hard gates below are matrixed over `check-addon-changes.outputs.changedAddons` and
+`if:`-skipped when it is `[]`, so a PR that touches no add-on directory (docs, `.github/`,
+`.claude/`) shows them as *skipping*, not passing — do not read that as a green build.
+
+- **CHANGELOG updated** — hard gate (`onpr_check-pr.yaml` exits 1 without it).
+- **HA add-on linter** — hard gate: `frenck/action-addon-linter` in `onpr_check-pr.yaml` has no
+  `continue-on-error`, so a config.yaml schema error fails the PR.
+- **Add-on image build** — hard gate, and slow; one run took ~3 h.
+- **Weekly super-linter** — `lint.yml` runs with `continue-on-error: true` at both call sites, so
+  it *cannot* fail a PR. Fix real findings anyway, but do not treat it as a blocker.
 - **Version bump** — no workflow checks it. It is repo convention, and required for Supervisor to
   offer the rebuild, but it will not fail CI.
 
