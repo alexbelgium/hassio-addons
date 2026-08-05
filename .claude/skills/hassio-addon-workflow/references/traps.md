@@ -180,7 +180,11 @@ cannot be determined, because the crash it prevents is worse than its overhead.
 
 ## CI and review bots
 
-**What CI actually gates** — checked against the workflows, because assuming costs a cycle:
+**What CI actually gates** — checked against the workflows, because assuming costs a cycle.
+
+All three hard gates below are matrixed over `check-addon-changes.outputs.changedAddons` and
+`if:`-skipped when it is `[]`, so a PR that touches no add-on directory (docs, `.github/`,
+`.claude/`) shows them as *skipping*, not passing — do not read that as a green build.
 
 - **CHANGELOG updated** — hard gate (`onpr_check-pr.yaml` exits 1 without it).
 - **HA add-on linter** — hard gate: `frenck/action-addon-linter` in `onpr_check-pr.yaml` has no
