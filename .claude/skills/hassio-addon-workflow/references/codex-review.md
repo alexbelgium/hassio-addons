@@ -8,15 +8,19 @@ and your assessment of each.
 
 ## Invocation
 
-**Use the CLI, not the MCP tool, for prompts of this size.** `mcp__codex__codex` timed out twice
-on ~4 KB prompts (2026-08-03); the CLI with the same content succeeded. This overrides the global
-CLAUDE.md note recommending the MCP tool — that guidance still holds for short questions. Run it
-backgrounded (`--sandbox read-only` means Codex cannot run anything, so paste every number into
-the prompt; `- <` feeds the prompt file on stdin):
+**Use the CLI, not the MCP tool, for prompts of this size.** The `codex` MCP tool timed out twice
+on ~4 KB prompts (2026-08-03); the CLI with the same content succeeded. The MCP tool is still fine
+for short questions.
+
+`--sandbox read-only` lets Codex read files but blocks writes and command execution, and
+`approval_policy=never` means it will not be prompted for permission to run anything either — so
+paste every number into the prompt rather than expecting Codex to gather it. `- <` feeds the
+prompt file on stdin. Run it in the background so you are not blocked for the several minutes it
+takes (`&` here, or your harness's background-task mechanism):
 
 ```bash
 codex exec --model gpt-5.6-sol --sandbox read-only --skip-git-repo-check \
-    -c approval_policy='"never"' - < prompt.md > codex_out.txt 2>&1
+    -c approval_policy='"never"' - < prompt.md > codex_out.txt 2>&1 &
 ```
 
 ## Writing the prompt

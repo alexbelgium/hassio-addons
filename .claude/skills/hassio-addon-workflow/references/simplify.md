@@ -19,8 +19,10 @@ Being able to build the complicated thing is not a reason to.
 - **Did the diff stay at the ladder level chosen in step 3?** If it crept up a level, either
   justify that out loud or redo it at the level you chose.
 - **Can this be solved by deleting instead of adding?** A flag that shouldn't be passed, a
-  process that shouldn't start, a registration that shouldn't be duplicated. Removals cannot
-  regress on hosts you can't test.
+  process that shouldn't start, a registration that shouldn't be duplicated. Deleting usually
+  shrinks the regression surface — but not always: the `/dev/shm` case in
+  `references/evidence.md` is a removal that reintroduced a crash loop on hosts unlike this one.
+  A removal that depends on a host default still needs the same verification as an addition.
 - **Is the fix bigger than the thing it fixes?** That is a smell, not a rule — but it usually
   means the problem was framed one level too deep.
 - **How does this fail in three years**, when the base image, Electron, or upstream has moved?

@@ -19,8 +19,9 @@ description: >-
 Triage first, then one of two paths:
 
 - **Light** — typo/doc fixes, CHANGELOG edits, version bumps, one-file edits at ladder levels
-  1-3 (below), simple questions: scope → implement → `scripts/validate.sh <addon> --vs-master` →
-  PR (version bump + CHANGELOG still required) → resolve bot comments.
+  1-3 (below), simple questions: scope → implement → validate (`$SKILL/scripts/validate.sh
+  <addon> --vs-master`; `$SKILL` defined below) → PR (version bump + CHANGELOG still required) →
+  resolve bot comments.
 - **Full loop** — performance/RAM/CPU work, diagnosis, anything changing a shipped default,
   ladder levels 4-6, or an explicit Codex-check request: scope → measure → plan → Codex reviews
   the plan → implement → simplify → Codex reviews the code → PR → resolve comments → verify in
@@ -34,8 +35,13 @@ reveals a deeper problem.
 hypothetical performance.
 
 **Repo layout.** `alexbelgium/hassio-addons`; each add-on is a top-level directory. This skill is
-checked in at `.claude/skills/hassio-addon-workflow/` (canonical copy) — invoke scripts
-repo-relative: `bash "$(git rev-parse --show-toplevel)/.claude/skills/hassio-addon-workflow/scripts/<script>.sh"`.
+checked in at `.claude/skills/hassio-addon-workflow/` (canonical copy). Set the skill root once,
+then every `scripts/…` and `references/…` path below is relative to it:
+
+```bash
+SKILL="$(git rev-parse --show-toplevel)/.claude/skills/hassio-addon-workflow"
+bash "$SKILL/scripts/preflight.sh"        # and likewise for the other scripts
+```
 
 **Non-negotiables:**
 - Docker build cannot be tested locally (no dockerd) — CI is the only gate.

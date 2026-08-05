@@ -15,7 +15,8 @@
 ## Before asserting anything, ask what would show it false
 
 - "This process is duplicated" → is it? `ps -ef --forest`, compare parents and start times.
-- "This costs 500 MB" → is it resident? `grep Rss /proc/<pid>/smaps`.
+- "This costs 500 MB" → is it resident? `grep Rss /proc/<pid>/smaps_rollup` — plain `smaps` prints
+  one `Rss:` line per mapping (dozens of them), not a process total.
 - "This block never runs" → is its payload in the image? `command -v`, `apt` history.
 - "The flag isn't set" → `tr '\0' '\n' < /proc/<pid>/cmdline`.
 
