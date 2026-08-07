@@ -1,3 +1,7 @@
+ 
+## 1.43.3.10861.318 (2026-08-08)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
+- Upstream tag : 1.43.3.10861-07dfddaeb-ls318
 ## 1.43.3.10828.316 (2026-08-01)
 
 - Version renamed from `1.43.3.10828-00f62d37d-ls316`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
