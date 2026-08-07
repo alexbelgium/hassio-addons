@@ -57,18 +57,18 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 137
-- Installed : 612843
+- Installed : 325872
 
 ### Top 3
 
-1. Arpspoof (102274x)
-2. Sponsorblockcast (98951x)
-3. Jellyfin (88956x)
+1. Arpspoof (102294x)
+2. Flaresolverr (87851x)
+3. Mylar3 (81161x)
 
 ### Architectures used
 
-- amd64: 89%
-- aarch64: 11%
+- amd64: 93%
+- aarch64: 7%
 
 ### Stars evolution
 
@@ -77,7 +77,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ## Add-ons provided by this repository
 
 %%ADDONS_LIST%%
-&#10003;  [Arpspoof (102274x)](arpspoof/) : block internet connection for local network devices
+&#10003;  [Arpspoof (102294x)](arpspoof/) : block internet connection for local network devices
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fupdater.json)
@@ -522,7 +522,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/billiards-rack.svg) [Jellyfin (88956x) NAS](jellyfin/) : A free Software Media System that puts you in control of managing and streaming your media
+&#10003; ![image](https://api.iconify.design/mdi/billiards-rack.svg) [Jellyfin NAS](jellyfin/) : A free Software Media System that puts you in control of managing and streaming your media
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyfin%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyfin%2Fupdater.json)
@@ -585,7 +585,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/movie-search.svg) [Maintainerr](maintainerr/) : Rule-based media cleanup tool for Plex, Jellyfin (88956x) and Emby. Creates collections and optionally deletes unwatched content.
+&#10003; ![image](https://api.iconify.design/mdi/movie-search.svg) [Maintainerr](maintainerr/) : Rule-based media cleanup tool for Plex, Jellyfin and Emby. Creates collections and optionally deletes unwatched content.
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmaintainerr%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmaintainerr%2Fupdater.json)
@@ -633,7 +633,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 
-&#10003;  [Mylar3](mylar3/) : Automated comic book downloader for use with NZB and torrents
+&#10003;  [Mylar3 (81161x)](mylar3/) : Automated comic book downloader for use with NZB and torrents
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmylar3%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmylar3%2Fupdater.json)
@@ -907,7 +907,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/movie-search.svg) [Seerr](seerr/) : Open-source media request and discovery manager for Jellyfin (88956x), Plex, and Emby
+&#10003; ![image](https://api.iconify.design/mdi/movie-search.svg) [Seerr](seerr/) : Open-source media request and discovery manager for Jellyfin, Plex, and Emby
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fseerr%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fseerr%2Fupdater.json)
