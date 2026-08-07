@@ -82,9 +82,9 @@ ingress: true
 ingress_port: 8071
 ingress_stream: true
 map:
-  - addon_config:rw
+  - app_config:rw
   - media:rw
-  - all_addon_configs:rw
+  - all_app_configs:rw
   - homeassistant_config:rw
   - addons:rw
   - backup:rw

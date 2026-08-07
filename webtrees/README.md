@@ -60,7 +60,7 @@ base_url_portless: base url without port
 
 - Config.yaml
 
-Custom env variables can be added to the config.yaml file referenced in the addon options. Folder containing this is not a part of root/config directory (where HA's configuration.yaml is), but /root/addon_configs ([HA documentation](https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/)). Full env variables can be found here : https://github.com/linuxserver/docker-paperless-ng. It must be entered in a valid yaml format, that is verified at launch of the addon.
+Custom env variables can be added to the config.yaml file referenced in the addon options. Folder containing this is not a part of root/config directory (where HA's configuration.yaml is), but /root/app_configs ([HA documentation](https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/)). Full env variables can be found here : https://github.com/linuxserver/docker-paperless-ng. It must be entered in a valid yaml format, that is verified at launch of the addon.
 
 ## Installation
 

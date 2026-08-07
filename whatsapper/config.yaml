@@ -4,7 +4,7 @@ arch:
 description: Whatsapper for Home Assistant
 image: ghcr.io/alexbelgium/whatsapper-{arch}
 map:
-  - addon_config:rw
+  - app_config:rw
   - share:rw
 name: Whatsapper
 options:

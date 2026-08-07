@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2.0.1 (2026-07-17)
 
 - Aligned the pull-request build context with the production builder by copying

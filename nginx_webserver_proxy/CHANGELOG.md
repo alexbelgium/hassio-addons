@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 # Changelog
 
 ## 2.14.1-1 (11-07-2026)

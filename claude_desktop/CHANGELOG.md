@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2026.08.04 (04-08-2026)
 - Fix: reverted the GPU acceleration added in 2026.08.03. It did not just fail to help — it was
   what disabled the GPU. `--use-gl=angle --use-angle=gl-egl` forces Mesa's EGL X11 platform,

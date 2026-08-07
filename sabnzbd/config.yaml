@@ -73,7 +73,7 @@ image: ghcr.io/alexbelgium/sabnzbd-{arch}
 ingress_entry: sabnzbd
 init: false
 map:
-  - addon_config:rw
+  - app_config:rw
   - homeassistant_config:rw
   - share:rw
   - media:rw

@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 5.14.26.1-2024-08-29-2 (2025-11-18)
 - Minor bugs fixed
 

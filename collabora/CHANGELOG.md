@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 26.04.2.4.1 (2026-07-26)
 - Rebuild on a Debian base: upstream turned collabora/code into a distroless image with no shell, which broke the addon build entirely. collabora/code stays the tracked upstream image in build.json, but is now a build stage whose payload is copied onto ghcr.io/hassio-addons/debian-base, and the addon ships its own launcher in place of the removed /start-collabora-online.sh

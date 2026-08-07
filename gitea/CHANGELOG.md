@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 1.27.1 (2026-08-01)
 - Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
@@ -13,7 +14,7 @@
 - Minor bugs fixed
 
 ## 1.26.2-2 (2026-06-19)
-- Expose app.ini in the addon_config folder so users can edit it directly via the HA file editor
+- Expose app.ini in the app_config folder so users can edit it directly via the HA file editor
 
 ## 1.26.2-1 (2026-06-19)
 - Fix SSH authentication failing with `chroot("/var/empty"): Operation not permitted [preauth]` by allowing `capability sys_chroot` in the AppArmor profile, which sshd needs for privilege-separation (#2653)

@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## v26.2.256 (2026-08-01)
 
 - Version renamed from `v26.2-ls256`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
@@ -234,7 +235,7 @@
 
 ## v24.5-ls180-3 (2025-02-10)
 
-- New config logic, files migrated to /addon_configs/xxx-nzbget
+- New config logic, files migrated to /app_configs/xxx-nzbget
 
 ## v24.5-ls180 (2025-02-08)
 

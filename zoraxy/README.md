@@ -49,7 +49,7 @@ and, if you want to reach your services from outside, forward them on your
 router.
 
 All configuration, the database, logs and plugins are stored persistently in the
-add-on configuration folder (`/addon_configs/<slug>_zoraxy/`, exposed inside the
+add-on configuration folder (`/app_configs/<slug>_zoraxy/`, exposed inside the
 container as `/config`), so they survive add-on updates and restarts.
 
 ### Options

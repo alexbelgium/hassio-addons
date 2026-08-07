@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 
 ## 0.6.1 (2025-11-18)
 - Added `env_vars` option to allow passing custom environment variables from the add-on configuration.

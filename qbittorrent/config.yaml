@@ -75,7 +75,7 @@ ingress: true
 init: false
 map:
   - media:rw
-  - addon_config:rw
+  - app_config:rw
   - homeassistant_config:rw
   - share:rw
   - ssl
