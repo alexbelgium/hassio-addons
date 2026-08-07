@@ -1,3 +1,7 @@
+ 
+## 07308543 (2026-08-08)
+- Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
+- Upstream tag : debiantrixie-version-07308543
 ## 2026.08.04 (04-08-2026)
 - Fix: reverted the GPU acceleration added in 2026.08.03. It did not just fail to help — it was
   what disabled the GPU. `--use-gl=angle --use-angle=gl-egl` forces Mesa's EGL X11 platform,
