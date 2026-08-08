@@ -1,4 +1,7 @@
- 
+## 4.4.25 (2026-08-08)
+- Update to latest version from ente/ente (changelog : https://github.com/ente/ente/releases)
+- Fix build failure: upstream renamed the `ente-io` org to `ente`, so the base image is now `ghcr.io/ente/server` (GHCR does not follow the rename)
+
 ## 4.4.23 (2026-06-11)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
 ## 1.7.24 (2026-06-05)
