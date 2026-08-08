@@ -206,7 +206,12 @@ jobs:
         run: |
           set -euo pipefail
           F=/tmp/ai-triage/verdict.json
-          if [ ! -s "$F" ] || ! jq -e . "$F" >/dev/null 2>&1; then
+          # `jq -e .` alone accepts any truthy JSON, so a verdict of `[1,2]` or
+          # `"hi"` passes here and then dies on `.verdict` below with "Cannot
+          # index array with string" — set -e kills the step before the
+          # ai:needs-info restore below, stranding the issue so no later reply
+          # can ever re-trigger it. Require an object.
+          if [ ! -s "$F" ] || ! jq -e 'type == "object"' "$F" >/dev/null 2>&1; then
             # A reporter reply consumed ai:needs-info in the claim step above.
             # With no verdict we would otherwise leave the issue with the flag
             # gone, so the next reply could never re-trigger — restore it.
