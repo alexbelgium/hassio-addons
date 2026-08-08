@@ -31,7 +31,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ---
 
-[Ente](https://github.com/ente-io/ente) is a self-hosted, end-to-end encrypted photo and video storage solution. This addon provides a complete Ente server setup including the museum API server and MinIO S3-compatible storage backend.
+[Ente](https://github.com/ente/ente) is a self-hosted, end-to-end encrypted photo and video storage solution. This addon provides a complete Ente server setup including the museum API server and MinIO S3-compatible storage backend.
 
 Ente offers:
 - End-to-end encrypted photo and video backup
@@ -41,7 +41,7 @@ Ente offers:
 - Album sharing with family and friends
 - Full control over your data with self-hosting
 
-This addon is based on the official Ente server: https://github.com/ente-io/ente/tree/main/server
+This addon is based on the official Ente server: https://github.com/ente/ente/tree/main/server
 
 ## Configuration
 
