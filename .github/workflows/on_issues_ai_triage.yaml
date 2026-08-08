@@ -180,20 +180,29 @@ jobs:
             Read /tmp/ai-triage/context.md, then follow the instructions in
             .github/prompts/issue-classify.md exactly.
 
-            Write your verdict as a single JSON object to
-            /tmp/ai-triage/verdict.json and write nothing else anywhere.
-            Do NOT comment on or label the issue yourself.
-          # No Bash and no GH_TOKEN in this step's env: the issue body is
-          # attacker-controlled text, and ai_triage_context.sh has already run
-          # the `gh search issues` duplicate lookup and baked the results into
-          # context.md, so the model has nothing left to ask GitHub for. Write
-          # stays only because the verdict is delivered as a file; the checkout
-          # is sparse and nothing downstream executes anything from it.
+            Return your verdict as structured output. Do NOT comment on or
+            label the issue yourself.
+          # The model gets NO write capability of any kind — not Bash, not
+          # Write, and no GH_TOKEN in this step's env. That matters more here
+          # than usual: allowed_non_write_users above deliberately admits
+          # untrusted reporters, and the issue body it reads is their text.
+          # With a Write tool an injected instruction could drop a script on
+          # disk and append BASH_ENV=<that script> to the runner's $GITHUB_ENV
+          # file command (discoverable under $RUNNER_TEMP with Glob). The
+          # runner applies that between steps, so the next bash step — Apply
+          # verdict, holding an issues:write GH_TOKEN — would source it before
+          # any of the validation below ran. Delivering the verdict through the
+          # action's --json-schema structured output instead of a file removes
+          # the write primitive that chain starts from.
+          # Duplicate lookup is already done too: ai_triage_context.sh ran
+          # `gh search issues` and baked the candidates into context.md, so the
+          # model has nothing left to ask GitHub for either.
           claude_args: |
             --model claude-sonnet-5
             --effort low
             --max-turns 12
-            --allowedTools "Read,Write,Glob,Grep"
+            --allowedTools "Read,Glob,Grep"
+            --json-schema '{"type":"object","properties":{"verdict":{"type":"string","enum":["owned","duplicate","needs-info","question","upstream-bug","addon-bug","feature-request"]},"addon":{"type":"string"},"confidence":{"type":"string","enum":["high","medium","low"]},"duplicate_of":{"type":"integer"},"labels":{"type":"array","items":{"type":"string"},"maxItems":2},"root_cause_hint":{"type":"string"},"comment":{"type":"string"}},"required":["verdict","confidence"]}'
 
       - name: Apply verdict
         if: github.event_name != 'issue_comment' || steps.claim.outputs.go == 'true'
@@ -203,9 +212,18 @@ jobs:
           REPO: ${{ github.repository }}
           EVENT_NAME: ${{ github.event_name }}
           CLASSIFY_OUTCOME: ${{ steps.classify.outcome }}
+          # Through env, never interpolated into the script body: this string
+          # is model output and "${{ }}" inline would splice it into the shell
+          # source itself.
+          STRUCTURED: ${{ steps.classify.outputs.structured_output }}
         run: |
           set -euo pipefail
+          mkdir -p /tmp/ai-triage
           F=/tmp/ai-triage/verdict.json
+          # The verdict arrives as the action's schema-validated structured
+          # output rather than a file the model wrote — see the Classify step.
+          # Materialise it here so the validation below is unchanged.
+          printf '%s' "${STRUCTURED:-}" > "$F"
           # `jq -e .` alone accepts any truthy JSON, so a verdict of `[1,2]` or
           # `"hi"` passes here and then dies on `.verdict` below with "Cannot
           # index array with string" — set -e kills the step before the
