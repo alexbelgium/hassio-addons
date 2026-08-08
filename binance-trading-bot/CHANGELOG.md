@@ -1,3 +1,7 @@
+## 1.0.0 (08-08-2026)
+- Update to latest version from chrisleekr/binance-trading-bot (changelog : https://github.com/chrisleekr/binance-trading-bot/releases)
+- Fix build failure: Alpine now enforces PEP 668, so the TradingView requirements are installed with `pip --break-system-packages`
+
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 0.0.101 (2025-06-13)
