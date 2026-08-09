@@ -260,11 +260,14 @@ jobs:
             #    outage). That is systemic — it hits every issue in exactly
             #    the same way — so quarantining the issue would silently bury
             #    a batch a day while the real fault sits in the workflow. Fail
-            #    red, touch no labels, let the catch-up retry once it's fixed.
-            #    Classify carries continue-on-error so the restore above still
-            #    runs, which also means the action's failure would otherwise
-            #    report this job green — exactly how tier 1 stayed dead for
-            #    weeks. Re-raise it.
+            #    red and add no labels of its own, so the catch-up retries it
+            #    once the fault is fixed. (The ai:needs-info restore above has
+            #    already run on the issue_comment path — that is a restore of
+            #    the issue's prior state, not a new verdict, so it stands.)
+            #    Classify carries continue-on-error so that restore always
+            #    gets to run, which also means the action's failure would
+            #    otherwise report this job green — exactly how tier 1 stayed
+            #    dead for weeks. Re-raise it.
             if [ "${CLASSIFY_OUTCOME:-}" = "failure" ]; then
               echo "::error::the Classify action failed for #$ISSUE — this is usually a workflow-level fault affecting every issue, so the issue is left untouched for a retry. See the Classify step."
               exit 1
@@ -282,7 +285,18 @@ jobs:
             if [ "${EVENT_NAME:-}" = "workflow_dispatch" ]; then
               echo "::warning::second attempt produced no verdict, handing #$ISSUE to a human"
               gh label create ai:needs-human --repo "$REPO" --color ededed >/dev/null 2>&1 || true
-              gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-human >/dev/null 2>&1 || true
+              # Drop the retry triggers in the same call. The catch-up search
+              # already excludes both, so this only bites on a MANUAL
+              # re-triage of an issue that still carries them — but there it
+              # matters: leaving ai-triage would keep an issue we just handed
+              # to a human sitting in tier 2's unattended fix queue, and
+              # leaving ai:needs-info would let a reporter reply silently
+              # re-trigger classification behind the human's back. The normal
+              # verdict path below already clears stale control labels; this
+              # keeps the escalation path consistent with it.
+              gh issue edit "$ISSUE" --repo "$REPO" \
+                --add-label ai:needs-human \
+                --remove-label ai-triage --remove-label ai:needs-info >/dev/null 2>&1 || true
             fi
             exit 0
           fi
