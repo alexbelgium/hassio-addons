@@ -87,6 +87,17 @@ jobs:
           # coderabbitai[bot], the review submitter. AI_PR_TOKEN, not
           # GITHUB_TOKEN, so the pushed fixes re-trigger CI on the PR.
           github_token: ${{ secrets.AI_PR_TOKEN }}
+          # Latent until now only because this job has never reached the action:
+          # every run so far skipped on the `ai-fix/*` branch guard. On the
+          # first real firing github.actor is coderabbitai[bot], and
+          # checkHumanActor (src/github/validation/actor.ts) rejects any actor
+          # whose account type is not User — a different gate from the write
+          # check above, which does return early for a [bot] actor. Without
+          # this the whole CodeRabbit follow-up tier would fail on its first
+          # genuine invocation. Named, not "*": the job `if` already requires
+          # the review to come from coderabbitai[bot], so nothing else can get
+          # here anyway, and "*" would only widen it if that guard changed.
+          allowed_bots: "coderabbitai"
           prompt: |
             CodeRabbit has reviewed pull request #${{ github.event.pull_request.number }}
             on ${{ github.repository }}. You are on that PR's branch. Follow
