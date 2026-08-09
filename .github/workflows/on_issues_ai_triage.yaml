@@ -175,6 +175,20 @@ jobs:
           # contents:read + issues:write, the model gets no credentials and no
           # Bash, and every value it produces is validated in Apply verdict.
           allowed_non_write_users: "*"
+          # Separate gate from the one above, and it bit the catch-up path in
+          # production: checkHumanActor (src/github/validation/actor.ts)
+          # rejects any actor whose account type is not User. The catch-up
+          # dispatches with GITHUB_TOKEN, so those runs arrive as
+          # github-actions[bot] and died with "Workflow initiated by non-human
+          # actor". allowed_non_write_users does NOT cover this — it is only
+          # consulted for User accounts.
+          # Named rather than "*": only this repo's own workflows can dispatch
+          # as github-actions, whereas "*" would also admit any other App that
+          # can reach a trigger. The matcher lowercases and strips a trailing
+          # [bot], so this entry matches the github-actions[bot] actor.
+          # Scheduled runs are unaffected either way — they arrive as
+          # actor=alexbelgium, a User.
+          allowed_bots: "github-actions"
           show_full_output: true
           prompt: |
             Read /tmp/ai-triage/context.md, then follow the instructions in
@@ -238,28 +252,38 @@ jobs:
               gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-info >/dev/null 2>&1 || true
             fi
 
-            # Classify carries continue-on-error so the restore above always
-            # gets to run. That also means a hard failure inside the action
-            # reports the job green — which is exactly how tier 1 stayed dead
-            # for weeks while every run showed success. Re-raise it here.
+            # Two very different failures land here, and they need opposite
+            # handling. Telling them apart is the whole point of reading
+            # steps.classify.outcome rather than just "is the file empty".
+            #
+            # 1. The ACTION itself failed (auth, config, a bad input, an
+            #    outage). That is systemic — it hits every issue in exactly
+            #    the same way — so quarantining the issue would silently bury
+            #    a batch a day while the real fault sits in the workflow. Fail
+            #    red, touch no labels, let the catch-up retry once it's fixed.
+            #    Classify carries continue-on-error so the restore above still
+            #    runs, which also means the action's failure would otherwise
+            #    report this job green — exactly how tier 1 stayed dead for
+            #    weeks. Re-raise it.
             if [ "${CLASSIFY_OUTCOME:-}" = "failure" ]; then
-              echo "::error::classification failed (see the Classify step); no verdict produced for #$ISSUE"
-              # A workflow_dispatch here is the daily catch-up (or a manual
-              # re-triage) — i.e. this issue has already had at least one shot
-              # and failed again. Hand it to a human rather than letting the
-              # catch-up re-dispatch the same issue every day forever; the
-              # label is in catchup's exclusion search, so it drops out of the
-              # queue instead of starving the newer issues behind it.
-              if [ "${EVENT_NAME:-}" = "workflow_dispatch" ]; then
-                gh label create ai:needs-human --repo "$REPO" --color ededed >/dev/null 2>&1 || true
-                gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-human >/dev/null 2>&1 || true
-              fi
+              echo "::error::the Classify action failed for #$ISSUE — this is usually a workflow-level fault affecting every issue, so the issue is left untouched for a retry. See the Classify step."
               exit 1
             fi
 
-            # Action succeeded but produced nothing usable: leave the issue
-            # untriaged so tomorrow's catch-up picks it up, and stay green.
-            echo "::warning::no usable verdict produced, leaving issue untouched"
+            # 2. The action RAN and produced nothing usable. That is specific
+            #    to this issue (the model couldn't reach a verdict on it), so
+            #    a retry is worth exactly one attempt. A workflow_dispatch
+            #    here is the catch-up or a manual re-triage — i.e. the second
+            #    look — so hand it to a human now rather than re-dispatching
+            #    the same issue every day forever; ai:needs-human is in the
+            #    catch-up exclusion search, so it drops out of the queue
+            #    instead of starving newer issues behind it.
+            echo "::warning::no usable verdict produced for #$ISSUE"
+            if [ "${EVENT_NAME:-}" = "workflow_dispatch" ]; then
+              echo "::warning::second attempt produced no verdict, handing #$ISSUE to a human"
+              gh label create ai:needs-human --repo "$REPO" --color ededed >/dev/null 2>&1 || true
+              gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-human >/dev/null 2>&1 || true
+            fi
             exit 0
           fi
 
