@@ -234,53 +234,55 @@ jobs:
           set -euo pipefail
           mkdir -p /tmp/ai-triage
           F=/tmp/ai-triage/verdict.json
+
+          # A reporter reply consumed ai:needs-info in the claim step above, so
+          # every early exit below has to restore it or the next reply could
+          # never re-trigger. Defined once here rather than repeated per exit.
+          restore_needs_info() {
+            [ "${EVENT_NAME:-}" = "issue_comment" ] || return 0
+            gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-info >/dev/null 2>&1 || true
+          }
+
+          # GATE 1 — did the action itself run? This is checked BEFORE looking
+          # at the payload, because the action can fail *after* having written
+          # a valid structured output: the object would sail through the shape
+          # check below, labels and a comment would be applied, and the step
+          # would exit 0 — a green run on a failed action, which is the exact
+          # silent-failure mode this workflow was rebuilt to eliminate.
+          # A failed action means its output is not trustworthy, full stop.
+          #
+          # This branch is also deliberately label-neutral. An action failure
+          # (auth, config, an outage) is systemic — it hits every issue the
+          # same way — so quarantining here would silently bury a batch a day
+          # while the real fault sits in the workflow. Fail red, add nothing,
+          # let the catch-up retry once it's fixed. Classify carries
+          # continue-on-error so this step still runs at all; without the
+          # explicit exit 1 the job would report success.
+          if [ "${CLASSIFY_OUTCOME:-}" = "failure" ]; then
+            restore_needs_info
+            echo "::error::the Classify action failed for #$ISSUE — this is usually a workflow-level fault affecting every issue, so the issue is left untouched for a retry. See the Classify step."
+            exit 1
+          fi
+
           # The verdict arrives as the action's schema-validated structured
           # output rather than a file the model wrote — see the Classify step.
-          # Materialise it here so the validation below is unchanged.
           printf '%s' "${STRUCTURED:-}" > "$F"
-          # `jq -e .` alone accepts any truthy JSON, so a verdict of `[1,2]` or
-          # `"hi"` passes here and then dies on `.verdict` below with "Cannot
-          # index array with string" — set -e kills the step before the
-          # ai:needs-info restore below, stranding the issue so no later reply
-          # can ever re-trigger it. Require an object.
+
+          # GATE 2 — the action ran, but is the payload usable? `jq -e .` alone
+          # accepts any truthy JSON, so a verdict of `[1,2]` or `"hi"` would
+          # pass and then die on `.verdict` below with "Cannot index array with
+          # string", killing the step under set -e before the restore. Require
+          # an object.
+          #
+          # Reaching here means the failure is specific to THIS issue — the
+          # model looked at it and produced nothing usable — so a retry is
+          # worth exactly one attempt. A workflow_dispatch is the catch-up or
+          # a manual re-triage, i.e. the second look, so hand it to a human
+          # rather than re-dispatching the same issue every day forever;
+          # ai:needs-human is in the catch-up exclusion search, so it drops out
+          # of the queue instead of starving newer issues behind it.
           if [ ! -s "$F" ] || ! jq -e 'type == "object"' "$F" >/dev/null 2>&1; then
-            # A reporter reply consumed ai:needs-info in the claim step above.
-            # With no verdict we would otherwise leave the issue with the flag
-            # gone, so the next reply could never re-trigger — restore it.
-            # Do this FIRST, before any exit path below.
-            if [ "${EVENT_NAME:-}" = "issue_comment" ]; then
-              gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-info >/dev/null 2>&1 || true
-            fi
-
-            # Two very different failures land here, and they need opposite
-            # handling. Telling them apart is the whole point of reading
-            # steps.classify.outcome rather than just "is the file empty".
-            #
-            # 1. The ACTION itself failed (auth, config, a bad input, an
-            #    outage). That is systemic — it hits every issue in exactly
-            #    the same way — so quarantining the issue would silently bury
-            #    a batch a day while the real fault sits in the workflow. Fail
-            #    red and add no labels of its own, so the catch-up retries it
-            #    once the fault is fixed. (The ai:needs-info restore above has
-            #    already run on the issue_comment path — that is a restore of
-            #    the issue's prior state, not a new verdict, so it stands.)
-            #    Classify carries continue-on-error so that restore always
-            #    gets to run, which also means the action's failure would
-            #    otherwise report this job green — exactly how tier 1 stayed
-            #    dead for weeks. Re-raise it.
-            if [ "${CLASSIFY_OUTCOME:-}" = "failure" ]; then
-              echo "::error::the Classify action failed for #$ISSUE — this is usually a workflow-level fault affecting every issue, so the issue is left untouched for a retry. See the Classify step."
-              exit 1
-            fi
-
-            # 2. The action RAN and produced nothing usable. That is specific
-            #    to this issue (the model couldn't reach a verdict on it), so
-            #    a retry is worth exactly one attempt. A workflow_dispatch
-            #    here is the catch-up or a manual re-triage — i.e. the second
-            #    look — so hand it to a human now rather than re-dispatching
-            #    the same issue every day forever; ai:needs-human is in the
-            #    catch-up exclusion search, so it drops out of the queue
-            #    instead of starving newer issues behind it.
+            restore_needs_info
             echo "::warning::no usable verdict produced for #$ISSUE"
             if [ "${EVENT_NAME:-}" = "workflow_dispatch" ]; then
               echo "::warning::second attempt produced no verdict, handing #$ISSUE to a human"
