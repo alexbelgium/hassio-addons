@@ -41,6 +41,16 @@ on:
       issue:
         description: "Issue number to (re-)triage manually"
         required: true
+      source:
+        # Explicit provenance, set only by the catch-up job below. Previously
+        # this was inferred from github.actor, which is brittle: a re-run, a
+        # dispatch via a PAT or App, or another maintainer all change it, and
+        # the dangerous direction is the false negative — an automated retry
+        # that is never recognised as one keeps retrying forever. An input the
+        # scheduler sets explicitly cannot drift with GitHub's actor semantics.
+        description: "Set to 'catchup' by the daily catch-up job; leave blank for a manual re-triage"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -134,7 +144,7 @@ jobs:
           # .templates holds the shared build/runtime scripts (ha_entrypoint.sh,
           # ha_automodules.sh, the cont-init modules) that nearly every add-on
           # depends on, so a large share of reports can only be explained by
-          # reading them. Without it the classifier burned 6 of its 12 turns on
+          # reading them. Without it the classifier burned 6 of its turns on
           # #2949 hunting for files that were not checked out, then died on
           # max_turns. It is a small directory — cheaper to ship than to search
           # for and not find.
@@ -228,7 +238,7 @@ jobs:
             add-on source is on disk at all: judge from the bundle alone and
             set confidence accordingly rather than searching for the code.
 
-            You have a budget of 12 turns. The context bundle already contains
+            You have a budget of 25 turns. The context bundle already contains
             the issue, its comments, the add-on's config/Dockerfile/docs, its
             recent commits and candidate duplicates — so read it first and
             spend turns only on what it does not already answer.
@@ -253,7 +263,7 @@ jobs:
           claude_args: |
             --model claude-sonnet-5
             --effort low
-            --max-turns 12
+            --max-turns 25
             --allowedTools "Read,Glob,Grep"
             --json-schema '{"type":"object","properties":{"verdict":{"type":"string","enum":["owned","duplicate","needs-info","question","upstream-bug","addon-bug","feature-request"]},"addon":{"type":"string"},"confidence":{"type":"string","enum":["high","medium","low"]},"duplicate_of":{"type":"integer"},"labels":{"type":"array","items":{"type":"string"},"maxItems":2},"root_cause_hint":{"type":"string"},"comment":{"type":"string"}},"required":["verdict","confidence"]}'
 
@@ -264,9 +274,9 @@ jobs:
           ISSUE: ${{ github.event.issue.number || inputs.issue }}
           REPO: ${{ github.repository }}
           EVENT_NAME: ${{ github.event_name }}
-          # Distinguishes the automated catch-up retry (github-actions[bot])
-          # from a maintainer's manual dispatch — see is_automated_retry below.
-          ACTOR: ${{ github.actor }}
+          # Distinguishes the automated catch-up retry from a manual
+          # re-triage — see is_automated_retry below.
+          DISPATCH_SOURCE: ${{ inputs.source }}
           CLASSIFY_OUTCOME: ${{ steps.classify.outcome }}
           # Through env, never interpolated into the script body: this string
           # is model output and "${{ }}" inline would splice it into the shell
@@ -292,14 +302,18 @@ jobs:
           # Is this the automated second look, rather than a first attempt?
           # EVENT_NAME alone is not enough: workflow_dispatch is BOTH the daily
           # catch-up retry and the maintainer's manual re-triage, so keying on
-          # it would escalate a hand-dispatched first attempt immediately. The
-          # two are distinguishable by actor — the catch-up dispatches with
-          # GITHUB_TOKEN and so arrives as github-actions[bot], a manual run as
-          # the maintainer. Escalating only on the automated one keeps "one
-          # retry, then a human" literally true: a manual attempt that fails
-          # leaves the issue unlabelled, so the catch-up still gets its go.
+          # it alone escalates a hand-dispatched first attempt immediately.
+          # The catch-up therefore states its provenance explicitly via the
+          # `source` input. Inferring it from github.actor instead was rejected:
+          # a re-run, a PAT- or App-issued dispatch, or a different maintainer
+          # all change the actor, and the failure that matters is the false
+          # NEGATIVE — an automated retry not recognised as one would never
+          # escalate and would retry that issue forever.
+          # Unknown provenance is treated as "not the automated retry", which
+          # is safe here because every non-escalating max-turns path below ends
+          # in a red run rather than a silent green one.
           is_automated_retry() {
-            [ "${EVENT_NAME:-}" = "workflow_dispatch" ] && [ "${ACTOR:-}" = "github-actions[bot]" ]
+            [ "${EVENT_NAME:-}" = "workflow_dispatch" ] && [ "${DISPATCH_SOURCE:-}" = "catchup" ]
           }
 
           # Hand the issue to a human and take it out of the retry rotation.
@@ -366,7 +380,7 @@ jobs:
 
             # ...with one exception. Exhausting the turn budget is NOT a
             # workflow fault: the action ran fine and this particular issue was
-            # just too tangled to finish in 12 turns. Treating it as systemic
+            # just too tangled to finish inside the turn budget. Treating it as systemic
             # meant #2949 failed red and stayed unlabelled, so the catch-up
             # re-dispatched it every day forever — and being the newest issue
             # it took the first of only five daily slots each time.
@@ -374,16 +388,25 @@ jobs:
             # human. Warning rather than error, because a red run per day for a
             # per-issue condition is alarm fatigue, and the outcome is recorded
             # durably on the issue itself rather than only in a run log.
+            # A green run is only ever justified once the outcome is recorded
+            # somewhere durable. On the automated second look that is the
+            # ai:needs-human label, and only if it actually landed. On a first
+            # attempt nothing is recorded anywhere but this annotation, so
+            # exiting 0 there would be precisely the "green run, work silently
+            # dead" state that left triage broken for weeks. It costs at most
+            # one red run per problem issue, not one per day, because the
+            # second look ends the retry rotation either way.
             if hit_max_turns; then
-              echo "::warning::classification for #$ISSUE ran out of turns"
               if is_automated_retry; then
-                echo "::warning::second attempt also ran out of turns, handing #$ISSUE to a human"
+                echo "::warning::second attempt for #$ISSUE also ran out of turns, handing it to a human"
                 if ! escalate_to_human; then
                   echo "::error::could not label #$ISSUE ai:needs-human — it is NOT escalated and stays in the retry rotation"
                   exit 1
                 fi
+                exit 0
               fi
-              exit 0
+              echo "::error::classification for #$ISSUE ran out of turns; leaving it for the catch-up to retry once, after which it goes to a human"
+              exit 1
             fi
 
             echo "::error::the Classify action failed for #$ISSUE — this is usually a workflow-level fault affecting every issue, so the issue is left untouched for a retry. See the Classify step."
@@ -601,7 +624,7 @@ jobs:
           while IFS= read -r n; do
             [ -n "$n" ] || continue
             echo "re-dispatching tier 1 for #$n"
-            gh workflow run "AI issue triage" --repo "$REPO" -f issue="$n" || {
+            gh workflow run "AI issue triage" --repo "$REPO" -f issue="$n" -f source=catchup || {
               echo "::error::could not dispatch classify for #$n"
               FAILED=$((FAILED + 1))
             }
