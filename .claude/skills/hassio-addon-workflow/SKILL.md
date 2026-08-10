@@ -79,9 +79,10 @@ before it costs a full analysis pass. Measurement methodology, gotchas, and real
 ## 3. Plan — choose the mechanism level, then Codex reviews it (full loop)
 
 Look for prior art first: grep `.templates/` and the other add-ons for something that already
-solves this (`grep -rl "<knob or pattern>" --include='*.sh' --include='config.yaml' .`). If an
-add-on already handles it, the plan is "do what that one does" — say so, and say why the
-existing mechanism can't be reused if you're not reusing it.
+solves this (`grep -rl "<knob or pattern>" --exclude-dir=.git .` — search everything, not just
+`*.sh`: the mechanism may live in a `Dockerfile`'s `ARG MODULES=` or an extensionless s6 `run`
+file). If an add-on already handles it, the plan is "do what that one does" — say so, and say why
+the existing mechanism can't be reused if you're not reusing it.
 
 Then rank mechanisms, pick the lowest (simplest) one that solves it, and state the choice in the
 plan:
@@ -124,7 +125,9 @@ be solved by deleting instead of adding? Is the fix bigger than what it fixes? H
 three years? And on reuse: does any hunk reimplement something `.templates/`, another script in
 this add-on, or a sibling add-on already does — and if a future add-on hits this same problem,
 will it find one way to solve it or two? Fold a near-duplicate into the existing mechanism, or
-justify the divergence in the PR body. Case studies of what happens when this check is skipped:
+justify the divergence in the PR body — but never at the cost of an isolation rule
+`references/traps.md` documents: scripts shared by symlink with the webtop add-ons take a new
+numbered script, not an edit. Case studies of what happens when this check is skipped:
 `references/simplify.md`.
 
 ## 6. Codex attacks the code (full loop only)
