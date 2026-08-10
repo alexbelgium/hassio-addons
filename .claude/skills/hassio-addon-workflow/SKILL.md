@@ -25,9 +25,14 @@ Triage first, then one of two paths:
 Escalate mid-flight if a light task grows — touches a default, needs a new script or service, or
 reveals a deeper problem.
 
-**Standing rule:** ship the simplest solution that works. Complexity is bought only by a
-**measurement** showing a concrete, user-visible cost on a real host — never by reasoning about
-hypothetical performance.
+**Standing rule:** ship the simplest solution that works, and build it out of what already
+exists — a `.templates/` module, an existing cont-init script, the pattern a sibling add-on
+already uses for the same problem. 120+ add-ons are maintained by one person: a homogeneous repo
+where every add-on solves a problem the same way is worth more than a locally nicer bespoke
+design. Prefer reusing or extending over adding a parallel implementation, and when you must add
+something new, spell it the way the rest of the repo spells it (naming, option names, script
+numbering, file layout). Complexity is bought only by a **measurement** showing a concrete,
+user-visible cost on a real host — never by reasoning about hypothetical performance.
 
 **Repo layout.** `alexbelgium/hassio-addons`; each add-on is a top-level directory. This skill is
 checked in at `.claude/skills/hassio-addon-workflow/` (canonical copy). Set the skill root once,
@@ -73,7 +78,13 @@ before it costs a full analysis pass. Measurement methodology, gotchas, and real
 
 ## 3. Plan — choose the mechanism level, then Codex reviews it (full loop)
 
-Rank mechanisms, pick the lowest (simplest) one that solves it, and state the choice in the plan:
+Look for prior art first: grep `.templates/` and the other add-ons for something that already
+solves this (`grep -rl "<knob or pattern>" --include='*.sh' --include='config.yaml' .`). If an
+add-on already handles it, the plan is "do what that one does" — say so, and say why the
+existing mechanism can't be reused if you're not reusing it.
+
+Then rank mechanisms, pick the lowest (simplest) one that solves it, and state the choice in the
+plan:
 
 1. A config value — an option, a schema constraint, an existing env var.
 2. An existing knob the base image already reads (`MAX_RES`, `DRINODE`, `SELKIES_*`).
@@ -110,7 +121,11 @@ not just the happy path.
 
 Before requesting review, check: did the diff stay at the ladder level chosen in step 3? Can this
 be solved by deleting instead of adding? Is the fix bigger than what it fixes? How does it fail in
-three years? Case studies of what happens when this check is skipped: `references/simplify.md`.
+three years? And on reuse: does any hunk reimplement something `.templates/`, another script in
+this add-on, or a sibling add-on already does — and if a future add-on hits this same problem,
+will it find one way to solve it or two? Fold a near-duplicate into the existing mechanism, or
+justify the divergence in the PR body. Case studies of what happens when this check is skipped:
+`references/simplify.md`.
 
 ## 6. Codex attacks the code (full loop only)
 
