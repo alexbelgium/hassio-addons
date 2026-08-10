@@ -41,6 +41,16 @@ on:
       issue:
         description: "Issue number to (re-)triage manually"
         required: true
+      source:
+        # Explicit provenance, set only by the catch-up job below. Previously
+        # this was inferred from github.actor, which is brittle: a re-run, a
+        # dispatch via a PAT or App, or another maintainer all change it, and
+        # the dangerous direction is the false negative — an automated retry
+        # that is never recognised as one keeps retrying forever. An input the
+        # scheduler sets explicitly cannot drift with GitHub's actor semantics.
+        description: "Set to 'catchup' by the daily catch-up job; leave blank for a manual re-triage"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -131,9 +141,17 @@ jobs:
         with:
           fetch-depth: 1
           persist-credentials: false
+          # .templates holds the shared build/runtime scripts (ha_entrypoint.sh,
+          # ha_automodules.sh, the cont-init modules) that nearly every add-on
+          # depends on, so a large share of reports can only be explained by
+          # reading them. Without it the classifier burned 6 of its turns on
+          # #2949 hunting for files that were not checked out, then died on
+          # max_turns. It is a small directory — cheaper to ship than to search
+          # for and not find.
           sparse-checkout: |
             .github/prompts
             .github/scripts
+            .templates
           sparse-checkout-cone-mode: false
 
       - name: Build context bundle
@@ -190,9 +208,42 @@ jobs:
           # actor=alexbelgium, a User.
           allowed_bots: "github-actions"
           show_full_output: true
+          # Stated up front, because a wrong guess about the environment costs
+          # turns the analysis then does not have. On #2949, under the earlier
+          # 12-turn budget, the model spent 3 turns retrying Bash and 6 hunting
+          # files outside the sparse checkout and died before reaching a
+          # verdict. The budget is 25 now, but it is meant to buy analysis, not
+          # more failed probing — keep this in step with --max-turns below.
           prompt: |
             Read /tmp/ai-triage/context.md, then follow the instructions in
             .github/prompts/issue-classify.md exactly.
+
+            Before you start, two facts about this environment. Both are hard
+            limits, not preferences — working around them is not possible and
+            costs you turns you need for the analysis.
+
+            You have exactly three tools: Read, Glob and Grep. There is no
+            Bash. Do not try to run `find`, `ls`, `cat` or any other command;
+            those calls fail and are not retryable. Use Glob where you would
+            have used `find`, and Grep where you would have used `grep`.
+
+            This is a SPARSE checkout of a 100+ add-on monorepo. Only these
+            paths exist on disk — everything else is absent, and searching for
+            it will find nothing no matter how you phrase the search:
+              * .templates/          shared build and runtime scripts that most
+                                     add-ons rely on (ha_entrypoint.sh,
+                                     ha_automodules.sh, the cont-init modules)
+              * .github/prompts/, .github/scripts/
+              * the single add-on directory named in the context bundle, if it
+                was resolved — the bundle says which, or says UNRESOLVED
+            Other add-ons are NOT present. If the bundle says UNRESOLVED, no
+            add-on source is on disk at all: judge from the bundle alone and
+            set confidence accordingly rather than searching for the code.
+
+            You have a budget of 25 turns. The context bundle already contains
+            the issue, its comments, the add-on's config/Dockerfile/docs, its
+            recent commits and candidate duplicates — so read it first and
+            spend turns only on what it does not already answer.
 
             Return your verdict as structured output. Do NOT comment on or
             label the issue yourself.
@@ -214,7 +265,7 @@ jobs:
           claude_args: |
             --model claude-sonnet-5
             --effort low
-            --max-turns 12
+            --max-turns 25
             --allowedTools "Read,Glob,Grep"
             --json-schema '{"type":"object","properties":{"verdict":{"type":"string","enum":["owned","duplicate","needs-info","question","upstream-bug","addon-bug","feature-request"]},"addon":{"type":"string"},"confidence":{"type":"string","enum":["high","medium","low"]},"duplicate_of":{"type":"integer"},"labels":{"type":"array","items":{"type":"string"},"maxItems":2},"root_cause_hint":{"type":"string"},"comment":{"type":"string"}},"required":["verdict","confidence"]}'
 
@@ -225,11 +276,18 @@ jobs:
           ISSUE: ${{ github.event.issue.number || inputs.issue }}
           REPO: ${{ github.repository }}
           EVENT_NAME: ${{ github.event_name }}
+          # Distinguishes the automated catch-up retry from a manual
+          # re-triage — see is_automated_retry below.
+          DISPATCH_SOURCE: ${{ inputs.source }}
           CLASSIFY_OUTCOME: ${{ steps.classify.outcome }}
           # Through env, never interpolated into the script body: this string
           # is model output and "${{ }}" inline would splice it into the shell
           # source itself.
           STRUCTURED: ${{ steps.classify.outputs.structured_output }}
+          # Written by the action even when it fails (setExecutionFileOutputIfPresent
+          # runs in its catch block), which is what lets the max-turns check below
+          # work on exactly the runs that need it.
+          EXECUTION_FILE: ${{ steps.classify.outputs.execution_file }}
         run: |
           set -euo pipefail
           mkdir -p /tmp/ai-triage
@@ -241,6 +299,67 @@ jobs:
           restore_needs_info() {
             [ "${EVENT_NAME:-}" = "issue_comment" ] || return 0
             gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-info >/dev/null 2>&1 || true
+          }
+
+          # Is this the automated second look, rather than a first attempt?
+          # EVENT_NAME alone is not enough: workflow_dispatch is BOTH the daily
+          # catch-up retry and the maintainer's manual re-triage, so keying on
+          # it alone escalates a hand-dispatched first attempt immediately.
+          # The catch-up therefore states its provenance explicitly via the
+          # `source` input. Inferring it from github.actor instead was rejected:
+          # a re-run, a PAT- or App-issued dispatch, or a different maintainer
+          # all change the actor, and the failure that matters is the false
+          # NEGATIVE — an automated retry not recognised as one would never
+          # escalate and would retry that issue forever.
+          # Unknown provenance is treated as "not the automated retry", which
+          # is safe here because every non-escalating max-turns path below ends
+          # in a red run rather than a silent green one.
+          is_automated_retry() {
+            [ "${EVENT_NAME:-}" = "workflow_dispatch" ] && [ "${DISPATCH_SOURCE:-}" = "catchup" ]
+          }
+
+          # Hand the issue to a human and take it out of the retry rotation.
+          # Returns non-zero if the labels did not actually land — callers must
+          # treat that as a failure rather than reporting a hand-off that never
+          # happened, which would leave the issue unlabelled and back in the
+          # retry rotation it was supposed to leave.
+          escalate_to_human() {
+            # Best effort: the label usually exists, and `gh issue edit` fails
+            # on its own below if it does not.
+            gh label create ai:needs-human --repo "$REPO" --color ededed >/dev/null 2>&1 || true
+            # NOT suppressed with `|| true`. ai-triage and ai:needs-info come
+            # off in the same call: leaving ai-triage would keep an issue we
+            # just escalated sitting in tier 2's unattended queue, and leaving
+            # ai:needs-info would let a reporter reply silently re-trigger
+            # classification behind the human's back. Removing a label the
+            # issue does not carry is a no-op, so this cannot fail spuriously.
+            gh issue edit "$ISSUE" --repo "$REPO" \
+              --add-label ai:needs-human \
+              --remove-label ai-triage --remove-label ai:needs-info >/dev/null 2>&1
+          }
+
+          # Did the run die on its turn budget rather than on a workflow fault?
+          # The execution file is a JSON array of SDK messages; the terminal
+          # result object carries subtype "error_max_turns".
+          #
+          # This MUST fail closed: a false positive here downgrades a genuine
+          # workflow failure from a red run to a warning, which is the exact
+          # silent-failure class this workflow was rebuilt to remove. Hence the
+          # explicit `type == "array"` root check — without it `.[]?` happily
+          # iterates the VALUES of an object, so if the action ever changed the
+          # file's shape, {"result":{"subtype":"error_max_turns"}} would match
+          # and mask the failure. Anything that is not the array we expect is
+          # treated as "not max turns" and falls through to the loud path.
+          # The `?` and per-element type check keep a non-object element from
+          # aborting the step under set -e.
+          hit_max_turns() {
+            [ -n "${EXECUTION_FILE:-}" ] && [ -s "${EXECUTION_FILE:-}" ] || return 1
+            jq -e '(type == "array") and
+                   any(.[]?;
+                       (type == "object") and
+                       (((.subtype? // "") == "error_max_turns") or
+                        ((.terminal_reason? // "") == "max_turns")))' \
+               "$EXECUTION_FILE" >/dev/null 2>&1
           }
 
           # GATE 1 — did the action itself run? This is checked BEFORE looking
@@ -260,6 +379,38 @@ jobs:
           # explicit exit 1 the job would report success.
           if [ "${CLASSIFY_OUTCOME:-}" = "failure" ]; then
             restore_needs_info
+
+            # ...with one exception. Exhausting the turn budget is NOT a
+            # workflow fault: the action ran fine and this particular issue was
+            # just too tangled to finish inside the turn budget. Treating it as systemic
+            # meant #2949 failed red and stayed unlabelled, so the catch-up
+            # re-dispatched it every day forever — and being the newest issue
+            # it took the first of only five daily slots each time.
+            # So it is handled like GATE 2 below instead: one retry, then a
+            # human. Warning rather than error, because a red run per day for a
+            # per-issue condition is alarm fatigue, and the outcome is recorded
+            # durably on the issue itself rather than only in a run log.
+            # A green run is only ever justified once the outcome is recorded
+            # somewhere durable. On the automated second look that is the
+            # ai:needs-human label, and only if it actually landed. On a first
+            # attempt nothing is recorded anywhere but this annotation, so
+            # exiting 0 there would be precisely the "green run, work silently
+            # dead" state that left triage broken for weeks. It costs at most
+            # one red run per problem issue, not one per day, because the
+            # second look ends the retry rotation either way.
+            if hit_max_turns; then
+              if is_automated_retry; then
+                echo "::warning::second attempt for #$ISSUE also ran out of turns, handing it to a human"
+                if ! escalate_to_human; then
+                  echo "::error::could not label #$ISSUE ai:needs-human — it is NOT escalated and stays in the retry rotation"
+                  exit 1
+                fi
+                exit 0
+              fi
+              echo "::error::classification for #$ISSUE ran out of turns; leaving it for the catch-up to retry once, after which it goes to a human"
+              exit 1
+            fi
+
             echo "::error::the Classify action failed for #$ISSUE — this is usually a workflow-level fault affecting every issue, so the issue is left untouched for a retry. See the Classify step."
             exit 1
           fi
@@ -276,29 +427,23 @@ jobs:
           #
           # Reaching here means the failure is specific to THIS issue — the
           # model looked at it and produced nothing usable — so a retry is
-          # worth exactly one attempt. A workflow_dispatch is the catch-up or
-          # a manual re-triage, i.e. the second look, so hand it to a human
-          # rather than re-dispatching the same issue every day forever;
-          # ai:needs-human is in the catch-up exclusion search, so it drops out
-          # of the queue instead of starving newer issues behind it.
+          # worth exactly one attempt. Only a dispatch carrying source=catchup
+          # counts as that second attempt (is_automated_retry above); a manual
+          # workflow_dispatch is a first look and does NOT escalate, leaving
+          # the issue unlabelled so the catch-up still gets its own go. On the
+          # automated retry, hand it to a human rather than re-dispatching the
+          # same issue every day forever; ai:needs-human is in the catch-up
+          # exclusion search, so it drops out of the queue instead of starving
+          # newer issues behind it.
           if [ ! -s "$F" ] || ! jq -e 'type == "object"' "$F" >/dev/null 2>&1; then
             restore_needs_info
             echo "::warning::no usable verdict produced for #$ISSUE"
-            if [ "${EVENT_NAME:-}" = "workflow_dispatch" ]; then
+            if is_automated_retry; then
               echo "::warning::second attempt produced no verdict, handing #$ISSUE to a human"
-              gh label create ai:needs-human --repo "$REPO" --color ededed >/dev/null 2>&1 || true
-              # Drop the retry triggers in the same call. The catch-up search
-              # already excludes both, so this only bites on a MANUAL
-              # re-triage of an issue that still carries them — but there it
-              # matters: leaving ai-triage would keep an issue we just handed
-              # to a human sitting in tier 2's unattended fix queue, and
-              # leaving ai:needs-info would let a reporter reply silently
-              # re-trigger classification behind the human's back. The normal
-              # verdict path below already clears stale control labels; this
-              # keeps the escalation path consistent with it.
-              gh issue edit "$ISSUE" --repo "$REPO" \
-                --add-label ai:needs-human \
-                --remove-label ai-triage --remove-label ai:needs-info >/dev/null 2>&1 || true
+              if ! escalate_to_human; then
+                echo "::error::could not label #$ISSUE ai:needs-human — it is NOT escalated and stays in the retry rotation"
+                exit 1
+              fi
             fi
             exit 0
           fi
@@ -484,7 +629,7 @@ jobs:
           while IFS= read -r n; do
             [ -n "$n" ] || continue
             echo "re-dispatching tier 1 for #$n"
-            gh workflow run "AI issue triage" --repo "$REPO" -f issue="$n" || {
+            gh workflow run "AI issue triage" --repo "$REPO" -f issue="$n" -f source=catchup || {
               echo "::error::could not dispatch classify for #$n"
               FAILED=$((FAILED + 1))
             }
