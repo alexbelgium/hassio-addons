@@ -208,10 +208,12 @@ jobs:
           # actor=alexbelgium, a User.
           allowed_bots: "github-actions"
           show_full_output: true
-          # Stated up front, because the turn budget is 12 and a wrong guess
-          # about the environment costs turns that the analysis then does not
-          # have. On #2949 the model spent 3 turns retrying Bash and 6 hunting
-          # files outside the sparse checkout, leaving 3 for the actual issue.
+          # Stated up front, because a wrong guess about the environment costs
+          # turns the analysis then does not have. On #2949, under the earlier
+          # 12-turn budget, the model spent 3 turns retrying Bash and 6 hunting
+          # files outside the sparse checkout and died before reaching a
+          # verdict. The budget is 25 now, but it is meant to buy analysis, not
+          # more failed probing — keep this in step with --max-turns below.
           prompt: |
             Read /tmp/ai-triage/context.md, then follow the instructions in
             .github/prompts/issue-classify.md exactly.
@@ -425,11 +427,14 @@ jobs:
           #
           # Reaching here means the failure is specific to THIS issue — the
           # model looked at it and produced nothing usable — so a retry is
-          # worth exactly one attempt. A workflow_dispatch is the catch-up or
-          # a manual re-triage, i.e. the second look, so hand it to a human
-          # rather than re-dispatching the same issue every day forever;
-          # ai:needs-human is in the catch-up exclusion search, so it drops out
-          # of the queue instead of starving newer issues behind it.
+          # worth exactly one attempt. Only a dispatch carrying source=catchup
+          # counts as that second attempt (is_automated_retry above); a manual
+          # workflow_dispatch is a first look and does NOT escalate, leaving
+          # the issue unlabelled so the catch-up still gets its own go. On the
+          # automated retry, hand it to a human rather than re-dispatching the
+          # same issue every day forever; ai:needs-human is in the catch-up
+          # exclusion search, so it drops out of the queue instead of starving
+          # newer issues behind it.
           if [ ! -s "$F" ] || ! jq -e 'type == "object"' "$F" >/dev/null 2>&1; then
             restore_needs_info
             echo "::warning::no usable verdict produced for #$ISSUE"
