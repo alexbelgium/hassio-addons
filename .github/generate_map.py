@@ -143,13 +143,17 @@ def build_figure(counts, total_stargazers):
     by_iso = {}
     for name, n in counts.items():
         try:
-            by_iso[pycountry.countries.lookup(name).alpha_3] = n
+            code = pycountry.countries.lookup(name).alpha_3
         except LookupError:
             print("Skip unknown country:", name)
+            continue
+        # two spellings can resolve to the same ISO code, so accumulate
+        by_iso[code] = by_iso.get(code, 0) + n
 
     iso = list(by_iso)
     vals = [by_iso[k] for k in iso]
-    located = sum(counts.values())
+    # count only what is actually drawn, so the caption matches the map
+    located = sum(vals)
     max_count = max(vals) if vals else 1
 
     # The distribution is heavily long-tailed (the top country has ~200x the
@@ -206,8 +210,8 @@ def build_figure(counts, total_stargazers):
     repo = REPO or "this repository"
     caption = (
         f"{total_stargazers:,} stargazers"
-        f"   |   {located:,} with a public location"
-        f"   |   {len(counts)} countries"
+        f"   |   {located:,} mapped to a country"
+        f"   |   {len(by_iso)} countries"
     )
     annotations = [
         dict(
@@ -348,10 +352,12 @@ def main():
 
     save_cache(cache)
 
-    counts = count_by_country(cache)
+    # The cache is never pruned, so it still holds users who have since
+    # unstarred.  Keep them for future geocoding, but render only current stars.
+    counts = count_by_country({u: cache[u] for u in users})
 
     print("Rendering PNG map…")
-    build_choropleth(counts, len(cache))
+    build_choropleth(counts, len(users))
     print(
         "Done – files saved:",
         CSV_PATH.relative_to("."),
