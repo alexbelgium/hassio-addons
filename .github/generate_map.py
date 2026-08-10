@@ -117,6 +117,7 @@ def load_cache():
 
 
 def save_cache(cache):
+    """Write the cache back as username,country,last_checked."""
     CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
     with CSV_PATH.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
