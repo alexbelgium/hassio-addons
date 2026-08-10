@@ -3,7 +3,8 @@
 Generate a static PNG world map colour-coded by the percentage of your
 stargazers that come from each country.  The script maintains a CSV
 in ".github/stargazer_countries.csv" cache so that locations are only looked
-up once.  Blank answers are cached too and retried at most every RECHECK_DAYS.
+up once.  Blank answers are cached too and retried at most every RECHECK_DAYS,
+no more than MAX_RECHECKS_PER_RUN of them per run.
 """
 
 import csv
@@ -35,6 +36,13 @@ PNG_PATH = Path(".github/stargazer_map.png")
 # column existed) counts as never checked and is looked up once, which
 # stamps it.
 RECHECK_DAYS = 90
+
+# Cap on how many *expired* rows one run may refresh, oldest first.  The initial
+# migration leaves ~1700 rows due at once; without a cap that lands as a single
+# 30-minute spike, and every 90 days after.  Slicing it spreads the backlog over
+# a few runs and leaves the refresh dates staggered from then on.  New
+# stargazers are never capped -- they are the ones the map is missing.
+MAX_RECHECKS_PER_RUN = 200
 
 # ---- Rendering theme --------------------------------------------------------
 # Dark, opaque panel: GitHub does not swap the image between README themes, so
@@ -375,13 +383,24 @@ def main():
 
     cache = load_cache()
 
-    # Determine which usernames need a lookup: unknown users, plus blank rows
-    # last checked more than RECHECK_DAYS ago.
+    # Determine which usernames need a lookup: every unknown user, plus at most
+    # MAX_RECHECKS_PER_RUN blank rows last checked more than RECHECK_DAYS ago,
+    # oldest first (an empty last_checked sorts first, so the migration backlog
+    # drains before anything else).
     now = datetime.date.today()
     today = now.isoformat()
     cutoff = (now - datetime.timedelta(days=RECHECK_DAYS)).isoformat()
-    to_lookup = [u for u in users if needs_lookup(cache.get(u), cutoff)]
-    print(f"Need geocode for {len(to_lookup)} users")
+    new_users = [u for u in users if u not in cache]
+    expired = sorted(
+        (u for u in users if u in cache and needs_lookup(cache[u], cutoff)),
+        key=lambda u: (cache[u][1], u),
+    )
+    due = expired[:MAX_RECHECKS_PER_RUN]
+    to_lookup = new_users + due
+    print(
+        f"Need geocode for {len(to_lookup)} users "
+        f"({len(new_users)} new, {len(due)} of {len(expired)} expired)"
+    )
 
     for i, login in enumerate(to_lookup, 1):
         country = username_to_country(login)
