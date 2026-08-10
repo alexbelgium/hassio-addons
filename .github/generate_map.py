@@ -3,10 +3,12 @@
 Generate a static PNG world map colour-coded by the percentage of your
 stargazers that come from each country.  The script maintains a CSV
 in ".github/stargazer_countries.csv" cache so that locations are only looked
-up once (unless the country entry is blank).
+up once.  Blank answers are cached too and retried at most every RECHECK_DAYS,
+no more than MAX_RECHECKS_PER_RUN re-checks per run.
 """
 
 import csv
+import datetime
 import math
 import os
 import sys
@@ -25,6 +27,23 @@ REPO = os.getenv("REPO")  # expected   "owner/repo"
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")  # provided by workflow
 CSV_PATH = Path(".github/stargazer_countries.csv")
 PNG_PATH = Path(".github/stargazer_map.png")
+
+# ---- Cache policy -----------------------------------------------------------
+# Most blank rows are permanent: the user simply has no public "location" on
+# their profile.  Re-asking GitHub and Nominatim for them every week is ~1700
+# wasted requests per run, so a blank answer is cached too and only refreshed
+# after RECHECK_DAYS.  A row with no "last_checked" (i.e. written before the
+# column existed) counts as never checked and is looked up once, which
+# stamps it.
+RECHECK_DAYS = 90
+
+# Cap on how many already-checked rows one run may *re*-check, oldest first.
+# It applies only to rows that carry a real last_checked date and have since
+# expired: left uncapped, they all fall due on the same day and land as one
+# spike.  Rows that have never been checked -- new stargazers, and every row
+# migrated from the pre-"last_checked" CSV -- are always looked up in full, so
+# the first run after this lands still sweeps the whole backlog.
+MAX_RECHECKS_PER_RUN = 200
 
 # ---- Rendering theme --------------------------------------------------------
 # Dark, opaque panel: GitHub does not swap the image between README themes, so
@@ -111,20 +130,50 @@ def fetch_stargazer_usernames():
     return [s["login"] for s in github_paginated(url)]
 
 
+def _checked_date(value):
+    """Normalise a last_checked cell: a non-ISO-date value reads as never."""
+    value = (value or "").strip()
+    try:
+        datetime.date.fromisoformat(value)
+    except ValueError:
+        return ""
+    return value
+
+
 def load_cache():
+    """Map each username to (country, last_checked). Reads 2- and 3-column CSVs."""
     if not CSV_PATH.exists():
         return {}
     with CSV_PATH.open(newline="", encoding="utf-8") as f:
-        return {row["username"]: row["country"] for row in csv.DictReader(f)}
+        return {
+            row["username"]: (
+                row["country"],
+                _checked_date(row.get("last_checked")),
+            )
+            for row in csv.DictReader(f)
+        }
 
 
 def save_cache(cache):
+    """Write the cache back as username,country,last_checked."""
     CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
     with CSV_PATH.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["username", "country"])
-        for user, country in sorted(cache.items()):
-            w.writerow([user, country or ""])
+        w.writerow(["username", "country", "last_checked"])
+        for user, (country, last_checked) in sorted(cache.items()):
+            w.writerow([user, country or "", last_checked])
+
+
+def needs_lookup(entry, cutoff):
+    """True if this entry must be (re)queried. entry is None if absent."""
+    if entry is None:
+        return True  # new stargazer
+    country, last_checked = entry
+    if country:
+        return False  # a known country never changes here
+    if not last_checked:
+        return True  # blank, never checked (pre-"last_checked" row)
+    return last_checked < cutoff  # blank, and stale enough to retry
 
 
 def username_to_country(login):
@@ -150,7 +199,7 @@ def username_to_country(login):
 
 def count_by_country(cache):
     """Counter of country name -> stargazers, ignoring blank locations."""
-    return Counter(c for c in cache.values() if c)
+    return Counter(country for country, _ in cache.values() if country)
 
 
 def _log_ticks(lo, hi):
@@ -363,20 +412,37 @@ def main():
 
     cache = load_cache()
 
-    # Determine which usernames need a lookup
-    to_lookup = [u for u in users if cache.get(u, "") == ""]
-    print(f"Need geocode for {len(to_lookup)} users")
+    # Determine which usernames need a lookup.  Anything never checked -- a new
+    # stargazer, or a row migrated from the pre-"last_checked" CSV -- is looked
+    # up in full.  Rows that were checked before and have since expired are
+    # rate-limited to MAX_RECHECKS_PER_RUN, oldest first, so the recurring
+    # RECHECK_DAYS wave arrives in slices rather than all at once.
+    now = datetime.date.today()
+    today = now.isoformat()
+    cutoff = (now - datetime.timedelta(days=RECHECK_DAYS)).isoformat()
+    due = [u for u in users if needs_lookup(cache.get(u), cutoff)]
+    never = [u for u in due if not cache.get(u, ("", ""))[1]]
+    expired = sorted(
+        (u for u in due if cache.get(u, ("", ""))[1]),
+        key=lambda u: (cache[u][1], u),
+    )
+    rechecks = expired[:MAX_RECHECKS_PER_RUN]
+    to_lookup = never + rechecks
+    print(
+        f"Need geocode for {len(to_lookup)} users "
+        f"({len(never)} never checked, {len(rechecks)} of {len(expired)} expired)"
+    )
 
     for i, login in enumerate(to_lookup, 1):
         country = username_to_country(login)
-        cache[login] = country
+        cache[login] = (country, today)
         print(f"{i}/{len(to_lookup)}: {login:<20} -> {country}")
         # Nominatim polite usage
         time.sleep(1)
 
     # Ensure all stargazers are in cache (even those with blank location)
     for u in users:
-        cache.setdefault(u, "")
+        cache.setdefault(u, ("", today))
 
     save_cache(cache)
 
