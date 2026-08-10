@@ -61,6 +61,35 @@ HEADERS = {
 }
 GEOL = Nominatim(user_agent="gh-stargazer-map")
 
+# Non-answers that Nominatim happily resolves to a real place: "Earth" is a
+# town in Texas, "Remote" is a settlement in Oregon.  Matched on the whole
+# stripped, lowercased string only -- "Earth, TX" is someone's actual address
+# and must still geocode.
+JUNK_LOCATIONS = {
+    "127.0.0.1",
+    "/dev/null",
+    "anywhere",
+    "earth",
+    "everywhere",
+    "here",
+    "home",
+    "internet",
+    "localhost",
+    "mars",
+    "moon",
+    "n/a",
+    "none",
+    "nowhere",
+    "null",
+    "planet earth",
+    "remote",
+    "space",
+    "the internet",
+    "unknown",
+    "world",
+    "worldwide",
+}
+
 
 # -----------------------------------------------------------------------------
 
@@ -104,6 +133,8 @@ def username_to_country(login):
     resp.raise_for_status()
     loc = (resp.json() or {}).get("location") or ""
     if not loc.strip():
+        return ""
+    if loc.strip().strip(".!").lower() in JUNK_LOCATIONS:
         return ""
     try:
         g = GEOL.geocode(loc, language="en", addressdetails=True, timeout=10)
