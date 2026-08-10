@@ -61,6 +61,35 @@ HEADERS = {
 }
 GEOL = Nominatim(user_agent="gh-stargazer-map")
 
+# Non-answers that Nominatim happily resolves to a real place: "Earth" is a
+# town in Texas, "Remote" is a settlement in Oregon.  Matched on the whole
+# stripped, lowercased string only -- "Earth, TX" is someone's actual address
+# and must still geocode.
+JUNK_LOCATIONS = {
+    "127.0.0.1",
+    "/dev/null",
+    "anywhere",
+    "earth",
+    "everywhere",
+    "here",
+    "home",
+    "internet",
+    "localhost",
+    "mars",
+    "moon",
+    "n/a",
+    "none",
+    "nowhere",
+    "null",
+    "planet earth",
+    "remote",
+    "space",
+    "the internet",
+    "unknown",
+    "world",
+    "worldwide",
+}
+
 
 # -----------------------------------------------------------------------------
 
@@ -105,21 +134,18 @@ def username_to_country(login):
     loc = (resp.json() or {}).get("location") or ""
     if not loc.strip():
         return ""
+    if loc.strip().strip(".!").lower() in JUNK_LOCATIONS:
+        return ""
     try:
-        g = GEOL.geocode(loc, language="en", timeout=10)
+        g = GEOL.geocode(loc, language="en", addressdetails=True, timeout=10)
     except Exception:
         return ""
-    if not g or "display_name" not in g.raw:
-        return ""
-    # take the last comma-separated component that matches a country
-    for part in reversed(g.raw["display_name"].split(",")):
-        part = part.strip()
-        try:
-            country = pycountry.countries.lookup(part).name
-            return country
-        except LookupError:
-            pass
-    return ""
+    # Use the ISO code from the structured address: Nominatim's English display
+    # names ("Russia", "Turkey", "Ivory Coast") do not all match pycountry's ISO
+    # names ("Russian Federation", "Türkiye", "Côte d'Ivoire").
+    code = ((g.raw.get("address") or {}).get("country_code") or "") if g else ""
+    country = pycountry.countries.get(alpha_2=code.upper()) if code else None
+    return country.name if country else ""
 
 
 def count_by_country(cache):
