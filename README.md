@@ -70,9 +70,15 @@ If you want to do add the repository manually, please follow the procedure highl
 - amd64: 93%
 - aarch64: 7%
 
-### Stars evolution
+### Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date)](https://star-history.com/#alexbelgium/hassio-addons&Date)
+<a href="https://www.star-history.com/?type=date&repos=alexbelgium%2Fhassio-addons">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=alexbelgium/hassio-addons&type=date&theme=dark&legend=top-left&sealed_token=Ft6D4rx2V8l-M626J7uFACNWFJexZTQuLZvFi-nQ_FnbQ0KFnkzPBnnQdui7CREsxlWJ5rdTXvx5PVjpFxxQwump2HCc5SDviHt_iZPdJB3ckWEjXp0V3w" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=alexbelgium/hassio-addons&type=date&legend=top-left&sealed_token=Ft6D4rx2V8l-M626J7uFACNWFJexZTQuLZvFi-nQ_FnbQ0KFnkzPBnnQdui7CREsxlWJ5rdTXvx5PVjpFxxQwump2HCc5SDviHt_iZPdJB3ckWEjXp0V3w" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=alexbelgium/hassio-addons&type=date&legend=top-left&sealed_token=Ft6D4rx2V8l-M626J7uFACNWFJexZTQuLZvFi-nQ_FnbQ0KFnkzPBnnQdui7CREsxlWJ5rdTXvx5PVjpFxxQwump2HCc5SDviHt_iZPdJB3ckWEjXp0V3w" />
+ </picture>
+</a>
 
 ## Add-ons provided by this repository
 
