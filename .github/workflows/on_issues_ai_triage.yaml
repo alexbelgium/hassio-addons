@@ -264,6 +264,9 @@ jobs:
           ISSUE: ${{ github.event.issue.number || inputs.issue }}
           REPO: ${{ github.repository }}
           EVENT_NAME: ${{ github.event_name }}
+          # Distinguishes the automated catch-up retry (github-actions[bot])
+          # from a maintainer's manual dispatch — see is_automated_retry below.
+          ACTOR: ${{ github.actor }}
           CLASSIFY_OUTCOME: ${{ steps.classify.outcome }}
           # Through env, never interpolated into the script body: this string
           # is model output and "${{ }}" inline would splice it into the shell
@@ -286,16 +289,37 @@ jobs:
             gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-info >/dev/null 2>&1 || true
           }
 
+          # Is this the automated second look, rather than a first attempt?
+          # EVENT_NAME alone is not enough: workflow_dispatch is BOTH the daily
+          # catch-up retry and the maintainer's manual re-triage, so keying on
+          # it would escalate a hand-dispatched first attempt immediately. The
+          # two are distinguishable by actor — the catch-up dispatches with
+          # GITHUB_TOKEN and so arrives as github-actions[bot], a manual run as
+          # the maintainer. Escalating only on the automated one keeps "one
+          # retry, then a human" literally true: a manual attempt that fails
+          # leaves the issue unlabelled, so the catch-up still gets its go.
+          is_automated_retry() {
+            [ "${EVENT_NAME:-}" = "workflow_dispatch" ] && [ "${ACTOR:-}" = "github-actions[bot]" ]
+          }
+
           # Hand the issue to a human and take it out of the retry rotation.
+          # Returns non-zero if the labels did not actually land — callers must
+          # treat that as a failure rather than reporting a hand-off that never
+          # happened, which would leave the issue unlabelled and back in the
+          # retry rotation it was supposed to leave.
           escalate_to_human() {
+            # Best effort: the label usually exists, and `gh issue edit` fails
+            # on its own below if it does not.
             gh label create ai:needs-human --repo "$REPO" --color ededed >/dev/null 2>&1 || true
-            # ai-triage and ai:needs-info come off in the same call: leaving
-            # ai-triage would keep an issue we just escalated sitting in tier 2's
-            # unattended queue, and ai:needs-info would let a reporter reply
-            # silently re-trigger classification behind the human's back.
+            # NOT suppressed with `|| true`. ai-triage and ai:needs-info come
+            # off in the same call: leaving ai-triage would keep an issue we
+            # just escalated sitting in tier 2's unattended queue, and leaving
+            # ai:needs-info would let a reporter reply silently re-trigger
+            # classification behind the human's back. Removing a label the
+            # issue does not carry is a no-op, so this cannot fail spuriously.
             gh issue edit "$ISSUE" --repo "$REPO" \
               --add-label ai:needs-human \
-              --remove-label ai-triage --remove-label ai:needs-info >/dev/null 2>&1 || true
+              --remove-label ai-triage --remove-label ai:needs-info >/dev/null 2>&1
           }
 
           # Did the run die on its turn budget rather than on a workflow fault?
@@ -352,9 +376,12 @@ jobs:
             # durably on the issue itself rather than only in a run log.
             if hit_max_turns; then
               echo "::warning::classification for #$ISSUE ran out of turns"
-              if [ "${EVENT_NAME:-}" = "workflow_dispatch" ]; then
+              if is_automated_retry; then
                 echo "::warning::second attempt also ran out of turns, handing #$ISSUE to a human"
-                escalate_to_human
+                if ! escalate_to_human; then
+                  echo "::error::could not label #$ISSUE ai:needs-human — it is NOT escalated and stays in the retry rotation"
+                  exit 1
+                fi
               fi
               exit 0
             fi
@@ -383,9 +410,12 @@ jobs:
           if [ ! -s "$F" ] || ! jq -e 'type == "object"' "$F" >/dev/null 2>&1; then
             restore_needs_info
             echo "::warning::no usable verdict produced for #$ISSUE"
-            if [ "${EVENT_NAME:-}" = "workflow_dispatch" ]; then
+            if is_automated_retry; then
               echo "::warning::second attempt produced no verdict, handing #$ISSUE to a human"
-              escalate_to_human
+              if ! escalate_to_human; then
+                echo "::error::could not label #$ISSUE ai:needs-human — it is NOT escalated and stays in the retry rotation"
+                exit 1
+              fi
             fi
             exit 0
           fi
