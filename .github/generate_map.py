@@ -4,7 +4,7 @@ Generate a static PNG world map colour-coded by the percentage of your
 stargazers that come from each country.  The script maintains a CSV
 in ".github/stargazer_countries.csv" cache so that locations are only looked
 up once.  Blank answers are cached too and retried at most every RECHECK_DAYS,
-no more than MAX_RECHECKS_PER_RUN of them per run.
+no more than MAX_RECHECKS_PER_RUN re-checks per run.
 """
 
 import csv
@@ -37,11 +37,12 @@ PNG_PATH = Path(".github/stargazer_map.png")
 # stamps it.
 RECHECK_DAYS = 90
 
-# Cap on how many *expired* rows one run may refresh, oldest first.  The initial
-# migration leaves ~1700 rows due at once; without a cap that lands as a single
-# 30-minute spike, and every 90 days after.  Slicing it spreads the backlog over
-# a few runs and leaves the refresh dates staggered from then on.  New
-# stargazers are never capped -- they are the ones the map is missing.
+# Cap on how many already-checked rows one run may *re*-check, oldest first.
+# It applies only to rows that carry a real last_checked date and have since
+# expired: left uncapped, they all fall due on the same day and land as one
+# spike.  Rows that have never been checked -- new stargazers, and every row
+# migrated from the pre-"last_checked" CSV -- are always looked up in full, so
+# the first run after this lands still sweeps the whole backlog.
 MAX_RECHECKS_PER_RUN = 200
 
 # ---- Rendering theme --------------------------------------------------------
@@ -383,23 +384,25 @@ def main():
 
     cache = load_cache()
 
-    # Determine which usernames need a lookup: every unknown user, plus at most
-    # MAX_RECHECKS_PER_RUN blank rows last checked more than RECHECK_DAYS ago,
-    # oldest first (an empty last_checked sorts first, so the migration backlog
-    # drains before anything else).
+    # Determine which usernames need a lookup.  Anything never checked -- a new
+    # stargazer, or a row migrated from the pre-"last_checked" CSV -- is looked
+    # up in full.  Rows that were checked before and have since expired are
+    # rate-limited to MAX_RECHECKS_PER_RUN, oldest first, so the recurring
+    # RECHECK_DAYS wave arrives in slices rather than all at once.
     now = datetime.date.today()
     today = now.isoformat()
     cutoff = (now - datetime.timedelta(days=RECHECK_DAYS)).isoformat()
-    new_users = [u for u in users if u not in cache]
+    due = [u for u in users if needs_lookup(cache.get(u), cutoff)]
+    never = [u for u in due if not cache.get(u, ("", ""))[1]]
     expired = sorted(
-        (u for u in users if u in cache and needs_lookup(cache[u], cutoff)),
+        (u for u in due if cache.get(u, ("", ""))[1]),
         key=lambda u: (cache[u][1], u),
     )
-    due = expired[:MAX_RECHECKS_PER_RUN]
-    to_lookup = new_users + due
+    rechecks = expired[:MAX_RECHECKS_PER_RUN]
+    to_lookup = never + rechecks
     print(
         f"Need geocode for {len(to_lookup)} users "
-        f"({len(new_users)} new, {len(due)} of {len(expired)} expired)"
+        f"({len(never)} never checked, {len(rechecks)} of {len(expired)} expired)"
     )
 
     for i, login in enumerate(to_lookup, 1):
