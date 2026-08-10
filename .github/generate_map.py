@@ -103,7 +103,7 @@ def _checked_date(value):
 
 
 def load_cache():
-    """username -> (country, last_checked). Reads 2- and 3-column CSVs."""
+    """Map each username to (country, last_checked). Reads 2- and 3-column CSVs."""
     if not CSV_PATH.exists():
         return {}
     with CSV_PATH.open(newline="", encoding="utf-8") as f:
