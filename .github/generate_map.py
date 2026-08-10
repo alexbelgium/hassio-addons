@@ -31,10 +31,10 @@ PNG_PATH = Path(".github/stargazer_map.png")
 # Most blank rows are permanent: the user simply has no public "location" on
 # their profile.  Re-asking GitHub and Nominatim for them every week is ~1700
 # wasted requests per run, so a blank answer is cached too and only refreshed
-# after RECHECK_DAYS.  Rows written before the "last_checked" column existed are
-# treated as checked on BACKFILL_DATE (the day the column was introduced).
+# after RECHECK_DAYS.  A row with no "last_checked" (i.e. written before the
+# column existed) counts as never checked and is looked up once, which
+# stamps it.
 RECHECK_DAYS = 90
-BACKFILL_DATE = "2026-08-10"
 
 # ---- Rendering theme --------------------------------------------------------
 # Dark, opaque panel: GitHub does not swap the image between README themes, so
@@ -92,6 +92,16 @@ def fetch_stargazer_usernames():
     return [s["login"] for s in github_paginated(url)]
 
 
+def _checked_date(value):
+    """Normalise a last_checked cell: a non-ISO-date value reads as never."""
+    value = (value or "").strip()
+    try:
+        datetime.date.fromisoformat(value)
+    except ValueError:
+        return ""
+    return value
+
+
 def load_cache():
     """username -> (country, last_checked). Reads 2- and 3-column CSVs."""
     if not CSV_PATH.exists():
@@ -100,7 +110,7 @@ def load_cache():
         return {
             row["username"]: (
                 row["country"],
-                (row.get("last_checked") or "").strip() or BACKFILL_DATE,
+                _checked_date(row.get("last_checked")),
             )
             for row in csv.DictReader(f)
         }
@@ -116,12 +126,14 @@ def save_cache(cache):
 
 
 def needs_lookup(entry, cutoff):
-    """True if this cache entry has to be (re)queried. entry is None if absent."""
+    """True if this entry must be (re)queried. entry is None if absent."""
     if entry is None:
         return True  # new stargazer
     country, last_checked = entry
     if country:
         return False  # a known country never changes here
+    if not last_checked:
+        return True  # blank, never checked (pre-"last_checked" row)
     return last_checked < cutoff  # blank, and stale enough to retry
 
 
