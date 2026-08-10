@@ -127,15 +127,16 @@ def count_by_country(cache):
     return Counter(c for c in cache.values() if c)
 
 
-def _log_ticks(max_count):
-    """Colourbar ticks at 1, 3, 10, 30, ... up to max_count."""
-    ticks = []
-    step = 1
-    while step <= max_count:
-        ticks.append(step)
-        ticks.append(step * 3)
-        step *= 10
-    return [t for t in ticks if t <= max_count] or [1]
+def _log_ticks(lo, hi):
+    """Colourbar ticks at ... 0.1, 0.3, 1, 3, 10, 30 ... spanning [lo, hi]."""
+    candidates = [m * 10**k for k in range(-3, 3) for m in (1, 3)]
+    ticks = [t for t in candidates if lo / 1.5 <= t <= hi]
+    return ticks or [hi]
+
+
+def _fmt_pct(value):
+    """1 -> '1%', 0.3 -> '0.3%' -- no trailing zeros."""
+    return f"{value:.2f}".rstrip("0").rstrip(".") + "%"
 
 
 def build_figure(counts, total_stargazers):
@@ -153,27 +154,27 @@ def build_figure(counts, total_stargazers):
     iso = list(by_iso)
     vals = [by_iso[k] for k in iso]
     # count only what is actually drawn, so the caption matches the map
-    located = sum(vals)
-    max_count = max(vals) if vals else 1
+    located = sum(vals) or 1
+    pcts = [v / located * 100 for v in vals]
+    lo, hi = (min(pcts), max(pcts)) if pcts else (1.0, 1.0)
 
-    # The distribution is heavily long-tailed (the top country has ~200x the
-    # stargazers of the tail), so a linear ramp collapses everything but a
-    # handful of countries into the first colour step.  Colour on log10 of the
-    # count and relabel the bar with the real counts.
-    ticks = _log_ticks(max_count)
+    # The distribution is heavily long-tailed (the top country holds ~200x the
+    # share of the tail), so a linear ramp collapses everything but a handful
+    # of countries into the first colour step.  Colour on log10 of the share.
+    ticks = _log_ticks(lo, hi)
     fig = go.Figure(
         go.Choropleth(
             locations=iso,
             locationmode="ISO-3",
-            z=[math.log10(v) for v in vals],
-            zmin=-0.25,  # keeps count == 1 clearly off the bottom of the ramp
-            zmax=math.log10(max_count),
+            z=[math.log10(p) for p in pcts],
+            zmin=math.log10(lo) - 0.15,  # keep the smallest share off the floor
+            zmax=math.log10(hi),
             colorscale=SCALE,
             marker_line_color=BORDER,
             marker_line_width=0.5,
             colorbar=dict(
                 title=dict(
-                    text="stargazers per country (log scale)",
+                    text="share of located stargazers (log scale)",
                     font=dict(color=MUTED, size=13),
                     side="top",
                 ),
@@ -186,7 +187,7 @@ def build_figure(counts, total_stargazers):
                 len=0.34,
                 outlinewidth=0,
                 tickvals=[math.log10(t) for t in ticks],
-                ticktext=[str(t) for t in ticks],
+                ticktext=[_fmt_pct(t) for t in ticks],
                 tickfont=dict(color=MUTED, size=12),
             ),
         )
@@ -252,10 +253,10 @@ def build_figure(counts, total_stargazers):
         ),
     ]
 
-    # Top 5, laid out as three separate annotations (names, counts, share) so
-    # each column stays aligned whatever the country name length -- HTML text
-    # in an SVG annotation collapses padding spaces, so a monospace table would
-    # not line up.
+    # Top 5, laid out as two separate annotations (names, share) so each column
+    # stays aligned whatever the country name length -- HTML text in an SVG
+    # annotation collapses padding spaces, so a monospace table would not line
+    # up.
     top = counts.most_common(5)
     if top:
         base_y = 0.40
@@ -269,12 +270,11 @@ def build_figure(counts, total_stargazers):
                 ),
                 FG,
             ),
-            (0.170, "right", "<br>".join(str(n) for _, n in top), FG),
             (
-                0.235,
+                0.215,
                 "right",
                 "<br>".join(f"{n / located * 100:.1f}%" for _, n in top),
-                MUTED,
+                FG,
             ),
         ]
         annotations.append(
