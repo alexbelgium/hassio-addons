@@ -3,10 +3,11 @@
 Generate a static PNG world map colour-coded by the percentage of your
 stargazers that come from each country.  The script maintains a CSV
 in ".github/stargazer_countries.csv" cache so that locations are only looked
-up once (unless the country entry is blank).
+up once.  Blank answers are cached too and retried at most every RECHECK_DAYS.
 """
 
 import csv
+import datetime
 import math
 import os
 import sys
@@ -25,6 +26,15 @@ REPO = os.getenv("REPO")  # expected   "owner/repo"
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")  # provided by workflow
 CSV_PATH = Path(".github/stargazer_countries.csv")
 PNG_PATH = Path(".github/stargazer_map.png")
+
+# ---- Cache policy -----------------------------------------------------------
+# Most blank rows are permanent: the user simply has no public "location" on
+# their profile.  Re-asking GitHub and Nominatim for them every week is ~1700
+# wasted requests per run, so a blank answer is cached too and only refreshed
+# after RECHECK_DAYS.  Rows written before the "last_checked" column existed are
+# treated as checked on BACKFILL_DATE (the day the column was introduced).
+RECHECK_DAYS = 90
+BACKFILL_DATE = "2026-08-10"
 
 # ---- Rendering theme --------------------------------------------------------
 # Dark, opaque panel: GitHub does not swap the image between README themes, so
@@ -83,19 +93,36 @@ def fetch_stargazer_usernames():
 
 
 def load_cache():
+    """username -> (country, last_checked). Reads 2- and 3-column CSVs."""
     if not CSV_PATH.exists():
         return {}
     with CSV_PATH.open(newline="", encoding="utf-8") as f:
-        return {row["username"]: row["country"] for row in csv.DictReader(f)}
+        return {
+            row["username"]: (
+                row["country"],
+                (row.get("last_checked") or "").strip() or BACKFILL_DATE,
+            )
+            for row in csv.DictReader(f)
+        }
 
 
 def save_cache(cache):
     CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
     with CSV_PATH.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["username", "country"])
-        for user, country in sorted(cache.items()):
-            w.writerow([user, country or ""])
+        w.writerow(["username", "country", "last_checked"])
+        for user, (country, last_checked) in sorted(cache.items()):
+            w.writerow([user, country or "", last_checked])
+
+
+def needs_lookup(entry, cutoff):
+    """True if this cache entry has to be (re)queried. entry is None if absent."""
+    if entry is None:
+        return True  # new stargazer
+    country, last_checked = entry
+    if country:
+        return False  # a known country never changes here
+    return last_checked < cutoff  # blank, and stale enough to retry
 
 
 def username_to_country(login):
@@ -124,7 +151,7 @@ def username_to_country(login):
 
 def count_by_country(cache):
     """Counter of country name -> stargazers, ignoring blank locations."""
-    return Counter(c for c in cache.values() if c)
+    return Counter(country for country, _ in cache.values() if country)
 
 
 def _log_ticks(lo, hi):
@@ -335,20 +362,24 @@ def main():
 
     cache = load_cache()
 
-    # Determine which usernames need a lookup
-    to_lookup = [u for u in users if cache.get(u, "") == ""]
+    # Determine which usernames need a lookup: unknown users, plus blank rows
+    # last checked more than RECHECK_DAYS ago.
+    now = datetime.date.today()
+    today = now.isoformat()
+    cutoff = (now - datetime.timedelta(days=RECHECK_DAYS)).isoformat()
+    to_lookup = [u for u in users if needs_lookup(cache.get(u), cutoff)]
     print(f"Need geocode for {len(to_lookup)} users")
 
     for i, login in enumerate(to_lookup, 1):
         country = username_to_country(login)
-        cache[login] = country
+        cache[login] = (country, today)
         print(f"{i}/{len(to_lookup)}: {login:<20} -> {country}")
         # Nominatim polite usage
         time.sleep(1)
 
     # Ensure all stargazers are in cache (even those with blank location)
     for u in users:
-        cache.setdefault(u, "")
+        cache.setdefault(u, ("", today))
 
     save_cache(cache)
 
