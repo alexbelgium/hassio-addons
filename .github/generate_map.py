@@ -240,7 +240,9 @@ def build_figure(counts, total_stargazers):
         dict(
             text="Countries in grey have no located stargazer.<br>"
             "Location is read from the public GitHub profile,<br>"
-            "so the map covers the located subset only.",
+            "so the map covers the located subset only.<br>"
+            "Country lookup by Nominatim geocoding,<br>"
+            "data © OpenStreetMap contributors.",
             x=0.988,
             y=0.05,
             xref="paper",
