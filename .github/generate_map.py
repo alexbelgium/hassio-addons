@@ -7,13 +7,14 @@ up once (unless the country entry is blank).
 """
 
 import csv
+import math
 import os
 import sys
 import time
 from collections import Counter
 from pathlib import Path
 
-import plotly.express as px
+import plotly.graph_objects as go
 import pycountry
 import requests
 from geopy.geocoders import Nominatim
@@ -24,6 +25,35 @@ REPO = os.getenv("REPO")  # expected   "owner/repo"
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")  # provided by workflow
 CSV_PATH = Path(".github/stargazer_countries.csv")
 PNG_PATH = Path(".github/stargazer_map.png")
+
+# ---- Rendering theme --------------------------------------------------------
+# Dark, opaque panel: GitHub does not swap the image between README themes, so
+# a single background has to work in both.  A dark canvas with a bright
+# sequential ramp stays readable on light and dark pages alike.
+BG = "#0d1117"  # page / ocean
+LAND = "#2b323c"  # countries with zero stargazers (still visible)
+BORDER = "#0d1117"  # country outlines, same as background
+FG = "#e6edf3"  # primary text
+MUTED = "#8b98a5"  # secondary text
+
+# Viridis truncated at 35 %: even a single stargazer gets a colour that is
+# clearly distinct from the empty-land grey.
+SCALE = ["#2c728e", "#21918c", "#35b779", "#90d743", "#fde725"]
+
+# pycountry names that are too long / too formal for a top-5 list
+SHORT_NAMES = {
+    "Russian Federation": "Russia",
+    "Korea, Republic of": "South Korea",
+    "Korea, Democratic People's Republic of": "North Korea",
+    "Iran, Islamic Republic of": "Iran",
+    "Taiwan, Province of China": "Taiwan",
+    "Viet Nam": "Vietnam",
+    "Moldova, Republic of": "Moldova",
+    "Bolivia, Plurinational State of": "Bolivia",
+    "Venezuela, Bolivarian Republic of": "Venezuela",
+    "Tanzania, United Republic of": "Tanzania",
+    "Syrian Arab Republic": "Syria",
+}
 
 HEADERS = {
     "Authorization": f"token {GITHUB_TOKEN}",
@@ -92,30 +122,203 @@ def username_to_country(login):
     return ""
 
 
-def build_choropleth(percent_by_iso):
-    iso, vals = zip(*percent_by_iso.items())
-    fig = px.choropleth(
-        locations=list(iso),
-        locationmode="ISO-3",
-        color=list(vals),
-        color_continuous_scale="Greens",
-        range_color=(0, max(vals) if vals else 1),
+def count_by_country(cache):
+    """Counter of country name -> stargazers, ignoring blank locations."""
+    return Counter(c for c in cache.values() if c)
+
+
+def _log_ticks(max_count):
+    """Colourbar ticks at 1, 3, 10, 30, ... up to max_count."""
+    ticks = []
+    step = 1
+    while step <= max_count:
+        ticks.append(step)
+        ticks.append(step * 3)
+        step *= 10
+    return [t for t in ticks if t <= max_count] or [1]
+
+
+def build_figure(counts, total_stargazers):
+    """Build the choropleth figure from a {country name: stargazers} mapping."""
+    by_iso = {}
+    for name, n in counts.items():
+        try:
+            by_iso[pycountry.countries.lookup(name).alpha_3] = n
+        except LookupError:
+            print("Skip unknown country:", name)
+
+    iso = list(by_iso)
+    vals = [by_iso[k] for k in iso]
+    located = sum(counts.values())
+    max_count = max(vals) if vals else 1
+
+    # The distribution is heavily long-tailed (the top country has ~200x the
+    # stargazers of the tail), so a linear ramp collapses everything but a
+    # handful of countries into the first colour step.  Colour on log10 of the
+    # count and relabel the bar with the real counts.
+    ticks = _log_ticks(max_count)
+    fig = go.Figure(
+        go.Choropleth(
+            locations=iso,
+            locationmode="ISO-3",
+            z=[math.log10(v) for v in vals],
+            zmin=-0.25,  # keeps count == 1 clearly off the bottom of the ramp
+            zmax=math.log10(max_count),
+            colorscale=SCALE,
+            marker_line_color=BORDER,
+            marker_line_width=0.5,
+            colorbar=dict(
+                title=dict(
+                    text="stargazers per country (log scale)",
+                    font=dict(color=MUTED, size=13),
+                    side="top",
+                ),
+                orientation="h",
+                x=0.52,
+                y=0.02,
+                xanchor="center",
+                yanchor="bottom",
+                thickness=12,
+                len=0.34,
+                outlinewidth=0,
+                tickvals=[math.log10(t) for t in ticks],
+                ticktext=[str(t) for t in ticks],
+                tickfont=dict(color=MUTED, size=12),
+            ),
+        )
     )
-    fig.update_layout(
-        coloraxis_colorbar=dict(
-            title="% stargazers",
-            orientation="h",  # <-- échelle horizontale
-            x=0.5,  # <-- centré
-            y=0,  # <-- tout en bas
-            xanchor="center",
-            yanchor="bottom",
-            thickness=15,
-            len=0.7,  # <-- longueur de l'échelle, ajustable
+
+    fig.update_geos(
+        projection_type="natural earth",
+        showframe=False,
+        showcoastlines=False,
+        showland=True,
+        landcolor=LAND,
+        showocean=True,
+        oceancolor=BG,
+        showlakes=False,
+        bgcolor=BG,
+        lataxis_range=[-56, 84],  # crop Antarctica, it is always empty
+        lonaxis_range=[-176, 186],
+        domain=dict(x=[0.0, 1.0], y=[0.04, 0.92]),
+    )
+
+    repo = REPO or "this repository"
+    caption = (
+        f"{total_stargazers:,} stargazers"
+        f"   |   {located:,} with a public location"
+        f"   |   {len(counts)} countries"
+    )
+    annotations = [
+        dict(
+            text=f"<b>Stargazers of {repo}</b>",
+            x=0.012,
+            y=0.985,
+            xref="paper",
+            yref="paper",
+            xanchor="left",
+            yanchor="top",
+            showarrow=False,
+            font=dict(color=FG, size=25),
         ),
+        dict(
+            text=caption,
+            x=0.012,
+            y=0.925,
+            xref="paper",
+            yref="paper",
+            xanchor="left",
+            yanchor="top",
+            showarrow=False,
+            font=dict(color=MUTED, size=15),
+        ),
+        dict(
+            text="Countries in grey have no located stargazer.<br>"
+            "Location is read from the public GitHub profile,<br>"
+            "so the map covers the located subset only.",
+            x=0.988,
+            y=0.05,
+            xref="paper",
+            yref="paper",
+            xanchor="right",
+            yanchor="bottom",
+            align="right",
+            showarrow=False,
+            font=dict(color=MUTED, size=12),
+        ),
+    ]
+
+    # Top 5, laid out as three separate annotations (names, counts, share) so
+    # each column stays aligned whatever the country name length -- HTML text
+    # in an SVG annotation collapses padding spaces, so a monospace table would
+    # not line up.
+    top = counts.most_common(5)
+    if top:
+        base_y = 0.40
+        columns = [
+            (
+                0.022,
+                "left",
+                "<br>".join(
+                    f"{i}. {SHORT_NAMES.get(name, name)}"
+                    for i, (name, _) in enumerate(top, 1)
+                ),
+                FG,
+            ),
+            (0.170, "right", "<br>".join(str(n) for _, n in top), FG),
+            (
+                0.235,
+                "right",
+                "<br>".join(f"{n / located * 100:.1f}%" for _, n in top),
+                MUTED,
+            ),
+        ]
+        annotations.append(
+            dict(
+                text="<b>TOP COUNTRIES</b>",
+                x=0.022,
+                y=base_y,
+                xref="paper",
+                yref="paper",
+                xanchor="left",
+                yanchor="top",
+                showarrow=False,
+                font=dict(color=MUTED, size=13),
+            )
+        )
+        annotations += [
+            dict(
+                text=text,
+                x=x,
+                y=base_y - 0.055,
+                xref="paper",
+                yref="paper",
+                xanchor=anchor,
+                yanchor="top",
+                align=anchor,
+                showarrow=False,
+                font=dict(color=color, size=15),
+            )
+            for x, anchor, text, color in columns
+        ]
+
+    fig.update_layout(
+        width=1240,
+        height=680,
+        paper_bgcolor=BG,
+        plot_bgcolor=BG,
         margin=dict(l=0, r=0, t=0, b=0),
+        annotations=annotations,
     )
-    PNG_PATH.parent.mkdir(parents=True, exist_ok=True)
-    fig.write_image(str(PNG_PATH), scale=2)
+    return fig
+
+
+def build_choropleth(counts, total_stargazers, path=PNG_PATH):
+    fig = build_figure(counts, total_stargazers)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    # 1.5x of 1240x680 -> 1860x1020, sharp on HiDPI at README width without
+    # committing a multi-megabyte PNG every week.
+    fig.write_image(str(path), scale=1.5)
 
 
 def main():
@@ -145,23 +348,10 @@ def main():
 
     save_cache(cache)
 
-    # Build stats
-    countries = [c for c in cache.values() if c]
-    counts = Counter(countries)
-    total = sum(counts.values()) or 1
-    pct_by_country = {c: v / total for c, v in counts.items()}
-
-    # convert to ISO-3 for plotly
-    pct_by_iso = {}
-    for c, pct in pct_by_country.items():
-        try:
-            iso = pycountry.countries.lookup(c).alpha_3
-            pct_by_iso[iso] = pct * 100  # plotly wants numeric
-        except LookupError:
-            print("Skip unknown country:", c)
+    counts = count_by_country(cache)
 
     print("Rendering PNG map…")
-    build_choropleth(pct_by_iso)
+    build_choropleth(counts, len(cache))
     print(
         "Done – files saved:",
         CSV_PATH.relative_to("."),
