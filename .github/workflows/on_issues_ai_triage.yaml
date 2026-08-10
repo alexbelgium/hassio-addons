@@ -300,11 +300,22 @@ jobs:
 
           # Did the run die on its turn budget rather than on a workflow fault?
           # The execution file is a JSON array of SDK messages; the terminal
-          # result object carries subtype "error_max_turns". Guarded with `?`
-          # and a type check so a non-object element can't abort under set -e.
+          # result object carries subtype "error_max_turns".
+          #
+          # This MUST fail closed: a false positive here downgrades a genuine
+          # workflow failure from a red run to a warning, which is the exact
+          # silent-failure class this workflow was rebuilt to remove. Hence the
+          # explicit `type == "array"` root check — without it `.[]?` happily
+          # iterates the VALUES of an object, so if the action ever changed the
+          # file's shape, {"result":{"subtype":"error_max_turns"}} would match
+          # and mask the failure. Anything that is not the array we expect is
+          # treated as "not max turns" and falls through to the loud path.
+          # The `?` and per-element type check keep a non-object element from
+          # aborting the step under set -e.
           hit_max_turns() {
             [ -n "${EXECUTION_FILE:-}" ] && [ -s "${EXECUTION_FILE:-}" ] || return 1
-            jq -e 'any(.[]?;
+            jq -e '(type == "array") and
+                   any(.[]?;
                        (type == "object") and
                        (((.subtype? // "") == "error_max_turns") or
                         ((.terminal_reason? // "") == "max_turns")))' \
