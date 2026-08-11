@@ -8,12 +8,23 @@ set -e
 # bashio::net.wait_for : bashio takes (port host timeout) while the bundled
 # bashio-standalone.sh takes (host port timeout), and picking the wrong one
 # would either fail instantly or block for the whole timeout.
+# The per probe timeouts keep the 15 minute ceiling real : without them a
+# half open connection would hang a single probe, and the loop, forever.
+komga_ready=false
 for _ in $(seq 1 180); do
-    if curl -sf -o /dev/null "http://127.0.0.1:25600/komga/"; then
+    if curl -sf --connect-timeout 2 --max-time 5 -o /dev/null "http://127.0.0.1:25600/komga/"; then
+        komga_ready=true
         break
     fi
     sleep 5
 done
+
+# Deliberately not fatal : nginx serving a 502 tells the user something is wrong
+# and starts working by itself once komga finally answers, while refusing to
+# start would take ingress down for good after ha_entrypoint gives up retrying.
+if [ "$komga_ready" != true ]; then
+    bashio::log.warning "Komga did not answer within 15 minutes. Starting NGinx anyway : ingress will return 502 until it does."
+fi
 
 bashio::log.info "Starting NGinx..."
 exec nginx
