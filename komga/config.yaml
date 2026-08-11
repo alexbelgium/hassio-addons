@@ -102,4 +102,3 @@ slug: komga
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/komga
 version: "1.26.1"
-webui: http://[HOST]:[PORT:25600]/komga
