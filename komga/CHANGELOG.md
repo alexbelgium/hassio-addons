@@ -1,3 +1,7 @@
+## 1.26.1.1 (2026-08-11)
+
+- Bound the nginx readiness probes (`--connect-timeout` / `--max-time`) so a stalled connection cannot hang the wait, and log a warning when Komga has not answered within 15 minutes
+
 ## 1.26.1 (2026-08-11)
 
 - Initial release, based on gotson/komga ([changelog](https://github.com/gotson/komga/releases))
