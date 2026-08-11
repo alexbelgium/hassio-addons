@@ -9,6 +9,7 @@ CONFIG_LOCATION="/config"
 bashio::log.info "Config stored in $CONFIG_LOCATION"
 
 mkdir -p "$CONFIG_LOCATION"
-# Defaults matter : this script sorts before 00-global_var.sh, which is what
-# exports PUID/PGID from the addon options, and the upstream image sets neither
+# Numbered 20- on purpose : it must sort after 00-global_var.sh, which is what
+# exports PUID/PGID from the addon options. The upstream image sets neither, so
+# the fallbacks only apply when the module is absent.
 chown -R "${PUID:-0}:${PGID:-0}" "$CONFIG_LOCATION"

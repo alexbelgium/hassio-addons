@@ -24,11 +24,8 @@ ENV BASHIO_VERSION=0.14.3
 # 2 Modify Image #
 ##################
 
-# Set S6 wait time (unused here, the upstream image has no s6-overlay, but
-# keeps the pattern identical to the other addons)
-ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
+# No S6_* tuning here : the upstream image ships no s6-overlay, so the vars the
+# other addons set would be read by nobody
 
 # Komga is served from a fixed servlet context path. Ingress strips its own
 # prefix before forwarding, and Komga renders absolute asset urls, so nginx
@@ -121,4 +118,4 @@ HEALTHCHECK \
     --retries=5 \
     --start-period=180s \
     --timeout=25s \
-    CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
+    CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" >/dev/null 2>&1 || exit 1

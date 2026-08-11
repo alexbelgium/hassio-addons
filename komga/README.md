@@ -37,11 +37,13 @@ search index on first boot.
 | `smbv1` | Allow the legacy SMBv1 protocol. |
 | `env_vars` | Extra environment variables passed to Komga. See the [wiki](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2). |
 
-Any Komga setting can be passed through `env_vars` using the upstream naming, see the
-[Komga configuration options](https://komga.org/docs/installation/configuration/). Two common ones:
+Most Komga settings can be passed through `env_vars` using the upstream naming, see the
+[Komga configuration options](https://komga.org/docs/installation/configuration/). A common one:
 
 - `JAVA_TOOL_OPTIONS` = `-Xmx1g` — cap the JVM heap on small machines.
-- `KOMGA_LIBRARIES_SCAN_CRON` — change the automatic library scan schedule.
+
+`SERVER_SERVLET_CONTEXTPATH` and `SERVER_PORT` are reserved by the add-on: ingress is built
+around the `/komga` path on port 25600, and overriding either breaks the sidebar panel.
 
 ## Ingress and URLs
 
@@ -54,8 +56,6 @@ External clients — OPDS readers, Kobo sync, Tachiyomi/Mihon, Panels — must u
 `http://homeassistant:25600/komga` url. Ingress is browser-session based, so those clients cannot
 authenticate through it.
 
-Do not override `SERVER_SERVLET_CONTEXTPATH` through `env_vars`: ingress is built around the
-`/komga` path and changing it breaks the sidebar panel.
 
 ## Data
 
