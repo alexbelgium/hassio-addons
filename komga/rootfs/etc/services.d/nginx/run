@@ -10,8 +10,12 @@ set -e
 # would either fail instantly or block for the whole timeout.
 # The per probe timeouts keep the 15 minute ceiling real : without them a
 # half open connection would hang a single probe, and the loop, forever.
+# A wall clock deadline, not an attempt count : a failed probe costs up to
+# max-time on top of the sleep, so counting attempts would stretch the wait to
+# roughly twice the advertised ceiling.
 komga_ready=false
-for _ in $(seq 1 180); do
+deadline=$((SECONDS + 900))
+while [ "$SECONDS" -lt "$deadline" ]; do
     if curl -sf --connect-timeout 2 --max-time 5 -o /dev/null "http://127.0.0.1:25600/komga/"; then
         komga_ready=true
         break
