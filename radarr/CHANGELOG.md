@@ -1,4 +1,8 @@
  
+## 6.3.0.10514.1 (2026-08-11)
+
+- Bump the addon version so Home Assistant offers the rebuilt image. The `6.3.0.10514` tag was rebuilt on 2026-08-03 and now ships LinuxServer.io `ls313` instead of the `ls311` build that existing installations pulled, but because the addon version string was unchanged the Supervisor saw nothing new and never offered the update. Radarr itself is still 6.3.0.10514 — only the LinuxServer.io base image moved
+
 ## 6.3.0.10514 (2026-07-13)
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
  
