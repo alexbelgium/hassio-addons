@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+# Same invocation as the upstream image entrypoint (gotson/komga), which is
+# replaced by ha_entrypoint.sh so that cont-init.d and nginx can run too.
+# SERVER_SERVLET_CONTEXTPATH is set in the Dockerfile, see ingress.conf.
+
+bashio::log.info "Starting Komga on http://homeassistant:$(bashio::addon.port 25600)/komga"
+
+cd /app
+exec java \
+    -Dspring.profiles.include=docker \
+    --enable-native-access=ALL-UNNAMED \
+    -jar application.jar \
+    --spring.config.additional-location=file:/config/
