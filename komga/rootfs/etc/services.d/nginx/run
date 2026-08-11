@@ -3,11 +3,17 @@
 set -e
 # ==============================================================================
 
-# Wait for komga to become available. First boot builds the database, so leave
-# it a wide margin before nginx starts answering ingress requests.
-# Non fatal : bashio and bashio-standalone disagree on the argument order, and
-# a failed wait must not keep nginx (hence ingress) down.
-bashio::net.wait_for 25600 localhost 900 || true
+# Wait for komga to answer before nginx starts serving ingress. First boot
+# builds the database, so leave a wide margin, but poll rather than call
+# bashio::net.wait_for : bashio takes (port host timeout) while the bundled
+# bashio-standalone.sh takes (host port timeout), and picking the wrong one
+# would either fail instantly or block for the whole timeout.
+for _ in $(seq 1 180); do
+    if curl -sf -o /dev/null "http://127.0.0.1:25600/komga/"; then
+        break
+    fi
+    sleep 5
+done
 
 bashio::log.info "Starting NGinx..."
 exec nginx

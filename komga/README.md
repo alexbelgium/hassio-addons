@@ -59,9 +59,10 @@ authenticate through it.
 
 ## Data
 
-Komga's database, logs and search index are stored in the add-on configuration directory
-(`/addon_configs/xxx-komga`), so they survive add-on updates. Libraries stay where you put them,
-under `/media`, `/share` or a mounted disk.
+Komga's database, logs and search index live in `/config` inside the add-on, which Home Assistant
+maps to this add-on's own configuration directory — `/addon_configs/<repository_id>_komga`, browsable
+with the Filebrowser add-on. They survive add-on updates. Libraries stay where you put them, under
+`/media`, `/share` or a mounted disk.
 
 ## Support
 
