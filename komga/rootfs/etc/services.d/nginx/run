@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+# Wait for komga to answer before nginx starts serving ingress. First boot
+# builds the database, so leave a wide margin, but poll rather than call
+# bashio::net.wait_for : bashio takes (port host timeout) while the bundled
+# bashio-standalone.sh takes (host port timeout), and picking the wrong one
+# would either fail instantly or block for the whole timeout.
+for _ in $(seq 1 180); do
+    if curl -sf -o /dev/null "http://127.0.0.1:25600/komga/"; then
+        break
+    fi
+    sleep 5
+done
+
+bashio::log.info "Starting NGinx..."
+exec nginx
