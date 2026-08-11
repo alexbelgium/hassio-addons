@@ -7,7 +7,7 @@ set -e
 # replaced by ha_entrypoint.sh so that cont-init.d and nginx can run too.
 # SERVER_SERVLET_CONTEXTPATH is set in the Dockerfile, see ingress.conf.
 
-bashio::log.info "Starting Komga on http://homeassistant:$(bashio::addon.port 25600)/komga"
+bashio::log.info "Starting Komga (served on the /komga path, see the addon documentation)"
 
 cd /app
 exec java \

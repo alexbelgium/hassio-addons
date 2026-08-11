@@ -50,6 +50,13 @@ Komga is served from the `/komga` subpath so that it works behind Home Assistant
 - from the Home Assistant sidebar: ingress, no extra setup
 - directly: `http://homeassistant:25600/komga`
 
+External clients — OPDS readers, Kobo sync, Tachiyomi/Mihon, Panels — must use the direct
+`http://homeassistant:25600/komga` url. Ingress is browser-session based, so those clients cannot
+authenticate through it.
+
+Do not override `SERVER_SERVLET_CONTEXTPATH` through `env_vars`: ingress is built around the
+`/komga` path and changing it breaks the sidebar panel.
+
 ## Data
 
 Komga's database, logs and search index are stored in the add-on configuration directory

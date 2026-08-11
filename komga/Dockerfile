@@ -40,8 +40,10 @@ ENV SERVER_SERVLET_CONTEXTPATH="/komga"
 ##################
 
 # Add rootfs
+# Absolute paths on purpose : the upstream image sets WORKDIR /app, so the
+# relative "find ." used by the other addons would miss /etc entirely
 COPY rootfs/ /
-RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
+RUN find /etc/cont-init.d /etc/services.d -type f \( -name "*.sh" -o -name "run" \) -print -exec chmod +x {} \;
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
