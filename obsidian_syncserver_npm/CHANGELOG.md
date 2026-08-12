@@ -1,3 +1,5 @@
+## 3.5.2.1 (12-08-2026)
+- Minor bugs fixed
 # Changelog
 
 
