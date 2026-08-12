@@ -206,20 +206,35 @@ fi
 
 wait_for_supervisor() {
   local max="${HA_SUPERVISOR_WAIT:-30}"
-  local body fields ip ingress port started deadline announced=0
+  local body fields ip ingress port started deadline remaining timeout announced=0
 
   # Nothing to wait for without a token, and bashio could not read the values either.
   [ -n "${SUPERVISOR_TOKEN:-}" ] || return 0
-  [ "$max" -gt 0 ] 2>/dev/null || return 0
+  # Digits only, then forced to base 10: `test -gt` accepts a zero-padded override like 08, but
+  # arithmetic expansion reads it as octal and fails, which would leave the deadline empty and
+  # spin the loop below forever.
+  case "$max" in '' | *[!0-9]*) return 0 ;; esac
+  max=$((10#$max))
+  [ "$max" -gt 0 ] || return 0
   command -v curl >/dev/null 2>&1 || return 0
 
   # A real wall-clock ceiling. Counting attempts would not be one: each curl can itself burn
   # --max-time before the sleep even starts.
   started=$SECONDS
-  deadline=$((SECONDS + max))
+  deadline=$((started + max))
 
   while :; do
-    body="$(curl -fsSL --connect-timeout 2 --max-time 5 \
+    remaining=$((deadline - SECONDS))
+    if [ "$remaining" -le 0 ]; then
+      echo -e "\e[38;5;214m$(date) WARNING: Supervisor API did not report this add-on's network details within ${max}s, continuing anyway\e[0m"
+      return 0
+    fi
+
+    # Never let a single request outlive the ceiling it is bounded by.
+    timeout=5
+    [ "$remaining" -lt "$timeout" ] && timeout="$remaining"
+
+    body="$(curl -fsSL --connect-timeout 2 --max-time "$timeout" \
       -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
       "http://supervisor/addons/self/info" 2>/dev/null || true)"
 
@@ -240,16 +255,13 @@ wait_for_supervisor() {
       return 0
     fi
 
-    if [ "$SECONDS" -ge "$deadline" ]; then
-      echo -e "\e[38;5;214m$(date) WARNING: Supervisor API did not report this add-on's network details within ${max}s, continuing anyway\e[0m"
-      return 0
-    fi
-
     if [ "$announced" -eq 0 ]; then
       echo "Waiting for the Supervisor API to report this add-on's network details..."
       announced=1
     fi
-    sleep 1
+
+    # Skipped when the request already consumed what was left, so the sleep cannot overshoot.
+    [ "$((deadline - SECONDS))" -gt 0 ] && sleep 1
   done
 }
 
