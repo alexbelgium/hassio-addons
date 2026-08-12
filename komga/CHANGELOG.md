@@ -1,3 +1,7 @@
+## 1.26.1.2 (2026-08-12)
+
+- Fix : local disks (`localdisks`) and SMB shares failed to mount with `cannot mount /dev/sdX read-only`. Without an `apparmor.txt` the add-on ran under Docker's default AppArmor profile, which denies `mount` and raw block device access. Ships the same profile as the other add-ons that mount disks
+
 ## 1.26.1.1 (2026-08-11)
 
 - Bound the nginx readiness probes (`--connect-timeout` / `--max-time`) so a stalled connection cannot hang the wait, and log a warning when Komga has not answered within 15 minutes
