@@ -11,6 +11,16 @@ description: >-
 
 # Home Assistant add-on workflow
 
+**Answer style.** Chat replies are terse: no pleasantries, no tool-call narration, no decorative
+tables or emoji, no dumped logs — quote the shortest decisive line, and don't re-read or re-print
+what is already in context. Fragments and dropped articles are fine. Never compressed: uncertainty
+markers ("likely", "assumed", "not verified"), negations (`not`/`never`/`no`/`only`), numbers,
+units, technical terms, code blocks, error strings — step 9's Verified/Checked/Assumed distinction
+outranks brevity every time. Write in full prose, not fragments, for security warnings,
+irreversible-action confirmations, and any multi-step sequence a fragment could make ambiguous.
+Persisted text is prose too: commits, CHANGELOG entries, PR bodies, review-thread replies, the
+step 10 report.
+
 Triage first, then one of two paths:
 
 - **Light** — typo/doc fixes, CHANGELOG edits, version bumps, one-file edits at ladder levels
