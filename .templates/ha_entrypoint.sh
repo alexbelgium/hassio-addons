@@ -188,6 +188,73 @@ if [ -z "$BASHIO_LIB" ]; then
   done
 fi
 
+##############################
+# Wait for the Supervisor API #
+##############################
+
+# Many cont-init scripts build their nginx ingress config out of bashio::addon.ip_address and
+# bashio::addon.ingress_port. Both come from one GET /addons/self/info, and when that is answered
+# before the Supervisor is ready bashio prints nothing: the add-on then either writes
+# "listen : default_server;" -- which nginx rejects with `invalid port in ":"` -- or aborts under
+# set -e and leaves the %%port%% placeholders in place. Either way the add-on cannot serve ingress.
+# Wait here, once, until the call returns usable values, rather than making 48 add-ons defend
+# themselves against the same empty answer.
+#
+# Bounded and never fatal: an add-on with no SUPERVISOR_TOKEN, or a Supervisor that stays
+# unreachable, still has to start. HA_SUPERVISOR_WAIT (seconds, default 30) sets the ceiling; 0
+# skips the wait. When the Supervisor is already up -- the normal case -- this costs one request.
+
+wait_for_supervisor() {
+  local max="${HA_SUPERVISOR_WAIT:-30}"
+  local body fields ip ingress port started deadline announced=0
+
+  # Nothing to wait for without a token, and bashio could not read the values either.
+  [ -n "${SUPERVISOR_TOKEN:-}" ] || return 0
+  [ "$max" -gt 0 ] 2>/dev/null || return 0
+  command -v curl >/dev/null 2>&1 || return 0
+
+  # A real wall-clock ceiling. Counting attempts would not be one: each curl can itself burn
+  # --max-time before the sleep even starts.
+  started=$SECONDS
+  deadline=$((SECONDS + max))
+
+  while :; do
+    body="$(curl -fsSL --connect-timeout 2 --max-time 5 \
+      -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
+      "http://supervisor/addons/self/info" 2>/dev/null || true)"
+
+    # Pull the three fields without depending on jq, which not every base image has. Splitting on
+    # the structural characters first puts each scalar on its own line, so the key can be anchored
+    # at the start of it: a string value that happens to contain the text "ip_address" cannot then
+    # be mistaken for the field itself, and the result does not depend on field ordering. Handles
+    # both the compact JSON the Supervisor returns and pretty-printed variants.
+    fields="$(printf '%s' "$body" | sed 's/[,{}]/\n/g')"
+    ip="$(printf '%s\n' "$fields" | sed -n 's/^[[:space:]]*"ip_address"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n 1)"
+    ingress="$(printf '%s\n' "$fields" | sed -n 's/^[[:space:]]*"ingress"[[:space:]]*:[[:space:]]*\([a-z]*\).*/\1/p' | head -n 1)"
+    port="$(printf '%s\n' "$fields" | sed -n 's/^[[:space:]]*"ingress_port"[[:space:]]*:[[:space:]]*\([0-9][0-9]*\).*/\1/p' | head -n 1)"
+
+    # An ingress add-on also needs a usable port; a non-ingress one never gets one, so requiring
+    # it there would burn the whole timeout on every boot.
+    if [ -n "$ip" ] && { [ "$ingress" != "true" ] || { [ -n "$port" ] && [ "$port" != "0" ]; }; }; then
+      [ "$announced" -eq 0 ] || echo "Supervisor API ready after $((SECONDS - started))s"
+      return 0
+    fi
+
+    if [ "$SECONDS" -ge "$deadline" ]; then
+      echo -e "\e[38;5;214m$(date) WARNING: Supervisor API did not report this add-on's network details within ${max}s, continuing anyway\e[0m"
+      return 0
+    fi
+
+    if [ "$announced" -eq 0 ]; then
+      echo "Waiting for the Supervisor API to report this add-on's network details..."
+      announced=1
+    fi
+    sleep 1
+  done
+}
+
+wait_for_supervisor
+
 ####################
 # Starting scripts #
 ####################
