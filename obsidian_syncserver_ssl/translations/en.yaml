@@ -1,0 +1,22 @@
+configuration:
+  username:
+    name: Admin username
+    description: CouchDB administrator username. Use this in the Obsidian LiveSync plugin settings.
+  password:
+    name: Admin password
+    description: CouchDB administrator password. Leave blank to generate a strong one on first start and save it to /config/obsidian-syncserver/admin_password (also printed once in the log).
+  database:
+    name: Database name
+    description: CouchDB database holding the vault. Created automatically if missing. Must start with a lowercase letter.
+  ssl:
+    name: Enable HTTPS
+    description: Serve HTTPS on port 6984 using the certificate below. Required for mobile Obsidian. The add-on refuses to start if the certificate is missing, expired, or does not match the key.
+  certfile:
+    name: Certificate file
+    description: Certificate filename inside /ssl, typically fullchain.pem. Written there by the Let's Encrypt or DuckDNS add-on; this add-on only reads it and never renews it.
+  keyfile:
+    name: Private key file
+    description: Private key filename inside /ssl, typically privkey.pem.
+  log_level:
+    name: Log level
+    description: CouchDB log verbosity.
