@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 138
+- In the repository : 141
 - Installed : 325872
 
 ### Top 3
@@ -717,6 +717,27 @@ If you want to do add the repository manually, please follow the procedure highl
 ![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003;  [Obsidian Sync Server](obsidian_syncserver_solo/) : Self-hosted Obsidian LiveSync backend on CouchDB. Plain HTTP — put your own reverse proxy in front for TLS.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_solo%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_solo%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+
+&#10003;  [Obsidian Sync Server NPM](obsidian_syncserver_npm/) : Self-hosted Obsidian LiveSync backend on CouchDB, bundled with Nginx Proxy Manager for TLS and certificate management.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_npm%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_npm%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+
+&#10003;  [Obsidian Sync Server SSL](obsidian_syncserver_ssl/) : Self-hosted Obsidian LiveSync backend on CouchDB, serving HTTPS with your own certificates from /ssl. Supports mobile Obsidian.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_ssl%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_ssl%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
 
 &#10003;  [Omada (obsolete)](zzz_archived_omada/) : TP-Link Omada Controller (obsolete, use https://github.com/jkunczik/home-assistant-omada)
 
