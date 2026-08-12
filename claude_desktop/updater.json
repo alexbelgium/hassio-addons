@@ -1,6 +1,6 @@
 {
   "source": "github",
-  "upstream_repo": "linuxserver/docker-baseimage-selkies",
+  "upstream_repo": "aaddrick/claude-desktop-debian",
   "github_fulltag": true,
   "slug": "claude_desktop",
   "paused": false,
