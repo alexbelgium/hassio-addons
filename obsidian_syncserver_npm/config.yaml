@@ -1,0 +1,34 @@
+name: "Obsidian Sync Server NPM"
+slug: obsidian_syncserver_npm
+image: ghcr.io/alexbelgium/obsidian_syncserver_npm-{arch}
+description: "Self-hosted Obsidian LiveSync backend on CouchDB, bundled with Nginx Proxy Manager for TLS and certificate management."
+version: "3.5.2.1"
+url: "https://github.com/alexbelgium/hassio-addons/tree/master/obsidian_syncserver_npm"
+arch:
+  - amd64
+  - aarch64
+startup: services
+init: false
+ports:
+  5984/tcp: 5984
+  80/tcp: 80
+  81/tcp: 81
+  443/tcp: 443
+ports_description:
+  5984/tcp: "CouchDB HTTP (direct access, desktop Obsidian)"
+  80/tcp: "HTTP (certificate validation and redirect)"
+  81/tcp: "Nginx Proxy Manager admin UI"
+  443/tcp: "HTTPS — use this for mobile Obsidian"
+webui: "http://[HOST]:[PORT:81]"
+map:
+  - addon_config:rw
+options:
+  username: admin
+  password: ""
+  database: obsidian
+  log_level: info
+schema:
+  username: str
+  password: password?
+  database: match(^[a-z][a-z0-9_$()+/-]*$)
+  log_level: list(debug|info|warn|error)

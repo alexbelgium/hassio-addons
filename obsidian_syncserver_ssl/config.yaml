@@ -1,0 +1,36 @@
+name: "Obsidian Sync Server SSL"
+slug: obsidian_syncserver_ssl
+image: ghcr.io/alexbelgium/obsidian_syncserver_ssl-{arch}
+description: "Self-hosted Obsidian LiveSync backend on CouchDB, serving HTTPS with your own certificates from /ssl. Supports mobile Obsidian."
+version: "3.5.2"
+url: "https://github.com/alexbelgium/hassio-addons/tree/master/obsidian_syncserver_ssl"
+arch:
+  - amd64
+  - aarch64
+startup: services
+init: false
+ports:
+  5984/tcp: 5984
+  6984/tcp: 6984
+ports_description:
+  5984/tcp: "CouchDB HTTP"
+  6984/tcp: "CouchDB HTTPS — use this for mobile Obsidian"
+map:
+  - addon_config:rw
+  - ssl:ro
+options:
+  username: admin
+  password: ""
+  database: obsidian
+  ssl: true
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+  log_level: info
+schema:
+  username: str
+  password: password?
+  database: match(^[a-z][a-z0-9_$()+/-]*$)
+  ssl: bool
+  certfile: str
+  keyfile: str
+  log_level: list(debug|info|warn|error)

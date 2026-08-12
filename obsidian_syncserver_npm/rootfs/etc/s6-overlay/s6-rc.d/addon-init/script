@@ -1,0 +1,20 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+# NPM's own "prepare" service aborts the entire boot if /etc/letsencrypt is
+# not a mount. Home Assistant does not mount it, so point it at /data, which
+# Supervisor persists as a Docker volume.
+#
+# This is an s6-rc oneshot that "prepare" depends on, so it is guaranteed to
+# run first. NPM's image uses s6-overlay v3 and has no /etc/cont-init.d.
+
+if [ ! -L /etc/letsencrypt ]; then
+    mkdir -p /data/letsencrypt
+    if [ -d /etc/letsencrypt ] && [ -n "$(ls -A /etc/letsencrypt 2> /dev/null)" ]; then
+        cp -a /etc/letsencrypt/. /data/letsencrypt/ 2> /dev/null || true
+    fi
+    rm -rf /etc/letsencrypt
+    ln -sf /data/letsencrypt /etc/letsencrypt
+fi
+
+mkdir -p /data/letsencrypt
+echo "[obsidian-syncserver] /etc/letsencrypt -> /data/letsencrypt"

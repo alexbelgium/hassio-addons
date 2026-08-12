@@ -1,0 +1,3 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+exit 0
