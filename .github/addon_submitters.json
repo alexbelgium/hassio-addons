@@ -1,5 +1,6 @@
 {
   "aurral": "petruknw",
+  "bentopdf": "ToledoEM",
   "cleanuparr": "PierreNa",
   "gitea": "baldarn",
   "kometa": "akrigator",
@@ -8,7 +9,10 @@
   "manyfold": "ToledoEM",
   "navidrome": "baldarn",
   "netalertx": "jokob-sk",
-  "nginx proxy manager": "ToledoEM",
+  "nginx_webserver_proxy": "ToledoEM",
+  "obsidian_syncserver_npm": "ToledoEM",
+  "obsidian_syncserver_solo": "ToledoEM",
+  "obsidian_syncserver_ssl": "ToledoEM",
   "openproject": "baldarn",
   "resiliosync": "tyjtyj",
   "spotweb": "woutercoppens",

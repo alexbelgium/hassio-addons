@@ -86,3 +86,10 @@ Hit Test Database Connection to check it, then turn on end-to-end encryption wit
 ## Security
 
 CouchDB here requires authentication on every request. Keep this on your LAN unless you have deliberately set up remote access.
+
+## Support
+
+Create an issue on [github](https://github.com/alexbelgium/hassio-addons/issues) and tag @ToledoEM
+
+- Obsidian Self-hosted LiveSync plugin → [github.com/vrtmrz/obsidian-livesync](https://github.com/vrtmrz/obsidian-livesync)
+- CouchDB upstream → [couchdb.apache.org](https://couchdb.apache.org/)

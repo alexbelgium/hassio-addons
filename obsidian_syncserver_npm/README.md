@@ -91,3 +91,11 @@ Hit Test Database Connection to check it, then turn on end-to-end encryption wit
 ## Security
 
 CouchDB requires authentication on every request, and NPM's admin UI has its own login that you have to change the first time you use it. Keep this on your LAN unless you have deliberately set up remote access.
+
+## Support
+
+For problems with this add-on (not the upstream CouchDB or Nginx Proxy Manager software), create an issue on [github](https://github.com/alexbelgium/hassio-addons/issues) and tag @ToledoEM
+
+- Obsidian Self-hosted LiveSync plugin → [github.com/vrtmrz/obsidian-livesync](https://github.com/vrtmrz/obsidian-livesync)
+- CouchDB upstream → [couchdb.apache.org](https://couchdb.apache.org/)
+- Nginx Proxy Manager upstream → [github.com/NginxProxyManager/nginx-proxy-manager](https://github.com/NginxProxyManager/nginx-proxy-manager)

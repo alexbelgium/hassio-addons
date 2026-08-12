@@ -64,3 +64,10 @@ Hit Test Database Connection to check it, then turn on end-to-end encryption wit
 ## Security
 
 CouchDB here requires authentication on every request, so nothing is readable anonymously. Still, do not forward port 5984 to the internet. Keep it on your LAN, or put it behind a proxy that terminates TLS and does its own access control.
+
+## Support
+
+Create an issue on [github](https://github.com/alexbelgium/hassio-addons/issues) and tag @ToledoEM
+
+- Obsidian Self-hosted LiveSync plugin → [github.com/vrtmrz/obsidian-livesync](https://github.com/vrtmrz/obsidian-livesync)
+- CouchDB upstream → [couchdb.apache.org](https://couchdb.apache.org/)
