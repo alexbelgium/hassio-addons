@@ -173,9 +173,13 @@ fi
 ####################################
 
 BASHIO_LIB=""
+BASHIO_LIB_FULL=false
 for f in /usr/lib/bashio/bashio.sh /usr/lib/bashio/lib.sh /usr/src/bashio/bashio.sh /usr/local/lib/bashio/bashio.sh; do
   if [ -f "$f" ]; then
     BASHIO_LIB="$f"
+    # The real library, which talks to the Supervisor. The standalone shim below only reads
+    # environment variables, which matters to wait_for_supervisor().
+    BASHIO_LIB_FULL=true
     break
   fi
 done
@@ -197,8 +201,14 @@ fi
 # before the Supervisor is ready bashio prints nothing: the add-on then either writes
 # "listen : default_server;" -- which nginx rejects with `invalid port in ":"` -- or aborts under
 # set -e and leaves the %%port%% placeholders in place. Either way the add-on cannot serve ingress.
-# Wait here, once, until the call returns usable values, rather than making 48 add-ons defend
-# themselves against the same empty answer.
+# Ask for the same values here, through the same bashio calls, until they come back usable --
+# rather than making 48 add-ons defend themselves against the same empty answer.
+#
+# Going through bashio rather than curl is what makes this reliable rather than merely likely:
+# bashio caches a successful /addons/self/info under ${CACHE_DIR:-/tmp/.bashio}, so once this
+# returns, every later bashio::addon.* call in every cont-init script reads that file instead of
+# asking the Supervisor again. A probe that only proved the API was up a moment ago would leave
+# the very next call free to fail.
 #
 # Bounded and never fatal: an add-on with no SUPERVISOR_TOKEN, or a Supervisor that stays
 # unreachable, still has to start. HA_SUPERVISOR_WAIT (seconds, default 30) sets the ceiling; 0
@@ -206,20 +216,22 @@ fi
 
 wait_for_supervisor() {
   local max="${HA_SUPERVISOR_WAIT:-30}"
-  local body fields ip ingress port started deadline remaining timeout announced=0
+  local started deadline remaining attempt announced=0
 
-  # Nothing to wait for without a token, and bashio could not read the values either.
+  # Nothing to wait for without a token. The standalone shim is excluded too: it answers these
+  # calls from environment variables and never contacts the Supervisor, so it can never satisfy
+  # the probe and would burn the whole ceiling on every boot.
   [ -n "${SUPERVISOR_TOKEN:-}" ] || return 0
+  [ "${BASHIO_LIB_FULL:-false}" = "true" ] || return 0
+  # bashio's own curl carries no --max-time, so each attempt is bounded from the outside.
+  command -v timeout >/dev/null 2>&1 || return 0
   # Digits only, then forced to base 10: `test -gt` accepts a zero-padded override like 08, but
   # arithmetic expansion reads it as octal and fails, which would leave the deadline empty and
   # spin the loop below forever.
   case "$max" in '' | *[!0-9]*) return 0 ;; esac
   max=$((10#$max))
   [ "$max" -gt 0 ] || return 0
-  command -v curl >/dev/null 2>&1 || return 0
 
-  # A real wall-clock ceiling. Counting attempts would not be one: each curl can itself burn
-  # --max-time before the sleep even starts.
   started=$SECONDS
   deadline=$((started + max))
 
@@ -230,27 +242,17 @@ wait_for_supervisor() {
       return 0
     fi
 
-    # Never let a single request outlive the ceiling it is bounded by.
-    timeout=5
-    [ "$remaining" -lt "$timeout" ] && timeout="$remaining"
+    # No single attempt may outlive the ceiling it is bounded by.
+    attempt=5
+    [ "$remaining" -lt "$attempt" ] && attempt="$remaining"
 
-    body="$(curl -fsSL --connect-timeout 2 --max-time "$timeout" \
-      -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
-      "http://supervisor/addons/self/info" 2>/dev/null || true)"
-
-    # Pull the three fields without depending on jq, which not every base image has. Splitting on
-    # the structural characters first puts each scalar on its own line, so the key can be anchored
-    # at the start of it: a string value that happens to contain the text "ip_address" cannot then
-    # be mistaken for the field itself, and the result does not depend on field ordering. Handles
-    # both the compact JSON the Supervisor returns and pretty-printed variants.
-    fields="$(printf '%s' "$body" | sed 's/[,{}]/\n/g')"
-    ip="$(printf '%s\n' "$fields" | sed -n 's/^[[:space:]]*"ip_address"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n 1)"
-    ingress="$(printf '%s\n' "$fields" | sed -n 's/^[[:space:]]*"ingress"[[:space:]]*:[[:space:]]*\([a-z]*\).*/\1/p' | head -n 1)"
-    port="$(printf '%s\n' "$fields" | sed -n 's/^[[:space:]]*"ingress_port"[[:space:]]*:[[:space:]]*\([0-9][0-9]*\).*/\1/p' | head -n 1)"
-
-    # An ingress add-on also needs a usable port; a non-ingress one never gets one, so requiring
-    # it there would burn the whole timeout on every boot.
-    if [ -n "$ip" ] && { [ "$ingress" != "true" ] || { [ -n "$port" ] && [ "$port" != "0" ]; }; }; then
+    # One call is enough to settle all of them: bashio fetches the whole /addons/self/info object
+    # and caches it, so a populated ip_address means ingress_port and the rest are cached too.
+    # Run in a child shell so bashio's globals and traps stay out of the entrypoint; its own error
+    # logging is dropped because a failed attempt here is expected, not news.
+    # shellcheck disable=SC2016
+    if timeout "$attempt" bash -c '. "$1" && [ -n "$(bashio::addon.ip_address)" ]' \
+      _ "$BASHIO_LIB" >/dev/null 2>&1; then
       [ "$announced" -eq 0 ] || echo "Supervisor API ready after $((SECONDS - started))s"
       return 0
     fi
@@ -260,7 +262,7 @@ wait_for_supervisor() {
       announced=1
     fi
 
-    # Skipped when the request already consumed what was left, so the sleep cannot overshoot.
+    # Skipped when the attempt already consumed what was left, so the sleep cannot overshoot.
     [ "$((deadline - SECONDS))" -gt 0 ] && sleep 1
   done
 }
