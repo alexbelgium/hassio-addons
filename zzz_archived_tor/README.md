@@ -1,4 +1,4 @@
-## &#9888; Open Request : [✨ [REQUEST] qbittorrent (opened 2025-10-11)](https://github.com/alexbelgium/hassio-addons/issues/2139) by [@nyok92](https://github.com/nyok92)
+## &#9888; Open Issue : [✨ [REQUEST] qbittorrent (opened 2025-10-11)](https://github.com/alexbelgium/hassio-addons/issues/2139) by [@nyok92](https://github.com/nyok92)
 ## &#9888; Open Request : [✨ [REQUEST] transmission, document where torrent files are stored (opened 2026-07-14)](https://github.com/alexbelgium/hassio-addons/issues/2852) by [@bilogic](https://github.com/bilogic)
 ## &#9888; Open Issue : [🐛 [qBittorrent] Ingress fails - nginx invalid port in : due to premature exit 0 in 30-nginx.sh (opened 2026-08-10)](https://github.com/alexbelgium/hassio-addons/issues/2949) by [@override80](https://github.com/override80)
 # Hass.io Add-ons: Tor with bridges
