@@ -173,9 +173,13 @@ fi
 ####################################
 
 BASHIO_LIB=""
+BASHIO_LIB_FULL=false
 for f in /usr/lib/bashio/bashio.sh /usr/lib/bashio/lib.sh /usr/src/bashio/bashio.sh /usr/local/lib/bashio/bashio.sh; do
   if [ -f "$f" ]; then
     BASHIO_LIB="$f"
+    # The real library, which talks to the Supervisor. The standalone shim below only reads
+    # environment variables, which matters to wait_for_supervisor().
+    BASHIO_LIB_FULL=true
     break
   fi
 done
@@ -187,6 +191,83 @@ if [ -z "$BASHIO_LIB" ]; then
     fi
   done
 fi
+
+##############################
+# Wait for the Supervisor API #
+##############################
+
+# Many cont-init scripts build their nginx ingress config out of bashio::addon.ip_address and
+# bashio::addon.ingress_port. Both come from one GET /addons/self/info, and when that is answered
+# before the Supervisor is ready bashio prints nothing: the add-on then either writes
+# "listen : default_server;" -- which nginx rejects with `invalid port in ":"` -- or aborts under
+# set -e and leaves the %%port%% placeholders in place. Either way the add-on cannot serve ingress.
+# Ask for the same values here, through the same bashio calls, until they come back usable --
+# rather than making 48 add-ons defend themselves against the same empty answer.
+#
+# Going through bashio rather than curl is what makes this reliable rather than merely likely:
+# bashio caches a successful /addons/self/info under ${CACHE_DIR:-/tmp/.bashio}, so once this
+# returns, every later bashio::addon.* call in every cont-init script reads that file instead of
+# asking the Supervisor again. A probe that only proved the API was up a moment ago would leave
+# the very next call free to fail.
+#
+# Bounded and never fatal: an add-on with no SUPERVISOR_TOKEN, or a Supervisor that stays
+# unreachable, still has to start. HA_SUPERVISOR_WAIT (seconds, default 30) sets the ceiling; 0
+# skips the wait. When the Supervisor is already up -- the normal case -- this costs one request.
+
+wait_for_supervisor() {
+  local max="${HA_SUPERVISOR_WAIT:-30}"
+  local started deadline remaining attempt announced=0
+
+  # Nothing to wait for without a token. The standalone shim is excluded too: it answers these
+  # calls from environment variables and never contacts the Supervisor, so it can never satisfy
+  # the probe and would burn the whole ceiling on every boot.
+  [ -n "${SUPERVISOR_TOKEN:-}" ] || return 0
+  [ "${BASHIO_LIB_FULL:-false}" = "true" ] || return 0
+  # bashio's own curl carries no --max-time, so each attempt is bounded from the outside.
+  command -v timeout >/dev/null 2>&1 || return 0
+  # Digits only, then forced to base 10: `test -gt` accepts a zero-padded override like 08, but
+  # arithmetic expansion reads it as octal and fails, which would leave the deadline empty and
+  # spin the loop below forever.
+  case "$max" in '' | *[!0-9]*) return 0 ;; esac
+  max=$((10#$max))
+  [ "$max" -gt 0 ] || return 0
+
+  started=$SECONDS
+  deadline=$((started + max))
+
+  while :; do
+    remaining=$((deadline - SECONDS))
+    if [ "$remaining" -le 0 ]; then
+      echo -e "\e[38;5;214m$(date) WARNING: Supervisor API did not report this add-on's network details within ${max}s, continuing anyway\e[0m"
+      return 0
+    fi
+
+    # No single attempt may outlive the ceiling it is bounded by.
+    attempt=5
+    [ "$remaining" -lt "$attempt" ] && attempt="$remaining"
+
+    # One call is enough to settle all of them: bashio fetches the whole /addons/self/info object
+    # and caches it, so a populated ip_address means ingress_port and the rest are cached too.
+    # Run in a child shell so bashio's globals and traps stay out of the entrypoint; its own error
+    # logging is dropped because a failed attempt here is expected, not news.
+    # shellcheck disable=SC2016
+    if timeout "$attempt" bash -c '. "$1" && [ -n "$(bashio::addon.ip_address)" ]' \
+      _ "$BASHIO_LIB" >/dev/null 2>&1; then
+      [ "$announced" -eq 0 ] || echo "Supervisor API ready after $((SECONDS - started))s"
+      return 0
+    fi
+
+    if [ "$announced" -eq 0 ]; then
+      echo "Waiting for the Supervisor API to report this add-on's network details..."
+      announced=1
+    fi
+
+    # Skipped when the attempt already consumed what was left, so the sleep cannot overshoot.
+    [ "$((deadline - SECONDS))" -gt 0 ] && sleep 1
+  done
+}
+
+wait_for_supervisor
 
 ####################
 # Starting scripts #

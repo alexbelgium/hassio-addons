@@ -1,4 +1,8 @@
 
+## 5.2.3.2 (2026-08-12)
+
+- Fix : ingress could fail permanently with `nginx: [emerg] invalid port in ":"`. `30-nginx.sh` pastes `bashio::addon.ip_address` and `bashio::addon.ingress_port` straight into the nginx config; when the Supervisor answers before it is ready both come back empty and the config gets `listen : default_server;`. The add-on entrypoint now waits (up to 30s, tunable with `HA_SUPERVISOR_WAIT`) for the Supervisor to report the add-on's network details before any startup script runs
+
 ## 5.2.3-1 (2026-07-09)
 
 - Rebuild images after VueTorrent download path fix
