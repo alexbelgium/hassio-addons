@@ -1,3 +1,7 @@
+## 1.26.1.3 (2026-08-12)
+
+- Fix : 401 errors after a successful login through ingress. Komga scopes its session cookies to its servlet context path (`Path=/komga`), which the browser never sends back from the ingress url, so every request after the login was anonymous. Nginx now rewrites the cookie path onto the ingress entry
+
 ## 1.26.1.2 (2026-08-12)
 
 - Fix : local disks (`localdisks`) and SMB shares failed to mount with `cannot mount /dev/sdX read-only`. Without an `apparmor.txt` the add-on ran under Docker's default AppArmor profile, which denies `mount` and raw block device access. Ships the same profile as the other add-ons that mount disks
