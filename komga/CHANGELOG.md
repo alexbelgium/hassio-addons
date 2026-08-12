@@ -1,3 +1,5 @@
+## 1.26.1.4 (12-08-2026)
+- Minor bugs fixed
 ## 1.26.1.3 (2026-08-12)
 
 - Fix : 401 errors after a successful login through ingress. Komga scopes its session cookies to its servlet context path (`Path=/komga`), which the browser never sends back from the ingress url, so every request after the login was anonymous. Nginx now rewrites the cookie path onto the ingress entry
