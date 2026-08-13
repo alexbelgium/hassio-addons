@@ -1,3 +1,6 @@
+ 
+## 1.26.3 (2026-08-13)
+- Update to latest version from gotson/komga (changelog : https://github.com/gotson/komga/releases)
 ## 1.26.1.4 (12-08-2026)
 - Minor bugs fixed
 ## 1.26.1.3 (2026-08-12)
