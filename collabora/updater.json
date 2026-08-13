@@ -1,9 +1,9 @@
 {
   "github_exclude": "sha256",
-  "last_update": "2026-07-26",
+  "last_update": "2026-08-13",
   "repository": "alexbelgium/hassio-addons",
   "slug": "collabora",
   "source": "dockerhub",
   "upstream_repo": "collabora/code",
-  "upstream_version": "26.04.2.4.1"
+  "upstream_version": "26.04.3.1.1"
 }
