@@ -293,6 +293,7 @@ _wireguard_up() {
         elif [ "${result}" -eq 2 ]; then
             config["IPv6Enabled"]="true"
             local_ip_types["${local_ip}"]="ipv6"
+            allowed_ip_types["::/0"]="ipv6"
             _cmd "ip addr add ${local_ip} dev ${config["Interface"]}" || return 1
         else
             bashio::log.warning "Ignoring invalid local IP address: ${local_ip}"
