@@ -2,7 +2,7 @@ name: "Obsidian Sync Server"
 slug: obsidian_syncserver_solo
 image: ghcr.io/alexbelgium/obsidian_syncserver_solo-{arch}
 description: "Self-hosted Obsidian LiveSync backend on CouchDB. Plain HTTP — put your own reverse proxy in front for TLS."
-version: "3.5.2"
+version: "3.5.2.1"
 url: "https://github.com/alexbelgium/hassio-addons/tree/master/obsidian_syncserver_solo"
 arch:
   - amd64
