@@ -70,8 +70,9 @@ if [ -n "${ALSA_CARD:-}" ]; then
     # "ffmpeg -f alsa -i" (scripts/livestream.sh), so it must be an ALSA PCM name.
     # ALSA_CARD holds a card index (1) or a card id (Audio), which are not PCM names:
     # writing them as-is gives "Unknown PCM 1" and no recording at all. Build a PCM
-    # name from them, and pass through a value that already is one (plughw:...).
-    if [[ "$ALSA_CARD" == *:* ]] || [[ "$ALSA_CARD" =~ ^(default|null|pulse|pipewire)$ ]]; then
+    # name from them, unless the value already is one of ALSA's own PCM names
+    # (checked against "arecord -L", e.g. default, null, pulse, sysdefault, front...).
+    if [[ "$ALSA_CARD" == *:* ]] || arecord -L 2> /dev/null | grep -qx "$ALSA_CARD"; then
         REC_CARD="$ALSA_CARD"
     else
         REC_CARD="plughw:CARD=${ALSA_CARD},DEV=0"
