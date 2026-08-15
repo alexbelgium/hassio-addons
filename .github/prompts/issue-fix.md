@@ -13,14 +13,52 @@ about confidence matters more than the number of pull requests you open.
 
 ## Hard limits
 
-These are not guidelines. A workflow step enforces them after you finish, and
-anything that violates them gets blocked and flagged.
+These are not guidelines. Limit 1 is machine-enforced — a workflow step checks
+every pull request you open and blocks and flags anything that violates it. The
+rest are on you: nothing checks them, so breaking one ships silently.
 
 1. **Never modify `.github/` or `.templates/`.** Those are inherited by every
    add-on in the repo. A change there is a 100-add-on incident, not a fix.
-2. **Never touch the `version` or `upstream` fields in `config.yaml`.** The
-   `addons_updater` job owns those. Editing them causes merge conflicts you
-   will not be around to resolve.
+2. **`config.yaml` is yours to edit, with one carve-out.** Never change the
+   *upstream part* of `version` — the portion that tracks the upstream release
+   — and never edit `updater.json` at all. The `addons_updater` job owns both,
+   and editing them causes merge conflicts you will not be around to resolve.
+   (There is no `upstream:` key in `config.yaml`; upstream tracking lives in
+   `updater.json` as `upstream_repo` / `upstream_version`.)
+
+   The **local patch counter** is a different thing and you must bump it. When
+   you change any file in an add-on, `version` must change too — otherwise
+   Supervisor never offers the rebuild, the add-on keeps running the old image,
+   and your fix ships inert: merged, doing nothing, with the issue looking
+   closed. That is worse than not fixing it at all.
+
+   **You cannot tell the counter from `version` alone — read `updater.json`.**
+   Upstream versions in this repo have anywhere from one to five components, so
+   a trailing `.1234` is just as likely to belong to upstream as to be a local
+   counter. `updater.json`'s `upstream_version` is the authority. Let `U` be
+   that value, and compare:
+
+   | `version` vs `U` | what to do | example |
+   |---|---|---|
+   | identical | **append** `.1` | sonarr `4.0.19.3001` -> `4.0.19.3001.1` |
+   | `U` + `.` + digits | **increment** those digits | radarr `6.3.0.10514.1` -> `6.3.0.10514.2` |
+   | anything else | **leave it alone** | plex, readarr, joal |
+
+   Getting this backwards corrupts data you do not own: sonarr's `4.0.19.3001`
+   *is* the upstream version, so "increment the last component" would produce
+   `4.0.19.3002` and burn the identifier of a future real release. 82 of the
+   add-ons in this repo are in that first row — appending is the common case,
+   incrementing the rare one.
+
+   Use a dot, never a hyphen: `X.Y.Z-N` parses as a semver pre-release, which
+   Supervisor treats as *older* than `X.Y.Z` and will not offer.
+
+   The third row is not a failure — it is the safe answer whenever the add-on
+   has no `updater.json`, its `version` has drifted from `upstream_version`, or
+   the format is exotic (LSIO tag `1.43.1.10611-1e34174b1-ls301`, a date, a
+   nightly). Do not guess a counter onto those. Leave `version` untouched and
+   say so — in the pull request body, or in the plan if this issue is going out
+   as Outcome B — so a human can decide.
 3. **One add-on per branch, one branch per pull request.** Branch name
    `ai-fix/<addon>-<issue-number>`.
 4. **Never merge, never close an issue, never enable auto-merge.** Opening a
