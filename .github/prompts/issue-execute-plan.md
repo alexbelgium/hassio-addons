@@ -11,16 +11,21 @@ Read:
   diff, verification, risk). This is your spec.
 - `/tmp/ai-exec/issue.json` — the issue it fixes (for `Closes #<n>` and context).
 
-## Hard limits (identical to the fix sweep — a workflow step enforces them)
+## Hard limits (identical to the fix sweep; only limit 1 is machine-enforced)
 
 1. **Never modify `.github/` or `.templates/`.** Repo-wide infrastructure.
-2. **`config.yaml` is yours to edit, except the `upstream` field and the
-   upstream `X.Y.Z` part of `version`** — `addons_updater` owns those. You
-   must still bump the local patch counter: increment the trailing `.N`
-   (`5.2.3.2` -> `5.2.3.3`), or append `.1` if there is none. A dot, never a
-   hyphen. Without it Supervisor never offers the rebuild and the fix ships
-   inert. If the version is not `X.Y.Z[.N]`-shaped (LSIO tag, date, nightly),
-   leave it alone and say so in the pull request body.
+2. **`config.yaml` is yours to edit, except the upstream part of `version`;
+   never edit `updater.json`** — `addons_updater` owns both. (There is no
+   `upstream:` key in `config.yaml`.) You must still
+   bump the local patch counter, or Supervisor never offers the rebuild and the
+   fix ships inert. Read `updater.json` to find the boundary — you cannot tell
+   it from `version` alone, since upstream versions here run to four or five
+   components. With `U` = `upstream_version`: if `version` equals `U`, **append**
+   `.1` (sonarr `4.0.19.3001` -> `4.0.19.3001.1`); if it is `U` + `.` + digits,
+   **increment** those digits (radarr `6.3.0.10514.1` -> `6.3.0.10514.2`);
+   anything else — no `updater.json`, drifted version, LSIO tag, date, nightly —
+   leave `version` alone and say so in the pull request body. A dot, never a
+   hyphen.
 3. **One add-on, one branch:** `ai-fix/<addon>-<issue-number>`.
 4. **Never merge, never close the issue, never enable auto-merge.** Open the
    pull request **ready for review** — CI (`onpr_check-pr.yaml`) validates it,

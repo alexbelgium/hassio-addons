@@ -161,11 +161,17 @@ the sweep), `ai:plan-pending` (plan posted, awaiting `ai:approved`), `ai:fixed`,
 out of the automated tiers but not the manual ones. **Kill switch:** set the
 repo variable `AI_DISABLED=true` to pause every AI workflow with no file edits.
 AI fixes must never touch `.github/` or `.templates/` (enforced by
-`ai_guard_paths.sh`). They may edit `config.yaml` freely except the `upstream`
-field and the upstream `X.Y.Z` part of `version`, which `addons_updater` owns;
-they must still bump the local patch counter (`X.Y.Z.N`) so Supervisor offers
-the rebuild — without it the fix ships inert. This rule is prompt-only, not
-machine-enforced.
+`ai_guard_paths.sh`). They may edit `config.yaml` freely except the upstream
+part of `version`, and must never edit `updater.json` — `addons_updater` owns
+both. (There is no `upstream:` key in `config.yaml`; upstream tracking lives in
+`updater.json`.) They must still bump the local patch counter so Supervisor
+offers the rebuild —
+without it the fix ships inert. The counter boundary comes from
+`updater.json`'s `upstream_version`, never from the shape of `version`: append
+`.1` when the two are equal (the common case — upstream versions here run to
+four or five components), increment the trailing digits only when `version` is
+`upstream_version` + `.N`, and otherwise leave `version` alone. This rule is
+prompt-only, not machine-enforced.
 
 ## Linting Rules
 
