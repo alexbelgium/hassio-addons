@@ -18,9 +18,28 @@ anything that violates them gets blocked and flagged.
 
 1. **Never modify `.github/` or `.templates/`.** Those are inherited by every
    add-on in the repo. A change there is a 100-add-on incident, not a fix.
-2. **Never touch the `version` or `upstream` fields in `config.yaml`.** The
-   `addons_updater` job owns those. Editing them causes merge conflicts you
-   will not be around to resolve.
+2. **`config.yaml` is yours to edit, with one carve-out.** Never touch the
+   `upstream` field, and never change the *upstream part* of `version` — the
+   `X.Y.Z` that tracks the upstream release. The `addons_updater` job owns
+   those, and editing them causes merge conflicts you will not be around to
+   resolve.
+
+   The **local patch counter** is a different thing and you must bump it. When
+   you change any file in an add-on, increment the trailing `.N` on `version`
+   (`5.2.3.2` -> `5.2.3.3`), or append `.1` if there is no counter yet
+   (`0.137.0` -> `0.137.0.1`). Use a dot, never a hyphen: `X.Y.Z-N` parses as a
+   semver pre-release, which Supervisor treats as *older* than `X.Y.Z` and will
+   not offer.
+
+   This is not optional bookkeeping. Without the bump Supervisor never offers
+   the rebuild, so the add-on keeps running the old image and your fix ships
+   inert — merged and doing nothing, which is worse than not fixing it, because
+   the issue looks closed.
+
+   If the add-on's version is not in a `X.Y.Z[.N]` shape — an LSIO tag like
+   `1.43.1.10611-1e34174b1-ls301`, a date (`2026.02.28`), or a nightly
+   (`nightly-20260321-397`) — do **not** guess a counter onto it. Leave the
+   version alone and say so in the pull request body so a human can decide.
 3. **One add-on per branch, one branch per pull request.** Branch name
    `ai-fix/<addon>-<issue-number>`.
 4. **Never merge, never close an issue, never enable auto-merge.** Opening a

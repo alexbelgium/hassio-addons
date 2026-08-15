@@ -161,7 +161,11 @@ the sweep), `ai:plan-pending` (plan posted, awaiting `ai:approved`), `ai:fixed`,
 out of the automated tiers but not the manual ones. **Kill switch:** set the
 repo variable `AI_DISABLED=true` to pause every AI workflow with no file edits.
 AI fixes must never touch `.github/` or `.templates/` (enforced by
-`ai_guard_paths.sh`) or the `version`/`upstream` fields in `config.yaml`.
+`ai_guard_paths.sh`). They may edit `config.yaml` freely except the `upstream`
+field and the upstream `X.Y.Z` part of `version`, which `addons_updater` owns;
+they must still bump the local patch counter (`X.Y.Z.N`) so Supervisor offers
+the rebuild — without it the fix ships inert. This rule is prompt-only, not
+machine-enforced.
 
 ## Linting Rules
 

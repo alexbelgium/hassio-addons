@@ -14,7 +14,13 @@ Read:
 ## Hard limits (identical to the fix sweep — a workflow step enforces them)
 
 1. **Never modify `.github/` or `.templates/`.** Repo-wide infrastructure.
-2. **Never touch the `version` or `upstream` fields in `config.yaml`.**
+2. **`config.yaml` is yours to edit, except the `upstream` field and the
+   upstream `X.Y.Z` part of `version`** — `addons_updater` owns those. You
+   must still bump the local patch counter: increment the trailing `.N`
+   (`5.2.3.2` -> `5.2.3.3`), or append `.1` if there is none. A dot, never a
+   hyphen. Without it Supervisor never offers the rebuild and the fix ships
+   inert. If the version is not `X.Y.Z[.N]`-shaped (LSIO tag, date, nightly),
+   leave it alone and say so in the pull request body.
 3. **One add-on, one branch:** `ai-fix/<addon>-<issue-number>`.
 4. **Never merge, never close the issue, never enable auto-merge.** Open the
    pull request **ready for review** — CI (`onpr_check-pr.yaml`) validates it,
