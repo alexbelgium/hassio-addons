@@ -71,7 +71,7 @@ if [ -n "${ALSA_CARD:-}" ]; then
     # ALSA_CARD holds a card index (1) or a card id (Audio), which are not PCM names:
     # writing them as-is gives "Unknown PCM 1" and no recording at all. Build a PCM
     # name from them, and pass through a value that already is one (plughw:...).
-    if [[ "$ALSA_CARD" == *:* ]] || [[ "$ALSA_CARD" == "default" ]]; then
+    if [[ "$ALSA_CARD" == *:* ]] || [[ "$ALSA_CARD" =~ ^(default|null|pulse|pipewire)$ ]]; then
         REC_CARD="$ALSA_CARD"
     else
         REC_CARD="plughw:CARD=${ALSA_CARD},DEV=0"
@@ -79,12 +79,12 @@ if [ -n "${ALSA_CARD:-}" ]; then
     bashio::log.warning "ALSA_CARD is defined, the birdnet.conf is adapted to use device $REC_CARD"
     # --follow-symlinks : $HOME/BirdNET-Pi/birdnet.conf is a symlink to /config/birdnet.conf
     # (01-structure.sh), and sed -i would replace it with a regular file, detaching it from
-    # the file the WebUI writes to
-    for file in "$HOME"/BirdNET-Pi/birdnet.conf /config/birdnet.conf; do
-        if [ -f "$file" ]; then
-            sed -i --follow-symlinks "/^REC_CARD/c\REC_CARD=$REC_CARD" "$file"
-        fi
-    done
+    # the file the WebUI writes to. Only /config/birdnet.conf is updated directly, since the
+    # home-path symlink is writable by the pi/caddy user and could be repointed before this
+    # root-run script gets to it.
+    if [ -f /config/birdnet.conf ]; then
+        sed -i --follow-symlinks "/^REC_CARD/c\REC_CARD=$REC_CARD" /config/birdnet.conf
+    fi
 fi
 
 # Define permissions for audio
