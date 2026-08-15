@@ -66,10 +66,23 @@ fi || true
 
 # Use ALSA CARD defined in add-on options if available
 if [ -n "${ALSA_CARD:-}" ]; then
-    bashio::log.warning "ALSA_CARD is defined, the birdnet.conf is adapt to use device $ALSA_CARD"
+    # REC_CARD is passed as-is to "arecord -D" (scripts/birdnet_recording.sh) and to
+    # "ffmpeg -f alsa -i" (scripts/livestream.sh), so it must be an ALSA PCM name.
+    # ALSA_CARD holds a card index (1) or a card id (Audio), which are not PCM names:
+    # writing them as-is gives "Unknown PCM 1" and no recording at all. Build a PCM
+    # name from them, and pass through a value that already is one (plughw:...).
+    if [[ "$ALSA_CARD" == *:* ]] || [[ "$ALSA_CARD" == "default" ]]; then
+        REC_CARD="$ALSA_CARD"
+    else
+        REC_CARD="plughw:CARD=${ALSA_CARD},DEV=0"
+    fi
+    bashio::log.warning "ALSA_CARD is defined, the birdnet.conf is adapted to use device $REC_CARD"
+    # --follow-symlinks : $HOME/BirdNET-Pi/birdnet.conf is a symlink to /config/birdnet.conf
+    # (01-structure.sh), and sed -i would replace it with a regular file, detaching it from
+    # the file the WebUI writes to
     for file in "$HOME"/BirdNET-Pi/birdnet.conf /config/birdnet.conf; do
         if [ -f "$file" ]; then
-            sed -i "/^REC_CARD/c\REC_CARD=$ALSA_CARD" "$file"
+            sed -i --follow-symlinks "/^REC_CARD/c\REC_CARD=$REC_CARD" "$file"
         fi
     done
 fi

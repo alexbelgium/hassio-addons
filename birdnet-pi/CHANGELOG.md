@@ -1,3 +1,6 @@
+## 2026.08.15 (15-08-2026)
+- Fix: `ALSA_CARD` now really selects the microphone. Its value was copied as-is into `REC_CARD`, but BirdNET-Pi hands `REC_CARD` to `arecord -D` / `ffmpeg -f alsa -i`, which expect an ALSA PCM name: a card index such as `1` gave `Unknown PCM 1` and no recording at all. It is now converted to `plughw:CARD=<value>,DEV=0`, while a value that already is a PCM name (`dsnoop:CARD=Audio,DEV=0`, `default`, ...) is used as provided
+- Fix: setting `ALSA_CARD` no longer replaces the `~/BirdNET-Pi/birdnet.conf` symlink with a detached copy of `/config/birdnet.conf`
 ## 2026.08.02 (02-08-2026)
 - Fix: ingress returned "502 Bad Gateway" because Caddy never listened on :8082. `91-nginx_ingress.sh` hooked the ingress site into `update_caddyfile.sh` with a sed anchored on `sudo caddy fmt --overwrite`, but 2026.07.10-1 strips `sudo` from every BirdNET-Pi script at build time, so the anchor stopped matching. `update_caddyfile.sh` then rewrote the Caddyfile from scratch just before Caddy started, dropping the ingress site
 - Fix: `caddy_ingress.sh` no longer appends a second `:8082` block when it runs twice (a duplicate site address makes Caddy refuse to start)
