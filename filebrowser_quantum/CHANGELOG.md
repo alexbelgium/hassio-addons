@@ -1,4 +1,7 @@
  
+## 1.5.1.1 (2026-08-16)
+- Expose the web UI on host port 8071.
+
 ## 1.5.1 (2026-08-08)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
  
