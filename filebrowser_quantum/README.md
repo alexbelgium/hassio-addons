@@ -42,11 +42,11 @@ comparison to installing any other Home Assistant add-on.
 1. Click the `Save` button to store your configuration.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Access the web UI through the Home Assistant sidebar.
+1. Access the web UI through the sidebar or at `<your-ip>:8071`.
 
 ## Configuration
 
-The web UI is reached through the Home Assistant sidebar (Ingress). This add-on does not publish a port on your network, so it has no **Network** section in its configuration page and is not reachable at `<your-ip>:8071`.
+The web UI can be found at `<your-ip>:8071` or through the Home Assistant sidebar when using Ingress.
 
 **Default credentials:**
 - Username: `admin`
@@ -69,7 +69,7 @@ The web UI is reached through the Home Assistant sidebar (Ingress). This add-on 
 ## Setup
 
 1. Start the add-on and wait for it to initialize.
-1. Access the web interface through the Home Assistant sidebar.
+1. Access the web interface through the Home Assistant sidebar or at `<your-ip>:8071`.
 1. Log in using the default credentials:
    - Username: `admin`
    - Password: `admin`
