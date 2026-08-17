@@ -1,6 +1,9 @@
  
 ## 1.5.1.1 (2026-08-16)
-- Expose the web UI on host port 8071.
+- Expose the web UI on host port 8071, reachable at `<your-ip>:8071`
+  (redirects to `/filebrowser_quantum/`). Direct access is served by a new,
+  separate nginx vhost that proxies to the same backend Ingress already uses;
+  Ingress itself, and the app's own base URL, are unchanged.
 
 ## 1.5.1 (2026-08-08)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
