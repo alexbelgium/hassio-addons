@@ -128,24 +128,98 @@ function integrityOf(buf, blockSize) {
   return { algorithm: 'SHA256', hash: sha256(buf), blockSize, blocks };
 }
 
-/* Insert the opt-in after the bundle's leading "use strict" directive. It must go *after* it: a
- * directive prologue only takes effect as the very first statement, so prepending would silently
- * drop the whole main process out of strict mode.
+// Any of the four ECMAScript LineTerminator code points — not just "\n". A //-comment or an ASI
+// boundary ends at the first of these, and using a bare "\n" search for that would let a CR- or
+// U+2028/U+2029-terminated line swallow real code as "still the comment/still on this line" and
+// misplace the insertion point deep inside the bundle instead of before it.
+const LINE_TERMINATOR = /[\n\r\u2028\u2029]/;
+
+/* Skip a leading BOM and hashbang line. Only meaningful at byte 0 — called once, before any
+ * directive scanning. */
+function skipBomAndHashbang(source) {
+  let i = source.charCodeAt(0) === 0xfeff ? 1 : 0; // BOM
+  if (source.startsWith('#!', i)) {
+    const m = LINE_TERMINATOR.exec(source.slice(i));
+    i += m ? m.index + 1 : source.length - i;
+  }
+  return i;
+}
+
+/* Skip whitespace and comments starting at i. Returns the next index, or -1 for an unterminated
+ * block comment (caller refuses rather than guesses). */
+function skipWhitespaceAndComments(source, i) {
+  for (;;) {
+    const rest = source.slice(i);
+    const ws = /^\s+/.exec(rest);
+    if (ws) {
+      i += ws[0].length;
+      continue;
+    }
+    if (rest.startsWith('//')) {
+      const m = LINE_TERMINATOR.exec(rest);
+      i += m ? m.index + 1 : rest.length;
+      continue;
+    }
+    if (rest.startsWith('/*')) {
+      const end = rest.indexOf('*/');
+      if (end === -1) return -1;
+      i += end + 2;
+      continue;
+    }
+    return i;
+  }
+}
+
+// A single-line string literal: no raw line terminator in its content (a real one would need an
+// escaped line continuation, which this deliberately doesn't special-case — failing to match
+// just means the prologue scan below stops there, which is always safe, see applyPatch).
+const STRING_LITERAL = /^(['"])(?:\\.|(?!\1)[^\\\n\r\u2028\u2029])*\1/;
+
+/* Scan the bundle's full leading directive prologue: every consecutive ExpressionStatement made
+ * of nothing but a string literal, per how ECMAScript directives actually work. A directive
+ * prologue can hold more than one entry, and "use strict" only has to appear *somewhere* in it,
+ * not first — so this treats every leading directive as needing protection, not just one
+ * specifically named "use strict". Returns the index right after the full prologue (which is
+ * also correct as "no prologue, insert here" when there wasn't one), or -1 when a leading string
+ * literal isn't cleanly terminated as its own statement — ambiguous whether it's a directive at
+ * all, refused rather than guessed at. */
+function scanDirectivePrologue(source, start) {
+  let i = start;
+  for (;;) {
+    const next = skipWhitespaceAndComments(source, i);
+    if (next === -1) return -1;
+    const rest = source.slice(next);
+    const m = STRING_LITERAL.exec(rest);
+    if (!m) return next; // not a directive; prologue (possibly empty) ends here
+    const after = rest.slice(m[0].length);
+    if (after[0] === ';') {
+      i = next + m[0].length + 1;
+    } else if (after === '' || LINE_TERMINATOR.test(after[0])) {
+      i = next + m[0].length;
+    } else {
+      return -1; // "use strict" + x and friends: not unambiguously a directive
+    }
+  }
+}
+
+/* Insert the opt-in right after the bundle's full leading directive prologue (BOM/hashbang, then
+ * any run of string-literal-only statements — "use strict" among them if present). It must go
+ * *after* the whole prologue, not just after the first entry: a directive prologue only takes
+ * effect when its members are the very first statements, so inserting between two of them, or
+ * ahead of all of them, would silently drop the file out of strict mode just as surely as
+ * inserting ahead of a lone "use strict" would.
  *
- * Returns null — meaning "refuse to patch" — for anything that is not unambiguously a directive.
- * `"use strict" + x` is an expression, not a directive, and injecting into it would produce a
- * syntax error, so the directive is only accepted when it is terminated by its own semicolon, a
- * line break, or end of input. */
+ * When there is no prologue at all (observed from Claude Desktop 1.30096.1 onward, whose main
+ * entry opens with a bare IIFE instead), there is nothing to preserve: PATCH lands at the same
+ * position anyway, as the file's first real statement. A `try{}catch(e){}` statement can never
+ * merge with whatever follows via ASI — unlike a bare expression, a statement is not a valid
+ * left-hand side for anything a following token could continue — so this is unconditionally
+ * safe once placed after any banner comment / hashbang / directive prologue. */
 function applyPatch(source) {
-  const m = /^\s*(['"])use strict\1(;?)/.exec(source);
-  if (!m) return null;
-  const rest = source.slice(m[0].length);
-  const terminated = m[2] === ';' || rest === '' || /^[\r\n]/.test(rest);
-  if (!terminated) return null;
-  // Supply the terminator when the directive relied on ASI; without it the injected code would
-  // continue the string-literal expression instead of following it.
-  const sep = m[2] === ';' ? '' : ';';
-  return source.slice(0, m[0].length) + sep + PATCH + rest;
+  const start = skipBomAndHashbang(source);
+  const end = scanDirectivePrologue(source, start);
+  if (end === -1) return null;
+  return source.slice(0, end) + PATCH + source.slice(end);
 }
 
 function writeAll(fd, buf) {
@@ -203,7 +277,7 @@ function main() {
 
   const patchedSource = applyPatch(original);
   if (patchedSource === null) {
-    fail(`${mainRel} does not begin with a recognized "use strict" directive; refusing to patch`);
+    fail(`${mainRel} opens with an ambiguous "use strict"-like string literal; refusing to patch`);
   }
   const patched = Buffer.from(patchedSource, 'utf8');
 
