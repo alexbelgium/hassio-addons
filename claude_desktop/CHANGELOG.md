@@ -1,3 +1,5 @@
+## 07308545.1 (17-08-2026)
+- Minor bugs fixed
  
 ## 07308543.1 (17-08-2026)
 - Fix the "For your security, sign in again" prompt recurring on every restart again. The v1.37
