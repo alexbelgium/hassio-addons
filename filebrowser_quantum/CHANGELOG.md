@@ -1,7 +1,4 @@
  
-## 1.5.1.1 (2026-08-17)
-- Documentation: the add-on is Ingress-only and does not publish port 8071, so the README no longer advertises direct access at `<your-ip>:8071`
- 
 ## 1.5.1 (2026-08-08)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
  
