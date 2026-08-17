@@ -128,24 +128,69 @@ function integrityOf(buf, blockSize) {
   return { algorithm: 'SHA256', hash: sha256(buf), blockSize, blocks };
 }
 
-/* Insert the opt-in after the bundle's leading "use strict" directive. It must go *after* it: a
- * directive prologue only takes effect as the very first statement, so prepending would silently
- * drop the whole main process out of strict mode.
+/* Find where the bundle's real first statement begins, skipping a BOM, a hashbang line, and any
+ * //- or /*-comments a bundler banner may have put ahead of it. This matters because Vite/esbuild
+ * output routinely carries a leading license comment: testing for "use strict" only at byte 0
+ * would either miss a directive hidden behind that comment, or — if the caller then prepended
+ * blindly — push a real directive out of the first-statement position and silently drop the file
+ * out of strict mode. Returns -1 for an unterminated block comment, so the caller refuses rather
+ * than guesses. */
+function skipPrologue(source) {
+  let i = source.charCodeAt(0) === 0xfeff ? 1 : 0; // BOM
+  if (source.startsWith('#!', i)) {
+    const nl = source.indexOf('\n', i);
+    i = nl === -1 ? source.length : nl + 1;
+  }
+  for (;;) {
+    const rest = source.slice(i);
+    const ws = /^\s+/.exec(rest);
+    if (ws) {
+      i += ws[0].length;
+      continue;
+    }
+    if (rest.startsWith('//')) {
+      const nl = rest.indexOf('\n');
+      i += nl === -1 ? rest.length : nl + 1;
+      continue;
+    }
+    if (rest.startsWith('/*')) {
+      const end = rest.indexOf('*/');
+      if (end === -1) return -1;
+      i += end + 2;
+      continue;
+    }
+    return i;
+  }
+}
+
+/* Insert the opt-in after the bundle's leading "use strict" directive, if there is one (found
+ * past any prologue skipPrologue() skipped over). It must go *after* it: a directive prologue
+ * only takes effect as the very first statement, so prepending ahead of a real directive would
+ * silently drop the whole main process out of strict mode.
  *
- * Returns null — meaning "refuse to patch" — for anything that is not unambiguously a directive.
  * `"use strict" + x` is an expression, not a directive, and injecting into it would produce a
- * syntax error, so the directive is only accepted when it is terminated by its own semicolon, a
- * line break, or end of input. */
+ * syntax error, so a leading string literal is only treated as the directive when it is
+ * terminated by its own semicolon, a line break, or end of input — anything else is refused.
+ *
+ * When the bundle has no such directive (observed from Claude Desktop 1.30096.1 onward, whose
+ * main entry opens with a bare IIFE instead), there is nothing to preserve: PATCH is just
+ * inserted right after the skipped prologue, as the file's first real statement. A
+ * `try{}catch(e){}` statement can never merge with whatever follows via ASI — unlike a bare
+ * expression, a statement is not a valid left-hand side for anything a following token could
+ * continue — so this is unconditionally safe once placed after any banner comment / hashbang. */
 function applyPatch(source) {
-  const m = /^\s*(['"])use strict\1(;?)/.exec(source);
-  if (!m) return null;
-  const rest = source.slice(m[0].length);
+  const p = skipPrologue(source);
+  if (p === -1) return null; // unterminated leading comment; refuse rather than guess
+  const body = source.slice(p);
+  const m = /^(['"])use strict\1(;?)/.exec(body);
+  if (!m) return source.slice(0, p) + PATCH + body;
+  const rest = body.slice(m[0].length);
   const terminated = m[2] === ';' || rest === '' || /^[\r\n]/.test(rest);
   if (!terminated) return null;
   // Supply the terminator when the directive relied on ASI; without it the injected code would
   // continue the string-literal expression instead of following it.
   const sep = m[2] === ';' ? '' : ';';
-  return source.slice(0, m[0].length) + sep + PATCH + rest;
+  return source.slice(0, p) + m[0] + sep + PATCH + rest;
 }
 
 function writeAll(fd, buf) {
@@ -203,7 +248,7 @@ function main() {
 
   const patchedSource = applyPatch(original);
   if (patchedSource === null) {
-    fail(`${mainRel} does not begin with a recognized "use strict" directive; refusing to patch`);
+    fail(`${mainRel} opens with an ambiguous "use strict"-like string literal; refusing to patch`);
   }
   const patched = Buffer.from(patchedSource, 'utf8');
 

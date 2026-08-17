@@ -1,4 +1,23 @@
  
+## 07308543.1 (17-08-2026)
+- Fix the "For your security, sign in again" prompt recurring on every restart again. The v1.37
+  `safeStorage` patch (`86-claude_safestorage.sh` / `claude-safestorage-patch.js`) only knew how
+  to inject its opt-in after a leading `"use strict"` directive in the app's main bundle, and
+  refused to patch anything else. Confirmed live on the running add-on (Claude Desktop
+  1.30096.1): the shipped main bundle (`.vite/build/index.pre.js`) no longer opens with a
+  `"use strict"` directive at all — it now opens directly with a bare IIFE — so the patcher has
+  been silently refusing to patch on every boot, `safeStorage.isEncryptionAvailable()` stayed
+  `false`, and the app's own log kept showing `Encryption not available, returning empty env
+  vars` exactly as before v1.37. `applyPatch()` now falls back to inserting the opt-in as the
+  bundle's first real statement when no directive is present, skipping past any leading BOM,
+  hashbang, or banner comment first so a directive hidden behind a comment is still found and
+  protected rather than pushed out of position zero. Verified by copying the live production
+  `app.asar` and running the patcher against it directly: the previously-refused bundle now
+  patches successfully, the marker lands correctly, a second run reports "Already patched", and
+  targeted unit tests cover the bare-IIFE, comment-hidden-directive, hashbang, and
+  unterminated-comment cases.
+- One-time step after upgrading, same as v1.37: the previously-stored session is already stale,
+  so complete one sign-in from a computer; it then persists across restarts.
 ## 07308543 (2026-08-08)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 - Upstream tag : debiantrixie-version-07308543
