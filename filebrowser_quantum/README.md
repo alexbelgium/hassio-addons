@@ -42,11 +42,11 @@ comparison to installing any other Home Assistant add-on.
 1. Click the `Save` button to store your configuration.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Access the web UI through the sidebar or at `<your-ip>:8071`.
+1. Access the web UI through the sidebar or at `<your-ip>:8071/filebrowser_quantum/`.
 
 ## Configuration
 
-The web UI can be found at `<your-ip>:8071` or through the Home Assistant sidebar when using Ingress.
+The web UI can be found at `<your-ip>:8071` (redirects to `/filebrowser_quantum/`) or through the Home Assistant sidebar when using Ingress.
 
 **Default credentials:**
 - Username: `admin`
