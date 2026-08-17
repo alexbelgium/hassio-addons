@@ -98,10 +98,11 @@ setup_root_user() {
     fi
 
     # Check if the root user exists.
-    if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" -tAc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
+    if ! psql "postgres://${DB_USERNAME_URI}:${DB_PASSWORD_URI}@${DB_HOSTNAME}:${DB_PORT}" -tAc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
         bashio::log.info "Root user does not exist. Creating root user with DB_ROOT_PASSWORD..."
-        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" << EOF
-CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD '${DB_ROOT_PASSWORD}';
+        local root_password_sql="${DB_ROOT_PASSWORD//\'/\'\'}"
+        psql "postgres://${DB_USERNAME_URI}:${DB_PASSWORD_URI}@${DB_HOSTNAME}:${DB_PORT}" << EOF
+CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD '${root_password_sql}';
 EOF
     else
         bashio::log.info "Root user exists with a non-default password. No migration needed."
@@ -113,10 +114,10 @@ setup_database() {
     bashio::log.info "Setting up external PostgreSQL database..."
 
     # Create the database if it does not exist
-    if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}/postgres" -tAc \
+    if ! psql "postgres://${DB_USERNAME_URI}:${DB_PASSWORD_URI}@${DB_HOSTNAME}:${DB_PORT}/postgres" -tAc \
         "SELECT 1 FROM pg_database WHERE datname='${DB_DATABASE_NAME}';" | grep -q 1; then
         bashio::log.info "Database does not exist. Creating it now..."
-        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" << EOF
+        psql "postgres://${DB_USERNAME_URI}:${DB_PASSWORD_URI}@${DB_HOSTNAME}:${DB_PORT}" << EOF
 CREATE DATABASE ${DB_DATABASE_NAME};
 EOF
     else
@@ -124,20 +125,21 @@ EOF
     fi
 
     # Ensure the user exists and update its password
-    psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" << EOF
+    local db_password_sql="${DB_PASSWORD//\'/\'\'}"
+    psql "postgres://${DB_USERNAME_URI}:${DB_PASSWORD_URI}@${DB_HOSTNAME}:${DB_PORT}" << EOF
 DO \$\$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '${DB_USERNAME}') THEN
-        CREATE USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${DB_PASSWORD}';
+        CREATE USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${db_password_sql}';
     ELSE
-        ALTER USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${DB_PASSWORD}';
+        ALTER USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${db_password_sql}';
     END IF;
 END
 \$\$;
 EOF
 
     # Ensure the user has full privileges on the database
-    psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" << EOF
+    psql "postgres://${DB_USERNAME_URI}:${DB_PASSWORD_URI}@${DB_HOSTNAME}:${DB_PORT}" << EOF
 GRANT ALL PRIVILEGES ON DATABASE ${DB_DATABASE_NAME} TO ${DB_USERNAME};
 EOF
 
@@ -147,7 +149,7 @@ EOF
 # Function to check if the vectors (pgvecto.rs) extension is available on the server
 check_vector_extension() {
     echo "Checking if 'vectors' extension is available for database '${DB_DATABASE_NAME}'..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/${DB_DATABASE_NAME}" -tAc "SELECT 1 FROM pg_available_extensions WHERE name = 'vectors';")
+    RESULT=$(psql "postgres://$DB_USERNAME_URI:$DB_PASSWORD_URI@$DB_HOSTNAME:$DB_PORT/${DB_DATABASE_NAME}" -tAc "SELECT 1 FROM pg_available_extensions WHERE name = 'vectors';")
     if [[ "$RESULT" == "1" ]]; then
         echo "✅ 'vectors' extension is available."
         return 0
@@ -163,7 +165,7 @@ check_vector_extension() {
 # itself on first startup; checking pg_extension would false-warn on every fresh install.
 check_vchord_extension() {
     echo "Checking if 'vchord' extension is available for database '${DB_DATABASE_NAME}'..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/${DB_DATABASE_NAME}" -tAc "SELECT 1 FROM pg_available_extensions WHERE name = 'vchord';")
+    RESULT=$(psql "postgres://$DB_USERNAME_URI:$DB_PASSWORD_URI@$DB_HOSTNAME:$DB_PORT/${DB_DATABASE_NAME}" -tAc "SELECT 1 FROM pg_available_extensions WHERE name = 'vchord';")
     if [[ "$RESULT" == "1" ]]; then
         echo "✅ 'vchord' extension is available."
         return 0
@@ -186,6 +188,14 @@ export DB_DATABASE_NAME="$(bashio::config 'DB_DATABASE_NAME')"
 export DB_PORT="$(bashio::config 'DB_PORT')"
 export JWT_SECRET="$(bashio::config 'JWT_SECRET')"
 export DB_HOSTNAME="$(bashio::config 'DB_HOSTNAME')"
+
+# libpq percent-decodes the userinfo part of a postgres:// URI, so credentials
+# containing reserved characters (% @ / : ? #) are misread and every psql call
+# below fails with "password authentication failed". Encode them once here and
+# use the encoded copies in URIs only - the app itself still gets the raw value
+# through export_db_env. Same approach as the postgres_15/postgres_17 addons.
+export DB_USERNAME_URI="$(jq -rn --arg x "$DB_USERNAME" '$x|@uri')"
+export DB_PASSWORD_URI="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
 
 if bashio::config.true 'VIPS_NOVECTOR'; then
     export VIPS_NOVECTOR="1"

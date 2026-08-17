@@ -1,4 +1,7 @@
  
+## 3.1.0.1 (2026-08-17)
+- Fix `password authentication failed for user` when `DB_PASSWORD` contains special characters. Passwords are now URI-encoded before being used in the psql connection string, and SQL-escaped before being used in `CREATE`/`ALTER USER` statements
+ 
 ## 3.1.0 (2026-08-01)
 - Update to latest version from immich-app/immich (changelog : https://github.com/immich-app/immich/releases)
  
