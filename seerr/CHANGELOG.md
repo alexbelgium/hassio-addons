@@ -1,4 +1,8 @@
  
+## 3.4.1.1 (2026-08-16)
+
+- Fixed `404: Not Found` when clicking **Discover** in the sidebar through ingress (#2975). Seerr's Discover link points at `/`, which nginx rewrote to the ingress entry without a trailing slash; Home Assistant only routes ingress on `/api/hassio_ingress/<token>/…`, so the request was rejected by Home Assistant before reaching the add-on. Only ingress was affected; the directly published port 5055 always worked.
+
 ## 3.4.1 (2026-08-01)
 - Update to latest version from seerr-team/seerr (changelog : https://github.com/seerr-team/seerr/releases)
 ## 3.3.0.1 (2026-07-28)
