@@ -1,3 +1,6 @@
+ 
+## 0.6.27 (2026-08-13)
+- Update to latest version from linuxserver/docker-calibre-web (changelog : https://github.com/linuxserver/docker-calibre-web/releases)
 
 ## 0.6.26-2 (2026-04-06)
 - Fix: Install calibre (calibredb) at build time to fix 500 error when downloading books

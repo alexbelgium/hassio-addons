@@ -2,7 +2,7 @@ name: "Obsidian Sync Server SSL"
 slug: obsidian_syncserver_ssl
 image: ghcr.io/alexbelgium/obsidian_syncserver_ssl-{arch}
 description: "Self-hosted Obsidian LiveSync backend on CouchDB, serving HTTPS with your own certificates from /ssl. Supports mobile Obsidian."
-version: "3.5.2"
+version: "3.5.2.1"
 url: "https://github.com/alexbelgium/hassio-addons/tree/master/obsidian_syncserver_ssl"
 arch:
   - amd64

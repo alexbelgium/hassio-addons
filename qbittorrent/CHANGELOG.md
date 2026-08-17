@@ -1,4 +1,8 @@
 
+## 5.2.3.3 (2026-08-13)
+
+- Fix : with WireGuard, IPv6 traffic was silently dropped. When the WireGuard config declared an IPv6 `Address` (Mullvad, AirVPN and ProtonVPN all do), `vpn` added a default IPv6 route into the tunnel but never added `::/0` to the peer's `allowed-ips`, so WireGuard discarded every outgoing IPv6 packet. `::/0` is now allowed for IPv6 tunnels, mirroring the existing `0.0.0.0/0` handling for IPv4
+
 ## 5.2.3.2 (2026-08-12)
 
 - Fix : ingress could fail permanently with `nginx: [emerg] invalid port in ":"`. `30-nginx.sh` pastes `bashio::addon.ip_address` and `bashio::addon.ingress_port` straight into the nginx config; when the Supervisor answers before it is ready both come back empty and the config gets `listen : default_server;`. The add-on entrypoint now waits (up to 30s, tunable with `HA_SUPERVISOR_WAIT`) for the Supervisor to report the add-on's network details before any startup script runs

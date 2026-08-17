@@ -1,7 +1,7 @@
 {
   "source": "dockerhub",
   "upstream_repo": "library/couchdb",
-  "upstream_version": "3.5.2",
-  "last_update": "2026-08-12",
+  "upstream_version": "3.5.2.1-nouveau",
+  "last_update": "2026-08-13",
   "slug": "obsidian_syncserver_solo"
 }

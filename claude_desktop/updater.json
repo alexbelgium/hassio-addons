@@ -4,6 +4,6 @@
   "github_fulltag": true,
   "slug": "claude_desktop",
   "paused": false,
-  "upstream_version": "debiantrixie-version-07308543",
-  "last_update": "2026-08-08"
+  "upstream_version": "v3.2.2+claude1.30096.1",
+  "last_update": "2026-08-15"
 }

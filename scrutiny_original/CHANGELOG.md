@@ -1,4 +1,7 @@
  
+## v0.9.3 (2026-08-13)
+- Update to latest version from analogj/scrutiny (changelog : https://github.com/analogj/scrutiny/releases)
+ 
 ## v0.9.2 (2026-06-20)
 - Update to latest version from analogj/scrutiny (changelog : https://github.com/analogj/scrutiny/releases)
  
