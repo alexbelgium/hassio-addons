@@ -61,17 +61,33 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 # 4 Entrypoint #
 ################
 
-# Add entrypoint
+# Keep the repository initialization hook, but return after it has prepared the
+# cont-init scripts. Upstream s6 remains responsible for supervising services.
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 COPY ha_entrypoint.sh /ha_entrypoint.sh
-RUN chmod 777 /ha_entrypoint.sh
+RUN chmod 0755 /ha_entrypoint.sh && \
+    awk '!inserted && $0 == "if $PID1; then" { \
+        print "if ! $PID1; then"; \
+        print "  echo \"Initialization hook complete\""; \
+        print "  exit 0"; \
+        print "fi"; \
+        inserted=1 \
+    } { print }' /ha_entrypoint.sh > /ha_entrypoint.sh.tmp && \
+    mv /ha_entrypoint.sh.tmp /ha_entrypoint.sh && \
+    chmod 0755 /ha_entrypoint.sh
 
 # Install bashio
 COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+RUN test -x /init && \
+    test -x /ha_entrypoint.sh && \
+    bash -n /ha_entrypoint.sh && \
+    grep -q 'Initialization hook complete' /ha_entrypoint.sh
+
+# Scrutiny's image already includes s6-overlay and defines all services under
+# /etc/services.d. Keep /init as PID 1 so service readiness and s6-svc calls work.
+ENTRYPOINT [ "/init" ]
 
 ############
 # 5 Labels #

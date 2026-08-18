@@ -1,4 +1,7 @@
  
+## v0.9.3.1 (2026-08-18)
+- Fix startup crash: `collector-once` failed with `s6-svwait: fatal: unable to subscribe to events for /run/service/scrutiny` because the add-on entrypoint never started real s6 supervision. Keep the upstream image's own `/init` as PID 1 (same fix already shipped for `scrutiny`/`scrutiny_fa` in #2878). Closes #2989.
+ 
 ## v0.9.3 (2026-08-13)
 - Update to latest version from analogj/scrutiny (changelog : https://github.com/analogj/scrutiny/releases)
  
