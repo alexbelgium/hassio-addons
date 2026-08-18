@@ -47,11 +47,25 @@ function encodePart(part) {
 }
 
 /*
- * Returns the request URI with the path untouched byte-for-byte and only the
- * query string repaired. Used as the proxy_pass target.
+ * The cache-busting marker servers/ingress.conf inserts in front of every
+ * rewritten "/_next" path, e.g. "/ha-3-4-1-3/_next/static/chunks/x.js". It
+ * exists only to give each add-on release its own asset URLs - Seerr serves
+ * /_next/static/ as immutable for a year and sub_filter strips the validators,
+ * so identical URLs would pin the rewritten bundle in the browser forever. Seerr
+ * knows nothing about the marker, so it is removed again here, on the way in.
+ *
+ * The lookahead keeps this from touching a real Seerr path that merely starts
+ * with "ha-": only a leading segment directly followed by "/_next" is dropped.
+ */
+var ASSET_TAG = /^\/ha-[0-9A-Za-z-]+(?=\/_next(\/|$))/;
+
+/*
+ * Returns the request URI with the path untouched byte-for-byte apart from the
+ * cache-busting marker, and only the query string repaired. Used as the
+ * proxy_pass target.
  */
 function uri(r) {
-    var raw = r.variables.request_uri;
+    var raw = r.variables.request_uri.replace(ASSET_TAG, "");
     var split = raw.indexOf("?");
 
     if (split < 0) {
