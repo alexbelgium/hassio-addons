@@ -35,8 +35,8 @@ addon_version="$(bashio::addon.version 2>/dev/null || true)"
 # Seerr's own bundle (Next.js builds one to strip the /_next/data/ prefix), and
 # a dot there would be a wildcard.
 asset_tag="ha-$(printf '%s' "${addon_version}" | tr -c 'A-Za-z0-9' '-')"
-# A version made only of separators would sanitise away to a bare "ha-",
-# which njs/ingress.js would not recognise and so would forward unstripped.
+# An empty version would leave a bare "ha-", which njs/ingress.js does not
+# recognise as a marker and would forward to Seerr unstripped.
 [ "${asset_tag}" != "ha-" ] || asset_tag="ha-0"
 
 # Update ingress.conf with actual values

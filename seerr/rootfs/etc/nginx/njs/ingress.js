@@ -56,6 +56,11 @@ function encodePart(part) {
  *
  * The lookahead keeps this from touching a real Seerr path that merely starts
  * with "ha-": only a leading segment directly followed by "/_next" is dropped.
+ *
+ * Any marker is accepted, not just the one this container currently serves. A
+ * browser that loaded a page before an add-on update keeps requesting its
+ * dynamic chunks under the marker it was given, and those requests have to go
+ * on working until the tab is reloaded.
  */
 var ASSET_TAG = /^\/ha-[0-9A-Za-z-]+(?=\/_next(\/|$))/;
 
