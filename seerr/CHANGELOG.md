@@ -1,4 +1,8 @@
  
+## 3.4.1.2 (2026-08-18)
+
+- Fixed **Discover** in the sidebar still failing through ingress after 3.4.1.1 (#2975). The trailing slash added in 3.4.1.1 was also applied to the copy of the link inside Seerr's JavaScript bundle, and Next.js' client-side router strips a trailing slash before navigating: it then sent the click to a URL Home Assistant does not route, so it either landed on the same `404: Not Found` or threw `Invariant: attempted to hard navigate to the same URL` and did nothing at all. The bundle is no longer rewritten, so **Discover** routes inside the app exactly like **Requests**, **Issues** and **Settings** already did. The server-rendered link keeps its trailing slash. Only ingress was affected; the directly published port 5055 always worked.
+
 ## 3.4.1.1 (2026-08-16)
 
 - Fixed `404: Not Found` when clicking **Discover** in the sidebar through ingress (#2975). Seerr's Discover link points at `/`, which nginx rewrote to the ingress entry without a trailing slash; Home Assistant only routes ingress on `/api/hassio_ingress/<token>/…`, so the request was rejected by Home Assistant before reaching the add-on. Only ingress was affected; the directly published port 5055 always worked.
