@@ -38,9 +38,14 @@ and converted the way you want them.
 Everything else — root folders, download clients, naming, the ComicVine key — is configured in
 Kapowarr's own web interface, not in the add-on options.
 
-The *host*, *port* and *URL base* fields under *Settings > General* are reserved by the add-on.
-The URL base is set back to `/kapowarr` every time the add-on starts, because the sidebar panel is
-built around it; changing the host or port stops the add-on from reaching Kapowarr at all.
+The *host*, *port* and *URL base* fields under *Settings > General* are reserved by the add-on and
+should not be changed. The sidebar panel is built around the `/kapowarr` URL base: changing it
+breaks both the panel and the direct port until the add-on is restarted, which sets it back.
+Changing the host or port stops the add-on from reaching Kapowarr at all.
+
+When `PUID`/`PGID` are not `0`, Kapowarr runs as that user and can only read and write the root
+folders and download folders that user already has access to. The add-on only fixes ownership of
+its own configuration directory.
 
 ## Ingress and URLs
 

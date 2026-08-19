@@ -18,7 +18,6 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.3.1"
 FROM ${BUILD_FROM}
-ENV BASHIO_VERSION=0.14.3
 
 ##################
 # 2 Modify Image #
@@ -26,8 +25,6 @@ ENV BASHIO_VERSION=0.14.3
 
 # No S6_* tuning here : the upstream image is a plain python:slim image with no
 # s6-overlay, so the vars the other addons set would be read by nobody
-
-USER root
 
 ##################
 # 3 Install apps #
@@ -64,7 +61,6 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 COPY ha_entrypoint.sh /ha_entrypoint.sh
 RUN chmod 777 /ha_entrypoint.sh
 ENTRYPOINT ["/ha_entrypoint.sh"]
-CMD []
 
 # Install bashio
 COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh

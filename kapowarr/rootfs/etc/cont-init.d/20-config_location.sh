@@ -18,7 +18,10 @@ bashio::log.info "Config stored in $CONFIG_LOCATION"
 
 mkdir -p "$CONFIG_LOCATION/logs" "$CONFIG_LOCATION/temp_downloads"
 
-if [ ! -L /app/temp_downloads ]; then
+# Compared against the target rather than just testing for a symlink, so that a
+# link left pointing somewhere else -- by a future upstream image, or by hand --
+# is repaired instead of silently kept.
+if [ "$(readlink /app/temp_downloads)" != "$CONFIG_LOCATION/temp_downloads" ]; then
     rm -rf /app/temp_downloads
     ln -s "$CONFIG_LOCATION/temp_downloads" /app/temp_downloads
 fi

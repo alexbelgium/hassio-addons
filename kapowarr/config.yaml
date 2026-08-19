@@ -1,6 +1,9 @@
 arch:
   - aarch64
   - amd64
+backup_exclude:
+  - "**/logs/*"
+  - "**/temp_downloads/*"
 description: Comic book library manager, fitting in the *arr suite of software
 devices:
   - /dev/dri
@@ -36,7 +39,7 @@ devices:
   - /dev/nvme2n1
   - /dev/nvme2n1p1
   - /dev/nvme2n1p2
-  - /dev/nvme2n3p3
+  - /dev/nvme2n1p3
   - /dev/mmcblk
   - /dev/fuse
   - /dev/sda1
