@@ -14,30 +14,19 @@ ingress_entry=$(bashio::addon.ingress_entry)
 
 # Cache-busting marker for the rewritten JavaScript bundle.
 #
-# Seerr serves everything under /_next/static/ with
-# "Cache-Control: public, max-age=31536000, immutable", and nginx's sub_filter
-# strips ETag, Last-Modified and Content-Length from every response it rewrites.
-# A browser therefore pins the *rewritten* bundle for a year with no way to
-# revalidate it, while the HTML that references those chunks is served
-# "no-store" and keeps naming the very same chunk URLs. Any later change to the
-# sub_filter rules in ingress.conf is then undeliverable: the browser answers
-# every chunk request from its own disk cache and never asks this add-on again.
-# That is how #2975 survived two shipped fixes - the reporter kept running the
-# broken 3.4.1/3.4.1.1 JavaScript out of cache on the origin they use daily.
+# Seerr serves /_next/static/ as "public, max-age=31536000, immutable", and
+# nginx's sub_filter strips ETag and Last-Modified off every response it
+# rewrites, while the HTML naming those chunks is served "no-store" and keeps
+# naming the same URLs. A browser therefore pins the bundle this add-on rewrote
+# on its first visit for a year, with no request left that could deliver a
+# later change to the sub_filter rules below - which is how #2975 outlived two
+# fixes. Folding the version into the asset path gives every release its own
+# URLs. njs/ingress.js strips the marker again before proxying.
 #
-# Folding the add-on version into the asset path gives every release its own set
-# of asset URLs, so the first page load after an update misses the cache and
-# fetches the current bundle. njs/ingress.js strips the marker again before the
-# request is proxied, so Seerr still sees /_next/... exactly as it serves it.
-addon_version="$(bashio::addon.version 2>/dev/null || true)"
-[ -n "${addon_version}" ] || addon_version="${BUILD_VERSION:-0}"
-# Only [A-Za-z0-9-] survives: the marker ends up inside a regex literal in
-# Seerr's own bundle (Next.js builds one to strip the /_next/data/ prefix), and
-# a dot there would be a wildcard.
-asset_tag="ha-$(printf '%s' "${addon_version}" | tr -c 'A-Za-z0-9' '-')"
-# An empty version would leave a bare "ha-", which njs/ingress.js does not
-# recognise as a marker and would forward to Seerr unstripped.
-[ "${asset_tag}" != "ha-" ] || asset_tag="ha-0"
+# BUILD_VERSION is the add-on version baked in at build time (it is also what
+# bashio::addon.version returns). Only [A-Za-z0-9-] survives: the marker ends up
+# inside a regex literal in Seerr's own bundle, where a dot would be a wildcard.
+asset_tag="ha-$(printf '%s' "${BUILD_VERSION:-0}" | tr -c 'A-Za-z0-9' '-')"
 
 # Update ingress.conf with actual values
 sed -i "s|%%port%%|${ingress_port}|g" /etc/nginx/servers/ingress.conf

@@ -49,18 +49,15 @@ function encodePart(part) {
 /*
  * The cache-busting marker servers/ingress.conf inserts in front of every
  * rewritten "/_next" path, e.g. "/ha-3-4-1-3/_next/static/chunks/x.js". It
- * exists only to give each add-on release its own asset URLs - Seerr serves
- * /_next/static/ as immutable for a year and sub_filter strips the validators,
- * so identical URLs would pin the rewritten bundle in the browser forever. Seerr
- * knows nothing about the marker, so it is removed again here, on the way in.
+ * gives each add-on release its own asset URLs - Seerr serves /_next/static/ as
+ * immutable for a year and sub_filter strips the validators, so identical URLs
+ * would pin the rewritten bundle in the browser forever. Seerr knows nothing
+ * about the marker, so it is removed again here, on the way in.
  *
- * The lookahead keeps this from touching a real Seerr path that merely starts
- * with "ha-": only a leading segment directly followed by "/_next" is dropped.
- *
- * Any marker is accepted, not just the one this container currently serves. A
- * browser that loaded a page before an add-on update keeps requesting its
- * dynamic chunks under the marker it was given, and those requests have to go
- * on working until the tab is reloaded.
+ * Any marker is accepted, not just the one this container serves: a tab opened
+ * before an add-on update keeps requesting its dynamic chunks under the marker
+ * it was handed, and those have to keep working until it is reloaded. The
+ * lookahead keeps a real Seerr path that merely starts with "ha-" untouched.
  */
 var ASSET_TAG = /^\/ha-[0-9A-Za-z-]+(?=\/_next(\/|$))/;
 
