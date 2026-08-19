@@ -1,0 +1,6 @@
+{
+  "build_from": {
+    "aarch64": "mrcas/kapowarr:v1.3.1",
+    "amd64": "mrcas/kapowarr:v1.3.1"
+  }
+}

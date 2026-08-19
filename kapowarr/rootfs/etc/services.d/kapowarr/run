@@ -1,0 +1,25 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+# Kapowarr is started through the upstream entrypoint, which is what implements
+# PUID/PGID (groupmod -o / usermod -o, then gosu). ha_entrypoint.sh replaced it
+# as the container entrypoint so that cont-init.d and nginx could run too, so it
+# is called again here rather than reimplemented. Both usermod and groupmod are
+# given -o upstream, so a PUID that collides with an existing account is not an
+# error.
+#
+# --UrlBase is what makes ingress work: Kapowarr renders absolute urls, Home
+# Assistant strips its own ingress prefix before forwarding, and nginx adds it
+# back by rewriting this fixed prefix. See rootfs/etc/nginx/servers/ingress.conf.
+# Upstream only applies it on a startup (not on its own restarts) and stores it
+# in the database, so it is re-applied on every container start: a url base
+# changed by hand in Settings > General is repaired by restarting the add-on.
+
+bashio::log.info "Starting Kapowarr (served on the /kapowarr path, see the addon documentation)"
+
+exec /app/entrypoint.sh python3 /app/Kapowarr.py \
+    --DatabaseFolder /config \
+    --LogFolder /config/logs \
+    --UrlBase /kapowarr

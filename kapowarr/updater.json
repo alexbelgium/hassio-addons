@@ -1,0 +1,9 @@
+{
+  "github_beta": "false",
+  "last_update": "2026-08-19",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "kapowarr",
+  "source": "github",
+  "upstream_repo": "Casvt/Kapowarr",
+  "upstream_version": "1.3.1"
+}
