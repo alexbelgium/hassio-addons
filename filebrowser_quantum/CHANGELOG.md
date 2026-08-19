@@ -1,4 +1,11 @@
  
+## 1.5.1.2 (2026-08-19)
+- Fix direct access on port 8071, which was broken in 1.5.1.1: the root
+  redirect pointed at the container-internal port 8072 instead of the
+  published one, and the page it led to referenced assets under a path the
+  add-on did not serve, so every asset returned 404. Requests are now passed
+  through unchanged and only the bare root is redirected.
+
 ## 1.5.1.1 (2026-08-16)
 - Expose the web UI on host port 8071, reachable at `<your-ip>:8071`
   (redirects to `/filebrowser_quantum/`). Direct access is served by a new,
