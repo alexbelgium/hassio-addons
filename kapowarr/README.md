@@ -39,9 +39,10 @@ Everything else â€” root folders, download clients, naming, the ComicVine key â€
 Kapowarr's own web interface, not in the add-on options.
 
 The *host*, *port* and *URL base* fields under *Settings > General* are reserved by the add-on and
-should not be changed. The sidebar panel is built around the `/kapowarr` URL base: changing it
-breaks both the panel and the direct port until the add-on is restarted, which sets it back.
-Changing the host or port stops the add-on from reaching Kapowarr at all.
+should not be changed. The add-on is built around Kapowarr listening on `0.0.0.0:5656` under the
+`/kapowarr` URL base, and it sets all three back to those values every time it starts. Changing any
+of them breaks the sidebar panel and the direct port until the next add-on restart, which repairs
+them.
 
 When `PUID`/`PGID` are not `0`, Kapowarr runs as that user and can only read and write the root
 folders and download folders that user already has access to. The add-on only fixes ownership of

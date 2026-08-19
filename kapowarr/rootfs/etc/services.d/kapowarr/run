@@ -13,13 +13,24 @@ set -e
 # --UrlBase is what makes ingress work: Kapowarr renders absolute urls, Home
 # Assistant strips its own ingress prefix before forwarding, and nginx adds it
 # back by rewriting this fixed prefix. See rootfs/etc/nginx/servers/ingress.conf.
-# Upstream only applies it on a startup (not on its own restarts) and stores it
-# in the database, so it is re-applied on every container start: a url base
-# changed by hand in Settings > General is repaired by restarting the add-on.
+#
+# --Host and --Port are passed for the same reason, even though they are already
+# the upstream defaults: all three are stored in the database, and Kapowarr reads
+# the stored value when the flag is absent. Without them, a host or port changed
+# in Settings > General would survive every restart and upgrade while nginx and
+# the healthcheck stayed pointed at 127.0.0.1:5656 -- a permanent 502 with no way
+# back except editing the database. Passing all three makes the whole hosting
+# section self repairing.
+#
+# Upstream applies these three only on a startup, never on the restarts Kapowarr
+# performs itself, so they are re-applied once per container start and do not
+# fight the user in between.
 
 bashio::log.info "Starting Kapowarr (served on the /kapowarr path, see the addon documentation)"
 
 exec /app/entrypoint.sh python3 /app/Kapowarr.py \
     --DatabaseFolder /config \
     --LogFolder /config/logs \
+    --Host 0.0.0.0 \
+    --Port 5656 \
     --UrlBase /kapowarr
