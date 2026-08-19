@@ -1,0 +1,36 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+# Wait for Kapowarr to answer before nginx starts serving ingress. The first
+# boot creates the database and runs its migrations, so leave a wide margin, but
+# poll rather than call bashio::net.wait_for : bashio takes (port host timeout)
+# while the bundled bashio-standalone.sh takes (host port timeout), and picking
+# the wrong one would either fail instantly or block for the whole timeout.
+# The per probe timeouts keep the ceiling real : without them a half open
+# connection would hang a single probe, and the loop, forever.
+# A wall clock deadline, not an attempt count : a failed probe costs up to
+# max-time on top of the sleep, so counting attempts would stretch the wait to
+# roughly twice the advertised ceiling.
+# The probe asks for /kapowarr/ rather than / , because / is served by the empty
+# app that DispatcherMiddleware mounts beside the url base and always answers.
+kapowarr_ready=false
+deadline=$((SECONDS + 300))
+while [ "$SECONDS" -lt "$deadline" ]; do
+    if curl -sf --connect-timeout 2 --max-time 5 -o /dev/null "http://127.0.0.1:5656/kapowarr/"; then
+        kapowarr_ready=true
+        break
+    fi
+    sleep 5
+done
+
+# Deliberately not fatal : nginx serving a 502 tells the user something is wrong
+# and starts working by itself once Kapowarr finally answers, while refusing to
+# start would take ingress down for good after ha_entrypoint gives up retrying.
+if [ "$kapowarr_ready" != true ]; then
+    bashio::log.warning "Kapowarr did not answer within 5 minutes. Starting NGinx anyway : ingress will return 502 until it does."
+fi
+
+bashio::log.info "Starting NGinx..."
+exec nginx
