@@ -209,14 +209,25 @@ registers `codex mcp-server` in both Claude Code and Claude Desktop. A Claude
 session can therefore delegate a task to ChatGPT Codex and read its result back
 through MCP.
 
-Codex is not baked into the image because its Linux binary is large and the
-feature is off by default. At each startup, the add-on resolves the latest
-stable upstream release. It downloads the architecture-specific binary into
-persistent `/data/codex/bin` only when the installed release is missing or
-outdated, verifies the GitHub-published SHA-256 digest before extraction or
-execution, validates the staged binary with `--version`, and replaces the
-existing binary atomically. If release metadata or the download is unavailable,
-startup continues and a previously working installation is retained.
+Codex is not baked into the image because its Linux distribution is large and
+the feature is off by default. At each startup, the add-on resolves the latest
+stable upstream release. It downloads the architecture-specific package into
+persistent `/data/codex` only when the installed release is missing, incomplete
+or outdated, verifies the GitHub-published SHA-256 digest before extraction or
+execution, and validates the staged package with `--version` before it replaces
+the installed one. The complete upstream package is installed, not just the
+`codex` executable: Codex delegates every shell and file-read tool call to a
+companion `codex-code-mode-host` binary that it looks up next to itself, so an
+executable installed on its own can answer but can never run anything. If
+release metadata or the download is unavailable, startup continues and a
+previously working installation is retained.
+
+`/data/codex` belongs to the add-on: everything below it — `bin/`,
+`codex-package.json`, `codex-resources/` and `codex-path/` — is replaced as a
+unit whenever a new release is installed, so it is not a place to keep files by
+hand. Codex's own state (`auth.json`, `config.toml`) lives in `~/.codex` and is
+never touched by an install. The installed package is roughly 300 MB, and an
+upgrade briefly needs room for the archive and both releases at once.
 
 ### Signing in with a ChatGPT subscription
 

@@ -1,3 +1,49 @@
+## 07308545.2 (19-08-2026)
+- Fix Codex CLI being installed incomplete, which silently broke every Codex tool call. Since
+  codex-cli 0.147.0 the CLI does not execute shell commands or file reads itself; it delegates
+  them to a companion `codex-code-mode-host` binary that it looks up next to its own executable.
+  `81-codex_cli.sh` downloaded the `codex-<target>.tar.gz` release asset, which contains only the
+  `codex` executable, so that companion binary was never installed. Measured on the running add-on
+  (codex-cli 0.147.0, `/data/codex/bin` holding only `.version`, the launcher and `codex-real`):
+  `codex exec` starts, authenticates and answers, but every tool call fails with
+  `failed to spawn code-mode host /data/codex/bin/codex-code-mode-host: No such file or directory`
+  and the run still exits 0 — so Codex answered from the prompt text alone and the failure looked
+  like success. `--disable code_mode` does not avoid it.
+  - The installer now downloads the `codex-package-<target>.tar.gz` release asset, which is the
+    complete package tree upstream's own installer uses, and installs all of it: the entrypoint as
+    `/data/codex/bin/codex-real`, `codex-code-mode-host` beside it, and `codex-package.json`,
+    `codex-resources/` (bundled bubblewrap and zsh) and `codex-path/` (bundled ripgrep) in
+    `/data/codex`. Cherry-picking the two binaries out of that tree also works today, but it is
+    the same mistake at a smaller scale: the next helper upstream adds would break in exactly this
+    way again. The installed tree grows from ~246 MB to ~300 MB, and `/data/codex` is now
+    explicitly add-on-owned in its entirety: the package tree below it is replaced as a unit on
+    every upgrade, so nothing should be kept there by hand. Codex's own state stays in `~/.codex`
+    and is never touched.
+  - A replacement that is interrupted partway no longer leaves a Codex that looks installed but
+    mixes two releases. The stamp is removed before the first file is replaced, so a stamp-less
+    prefix identifies exactly that case; the entrypoint is then removed as well, the boot reports
+    Codex as unavailable instead of silently misbehaving, and the next start reinstalls in full.
+  - That layout is load-bearing, so the install prefix was chosen to satisfy it rather than
+    changed. Codex canonicalises its own executable path, requires the parent directory to be
+    named `bin`, and reads the manifest and helper directories from that directory's parent — the
+    existing `/data/codex/bin` prefix already matches, and the executable's file name is not part
+    of the contract, so `codex-real` and the subscription-only `codex` launcher wrapping it are
+    both unchanged, as is the `/usr/local/bin/codex` symlink and the MCP registration.
+  - Existing installs repair themselves. The "already installed, skip the download" test now also
+    requires the code-mode host and the package manifest to be present, so an add-on that already
+    has a working `codex-real` and no helpers reinstalls on the next start instead of staying
+    quietly broken.
+  - `claude-tools-doctor.sh` now reports whether the package layout is complete, because the
+    failure mode this fixes is invisible in `codex --version`, in the version stamp and in the
+    exit code.
+- Known limitation, unchanged by this release and not caused by it: Codex's own Linux sandbox
+  cannot start in this container. Running both the system `bwrap` 0.8.0 and the bundled one
+  directly with `--dev-bind / / --unshare-net /bin/true` fails identically with
+  `bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted`, so it is a container capability
+  limitation rather than a packaging one. With the shipped `codex_sandbox_mode: workspace-write`
+  default, tool calls therefore still fail with that bwrap error; `danger-full-access` is the only
+  mode that currently executes commands, and the container is already the security boundary.
+
 ## 07308545.1 (17-08-2026)
 - Minor bugs fixed
  
