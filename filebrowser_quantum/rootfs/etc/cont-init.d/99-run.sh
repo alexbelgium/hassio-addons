@@ -43,13 +43,9 @@ declare ingress_interface
 declare ingress_port
 #declare keyfile
 
-# The app's own baseURL is always the Supervisor ingress-entry path — this is
-# unchanged from before. FileBrowser Quantum has no known "ignore baseURL for
-# routing" leniency the way classic filebrowser's app does, so ingress access
-# is left completely untouched here. Direct ip:port access is handled below by
-# a second, separate nginx vhost (direct.conf) that rewrites a fixed public
-# path onto this same ingress-entry baseURL, instead of changing the baseURL
-# itself.
+# The app's own baseURL is the Supervisor ingress-entry path, unchanged from
+# before: FileBrowser emits that prefix as absolute links in its HTML and JS,
+# so it is also the path direct ip:port access has to use (see direct.conf).
 FB_BASEURL=$(bashio::addon.ingress_entry)
 export FB_BASEURL
 
@@ -67,11 +63,11 @@ sed -i "s|%%port%%|${ingress_port}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%subpath%%|${FB_BASEURL}/|g" /etc/nginx/servers/ingress.conf
 
-# --- Direct ip:port access (separate from ingress, see comment above) ---
-# Publishes a second nginx vhost on a fixed internal port (published to the
-# host as 8071 via config.yaml's `ports:`), at a fixed public path
-# (/filebrowser_quantum/), that proxies to the same backend the ingress vhost
-# uses. This keeps the app's own baseURL, and therefore ingress, unchanged.
+# --- Direct ip:port access (separate vhost, ingress untouched) ---
+# Listens on 8072, published to the host as 8071 by config.yaml's `ports:`.
+# Requests are passed through unchanged; the bare root and the two legacy
+# /filebrowser_quantum paths are redirected to the app's baseURL, which is what
+# its own links already point at.
 sed -i "s|%%protocol%%|${ADDON_PROTOCOL}|g" /etc/nginx/servers/direct.conf
 sed -i "s|%%subpath%%|${FB_BASEURL}/|g" /etc/nginx/servers/direct.conf
 
