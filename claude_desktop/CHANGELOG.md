@@ -18,9 +18,11 @@
     `/data/codex/bin/codex-real`, `codex-code-mode-host` beside it, and `codex-package.json`,
     `codex-resources/` (bundled bubblewrap and zsh) and `codex-path/` (bundled ripgrep) in
     `/data/codex`. The installed tree grows from ~246 MB to ~300 MB, and `/data/codex` is now
-    explicitly add-on-owned in its entirety: the package tree below it is replaced as a unit on
-    every upgrade — files an older release left behind are removed with it — so nothing should be
-    kept there by hand. Codex's own state stays in `~/.codex` and is never touched.
+    explicitly add-on-owned in its entirety: every path the new release ships replaces the
+    installed copy of that path outright rather than merging into it, so nothing should be kept
+    there by hand. A path upstream stops shipping altogether is not pruned — it is left behind as
+    dead weight that the new entrypoint no longer looks for. Codex's own state stays in
+    `~/.codex` and is never touched.
   - An incomplete install is no longer advertised. `82-claude_tools.sh` registers the Codex MCP
     server whenever the launcher at `/data/codex/bin/codex` is executable and re-checks nothing
     else, and both the launcher and the package tree persist in `/data` independently of each
@@ -31,8 +33,9 @@
     prefix is exactly the tree that may mix two releases. This covers the cases that reach the
     launcher without a fresh install: a boot that cannot reach the release metadata and finds a
     pre-existing incomplete install, and a launcher left behind by an interrupted replacement.
-    Nothing is deleted beyond the launcher — the executable, the package tree and the ChatGPT
-    sign-in stay, so a later boot completes the install without another download or another login.
+    Nothing under `/data/codex` is deleted beyond that launcher — the executable, the package
+    tree and the ChatGPT sign-in stay, so a later boot completes the install without another
+    download or another login.
   - That layout is load-bearing, so the install prefix was chosen to satisfy it rather than
     changed. Codex canonicalises its own executable path, requires the parent directory to be
     named `bin`, and reads the manifest and helper directories from that directory's parent — the
