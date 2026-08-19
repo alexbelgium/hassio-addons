@@ -38,6 +38,18 @@ run_as_runtime_user() {
     s6-setuidgid abc env HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" "$@"
 }
 
+# What "installed" means, in one place. A Codex that is missing its code-mode host, its package
+# manifest or its version stamp still starts, authenticates and answers — it simply cannot run a
+# single tool call — so presence of the executable alone is not a usable install. The stamp counts
+# because it is removed before the first file of a replacement is moved and written after the last,
+# so its absence next to an executable means the tree may mix two releases.
+codex_install_is_complete() {
+    [ -x "$CODEX_REAL" ] \
+        && [ -x "$CODEX_HOST" ] \
+        && [ -f "$CODEX_MANIFEST" ] \
+        && [ -f "$CODEX_STAMP" ]
+}
+
 # Move a verified package tree from staging into the install prefix. Called only from an `if`
 # condition, where `set -e` does not apply, so every step reports failure explicitly.
 #
@@ -152,14 +164,10 @@ PY
 fi
 
 if [ -z "$release_info" ]; then
-    if [ -x "$CODEX_REAL" ] && run_as_runtime_user "$CODEX_REAL" --version > /dev/null 2>&1; then
+    if codex_install_is_complete && run_as_runtime_user "$CODEX_REAL" --version > /dev/null 2>&1; then
         bashio::log.warning "Unable to resolve the latest verified Codex release; keeping the existing install"
-        if [ ! -x "$CODEX_HOST" ]; then
-            bashio::log.warning "The existing Codex install has no code-mode host; its tool calls will fail until a boot can reach the release metadata"
-        fi
     else
-        bashio::log.warning "Unable to resolve the latest verified Codex release; Codex is unavailable this boot"
-        exit 0
+        bashio::log.warning "Unable to resolve the latest verified Codex release; the installed Codex is missing or incomplete and stays unavailable until a boot can reach the release metadata"
     fi
 else
     IFS=$'\t' read -r CODEX_WANTED CODEX_SHA256 CODEX_URL <<< "$release_info"
@@ -168,9 +176,7 @@ else
     # every install made before this add-on switched to the package asset has a working codex-real
     # and no helpers, and repairs itself here rather than needing a fresh /data. Running the binary
     # also rejects one built for another architecture, which a restored backup could leave behind.
-    if [ -x "$CODEX_REAL" ] \
-        && [ -x "$CODEX_HOST" ] \
-        && [ -f "$CODEX_MANIFEST" ] \
+    if codex_install_is_complete \
         && [ "$(cat "$CODEX_STAMP" 2> /dev/null || true)" = "$CODEX_WANTED" ] \
         && run_as_runtime_user "$CODEX_REAL" --version > /dev/null 2>&1; then
         bashio::log.info "Codex CLI ${CODEX_WANTED} already installed (latest stable)"
@@ -198,22 +204,24 @@ else
             && install_codex_package "$staged"; then
             printf '%s' "$CODEX_WANTED" > "$CODEX_STAMP"
             bashio::log.info "Codex CLI installed: $("$CODEX_REAL" --version 2> /dev/null || echo unknown)"
-        elif [ -x "$CODEX_REAL" ] && [ -f "$CODEX_STAMP" ]; then
+        elif codex_install_is_complete; then
             bashio::log.warning "Verified Codex ${CODEX_WANTED} installation failed; keeping the existing install"
         else
-            # The stamp is removed before the first file is replaced, so a missing stamp next to an
-            # existing codex-real means the replacement itself was interrupted and the prefix may
-            # now mix two releases. Never expose that: drop the entrypoint so this boot reports
-            # Codex as unavailable — the failure this whole change fixes was a Codex that looked
-            # installed and answered normally while being unable to do anything — and let the next
-            # boot reinstall from scratch.
-            rm -f -- "$CODEX_REAL"
             bashio::log.warning "Verified Codex ${CODEX_WANTED} installation failed; Codex is unavailable this boot"
         fi
     fi
 fi
 
-if [ ! -x "$CODEX_REAL" ]; then
+# The launcher is the add-on's single "Codex is usable" signal: 82-claude_tools.sh registers the
+# Codex MCP server when it is executable and re-checks nothing else. Write it only for a complete
+# install, and remove it — together with the PATH symlink — for an incomplete one. Both the launcher
+# and the package tree live in /data and survive restarts independently, so a launcher left from an
+# earlier boot would otherwise outlive the install it was written for and advertise a Codex whose
+# every tool call fails. The executable, the package tree and the ChatGPT sign-in are all left in
+# place: a later boot completes the install without another download or another login.
+if ! codex_install_is_complete; then
+    rm -f -- "$CODEX_BIN" "$CODEX_LINK"
+    bashio::log.warning "Codex is not completely installed; not registering it this boot"
     exit 0
 fi
 

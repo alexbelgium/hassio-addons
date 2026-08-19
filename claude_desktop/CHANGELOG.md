@@ -1,5 +1,5 @@
-## 07308545.2 (19-08-2026)
-- Fix Codex CLI being installed incomplete, which silently broke every Codex tool call. Since
+## 07308545.3 (19-08-2026)
+- Fix an incompletely installed Codex CLI, which silently broke every Codex tool call. Since
   codex-cli 0.147.0 the CLI does not execute shell commands or file reads itself; it delegates
   them to a companion `codex-code-mode-host` binary that it looks up next to its own executable.
   `81-codex_cli.sh` downloaded the `codex-<target>.tar.gz` release asset, which contains only the
@@ -19,10 +19,18 @@
     explicitly add-on-owned in its entirety: the package tree below it is replaced as a unit on
     every upgrade, so nothing should be kept there by hand. Codex's own state stays in `~/.codex`
     and is never touched.
-  - A replacement that is interrupted partway no longer leaves a Codex that looks installed but
-    mixes two releases. The stamp is removed before the first file is replaced, so a stamp-less
-    prefix identifies exactly that case; the entrypoint is then removed as well, the boot reports
-    Codex as unavailable instead of silently misbehaving, and the next start reinstalls in full.
+  - An incomplete install is no longer advertised. `82-claude_tools.sh` registers the Codex MCP
+    server whenever the launcher at `/data/codex/bin/codex` is executable and re-checks nothing
+    else, and both the launcher and the package tree persist in `/data` independently of each
+    other. The launcher is therefore now written only for an install that has its executable, its
+    code-mode host, its package manifest and its version stamp, and is removed together with the
+    `/usr/local/bin/codex` symlink otherwise. The stamp is part of that test because it is deleted
+    before the first file of a replacement is moved and written after the last, so a stamp-less
+    prefix is exactly the tree that may mix two releases. This covers the cases that reach the
+    launcher without a fresh install: a boot that cannot reach the release metadata and finds a
+    pre-existing incomplete install, and a launcher left behind by an interrupted replacement.
+    Nothing is deleted beyond the launcher — the executable, the package tree and the ChatGPT
+    sign-in stay, so a later boot completes the install without another download or another login.
   - That layout is load-bearing, so the install prefix was chosen to satisfy it rather than
     changed. Codex canonicalises its own executable path, requires the parent directory to be
     named `bin`, and reads the manifest and helper directories from that directory's parent — the
