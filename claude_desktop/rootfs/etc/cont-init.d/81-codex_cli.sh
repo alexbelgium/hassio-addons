@@ -53,6 +53,12 @@ codex_install_is_complete() {
 # Move a verified package tree from staging into the install prefix. Called only from an `if`
 # condition, where `set -e` does not apply, so every step reports failure explicitly.
 #
+# Whatever the package ships is installed, rather than the file names this add-on happens to know
+# about today: a helper added by a future release has to arrive beside codex-real on its own, or it
+# fails exactly the way the missing code-mode host did. Only paths the archive actually contains are
+# touched — /data/codex also holds this install's staging directory, so the tree below it is never
+# cleared wholesale.
+#
 # The long, failure-prone part of an install — the download and its digest check — is already done
 # by the time this runs; what is left is same-filesystem renames of an already validated tree. They
 # are not one atomic operation, so the version stamp is removed first: any interruption leaves a
@@ -61,18 +67,28 @@ codex_install_is_complete() {
 # helper binaries are the new release too.
 install_codex_package() {
     local staged="$1"
-    local optional
+    local entry name
     rm -f -- "$CODEX_STAMP" || return 1
-    rm -rf -- "${CODEX_ROOT}/codex-resources" "${CODEX_ROOT}/codex-path" || return 1
-    # codex-resources/ and codex-path/ hold optional helpers (bubblewrap, zsh, ripgrep) that Codex
-    # falls back to system copies for, so a target that ships without them still installs.
-    for optional in codex-resources codex-path; do
-        if [ -d "${staged}/${optional}" ]; then
-            mv -f -- "${staged}/${optional}" "${CODEX_ROOT}/${optional}" || return 1
+    # Everything beside bin/ first — the manifest and the helper directories (codex-resources/ and
+    # codex-path/ today, holding bubblewrap, zsh and ripgrep) — then everything the package puts in
+    # bin/ except the entrypoint, then the entrypoint. The existing launcher and version stamp are
+    # never matched: the launcher is skipped by name and the stamp is a dot file.
+    for entry in "${staged}"/*; do
+        name="${entry##*/}"
+        if [ ! -e "$entry" ] || [ "$name" = "bin" ]; then
+            continue
         fi
+        rm -rf -- "${CODEX_ROOT:?}/${name}" || return 1
+        mv -f -- "$entry" "${CODEX_ROOT}/${name}" || return 1
     done
-    mv -f -- "${staged}/codex-package.json" "$CODEX_MANIFEST" || return 1
-    mv -f -- "${staged}/bin/codex-code-mode-host" "$CODEX_HOST" || return 1
+    for entry in "${staged}"/bin/*; do
+        name="${entry##*/}"
+        if [ ! -e "$entry" ] || [ "$name" = "codex" ]; then
+            continue
+        fi
+        rm -rf -- "${CODEX_PREFIX:?}/${name}" || return 1
+        mv -f -- "$entry" "${CODEX_PREFIX}/${name}" || return 1
+    done
     mv -f -- "${staged}/bin/codex" "$CODEX_REAL" || return 1
 }
 

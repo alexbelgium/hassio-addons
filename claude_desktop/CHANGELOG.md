@@ -10,15 +10,17 @@
   and the run still exits 0 — so Codex answered from the prompt text alone and the failure looked
   like success. `--disable code_mode` does not avoid it.
   - The installer now downloads the `codex-package-<target>.tar.gz` release asset, which is the
-    complete package tree upstream's own installer uses, and installs all of it: the entrypoint as
+    complete package tree upstream's own installer uses, and installs all of it. Not a list of
+    known file names: whatever the archive contains is moved into place by position, so a helper
+    added by a future release arrives beside the entrypoint on its own instead of being extracted
+    and then dropped — cherry-picking today's two binaries works today, but it is the same mistake
+    at a smaller scale. For release 0.148.0 that means the entrypoint as
     `/data/codex/bin/codex-real`, `codex-code-mode-host` beside it, and `codex-package.json`,
     `codex-resources/` (bundled bubblewrap and zsh) and `codex-path/` (bundled ripgrep) in
-    `/data/codex`. Cherry-picking the two binaries out of that tree also works today, but it is
-    the same mistake at a smaller scale: the next helper upstream adds would break in exactly this
-    way again. The installed tree grows from ~246 MB to ~300 MB, and `/data/codex` is now
+    `/data/codex`. The installed tree grows from ~246 MB to ~300 MB, and `/data/codex` is now
     explicitly add-on-owned in its entirety: the package tree below it is replaced as a unit on
-    every upgrade, so nothing should be kept there by hand. Codex's own state stays in `~/.codex`
-    and is never touched.
+    every upgrade — files an older release left behind are removed with it — so nothing should be
+    kept there by hand. Codex's own state stays in `~/.codex` and is never touched.
   - An incomplete install is no longer advertised. `82-claude_tools.sh` registers the Codex MCP
     server whenever the launcher at `/data/codex/bin/codex` is executable and re-checks nothing
     else, and both the launcher and the package tree persist in `/data` independently of each
