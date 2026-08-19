@@ -95,7 +95,7 @@ jobs:
       - name: Commit sanitize changes
         id: sanitize_commit
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-        uses: EndBug/add-and-commit@v11
+        uses: EndBug/add-and-commit@v11.0.0
         with:
           commit: -u
           message: "GitHub bot: sanitize (spaces + LF endings) & chmod [nobuild]"
@@ -410,7 +410,7 @@ jobs:
           done
 
       - name: Commit changelog changes
-        uses: EndBug/add-and-commit@v11
+        uses: EndBug/add-and-commit@v11.0.0
         with:
           commit: -u
           message: "GitHub bot: changelog [nobuild]"
