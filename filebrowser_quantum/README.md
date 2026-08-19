@@ -46,7 +46,7 @@ comparison to installing any other Home Assistant add-on.
 
 ## Configuration
 
-The web UI can be found at `<your-ip>:8071` or through the Home Assistant sidebar when using Ingress. Direct access redirects to the add-on's internal base path, so the address bar will show a longer URL than the one you typed.
+The web UI can be found at `<your-ip>:8071` or through the Home Assistant sidebar when using Ingress. Direct access redirects to the add-on's configured base path, so the address bar will show a longer URL than the one you typed.
 
 **Default credentials:**
 - Username: `admin`

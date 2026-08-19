@@ -65,8 +65,9 @@ sed -i "s|%%subpath%%|${FB_BASEURL}/|g" /etc/nginx/servers/ingress.conf
 
 # --- Direct ip:port access (separate vhost, ingress untouched) ---
 # Listens on 8072, published to the host as 8071 by config.yaml's `ports:`.
-# Requests are passed through unchanged; only the bare root is redirected to
-# the app's baseURL, which is what its own links already point at.
+# Requests are passed through unchanged; the bare root and the two legacy
+# /filebrowser_quantum paths are redirected to the app's baseURL, which is what
+# its own links already point at.
 sed -i "s|%%protocol%%|${ADDON_PROTOCOL}|g" /etc/nginx/servers/direct.conf
 sed -i "s|%%subpath%%|${FB_BASEURL}/|g" /etc/nginx/servers/direct.conf
 

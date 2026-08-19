@@ -4,7 +4,8 @@
   redirect pointed at the container-internal port 8072 instead of the
   published one, and the page it led to referenced assets under a path the
   add-on did not serve, so every asset returned 404. Requests are now passed
-  through unchanged and only the bare root is redirected.
+  through unchanged, with the bare root and the two previously documented
+  `/filebrowser_quantum` URLs redirected to the app's configured base path.
 
 ## 1.5.1.1 (2026-08-16)
 - Expose the web UI on host port 8071, reachable at `<your-ip>:8071`
