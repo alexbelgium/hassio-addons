@@ -45,7 +45,10 @@ verbosity chosen in Settings on every restart.
 With the default `PUID`/`PGID` of `0`, Comicarr runs as root, which is what lets it write to
 Home Assistant's root-owned `/media` and `/share`. Setting `PUID` to any other value hands
 startup to the upstream entrypoint, which creates a matching user and drops privileges — the
-library and download folders then have to be writable by that user.
+library and download folders then have to be writable by that user. Switching an existing
+installation from `0` to an unprivileged uid also leaves the files already written under
+`/config/comicarr` owned by root; chown them yourself, or Comicarr will fail the first time it
+writes its configuration or database.
 
 The web interface port is fixed at `8090`. Changing **Settings → Interface → port** has no
 effect: the add-on forces `8090` on startup, because ingress and the health check are built
