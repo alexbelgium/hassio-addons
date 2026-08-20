@@ -1,0 +1,31 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+# The upstream /entrypoint.sh creates a "comicarr" user out of PUID/PGID and
+# gosu's to it, but it runs "useradd -u $PUID" under set -e : with PUID=0 -- the
+# default in this repo, and the only value that can write Home Assistant's
+# root-owned /media and /share -- useradd refuses the duplicate uid and takes
+# the whole container down. So the default path starts the app directly as root,
+# the same choice the komga add-on makes, and the upstream entrypoint is used
+# only when the user asks for an unprivileged uid.
+#
+# --port is forced on both paths. HTTP_PORT is writable from the Settings page,
+# and changing it there would silently break nginx's proxy_pass and the
+# healthcheck, leaving an add-on that looks healthy and serves nothing.
+
+umask "${UMASK:-002}"
+
+if [ "${PUID:-0}" != "0" ]; then
+    bashio::log.info "Starting Comicarr as ${PUID}:${PGID:-0} ..."
+    exec /entrypoint.sh --port 8090
+fi
+
+bashio::log.info "Starting Comicarr..."
+
+cd /opt/comicarr
+exec python /opt/comicarr/Comicarr.py \
+    --nolaunch \
+    --datadir /config/comicarr \
+    --port 8090
