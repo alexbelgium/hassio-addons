@@ -1,6 +1,7 @@
 {
   "github_beta": "false",
   "last_update": "2026-08-19",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "kapowarr",
   "source": "github",
