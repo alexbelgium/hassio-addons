@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 141
+- In the repository : 143
 - Installed : 361103
 
 ### Top 3
@@ -309,6 +309,16 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
+&#10003; ![image](https://api.iconify.design/mdi/book-open-page-variant.svg) [Comicarr](comicarr/) : Automated comic book and manga downloader and library manager with a modern React UI
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcomicarr%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcomicarr%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
+
 &#10003; ![image](https://api.iconify.design/mdi/book-open.svg) [Comixed](comixed/) : managing digital comics
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcomixed%2Fconfig.yaml)
@@ -559,6 +569,16 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjoplin%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/book-multiple.svg) [Kapowarr](zzz_archived_kapowarr/) : Comic book library manager, fitting in the *arr suite of software
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_kapowarr%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_kapowarr%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003;  [Kometa](kometa/) : Python script to update metadata information for movies, shows, and collections as well as automatically build collections
 
