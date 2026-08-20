@@ -68,7 +68,6 @@ devices:
   - /dev/nvme2
 image: ghcr.io/alexbelgium/comicarr-{arch}
 ingress: true
-ingress_port: 8099
 init: false
 map:
   - addon_config:rw
