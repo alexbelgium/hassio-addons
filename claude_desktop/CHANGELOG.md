@@ -1,3 +1,62 @@
+## 07308545.3 (19-08-2026)
+- Fix an incompletely installed Codex CLI, which silently broke every Codex tool call. Since
+  codex-cli 0.147.0 the CLI does not execute shell commands or file reads itself; it delegates
+  them to a companion `codex-code-mode-host` binary that it looks up next to its own executable.
+  `81-codex_cli.sh` downloaded the `codex-<target>.tar.gz` release asset, which contains only the
+  `codex` executable, so that companion binary was never installed. Measured on the running add-on
+  (codex-cli 0.147.0, `/data/codex/bin` holding only `.version`, the launcher and `codex-real`):
+  `codex exec` starts, authenticates and answers, but every tool call fails with
+  `failed to spawn code-mode host /data/codex/bin/codex-code-mode-host: No such file or directory`
+  and the run still exits 0 — so Codex answered from the prompt text alone and the failure looked
+  like success. `--disable code_mode` does not avoid it.
+  - The installer now downloads the `codex-package-<target>.tar.gz` release asset, which is the
+    complete package tree upstream's own installer uses, and installs all of it. Not a list of
+    known file names: whatever the archive contains is moved into place by position, so a helper
+    added by a future release arrives beside the entrypoint on its own instead of being extracted
+    and then dropped — cherry-picking today's two binaries works today, but it is the same mistake
+    at a smaller scale. For release 0.148.0 that means the entrypoint as
+    `/data/codex/bin/codex-real`, `codex-code-mode-host` beside it, and `codex-package.json`,
+    `codex-resources/` (bundled bubblewrap and zsh) and `codex-path/` (bundled ripgrep) in
+    `/data/codex`. The installed tree grows from ~246 MB to ~300 MB, and `/data/codex` is now
+    explicitly add-on-owned in its entirety: every path the new release ships replaces the
+    installed copy of that path outright rather than merging into it, so nothing should be kept
+    there by hand. A path upstream stops shipping altogether is not pruned — it is left behind as
+    dead weight that the new entrypoint no longer looks for. Codex's own state stays in
+    `~/.codex` and is never touched.
+  - An incomplete install is no longer advertised. `82-claude_tools.sh` registers the Codex MCP
+    server whenever the launcher at `/data/codex/bin/codex` is executable and re-checks nothing
+    else, and both the launcher and the package tree persist in `/data` independently of each
+    other. The launcher is therefore now written only for an install that has its executable, its
+    code-mode host, its package manifest and its version stamp, and is removed together with the
+    `/usr/local/bin/codex` symlink otherwise. The stamp is part of that test because it is deleted
+    before the first file of a replacement is moved and written after the last, so a stamp-less
+    prefix is exactly the tree that may mix two releases. This covers the cases that reach the
+    launcher without a fresh install: a boot that cannot reach the release metadata and finds a
+    pre-existing incomplete install, and a launcher left behind by an interrupted replacement.
+    Nothing under `/data/codex` is deleted beyond that launcher — the executable, the package
+    tree and the ChatGPT sign-in stay, so a later boot completes the install without another
+    download or another login.
+  - That layout is load-bearing, so the install prefix was chosen to satisfy it rather than
+    changed. Codex canonicalises its own executable path, requires the parent directory to be
+    named `bin`, and reads the manifest and helper directories from that directory's parent — the
+    existing `/data/codex/bin` prefix already matches, and the executable's file name is not part
+    of the contract, so `codex-real` and the subscription-only `codex` launcher wrapping it are
+    both unchanged, as is the `/usr/local/bin/codex` symlink and the MCP registration.
+  - Existing installs repair themselves. The "already installed, skip the download" test now also
+    requires the code-mode host and the package manifest to be present, so an add-on that already
+    has a working `codex-real` and no helpers reinstalls on the next start instead of staying
+    quietly broken.
+  - `claude-tools-doctor.sh` now reports whether the package layout is complete, because the
+    failure mode this fixes is invisible in `codex --version`, in the version stamp and in the
+    exit code.
+- Known limitation, unchanged by this release and not caused by it: Codex's own Linux sandbox
+  cannot start in this container. Running both the system `bwrap` 0.8.0 and the bundled one
+  directly with `--dev-bind / / --unshare-net /bin/true` fails identically with
+  `bwrap: loopback: Failed RTM_NEWADDR: Operation not permitted`, so it is a container capability
+  limitation rather than a packaging one. With the shipped `codex_sandbox_mode: workspace-write`
+  default, tool calls therefore still fail with that bwrap error; `danger-full-access` is the only
+  mode that currently executes commands, and the container is already the security boundary.
+
 ## 07308545.1 (17-08-2026)
 - Minor bugs fixed
  

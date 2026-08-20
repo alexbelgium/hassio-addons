@@ -10,10 +10,20 @@ set -o pipefail
 # The install prefix is /data/codex, NOT $HOME/.codex/bin: /data is persistent regardless of the
 # configurable data_location, and the managed MCP merge treats commands under $HOME as
 # user-installed. Codex state (auth.json, config.toml) remains in the runtime user's home.
+#
+# Codex is distributed as a package tree, not as a lone executable: since 0.147.0 every shell and
+# file-read tool call is executed by a companion binary, codex-code-mode-host, that Codex looks up
+# next to itself. Upstream publishes that tree as the codex-package-<target> release asset, and the
+# whole tree is installed here. Its layout is load-bearing and must not be flattened: Codex
+# canonicalises its own executable path, requires the parent directory to be named `bin`, and then
+# reads codex-package.json, codex-resources/ and codex-path/ from that directory's parent. The
+# executable's file name is not part of that contract, which is why codex-real keeps its name.
 CODEX_ROOT="/data/codex"
 CODEX_PREFIX="${CODEX_ROOT}/bin"
 CODEX_BIN="${CODEX_PREFIX}/codex"
 CODEX_REAL="${CODEX_PREFIX}/codex-real"
+CODEX_HOST="${CODEX_PREFIX}/codex-code-mode-host"
+CODEX_MANIFEST="${CODEX_ROOT}/codex-package.json"
 CODEX_STAMP="${CODEX_PREFIX}/.version"
 CODEX_LINK="/usr/local/bin/codex"
 CODEX_RELEASE_API="https://api.github.com/repos/openai/codex/releases/latest"
@@ -26,6 +36,60 @@ fi
 
 run_as_runtime_user() {
     s6-setuidgid abc env HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" "$@"
+}
+
+# What "installed" means, in one place. A Codex that is missing its code-mode host, its package
+# manifest or its version stamp still starts, authenticates and answers — it simply cannot run a
+# single tool call — so presence of the executable alone is not a usable install. The stamp counts
+# because it is removed before the first file of a replacement is moved and written after the last,
+# so its absence next to an executable means the tree may mix two releases.
+codex_install_is_complete() {
+    [ -x "$CODEX_REAL" ] \
+        && [ -x "$CODEX_HOST" ] \
+        && [ -f "$CODEX_MANIFEST" ] \
+        && [ -f "$CODEX_STAMP" ]
+}
+
+# Move a verified package tree from staging into the install prefix. Called only from an `if`
+# condition, where `set -e` does not apply, so every step reports failure explicitly.
+#
+# Whatever the package ships is installed, rather than the file names this add-on happens to know
+# about today: a helper added by a future release has to arrive beside codex-real on its own, or it
+# fails exactly the way the missing code-mode host did. Only paths the archive actually contains are
+# touched — /data/codex also holds this install's staging directory, so the tree below it is never
+# cleared wholesale.
+#
+# The long, failure-prone part of an install — the download and its digest check — is already done
+# by the time this runs; what is left is same-filesystem renames of an already validated tree. They
+# are not one atomic operation, so the version stamp is removed first: any interruption leaves a
+# stamp-less prefix, which the next boot treats as "not installed" and replaces wholesale. The
+# entrypoint is moved last, so a prefix whose codex-real is the new release is a prefix whose
+# helper binaries are the new release too.
+install_codex_package() {
+    local staged="$1"
+    local entry name
+    rm -f -- "$CODEX_STAMP" || return 1
+    # Everything beside bin/ first — the manifest and the helper directories (codex-resources/ and
+    # codex-path/ today, holding bubblewrap, zsh and ripgrep) — then everything the package puts in
+    # bin/ except the entrypoint, then the entrypoint. The existing launcher and version stamp are
+    # never matched: the launcher is skipped by name and the stamp is a dot file.
+    for entry in "${staged}"/*; do
+        name="${entry##*/}"
+        if [ ! -e "$entry" ] || [ "$name" = "bin" ]; then
+            continue
+        fi
+        rm -rf -- "${CODEX_ROOT:?}/${name}" || return 1
+        mv -f -- "$entry" "${CODEX_ROOT}/${name}" || return 1
+    done
+    for entry in "${staged}"/bin/*; do
+        name="${entry##*/}"
+        if [ ! -e "$entry" ] || [ "$name" = "codex" ]; then
+            continue
+        fi
+        rm -rf -- "${CODEX_PREFIX:?}/${name}" || return 1
+        mv -f -- "$entry" "${CODEX_PREFIX}/${name}" || return 1
+    done
+    mv -f -- "${staged}/bin/codex" "$CODEX_REAL" || return 1
 }
 
 if ! bashio::config.true 'install_codex_cli'; then
@@ -44,7 +108,7 @@ case "$(uname -m)" in
         ;;
 esac
 
-CODEX_ASSET="codex-${CODEX_TARGET}.tar.gz"
+CODEX_ASSET="codex-package-${CODEX_TARGET}.tar.gz"
 mkdir -p "$CODEX_PREFIX"
 
 # Migrate the PR's earlier direct-binary layout to the enforced wrapper layout without another
@@ -116,38 +180,47 @@ PY
 fi
 
 if [ -z "$release_info" ]; then
-    if [ -x "$CODEX_REAL" ] && run_as_runtime_user "$CODEX_REAL" --version > /dev/null 2>&1; then
+    if codex_install_is_complete && run_as_runtime_user "$CODEX_REAL" --version > /dev/null 2>&1; then
         bashio::log.warning "Unable to resolve the latest verified Codex release; keeping the existing install"
     else
-        bashio::log.warning "Unable to resolve the latest verified Codex release; Codex is unavailable this boot"
-        exit 0
+        bashio::log.warning "Unable to resolve the latest verified Codex release; the installed Codex is missing or incomplete and stays unavailable until a boot can reach the release metadata"
     fi
 else
     IFS=$'\t' read -r CODEX_WANTED CODEX_SHA256 CODEX_URL <<< "$release_info"
 
-    if [ -x "$CODEX_REAL" ] \
+    # An install is complete only if the code-mode host and the package manifest are there too:
+    # every install made before this add-on switched to the package asset has a working codex-real
+    # and no helpers, and repairs itself here rather than needing a fresh /data. Running the binary
+    # also rejects one built for another architecture, which a restored backup could leave behind.
+    if codex_install_is_complete \
         && [ "$(cat "$CODEX_STAMP" 2> /dev/null || true)" = "$CODEX_WANTED" ] \
         && run_as_runtime_user "$CODEX_REAL" --version > /dev/null 2>&1; then
         bashio::log.info "Codex CLI ${CODEX_WANTED} already installed (latest stable)"
     else
         bashio::log.info "Installing latest stable Codex CLI ${CODEX_WANTED} (${CODEX_TARGET}); this is a large one-time download"
         archive="${codex_tmp}/${CODEX_ASSET}"
-        extracted="${codex_tmp}/codex-${CODEX_TARGET}"
+        staged="${codex_tmp}/package"
 
-        # Fail open for add-on startup but fail closed for the candidate binary: its official
+        # Fail open for add-on startup but fail closed for the candidate release: its official
         # release digest must match before extraction or execution, and replacement happens only
-        # after the staged binary successfully runs.
-        if curl -fsSL --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 600 \
-            -o "$archive" "$CODEX_URL" \
+        # after the staged tree is complete and its entrypoint successfully runs. The candidate is
+        # exercised in staging with its own codex-package.json and helper directories in place, so
+        # the layout Codex will resolve at runtime is the layout that was validated.
+        if mkdir -p "$staged" \
+            && chmod 0755 "$staged" \
+            && curl -fsSL --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 600 \
+                -o "$archive" "$CODEX_URL" \
             && printf '%s  %s\n' "$CODEX_SHA256" "$archive" | sha256sum -c - > /dev/null \
-            && tar -xzf "$archive" -C "$codex_tmp" \
-            && [ -f "$extracted" ] \
-            && chmod 0755 "$extracted" \
-            && run_as_runtime_user "$extracted" --version > /dev/null 2>&1 \
-            && mv -f "$extracted" "$CODEX_REAL"; then
+            && tar -xzf "$archive" -C "$staged" \
+            && [ -f "${staged}/codex-package.json" ] \
+            && [ -f "${staged}/bin/codex" ] \
+            && [ -f "${staged}/bin/codex-code-mode-host" ] \
+            && chmod 0755 "${staged}/bin/codex" "${staged}/bin/codex-code-mode-host" \
+            && run_as_runtime_user "${staged}/bin/codex" --version > /dev/null 2>&1 \
+            && install_codex_package "$staged"; then
             printf '%s' "$CODEX_WANTED" > "$CODEX_STAMP"
             bashio::log.info "Codex CLI installed: $("$CODEX_REAL" --version 2> /dev/null || echo unknown)"
-        elif [ -x "$CODEX_REAL" ]; then
+        elif codex_install_is_complete; then
             bashio::log.warning "Verified Codex ${CODEX_WANTED} installation failed; keeping the existing install"
         else
             bashio::log.warning "Verified Codex ${CODEX_WANTED} installation failed; Codex is unavailable this boot"
@@ -155,7 +228,16 @@ else
     fi
 fi
 
-if [ ! -x "$CODEX_REAL" ]; then
+# The launcher is the add-on's single "Codex is usable" signal: 82-claude_tools.sh registers the
+# Codex MCP server when it is executable and re-checks nothing else. Write it only for a complete
+# install, and remove it — together with the PATH symlink — for an incomplete one. Both the launcher
+# and the package tree live in /data and survive restarts independently, so a launcher left from an
+# earlier boot would otherwise outlive the install it was written for and advertise a Codex whose
+# every tool call fails. The executable, the package tree and the ChatGPT sign-in are all left in
+# place: a later boot completes the install without another download or another login.
+if ! codex_install_is_complete; then
+    rm -f -- "$CODEX_BIN" "$CODEX_LINK"
+    bashio::log.warning "Codex is not completely installed; not registering it this boot"
     exit 0
 fi
 
