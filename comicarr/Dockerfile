@@ -70,7 +70,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 # upstream /entrypoint.sh, which services.d/comicarr/run still calls when the
 # user asks for an unprivileged uid.
 COPY ha_entrypoint.sh /ha_entrypoint.sh
-RUN chmod 777 /ha_entrypoint.sh
+RUN chmod 0755 /ha_entrypoint.sh
 ENTRYPOINT ["/ha_entrypoint.sh"]
 
 # Install bashio
