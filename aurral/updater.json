@@ -1,9 +1,9 @@
 {
-  "last_update": "2026-08-13",
+  "last_update": "2026-08-22",
   "repository": "alexbelgium/hassio-addons",
   "slug": "aurral",
   "source": "github",
   "upstream_repo": "lklynet/aurral",
-  "upstream_version": "2.4.0",
+  "upstream_version": "2.5.1",
   "github_beta": false
 }
