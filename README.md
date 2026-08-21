@@ -57,18 +57,18 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 143
-- Installed : 361103
+- Installed : 390969
 
 ### Top 3
 
-1. Arpspoof (103023x)
-2. Flaresolverr (88761x)
-3. Mylar3 (81856x)
+1. Arpspoof (103763x)
+2. Flaresolverr (89649x)
+3. Mylar3 (82537x)
 
 ### Architectures used
 
-- amd64: 90%
-- aarch64: 10%
+- amd64: 88%
+- aarch64: 12%
 
 ### Star History
 
@@ -82,8 +82,8 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Add-ons provided by this repository
 
-%%ADDONS_LIST%%
-&#10003;  [Arpspoof (103023x)](arpspoof/) : block internet connection for local network devices
+
+&#10003;  [Arpspoof (103763x)](arpspoof/) : block internet connection for local network devices
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fupdater.json)
@@ -669,7 +669,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 
-&#10003;  [Mylar3 (81856x)](mylar3/) : Automated comic book downloader for use with NZB and torrents
+&#10003;  [Mylar3 (82537x)](mylar3/) : Automated comic book downloader for use with NZB and torrents
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmylar3%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmylar3%2Fupdater.json)
