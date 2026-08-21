@@ -77,8 +77,6 @@ jobs:
           # ---------------------------
           cp .templates/.README.md README2.md
           ADDONSLINE="$(sed -n '/%%ADDONS_LIST%%/=' README2.md)"
-          # Keep the placeholder line so INSERT index stays stable
-          # sed -i '/%%ADDONS_LIST%%/d' README2.md
 
           # ---------------------------
           # Sort folders by addon name (supports config.json & config.yaml/.yml)
@@ -160,6 +158,8 @@ jobs:
               sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION\\n" README2.md
             fi
           done
+          # Keep the placeholder line so INSERT index stays stable
+          sed -i 's/%%ADDONS_LIST%%//g' README2.md
 
           # ---------------------------
           # Restore folders name
