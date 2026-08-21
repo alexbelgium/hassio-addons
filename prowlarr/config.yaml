@@ -110,4 +110,4 @@ schema:
 slug: prowlarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.6.2.5548.10"
+version: "2.6.2.5558.10"
