@@ -136,5 +136,5 @@ schema:
 slug: claude_desktop
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "07308545.3"
+version: "07308545.4"
 video: true

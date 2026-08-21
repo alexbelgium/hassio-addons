@@ -1,3 +1,7 @@
+ 
+## 07308545.4 (2026-08-22)
+- Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
+- Upstream tag : v3.2.2+claude1.32885.1
 ## 07308545.3 (19-08-2026)
 - Fix an incompletely installed Codex CLI, which silently broke every Codex tool call. Since
   codex-cli 0.147.0 the CLI does not execute shell commands or file reads itself; it delegates
