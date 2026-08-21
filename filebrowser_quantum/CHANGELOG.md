@@ -1,4 +1,7 @@
  
+## 1.5.2 (2026-08-22)
+- Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
+ 
 ## 1.5.1.2 (2026-08-19)
 - Fix direct access on port 8071, which was broken in 1.5.1.1: the root
   redirect pointed at the container-internal port 8072 instead of the
