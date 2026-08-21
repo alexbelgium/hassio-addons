@@ -1,4 +1,7 @@
  
+## v1.69.1 (2026-08-22)
+- Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
+ 
 ## v1.69.0 (2026-08-15)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
  
