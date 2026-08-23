@@ -27,17 +27,45 @@ else
     # The column only exists once calibre-web 0.6.27+ has migrated app.db, so a failure here is
     # not fatal : the next start applies it.
     addon_ip=$(bashio::addon.ip_address)
-    trusted_ips="127.0.0.1,::1,::ffff:127.0.0.1"
+    managed_ips="127.0.0.1,::1,::ffff:127.0.0.1"
     if bashio::var.has_value "${addon_ip}"; then
-        trusted_ips="${trusted_ips},${addon_ip},::ffff:${addon_ip}"
+        managed_ips="${managed_ips},${addon_ip},::ffff:${addon_ip}"
     fi
-    trusted_ips_error=$(sqlite3 /config/app.db "update settings set config_reverse_proxy_trusted_ips='${trusted_ips}'" 2>&1) || {
-        if echo "${trusted_ips_error}" | grep -q "no such column"; then
-            bashio::log.warning "Could not set the ingress trusted ip list, it will be applied at next start"
-        else
-            bashio::log.warning "Could not set the ingress trusted ip list: ${trusted_ips_error}"
+    trusted_ips="${managed_ips}"
+
+    # The same field is where a user lists their own reverse proxy when they reach calibre-web
+    # through the exposed port instead of ingress, so the list is merged rather than replaced :
+    # everything this script did not put there itself is kept. What was written on the previous
+    # start is recorded in /data rather than guessed back from the value, because the addon ip
+    # changes across restarts and an entry that is merely left alone would accumulate. A stale
+    # 172.30.32.0/23 address can be handed to a different addon later, which would then be
+    # trusted to send the auth header.
+    managed_ips_state=/data/.reverse_proxy_trusted_ips
+    previous_ips=""
+    if [ -f "${managed_ips_state}" ]; then
+        previous_ips=$(cat "${managed_ips_state}")
+    fi
+    current_ips=$(sqlite3 /config/app.db "select coalesce(config_reverse_proxy_trusted_ips,'') from settings" 2> /dev/null) || current_ips=""
+    IFS=',' read -r -a current_ips_entries <<< "${current_ips}"
+    for entry in "${current_ips_entries[@]}"; do
+        entry="${entry//[[:space:]]/}"
+        if [ -z "${entry}" ]; then
+            continue
         fi
-    }
+        # Already required, or injected by an earlier start : do not carry it over.
+        if [[ ",${trusted_ips},${previous_ips}," == *",${entry},"* ]]; then
+            continue
+        fi
+        trusted_ips="${trusted_ips},${entry}"
+    done
+
+    if trusted_ips_error=$(sqlite3 /config/app.db "update settings set config_reverse_proxy_trusted_ips='${trusted_ips}'" 2>&1); then
+        printf '%s' "${managed_ips}" > "${managed_ips_state}"
+    elif echo "${trusted_ips_error}" | grep -q "no such column"; then
+        bashio::log.warning "Could not set the ingress trusted ip list, it will be applied at next start"
+    else
+        bashio::log.warning "Could not set the ingress trusted ip list: ${trusted_ips_error}"
+    fi
 fi
 
 bashio::log.info "Default username:password is admin:admin123"
