@@ -1,3 +1,7 @@
+## 2025.12.8 (2026-08-23)
+
+- Fix: Use `portainer/agent:alpine-sts` to match the STS release channel configured in `updater.json`
+
 ## 2025.12.7 (2026-08-23)
 
 - Fix: Docker reported the addon as `unhealthy` in Portainer. The healthcheck script could never run because its shebang required the s6-overlay environment, which this addon's entrypoint does not set up (https://github.com/alexbelgium/hassio-addons/issues/3002)
