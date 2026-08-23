@@ -1,3 +1,8 @@
+## 2025.12.7 (2026-08-23)
+
+- Fix: Docker reported the addon as `unhealthy` in Portainer. The healthcheck script could never run because its shebang required the s6-overlay environment, which this addon's entrypoint does not set up (https://github.com/alexbelgium/hassio-addons/issues/3002)
+- Remove the unused and broken `wait-for-signal` script; nothing invoked it
+
 ## 2025.12.6 (2026-08-01)
 
 - Version renamed from `2025.12-6`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
