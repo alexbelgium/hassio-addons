@@ -58,6 +58,69 @@ jobs:
           echo "Changed addons: $changed_addons"
           echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
 
+  # 1b. A pull request that changes what an add-on ships must bump that add-on's
+  # version. Supervisor only offers a rebuild when `version` changes, so without
+  # one the fix merges and no user ever receives it - inert, while the issue
+  # looks closed. Nothing else in CI checks this (the add-on linter validates
+  # the schema, not that the value moved).
+  #
+  # Deliberately independent of check-addon-changes above: that job derives
+  # `changedAddons` from `^<addon>/config.(json|ya?ml)$` alone, so it is empty
+  # for precisely the pull requests this catches - an add-on whose scripts
+  # changed while config.yaml did not. Gating this on its output would make it
+  # a no-op. It does its own scan and changes nothing about which add-ons are
+  # linted or built.
+  check-version-bump:
+    name: Check add-on version bumped
+    if: ${{ github.repository_owner == 'alexbelgium' }}
+    runs-on: ubuntu-latest
+    # Only reads git history and the PR's labels.
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      # The bypass label is read LIVE here rather than from the job's `if:`.
+      # The event payload is a snapshot from trigger time, and this workflow
+      # deliberately does not listen for `labeled` — adding that activity type
+      # would re-run the ~3 h add-on builds on every label change. Reading it
+      # at run time instead means "label the PR, then re-run this one job"
+      # works, which is the sequence the failure message asks for.
+      - name: Check for the bypass label
+        id: bypass
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          skip=$(gh pr view "$PR" --repo "$REPO" --json labels \
+                 --jq '[.labels[].name] | index("skip-version-check") != null')
+          echo "skip=$skip" >> "$GITHUB_OUTPUT"
+          [ "$skip" = "true" ] && echo "skip-version-check label present; skipping." || true
+
+      - name: Checkout repo
+        if: steps.bypass.outputs.skip != 'true'
+        uses: actions/checkout@v7.0.1
+        with:
+          # Same reason as check-addon-changes: HEAD^1 must be resolvable.
+          fetch-depth: 2
+          # Nothing here pushes, and the repo is public, so an anonymous fetch
+          # of the base commit is enough - do not leave a token in .git/config.
+          persist-credentials: false
+
+      - name: Check every changed add-on bumped its version
+        if: steps.bypass.outputs.skip != 'true'
+        env:
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          # HEAD^1, not pull_request.base.sha, for the same reason as above: the
+          # event payload's base can be stale if master advanced since trigger.
+          BASE_SHA=$(git rev-parse HEAD^1)
+          git fetch origin "$BASE_SHA"
+          export BASE_SHA
+          bash .github/scripts/check_version_bump.sh
+
   check-changed-changelog:
     name: Check if CHANGELOG.md changed
     needs: check-addon-changes
