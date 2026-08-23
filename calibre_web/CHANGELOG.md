@@ -1,4 +1,7 @@
  
+## 0.6.27.1 (2026-08-23)
+- Fix: Ingress login was rejected since 0.6.27, which only accepts the reverse proxy auth header from trusted source addresses. The addon now adds its own ip to that list (https://github.com/alexbelgium/hassio-addons/issues/3003)
+
 ## 0.6.27 (2026-08-13)
 - Update to latest version from linuxserver/docker-calibre-web (changelog : https://github.com/linuxserver/docker-calibre-web/releases)
 

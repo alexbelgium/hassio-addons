@@ -18,6 +18,22 @@ if [ ! -f /config/app.db ]; then
     bashio::log.warning "First boot : disabling Ingress until addon restart"
 else
     sqlite3 /config/app.db 'update settings set config_reverse_proxy_login_header_name="X-WebAuth-User",config_allow_reverse_proxy_header_login=1'
+
+    # Calibre-web 0.6.27 only accepts the ingress auth header from a trusted source address, and
+    # defaults that list to "127.0.0.1,::1". Nginx binds its upstream socket to the addon ip
+    # (proxy_bind $server_addr in ingress.conf) and calibre-web listens dual-stack, so it sees
+    # ::ffff:<addon ip> and drops the header. Both the plain and the ipv4-mapped forms are listed
+    # because an ipv4 entry never matches an ipv6-mapped address on the calibre-web side.
+    # The column only exists once calibre-web 0.6.27+ has migrated app.db, so a failure here is
+    # not fatal : the next start applies it.
+    addon_ip=$(bashio::addon.ip_address)
+    trusted_ips="127.0.0.1,::1,::ffff:127.0.0.1"
+    if bashio::var.has_value "${addon_ip}"; then
+        trusted_ips="${trusted_ips},${addon_ip},::ffff:${addon_ip}"
+    fi
+    if ! sqlite3 /config/app.db "update settings set config_reverse_proxy_trusted_ips='${trusted_ips}'" 2> /dev/null; then
+        bashio::log.warning "Could not set the ingress trusted ip list, it will be applied at next start"
+    fi
 fi
 
 bashio::log.info "Default username:password is admin:admin123"
