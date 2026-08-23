@@ -81,8 +81,7 @@ RUN chmod 777 /ha_entrypoint.sh
 COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
-RUN chmod a+x /usr/sbin/healthcheck && \
-    chmod a+x /usr/sbin/wait-for-signal
+RUN chmod a+x /usr/sbin/healthcheck
 WORKDIR "/app"
 
 ENTRYPOINT [ "/usr/bin/env" ]

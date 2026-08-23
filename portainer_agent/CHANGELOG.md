@@ -1,6 +1,7 @@
 ## 2025.12.7 (2026-08-23)
 
 - Fix: Docker reported the addon as `unhealthy` in Portainer. The healthcheck script could never run because its shebang required the s6-overlay environment, which this addon's entrypoint does not set up (https://github.com/alexbelgium/hassio-addons/issues/3002)
+- Remove the unused and broken `wait-for-signal` script; nothing invoked it
 
 ## 2025.12.6 (2026-08-01)
 
