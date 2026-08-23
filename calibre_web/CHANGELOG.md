@@ -1,6 +1,6 @@
  
 ## 0.6.27.2 (2026-08-23)
-- Fix: the ingress trusted ip list is now merged instead of replaced, so a reverse proxy added in the calibre-web admin page is no longer erased on every addon start (https://github.com/alexbelgium/hassio-addons/pull/3004)
+- Fix: follow-up to 0.6.27.1 - the ingress trusted ip list is now merged instead of replaced, so a reverse proxy added in the calibre-web admin page is no longer erased on every addon start (https://github.com/alexbelgium/hassio-addons/pull/3009)
 
 ## 0.6.27.1 (2026-08-23)
 - Fix: Ingress login was rejected since 0.6.27, which only accepts the reverse proxy auth header from trusted source addresses. The addon now adds its own ip to that list (https://github.com/alexbelgium/hassio-addons/issues/3003)
