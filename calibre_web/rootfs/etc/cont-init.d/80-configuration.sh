@@ -31,9 +31,13 @@ else
     if bashio::var.has_value "${addon_ip}"; then
         trusted_ips="${trusted_ips},${addon_ip},::ffff:${addon_ip}"
     fi
-    if ! sqlite3 /config/app.db "update settings set config_reverse_proxy_trusted_ips='${trusted_ips}'" 2> /dev/null; then
-        bashio::log.warning "Could not set the ingress trusted ip list, it will be applied at next start"
-    fi
+    trusted_ips_error=$(sqlite3 /config/app.db "update settings set config_reverse_proxy_trusted_ips='${trusted_ips}'" 2>&1) || {
+        if echo "${trusted_ips_error}" | grep -q "no such column"; then
+            bashio::log.warning "Could not set the ingress trusted ip list, it will be applied at next start"
+        else
+            bashio::log.warning "Could not set the ingress trusted ip list: ${trusted_ips_error}"
+        fi
+    }
 fi
 
 bashio::log.info "Default username:password is admin:admin123"
