@@ -1,4 +1,8 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/env bash
+# shellcheck shell=bash
+# Plain bash on purpose : ha_entrypoint.sh replaces s6-overlay's /init, so
+# /run/s6/container_environment is never created and a with-contenv shebang
+# would fail before this script runs. Nothing here needs the s6 environment.
 
 if [ -f "/tmp/healthcheck-signal" ]; then
   curl -k --fail https://127.0.0.1:9001/ping || exit 1
