@@ -1,4 +1,7 @@
  
+## 0.6.27.2 (2026-08-23)
+- Fix: trust the whole supervisor network range for the ingress auth header instead of the addon's own address, which changes across restarts. The list is only written when that range is missing, so an entry added in the calibre-web admin page is no longer erased on every start (https://github.com/alexbelgium/hassio-addons/pull/3010)
+
 ## 0.6.27.1 (2026-08-23)
 - Fix: Ingress login was rejected since 0.6.27, which only accepts the reverse proxy auth header from trusted source addresses. The addon now adds its own ip to that list (https://github.com/alexbelgium/hassio-addons/issues/3003)
 
