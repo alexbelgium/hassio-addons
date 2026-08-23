@@ -1,6 +1,7 @@
-## 2025.12.8 (2026-08-23)
+## 2.44.0 (2026-08-23)
 
 - Fix: Use `portainer/agent:alpine-sts` to match the STS release channel configured in `updater.json`
+- Fix: Align add-on versioning with Portainer STS releases
 
 ## 2025.12.7 (2026-08-23)
 
