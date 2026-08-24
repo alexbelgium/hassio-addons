@@ -219,8 +219,10 @@ All three hard gates below are matrixed over `check-addon-changes.outputs.change
 **"Merged" is not "on master".** The push builder's revert-on-failure job reverts the merge
 commit when its prebuild step fails — including failures unrelated to your diff. A seerr fix
 merged at 05:15 and was reverted one minute later because `EndBug/add-and-commit`'s floating
-`v11` tag had moved to a broken release (#2993, reapplied verbatim in #2997). After merge, confirm
-your commit's tree is still what `origin/master` holds before declaring done.
+`v11` tag had moved to a broken release (#2993, reapplied verbatim in #2997). After merge,
+`git fetch origin master` first — the remote-tracking ref is stale otherwise and would "confirm"
+against pre-merge state — then check your commit's tree is still what `origin/master` holds
+before declaring done.
 
 **CI rewrites your shell scripts.** `lint.yml` runs `shfmt -w -i 4 -ci -bn -sr` over every `*.sh`
 and `run`, plus a `chmod +x` pass, on schedule. Repo-wide reformatting commits land on master
