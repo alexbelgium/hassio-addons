@@ -17,7 +17,9 @@
 - Replaced the pinned upstream commit with `ARG BUILD_UPSTREAM`, which names an
   upstream release tag, and re-enabled the repository updater for this add-on.
   Upstream releases are now picked up automatically instead of requiring a
-  manual commit pin; upstream's development tags are excluded.
+  manual commit pin. Upstream's development tags are excluded: `lastversion`
+  reports the `v1.7d` development tag as release `1.7`, for which no source
+  archive exists, so an unfiltered update would have broken the build.
 
 ## 2.0.1 (2026-07-17)
 

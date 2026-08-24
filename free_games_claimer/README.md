@@ -149,8 +149,10 @@ version and `CHANGELOG.md` together, so a new upstream release reaches the
 add-on without a manual edit while the image contents still never change
 without a version bump.
 
-Upstream's development tags (`v1.7d` and similar) carry no GitHub release and
-are filtered out through `"github_exclude": "d"` in `updater.json`.
+Upstream's development tags (`v1.7d` and similar) are filtered out through
+`"github_exclude": "d"` in `updater.json`. Without it the updater reports the
+`v1.7d` tag as release `1.7`, for which GitHub serves no source archive, and
+the build would fail.
 
 The add-on version does not track the upstream version. The add-on uses a `2.x`
 series while upstream is on `1.x`, and Home Assistant only offers an update

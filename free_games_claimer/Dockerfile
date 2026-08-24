@@ -98,11 +98,16 @@ RUN apt-get update \
 
 # Install the upstream release named by BUILD_UPSTREAM. The repository updater
 # bumps that value together with the add-on version, so the image contents
-# still cannot change without a version bump.
+# still cannot change without a version bump. Upstream tags its releases
+# "v1.6", but the tag name is downloaded without the prefix as well so that an
+# unattended update does not fail the build if upstream ever drops it.
 WORKDIR /fgc
-RUN curl --proto "=https" --tlsv1.2 -fsSL \
+RUN (curl --proto "=https" --tlsv1.2 -fsSL \
         "https://github.com/${UPSTREAM_REPOSITORY}/archive/v${BUILD_UPSTREAM}.tar.gz" \
         -o /tmp/free-games-claimer-remaster.tar.gz \
+        || curl --proto "=https" --tlsv1.2 -fsSL \
+            "https://github.com/${UPSTREAM_REPOSITORY}/archive/${BUILD_UPSTREAM}.tar.gz" \
+            -o /tmp/free-games-claimer-remaster.tar.gz) \
     && tar -xzf /tmp/free-games-claimer-remaster.tar.gz --strip-components=1 -C /fgc \
     && python3 -m pip install --no-cache-dir --break-system-packages -r requirements.txt \
     && dos2unix ./*.sh \
