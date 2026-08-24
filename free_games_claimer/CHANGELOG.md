@@ -12,6 +12,8 @@
   to run `docker compose pull`, while the add-on is updated through the Home
   Assistant add-on store. Set `NOTIFY_UPDATES=true` in `config.env` to receive
   it anyway.
+- Reworded the add-on description so the store list reads as partial rather
+  than exhaustive; the full list is in the README.
 - The default store selection is unchanged: existing installations keep
   claiming from Epic, Prime Gaming and GOG until `STORES` is edited.
 - Replaced the pinned upstream commit with `ARG BUILD_UPSTREAM`, which names an
