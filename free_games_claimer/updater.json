@@ -1,8 +1,10 @@
 {
   "dockerhub_by_date": false,
   "dockerhub_list_size": 2,
+  "github_exclude": "d",
+  "github_fulltag": false,
   "last_update": "24-08-2026",
-  "paused": true,
+  "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "free_games_claimer",
   "source": "github",

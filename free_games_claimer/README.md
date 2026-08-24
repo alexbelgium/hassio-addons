@@ -142,16 +142,23 @@ normally uses port `7080`.
 
 ## Upstream update policy
 
-The image is built from an explicit upstream commit in the Dockerfile. This
-keeps amd64 and aarch64 images reproducible and prevents an upstream branch or
-container tag from changing without an add-on review and version bump.
+The image is built from the upstream release named by `ARG BUILD_UPSTREAM` in
+the Dockerfile, downloaded as the matching `v<version>` source tarball. The
+repository updater tracks upstream releases and bumps that value, the add-on
+version and `CHANGELOG.md` together, so a new upstream release reaches the
+add-on without a manual edit while the image contents still never change
+without a version bump.
 
-The repository updater is intentionally paused for this add-on because the
-add-on uses its own `2.x` version series while the replacement upstream uses a
-`1.x` version series. An automatic replacement would risk a Home Assistant
-version regression and would not safely update the pinned commit. A maintainer
-upstream update must therefore update `UPSTREAM_REF`, `upstream_version`, the
-add-on version, and `CHANGELOG.md` together.
+Upstream's development tags (`v1.7d` and similar) carry no GitHub release and
+are filtered out through `"github_exclude": "d"` in `updater.json`.
+
+The add-on version does not track the upstream version. The add-on uses a `2.x`
+series while upstream is on `1.x`, and Home Assistant only offers an update
+when the new version sorts strictly higher, so the updater increments the
+add-on version (`2.1.0` to `2.1.1`) instead of publishing a lower-sorting
+upstream number. The upstream release actually installed is recorded in
+`upstream_version` in `updater.json`, in the `io.hass.upstream` image label,
+and in the add-on's startup banner.
 
 ## Installation
 

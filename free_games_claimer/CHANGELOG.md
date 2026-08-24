@@ -14,6 +14,10 @@
   it anyway.
 - The default store selection is unchanged: existing installations keep
   claiming from Epic, Prime Gaming and GOG until `STORES` is edited.
+- Replaced the pinned upstream commit with `ARG BUILD_UPSTREAM`, which names an
+  upstream release tag, and re-enabled the repository updater for this add-on.
+  Upstream releases are now picked up automatically instead of requiring a
+  manual commit pin; upstream's development tags are excluded.
 
 ## 2.0.1 (2026-07-17)
 
