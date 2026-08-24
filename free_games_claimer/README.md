@@ -24,14 +24,19 @@ This add-on is based on
 [Free Games Claimer Remaster](https://github.com/P-Adamiec/Free-Games-Claimer-Remaster).
 It can claim free games from:
 
-- Epic Games Store
+- Epic Games Store, including its weekly free mobile game
+- Fab, Epic's asset marketplace (`fab`)
 - Amazon Prime Gaming
 - GOG
 - Steam
+- Ubisoft giveaways (`ubisoft`)
+- AliExpress daily coin check-in (`aliexpress`)
 - GamerPower-supported stores, when explicitly enabled
 
 For compatibility with previous add-on releases, the default store selection
-remains Epic Games, Prime Gaming, and GOG.
+remains Epic Games, Prime Gaming, and GOG. The other stores are enabled by
+adding them to `STORES`, for example `epic,prime,gog,fab,ubisoft`, and each
+needs its own credentials in `config.env`.
 
 ## Web interface
 
@@ -97,6 +102,11 @@ STEAM_PASSWORD=your-password
 NOTIFY=tgram://bot-token/chat-id
 # DISCORD_WEBHOOK=https://discord.com/api/webhooks/...
 ```
+
+Upstream's release-update notification (`NOTIFY_UPDATES`) is disabled by the
+add-on, because it advises running `docker compose pull` while the add-on is
+actually updated through the Home Assistant add-on store. Setting
+`NOTIFY_UPDATES=true` in `config.env` re-enables it.
 
 Existing variables such as `EG_EMAIL`, `EG_PASSWORD`, `PG_EMAIL`,
 `PG_PASSWORD`, `PG_OTPKEY`, `GOG_EMAIL`, `GOG_PASSWORD`, `SHOW`, `WIDTH`,

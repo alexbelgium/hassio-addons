@@ -17,7 +17,7 @@ ARG BUILD_REF
 ARG BUILD_REPOSITORY
 ARG BUILD_VERSION
 ARG UPSTREAM_REPOSITORY="P-Adamiec/Free-Games-Claimer-Remaster"
-ARG UPSTREAM_REF="cca4992354215cef8807b748575af797606627f4"
+ARG UPSTREAM_REF="1e2b38f945b9371641c64a62cff1d5fb65df96c0"
 
 ENV S6_CMD_WAIT_FOR_SERVICES="1" \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME="0" \
@@ -87,6 +87,11 @@ RUN apt-get update \
     else \
         apt-get install -y --no-install-recommends chromium; \
     fi \
+    && printf '#!/bin/sh\nexit 0\n' > /usr/bin/xdg-open \
+    && chmod +x /usr/bin/xdg-open \
+    && mkdir -p /etc/opt/chrome/policies/managed /etc/chromium/policies/managed \
+    && printf '%s\n' '{"AutoLaunchProtocolsFromOrigins":[{"protocol":"aliexpress","allowed_origins":["*"]},{"protocol":"aliexpresshd","allowed_origins":["*"]},{"protocol":"aecmd","allowed_origins":["*"]},{"protocol":"alibaba","allowed_origins":["*"]},{"protocol":"alipay","allowed_origins":["*"]},{"protocol":"alipays","allowed_origins":["*"]},{"protocol":"tmall","allowed_origins":["*"]},{"protocol":"taobao","allowed_origins":["*"]},{"protocol":"market","allowed_origins":["*"]},{"protocol":"intent","allowed_origins":["*"]}]}' \
+       | tee /etc/opt/chrome/policies/managed/fgc-autolaunch.json /etc/chromium/policies/managed/fgc-autolaunch.json > /dev/null \
     && ln -sf /usr/share/novnc/vnc_auto.html /usr/share/novnc/index.html \
     && ln -sf /usr/bin/python3 /usr/bin/python \
     && apt-get purge -y gnupg \
