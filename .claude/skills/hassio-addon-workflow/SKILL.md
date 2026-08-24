@@ -29,8 +29,8 @@ Triage first, then one of two paths:
   resolve bot comments.
 - **Full loop** — performance/RAM/CPU work, diagnosis, anything changing a shipped default,
   ladder levels 4-6, or an explicit Codex-check request: scope → measure → plan → Codex reviews
-  the plan → implement → simplify → Codex reviews the code → PR → resolve comments → verify in
-  production → report.
+  the plan → implement → simplify → Codex reviews the code → **simplify again** → PR → resolve
+  comments → verify in production → report.
 
 Escalate mid-flight if a light task grows — touches a default, needs a new script or service, or
 reveals a deeper problem.
@@ -42,7 +42,10 @@ where every add-on solves a problem the same way is worth more than a locally ni
 design. Prefer reusing or extending over adding a parallel implementation, and when you must add
 something new, spell it the way the rest of the repo spells it (naming, option names, script
 numbering, file layout). Complexity is bought only by a **measurement** showing a concrete,
-user-visible cost on a real host — never by reasoning about hypothetical performance.
+user-visible cost on a real host — never by reasoning about hypothetical performance, and never by
+reasoning about a hypothetical *host* either. A defensive branch is complexity like any other: name
+the input that reaches it and the image or host where that happens, or delete it and let the case
+fail visibly instead.
 
 **Repo layout.** `alexbelgium/hassio-addons`; each add-on is a top-level directory. This skill is
 checked in at `.claude/skills/hassio-addon-workflow/` (canonical copy). Set the skill root once,
@@ -113,6 +116,10 @@ Attack your own plan before implementing:
 - What is the **blast radius** if the assumption underneath it is wrong?
 - What am I **inferring** that I could instead **detect at runtime** or **record explicitly**?
   Highest-yield question here — see `references/evidence.md`'s failure-mode section.
+- For every branch that exists **only to survive something going wrong**: name the image or host
+  where that input actually arrives, and go and look. Naming is the bar, not reproducing it here —
+  `references/simplify.md` works the `/dev/shm` guard and the `s6-dumpenv` fallback through that
+  distinction.
 
 Full loop only, before writing code: get Codex's independent read on the plan. Spawn a subagent
 whose prompt includes the path `references/codex-review.md` and tells it to follow that file's
@@ -140,10 +147,21 @@ justify the divergence in the PR body — but never at the cost of an isolation 
 numbered script, not an edit. Case studies of what happens when this check is skipped:
 `references/simplify.md`.
 
-## 6. Codex attacks the code (full loop only)
+## 6. Codex attacks the code, then simplify what the review added (full loop only)
 
 Same delegated invocation, pointed at `git diff origin/master...HEAD` plus your reasoning per
 hunk. Details in `references/codex-review.md`.
+
+Then run step 5's checks again over the hunks the review changed. Adversarial review only ever
+argues *for* another branch — that is its job — so accepting objections ratchets the diff upward,
+and nothing else in the loop walks it back down. For each accepted objection: is the case it
+defends one you have now demonstrated, or one you have merely been told about? Taking a
+correctness objection often deletes the code that made it necessary, and a fix that collapses back
+to fewer lines than you started the review with is the normal outcome, not a suspicious one.
+
+These edits land after step 4's checks already ran, so re-run them: `scripts/validate.sh <addon>
+--vs-master` plus the behavioural tests, over the final diff. Deleting a branch is exactly the
+kind of edit that leaves a stray `fi` behind.
 
 ## 7. Open the PR
 
