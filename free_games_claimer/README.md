@@ -146,8 +146,14 @@ The image is built from the upstream release named by `ARG BUILD_UPSTREAM` in
 the Dockerfile, downloaded as the matching `v<version>` source tarball. The
 repository updater tracks upstream releases and bumps that value, the add-on
 version and `CHANGELOG.md` together, so a new upstream release reaches the
-add-on without a manual edit while the image contents still never change
-without a version bump.
+add-on without a manual edit.
+
+A release tag is a mutable reference. Rebuilding the same `BUILD_UPSTREAM`
+installs whatever that tag points at, so an upstream tag that is force-moved or
+deleted would change or fail the build without an add-on change. That is the
+accepted cost of automatic tracking, and it is the same trade-off every other
+automatically updated add-on in this repository makes; the previous commit pin
+was immutable but could only be advanced by hand.
 
 Upstream's development tags (`v1.7d` and similar) are filtered out through
 `"github_exclude": "d"` in `updater.json`. Without it the updater reports the

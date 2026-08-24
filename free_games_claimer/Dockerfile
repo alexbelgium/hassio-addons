@@ -97,10 +97,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /var/cache/* /var/tmp/* /tmp/* /usr/share/doc/*
 
 # Install the upstream release named by BUILD_UPSTREAM. The repository updater
-# bumps that value together with the add-on version, so the image contents
-# still cannot change without a version bump. Upstream tags its releases
-# "v1.6", but the tag name is downloaded without the prefix as well so that an
-# unattended update does not fail the build if upstream ever drops it.
+# bumps that value together with the add-on version. A release tag is a mutable
+# reference: rebuilding the same BUILD_UPSTREAM installs whatever the tag points
+# at today, which is the accepted cost of tracking upstream automatically.
+# Upstream tags its releases "v1.6", but the tag name is downloaded without the
+# prefix as well so that an unattended update does not fail the build if
+# upstream ever drops it.
 WORKDIR /fgc
 RUN (curl --proto "=https" --tlsv1.2 -fsSL \
         "https://github.com/${UPSTREAM_REPOSITORY}/archive/v${BUILD_UPSTREAM}.tar.gz" \
