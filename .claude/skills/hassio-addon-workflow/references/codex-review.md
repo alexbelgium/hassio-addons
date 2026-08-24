@@ -39,3 +39,10 @@ codex exec --model gpt-5.6-sol --sandbox read-only --skip-git-repo-check \
 **Codex agrees with confident premises.** It has confirmed a wrong conclusion stated too
 confidently, and separately caught a genuine methodology error in the same review. Treat its
 confirmations with the same scepticism as its objections — especially about the build.
+
+**Its objections ratchet complexity upward.** An adversarial reviewer is asked to find what could
+go wrong, so its output is a list of arguments for more code; it is never asked whether the branch
+it wants is reachable. Separate "this is wrong" from "this is undefended" before you write
+anything: the first is a bug and you fix it, the second is a claim about some host, and it needs
+the same demonstration you would demand of a measurement. That is what step 6's second simplify
+pass is for.
