@@ -11,6 +11,7 @@ workflows and lint rules — that is not repeated here.
 - [Environment and workspace](#environment-and-workspace)
 - [Measurement](#measurement)
 - [Passing values into base-image services](#passing-values-into-base-image-services)
+- [Writing into an app's own config](#writing-into-an-apps-own-config)
 - [Shell and bashio](#shell-and-bashio)
 - [Dockerfile and architecture](#dockerfile-and-architecture)
 - [Versioning](#versioning)
@@ -116,6 +117,20 @@ place for filesystem and permission setup.
 the openbox autostart. (ANGLE's OpenGL backend, for instance, fails with "Could not open the
 default X display".)
 
+## Writing into an app's own config
+
+**A field your cont-init script writes may also be user-editable in the app's UI.** An
+unconditional `UPDATE`/overwrite on every boot silently erases whatever the user added there,
+and containers are recreated on restart so it re-erases forever (calibre-web
+`config_reverse_proxy_trusted_ips`, #3004 — flagged by two review bots, fixed in #3010).
+Prepend/merge with an idempotence guard instead of assigning.
+
+**Prefer values that are constant across boots.** The add-on's own IP changes every restart,
+so injecting it forces a rewrite-every-boot design plus stale-entry cleanup (a stale trusted IP
+can be handed to a *different* add-on later). Trusting the whole supervisor range
+`172.30.32.0/23` is constant, written once. For dual-stack listeners the IPv4 form never
+matches IPv4-mapped addresses — also list the mapped form (`::ffff:172.30.32.0/119`).
+
 ## Shell and bashio
 
 **`bashio::config` for lists**: `while read ... < <(bashio::config ...)` silently yields an empty
@@ -194,6 +209,12 @@ All three hard gates below are matrixed over `check-addon-changes.outputs.change
   it *cannot* fail a PR. Fix real findings anyway, but do not treat it as a blocker.
 - **Version bump** — no workflow checks it. It is repo convention, and required for Supervisor to
   offer the rebuild, but it will not fail CI.
+
+**"Merged" is not "on master".** The push builder's revert-on-failure job reverts the merge
+commit when its prebuild step fails — including failures unrelated to your diff. A seerr fix
+merged at 05:15 and was reverted one minute later because `EndBug/add-and-commit`'s floating
+`v11` tag had moved to a broken release (#2993, reapplied verbatim in #2997). After merge, confirm
+your commit's tree is still what `origin/master` holds before declaring done.
 
 **CI rewrites your shell scripts.** `lint.yml` runs `shfmt -w -i 4 -ci -bn -sr` over every `*.sh`
 and `run`, plus a `chmod +x` pass, on schedule. Repo-wide reformatting commits land on master

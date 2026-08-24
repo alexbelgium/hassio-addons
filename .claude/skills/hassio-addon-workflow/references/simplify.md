@@ -1,7 +1,7 @@
 # Simplify — case studies
 
 Evidence for why the mechanism ladder in SKILL.md step 3 exists, and why levels 4-6 need a reason
-that survives being said out loud. In all three cases the simpler option existed and was skipped.
+that survives being said out loud. In each case the simpler option existed and was skipped.
 Being able to build the complicated thing is not a reason to.
 
 - A rejected PR spent a **388-line TCP proxy plus a 142-line monkeypatch of a private upstream
@@ -13,6 +13,13 @@ Being able to build the complicated thing is not a reason to.
 - A resolution cap shipped as a **new init script writing an s6 envdir** — the wrong mechanism
   entirely (ladder level 4). Renaming the option to the env var the service already reads
   (level 1) would have worked, and the new script did not.
+- A calibre-web trusted-ips fix injected the add-on's **per-boot IP**, which forced a
+  rewrite-every-boot design that erased user entries; preserving them then needed merge logic
+  plus a state file recording what was injected (+34 lines, PR #3009 — closed unmerged). Asking
+  "is there a constant that makes the rewrite unnecessary?" gave the shipped fix: trust the
+  static supervisor range `172.30.32.0/23`, one idempotent statement, **net −6 lines**
+  (PR #3010). Complexity spent working around a changing value is a sign to hunt for the
+  constant instead.
 
 ## Checks worth running against your own diff
 

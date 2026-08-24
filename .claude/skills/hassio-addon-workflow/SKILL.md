@@ -172,7 +172,9 @@ work" — either it was exercised, or say plainly it wasn't.
 
 Light path: verification is `validate.sh` plus CI; anything beyond that is Assumed. Full loop: CI
 passing proves the build works, not that the change does anything — re-run the measurement that
-motivated the work once the rebuilt add-on is running. Real "merged and inert" examples, and what
+motivated the work once the rebuilt add-on is running. After merge, confirm the commit survived
+on `origin/master`: the builder's revert-on-failure job can revert a merge for reasons unrelated
+to your diff (see `references/traps.md#ci-and-review-bots`). Real "merged and inert" examples, and what
 to do when a fix can't be self-verified: `references/evidence.md`.
 
 ## 10. Calibrate and report
@@ -190,6 +192,10 @@ Risk + rollback                 — the riskiest hunk and how to revert it alone
 
 Lead with anything that did not work — a merged PR that achieved nothing is the single most
 important sentence in the report. Give confidence per claim, not one blanket number.
+
+**Feed the skill.** When a shipped fix needed a follow-up PR, or a reviewer caught something this
+skill should have, add the distilled lesson to the matching `references/` file in that follow-up
+PR — one entry, with the PR numbers. That loop is what keeps this file short and the traps real.
 
 Scripts are meant to be **run, not read** — each is cited at its point of use above; read one
 only if its output surprises you.
