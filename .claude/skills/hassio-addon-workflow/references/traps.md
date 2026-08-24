@@ -221,8 +221,11 @@ commit when its prebuild step fails — including failures unrelated to your dif
 merged at 05:15 and was reverted one minute later because `EndBug/add-and-commit`'s floating
 `v11` tag had moved to a broken release (#2993, reapplied verbatim in #2997). After merge,
 `git fetch origin master` first — the remote-tracking ref is stale otherwise and would "confirm"
-against pre-merge state — then check your commit's tree is still what `origin/master` holds
-before declaring done.
+against pre-merge state — then check that `git diff origin/master -- <the paths you touched>` is
+empty before declaring done. Scope it to your paths: master moves under you, so whole-tree
+equality fails on unrelated commits. Ancestry is not the check either — this repo squash-merges,
+so a merged PR head is never an ancestor of `master` (verified on #3010, whose fix is live), and
+a revert leaves the original commit an ancestor anyway.
 
 **CI rewrites your shell scripts.** `lint.yml` runs `shfmt -w -i 4 -ci -bn -sr` over every `*.sh`
 and `run`, plus a `chmod +x` pass, on schedule. Repo-wide reformatting commits land on master
