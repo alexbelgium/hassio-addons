@@ -427,7 +427,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003;  [Free Games Claimer](free_games_claimer/) : Automatically claims free games from Epic Games Store, Amazon Prime Gaming, GOG, Steam, and optional GamerPower-supported stores
+&#10003;  [Free Games Claimer](free_games_claimer/) : Claims free games from Epic, Prime, GOG, Steam, Ubisoft and more
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffree_games_claimer%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffree_games_claimer%2Fupdater.json)
