@@ -172,9 +172,10 @@ work" — either it was exercised, or say plainly it wasn't.
 
 Light path: verification is `validate.sh` plus CI; anything beyond that is Assumed. Full loop: CI
 passing proves the build works, not that the change does anything — re-run the measurement that
-motivated the work once the rebuilt add-on is running. After merge, confirm the commit survived
-on `origin/master`: the builder's revert-on-failure job can revert a merge for reasons unrelated
-to your diff (see `references/traps.md#ci-and-review-bots`). Real "merged and inert" examples, and what
+motivated the work once the rebuilt add-on is running. After merge, `git fetch origin master`
+(the tracking ref is stale otherwise), then confirm the commit survived on `origin/master`: the
+builder's revert-on-failure job can revert a merge for reasons unrelated to your diff (see
+`references/traps.md#ci-and-review-bots`). Real "merged and inert" examples, and what
 to do when a fix can't be self-verified: `references/evidence.md`.
 
 ## 10. Calibrate and report

@@ -131,6 +131,12 @@ can be handed to a *different* add-on later). Trusting the whole supervisor rang
 `172.30.32.0/23` is constant, written once. For dual-stack listeners the IPv4 form never
 matches IPv4-mapped addresses — also list the mapped form (`::ffff:172.30.32.0/119`).
 
+Constant is not free when the value gates **authentication**: trusting the whole range means any
+add-on on the supervisor network can send the auth header and impersonate a user. #3010 shipped
+that as an explicit, stated trade-off with the maintainer's sign-off. State the blast radius in
+the PR body and get the maintainer's call before widening trust — never present it as a neutral
+simplification.
+
 ## Shell and bashio
 
 **`bashio::config` for lists**: `while read ... < <(bashio::config ...)` silently yields an empty
