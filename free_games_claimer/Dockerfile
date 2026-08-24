@@ -164,4 +164,4 @@ LABEL \
     org.opencontainers.image.created="${BUILD_DATE}" \
     org.opencontainers.image.revision="${BUILD_REF}" \
     org.opencontainers.image.version="${BUILD_VERSION}" \
-    io.hass.upstream="https://github.com/${UPSTREAM_REPOSITORY}/releases/tag/v${BUILD_UPSTREAM}"
+    io.hass.upstream="https://github.com/${UPSTREAM_REPOSITORY}/releases"

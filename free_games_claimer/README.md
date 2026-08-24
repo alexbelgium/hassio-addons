@@ -165,8 +165,8 @@ series while upstream is on `1.x`, and Home Assistant only offers an update
 when the new version sorts strictly higher, so the updater increments the
 add-on version (`2.1.0` to `2.1.1`) instead of publishing a lower-sorting
 upstream number. The upstream release actually installed is recorded in
-`upstream_version` in `updater.json`, in the `io.hass.upstream` image label,
-and in the add-on's startup banner.
+`upstream_version` in `updater.json`, in `CHANGELOG.md`, and in the add-on's
+startup banner.
 
 ## Installation
 
