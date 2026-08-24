@@ -1,3 +1,28 @@
+## 2.1.0 (2026-08-24)
+
+- Updated the pinned upstream from Free Games Claimer Remaster 1.1 to 1.6,
+  which adds the Ubisoft giveaway, Fab, AliExpress and Epic mobile stores,
+  fixed daily scheduler times, the `VNC_URL` notification link override, and a
+  fix for the `--accept-lang` flag that made every store's browser detectable
+  as automated.
+- Mirrored upstream's Chromium hardening: `xdg-open` is neutralised and an
+  `AutoLaunchProtocolsFromOrigins` policy is installed, so app-scheme links
+  cannot open a blocking dialog in the VNC session.
+- Disabled upstream's release-update notification by default. It tells the user
+  to run `docker compose pull`, while the add-on is updated through the Home
+  Assistant add-on store. Set `NOTIFY_UPDATES=true` in `config.env` to receive
+  it anyway.
+- Reworded the add-on description so the store list reads as partial rather
+  than exhaustive; the full list is in the README.
+- The default store selection is unchanged: existing installations keep
+  claiming from Epic, Prime Gaming and GOG until `STORES` is edited.
+- Replaced the pinned upstream commit with `ARG BUILD_UPSTREAM`, which names an
+  upstream release tag, and re-enabled the repository updater for this add-on.
+  Upstream releases are now picked up automatically instead of requiring a
+  manual commit pin. Upstream's development tags are excluded: `lastversion`
+  reports the `v1.7d` development tag as release `1.7`, for which no source
+  archive exists, so an unfiltered update would have broken the build.
+
 ## 2.0.1 (2026-07-17)
 
 - Aligned the pull-request build context with the production builder by copying
