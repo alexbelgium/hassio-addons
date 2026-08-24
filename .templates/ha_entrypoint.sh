@@ -168,6 +168,59 @@ if [ -z "$shebang" ]; then
   exit 1
 fi
 
+#####################################
+# Seed the s6 container environment #
+#####################################
+
+# s6-overlay's stage 1 dumps the container's environment into /run/s6/container_environment, and
+# `with-contenv` reads it back (emptyenv -p; s6-envdir). Add-ons that override the base image's
+# ENTRYPOINT ["/init"] with ENTRYPOINT ["/usr/bin/env"] plus CMD ["/ha_entrypoint.sh"] never run
+# stage 1, so nothing creates that directory and every #!/usr/bin/with-contenv script outside the
+# three globs whose shebang is rewritten below either exits non-zero before its first line
+# (directory missing: s6-envdir errors) or runs against whatever a cont-init script happened to
+# leave there -- measured at 16 variables instead of 110, SUPERVISOR_TOKEN among the missing.
+# Neither says anything, so all that surfaces is what the caller makes of it: a HEALTHCHECK
+# reporting "unhealthy", a cron job doing nothing. So dump the environment here instead.
+#
+# Deliberately after the shebang probe above, not next to the other PID 1 setup: the probe's first
+# candidate is "/command/with-contenv bashio" and it fails today in exactly these add-ons, so the
+# probe falls through to "/usr/bin/env bashio". Seeding earlier would make that candidate start
+# succeeding and flip the shebang of every cont-init and service script here, so scripts launched
+# directly would lose what an earlier sourced script exported -- a far larger change than this.
+#
+# It does switch on two dormant writes: 00-global_var.sh and 01-config_yaml.sh push their values
+# into the envdir, but only `if [ -d ]`. That is what those lines are for, and it means out-of-glob
+# scripts now see the user's configured options too.
+
+S6_CONTAINER_ENV="/run/s6/container_environment"
+
+# Only when this script is PID 1 -- under /init it is the stage-2 hook and stage 1 has already
+# written the directory -- and only where with-contenv exists to care.
+if $PID1 && { [ -x /command/with-contenv ] || [ -x /usr/bin/with-contenv ]; }; then
+  # Filled in a sibling and renamed into place, never written to live. A half-populated envdir is
+  # worse than an absent one: s6-envdir accepts it, so a with-contenv script starts and runs
+  # against an environment quietly missing SUPERVISOR_TOKEN, where an absent one stops it at its
+  # shebang. rename(2) means a concurrent reader -- a HEALTHCHECK can run alongside PID 1 -- sees
+  # the directory either absent or complete, never mid-dump.
+  #
+  # Cleared rather than written over: /run is not a tmpfs here, so an image layer can persist
+  # entries, and writing name by name would merge into them and leave variables PID 1 does not
+  # have, a stale SUPERVISOR_TOKEN among them. A failed rm has to abort the chain, because mkdir -p
+  # accepts a surviving symlink-to-directory and would let the dump follow it. rm does not traverse
+  # a symlink, but it would empty anything bind-mounted at this exact path -- not a configuration
+  # any add-on uses, and not one s6 would tolerate either.
+  if rm -rf "$S6_CONTAINER_ENV" "$S6_CONTAINER_ENV.tmp" && mkdir -p "$S6_CONTAINER_ENV.tmp" &&
+    s6-dumpenv -- "$S6_CONTAINER_ENV.tmp" && mv "$S6_CONTAINER_ENV.tmp" "$S6_CONTAINER_ENV"; then
+    echo "Populated $S6_CONTAINER_ENV for with-contenv"
+  else
+    # Leaves the directory absent, which is exactly how this fails today -- so the failure mode is
+    # unchanged, not newly degraded. Never fatal, a read-only /run must still let the add-on boot,
+    # but never silent either, since the shebang failure it leaves behind says nothing on its own.
+    rm -rf "$S6_CONTAINER_ENV" "$S6_CONTAINER_ENV.tmp" 2>/dev/null || true
+    echo -e "\e[38;5;214m$(date) WARNING: could not populate $S6_CONTAINER_ENV; scripts with a with-contenv shebang will fail at their shebang, as they did before this was attempted\e[0m"
+  fi
+fi
+
 ####################################
 # Bashio library for source fallback
 ####################################
