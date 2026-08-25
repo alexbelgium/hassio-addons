@@ -169,7 +169,9 @@ CI gates on a PR: **`CHANGELOG.md` updated** (hard fail), the **HA add-on linter
 (`frenck/action-addon-linter`, blocking — not the weekly Super-Linter, which is non-blocking), and
 the **add-on image build**. Bump `version` anyway (`X.Y.Z.N`, never `X.Y.Z-N`, see
 `references/traps.md#versioning`) — Supervisor won't offer a rebuild without it. Update
-`README.md` if you added options; match the CHANGELOG heading format `## X.Y (DD-MM-YYYY)`.
+`README.md` if you added options; write the CHANGELOG heading as `## <version> (<date>)`,
+matching the date format already in that file — almost always ISO `YYYY-MM-DD`, see
+`references/traps.md#ci-and-review-bots`.
 
 Write the body to a file, `gh pr create --body-file`: state what was measured, what changed,
 **what is not verified**, and how to roll back the riskiest hunk alone.
