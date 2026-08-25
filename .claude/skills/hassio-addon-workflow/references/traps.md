@@ -241,15 +241,17 @@ account. Note it and move on rather than guessing.
 **Resolving a review thread requires GraphQL** (`resolveReviewThread`); the REST API cannot do it.
 `scripts/pr_review.sh` wraps fetch / reply / resolve.
 
-**CHANGELOG heading dates are ISO, whatever the bots' defaults say.** Match the format already in
-the add-on's file. Repo-wide that is `## <version> (YYYY-MM-DD)`: 7705 dated headings against 363
-in `DD-MM-YYYY`, and the newest entry is ISO in 125 of 135 add-ons. Copilot flags an ISO file that
-gets a `DD-MM-YYYY` entry (#3019). `DD-MM-YYYY` is not invented — it is what `onpush_builder.yaml`
-writes with `date '+%d-%m-%Y'` when it has to insert a heading you forgot, and what the
-addons_updater bot writes when its `date_iso8601` option is off (`99-run.sh`; it is on in
-production here) — but neither is a reason to write it yourself. The builder's duplicate check is
-`grep -q "^## ${version} ("`, keyed on the exact `config.yaml` version and blind to the date, so
-an ISO heading you wrote yourself still suppresses the bot's insertion.
+**Most CHANGELOG heading dates are ISO, whatever the bots' defaults say.** Match the format
+already in the add-on's file — a `DD-MM-YYYY` file stays `DD-MM-YYYY`. Where you have no
+precedent, ISO is the house style: as of 2026-08-25, `## <version> (YYYY-MM-DD)` accounts for
+7705 dated headings against 363 in `DD-MM-YYYY`, and the newest entry is ISO in 125 of 135
+add-ons. Copilot flags an ISO file that gets a `DD-MM-YYYY` entry (#3019). `DD-MM-YYYY` is not
+invented — it is what `onpush_builder.yaml` writes with `date '+%d-%m-%Y'` when it has to insert
+a heading you forgot, and what the addons_updater bot writes when its `date_iso8601` option is
+off (`99-run.sh`; it is on in production here) — but neither is a reason to write it yourself.
+The builder's duplicate check is `grep -q "^## ${version} ("` — an unescaped BRE, so the dots in
+a version match any character, and it does not look at the date at all. Either way an ISO heading
+you wrote yourself still suppresses the bot's insertion.
 
 **The repo's `.markdownlint.yaml` does not disable MD022/MD032**, so a CHANGELOG will show
 dozens of pre-existing heading/list findings. They are noise because lint is `continue-on-error`,
