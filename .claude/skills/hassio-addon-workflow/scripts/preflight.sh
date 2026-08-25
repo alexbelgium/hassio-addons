@@ -64,7 +64,8 @@ if [ -n "${BUILD_VERSION:-}" ]; then
         echo "  $SLUG/config.yaml version = $here"
         echo "  running image BUILD_VERSION = $BUILD_VERSION"
         if [ "$here" = "$BUILD_VERSION" ]; then
-            echo "  MATCH — this checkout corresponds to the running image."
+            # version is bumped once per PR, so a later commit or a dirty tree matches here.
+            echo "  VERSION MATCH — source revision itself is not verified."
         else
             echo "  MISMATCH — this branch is NOT what is running."
             git fetch origin master --quiet 2> /dev/null

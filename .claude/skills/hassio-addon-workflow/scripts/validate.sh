@@ -4,10 +4,13 @@
 # rather than implying the build was checked.
 #
 # --vs-master re-lints each changed file at origin/master and prints only findings your diff
-# ADDED. Without it you will chase warnings that were already in the file.
+# ADDED, and fails if there are any. Without it you will chase warnings that were already there.
 #
 # Usage: validate.sh [addon-dir] [--vs-master]
 set -uo pipefail
+# git diff prints repo-root-relative paths and $ADDON is a top-level directory name: neither
+# resolves from a subdirectory, where the -f guard below would skip every file and report clean.
+if root=$(git rev-parse --show-toplevel 2> /dev/null); then cd "$root" || exit 1; fi
 
 ADDON="${1:-}"
 [ "${ADDON:-}" = "--vs-master" ] && { ADDON=""; set -- --vs-master; }
@@ -31,17 +34,21 @@ echo "== validating $ADDON =="
 
 fail=0
 note() { printf '  %-13s %s\n' "$1" "$2"; }
+# execline `run`/`finish` files are not shell (25 of them here, across 21 add-ons). Neither
+# linter below can read one, so anything either says about it is noise.
+is_execline() { local l; IFS= read -r l < "$1" 2> /dev/null; [[ $l == '#!'*execlineb* ]]; }
 
-# Shell: bash -n then shellcheck -x (follows sourced files, as CI does).
-while IFS= read -r f; do
-    [ -f "$f" ] || continue
+# Shell: bash -n then shellcheck -x (follows sourced files, as CI does). One list for both.
+files=()
+while IFS= read -r f; do is_execline "$f" || files+=("$f"); done \
+    < <(find "$ADDON" -type f \( -name '*.sh' -o -name 'run' -o -name 'finish' -o -name 'autostart' \) 2> /dev/null)
+for f in "${files[@]}"; do
     if ! out=$(bash -n "$f" 2>&1); then note "bash -n" "FAIL $f"; echo "$out" | sed 's/^/      /'; fail=1; fi
-done < <(find "$ADDON" -type f \( -name '*.sh' -o -name 'run' -o -name 'finish' -o -name 'autostart' \) 2> /dev/null)
-[ "$fail" -eq 0 ] && note "bash -n" "ok"
+done
+[ "$fail" -eq 0 ] && note "bash -n" "${#files[@]} file(s) checked"
 
-if command -v shellcheck > /dev/null 2>&1; then
-    sc=$(find "$ADDON" -type f \( -name '*.sh' -o -name 'autostart' -o -name 'run' -o -name 'finish' \) -print0 2> /dev/null |
-        xargs -0 -r shellcheck -x -f gcc 2>&1)
+if [ "${#files[@]}" -gt 0 ] && command -v shellcheck > /dev/null 2>&1; then
+    sc=$(shellcheck -x -f gcc "${files[@]}" 2>&1)
     if [ -n "$sc" ]; then
         note "shellcheck" "$(printf '%s\n' "$sc" | grep -c .) finding(s)"
         printf '%s\n' "$sc" | sed 's/^/      /' | head -20
@@ -50,7 +57,10 @@ fi
 
 command -v hadolint > /dev/null 2>&1 && [ -f "$ADDON/Dockerfile" ] && {
     hl=$(hadolint "$ADDON/Dockerfile" 2>&1)
-    [ -n "$hl" ] && { note "hadolint" "$(printf '%s\n' "$hl" | grep -c .) finding(s)"; printf '%s\n' "$hl" | sed 's/^/      /' | head -10; } || note "hadolint" "clean"
+    if [ -n "$hl" ]; then
+        note "hadolint" "$(printf '%s\n' "$hl" | grep -c .) finding(s)"
+        printf '%s\n' "$hl" | sed 's/^/      /' | head -10
+    else note "hadolint" "clean"; fi
 }
 
 if [ -f "$ADDON/config.yaml" ]; then
@@ -79,11 +89,14 @@ $VS_MASTER && command -v npx > /dev/null 2>&1 && [ -f "$ADDON/CHANGELOG.md" ] &&
 
 echo
 echo "== CI requirements =="
-if git diff --name-only origin/master...HEAD 2> /dev/null | grep -q "$ADDON/CHANGELOG.md"; then
+# -Fxq, not -q: unanchored, seerr's is matched by zzz_archived_overseerr's, and . is a wildcard.
+# Stricter than the gate itself, whose quoted =~ accepts that same collision
+# (onpr_check-pr.yaml:75), so this can fail where CI passes — the wrong add-on's is still wrong.
+if git diff --name-only origin/master...HEAD 2> /dev/null | grep -Fxq "$ADDON/CHANGELOG.md"; then
     note "CHANGELOG" "updated"
 else
     # This one IS gated: onpr_check-pr.yaml exits 1 without it.
-    note "CHANGELOG" "NOT UPDATED — this is the one CI hard-gate"; fail=1
+    note "CHANGELOG" "NOT UPDATED for $ADDON — CI hard-gates this"; fail=1
 fi
 if git diff origin/master...HEAD -- "$ADDON/config.yaml" 2> /dev/null | grep -q '^+version:'; then
     note "version" "bumped"
@@ -98,8 +111,15 @@ if $VS_MASTER; then
     echo
     echo "== findings ADDED by this diff (pre-existing ones filtered out) =="
     tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
-    git diff --name-only origin/master...HEAD -- "$ADDON" 2> /dev/null | while IFS= read -r f; do
-        git show "origin/master:$f" > "$tmp/base" 2> /dev/null || continue
+    added=0
+    # Fed by process substitution, not a pipe: a pipeline runs this in a subshell, where the
+    # findings below could never reach $fail and the verdict would contradict the list.
+    while IFS= read -r f; do
+        # Deleted: linting the path that is gone invents a finding. Added: no base, and an
+        # empty one says the right thing — every finding in it is one this diff added.
+        [ -f "$f" ] || continue
+        is_execline "$f" && continue
+        git show "origin/master:$f" > "$tmp/base" 2> /dev/null || : > "$tmp/base"
         # A missing linter must be a visible skip, not a silent "no new findings":
         # its "command not found" error is identical for base and head, so comm would
         # cancel it out and report a false clean.
@@ -115,12 +135,16 @@ if $VS_MASTER; then
                 cmd() { hadolint "$1" 2>&1 | sed 's/^[^:]*//; s/^:[0-9]*//'; } ;;
             *) continue ;;
         esac
-        cp "$tmp/base" "$tmp/base_f"; b=$(cmd "$tmp/base_f" | sort)
+        b=$(cmd "$tmp/base" | sort)
         a=$(cmd "$f" | sort)
-        new=$(comm -13 <(printf '%s\n' "$b") <(printf '%s\n' "$a") | grep -c .)
-        [ "$new" -gt 0 ] && { echo "  $f: $new NEW finding(s)"; comm -13 <(printf '%s\n' "$b") <(printf '%s\n' "$a") | sed 's/^/      /' | head -5; }
-    done
-    echo "  (nothing listed above = your diff introduced no new lint findings)"
+        new=$(comm -13 <(printf '%s\n' "$b") <(printf '%s\n' "$a"))
+        [ -n "$new" ] && {
+            echo "  $f: $(printf '%s\n' "$new" | grep -c .) NEW finding(s)"
+            printf '%s\n' "$new" | sed 's/^/      /' | head -5
+            added=1; fail=1
+        }
+    done < <(git diff --name-only origin/master...HEAD -- "$ADDON" 2> /dev/null)
+    [ "$added" -eq 0 ] && echo "  (none — this diff introduced no new lint findings)"
 fi
 
 echo

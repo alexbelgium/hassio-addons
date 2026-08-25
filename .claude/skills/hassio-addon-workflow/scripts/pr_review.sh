@@ -90,6 +90,7 @@ resolve)
     ;;
 watch)
     MINS="${3:-180}"   # the addon build alone has taken ~3h; 20 was far too short
+    wfail=2            # not 0: running out of minutes with checks still pending is not a pass
     for i in $(seq 1 "$MINS"); do
         c=$(gh pr checks "$PR" 2> /dev/null | awk '{print $1"="$2}' | tr '\n' ' ')
         if [ -z "$c" ]; then
@@ -102,11 +103,14 @@ watch)
         case "$c" in
         *pending*) sleep 60 ;;
         *fail* | *error* | *cancel*) echo "settled — with FAILURES (see above)"; wfail=1; break ;;
-        *) echo "settled — all passing"; break ;;
+        *) echo "settled — all passing"; wfail=0; break ;;
         esac
     done
+    [ "$wfail" -eq 2 ] && echo "gave up after ${MINS}m, checks still unsettled — NOT a pass"
+    # A PR touching no */config.* skips the CHANGELOG, linter and build jobs outright (#3018).
+    case "${c:-}" in *skipping*) echo "  ...of which some were SKIPPED — a skipped job tested nothing" ;; esac
     echo "note: long queues here are usually account runner contention, not your diff."
-    exit "${wfail:-0}"
+    exit "$wfail"
     ;;
 *) echo "unknown: $CMD"; exit 1 ;;
 esac
