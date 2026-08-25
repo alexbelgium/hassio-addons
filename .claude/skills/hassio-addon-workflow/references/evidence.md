@@ -34,6 +34,12 @@ then generalising it to all hosts.**
   would have deleted a user's hand-written configuration.
 - A GPU probe created a hardware context — but that proved the driver worked, not that Chromium's
   GPU path did.
+- SABnzbd's source was grepped to see which proxy headers it reads, and `X-Forwarded-For` was
+  forwarded because it reads that one — but `verify_xff_header` is on by default and makes it
+  *reject* every address in the chain that is not local, so ingress answered 403 for anyone
+  reaching Home Assistant from outside the LAN (#3019, fixed in #3023). Every check ran from
+  inside the container, where no such header exists. **That an app reads a header is not a reason
+  to send it — find out what it does with it, and exercise the path a remote user takes.**
 
 The pattern is always *inference standing in for detection*. Before changing a default, ask what
 this is like on a host unlike yours. Prefer detecting the condition at runtime over asserting it.
