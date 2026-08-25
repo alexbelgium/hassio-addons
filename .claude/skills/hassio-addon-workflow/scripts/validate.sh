@@ -8,6 +8,9 @@
 #
 # Usage: validate.sh [addon-dir] [--vs-master]
 set -uo pipefail
+# git diff prints repo-root-relative paths and $ADDON is a top-level directory name: neither
+# resolves from a subdirectory, where the -f guard below would skip every file and report clean.
+if root=$(git rev-parse --show-toplevel 2> /dev/null); then cd "$root" || exit 1; fi
 
 ADDON="${1:-}"
 [ "${ADDON:-}" = "--vs-master" ] && { ADDON=""; set -- --vs-master; }
@@ -42,7 +45,7 @@ while IFS= read -r f; do is_execline "$f" || files+=("$f"); done \
 for f in "${files[@]}"; do
     if ! out=$(bash -n "$f" 2>&1); then note "bash -n" "FAIL $f"; echo "$out" | sed 's/^/      /'; fail=1; fi
 done
-[ "$fail" -eq 0 ] && note "bash -n" "ok (${#files[@]} files)"
+[ "$fail" -eq 0 ] && note "bash -n" "${#files[@]} file(s) checked"
 
 if [ "${#files[@]}" -gt 0 ] && command -v shellcheck > /dev/null 2>&1; then
     sc=$(shellcheck -x -f gcc "${files[@]}" 2>&1)
@@ -87,11 +90,13 @@ $VS_MASTER && command -v npx > /dev/null 2>&1 && [ -f "$ADDON/CHANGELOG.md" ] &&
 echo
 echo "== CI requirements =="
 # -Fxq, not -q: unanchored, seerr's is matched by zzz_archived_overseerr's, and . is a wildcard.
+# Stricter than the gate itself, whose quoted =~ accepts that same collision
+# (onpr_check-pr.yaml:75), so this can fail where CI passes — the wrong add-on's is still wrong.
 if git diff --name-only origin/master...HEAD 2> /dev/null | grep -Fxq "$ADDON/CHANGELOG.md"; then
     note "CHANGELOG" "updated"
 else
     # This one IS gated: onpr_check-pr.yaml exits 1 without it.
-    note "CHANGELOG" "NOT UPDATED — this is the one CI hard-gate"; fail=1
+    note "CHANGELOG" "NOT UPDATED for $ADDON — CI hard-gates this"; fail=1
 fi
 if git diff origin/master...HEAD -- "$ADDON/config.yaml" 2> /dev/null | grep -q '^+version:'; then
     note "version" "bumped"

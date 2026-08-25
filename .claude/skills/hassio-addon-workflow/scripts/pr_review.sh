@@ -108,7 +108,7 @@ watch)
     done
     [ "$wfail" -eq 2 ] && echo "gave up after ${MINS}m, checks still unsettled — NOT a pass"
     # A PR touching no */config.* skips the CHANGELOG, linter and build jobs outright (#3018).
-    case "${c:-}" in *skipping*) echo "some checks SKIPPED — a skipped job tested nothing" ;; esac
+    case "${c:-}" in *skipping*) echo "  ...of which some were SKIPPED — a skipped job tested nothing" ;; esac
     echo "note: long queues here are usually account runner contention, not your diff."
     exit "$wfail"
     ;;
