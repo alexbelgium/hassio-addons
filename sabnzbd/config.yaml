@@ -70,7 +70,7 @@ environment:
   PGID: "0"
   PUID: "0"
 image: ghcr.io/alexbelgium/sabnzbd-{arch}
-ingress_entry: sabnzbd
+ingress: true
 init: false
 map:
   - addon_config:rw
@@ -106,5 +106,5 @@ schema:
 slug: sabnzbd
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "5.1.1"
+version: "5.1.1.1"
 webui: http://[HOST]:[PORT:8080]

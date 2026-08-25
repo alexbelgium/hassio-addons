@@ -1,4 +1,8 @@
  
+## 5.1.1.1 (25-08-2026)
+- Ingress is now enabled: the WebUI opens directly in the Home Assistant sidebar, no port needed. Access by ip:port is unchanged.
+- Note for users who set a "Host verification" whitelist in SABnzbd: ingress traffic reaches SABnzbd as `127.0.0.1:8080`, so it is not subject to that whitelist. Direct ip:port access still is.
+
 ## 5.1.1 (2026-08-22)
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
  
