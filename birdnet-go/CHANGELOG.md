@@ -1,3 +1,5 @@
+## 20260826 (26-08-2026)
+- Minor bugs fixed
 ## 20260716.1 (26-08-2026)
 - Minor bugs fixed
  
