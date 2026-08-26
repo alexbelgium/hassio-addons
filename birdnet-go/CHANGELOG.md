@@ -1,4 +1,7 @@
  
+## 20260716.1 (2026-08-26)
+- Rebuild after syncing the alexbelgium/birdnet-go fork with upstream tphakala/birdnet-go and resolving conflicts on all open pull requests
+
 ## 20260716 (2026-07-16)
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
  
