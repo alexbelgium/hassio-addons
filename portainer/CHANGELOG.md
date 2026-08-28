@@ -1,4 +1,7 @@
  
+## 2.45.0 (2026-08-29)
+- Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
+ 
 ## 2.44.0.1 (2026-08-05)
 - Ingress: request uncompressed responses from Portainer so they carry a Content-Length and stay on the Home Assistant relay's buffered path. Portainer compresses its own responses, and the Accept-Encoding strip in proxy_params.conf never applied because the location block declares its own proxy_set_header directives, which makes nginx discard the server-level ones. Partial mitigation for #2766: the page itself and all assets under 4 MB are now buffered, but the two large JavaScript bundles still exceed the relay's 4 MB buffering threshold. Direct access on the web UI port keeps compression
  
