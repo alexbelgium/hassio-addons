@@ -1,3 +1,5 @@
+## 20260828 (28-08-2026)
+- Minor bugs fixed
 ## 20260826.1 (26-08-2026)
 - Synced with upstream birdnet-go; new/updated PRs pending in fork
 ## 20260826 (26-08-2026)
