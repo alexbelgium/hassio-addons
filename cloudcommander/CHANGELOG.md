@@ -1,4 +1,7 @@
  
+## 19.20.4 (2026-08-29)
+- Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
+ 
 ## 19.20.0 (2026-08-08)
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
  
