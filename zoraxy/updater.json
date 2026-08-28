@@ -1,11 +1,11 @@
 {
-  "last_update": "2026-08-29",
+  "last_update": "2026-06-19",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "zoraxy",
   "source": "github",
   "upstream_repo": "tobychui/zoraxy",
-  "upstream_version": "3.3.4",
+  "upstream_version": "3.3.3",
   "github_beta": false,
   "github_fulltag": false,
   "github_tagfilter": "",

@@ -1,6 +1,3 @@
- 
-## 3.3.4 (2026-08-29)
-- Update to latest version from tobychui/zoraxy (changelog : https://github.com/tobychui/zoraxy/releases)
 ## 3.3.3 (2026-06-19)
 - Initial release
 - Zoraxy reverse proxy with web management UI (port 8000) for Home Assistant
