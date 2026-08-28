@@ -1,3 +1,7 @@
+ 
+## 2.44.0.2 (2026-08-29)
+- Update to latest version from portainer/agent
+- Upstream tag : sts
 ## 2.44.0.1 (2026-08-24)
 
 - Rebuild to pick up a fix in the shared entrypoint: when `ha_entrypoint.sh` runs as PID 1, as it does in this add-on, it now populates `/run/s6/container_environment`, so a script carrying a `#!/usr/bin/with-contenv` shebang gets a populated environment including `SUPERVISOR_TOKEN` instead of failing at its shebang. Nothing shipped in this add-on still uses that shebang (the healthcheck moved to plain bash in 2.44.0), so this changes nothing about the agent itself; it matters for a `script.sh` added by the user, and it is the add-on that build-tests the shared change
