@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-08-22",
+  "last_update": "2026-08-29",
   "repository": "alexbelgium/hassio-addons",
   "slug": "sabnzbd",
   "source": "github",
   "upstream_repo": "linuxserver/docker-sabnzbd",
-  "upstream_version": "5.1.1"
+  "upstream_version": "5.1.2"
 }

@@ -1,4 +1,7 @@
  
+## 5.1.2 (2026-08-29)
+- Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
+ 
 ## 5.1.1.3 (2026-08-25)
 - Fixed ingress returning `403 External internet access denied` when Home Assistant is reached from outside the local network. SABnzbd's `verify_xff_header` option, which is on by default, refuses any request whose `X-Forwarded-For` chain contains a non-local address, so the proxy no longer forwards that header.
 
