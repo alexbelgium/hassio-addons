@@ -1,3 +1,6 @@
+ 
+## 3.3.4 (2026-08-29)
+- Update to latest version from tobychui/zoraxy (changelog : https://github.com/tobychui/zoraxy/releases)
 ## 3.3.3.1 (29-08-2026)
 - Fix build failure against the current upstream image: since v3.3.4 the upstream
   build deletes /sbin/apk, so the shared module and package scripts had no package
