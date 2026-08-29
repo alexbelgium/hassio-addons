@@ -10,6 +10,11 @@
 #               /`
 #=== Home Assistant Addon ===#
 
+# Declared before the first FROM so they stay global build args, usable by the
+# FROM of the final stage below.
+ARG BUILD_FROM
+ARG BUILD_VERSION
+
 ############################
 # 0 Tools stage (apk OK)   #
 ############################
@@ -26,8 +31,6 @@ RUN apk add --no-cache apk-tools-static
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM
-ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
 ##################
