@@ -163,6 +163,26 @@ the running image (`command -v <tool>`), and cross-check `/var/log/apt/history.l
 matching `apt-get install` line. An `if` block whose condition never matched leaves no trace and
 no error — one such block sat dead for weeks while appearing to guarantee driver verification.
 
+**Adding a build stage above `ARG BUILD_FROM` breaks the final `FROM`.** Global build args must
+be declared *before the first* `FROM` in the file; an `ARG` that follows one belongs to that stage
+only. Inserting a tools stage at the top of an add-on Dockerfile therefore demotes the
+`ARG BUILD_FROM` below it, and the final `FROM ${BUILD_FROM}` expands empty:
+`failed to solve: base name (${BUILD_FROM}) should not be blank`. Move `ARG BUILD_FROM` (and
+`ARG BUILD_VERSION`) above the new stage. `netalertx` does not hit this only because it hardcodes
+its base image instead of using `${BUILD_FROM}` — do not copy its ordering blindly
+(PR #3024).
+
+**A base image can lose its package manager between upstream releases.** Zoraxy v3.3.4 added
+`/sbin/apk` to the upstream cleanup step, so `ha_automodules.sh` failed with
+`apt-get: not found / apk: not found` (exit 127) on both architectures. The removal deleted only
+the binary — `/etc/apk` (repositories, keys, world) and `/lib/apk/db` survived, confirmed by a
+single `sbin/.wh.apk` whiteout in the layer — so copying `apk.static` from an
+`apk-tools-static` build stage restores package management in one line. Diff the upstream image
+configs across the two tags (`.history[].created_by` from the registry config blob) before
+theorising; it names the changed step exactly. Note `build_from` is often a floating `:latest`
+tag, so the builder's revert-on-failure does **not** restore a working build — the next rebuild
+fails identically until the Dockerfile is fixed (PR #3024).
+
 **Don't test for distro-specific filenames.** A guard on
 `/usr/share/vulkan/icd.d/intel_icd.x86_64.json` named a file Debian does not ship (it installs
 `intel_icd.json`), so fixing the arch variable alone would have turned dead code into a failing
