@@ -10,12 +10,27 @@
 #               /`
 #=== Home Assistant Addon ===#
 
+# Declared before the first FROM so they stay global build args, usable by the
+# FROM of the final stage below.
+ARG BUILD_FROM
+ARG BUILD_VERSION
+
+############################
+# 0 Tools stage (apk OK)   #
+############################
+# Upstream's image build ends with "rm -rf /sbin/apk" (added in v3.3.4), which
+# deletes the package manager binary but leaves /etc/apk (repositories, keys,
+# world) and /lib/apk/db intact. The shared build scripts below need a package
+# manager to install bash, curl and jq, none of which the image ships, so
+# restore apk from its statically-linked build. Keep this Alpine tag in sync
+# with the upstream base image (currently alpine-minirootfs-3.24.1).
+FROM alpine:3.24 AS ha_apk
+RUN apk add --no-cache apk-tools-static
+
 #################
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM
-ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
 ##################
@@ -45,6 +60,9 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
 # Persist Zoraxy data in /config (addon_config) instead of the ephemeral
 # upstream working directory, so the configuration survives add-on updates.
 RUN sed -i 's#/opt/zoraxy/config#/config#g' /opt/zoraxy/entrypoint.py
+
+# Restore the package manager deleted by the upstream image build (see stage 0)
+COPY --from=ha_apk /sbin/apk.static /sbin/apk
 
 # Modules
 ARG MODULES="00-banner.sh"
