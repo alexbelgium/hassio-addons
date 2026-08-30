@@ -78,19 +78,40 @@ run against the change came back clean:
 
 None of that reproduced the failure, and none of it explained the one fact that mattered: the user
 saw it fail under ingress and work on the add-on's direct port, and the `sub_filter` was the only
-ingress-side change in that update. **Revert first and keep investigating.** A revert also
-discriminates: if the symptom survives it, the cause was the concurrent upstream bump that
-`build_from: <image>:latest` delivers on every rebuild, not the diff.
+ingress-side change in that update. **Revert first and keep investigating.**
+
+A revert can also discriminate — if the symptom survives it, the cause was the concurrent upstream
+bump rather than the diff — but only if **both builds resolve the same upstream image**. With
+`build_from: <image>:latest` they need not: `latest` can move between the two rebuilds, and then
+the comparison proves nothing. Resolve the tag to a digest and record it before and after, or pin
+`build_from` to that digest for the duration of the experiment:
+
+```bash
+T=$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=repository:<repo>:pull" | jq -r .token)
+curl -s -H "Authorization: Bearer $T" \
+     -H "Accept: application/vnd.oci.image.index.v1+json" \
+     "https://registry-1.docker.io/v2/<repo>/manifests/latest" \
+  | jq -r '.manifests[] | select(.platform.architecture=="amd64" and .platform.os=="linux") | .digest'
+```
+
+For the case above both builds resolved `gtstef/filebrowser:latest` amd64 to
+`sha256:e549e1a9b5de573c276f7be67444841559e3f89cbc664a2f926968453d069436` (v1.5.4-stable, created
+2026-08-29T14:19:56Z), so that comparison was controlled — but it was luck, not design.
 
 Worth building next time, because it took most of the session and is reusable: a reproduction rig
 made **out of the published image's own layers**, with no dockerd. Pull the manifest and blobs from
 the registry with `curl` + `jq`, untar them in order, then run the extracted binary through the
 image's own musl loader (`root/lib/ld-musl-x86_64.so.1 ./filebrowser`) with the real `http/dist`
-next to it. Put the add-on's rendered `ingress.conf` in front of it, and a second nginx server in
+next to it. Plain `tar` does not interpret whiteouts, so a file a later layer deletes
+(`.wh.<name>`) or a directory it marks opaque (`.wh..wh..opq`) survives into the reconstructed
+rootfs; check with `tar tzf <layer> | grep '\.wh\.'` and reach for an OCI-aware unpacker if any
+turn up. (There were none in `gtstef/filebrowser:latest` — all eleven layers, 0 whiteout entries —
+so that rig was faithful.) Put the add-on's rendered `ingress.conf` in front of it, and a second nginx server in
 front of that to strip the `/api/hassio_ingress/<token>` prefix the way Supervisor does. That gets
 the real frontend, the real backend and the real vhost under a browser — everything except
 Supervisor itself.
 
 **`build_from: <image>:latest` means every merge ships an upstream version bump too.** Record which
-upstream version each add-on image was built from (the registry config blob's `created` timestamp
-plus the binary's version string) before attributing a regression to the diff.
+upstream version each add-on image was built from — the registry config blob's `created` timestamp,
+the resolved manifest digest, and the binary's version string — before attributing a regression to
+the diff.
