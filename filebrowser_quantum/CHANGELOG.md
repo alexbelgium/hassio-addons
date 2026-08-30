@@ -1,4 +1,9 @@
  
+## 1.5.3.2 (2026-08-30)
+- Revert the 1.5.3.1 ingress filter while a report of broken downloads is
+  investigated. "Open parent directory" in the tool views opens a new tab
+  again, as it did up to 1.5.3.
+ 
 ## 1.5.3.1 (2026-08-29)
 - Fix "open parent directory" in Tools -> File Size Analyzer under Home
   Assistant ingress. FileBrowser opened the parent folder in a new tab, which
