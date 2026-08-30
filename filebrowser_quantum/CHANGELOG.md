@@ -1,4 +1,13 @@
  
+## 1.5.3.2 (2026-08-30)
+- Fix Download in the Home Assistant iOS companion app, where a file opened and
+  showed its content with no way to save it. FileBrowser downloads by clicking
+  a link that carries no `download` attribute, and the app's WKWebView only
+  turns a click into a real download when that attribute is present, so inside
+  the ingress panel the file was simply rendered. The ingress filter now adds
+  the attribute to the two download endpoints. Desktop browsers already
+  downloaded these and are unchanged, as is direct access on port 8071.
+ 
 ## 1.5.3.1 (2026-08-29)
 - Fix "open parent directory" in Tools -> File Size Analyzer under Home
   Assistant ingress. FileBrowser opened the parent folder in a new tab, which
