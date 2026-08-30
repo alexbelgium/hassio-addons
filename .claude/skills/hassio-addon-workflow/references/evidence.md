@@ -58,3 +58,39 @@ Once the rebuilt add-on is running, re-run the measurement that motivated the wo
 cannot be self-verified — a service that reads its environment only at start makes an env-var fix
 unproven until the add-on restarts, which needs the user or `ha-cli` with their agreement. If you
 cannot restart, the change is **Assumed**, not Verified, and must be reported that way.
+
+## A local reproduction that passes does not outrank a user's production report
+
+PR #3026 added an nginx `sub_filter` to the `filebrowser_quantum` ingress vhost. After it merged,
+the user reported that Download had stopped working — the file opened inline instead. Every check
+run against the change came back clean:
+
+- the shipped bundle's Download action builds an `<a href>` and clicks it, and never calls
+  `window.open`, which is all the injected shim overrides;
+- the shim's own predicate, evaluated live in the running app, returned false for the download
+  URL, the `inline=true` raw URL and the public-share download URL;
+- the download response through the vhost was **byte-identical** with and without the `sub_filter`
+  (`Content-Disposition: attachment` intact, `Content-Length` unchanged), for `text/plain` and for
+  the `text/html` case the filter actually scans;
+- upstream's frontend download code is unchanged from v1.5.0-stable to v1.5.4-stable, and Home
+  Assistant's ingress iframe carries no `sandbox` attribute (`ha-panel-app.ts`), so downloads are
+  not sandbox-blocked either.
+
+None of that reproduced the failure, and none of it explained the one fact that mattered: the user
+saw it fail under ingress and work on the add-on's direct port, and the `sub_filter` was the only
+ingress-side change in that update. **Revert first and keep investigating.** A revert also
+discriminates: if the symptom survives it, the cause was the concurrent upstream bump that
+`build_from: <image>:latest` delivers on every rebuild, not the diff.
+
+Worth building next time, because it took most of the session and is reusable: a reproduction rig
+made **out of the published image's own layers**, with no dockerd. Pull the manifest and blobs from
+the registry with `curl` + `jq`, untar them in order, then run the extracted binary through the
+image's own musl loader (`root/lib/ld-musl-x86_64.so.1 ./filebrowser`) with the real `http/dist`
+next to it. Put the add-on's rendered `ingress.conf` in front of it, and a second nginx server in
+front of that to strip the `/api/hassio_ingress/<token>` prefix the way Supervisor does. That gets
+the real frontend, the real backend and the real vhost under a browser — everything except
+Supervisor itself.
+
+**`build_from: <image>:latest` means every merge ships an upstream version bump too.** Record which
+upstream version each add-on image was built from (the registry config blob's `created` timestamp
+plus the binary's version string) before attributing a regression to the diff.
