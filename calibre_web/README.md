@@ -99,15 +99,15 @@ This addon supports mounting both local drives and remote SMB shares:
 
 ### Optional Calibre-Web features
 
-Calibre-Web documents optional extras that a manual installation adds with `pip install calibreweb[metadata]` and similar. **You do not need to install anything here**: the LinuxServer base image this add-on builds on installs Calibre-Web's `requirements.txt` *and* its full `optional-requirements.txt`, so the gdrive, gmail, goodreads, ldap, oauth, metadata, comics and kobo dependencies are all present already. Running `pip install calibreweb[...]` inside the container does not enable anything - it pulls a second, unused copy of Calibre-Web from PyPI, and it is discarded anyway because the Supervisor recreates the container on every restart.
+Calibre-Web documents optional extras that a manual installation adds with `pip install calibreweb[metadata]` and similar. **You do not need to install anything here**: the LinuxServer base image this add-on builds on installs Calibre-Web's `requirements.txt` *and* its full `optional-requirements.txt` into the application's virtualenv, so the gdrive, gmail, goodreads, ldap, oauth, metadata, comics and kobo dependencies are all present already. Running `pip install calibreweb[...]` inside the container is not a supported way to enable them: it installs the PyPI distribution of Calibre-Web over an installation that already has those dependencies, and it can disturb the versions the base image pinned. It is also thrown away, because the Supervisor recreates the add-on container on restart.
 
 Optional features are switched on in the Calibre-Web web interface, not in the add-on options, under `Admin` -> `Basic Configuration` -> `Feature Configuration` (for example `Enable Uploads`, `Enable Kobo sync`, `Use Goodreads`).
 
-**Book covers.** The `Fetch Cover from URL` and `Upload Cover from Local Disk` fields only appear on a book's `Edit Metadata` page when `Enable Uploads` is ticked in `Feature Configuration` **and** the logged-in user has the `Upload` permission (`Admin` -> the user -> `Upload`). A missing python package is not what hides them.
+**Book covers.** The `Fetch Cover from URL` and `Upload Cover from Local Disk` fields only appear on a book's `Edit Metadata` page when `Enable Uploads` is ticked in `Feature Configuration` **and** the logged-in user has the `Upload` permission (`Admin` -> the user -> `Upload`). A missing Python package is not what hides them.
 
-**Conversion and metadata embedding** need the Calibre command-line binaries (`ebook-convert`, `ebook-meta`, `calibredb`). Those are installed at start by the `linuxserver/mods:universal-calibre` docker mod, which is the shipped default of the `DOCKER_MODS` option. If you set `DOCKER_MODS` yourself, keep `linuxserver/mods:universal-calibre` in the list (mods are separated by `|`) or those binaries disappear.
+**Conversion, metadata embedding and the other Calibre integrations** use command-line binaries such as `ebook-convert`, `ebook-meta` and `calibredb`. Those are installed at start by the `linuxserver/mods:universal-calibre` docker mod, which is the shipped default of the `DOCKER_MODS` option. If you set `DOCKER_MODS` yourself, keep `linuxserver/mods:universal-calibre` in the list (mods are separated by `|`) or those binaries disappear.
 
-**Any other python package** can be installed from the add-on's custom script (see the section below); `pip` there points at Calibre-Web's own virtualenv. Such a script runs on every start, and it has to: nothing installed into the container survives a restart.
+**Other compatible Python packages** can be installed from the add-on's custom script (see the section below); `pip` there points at Calibre-Web's own virtualenv. Such a script runs on every start, and it has to, since the container's writable layer does not persist.
 
 ### Custom Scripts and Environment Variables
 

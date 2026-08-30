@@ -35,8 +35,8 @@ RUN \
     && echo '#!/bin/sh' > /usr/bin/xdg-desktop-menu && chmod +x /usr/bin/xdg-desktop-menu \
     && echo '#!/bin/sh' > /usr/bin/xdg-mime && chmod +x /usr/bin/xdg-mime
 
-# The calibre binaries (calibredb, ebook-convert, ebook-meta) are installed at start by the
-# linuxserver/mods:universal-calibre docker mod, which config.yaml sets as the default DOCKER_MODS.
+# By default the calibre binaries (calibredb, ebook-convert, ebook-meta) are installed at start by
+# the linuxserver/mods:universal-calibre docker mod, set as the default DOCKER_MODS in config.yaml.
 # The xdg-* stubs above keep its calibre_postinstall step quiet.
 
 # Global LSIO modifications
