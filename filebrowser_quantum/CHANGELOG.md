@@ -1,4 +1,15 @@
  
+## 1.5.3.1 (2026-08-29)
+- Fix "open parent directory" in Tools -> File Size Analyzer under Home
+  Assistant ingress. FileBrowser opened the parent folder in a new tab, which
+  lands on the raw ingress URL with no Home Assistant frontend around it to
+  keep the ingress session alive, so the new tab answered 401 instead of
+  showing the folder. The ingress vhost now turns that popup into a navigation
+  of the panel itself. The same fix covers the other tool views and the "go to
+  item" action on search results, which open a new tab the same way. Download
+  and preview popups, links pointing out of the add-on, and direct access on
+  port 8071 are unchanged.
+ 
 ## 1.5.3 (2026-08-29)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
  
