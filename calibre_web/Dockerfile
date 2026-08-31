@@ -35,11 +35,9 @@ RUN \
     && echo '#!/bin/sh' > /usr/bin/xdg-desktop-menu && chmod +x /usr/bin/xdg-desktop-menu \
     && echo '#!/bin/sh' > /usr/bin/xdg-mime && chmod +x /usr/bin/xdg-mime
 
-# Install calibre binaries (provides calibredb required for book downloads)
-# hadolint ignore=DL4006
-RUN \
-    wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin install_dir=/opt/calibre
-ENV PATH="/opt/calibre:${PATH}"
+# By default the calibre binaries (calibredb, ebook-convert, ebook-meta) are installed at start by
+# the linuxserver/mods:universal-calibre docker mod, set as the default DOCKER_MODS in config.yaml.
+# The xdg-* stubs above keep its calibre_postinstall step quiet.
 
 # Global LSIO modifications
 COPY ha_lsio.sh /ha_lsio.sh

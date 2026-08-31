@@ -1,4 +1,8 @@
  
+## 0.6.27.3 (2026-08-30)
+- Doc: explain in the README that Calibre-Web's optional extras (metadata, kobo, gdrive, gmail, goodreads, ldap, oauth, comics) are already installed by the LinuxServer base image, that `pip install calibreweb[...]` inside the container is useless and not persistent, and that the cover fields on the Edit Metadata page are gated on `Enable Uploads` plus the user's `Upload` permission (https://github.com/alexbelgium/hassio-addons/issues/1143)
+- Fix: remove the Dockerfile step that claimed to install the Calibre binaries into `/opt/calibre`. There is no `wget` in the image, so the command failed silently and left the layer empty; the binaries are and were provided at start by the default `linuxserver/mods:universal-calibre` docker mod
+
 ## 0.6.27.2 (2026-08-23)
 - Fix: trust the whole supervisor network range for the ingress auth header instead of the addon's own address, which changes across restarts. The list is only written when that range is missing, so an entry added in the calibre-web admin page is no longer erased on every start (https://github.com/alexbelgium/hassio-addons/pull/3010)
 
