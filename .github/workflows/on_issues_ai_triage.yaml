@@ -362,6 +362,25 @@ jobs:
                "$EXECUTION_FILE" >/dev/null 2>&1
           }
 
+          # Did the run die because the Claude credential is bad? The action
+          # reports this uselessly — a revoked token surfaces as "--json-schema
+          # was provided but Claude did not return structured_output", which
+          # points at the schema and not at auth. The execution file carries the
+          # truth: api_retry / result objects with error "authentication_failed"
+          # and a 401. Same array guard and fail-closed posture as above; an
+          # unrecognised shape simply is not an auth failure and falls through
+          # to the generic branch.
+          hit_auth_failure() {
+            [ -n "${EXECUTION_FILE:-}" ] && [ -s "${EXECUTION_FILE:-}" ] || return 1
+            jq -e '(type == "array") and
+                   any(.[]?;
+                       (type == "object") and
+                       (((.error? // "") == "authentication_failed") or
+                        ((.error_status? // 0) == 401) or
+                        ((.api_error_status? // 0) == 401)))' \
+               "$EXECUTION_FILE" >/dev/null 2>&1
+          }
+
           # GATE 1 — did the action itself run? This is checked BEFORE looking
           # at the payload, because the action can fail *after* having written
           # a valid structured output: the object would sail through the shape
@@ -379,6 +398,16 @@ jobs:
           # explicit exit 1 the job would report success.
           if [ "${CLASSIFY_OUTCOME:-}" = "failure" ]; then
             restore_needs_info
+
+            # Checked before anything else, because it is the one failure with
+            # a specific remedy and it takes down every tier at once — tier 1
+            # cannot label, so tier 2's batch is empty and the whole pipeline
+            # goes quiet while each run still fails in a way that reads like a
+            # per-issue problem. Say plainly what is wrong and what to do.
+            if hit_auth_failure; then
+              echo "::error::CLAUDE_CODE_OAUTH_TOKEN is rejected (HTTP 401 / authentication_failed). This is NOT a problem with issue #$ISSUE — every AI workflow is down until the credential is replaced. Regenerate it with 'claude setup-token' and update the CLAUDE_CODE_OAUTH_TOKEN secret in the CR_PAT environment. Set the AI_DISABLED repo variable to 'true' to silence these runs meanwhile."
+              exit 1
+            fi
 
             # ...with one exception. Exhausting the turn budget is NOT a
             # workflow fault: the action ran fine and this particular issue was
