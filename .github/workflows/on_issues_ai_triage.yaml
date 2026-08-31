@@ -363,13 +363,22 @@ jobs:
           }
 
           # Did the run die because the Claude credential is bad? The action
-          # reports this uselessly — a revoked token surfaces as "--json-schema
-          # was provided but Claude did not return structured_output", which
-          # points at the schema and not at auth. The execution file carries the
-          # truth: api_retry / result objects with error "authentication_failed"
-          # and a 401. Same array guard and fail-closed posture as above; an
-          # unrecognised shape simply is not an auth failure and falls through
-          # to the generic branch.
+          # reports this uselessly — the failure surfaces as "--json-schema was
+          # provided but Claude did not return structured_output", which points
+          # at the schema and not at auth. The execution file carries the truth.
+          #
+          # A bad credential shows up in more than one shape, and both have been
+          # seen in production within a week:
+          #   * revoked token  -> error "authentication_failed", HTTP 401
+          #   * malformed token -> error "invalid_request", api_error_status
+          #     null, and the reason only in the SDK's message text ("Invalid
+          #     Authorization header value from CLAUDE_CODE_OAUTH_TOKEN: it
+          #     contains a line break at character 62").
+          # Matching only the first shape reported the second as a generic
+          # workflow fault, so the text marker is checked too — but only on an
+          # object the SDK itself flagged as an API error, so an issue body that
+          # merely mentions the secret's name cannot fake one. A false positive
+          # would change only the message: this branch exits 1 either way.
           hit_auth_failure() {
             [ -n "${EXECUTION_FILE:-}" ] && [ -s "${EXECUTION_FILE:-}" ] || return 1
             jq -e '(type == "array") and
@@ -377,8 +386,24 @@ jobs:
                        (type == "object") and
                        (((.error? // "") == "authentication_failed") or
                         ((.error_status? // 0) == 401) or
-                        ((.api_error_status? // 0) == 401)))' \
+                        ((.api_error_status? // 0) == 401) or
+                        (((.is_api_error_message? // false) == true) and
+                         (tostring | test("CLAUDE_CODE_OAUTH_TOKEN|Invalid auth token")))))' \
                "$EXECUTION_FILE" >/dev/null 2>&1
+          }
+
+          # The SDK's own words are far more useful than anything this script
+          # can infer — "it contains a line break at character 62" names the
+          # exact defect. Surface it verbatim when present.
+          auth_failure_detail() {
+            [ -n "${EXECUTION_FILE:-}" ] && [ -s "${EXECUTION_FILE:-}" ] || return 0
+            jq -r 'if type == "array" then
+                     [ .[]? | select(type == "object")
+                            | select((.is_api_error_message? // false) == true)
+                            | tostring
+                            | capture("(?<m>Invalid Authorization header value[^\"]*|Invalid auth token[^\"]*)")
+                            | .m ] | first // ""
+                   else "" end' "$EXECUTION_FILE" 2> /dev/null || true
           }
 
           # GATE 1 — did the action itself run? This is checked BEFORE looking
@@ -405,7 +430,8 @@ jobs:
             # goes quiet while each run still fails in a way that reads like a
             # per-issue problem. Say plainly what is wrong and what to do.
             if hit_auth_failure; then
-              echo "::error::CLAUDE_CODE_OAUTH_TOKEN is rejected (HTTP 401 / authentication_failed). This is NOT a problem with issue #$ISSUE — every AI workflow is down until the credential is replaced. Regenerate it with 'claude setup-token' and update the CLAUDE_CODE_OAUTH_TOKEN secret in the CR_PAT environment. Set the AI_DISABLED repo variable to 'true' to silence these runs meanwhile."
+              DETAIL=$(auth_failure_detail)
+              echo "::error::CLAUDE_CODE_OAUTH_TOKEN is being rejected${DETAIL:+ — $DETAIL}. This is NOT a problem with issue #$ISSUE: every AI workflow is down until the credential is fixed. Regenerate with 'claude setup-token' and re-enter the secret in the CR_PAT environment as a SINGLE line with no line break or trailing newline. Set the AI_DISABLED repo variable to 'true' to silence these runs meanwhile."
               exit 1
             fi
 
