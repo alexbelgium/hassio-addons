@@ -1,4 +1,15 @@
  
+## 1.5.3.3 (2026-08-31)
+- Complete the iOS companion app fix from 1.5.3.2. The "no preview available"
+  screen -- what you get for a `.zip`, `.bin` or anything else FileBrowser
+  cannot render -- offers its Download and "Open file" buttons as new-tab
+  links, and so does the share list in settings. The app hands every new tab
+  to an external browser, which carries no ingress session, so those answered
+  401. They now stay in the panel when running in the companion app, and open
+  a new tab as before in a normal browser. Download also saves the file
+  instead of displaying it, which 1.5.3.2 only fixed for the download button
+  in the file list.
+ 
 ## 1.5.3.2 (2026-08-30)
 - Fix Download in the Home Assistant iOS companion app (iOS 17 and later),
   where a file opened and showed its content with no way to save it.
