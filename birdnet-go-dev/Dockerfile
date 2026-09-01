@@ -89,7 +89,7 @@ RUN apk add --no-cache curl && \
 # 1a Build environment (mirrors tphakala/birdnet-go Docker/Dockerfile)  #
 #########################################################################
 
-FROM --platform=$BUILDPLATFORM golang:1.26-trixie AS buildenv
+FROM --platform=$BUILDPLATFORM golang:1.27-trixie AS buildenv
 ARG BUILD_VERSION
 ENV BUILD_VERSION=${BUILD_VERSION:-unknown}
 
