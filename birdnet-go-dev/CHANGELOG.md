@@ -1,3 +1,5 @@
+## 20260901.4 (01-09-2026)
+- Minor bugs fixed
 ## 20260901.3 (01-09-2026)
 - Rebuild: live spectrogram in Currently Hearing now uses the same SoX recipe, palette and 2:1 ratio as the detection spectrograms, with a kHz axis overlay (fork PR #61)
 ## 20260901.2 (01-09-2026)
