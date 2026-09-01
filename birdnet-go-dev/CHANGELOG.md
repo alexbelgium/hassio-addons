@@ -1,3 +1,5 @@
+## 20260901.2 (01-09-2026)
+- Rebuild: re-merges the open fork PRs, adding a static SoX spectrogram of the chunk being analysed to the Currently Hearing card (fork PR #61)
 ## 20260901.1 (01-09-2026)
 - Minor bugs fixed
 ## 20260901 (01-09-2026)
