@@ -1,5 +1,3 @@
-## 20260901 (01-09-2026)
-- Synced with upstream birdnet-go (7 commits); resolved merge conflict in fork PR #6
 ## 20260829.2 (29-08-2026)
 - Minor bugs fixed
 ## 20260829.1 (29-08-2026)
