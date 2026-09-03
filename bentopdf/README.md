@@ -104,6 +104,12 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 
 No other configuration is needed. Drop your files in and go.
 
+### Simple Mode build
+
+Upstream publishes two builds per release, and this add-on uses the Simple Mode one. It leaves out the bentopdf.com marketing pages: nav bar, hero, features, FAQ and footer.
+
+You still get all 130 tool pages and the same LibreOffice WebAssembly payload as the standard build. Dropping those pages also cuts the served payload to about 228 MB, down from about 258 MB.
+
 ---
 
 ## Privacy
