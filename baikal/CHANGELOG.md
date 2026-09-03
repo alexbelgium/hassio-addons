@@ -1,3 +1,10 @@
+## 0.12.1 (2026-09-03)
+
+- Update to Baikal 0.12.1 from 0.10.1 (changelog : <https://github.com/sabre-io/Baikal/releases>). This includes the 0.12.1 fix for an XSS vulnerability that let an authenticated user take over the admin interface by renaming a calendar
+- ⚠ After the update, open the Baikal web admin once : Baikal asks to confirm the upgrade before it serves calendars again
+- The application is now taken from the release published by sabre-io instead of from the ckulka/baikal-docker image, which stopped at 0.10.1. The base image still provides nginx, php-fpm and msmtp. Automatic version tracking is enabled again, following sabre-io/Baikal
+- The Baikal application files in the addon data folder are now replaced on every start instead of being kept. Calendars, contacts, users and the Baikal configuration are untouched ; any manual edit made inside the application folders themselves is lost
+
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
 ## 0.10.1-hafix4 (2025-11-18)
