@@ -16,7 +16,19 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="0.10.1+hafix"
+ARG BUILD_UPSTREAM="0.12.1"
+
+# ckulka/baikal-docker, which builds the base image, stopped publishing new
+# Baikal versions at 0.10.1 : the base image is used for its runtime only
+# (nginx, php-fpm, msmtp) and the application comes from the release published
+# by sabre-io itself
+FROM alpine:3.21 AS baikal
+ARG BUILD_UPSTREAM
+RUN apk add --no-cache curl unzip \
+    && curl -f -s -S -L -o /tmp/baikal.zip "https://github.com/sabre-io/Baikal/releases/download/${BUILD_UPSTREAM}/baikal-${BUILD_UPSTREAM}.zip" \
+    && unzip -q /tmp/baikal.zip -d / \
+    && rm /tmp/baikal.zip
+
 FROM ${BUILD_FROM}
 
 ##################
@@ -27,6 +39,24 @@ FROM ${BUILD_FROM}
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
+
+# Ship the Baikal release instead of the one bundled in the base image
+RUN rm -rf /var/www/baikal
+COPY --from=baikal --chown=nginx:nginx /baikal /var/www/baikal
+
+# Home Assistant asks for an expanded time range, and Baikal stores
+# cal:calendar-timezone as a bare timezone name rather than as the VTIMEZONE
+# object sabre/dav expects, so sabre/dav raises a ParseException and answers
+# 500 (sabre-io/Baikal#1241 and sabre-io/dav#1318, both still open). Read the
+# value as a timezone name instead. The two checks turn a release that moved
+# this code into a failed build rather than into an addon that Home Assistant
+# cannot read.
+# hadolint ignore=SC2016
+RUN \
+    DAVPLUGIN="/var/www/baikal/vendor/sabre/dav/lib/CalDAV/Plugin.php" \
+    && sed -i '/^                \/\/ This property contains a VCALENDAR with a single$/,/^                \$vtimezoneObj->destroy();$/c\                $calendarTimeZone = new DateTimeZone($tzResult[$tzProp]);' "$DAVPLUGIN" \
+    && grep -qxF '                $calendarTimeZone = new DateTimeZone($tzResult[$tzProp]);' "$DAVPLUGIN" \
+    && ! grep -qxF '                $calendarTimeZone = $vtimezoneObj->VTIMEZONE->getTimeZone();' "$DAVPLUGIN"
 
 # Image specific modifications
 # hadolint ignore=SC2015, SC2013, SC2086

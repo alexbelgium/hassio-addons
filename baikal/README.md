@@ -33,7 +33,9 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ---
 
 [Baikal](https://sabre.io/baikal/) is a lightweight CalDAV+CardDAV server. It offers an extensive web interface with easy management of users, address books and calendars. It is fast and simple to install and only needs a basic php capable server. The data can be stored in a MySQL or a SQLite database.
-It is based on the docker image : https://github.com/ckulka/baikal-docker
+It ships the release published by [sabre-io](https://github.com/sabre-io/Baikal/releases), running on the nginx and php-fpm image built by https://github.com/ckulka/baikal-docker.
+
+After an update of Baikal itself, open the web admin once : Baikal asks to confirm the upgrade before it serves calendars again. Calendars, contacts, users and the Baikal configuration are kept, but a manual edit made inside the application folders themselves is replaced on every start.
 
 ## Configuration
 
