@@ -45,8 +45,13 @@ ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 # Specific images modifications
+# The base image installs kepubify with "curl -o /usr/bin/kepubify" and never marks it executable,
+# so calibre-web's resolve_binary_path() rejects it (it requires os.access(X_OK)) and enabling
+# Kobo sync fails with "Kepubify binary not found". Unguarded on purpose: if a future base image
+# stops shipping the binary, the build must fail here rather than ship a silently broken add-on.
 RUN \
-    usermod --home /config abc
+    usermod --home /config abc \
+    && chmod 0755 /usr/bin/kepubify
 
 ##################
 # 3 Install apps #

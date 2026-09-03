@@ -1,4 +1,8 @@
  
+## 0.6.27.4 (2026-09-03)
+- Fix: Kobo sync could not be enabled, failing with "Kepubify binary not found" even when the path was set to `/usr/bin` by hand. The LinuxServer base image downloads `/usr/bin/kepubify` with `curl -o` and never marks it executable (mode 0644), and calibre-web only accepts a binary that passes `os.access(X_OK)`. The addon now sets mode 0755 on it at build time (https://github.com/alexbelgium/hassio-addons/issues/3040)
+- Fix: calibre-web only looks for kepubify under `/opt/kepubify`, never `/usr/bin` where the base image puts it, so the kepubify path was stored empty on the first start and never retried. The addon now fills it in with `/usr/bin` when it is still empty, leaving a path set by hand untouched. On a brand new install `/config/app.db` does not exist yet during the first start, so the path is filled in on the second start, as is already the case for the ingress settings
+
 ## 0.6.27.3 (2026-08-30)
 - Doc: explain in the README that Calibre-Web's optional extras (metadata, kobo, gdrive, gmail, goodreads, ldap, oauth, comics) are already installed by the LinuxServer base image, that `pip install calibreweb[...]` inside the container is useless and not persistent, and that the cover fields on the Edit Metadata page are gated on `Enable Uploads` plus the user's `Upload` permission (https://github.com/alexbelgium/hassio-addons/issues/1143)
 - Fix: remove the Dockerfile step that claimed to install the Calibre binaries into `/opt/calibre`. There is no `wget` in the image, so the command failed silently and left the layer empty; the binaries are and were provided at start by the default `linuxserver/mods:universal-calibre` docker mod

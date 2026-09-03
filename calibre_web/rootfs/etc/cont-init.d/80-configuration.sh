@@ -32,6 +32,13 @@ else
     # before calibre-web, so a failure here is not fatal : the next start applies it.
     trusted_ips_error=$(sqlite3 /config/app.db "update settings set config_reverse_proxy_trusted_ips='127.0.0.1,::1,::ffff:127.0.0.1,172.30.32.0/23,::ffff:172.30.32.0/119,'||coalesce(config_reverse_proxy_trusted_ips,'') where coalesce(config_reverse_proxy_trusted_ips,'') not like '%::ffff:172.30.32.0/119%'" 2>&1) ||
         bashio::log.warning "Could not set the ingress trusted ip list, it will be applied at next start (${trusted_ips_error})"
+
+    # Calibre-web only autodetects kepubify under /opt/kepubify, never /usr/bin where the base
+    # image puts it, so the setting is stored empty on the very first start and is never retried
+    # afterwards : every install ends up with an empty path and Kobo sync cannot be enabled.
+    # Filled in only when it is still empty, so a path the user set by hand is never overwritten.
+    kepubify_error=$(sqlite3 /config/app.db "update settings set config_kepubifypath='/usr/bin' where coalesce(config_kepubifypath,'') = ''" 2>&1) ||
+        bashio::log.warning "Could not set the kepubify path, it will be applied at next start (${kepubify_error})"
 fi
 
 bashio::log.info "Default username:password is admin:admin123"
