@@ -1,4 +1,7 @@
  
+## 26.9.0 (2026-09-05)
+- Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
+ 
 ## 26.8.5 (2026-08-08)
 - Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
  
