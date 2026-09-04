@@ -1,4 +1,8 @@
  
+## 1.43.3.10896.322 (2026-09-05)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
+- Upstream tag : 1.43.3.10896-cb3ebc72d-ls322
+ 
 ## 1.43.3.10896.321 (2026-08-22)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 - Upstream tag : 1.43.3.10896-cb3ebc72d-ls321
