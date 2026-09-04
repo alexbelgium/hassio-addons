@@ -1,3 +1,6 @@
+ 
+## v0.16.1 (2026-09-05)
+- Update to latest version from Unpackerr/unpackerr (changelog : https://github.com/Unpackerr/unpackerr/releases)
 
 ## v0.15.2-2 (2026-04-06)
 - Fix environment variables not being passed into the container (e.g. VPN_AUTO_PORT_FORWARD, VPN_ENABLED)
