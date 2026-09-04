@@ -1,4 +1,7 @@
  
+## 0.23.0 (2026-09-05)
+- Update to latest version from varun-raj/immich-power-tools (changelog : https://github.com/varun-raj/immich-power-tools/releases)
+ 
 ## 0.22.0 (2026-07-04)
 - Update to latest version from varun-raj/immich-power-tools (changelog : https://github.com/varun-raj/immich-power-tools/releases)
 
