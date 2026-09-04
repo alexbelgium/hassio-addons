@@ -1,4 +1,4 @@
-## 2.6.4 (04-09-2026)
+## 2.6.4 (2026-09-04)
 
 - Fix the add-on failing to start on a fresh install with `django.core.exceptions.ImproperlyConfigured: Set the DJANGO_DB_ENGINE environment variable`. The upstream `wger/server` image stopped shipping database defaults, and `settings/main.py` reads `DJANGO_DB_ENGINE` and `DJANGO_DB_DATABASE` with no fallback, so the add-on now sets them explicitly to sqlite at `/data/database.sqlite` — the same location the previous startup rewrite produced, so existing databases keep working.
 - Set `DJANGO_PERFORM_MIGRATIONS=True`, as upstream's own docker deployment does, so an existing database gets new migrations applied when the add-on is rebuilt against a newer upstream release.
