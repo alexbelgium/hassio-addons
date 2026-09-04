@@ -1,4 +1,8 @@
  
+## 3.20.9 (2026-09-05)
+- Update to latest version from wiserain/flexget
+- Upstream tag : ci
+ 
 ## 3.20.8 (2026-08-29)
 - Update to latest version from wiserain/flexget
  
