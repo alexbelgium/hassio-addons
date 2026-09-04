@@ -1,4 +1,7 @@
  
+## 8.19.21 (2026-09-05)
+- Update to latest version from elastic/elasticsearch (changelog : https://github.com/elastic/elasticsearch/releases)
+ 
 ## 8.19.20 (2026-08-13)
 - Update to latest version from elastic/elasticsearch (changelog : https://github.com/elastic/elasticsearch/releases)
 ## 8.19.19.2 (21-07-2026)

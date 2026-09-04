@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_UPSTREAM="8.19.20"
+ARG BUILD_UPSTREAM="8.19.21"
 # Pull from Elastic's own registry (multi-arch, published atomically with the
 # GitHub release the updater tracks) rather than the Docker Hub "library"
 # mirror, whose arm64/aarch64 tag lags hours behind and breaks the aarch64
