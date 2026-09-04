@@ -48,5 +48,5 @@ schema:
   username: str
 slug: collabora
 url: https://github.com/alexbelgium/hassio-addons
-version: "26.04.3.1.1"
+version: "26.04.3.2.1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:9980]/browser/dist/admin/admin.html"
