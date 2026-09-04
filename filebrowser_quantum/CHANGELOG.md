@@ -1,4 +1,7 @@
  
+## 1.5.6 (2026-09-05)
+- Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
+ 
 ## 1.5.3.3 (2026-08-31)
 - Complete the iOS companion app fix from 1.5.3.2. The "no preview available"
   screen -- what you get for a `.zip`, `.bin` or anything else FileBrowser
