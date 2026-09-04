@@ -1,4 +1,7 @@
  
+## 1.27.3 (2026-09-05)
+- Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
+ 
 ## 1.27.2 (2026-08-15)
 - Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
  
