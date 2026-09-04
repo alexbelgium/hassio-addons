@@ -57,12 +57,12 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 143
-- Installed : 329697
+- Installed : 334103
 
 ### Top 3
 
-1. Arpspoof (104512x)
-2. Flaresolverr (90553x)
+1. Arpspoof (105194x)
+2. Flaresolverr (91401x)
 3. Portainer (19664x)
 
 ### Architectures used
@@ -83,7 +83,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ## Add-ons provided by this repository
 
 
-&#10003;  [Arpspoof (104512x)](arpspoof/) : block internet connection for local network devices
+&#10003;  [Arpspoof (105194x)](arpspoof/) : block internet connection for local network devices
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fupdater.json)
@@ -138,6 +138,7 @@ If you want to do add the repository manually, please follow the procedure highl
 &#10003; ![image](https://api.iconify.design/mdi/file-pdf-box.svg) [BentoPDF](bentopdf/) : Privacy-first PDF toolkit. 50+ tools, all processing client-side in the browser. Files never leave your device.
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbentopdf%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbentopdf%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
