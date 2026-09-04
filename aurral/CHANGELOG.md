@@ -1,4 +1,7 @@
  
+## 2.8.0 (2026-09-05)
+- Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
+ 
 ## 2.7.0 (2026-08-29)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
  
