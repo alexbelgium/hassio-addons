@@ -42,10 +42,21 @@ ENV PGDATA=/config/postgres
 #   - gnupg2 is unnecessary: apt has read ASCII-armoured keys since 1.4.
 #   - lsb-release is unnecessary: /etc/os-release carries the codename.
 # curl is already present in the upstream linkwarden image.
+#
+# postgresql-16's own dependencies still come from bullseye-security, and
+# deb.debian.org serves that suite inconsistently now: libc-l10n, exim4-base and
+# libpython3.9-minimal all 404'd there during a build while every one of them was
+# 200 on security.debian.org, the origin deb.debian.org is a CDN alias for. Point
+# the security suite straight at the origin. If a future base image stops using
+# /etc/apt/sources.list this sed fails the build loudly, which is the point:
+# whoever rebases it has to revisit this.
 # hadolint ignore=DL3015
 RUN \
     # Change data directory
     mv /data /data_linkwarden && \
+    \
+    # Fetch the security suite from its origin rather than the CDN
+    sed -i 's|deb.debian.org/debian-security|security.debian.org/debian-security|g' /etc/apt/sources.list && \
     \
     # Install postgres
     curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc -o /etc/apt/trusted.gpg.d/postgresql.asc && \
