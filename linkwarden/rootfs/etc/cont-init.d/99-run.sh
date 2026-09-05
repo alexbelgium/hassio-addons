@@ -62,23 +62,28 @@ if [[ "$DATABASE_URL" == *"localhost"* ]]; then
     # Create folder
     if [ ! -e /config/postgres/postgresql.conf ]; then
         echo "... init folder"
-        sudo -u postgres /usr/lib/postgresql/16/bin/initdb -D /config/postgres
+        su - postgres -c "/usr/lib/postgresql/16/bin/initdb -D /config/postgres"
     fi
     chown -R postgres:postgres /config/postgres
     chmod 0700 /config/postgres
 
     echo "... starting server"
-    sudo -u postgres service postgresql start
+    # su - resets PATH to the login default, which has no /usr/sbin
+    su - postgres -c "/usr/sbin/service postgresql start"
     sleep 5
 
     echo "... create user and table"
+    # Both statements go to psql on stdin over the local socket, so neither the
+    # password nor a connection URI ends up in the process arguments
     # Set password
-    sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'homeassistant';"
+    su - postgres -c 'psql' <<'SQL'
+ALTER USER postgres WITH PASSWORD 'homeassistant';
+SQL
 
     # Create database if does not exist
-    echo "CREATE DATABASE linkwarden; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;
-    \q" > setup_postgres.sql
-    sudo -u postgres bash -c 'cat setup_postgres.sql | psql "postgres://postgres:homeassistant@localhost:5432"' || true
+    su - postgres -c 'psql' <<'SQL' || true
+CREATE DATABASE linkwarden; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;
+SQL
 fi
 
 ########################

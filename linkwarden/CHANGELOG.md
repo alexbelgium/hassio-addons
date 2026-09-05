@@ -1,4 +1,10 @@
  
+## 2.16.2 (2026-09-05)
+- Update to latest version from linkwarden/linkwarden (changelog : https://github.com/linkwarden/linkwarden/releases)
+- Stop installing vim, sudo, gnupg2 and lsb-release at build time. Debian 11 reached LTS end on 2026-08-31 and deb.debian.org no longer serves some of the debs that its frozen bullseye-security index still lists, which is what broke the 2.16.2 build.
+- Run the Postgres bootstrap through su instead of sudo, as the ente and postgres_15 add-ons already do
+- Fetch the bullseye-security suite from security.debian.org instead of the deb.debian.org CDN, which 404s on debs that suite still lists
+ 
 ## 2.16.1 (2026-08-22)
 - Update to latest version from linkwarden/linkwarden (changelog : https://github.com/linkwarden/linkwarden/releases)
  
