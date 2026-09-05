@@ -63,8 +63,11 @@ if [ "${#SETTINGS_FILES[@]}" -gt 0 ]; then
     done
 else
     # Expected on wger >= 2.7: the settings no longer hardcode a database path,
-    # it is taken from DJANGO_DB_DATABASE instead (set in the Dockerfile)
-    bashio::log.info "Settings do not hardcode a database path, using DJANGO_DB_DATABASE=${DJANGO_DB_DATABASE:-/data/database.sqlite}"
+    # it comes from the environment instead. Which variable wins is decided by
+    # wger, not here: PS_DATABASE_URI takes precedence over the DJANGO_DB_*
+    # defaults set in the Dockerfile, so no single one is named, and no value
+    # is logged (PS_DATABASE_URI carries credentials).
+    bashio::log.info "Settings do not hardcode a database path, the database is taken from the environment"
 fi
 
 #####################
