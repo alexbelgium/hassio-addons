@@ -73,13 +73,15 @@ if [[ "$DATABASE_URL" == *"localhost"* ]]; then
     sleep 5
 
     echo "... create user and table"
+    # Both statements go to psql on stdin over the local socket, so neither the
+    # password nor a connection URI ends up in the process arguments
     # Set password
-    su - postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD 'homeassistant';\""
+    su - postgres -c 'psql' <<'SQL'
+ALTER USER postgres WITH PASSWORD 'homeassistant';
+SQL
 
     # Create database if does not exist
-    # Fed on stdin rather than through a file: su - starts in postgres' home,
-    # so a relative path would no longer resolve
-    su - postgres -c 'psql "postgres://postgres:homeassistant@localhost:5432"' <<'SQL' || true
+    su - postgres -c 'psql' <<'SQL' || true
 CREATE DATABASE linkwarden; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;
 SQL
 fi
