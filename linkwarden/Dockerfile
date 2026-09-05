@@ -30,38 +30,15 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV PGDATA=/config/postgres
 # Adapt campaign
-#
-# Nothing is installed from the base image's own Debian suites before the PGDG
-# repository is added. Debian 11 reached LTS end on 2026-08-31 and its frozen
-# bullseye-security index still lists debs that deb.debian.org no longer serves
-# (sudo 1.9.5p2-3+deb11u4 among them), so every avoidable package here is a
-# build that fails for reasons unrelated to this add-on:
-#   - vim was never used by the add-on.
-#   - sudo is replaced by su in 99-run.sh, matching the ente and postgres_15
-#     add-ons.
-#   - gnupg2 is unnecessary: apt has read ASCII-armoured keys since 1.4.
-#   - lsb-release is unnecessary: /etc/os-release carries the codename.
-# curl is already present in the upstream linkwarden image.
-#
-# postgresql-16's own dependencies still come from bullseye-security, and
-# deb.debian.org serves that suite inconsistently now: libc-l10n, exim4-base and
-# libpython3.9-minimal all 404'd there during a build while every one of them was
-# 200 on security.debian.org, the origin deb.debian.org is a CDN alias for. Point
-# the security suite straight at the origin. If a future base image stops using
-# /etc/apt/sources.list this sed fails the build loudly, which is the point:
-# whoever rebases it has to revisit this.
 # hadolint ignore=DL3015
 RUN \
     # Change data directory
     mv /data /data_linkwarden && \
     \
-    # Fetch the security suite from its origin rather than the CDN
-    sed -i 's|deb.debian.org/debian-security|security.debian.org/debian-security|g' /etc/apt/sources.list && \
-    \
     # Install postgres
-    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc -o /etc/apt/trusted.gpg.d/postgresql.asc && \
-    . /etc/os-release && \
-    echo "deb https://apt.postgresql.org/pub/repos/apt ${VERSION_CODENAME}-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    apt-get update && apt-get install vim gnupg2 lsb-release sudo curl -y && \
+    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc| gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
+    sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
     apt-get update && apt-get install -y postgresql-16 && \
     sed -i "/data_directory/c data_directory = '/config/postgres'" /etc/postgresql/*/main/postgresql.conf
 
