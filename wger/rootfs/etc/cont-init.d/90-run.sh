@@ -62,7 +62,9 @@ if [ "${#SETTINGS_FILES[@]}" -gt 0 ]; then
         sed -i "s|/home/wger/db/database.sqlite|/data/database.sqlite|g" "$settings_file"
     done
 else
-    bashio::log.warning "Unable to find Python settings containing database path under /home, skipping rewrite"
+    # Expected on wger >= 2.7: the settings no longer hardcode a database path,
+    # it is taken from DJANGO_DB_DATABASE instead (set in the Dockerfile)
+    bashio::log.info "Settings do not hardcode a database path, using DJANGO_DB_DATABASE=${DJANGO_DB_DATABASE:-/data/database.sqlite}"
 fi
 
 #####################

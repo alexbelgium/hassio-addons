@@ -1,3 +1,8 @@
+## 2.6.4 (2026-09-05)
+
+- Fix the add-on failing to start with `ImproperlyConfigured: Set the DJANGO_DB_ENGINE environment variable`: wger 2.7 removed the implicit sqlite fallback from its settings, so the database is now declared explicitly through `DJANGO_DB_ENGINE` / `DJANGO_DB_DATABASE`, still pointing at the persistent `/data/database.sqlite`
+- Replace the misleading "Unable to find Python settings containing database path" warning with an informational message, as wger no longer hardcodes that path
+
 ## 2.6.3 (2026-08-01)
 
 - Version renamed from `2.6-dev-3`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged

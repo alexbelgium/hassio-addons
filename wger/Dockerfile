@@ -34,6 +34,18 @@ ENV SYNC_EXERCISES_ON_STARTUP=True \
     DJANGO_MEDIA_ROOT="/data/media" \
     DJANGO_STATIC_ROOT="/data/static"
 
+# wger 2.7 dropped the implicit sqlite fallback in settings/main.py, so the
+# database has to be declared through the environment or Django aborts with
+# "Set the DJANGO_DB_ENGINE environment variable".
+# USER/PASSWORD/HOST/PORT are ignored by the sqlite backend; they are set
+# because wger 2.6 read them without a default, so both base images boot.
+ENV DJANGO_DB_ENGINE="django.db.backends.sqlite3" \
+    DJANGO_DB_DATABASE="/data/database.sqlite" \
+    DJANGO_DB_USER="" \
+    DJANGO_DB_PASSWORD="" \
+    DJANGO_DB_HOST="" \
+    DJANGO_DB_PORT="5432"
+
 USER root
 
 RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
