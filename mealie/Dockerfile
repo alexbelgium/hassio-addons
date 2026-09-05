@@ -15,24 +15,30 @@
 #################
 
 # Stage 1: Build Frontend with SUB_PATH
-FROM node:22 AS frontend-builder
+# Mirrors upstream docker/Dockerfile: node:24 + pnpm, installing from the
+# committed pnpm-lock.yaml. Upstream dropped frontend/yarn.lock in v3.24.0, so a
+# yarn install here resolved every dependency fresh and eventually picked a
+# vuetify release without "vuetify/labs/rules", breaking "nuxt generate".
+FROM node:24 AS frontend-builder
 
 # Set the SUB_PATH environment variable
 ARG SUB_PATH="/mealie/"
 ENV SUB_PATH=$SUB_PATH
 
-ENV MEALIE_VERSION="v3.24.0"
+ENV MEALIE_VERSION="v3.25.1"
+
+RUN npm install --global pnpm@11
 
 # Clone the Mealie repository to get the frontend source code
 WORKDIR /frontend
 # hadolint ignore=DL3003
 RUN mkdir -p /frontend/tempdir && cd /frontend/tempdir && \
-    git clone --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/mealie.git . && \
-    cp -rf frontend/* /frontend && cd /frontend && rm -rf tempdir && \
-    yarn install --prefer-offline --frozen-lockfile --non-interactive --production=false --network-timeout 1000000
+    git clone --depth 1 --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/mealie.git . && \
+    cp -a frontend/. /frontend/ && cd /frontend && rm -rf tempdir && \
+    pnpm install --frozen-lockfile
 
 # Build the frontend
-RUN yarn generate
+RUN pnpm generate
 
 # Stage 2: Build the Final Image
 FROM hkotel/mealie:latest
