@@ -31,7 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 ENV PGDATA=/config/postgres
 # Adapt campaign
 #
-# Nothing is installed from the base image's own Debian suites before the PGDATA
+# Nothing is installed from the base image's own Debian suites before the PGDG
 # repository is added. Debian 11 reached LTS end on 2026-08-31 and its frozen
 # bullseye-security index still lists debs that deb.debian.org no longer serves
 # (sudo 1.9.5p2-3+deb11u4 among them), so every avoidable package here is a

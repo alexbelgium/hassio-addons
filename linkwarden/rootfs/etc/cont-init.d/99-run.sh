@@ -77,9 +77,11 @@ if [[ "$DATABASE_URL" == *"localhost"* ]]; then
     su - postgres -c "psql -c \"ALTER USER postgres WITH PASSWORD 'homeassistant';\""
 
     # Create database if does not exist
-    # Absolute path: su - starts in postgres' home, not this script's directory
-    echo "CREATE DATABASE linkwarden; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;" > /tmp/setup_postgres.sql
-    su - postgres -c 'psql "postgres://postgres:homeassistant@localhost:5432" -f /tmp/setup_postgres.sql' || true
+    # Fed on stdin rather than through a file: su - starts in postgres' home,
+    # so a relative path would no longer resolve
+    su - postgres -c 'psql "postgres://postgres:homeassistant@localhost:5432"' <<'SQL' || true
+CREATE DATABASE linkwarden; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;
+SQL
 fi
 
 ########################
