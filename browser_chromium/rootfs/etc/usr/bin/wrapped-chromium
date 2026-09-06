@@ -5,12 +5,12 @@ set -Eeuo pipefail
 
 # Resolve chromium binary (LSIO uses this path)
 if [[ -x /usr/lib/chromium/chromium ]]; then
-  BIN=/usr/lib/chromium/chromium
+	BIN=/usr/lib/chromium/chromium
 elif command -v chromium >/dev/null 2>&1; then
-  BIN="$(command -v chromium)"
+	BIN="$(command -v chromium)"
 else
-  echo "ERROR: chromium binary not found" >&2
-  exit 127
+	echo "ERROR: chromium binary not found" >&2
+	exit 127
 fi
 
 # Fixed profile dir as requested
@@ -19,7 +19,7 @@ mkdir -p "${USER_DATA_DIR}"
 
 # Cleanup stale locks if chromium is not already running
 if ! pgrep -f 'chromium' >/dev/null 2>&1; then
-  rm -f "${USER_DATA_DIR}/Singleton"* || true
+	rm -f "${USER_DATA_DIR}/Singleton"* || true
 fi
 
 # Detect seccomp mode (0 = disabled)
@@ -27,22 +27,22 @@ seccomp_mode="$(awk -F':' '/^Seccomp:/{gsub(/[[:space:]]/,"",$2); print $2}' /pr
 
 # Base arguments (exactly what you requested + required safety flags)
 args=(
-  --remote-debugging-address=0.0.0.0
-  --remote-debugging-port=9221
-  --user-data-dir="${USER_DATA_DIR}"
-  --disable-dev-shm-usage
-  --no-first-run
-  --no-default-browser-check
-  --disable-background-networking
-  --disable-sync
-  --password-store=basic
-  "--simulate-outdated-no-au=Tue, 31 Dec 2099 23:59:59 GMT"
-  --start-maximized
+	--remote-debugging-address=0.0.0.0
+	--remote-debugging-port=9221
+	--user-data-dir="${USER_DATA_DIR}"
+	--disable-dev-shm-usage
+	--no-first-run
+	--no-default-browser-check
+	--disable-background-networking
+	--disable-sync
+	--password-store=basic
+	"--simulate-outdated-no-au=Tue, 31 Dec 2099 23:59:59 GMT"
+	--start-maximized
 )
 
 # Container reality: sandbox usually breaks unless seccomp is fully disabled
 if [[ "${seccomp_mode}" != "0" ]]; then
-  args+=( --no-sandbox --test-type )
+	args+=(--no-sandbox --test-type)
 fi
 
 # IMPORTANT:

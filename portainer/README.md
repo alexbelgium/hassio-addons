@@ -76,7 +76,7 @@ The default username is "admin" and the password is described in the startup log
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `ssl` | bool | `false` | Enable HTTPS for web interface |
 | `certfile` | str | `fullchain.pem` | SSL certificate file (in `/ssl/`) |
 | `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |

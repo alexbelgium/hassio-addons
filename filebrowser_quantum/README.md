@@ -57,7 +57,7 @@ The web UI can be found at `<your-ip>:8071` or through the Home Assistant sideba
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `auth_method` | list | `password` | Authentication method (`password`, `noauth`, `proxy`, `oidc`) |
 | `default_user_scope` | str | `/` | The root filesystem path used as the FileBrowser source and as the default scope for all users. Must be an existing absolute directory path (e.g. `/share`, `/media`). |
 | `localdisks` | str | _(optional)_ | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |

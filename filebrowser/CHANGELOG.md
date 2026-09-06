@@ -1,4 +1,4 @@
- 
+
 ## 2.63.23 (2026-08-01)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
 ## 2.63.18.5 (26-07-2026)
@@ -7,7 +7,7 @@
 - Minor bugs fixed
 ## 2.63.18.3 (22-07-2026)
 - New flag added : follow_external_symlinks
- 
+
 ## 2.63.18 (2026-07-04)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
 
@@ -16,10 +16,10 @@
 
 ## 2.63.16 (2026-06-23)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
- 
+
 ## 2.63.15 (2026-06-17)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
- 
+
 ## 2.63.14 (2026-06-11)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
 ## 2.63.12 (2026-06-05)

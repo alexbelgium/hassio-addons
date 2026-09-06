@@ -62,7 +62,7 @@ Default password: admin123
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `PGID` | int | `0` | Group ID for file permissions |
 | `PUID` | int | `0` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
@@ -99,7 +99,7 @@ This addon supports mounting both local drives and remote SMB shares:
 
 ### Optional Calibre-Web features
 
-Calibre-Web documents optional extras that a manual installation adds with `pip install calibreweb[metadata]` and similar. **You do not need to install anything here**: the LinuxServer base image this add-on builds on installs Calibre-Web's `requirements.txt` *and* its full `optional-requirements.txt` into the application's virtualenv, so the gdrive, gmail, goodreads, ldap, oauth, metadata, comics and kobo dependencies are all present already. Running `pip install calibreweb[...]` inside the container is not a supported way to enable them: it installs the PyPI distribution of Calibre-Web over an installation that already has those dependencies, and it can disturb the versions the base image pinned. It is also thrown away, because the Supervisor recreates the add-on container on restart.
+Calibre-Web documents optional extras that a manual installation adds with `pip install calibreweb[metadata]` and similar. **You do not need to install anything here**: the LinuxServer base image this add-on builds on installs Calibre-Web's `requirements.txt` _and_ its full `optional-requirements.txt` into the application's virtualenv, so the gdrive, gmail, goodreads, ldap, oauth, metadata, comics and kobo dependencies are all present already. Running `pip install calibreweb[...]` inside the container is not a supported way to enable them: it installs the PyPI distribution of Calibre-Web over an installation that already has those dependencies, and it can disturb the versions the base image pinned. It is also thrown away, because the Supervisor recreates the add-on container on restart.
 
 Optional features are switched on in the Calibre-Web web interface, not in the add-on options, under `Admin` -> `Basic Configuration` -> `Feature Configuration` (for example `Enable Uploads`, `Enable Kobo sync`, `Use Goodreads`).
 

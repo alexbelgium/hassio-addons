@@ -60,7 +60,7 @@ Initial setup requires creating an admin account through the web interface.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |

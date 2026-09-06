@@ -1,28 +1,28 @@
- 
+
 ## 2.6.3.5608.14 (2026-09-05)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.3.5608-ls14
- 
+
 ## 2.6.2.5583.12 (2026-08-29)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.2.5583-ls12
- 
+
 ## 2.6.2.5581.11 (2026-08-29)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.2.5581-ls11
- 
+
 ## 2.6.2.5558.10 (2026-08-22)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.2.5558-ls10
- 
+
 ## 2.6.2.5548.10 (2026-08-13)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.2.5548-ls10
- 
+
 ## 2.6.2.5534.9 (2026-08-11)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.2.5534-ls9
- 
+
 ## 2.6.2.5517.9 (2026-08-02)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.2.5517-ls9
@@ -30,19 +30,19 @@
 
 - Version renamed from `nightly-2.6.1.5509-ls8`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
 
- 
+
 ## nightly-2.6.1.5509-ls8 (2026-08-01)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
- 
+
 ## nightly-2.6.0.5494-ls8 (2026-07-25)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
- 
+
 ## nightly-2.5.2.5487-ls8 (2026-07-22)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
- 
+
 ## nightly-2.5.1.5478-ls7 (2026-07-18)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
- 
+
 ## develop-2.5.1.5464-ls268 (2026-07-13)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 
@@ -52,16 +52,16 @@
 
 ## nightly-2.5.0.5453-ls4 (2026-07-04)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
- 
+
 ## nightly-2.5.0.5443-ls4 (2026-06-29)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 
 ## nightly-2.5.0.5422-ls3 (2026-06-27)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
- 
+
 ## nightly-2.5.0.5422-ls2 (2026-06-20)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
- 
+
 ## 2.4.0.5397-ls149 (2026-06-11)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 ## nightly-2.4.0.5391-ls238 (2026-06-05)

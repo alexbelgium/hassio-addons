@@ -1,19 +1,19 @@
- 
+
 ## 17.8.0 (2026-09-05)
 - Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
- 
+
 ## 17.7.2 (2026-08-13)
 - Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
- 
+
 ## 17.7.1 (2026-08-08)
 - Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
- 
+
 ## 17.6.0 (2026-07-18)
 - Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
- 
+
 ## 17.5.1 (2026-06-17)
 - Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
- 
+
 ## 17.5.0 (2026-06-11)
 - Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
 

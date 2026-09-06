@@ -25,7 +25,7 @@ Use `env_vars` to pass extra environment variables when needed. Seerr configurat
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `NODE_MEMORY_LIMIT` | int | `512` | Maximum Node.js heap memory in MB. Increase if Seerr crashes with large libraries; decrease on memory-constrained systems. |
 | `PGID` | int | `0` | Group ID for file permissions |
 | `PUID` | int | `0` | User ID for file permissions |

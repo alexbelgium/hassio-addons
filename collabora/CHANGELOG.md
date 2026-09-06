@@ -1,10 +1,10 @@
- 
+
 ## 26.04.3.2.1 (2026-09-05)
 - Update to latest version from collabora/code
- 
+
 ## 26.04.3.1.1 (2026-08-13)
 - Update to latest version from collabora/code
- 
+
 ## 26.04.2.4.1 (2026-07-26)
 - Rebuild on a Debian base: upstream turned collabora/code into a distroless image with no shell, which broke the addon build entirely. collabora/code stays the tracked upstream image in build.json, but is now a build stage whose payload is copied onto ghcr.io/hassio-addons/debian-base, and the addon ships its own launcher in place of the removed /start-collabora-online.sh
 - build.json names the architecture explicitly again (`collabora/code:latest-amd64` and `collabora/code:latest-arm64`). The builder never passes `--platform`, so the tag is the only thing that decides which binaries land in the addon
@@ -19,16 +19,16 @@
 - Added `aliasgroup2` and `aliasgroup3` for additional Nextcloud servers
 - `cert_domain` is now a string (it is a certificate common name) and is passed to Collabora
 - Documented the above, and corrected the README which asked for two backslashes where Collabora expects one
- 
+
 ## 1.3.0 (2026-07-16)
 - Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
- 
+
 ## 1.2.2 (2026-07-04)
 - Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
- 
+
 ## 1.2.1 (2026-06-27)
 - Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
- 
+
 ## 1.2.0 (2026-06-23)
 - Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
 

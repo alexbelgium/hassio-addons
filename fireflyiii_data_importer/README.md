@@ -49,7 +49,7 @@ For complete setup documentation, see: https://docs.firefly-iii.org/data-importe
 ### Options
 
 | Option | Type | Required | Description |
-|--------|------|----------|-------------|
+| -------- | ------ | ---------- | ------------- |
 | `FIREFLY_III_URL` | str | Yes | URL to your Firefly III instance |
 | `FIREFLY_III_ACCESS_TOKEN` | str | Yes | Personal Access Token from Firefly III |
 | `CONFIG_LOCATION` | str | Yes | Location for configuration files |

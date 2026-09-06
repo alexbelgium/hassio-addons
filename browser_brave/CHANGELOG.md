@@ -1,46 +1,46 @@
- 
+
 ## 1.94.121-ls127 (2026-09-05)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.94.117-ls125 (2026-08-29)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.93.138-ls124 (2026-08-22)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.93.136-ls122 (2026-08-13)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.93.134-ls121 (2026-08-08)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.93.129-ls119 (2026-08-01)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.92.144-ls117 (2026-07-25)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.92.141-ls115 (2026-07-18)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.92.140-ls113 (2026-07-16)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.92.139-ls112 (2026-07-11)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.92.134-ls109 (2026-07-04)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.91.180-ls108 (2026-06-27)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.91.175-ls106 (2026-06-20)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.91.172-ls105 (2026-06-13)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
- 
+
 ## 1.91.171-ls104 (2026-06-11)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
 ## 1.91.168-ls103 (2026-06-05)

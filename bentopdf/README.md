@@ -17,7 +17,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 ### Organize & Edit
 
 | Tool | Tool | Tool |
-|------|------|------|
+| ------ | ------ | ------ |
 | Merge PDF | Split PDF | Organize PDF |
 | Delete Pages | Extract Pages | Reverse Pages |
 | Rotate PDF | Rotate Custom | Crop PDF |
@@ -28,7 +28,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 ### Convert TO PDF
 
 | Tool | Tool | Tool |
-|------|------|------|
+| ------ | ------ | ------ |
 | Word to PDF | Excel to PDF | PowerPoint to PDF |
 | Image to PDF | JPG to PDF | PNG to PDF |
 | BMP to PDF | TIFF to PDF | WEBP to PDF |
@@ -44,7 +44,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 ### Convert FROM PDF
 
 | Tool | Tool | Tool |
-|------|------|------|
+| ------ | ------ | ------ |
 | PDF to DOCX | PDF to Excel | PDF to JPG |
 | PDF to PNG | PDF to BMP | PDF to TIFF |
 | PDF to WEBP | PDF to SVG | PDF to Text |
@@ -54,7 +54,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 ### Security & Metadata
 
 | Tool | Tool | Tool |
-|------|------|------|
+| ------ | ------ | ------ |
 | Encrypt PDF | Decrypt PDF | Change Permissions |
 | Remove Restrictions | Sign PDF | Digital Sign PDF |
 | Validate Signature | Edit Metadata | View Metadata |
@@ -64,7 +64,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 ### Enhance & Process
 
 | Tool | Tool | Tool |
-|------|------|------|
+| ------ | ------ | ------ |
 | Compress PDF | OCR PDF | Deskew PDF |
 | Rasterize PDF | Linearize PDF | PDF to PDF/A |
 | Adjust Colors | Invert Colors | Text Color |
@@ -76,7 +76,7 @@ A privacy-first PDF toolkit running entirely in your browser — no uploads, no 
 ### Forms & More
 
 | Tool | Tool | Tool |
-|------|------|------|
+| ------ | ------ | ------ |
 | Form Creator | Form Filler | Table of Contents |
 | Bookmark | PDF Editor | Extract Images |
 | Extract Tables | Extract Attachments | Edit Attachments |

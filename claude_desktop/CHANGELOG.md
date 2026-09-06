@@ -1,12 +1,12 @@
- 
+
 ## 07308545.6 (2026-09-05)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
 - Upstream tag : v3.2.3+claude1.40609.1
- 
+
 ## 07308545.5 (2026-08-29)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
 - Upstream tag : v3.2.2+claude1.37937.3
- 
+
 ## 07308545.4 (2026-08-22)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
 - Upstream tag : v3.2.2+claude1.32885.1
@@ -71,7 +71,7 @@
 
 ## 07308545.1 (17-08-2026)
 - Minor bugs fixed
- 
+
 ## 07308543.1 (17-08-2026)
 - Fix the "For your security, sign in again" prompt recurring on every restart again. The v1.37
   `safeStorage` patch (`86-claude_safestorage.sh` / `claude-safestorage-patch.js`) only knew how
@@ -94,11 +94,11 @@
 ## 07308545 (2026-08-15)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
 - Upstream tag : v3.2.2+claude1.30096.1
- 
+
 ## 07308544 (2026-08-13)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
 - Upstream tag : v3.2.2+claude1.28929.0
- 
+
 ## 07308543 (2026-08-08)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 - Upstream tag : debiantrixie-version-07308543
@@ -185,10 +185,10 @@
 
 ## 2026.08.02 (02-08-2026)
 - Minor bugs fixed
- 
+
 ## ubunturesolute-version-3a10bef7 (2026-08-01)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
- 
+
 ## kali-version-e963b19b (2026-08-01)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 ## 1.37 (28-07-2026)
@@ -199,7 +199,7 @@
   - **`gnome-keyring` stays out of the image.** Re-adding it would reintroduce the first-boot keyring password prompt that blocks Claude Desktop from launching at all. This route needs no keyring, no D-Bus Secret Service, no daemon and no password, so no prompt can appear. The trade-off is unchanged from v1.35 and is inherent to the `basic` backend: its key is fixed rather than gated by a keyring, so any process that can read the persistent `$HOME/.config/Claude` profile can recover the stored credentials.
   - **One-time step after upgrading.** The previously stored session is already stale, so a single sign-in is still needed once after this update; it then persists across restarts.
 
- 
+
 ## 1.36.4 (28-07-2026)
 
 - Fix Selkies dying with a Rust `RuntimeDirNotSet` unwrap panic just after `Data WebSocket Server listening on port 8081`, and the data websocket then being proxied to the wrong port. Upstream relies on s6-rc ordering: `init-selkies-config` publishes `XDG_RUNTIME_DIR` and `CUSTOM_WS_PORT` into the s6 envdir and `svc-selkies` starts afterwards. The add-on entrypoint replaces s6-overlay and starts every `s6-rc.d` run script in parallel with no dependency graph, so Selkies can snapshot the envdir before that oneshot has written to it -- which is why it bound port 8081 (its own default) instead of the 8082 nginx proxies to, and why its Wayland compositor found no runtime directory to bind a socket in. `20-folders.sh` now exports both variables inside each run script, where no start ordering can lose them, and corrects the base image's `$HOME/.XDG` override where that write happens instead of appending a correction after the `exit 0` that the oneshot-tolerance block adds -- which meant the correction never ran on any boot after the first.
@@ -210,7 +210,7 @@
 
 ## 1.36.2 (28-07-2026)
 - Minor bugs fixed
- 
+
 ## 1.36.1 (27-07-2026)
 
 - Fix the Codex CLI install failing on every boot with `Verified Codex <version> installation failed; Codex is unavailable this boot`, leaving `install_codex_cli` permanently non-functional. The download, its SHA-256 verification, and the extraction all succeeded; the chain broke at the final step, which validates the candidate binary by running `--version` as the `abc` runtime user. `mktemp -d` creates its directory `0700 root:root`, and `abc` cannot traverse a root-only directory, so executing the staged binary failed with `unable to exec: Permission denied` (exit 126) before it could be moved into place. Reproduced and fixed by making the staging directory traversable (`chmod 0755`) immediately after `mktemp`; verified on a live add-on container, where the same probe goes from exit 126 to success once the mode is widened. Nothing secret is staged there — the public release archive and the extracted binary, both world-readable upstream artifacts — and the existing `cleanup()` trap still removes the directory on exit. The validation deliberately keeps running as `abc` rather than root, so the binary is exercised as the identity that will actually run it.
@@ -240,10 +240,10 @@
 ## 1.33 (22-07-2026)
 
 - Add cowork virtualization support: `qemu-system-x86` and `ovmf` (Bookworm main, installed via apt) plus `virtiofsd` for sharing the workspace into the sandbox microVM. `virtiofsd` is only packaged for Debian trixie/sid, not Bookworm or bookworm-backports, and its trixie `.deb` links a newer GLIBC than this add-on's Bookworm runtime — so it now gets built from the pinned crates.io release (`1.14.0`) in a dedicated `virtiofsd-builder` stage, the same GLIBC-safe pattern already used for `rtk` and `tokensave`. Its build deps (`libseccomp-dev`, `libcap-ng-dev`, `pkg-config`, `clang`, `libclang-dev`) live only in that builder stage; only the runtime shared libs (`libseccomp2`, `libcap-ng0`) ship in the final image. The built binary is validated with `--version` at build time alongside `rtk`/`tokensave`, so a GLIBC/ABI mismatch fails the image build instead of surfacing at container start. Docker itself is deliberately not installed: this base image already ships Docker-in-Docker (`docker-ce`/`containerd.io` from Docker's own apt repo, started via the pre-existing `START_DOCKER` env var) — an initial attempt to also `apt-get install docker.io` broke the build, since Debian's package pulls in `containerd`/`runc`, which apt refuses to install alongside the base image's already-installed `containerd.io` (`Conflicts`).
- 
+
 ## ubunturesolute-version-8208e985 (2026-07-21)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
- 
+
 ## kali-version-9ad48e7a (2026-07-18)
 - Update to latest version from linuxserver/docker-baseimage-selkies (changelog : https://github.com/linuxserver/docker-baseimage-selkies/releases)
 ## 1.32 (17-07-2026)

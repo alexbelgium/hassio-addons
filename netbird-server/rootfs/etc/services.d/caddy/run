@@ -11,8 +11,8 @@ DATA_DIR="/config/netbird"
 CADDYFILE="${DATA_DIR}/Caddyfile"
 
 if [[ ! -f "$CADDYFILE" ]]; then
-  bashio::log.error "Missing Caddyfile at ${CADDYFILE}."
-  bashio::exit.nok
+    bashio::log.error "Missing Caddyfile at ${CADDYFILE}."
+    bashio::exit.nok
 fi
 
 export XDG_DATA_HOME="${DATA_DIR}/caddy/data"

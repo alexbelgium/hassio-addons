@@ -43,7 +43,7 @@ Webui can be found at `<your-ip>:port`.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `PGID` | int | `1000` | Group ID for file permissions |
 | `PUID` | int | `1000` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
@@ -143,7 +143,7 @@ If you use clients for file syncing, the use of SQLite is highly discouraged.
 and you want to overcome this, follow the below steps:
 
 - 1. Install `mariadb` add-on, configure it with some random infos and start it. It is important to start it successfully in order to be seen by `nextcloud` in the network.
-- 2. Install `nextcloud` add-on (or restart it if you have already installed), watch the logs until you will notice the following `warning`:
+- 1. Install `nextcloud` add-on (or restart it if you have already installed), watch the logs until you will notice the following `warning`:
 
   ```bash
   WARNING: MariaDB addon was found! It can't be configured automatically due to the way Nextcloud works, but you can configure it manually when running the web UI for the first time using those values :
@@ -153,8 +153,8 @@ and you want to overcome this, follow the below steps:
   Host-name : core-mariadb:3306
   ```
 
-- 3. Go back at `mariadb` add-on, configure it with above credentials and restart it. Make sure the add-on is creating the `nextcloud` database.
-- 4. Go in the webui and fill all required info. Here you can view an example:
+- 1. Go back at `mariadb` add-on, configure it with above credentials and restart it. Make sure the add-on is creating the `nextcloud` database.
+- 1. Go in the webui and fill all required info. Here you can view an example:
 
 ![image](https://user-images.githubusercontent.com/19391765/207888717-50b43002-a5e2-4782-b5c9-1f582309df2b.png)
 

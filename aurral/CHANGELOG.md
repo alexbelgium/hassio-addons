@@ -1,31 +1,31 @@
- 
+
 ## 2.8.0 (2026-09-05)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
- 
+
 ## 2.7.0 (2026-08-29)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
- 
+
 ## 2.5.1 (2026-08-22)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
- 
+
 ## 2.4.0 (2026-08-13)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
- 
+
 ## 2.1.0 (2026-08-08)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
- 
+
 ## 2.0.3 (2026-08-01)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
- 
+
 ## 2.0.2 (2026-08-01)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
- 
+
 ## 2.0.0 (2026-07-22)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
- 
+
 ## 1.76.52 (2026-07-11)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
- 
+
 ## 1.76.51 (2026-06-17)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
 ## 1.76.49 (2026-06-05)

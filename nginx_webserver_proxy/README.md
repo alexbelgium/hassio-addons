@@ -35,7 +35,7 @@ This add-on combines a full reverse proxy with a proper static file server, allo
 ## Configuration
 
 | Option | Default | Description |
-|--------|---------|-------------|
+| -------- | --------- | ------------- |
 | `static_site_enabled` | `true` | Enable or disable the static file server on port 80 |
 | `static_site_root` | `/share/www` | Path to serve static files from |
 | `static_site_prefix` | `/` | URL prefix for the static site (e.g., `/www` for `http://host/www`) |

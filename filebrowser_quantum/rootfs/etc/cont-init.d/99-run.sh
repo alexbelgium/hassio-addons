@@ -88,10 +88,10 @@ bashio::log.info "Updating FileBrowser config..."
 
 # --- Server (hardcoded values) ---
 bashio::log.info "... set server"
-yq e -i ".server.port = 8080"            "$FILEBROWSER_CONFIG"
-yq e -i ".server.listen = \"0.0.0.0\""  "$FILEBROWSER_CONFIG"
+yq e -i ".server.port = 8080" "$FILEBROWSER_CONFIG"
+yq e -i ".server.listen = \"0.0.0.0\"" "$FILEBROWSER_CONFIG"
 yq e -i ".server.database = \"/config/database.db\"" "$FILEBROWSER_CONFIG"
-yq e -i ".server.cacheDir = \"/cache\""  "$FILEBROWSER_CONFIG"
+yq e -i ".server.cacheDir = \"/cache\"" "$FILEBROWSER_CONFIG"
 
 # --- Default user scope / source path ---
 bashio::log.info "... set default user scope"
@@ -110,8 +110,8 @@ if [ ! -d "$DEFAULT_USER_SCOPE" ]; then
 fi
 
 bashio::log.info "... set source path and defaultUserScope to ${DEFAULT_USER_SCOPE}"
-yq e -i ".server.sources[0].path = \"${DEFAULT_USER_SCOPE}\""  "$FILEBROWSER_CONFIG"
-yq e -i ".server.sources[0].name = \"Default\""                "$FILEBROWSER_CONFIG"
+yq e -i ".server.sources[0].path = \"${DEFAULT_USER_SCOPE}\"" "$FILEBROWSER_CONFIG"
+yq e -i ".server.sources[0].name = \"Default\"" "$FILEBROWSER_CONFIG"
 yq e -i ".server.sources[0].config.defaultUserScope = \"${DEFAULT_USER_SCOPE}\"" "$FILEBROWSER_CONFIG"
 
 # --- Base URL (from env or config) ---
@@ -124,28 +124,28 @@ AUTH_METHOD=$(bashio::config 'auth_method' 'password')
 bashio::log.info "... authentication method set to $AUTH_METHOD"
 case "$AUTH_METHOD" in
     noauth)
-        yq e -i ".auth.methods.noauth = true"            "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.noauth = true" "$FILEBROWSER_CONFIG"
         yq e -i ".auth.methods.password.enabled = false" "$FILEBROWSER_CONFIG"
-        yq e -i ".auth.methods.proxy.enabled = false"    "$FILEBROWSER_CONFIG"
-        yq e -i ".auth.methods.oidc.enabled = false"     "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.proxy.enabled = false" "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.oidc.enabled = false" "$FILEBROWSER_CONFIG"
         ;;
     password)
-        yq e -i ".auth.methods.noauth = false"           "$FILEBROWSER_CONFIG"
-        yq e -i ".auth.methods.password.enabled = true"  "$FILEBROWSER_CONFIG"
-        yq e -i ".auth.methods.proxy.enabled = false"    "$FILEBROWSER_CONFIG"
-        yq e -i ".auth.methods.oidc.enabled = false"     "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.noauth = false" "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.password.enabled = true" "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.proxy.enabled = false" "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.oidc.enabled = false" "$FILEBROWSER_CONFIG"
         ;;
     proxy)
-        yq e -i ".auth.methods.noauth = false"           "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.noauth = false" "$FILEBROWSER_CONFIG"
         yq e -i ".auth.methods.password.enabled = false" "$FILEBROWSER_CONFIG"
-        yq e -i ".auth.methods.proxy.enabled = true"     "$FILEBROWSER_CONFIG"
-        yq e -i ".auth.methods.oidc.enabled = false"     "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.proxy.enabled = true" "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.oidc.enabled = false" "$FILEBROWSER_CONFIG"
         ;;
     oidc)
-        yq e -i ".auth.methods.noauth = false"           "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.noauth = false" "$FILEBROWSER_CONFIG"
         yq e -i ".auth.methods.password.enabled = false" "$FILEBROWSER_CONFIG"
-        yq e -i ".auth.methods.proxy.enabled = false"    "$FILEBROWSER_CONFIG"
-        yq e -i ".auth.methods.oidc.enabled = true"      "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.proxy.enabled = false" "$FILEBROWSER_CONFIG"
+        yq e -i ".auth.methods.oidc.enabled = true" "$FILEBROWSER_CONFIG"
         ;;
     *)
         bashio::log.fatal "Unknown auth_method: $AUTH_METHOD"

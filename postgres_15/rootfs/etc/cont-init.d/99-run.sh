@@ -108,7 +108,7 @@ wait_for_postgres() {
     while ! pg_isready -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" > /dev/null 2>&1; do
         tries=$((tries + 1))
         [ "$tries" -ge 60 ] && {
-            bashio::log.error "Postgres did not start after 2 minutes, aborting."
+            bashio::log.error "Postgres did not start after 2 minutes, aborting."
             exit 1
         }
         echo "PostgreSQL is starting up... ($tries/60)"

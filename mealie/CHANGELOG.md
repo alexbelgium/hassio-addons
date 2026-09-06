@@ -1,20 +1,20 @@
- 
+
 ## v3.25.1 (2026-09-05)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 - Build the ingress frontend with pnpm and the upstream lockfile: upstream dropped frontend/yarn.lock in v3.24.0, so the previous yarn install resolved dependencies unpinned and the build broke on a vuetify release without "vuetify/labs/rules"
- 
+
 ## v3.24.0 (2026-08-29)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
- 
+
 ## v3.23.1 (2026-08-22)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
- 
+
 ## v3.22.0 (2026-08-01)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
- 
+
 ## v3.21.0 (2026-07-25)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
- 
+
 ## v3.20.1 (2026-06-27)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 

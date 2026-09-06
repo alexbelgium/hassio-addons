@@ -55,7 +55,7 @@ if bashio::config.has_value "openvpn_config"; then
 fi
 if [[ -z "${openvpn_config}" ]]; then
     bashio::log.info 'openvpn_config option left empty. Attempting automatic selection.'
-        mapfile -t configs < <(find /config/openvpn -maxdepth 1 \( -type f -name '*.conf' -o -name '*.ovpn' \) -print)
+    mapfile -t configs < <(find /config/openvpn -maxdepth 1 \( -type f -name '*.conf' -o -name '*.ovpn' \) -print)
     if [ "${#configs[@]}" -eq 0 ]; then
         bashio::log.fatal 'OpenVPN is enabled but no .conf or .ovpn file was found in /config/openvpn.'
         bashio::addon.stop
@@ -91,7 +91,7 @@ openvpn_runtime_config="${OPENVPN_STATE_DIR}/${interface_name}.conf"
 cp "${openvpn_config}" "${openvpn_runtime_config}"
 chmod 600 "${openvpn_runtime_config}"
 
-dos2unix "${openvpn_runtime_config}" >/dev/null 2>&1 || true
+dos2unix "${openvpn_runtime_config}" > /dev/null 2>&1 || true
 sed -i '/^[[:space:]]*[;#]/d' "${openvpn_runtime_config}"
 sed -i 's/#.*//' "${openvpn_runtime_config}"
 sed -i '/^[[:space:]]*$/d' "${openvpn_runtime_config}"

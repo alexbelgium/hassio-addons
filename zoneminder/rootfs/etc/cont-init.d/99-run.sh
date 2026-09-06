@@ -73,7 +73,7 @@ case "$(bashio::config "DB_CONNECTION")" in
             local out
             out="$("${mysql_base[@]}" -e \
                 "SELECT schema_name FROM information_schema.schemata WHERE schema_name='${db}';" \
-                2>/dev/null || true)"
+                2> /dev/null || true)"
             [ -n "$out" ]
         }
 
@@ -82,7 +82,7 @@ case "$(bashio::config "DB_CONNECTION")" in
             # If schema doesn't exist, count should be 0
             "${mysql_base[@]}" -e \
                 "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='${db}';" \
-                2>/dev/null || echo 0
+                2> /dev/null || echo 0
         }
 
         is_likely_zoneminder_db() {
@@ -99,7 +99,7 @@ case "$(bashio::config "DB_CONNECTION")" in
                 "SELECT COUNT(*) FROM information_schema.tables
                  WHERE table_schema='${db}'
                    AND LOWER(table_name) IN ('config','monitors');" \
-                2>/dev/null || echo 0)"
+                2> /dev/null || echo 0)"
 
             # Firefly-ish signature tables (heuristic blacklist)
             local ff_sig
@@ -110,14 +110,14 @@ case "$(bashio::config "DB_CONNECTION")" in
                      'accounts','transactions','transaction_journals','categories',
                      'budgets','bills','tags','piggy_banks','rules','rule_groups'
                    );" \
-                2>/dev/null || echo 0)"
+                2> /dev/null || echo 0)"
 
             [ "${zm_required:-0}" -ge 2 ] && [ "${ff_sig:-0}" -eq 0 ]
         }
 
         create_db_if_missing() {
             local db="$1"
-            "${mysql_base[@]}" -e "CREATE DATABASE IF NOT EXISTS \`${db}\`;" >/dev/null
+            "${mysql_base[@]}" -e "CREATE DATABASE IF NOT EXISTS \`${db}\`;" > /dev/null
         }
 
         # --- Legacy fix: previous buggy addon used DB name 'firefly' ---
@@ -154,9 +154,9 @@ case "$(bashio::config "DB_CONNECTION")" in
             create_db_if_missing "$ZM_DB_NAME"
 
             dump_bin=""
-            if command -v mysqldump >/dev/null 2>&1; then
+            if command -v mysqldump > /dev/null 2>&1; then
                 dump_bin="mysqldump"
-            elif command -v mariadb-dump >/dev/null 2>&1; then
+            elif command -v mariadb-dump > /dev/null 2>&1; then
                 dump_bin="mariadb-dump"
             fi
 
@@ -167,8 +167,8 @@ case "$(bashio::config "DB_CONNECTION")" in
                     -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
                     -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
                     --routines --events --triggers \
-                    "${LEGACY_DB_NAME}" | \
-                    mysql \
+                    "${LEGACY_DB_NAME}" \
+                    | mysql \
                         -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
                         -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
                         "${ZM_DB_NAME}"; then

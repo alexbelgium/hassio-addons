@@ -1,37 +1,37 @@
- 
+
 ## 2.56.3 (2026-09-05)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.56.0 (2026-08-22)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.55.4 (2026-08-13)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.55.3 (2026-08-08)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.55.2 (2026-08-01)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.55.0 (2026-07-16)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.54.2 (2026-07-04)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.54.1 (2026-06-23)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.54.0 (2026-06-20)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.52.2 (2026-06-17)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.52.1 (2026-06-13)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
- 
+
 ## 2.52.0 (2026-06-11)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
 ## 2.51.0 (2026-06-05)

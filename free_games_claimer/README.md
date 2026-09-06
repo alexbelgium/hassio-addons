@@ -52,7 +52,7 @@ interaction. Set `VNC_PASSWORD` in `config.env` to protect the VNC session.
 ## Add-on options
 
 | Option | Default | Description |
-|--------|---------|-------------|
+| -------- | --------- | ------------- |
 | `CONFIG_LOCATION` | `/config/config.env` | Persistent environment configuration file |
 | `RUN_ONCE` | `true` | Run all selected claimers once, then stop the add-on as previous releases did |
 | `STORES` | empty | Optional comma-separated override, such as `epic,prime,gog,steam` |

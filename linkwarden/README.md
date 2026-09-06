@@ -43,7 +43,7 @@ You'll need to create a new user account at startup.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `NEXTAUTH_SECRET` | str | **Required** | Secret key for NextAuth.js authentication (must be filled at start) |
 | `NEXTAUTH_URL` | str | | Custom NextAuth URL (optional, only if Linkwarden is kept externally) |
 | `NEXT_PUBLIC_DISABLE_REGISTRATION` | bool | `false` | Disable new user registration |

@@ -1,46 +1,46 @@
- 
+
 ## 3.26.0 (2026-09-05)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.25.0 (2026-08-29)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.24.0 (2026-08-22)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.22.1 (2026-08-13)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.22.0 (2026-08-08)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.21.1 (2026-08-02)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.21.0 (2026-08-01)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.20.1 (2026-08-01)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.18.0 (2026-07-22)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.16.0 (2026-07-04)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.15.3 (2026-06-27)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.15.2 (2026-06-23)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.15.1 (2026-06-20)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.15.0 (2026-06-11)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
- 
+
 ## 3.14.0 (2026-06-06)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
 

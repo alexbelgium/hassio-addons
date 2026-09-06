@@ -42,7 +42,7 @@ Webui can be found at `<your-ip>:8171`.
 #### Connection
 
 | Option | Type | Description |
-|--------|------|-------------|
+| -------- | ------ | ------------- |
 | `ImmichServerUrl` | str | URL of your Immich server (e.g., `http://homeassistant:3001`). Used for single-account setup. |
 | `ApiKey` | str | Immich API key for authentication. Used for single-account setup. |
 | `Accounts` | list | List of Immich accounts for multi-account support. Each entry requires `ImmichServerUrl` and `ApiKey`, plus optional per-account filters (see below). |
@@ -53,7 +53,7 @@ Webui can be found at `<your-ip>:8171`.
 These top-level options map to ImmichFrame's `General` settings and control the display behavior:
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `Interval` | int | 45 | Image display interval in seconds |
 | `TransitionDuration` | float | 2 | Transition duration in seconds |
 | `ShowClock` | bool | true | Display the current time |
@@ -91,7 +91,7 @@ These top-level options map to ImmichFrame's `General` settings and control the 
 These options can be set within each `Accounts` entry to control which images are shown:
 
 | Option | Type | Description |
-|--------|------|-------------|
+| -------- | ------ | ------------- |
 | `Albums` | str | Comma-separated album UUIDs |
 | `ExcludedAlbums` | str | Comma-separated excluded album UUIDs |
 | `People` | str | Comma-separated people UUIDs |

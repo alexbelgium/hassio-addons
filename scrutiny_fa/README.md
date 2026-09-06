@@ -52,7 +52,7 @@ It automatically mounts all local drives.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `Updates` | list | `Hourly` | Update schedule (Quarterly/Hourly/Daily/Weekly/Custom) |
 | `Updates_custom_time` | str | | Custom update interval (e.g., "5m", "2h", "1w", "2mo") |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |

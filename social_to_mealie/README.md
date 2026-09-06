@@ -47,7 +47,7 @@ Webui can be found at <http://homeassistant:3000>.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `OPENAI_URL` | str | `https://api.openai.com/v1` | URL for the OpenAI-compatible endpoint |
 | `OPENAI_API_KEY` | str | `` | API key for the OpenAI-compatible provider |
 | `TRANSCRIPTION_MODEL` | str | `whisper-1` | Whisper model to use for transcription |

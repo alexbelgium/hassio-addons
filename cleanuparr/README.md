@@ -23,7 +23,7 @@ Integrations supported:
 ## Configuration
 
 | Option | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `TZ` | Timezone (e.g. `Europe/Paris`). Defaults to `Europe/London`. |
 | `PUID` | User ID to run the process as. Defaults to `0` (root). |
 | `PGID` | Group ID to run the process as. Defaults to `0` (root). |

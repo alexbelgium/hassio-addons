@@ -52,7 +52,7 @@ Webui can be found at `<your-ip>:8181`.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `database` | list | `sqlite` | Database type (sqlite/MariaDB_addon/Mysql_external) |
 | `APP_KEY` | str | | Application encryption key (auto-generated if empty) |
 | `DB_DATABASE` | str | | Database name (for external MySQL/MariaDB) |

@@ -68,7 +68,7 @@ Webui can be found at <http://homeassistant:8000> (Seahub) and <http://homeassis
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `PGID` | int | `1000` | Group ID for file permissions |
 | `PUID` | int | `1000` | User ID for file permissions |
 | `TZ` | str | `Europe/Paris` | Timezone (e.g., `Europe/London`) |

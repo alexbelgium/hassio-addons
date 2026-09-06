@@ -23,7 +23,7 @@ _fetch_public_ip() {
     mapfile -t shuffled_urls < <(printf "%s\n" "${urls[@]}" | shuf)
     # Loop through the now-randomized list
     for url in "${shuffled_urls[@]}"; do
-        resp=$(curl -fsS --max-time 5 "${url}" 2>/dev/null || true)
+        resp=$(curl -fsS --max-time 5 "${url}" 2> /dev/null || true)
         resp="${resp//[[:space:]]/}"
 
         # Validate IPv4 or IPv6

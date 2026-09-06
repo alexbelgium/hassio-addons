@@ -41,7 +41,7 @@ Default user: `postgres`, password: set by `POSTGRES_PASSWORD`
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `POSTGRES_PASSWORD` | password | `homeassistant` | Password for the postgres user |
 | `POSTGRES_USER` | str | | Optional custom username |
 | `POSTGRES_DB` | str | | Optional default database name |

@@ -73,7 +73,7 @@ map:
 name: BirdNET-PiPy
 options:
   env_vars: []
-  ICECAST_PASSWORD: ''
+  ICECAST_PASSWORD: ""
   data_location: /config/data
 panel_icon: mdi:bird
 ports:

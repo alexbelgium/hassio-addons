@@ -34,7 +34,7 @@ copy_tree() {
     local src="$1"
     local dst="$2"
 
-    if command -v rsync >/dev/null 2>&1; then
+    if command -v rsync > /dev/null 2>&1; then
         # Trailing slashes are important: copy contents into dst
         rsync -aH --numeric-ids --inplace --info=progress2 "${src%/}/" "${dst%/}/"
     else
@@ -50,7 +50,7 @@ copy_tree() {
 
 LAST_LOCATION=""
 if [[ -f "$LAST_FILE" ]]; then
-    LAST_LOCATION="$(cat "$LAST_FILE" 2>/dev/null || true)"
+    LAST_LOCATION="$(cat "$LAST_FILE" 2> /dev/null || true)"
 fi
 
 OLD_DIR=""

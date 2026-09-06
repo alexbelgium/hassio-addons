@@ -46,17 +46,17 @@ fi
 # 1 Export user env_vars   #
 ############################
 
-if [ -f "$OPTIONS_JSON" ] && command -v jq >/dev/null 2>&1; then
+if [ -f "$OPTIONS_JSON" ] && command -v jq > /dev/null 2>&1; then
     while IFS= read -r pair; do
-        name=$(jq -r '.name // empty' <<<"$pair")
-        value=$(jq -r '.value // empty' <<<"$pair")
+        name=$(jq -r '.name // empty' <<< "$pair")
+        value=$(jq -r '.value // empty' <<< "$pair")
         if [[ $name =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
             echo "Setting env variable from options: $name"
             export "$name"="$value"
         elif [ -n "$name" ]; then
             echo "WARNING: ignoring invalid env_vars name: $name"
         fi
-    done < <(jq -c '.env_vars[]?' "$OPTIONS_JSON" 2>/dev/null || true)
+    done < <(jq -c '.env_vars[]?' "$OPTIONS_JSON" 2> /dev/null || true)
 fi
 
 ##################################
@@ -82,7 +82,7 @@ data_version=""
 
 if [ -f "$VERSION_MARKER" ]; then
     data_version="$(head -n 1 "$VERSION_MARKER" | tr -cd '0-9.')"
-elif [ -d "$PERSISTENT_HOME/data" ] && [ -n "$(ls -A "$PERSISTENT_HOME/data" 2>/dev/null)" ]; then
+elif [ -d "$PERSISTENT_HOME/data" ] && [ -n "$(ls -A "$PERSISTENT_HOME/data" 2> /dev/null)" ]; then
     # Existing data without a marker: only 7.17.9 was ever shipped before markers
     data_version="7.17.9"
 fi
@@ -128,7 +128,7 @@ mkdir -p "$PERSISTENT_HOME"
 for dir in "data" "config"; do
     if [ ! -L "$ES_HOME/$dir" ]; then
         if [ -d "$ES_HOME/$dir" ]; then
-            cp -rn "$ES_HOME/$dir" "$PERSISTENT_HOME" 2>/dev/null || true
+            cp -rn "$ES_HOME/$dir" "$PERSISTENT_HOME" 2> /dev/null || true
             rm -rf "${ES_HOME:?}/$dir"
         fi
         mkdir -p "$PERSISTENT_HOME/$dir"
@@ -139,7 +139,7 @@ done
 # Make the persisted files usable by the elasticsearch user (uid 1000),
 # which the official entrypoint drops to when started as root
 if [ "$(id -u)" -eq 0 ]; then
-    chown -R 1000:0 "$PERSISTENT_HOME/data" "$PERSISTENT_HOME/config" 2>/dev/null || true
+    chown -R 1000:0 "$PERSISTENT_HOME/data" "$PERSISTENT_HOME/config" 2> /dev/null || true
 fi
 
 echo "Data location: $PERSISTENT_HOME (persistent). Please wait while elasticsearch starts..."
@@ -156,9 +156,9 @@ if [ "$data_version" != "$current_version" ]; then
             # Check the HTTP status directly instead of curl -f: a 401 means
             # Elasticsearch is up and answering (security just requires
             # auth), so it must count as healthy too, not as a failure.
-            status=$(curl -A "HealthCheck: Docker/1.0" -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:9200" 2>/dev/null || true)
+            status=$(curl -A "HealthCheck: Docker/1.0" -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:9200" 2> /dev/null || true)
             if [ "$status" = "200" ] || [ "$status" = "401" ]; then
-                echo "$current_version" >"$VERSION_MARKER"
+                echo "$current_version" > "$VERSION_MARKER"
                 echo "Elasticsearch $current_version started successfully; data version recorded."
                 exit 0
             fi

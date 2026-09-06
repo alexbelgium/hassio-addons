@@ -1,16 +1,16 @@
- 
+
 ## 2026.08.29 (2026-08-29)
 - Update to latest version from charlocharlie/epicgames-freegames
 - Upstream tag : debian-2026-08-29
- 
+
 ## 2026.08.13 (2026-08-13)
 - Update to latest version from charlocharlie/epicgames-freegames
 - Upstream tag : debian-2026-08-13
- 
+
 ## 2026.08.04 (2026-08-04)
 - Update to latest version from charlocharlie/epicgames-freegames
 - Upstream tag : debian-2026-08-04
- 
+
 ## 2026.08.01 (2026-08-01)
 - Update to latest version from charlocharlie/epicgames-freegames
 - Upstream tag : debian-2026-08-01
@@ -18,16 +18,16 @@
 
 - Version renamed from `debian-2026-07-27`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
 
- 
+
 ## debian-2026-07-27 (2026-07-27)
 - Update to latest version from charlocharlie/epicgames-freegames
- 
+
 ## debian-2026-07-24 (2026-07-24)
 - Update to latest version from charlocharlie/epicgames-freegames
- 
+
 ## debian-2026-07-20 (2026-07-20)
 - Update to latest version from charlocharlie/epicgames-freegames
- 
+
 ## debian-2026-06-21 (2026-06-21)
 - Update to latest version from charlocharlie/epicgames-freegames
 ## debian-2026-06-05 (2026-06-05)

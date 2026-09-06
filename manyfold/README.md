@@ -147,7 +147,7 @@ After changing values:
 **How it works:**
 
 | Scenario | Behaviour |
-|----------|-----------|
+| ---------- | ----------- |
 | **New install**, option left blank | A random secret is auto-generated and saved to `/config/secret_key_base` |
 | **Addon update**, option still blank | The previously saved `/config/secret_key_base` is reused — no data loss |
 | **Option manually set** | The value from the addon options is used and saved to `/config/secret_key_base` |
@@ -172,7 +172,7 @@ chmod 600 /addon_configs/<new_slug>/secret_key_base
 
 Replace `<old_slug>` and `<new_slug>` with the actual directory names (e.g. `db21ed7f_manyfold` and `088d77ac_manyfold_solo`). List them with `ls /addon_configs/`.
 
-3. Start the new addon — it will pick up the existing database and secret automatically.
+1. Start the new addon — it will pick up the existing database and secret automatically.
 
 ## Notes
 

@@ -62,7 +62,7 @@ You can place the user folder from the theme/skeleton in /share/codex/www/user,
 ## Options
 
 | Option | Description | Default | Example |
-|--------|-------------|---------|---------|
+| -------- | ------------- | --------- | --------- |
 | `PGID` | Group ID for file permissions | `0` | `1000` |
 | `PUID` | User ID for file permissions | `0` | `1000` |
 | `TZ` | Timezone in long format | - | `America/Los_Angeles` |

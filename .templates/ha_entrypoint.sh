@@ -7,13 +7,13 @@
 
 PID1=false
 if [ "$$" -eq 1 ]; then
-  PID1=true
-  echo "Starting as entrypoint"
-  if [ -d /command ]; then
-    ln -sf /command/* /usr/bin/ 2>/dev/null || true
-  fi
+    PID1=true
+    echo "Starting as entrypoint"
+    if [ -d /command ]; then
+        ln -sf /command/* /usr/bin/ 2> /dev/null || true
+    fi
 else
-  echo "Starting custom scripts"
+    echo "Starting custom scripts"
 fi
 
 ##########################################
@@ -21,31 +21,37 @@ fi
 ##########################################
 
 pick_exec_dir() {
-  # Prefer locations that are commonly exec-capable in containers
-  # and writable. Avoid /tmp because it may be mounted noexec.
-  local d
-  for d in /dev/shm /run /var/run /mnt /root /; do
-    if [ -d "$d" ] && [ -w "$d" ]; then
-      # Create a tiny test executable to confirm "exec" works
-      local t="${d%/}/.exec_test_$$"
-      printf '#!/bin/sh\necho ok\n' >"$t" 2>/dev/null || { rm -f "$t" 2>/dev/null || true; continue; }
-      chmod 700 "$t" 2>/dev/null || { rm -f "$t" 2>/dev/null || true; continue; }
-      if "$t" >/dev/null 2>&1; then
-        rm -f "$t" 2>/dev/null || true
-        echo "$d"
-        return 0
-      fi
-      rm -f "$t" 2>/dev/null || true
-    fi
-  done
-  return 1
+    # Prefer locations that are commonly exec-capable in containers
+    # and writable. Avoid /tmp because it may be mounted noexec.
+    local d
+    for d in /dev/shm /run /var/run /mnt /root /; do
+        if [ -d "$d" ] && [ -w "$d" ]; then
+            # Create a tiny test executable to confirm "exec" works
+            local t="${d%/}/.exec_test_$$"
+            printf '#!/bin/sh\necho ok\n' > "$t" 2> /dev/null || {
+                rm -f "$t" 2> /dev/null || true
+                continue
+            }
+            chmod 700 "$t" 2> /dev/null || {
+                rm -f "$t" 2> /dev/null || true
+                continue
+            }
+            if "$t" > /dev/null 2>&1; then
+                rm -f "$t" 2> /dev/null || true
+                echo "$d"
+                return 0
+            fi
+            rm -f "$t" 2> /dev/null || true
+        fi
+    done
+    return 1
 }
 
 EXEC_DIR="$(pick_exec_dir || true)"
 if [ -z "${EXEC_DIR:-}" ]; then
-  echo "ERROR: Could not find an exec-capable writable directory (e.g., /dev/shm,/run)."
-  echo "Your environment likely mounts all writable dirs as noexec; shebang validation cannot run safely."
-  exit 1
+    echo "ERROR: Could not find an exec-capable writable directory (e.g., /dev/shm,/run)."
+    echo "Your environment likely mounts all writable dirs as noexec; shebang validation cannot run safely."
+    exit 1
 fi
 
 ######################
@@ -53,14 +59,14 @@ fi
 ######################
 
 candidate_shebangs=(
-  "/command/with-contenv bashio"
-  "/usr/bin/with-contenv bashio"
-  "/usr/bin/env bashio"
-  "/usr/bin/bashio"
-  "/usr/bin/bash"
-  "/bin/bash"
-  "/usr/bin/sh"
-  "/bin/sh"
+    "/command/with-contenv bashio"
+    "/usr/bin/with-contenv bashio"
+    "/usr/bin/env bashio"
+    "/usr/bin/bashio"
+    "/usr/bin/bash"
+    "/bin/bash"
+    "/usr/bin/sh"
+    "/bin/sh"
 )
 
 SHEBANG_ERRORS=()
@@ -104,68 +110,68 @@ echo "${_bv:-PROBE_OK}"
 '
 
 validate_shebang() {
-  local candidate="$1"
-  local tmp out rc
-  local errfile msg
+    local candidate="$1"
+    local tmp out rc
+    local errfile msg
 
-  # shellcheck disable=SC2206
-  local cmd=( $candidate )
-  local exe="${cmd[0]}"
+    # shellcheck disable=SC2206
+    local cmd=($candidate)
+    local exe="${cmd[0]}"
 
-  if [ ! -x "$exe" ]; then
-    SHEBANG_ERRORS+=(" - FAIL (not executable): #!$candidate")
+    if [ ! -x "$exe" ]; then
+        SHEBANG_ERRORS+=(" - FAIL (not executable): #!$candidate")
+        return 1
+    fi
+
+    tmp="${EXEC_DIR%/}/shebang_test.$$.$RANDOM"
+    errfile="${EXEC_DIR%/}/shebang_probe_err.$$"
+    {
+        printf '#!%s\n' "$candidate"
+        printf '%s\n' "$probe_script_content"
+    } > "$tmp"
+    chmod 700 "$tmp" 2> /dev/null || true
+
+    set +e
+    out="$("$tmp" 2> "$errfile")"
+    rc=$?
+    set -e
+
+    rm -f "$tmp" 2> /dev/null || true
+
+    if [ "$rc" -eq 0 ] && [ -n "${out:-}" ] && [ "$out" != "null" ]; then
+        rm -f "$errfile" 2> /dev/null || true
+        return 0
+    fi
+
+    msg=$' - FAIL: #!'"$candidate"$'\n'"   rc=$rc, stdout='${out:-}'"$'\n'
+    if [ -s "$errfile" ]; then
+        msg+=$'   stderr:\n'
+        msg+="$(sed -n '1,8p' "$errfile")"$'\n'
+    else
+        msg+=$'   stderr: <empty>\n'
+    fi
+    SHEBANG_ERRORS+=("$msg")
+    rm -f "$errfile" 2> /dev/null || true
     return 1
-  fi
-
-  tmp="${EXEC_DIR%/}/shebang_test.$$.$RANDOM"
-  errfile="${EXEC_DIR%/}/shebang_probe_err.$$"
-  {
-    printf '#!%s\n' "$candidate"
-    printf '%s\n' "$probe_script_content"
-  } >"$tmp"
-  chmod 700 "$tmp" 2>/dev/null || true
-
-  set +e
-  out="$("$tmp" 2>"$errfile")"
-  rc=$?
-  set -e
-
-  rm -f "$tmp" 2>/dev/null || true
-
-  if [ "$rc" -eq 0 ] && [ -n "${out:-}" ] && [ "$out" != "null" ]; then
-    rm -f "$errfile" 2>/dev/null || true
-    return 0
-  fi
-
-  msg=$' - FAIL: #!'"$candidate"$'\n'"   rc=$rc, stdout='${out:-}'"$'\n'
-  if [ -s "$errfile" ]; then
-    msg+=$'   stderr:\n'
-    msg+="$(sed -n '1,8p' "$errfile")"$'\n'
-  else
-    msg+=$'   stderr: <empty>\n'
-  fi
-  SHEBANG_ERRORS+=("$msg")
-  rm -f "$errfile" 2>/dev/null || true
-  return 1
 }
 
 shebang=""
 for candidate in "${candidate_shebangs[@]}"; do
-  if validate_shebang "$candidate"; then
-    shebang="$candidate"
-    break
-  fi
+    if validate_shebang "$candidate"; then
+        shebang="$candidate"
+        break
+    fi
 done
 
 if [ -z "$shebang" ]; then
-  echo "ERROR: No valid shebang found (unable to execute bashio::addon.version via candidates)." >&2
-  echo "Tried:" >&2
-  printf ' - %s\n' "${candidate_shebangs[@]}" >&2
-  if [ "${#SHEBANG_ERRORS[@]}" -gt 0 ]; then
-    echo "Probe failures:" >&2
-    printf '%s\n' "${SHEBANG_ERRORS[@]}" >&2
-  fi
-  exit 1
+    echo "ERROR: No valid shebang found (unable to execute bashio::addon.version via candidates)." >&2
+    echo "Tried:" >&2
+    printf ' - %s\n' "${candidate_shebangs[@]}" >&2
+    if [ "${#SHEBANG_ERRORS[@]}" -gt 0 ]; then
+        echo "Probe failures:" >&2
+        printf '%s\n' "${SHEBANG_ERRORS[@]}" >&2
+    fi
+    exit 1
 fi
 
 #####################################
@@ -197,28 +203,28 @@ S6_CONTAINER_ENV="/run/s6/container_environment"
 # Only when this script is PID 1 -- under /init it is the stage-2 hook and stage 1 has already
 # written the directory -- and only where with-contenv exists to care.
 if $PID1 && { [ -x /command/with-contenv ] || [ -x /usr/bin/with-contenv ]; }; then
-  # Filled in a sibling and renamed into place, never written to live. A half-populated envdir is
-  # worse than an absent one: s6-envdir accepts it, so a with-contenv script starts and runs
-  # against an environment quietly missing SUPERVISOR_TOKEN, where an absent one stops it at its
-  # shebang. rename(2) means a concurrent reader -- a HEALTHCHECK can run alongside PID 1 -- sees
-  # the directory either absent or complete, never mid-dump.
-  #
-  # Cleared rather than written over: /run is not a tmpfs here, so an image layer can persist
-  # entries, and writing name by name would merge into them and leave variables PID 1 does not
-  # have, a stale SUPERVISOR_TOKEN among them. A failed rm has to abort the chain, because mkdir -p
-  # accepts a surviving symlink-to-directory and would let the dump follow it. rm does not traverse
-  # a symlink, but it would empty anything bind-mounted at this exact path -- not a configuration
-  # any add-on uses, and not one s6 would tolerate either.
-  if rm -rf "$S6_CONTAINER_ENV" "$S6_CONTAINER_ENV.tmp" && mkdir -p "$S6_CONTAINER_ENV.tmp" &&
-    s6-dumpenv -- "$S6_CONTAINER_ENV.tmp" && mv "$S6_CONTAINER_ENV.tmp" "$S6_CONTAINER_ENV"; then
-    echo "Populated $S6_CONTAINER_ENV for with-contenv"
-  else
-    # Leaves the directory absent, which is exactly how this fails today -- so the failure mode is
-    # unchanged, not newly degraded. Never fatal, a read-only /run must still let the add-on boot,
-    # but never silent either, since the shebang failure it leaves behind says nothing on its own.
-    rm -rf "$S6_CONTAINER_ENV" "$S6_CONTAINER_ENV.tmp" 2>/dev/null || true
-    echo -e "\e[38;5;214m$(date) WARNING: could not populate $S6_CONTAINER_ENV; scripts with a with-contenv shebang will fail at their shebang, as they did before this was attempted\e[0m"
-  fi
+    # Filled in a sibling and renamed into place, never written to live. A half-populated envdir is
+    # worse than an absent one: s6-envdir accepts it, so a with-contenv script starts and runs
+    # against an environment quietly missing SUPERVISOR_TOKEN, where an absent one stops it at its
+    # shebang. rename(2) means a concurrent reader -- a HEALTHCHECK can run alongside PID 1 -- sees
+    # the directory either absent or complete, never mid-dump.
+    #
+    # Cleared rather than written over: /run is not a tmpfs here, so an image layer can persist
+    # entries, and writing name by name would merge into them and leave variables PID 1 does not
+    # have, a stale SUPERVISOR_TOKEN among them. A failed rm has to abort the chain, because mkdir -p
+    # accepts a surviving symlink-to-directory and would let the dump follow it. rm does not traverse
+    # a symlink, but it would empty anything bind-mounted at this exact path -- not a configuration
+    # any add-on uses, and not one s6 would tolerate either.
+    if rm -rf "$S6_CONTAINER_ENV" "$S6_CONTAINER_ENV.tmp" && mkdir -p "$S6_CONTAINER_ENV.tmp" \
+        && s6-dumpenv -- "$S6_CONTAINER_ENV.tmp" && mv "$S6_CONTAINER_ENV.tmp" "$S6_CONTAINER_ENV"; then
+        echo "Populated $S6_CONTAINER_ENV for with-contenv"
+    else
+        # Leaves the directory absent, which is exactly how this fails today -- so the failure mode is
+        # unchanged, not newly degraded. Never fatal, a read-only /run must still let the add-on boot,
+        # but never silent either, since the shebang failure it leaves behind says nothing on its own.
+        rm -rf "$S6_CONTAINER_ENV" "$S6_CONTAINER_ENV.tmp" 2> /dev/null || true
+        echo -e "\e[38;5;214m$(date) WARNING: could not populate $S6_CONTAINER_ENV; scripts with a with-contenv shebang will fail at their shebang, as they did before this was attempted\e[0m"
+    fi
 fi
 
 ####################################
@@ -228,21 +234,21 @@ fi
 BASHIO_LIB=""
 BASHIO_LIB_FULL=false
 for f in /usr/lib/bashio/bashio.sh /usr/lib/bashio/lib.sh /usr/src/bashio/bashio.sh /usr/local/lib/bashio/bashio.sh; do
-  if [ -f "$f" ]; then
-    BASHIO_LIB="$f"
-    # The real library, which talks to the Supervisor. The standalone shim below only reads
-    # environment variables, which matters to wait_for_supervisor().
-    BASHIO_LIB_FULL=true
-    break
-  fi
+    if [ -f "$f" ]; then
+        BASHIO_LIB="$f"
+        # The real library, which talks to the Supervisor. The standalone shim below only reads
+        # environment variables, which matters to wait_for_supervisor().
+        BASHIO_LIB_FULL=true
+        break
+    fi
 done
 if [ -z "$BASHIO_LIB" ]; then
-  for f in /usr/local/lib/bashio-standalone.sh /.bashio-standalone.sh; do
-    if [ -f "$f" ]; then
-      BASHIO_LIB="$f"
-      break
-    fi
-  done
+    for f in /usr/local/lib/bashio-standalone.sh /.bashio-standalone.sh; do
+        if [ -f "$f" ]; then
+            BASHIO_LIB="$f"
+            break
+        fi
+    done
 fi
 
 ##############################
@@ -268,56 +274,56 @@ fi
 # skips the wait. When the Supervisor is already up -- the normal case -- this costs one request.
 
 wait_for_supervisor() {
-  local max="${HA_SUPERVISOR_WAIT:-30}"
-  local started deadline remaining attempt announced=0
+    local max="${HA_SUPERVISOR_WAIT:-30}"
+    local started deadline remaining attempt announced=0
 
-  # Nothing to wait for without a token. The standalone shim is excluded too: it answers these
-  # calls from environment variables and never contacts the Supervisor, so it can never satisfy
-  # the probe and would burn the whole ceiling on every boot.
-  [ -n "${SUPERVISOR_TOKEN:-}" ] || return 0
-  [ "${BASHIO_LIB_FULL:-false}" = "true" ] || return 0
-  # bashio's own curl carries no --max-time, so each attempt is bounded from the outside.
-  command -v timeout >/dev/null 2>&1 || return 0
-  # Digits only, then forced to base 10: `test -gt` accepts a zero-padded override like 08, but
-  # arithmetic expansion reads it as octal and fails, which would leave the deadline empty and
-  # spin the loop below forever.
-  case "$max" in '' | *[!0-9]*) return 0 ;; esac
-  max=$((10#$max))
-  [ "$max" -gt 0 ] || return 0
+    # Nothing to wait for without a token. The standalone shim is excluded too: it answers these
+    # calls from environment variables and never contacts the Supervisor, so it can never satisfy
+    # the probe and would burn the whole ceiling on every boot.
+    [ -n "${SUPERVISOR_TOKEN:-}" ] || return 0
+    [ "${BASHIO_LIB_FULL:-false}" = "true" ] || return 0
+    # bashio's own curl carries no --max-time, so each attempt is bounded from the outside.
+    command -v timeout > /dev/null 2>&1 || return 0
+    # Digits only, then forced to base 10: `test -gt` accepts a zero-padded override like 08, but
+    # arithmetic expansion reads it as octal and fails, which would leave the deadline empty and
+    # spin the loop below forever.
+    case "$max" in '' | *[!0-9]*) return 0 ;; esac
+    max=$((10#$max))
+    [ "$max" -gt 0 ] || return 0
 
-  started=$SECONDS
-  deadline=$((started + max))
+    started=$SECONDS
+    deadline=$((started + max))
 
-  while :; do
-    remaining=$((deadline - SECONDS))
-    if [ "$remaining" -le 0 ]; then
-      echo -e "\e[38;5;214m$(date) WARNING: Supervisor API did not report this add-on's network details within ${max}s, continuing anyway\e[0m"
-      return 0
-    fi
+    while :; do
+        remaining=$((deadline - SECONDS))
+        if [ "$remaining" -le 0 ]; then
+            echo -e "\e[38;5;214m$(date) WARNING: Supervisor API did not report this add-on's network details within ${max}s, continuing anyway\e[0m"
+            return 0
+        fi
 
-    # No single attempt may outlive the ceiling it is bounded by.
-    attempt=5
-    [ "$remaining" -lt "$attempt" ] && attempt="$remaining"
+        # No single attempt may outlive the ceiling it is bounded by.
+        attempt=5
+        [ "$remaining" -lt "$attempt" ] && attempt="$remaining"
 
-    # One call is enough to settle all of them: bashio fetches the whole /addons/self/info object
-    # and caches it, so a populated ip_address means ingress_port and the rest are cached too.
-    # Run in a child shell so bashio's globals and traps stay out of the entrypoint; its own error
-    # logging is dropped because a failed attempt here is expected, not news.
-    # shellcheck disable=SC2016
-    if timeout "$attempt" bash -c '. "$1" && [ -n "$(bashio::addon.ip_address)" ]' \
-      _ "$BASHIO_LIB" >/dev/null 2>&1; then
-      [ "$announced" -eq 0 ] || echo "Supervisor API ready after $((SECONDS - started))s"
-      return 0
-    fi
+        # One call is enough to settle all of them: bashio fetches the whole /addons/self/info object
+        # and caches it, so a populated ip_address means ingress_port and the rest are cached too.
+        # Run in a child shell so bashio's globals and traps stay out of the entrypoint; its own error
+        # logging is dropped because a failed attempt here is expected, not news.
+        # shellcheck disable=SC2016
+        if timeout "$attempt" bash -c '. "$1" && [ -n "$(bashio::addon.ip_address)" ]' \
+            _ "$BASHIO_LIB" > /dev/null 2>&1; then
+            [ "$announced" -eq 0 ] || echo "Supervisor API ready after $((SECONDS - started))s"
+            return 0
+        fi
 
-    if [ "$announced" -eq 0 ]; then
-      echo "Waiting for the Supervisor API to report this add-on's network details..."
-      announced=1
-    fi
+        if [ "$announced" -eq 0 ]; then
+            echo "Waiting for the Supervisor API to report this add-on's network details..."
+            announced=1
+        fi
 
-    # Skipped when the attempt already consumed what was left, so the sleep cannot overshoot.
-    [ "$((deadline - SECONDS))" -gt 0 ] && sleep 1
-  done
+        # Skipped when the attempt already consumed what was left, so the sleep cannot overshoot.
+        [ "$((deadline - SECONDS))" -gt 0 ] && sleep 1
+    done
 }
 
 wait_for_supervisor
@@ -327,97 +333,97 @@ wait_for_supervisor
 ####################
 
 run_one_script() {
-  local script="$1"
+    local script="$1"
 
-  echo "$script: executing"
+    echo "$script: executing"
 
-  if [ "$(id -u)" -eq 0 ]; then
-    chown "$(id -u)":"$(id -g)" "$script" || true
-    chmod a+x "$script" || true
-  else
-    echo -e "\e[38;5;214m$(date) WARNING: Script executed with user $(id -u):$(id -g), things can break and chown won't work\e[0m"
-    sed -i "s/^[[:space:]]*chown /true # chown /g" "$script"
-    sed -i "s/^[[:space:]]*chmod /true # chmod /g" "$script"
-  fi
-
-  sed -i "1s|^.*|#!$shebang|" "$script"
-  chmod +x "$script"
-
-  if [ "${ha_entry_source:-null}" = "true" ]; then
-    sed -i -E 's/^[[:space:]]*exit ([0-9]+)/return \1 \|\| exit \1/g' "$script"
-    sed -i 's/bashio::exit\.nok/return 1/g' "$script"
-    sed -i 's/bashio::exit\.ok/return 0/g' "$script"
-    # shellcheck disable=SC1090
-    source "$script" || echo -e "\033[0;31mError\033[0m : $script exiting $?"
-  else
-    _run_rc=0
-    "$script" || _run_rc=$?
-    if [ "$_run_rc" -eq 126 ] && [ -n "${BASHIO_LIB:-}" ]; then
-      echo "Direct exec failed (rc=126, likely E2BIG), retrying via source in subshell..."
-      _run_rc=0
-      (
-        # shellcheck disable=SC1090
-        . "$BASHIO_LIB" 2>/dev/null || true
-        # shellcheck disable=SC1090
-        . "$script"
-      ) || _run_rc=$?
-      if [ "$_run_rc" -ne 0 ]; then
-        echo -e "\033[0;31mError\033[0m : $script exiting $_run_rc"
-      fi
-    elif [ "$_run_rc" -ne 0 ]; then
-      echo -e "\033[0;31mError\033[0m : $script exiting $_run_rc"
+    if [ "$(id -u)" -eq 0 ]; then
+        chown "$(id -u)":"$(id -g)" "$script" || true
+        chmod a+x "$script" || true
+    else
+        echo -e "\e[38;5;214m$(date) WARNING: Script executed with user $(id -u):$(id -g), things can break and chown won't work\e[0m"
+        sed -i "s/^[[:space:]]*chown /true # chown /g" "$script"
+        sed -i "s/^[[:space:]]*chmod /true # chmod /g" "$script"
     fi
-  fi
 
-  sed -i '1a exit 0' "$script"
+    sed -i "1s|^.*|#!$shebang|" "$script"
+    chmod +x "$script"
+
+    if [ "${ha_entry_source:-null}" = "true" ]; then
+        sed -i -E 's/^[[:space:]]*exit ([0-9]+)/return \1 \|\| exit \1/g' "$script"
+        sed -i 's/bashio::exit\.nok/return 1/g' "$script"
+        sed -i 's/bashio::exit\.ok/return 0/g' "$script"
+        # shellcheck disable=SC1090
+        source "$script" || echo -e "\033[0;31mError\033[0m : $script exiting $?"
+    else
+        _run_rc=0
+        "$script" || _run_rc=$?
+        if [ "$_run_rc" -eq 126 ] && [ -n "${BASHIO_LIB:-}" ]; then
+            echo "Direct exec failed (rc=126, likely E2BIG), retrying via source in subshell..."
+            _run_rc=0
+            (
+                # shellcheck disable=SC1090
+                . "$BASHIO_LIB" 2> /dev/null || true
+                # shellcheck disable=SC1090
+                . "$script"
+            ) || _run_rc=$?
+            if [ "$_run_rc" -ne 0 ]; then
+                echo -e "\033[0;31mError\033[0m : $script exiting $_run_rc"
+            fi
+        elif [ "$_run_rc" -ne 0 ]; then
+            echo -e "\033[0;31mError\033[0m : $script exiting $_run_rc"
+        fi
+    fi
+
+    sed -i '1a exit 0' "$script"
 }
 
 if [ -d /etc/cont-init.d ]; then
-  for SCRIPTS in /etc/cont-init.d/*; do
-    [ -e "$SCRIPTS" ] || continue
-    run_one_script "$SCRIPTS"
-  done
+    for SCRIPTS in /etc/cont-init.d/*; do
+        [ -e "$SCRIPTS" ] || continue
+        run_one_script "$SCRIPTS"
+    done
 fi
 
 if $PID1; then
-  shopt -s nullglob
-  for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run; do
-    [ -f "$runfile" ] || continue
-    echo "Starting: $runfile"
-    sed -i "1s|^.*|#!$shebang|" "$runfile"
-    chmod +x "$runfile"
-    (
-      restart_count=0
-      max_restarts=5
-      while true; do
-        _svc_rc=0
-        "$runfile" || _svc_rc=$?
-        if [ "$_svc_rc" -eq 126 ] && [ -n "${BASHIO_LIB:-}" ]; then
-          echo "Direct exec of $runfile failed (rc=126, likely E2BIG), retrying via source..."
-          _svc_rc=0
-          (
-            # shellcheck disable=SC1090
-            . "$BASHIO_LIB" 2>/dev/null || true
-            # shellcheck disable=SC1090
-            . "$runfile"
-          ) || _svc_rc=$?
-        fi
-        rc=$_svc_rc
-        if [ "$rc" -eq 0 ]; then
-          echo "$runfile exited cleanly (exit 0), not restarting."
-          break
-        fi
-        restart_count=$((restart_count + 1))
-        if [ "$restart_count" -ge "$max_restarts" ]; then
-          echo -e "\033[0;31mERROR: $runfile has crashed $restart_count times (last exit code: $rc), giving up.\033[0m"
-          break
-        fi
-        echo -e "\e[38;5;214m$(date) WARNING: $runfile exited (code $rc), restarting (#${restart_count}/${max_restarts}) in 5s...\e[0m"
-        sleep 5
-      done
-    ) &
-  done
-  shopt -u nullglob
+    shopt -s nullglob
+    for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run; do
+        [ -f "$runfile" ] || continue
+        echo "Starting: $runfile"
+        sed -i "1s|^.*|#!$shebang|" "$runfile"
+        chmod +x "$runfile"
+        (
+            restart_count=0
+            max_restarts=5
+            while true; do
+                _svc_rc=0
+                "$runfile" || _svc_rc=$?
+                if [ "$_svc_rc" -eq 126 ] && [ -n "${BASHIO_LIB:-}" ]; then
+                    echo "Direct exec of $runfile failed (rc=126, likely E2BIG), retrying via source..."
+                    _svc_rc=0
+                    (
+                        # shellcheck disable=SC1090
+                        . "$BASHIO_LIB" 2> /dev/null || true
+                        # shellcheck disable=SC1090
+                        . "$runfile"
+                    ) || _svc_rc=$?
+                fi
+                rc=$_svc_rc
+                if [ "$rc" -eq 0 ]; then
+                    echo "$runfile exited cleanly (exit 0), not restarting."
+                    break
+                fi
+                restart_count=$((restart_count + 1))
+                if [ "$restart_count" -ge "$max_restarts" ]; then
+                    echo -e "\033[0;31mERROR: $runfile has crashed $restart_count times (last exit code: $rc), giving up.\033[0m"
+                    break
+                fi
+                echo -e "\e[38;5;214m$(date) WARNING: $runfile exited (code $rc), restarting (#${restart_count}/${max_restarts}) in 5s...\e[0m"
+                sleep 5
+            done
+        ) &
+    done
+    shopt -u nullglob
 fi
 
 ######################
@@ -425,43 +431,43 @@ fi
 ######################
 
 if $PID1; then
-  echo " "
-  echo -e "\033[0;32mEverything started!\033[0m"
+    echo " "
+    echo -e "\033[0;32mEverything started!\033[0m"
 
-  terminate() {
-    local local_pid
-    echo "Termination signal received, forwarding to subprocesses..."
-    if command -v pgrep >/dev/null 2>&1; then
-      while read -r pid; do
-        [ -n "$pid" ] || continue
-        echo "Terminating child PID $pid"
-        kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
-      done < <(pgrep -P "$$" || true)
-    else
-      for p in /proc/[0-9]*/; do
-        local_pid="${p#/proc/}"
-        local_pid="${local_pid%/}"
-        if [ "$local_pid" -ne 1 ] && grep -q "^PPid:[[:space:]]*$$" "/proc/$local_pid/status" 2>/dev/null; then
-          echo "Terminating child PID $local_pid"
-          kill -TERM "$local_pid" 2>/dev/null || echo "Failed to terminate PID $local_pid"
+    terminate() {
+        local local_pid
+        echo "Termination signal received, forwarding to subprocesses..."
+        if command -v pgrep > /dev/null 2>&1; then
+            while read -r pid; do
+                [ -n "$pid" ] || continue
+                echo "Terminating child PID $pid"
+                kill -TERM "$pid" 2> /dev/null || echo "Failed to terminate PID $pid"
+            done < <(pgrep -P "$$" || true)
+        else
+            for p in /proc/[0-9]*/; do
+                local_pid="${p#/proc/}"
+                local_pid="${local_pid%/}"
+                if [ "$local_pid" -ne 1 ] && grep -q "^PPid:[[:space:]]*$$" "/proc/$local_pid/status" 2> /dev/null; then
+                    echo "Terminating child PID $local_pid"
+                    kill -TERM "$local_pid" 2> /dev/null || echo "Failed to terminate PID $local_pid"
+                fi
+            done
         fi
-      done
-    fi
-    wait || true
-    echo "All subprocesses terminated. Exiting."
-    exit 0
-  }
+        wait || true
+        echo "All subprocesses terminated. Exiting."
+        exit 0
+    }
 
-  trap terminate SIGTERM SIGINT
-  while :; do
-    sleep infinity &
-    wait $!
-  done
+    trap terminate SIGTERM SIGINT
+    while :; do
+        sleep infinity &
+        wait $!
+    done
 else
-  echo " "
-  echo -e "\033[0;32mStarting the upstream container\033[0m"
-  echo " "
-  if [ -f /docker-mods ]; then
-    exec /docker-mods
-  fi
+    echo " "
+    echo -e "\033[0;32mStarting the upstream container\033[0m"
+    echo " "
+    if [ -f /docker-mods ]; then
+        exec /docker-mods
+    fi
 fi

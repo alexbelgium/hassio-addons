@@ -1,10 +1,10 @@
- 
+
 ## 0.148.0 (2026-08-29)
 - Update to latest version from manyfold3d/manyfold (changelog : https://github.com/manyfold3d/manyfold/releases)
- 
+
 ## 0.147.2 (2026-08-15)
 - Update to latest version from manyfold3d/manyfold (changelog : https://github.com/manyfold3d/manyfold/releases)
- 
+
 ## 0.147.1 (2026-08-01)
 - Update to latest version from manyfold3d/manyfold (changelog : https://github.com/manyfold3d/manyfold/releases)
 ## 0.146.1-3 (2026-07-08)
@@ -14,7 +14,7 @@
 
 ## 0.146.1-2 (06-07-2026)
 - Minor bugs fixed
- 
+
 ## 0.146.1 (2026-07-06)
 - Add configurable Manyfold public hostname with Home Assistant external URL and homeassistant.local fallbacks.
 
@@ -40,8 +40,8 @@
 - Minor bugs fixed
 
 ## 0.140.1
- - Bump version to 0.140.1
- - Detailed changes https://github.com/manyfold3d/manyfold/compare/v0.139.3...v0.140.1
+- Bump version to 0.140.1
+- Detailed changes https://github.com/manyfold3d/manyfold/compare/v0.139.3...v0.140.1
 
 ## 0.139.3 (11-05-2026)
 
@@ -58,7 +58,7 @@
 ## 0.137.0
 
 - Bumped upstream Manyfold image to `ghcr.io/manyfold3d/manyfold-solo:0.137.0` for both `amd64` and `aarch64`.
-- Add funtionalities about sharing and comment federation, some implemented in 0.136.0 
+- Add funtionalities about sharing and comment federation, some implemented in 0.136.0
 
 ## 0.135.0
 

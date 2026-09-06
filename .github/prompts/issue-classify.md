@@ -40,7 +40,7 @@ the check is a guard, not a common case.)
 ## Rule 1 — pick exactly one verdict
 
 | verdict | when |
-|---|---|
+| --- | --- |
 | `duplicate` | An existing open or closed issue reports the same thing. Set `duplicate_of`. |
 | `needs-info` | You cannot tell what is wrong without the add-on version, HA version, architecture, config, or the actual log output. |
 | `question` | A usage question answerable from `DOCS.md`, the wiki, or the add-on config. Not a defect. |

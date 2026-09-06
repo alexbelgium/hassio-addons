@@ -75,7 +75,7 @@ You can add the following tags in the file :
 
 ### Addon version numbering
 
-The `version` written in the addon `config.yaml` is the one Home Assistant compares to decide whether an update is available. Home Assistant hides the update when it can order both versions and the new one is not strictly newer (`1.2.3` -> `1.2.3-2` is a semver pre-release, so it is *older*), and it cannot order tags such as `version-bf9e0b4f` or `ubuntu-2026-06-01` at all.
+The `version` written in the addon `config.yaml` is the one Home Assistant compares to decide whether an update is available. Home Assistant hides the update when it can order both versions and the new one is not strictly newer (`1.2.3` -> `1.2.3-2` is a semver pre-release, so it is _older_), and it cannot order tags such as `version-bf9e0b4f` or `ubuntu-2026-06-01` at all.
 
 The addon version is therefore derived from the upstream tag:
 

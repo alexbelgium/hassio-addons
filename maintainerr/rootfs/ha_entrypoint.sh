@@ -27,9 +27,9 @@ echo "[Maintainerr] Setting up data directory: $DATA_DIR"
 mkdir -p "$DATA_DIR" "$DATA_DIR/logs"
 
 # Copy any seed/existing data from /opt/data to /config/data (don't overwrite)
-if [ -d /opt/data ] && [ "$(ls -A /opt/data 2>/dev/null)" ]; then
+if [ -d /opt/data ] && [ "$(ls -A /opt/data 2> /dev/null)" ]; then
     echo "[Maintainerr] Copying existing files from /opt/data to $DATA_DIR..."
-    cp -rn /opt/data/. "$DATA_DIR/" 2>/dev/null || true
+    cp -rn /opt/data/. "$DATA_DIR/" 2> /dev/null || true
 fi
 
 # Apply permissions/ownership once so copied files are also covered

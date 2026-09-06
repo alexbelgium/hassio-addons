@@ -44,7 +44,7 @@ Complete documentation: https://docs.tandoor.dev/install/docker/
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `SECRET_KEY` | str | `YOUR_SECRET_KEY` | **REQUIRED**: Django secret key for security |
 | `ALLOWED_HOSTS` | str | | **REQUIRED**: Comma-separated Home Assistant URLs for ingress |
 | `DB_TYPE` | list | `sqlite` | Database type (sqlite or postgresql_external) |

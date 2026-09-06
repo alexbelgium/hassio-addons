@@ -8,12 +8,12 @@
 # run first. NPM's image uses s6-overlay v3 and has no /etc/cont-init.d.
 
 if [ ! -L /etc/letsencrypt ]; then
-    mkdir -p /data/letsencrypt
-    if [ -d /etc/letsencrypt ] && [ -n "$(ls -A /etc/letsencrypt 2> /dev/null)" ]; then
-        cp -a /etc/letsencrypt/. /data/letsencrypt/ 2> /dev/null || true
-    fi
-    rm -rf /etc/letsencrypt
-    ln -sf /data/letsencrypt /etc/letsencrypt
+	mkdir -p /data/letsencrypt
+	if [ -d /etc/letsencrypt ] && [ -n "$(ls -A /etc/letsencrypt 2>/dev/null)" ]; then
+		cp -a /etc/letsencrypt/. /data/letsencrypt/ 2>/dev/null || true
+	fi
+	rm -rf /etc/letsencrypt
+	ln -sf /data/letsencrypt /etc/letsencrypt
 fi
 
 mkdir -p /data/letsencrypt

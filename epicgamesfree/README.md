@@ -88,7 +88,7 @@ Create `/config/addons_config/epicgamesfree/config.json`:
 ### Configuration Options
 
 | Option | Type | Description |
-|--------|------|-------------|
+| -------- | ------ | ------------- |
 | `accounts` | array | List of Epic Games accounts |
 | `cronSchedule` | string | Cron schedule to claim games (default: `0 */6 * * *`) |
 | `runOnStartup` | boolean | Run a claim cycle when the add-on starts |

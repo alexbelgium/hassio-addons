@@ -45,7 +45,7 @@ if [ "$(bashio::config 'permission_mode')" = "bypass" ]; then
 fi
 
 section "Claude Code permission state"
-RUNTIME_HOME="$RUNTIME_HOME" python3 - <<'PY'
+RUNTIME_HOME="$RUNTIME_HOME" python3 - << 'PY'
 import json
 import os
 from pathlib import Path
@@ -66,7 +66,7 @@ else:
 PY
 
 section "MCP registrations (environment values redacted)"
-RUNTIME_HOME="$RUNTIME_HOME" python3 - <<'PY'
+RUNTIME_HOME="$RUNTIME_HOME" python3 - << 'PY'
 import json
 import os
 from pathlib import Path
@@ -104,7 +104,7 @@ for path in paths:
 PY
 
 section "Claude Code hooks"
-RUNTIME_HOME="$RUNTIME_HOME" python3 - <<'PY'
+RUNTIME_HOME="$RUNTIME_HOME" python3 - << 'PY'
 import json
 import os
 from pathlib import Path

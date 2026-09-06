@@ -45,7 +45,7 @@ Configurations can be done through the app webUI, except for the following optio
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `APP_KEY` | str | `CHANGEME_32_CHARS_EuC5dfn3LAPzeO` | **CRITICAL**: 32-character encryption key - change before first run! |
 | `CONFIG_LOCATION` | str | `/config/addons_config/fireflyiii/config.yaml` | Location of additional config file |
 | `DB_CONNECTION` | list | `sqlite_internal` | Database type (sqlite_internal/mariadb_addon/mysql/pgsql) |

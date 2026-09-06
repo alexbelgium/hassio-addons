@@ -7,7 +7,7 @@ bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores a
 unlock_sqlite_migrations() {
     local db_path="$1"
 
-    if ! command -v sqlite3 >/dev/null 2>&1; then
+    if ! command -v sqlite3 > /dev/null 2>&1; then
         bashio::log.warning "sqlite3 not available; skipping SQLite migration lock check."
         return 0
     fi
@@ -20,7 +20,7 @@ unlock_sqlite_migrations() {
 
     # If the lock table doesn't exist yet, nothing to unlock
     local has_table
-    has_table="$(sqlite3 "$db_path" "SELECT 1 FROM sqlite_master WHERE type='table' AND name='knex_migrations_lock' LIMIT 1;" 2>/dev/null || true)"
+    has_table="$(sqlite3 "$db_path" "SELECT 1 FROM sqlite_master WHERE type='table' AND name='knex_migrations_lock' LIMIT 1;" 2> /dev/null || true)"
     [[ "$has_table" == "1" ]] || return 0
 
     # Ensure the lock row exists (Knex expects one row)
@@ -28,22 +28,22 @@ unlock_sqlite_migrations() {
     sqlite3 "$db_path" "
         PRAGMA busy_timeout=5000;
         INSERT OR IGNORE INTO knex_migrations_lock(\"index\", is_locked) VALUES (1, 0);
-    " >/dev/null 2>&1 || true
+    " > /dev/null 2>&1 || true
 
     local is_locked
-    is_locked="$(sqlite3 "$db_path" "PRAGMA busy_timeout=5000; SELECT is_locked FROM knex_migrations_lock WHERE \"index\"=1 LIMIT 1;" 2>/dev/null || true)"
+    is_locked="$(sqlite3 "$db_path" "PRAGMA busy_timeout=5000; SELECT is_locked FROM knex_migrations_lock WHERE \"index\"=1 LIMIT 1;" 2> /dev/null || true)"
 
     if [[ "$is_locked" == "1" ]]; then
         bashio::log.warning "Locked SQLite migration table detected, attempting to unlock."
         sqlite3 "$db_path" "
             PRAGMA busy_timeout=5000;
             UPDATE knex_migrations_lock SET is_locked = 0 WHERE \"index\"=1 AND is_locked=1;
-        " >/dev/null 2>&1 || bashio::log.warning "Failed to clear SQLite migration lock."
+        " > /dev/null 2>&1 || bashio::log.warning "Failed to clear SQLite migration lock."
     fi
 }
 
 unlock_postgres_migrations() {
-    if ! command -v psql >/dev/null 2>&1; then
+    if ! command -v psql > /dev/null 2>&1; then
         bashio::log.warning "psql not available; skipping PostgreSQL migration lock check."
         return 0
     fi
@@ -59,23 +59,26 @@ unlock_postgres_migrations() {
     # If table doesn't exist, skip
     local has_table
     has_table="$(psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc \
-        "SELECT 1 FROM information_schema.tables WHERE table_name='knex_migrations_lock' LIMIT 1;" 2>/dev/null || true)"
-    [[ "$has_table" == "1" ]] || { unset PGPASSWORD; return 0; }
+        "SELECT 1 FROM information_schema.tables WHERE table_name='knex_migrations_lock' LIMIT 1;" 2> /dev/null || true)"
+    [[ "$has_table" == "1" ]] || {
+        unset PGPASSWORD
+        return 0
+    }
 
     # Ensure row exists
     psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc \
         "INSERT INTO knex_migrations_lock(\"index\", is_locked) VALUES (1, 0) ON CONFLICT (\"index\") DO NOTHING;" \
-        >/dev/null 2>&1 || true
+        > /dev/null 2>&1 || true
 
     local is_locked
     is_locked="$(psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc \
-        "SELECT is_locked FROM knex_migrations_lock WHERE \"index\"=1 LIMIT 1;" 2>/dev/null || true)"
+        "SELECT is_locked FROM knex_migrations_lock WHERE \"index\"=1 LIMIT 1;" 2> /dev/null || true)"
 
     if [[ "$is_locked" == "1" ]]; then
         bashio::log.warning "Locked PostgreSQL migration table detected, attempting to unlock."
         psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc \
             "UPDATE knex_migrations_lock SET is_locked = 0 WHERE \"index\"=1 AND is_locked=1;" \
-            >/dev/null 2>&1 || bashio::log.warning "Failed to clear PostgreSQL migration lock."
+            > /dev/null 2>&1 || bashio::log.warning "Failed to clear PostgreSQL migration lock."
     fi
 
     unset PGPASSWORD

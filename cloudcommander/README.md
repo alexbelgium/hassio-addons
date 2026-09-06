@@ -40,7 +40,7 @@ Configurations can be done through the app webUI, except for the following optio
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `CUSTOM_OPTIONS` | str | | Custom CLI options (e.g., `--name Homeassistant`) |
 | `DROPBOX_TOKEN` | str | | Dropbox integration token (see https://cloudcmd.io/) |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
