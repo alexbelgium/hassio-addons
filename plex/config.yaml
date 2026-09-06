@@ -169,12 +169,13 @@ schema:
   data_location: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   skip_permissions_check: bool?
   smbv1: bool?
 slug: plex_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/plex
 usb: true
-version: "1.43.3.10896.322"
+version: "1.43.3.10896.323"
 video: true
 webui: "[PROTO:ssl]://[HOST]:[PORT:32400]/web"

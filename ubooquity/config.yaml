@@ -105,11 +105,12 @@ schema:
   localdisks: str?
   maxmem: int
   networkdisks: str?
+  nfsversions: str?
   smbv1: bool?
   ssl: bool
   theme: list(default|comixology2|plextheme-master)
 slug: ubooquity
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 3.1.0
+version: 3.1.1
 webui: "[PROTO:ssl]://[HOST]:[PORT:2206]/ubooquity/admin"

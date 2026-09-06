@@ -125,11 +125,12 @@ schema:
   keyfile: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   ssl: bool
 services:
   - mysql:want
 slug: photoprism
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2026.07.28"
+version: "2026.09.06"
 video: true

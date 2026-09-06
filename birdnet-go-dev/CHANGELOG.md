@@ -1,3 +1,6 @@
+## 20260906 (06-09-2026)
+- Add `nfsversions` option: configure the NFS protocol versions tried when mounting NFS shares (comma or space separated, e.g. `4.2, 4.1, 4, 3`). Defaults to the previous built-in `4.2 4.1 4 3` ladder when unset, so existing installs are unchanged
+
 ## 20260901.4 (01-09-2026)
 - Minor bugs fixed
 ## 20260901.3 (01-09-2026)

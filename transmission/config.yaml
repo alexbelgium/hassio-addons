@@ -116,6 +116,7 @@ schema:
   incomplete_dir: str?
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   pass: str?
   smbv1: bool?
   user: str?
@@ -124,4 +125,4 @@ schema:
 slug: transmission_ls
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "4.1.3"
+version: "4.1.4"

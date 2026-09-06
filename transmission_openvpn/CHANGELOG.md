@@ -1,3 +1,6 @@
+## v5.5.3 (2026-09-06)
+- Add `nfsversions` option: configure the NFS protocol versions tried when mounting NFS shares (comma or space separated, e.g. `4.2, 4.1, 4, 3`). Defaults to the previous built-in `4.2 4.1 4 3` ladder when unset, so existing installs are unchanged
+
  
 ## v5.5.2 (2026-08-22)
 - Update to latest version from haugene/docker-transmission-openvpn (changelog : https://github.com/haugene/docker-transmission-openvpn/releases)

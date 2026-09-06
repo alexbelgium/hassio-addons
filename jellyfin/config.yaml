@@ -121,8 +121,9 @@ schema:
   data_location: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: jellyfin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "10.11.11"
+version: "10.11.12"
 video: true

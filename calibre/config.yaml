@@ -114,8 +114,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: calibre
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/calibre
-version: "9.14.0"
+version: "9.14.1"
 video: true

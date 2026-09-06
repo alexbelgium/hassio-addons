@@ -1,3 +1,6 @@
+## 3.1.0.2 (2026-09-06)
+- Add `nfsversions` option: configure the NFS protocol versions tried when mounting NFS shares (comma or space separated, e.g. `4.2, 4.1, 4, 3`). Defaults to the previous built-in `4.2 4.1 4 3` ladder when unset, so existing installs are unchanged
+
  
 ## 3.1.0.1 (2026-08-17)
 - Fix `password authentication failed for user` when `DB_PASSWORD` contains special characters. Passwords are now URI-encoded before being used in the psql connection string, and SQL-escaped before being used in `CREATE`/`ALTER USER` statements

@@ -119,9 +119,10 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: tdarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.86.01"
+version: "2.87.01"
 video: true
 webui: "[PROTO:ssl]://[HOST]:[PORT:8265]"

@@ -1,3 +1,6 @@
+## 4.4.28 (2026-09-06)
+- Add `nfsversions` option: configure the NFS protocol versions tried when mounting NFS shares (comma or space separated, e.g. `4.2, 4.1, 4, 3`). Defaults to the previous built-in `4.2 4.1 4 3` ladder when unset, so existing installs are unchanged
+
  
 ## 4.4.27 (2026-09-05)
 - Update to latest version from ente/ente (changelog : https://github.com/ente/ente/releases)

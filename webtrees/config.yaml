@@ -110,6 +110,7 @@ schema:
   keyfile: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   ssl: bool
   trusted_headers: str?
 services:
@@ -117,5 +118,5 @@ services:
 slug: webtrees
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.2.6.1"
+version: "2.2.7"
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"

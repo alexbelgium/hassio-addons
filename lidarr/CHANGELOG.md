@@ -1,3 +1,6 @@
+## 3.1.0.4876 (2026-09-06)
+- Add `nfsversions` option: configure the NFS protocol versions tried when mounting NFS shares (comma or space separated, e.g. `4.2, 4.1, 4, 3`). Defaults to the previous built-in `4.2 4.1 4 3` ladder when unset, so existing installs are unchanged
+
 ## 3.1.0.4875.1 (2026-08-01)
 
 - Version renamed from `3.1.0.4875-1`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged

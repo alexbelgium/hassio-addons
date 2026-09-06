@@ -100,8 +100,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   smbv1: bool?
 slug: kapowarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/kapowarr
-version: "1.3.1"
+version: "1.3.2"

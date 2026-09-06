@@ -107,6 +107,7 @@ schema:
   keyfile: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   pi_password: password
   ssl: bool
 services:
@@ -116,5 +117,5 @@ tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi-zach
 usb: true
-version: 2026.08.15
+version: 2026.09.06
 video: true

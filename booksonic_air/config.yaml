@@ -96,8 +96,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: booksonic-air_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/booksonic_air
-version: 2201.1.0
+version: 2201.1.1
 webui: http://[HOST]:[PORT:4040]

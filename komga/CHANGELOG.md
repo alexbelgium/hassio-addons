@@ -1,3 +1,6 @@
+## 1.26.4 (2026-09-06)
+- Add `nfsversions` option: configure the NFS protocol versions tried when mounting NFS shares (comma or space separated, e.g. `4.2, 4.1, 4, 3`). Defaults to the previous built-in `4.2 4.1 4 3` ladder when unset, so existing installs are unchanged
+
 ## 1.26.3.1 (19-08-2026)
 
 - Fix : tapping `Read` in the Home Assistant companion app opened the reader in an external browser, which carries no ingress session cookie, so Home Assistant answered `401 Unauthorized` before Komga was reached ([#2994](https://github.com/alexbelgium/hassio-addons/issues/2994)). Komga opens the reader with `window.open(url, '_blank')` ; nginx now injects a script that turns that popup into a navigation of the ingress panel itself. Only http(s) urls below Komga's own base path are affected, so the OAuth2 login popup and links out of Komga keep their own window

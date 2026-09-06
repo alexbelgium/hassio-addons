@@ -122,8 +122,9 @@ schema:
   keyfile: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   ssl: bool
 slug: filebrowser
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.63.23"
+version: "2.63.24"

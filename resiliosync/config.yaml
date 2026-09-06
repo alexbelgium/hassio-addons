@@ -110,7 +110,8 @@ schema:
   downloads_location: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: resiliosync
 udev: true
 url: https://github.com/tyjtyj/hassio-addons
-version: "3.1.2.1076"
+version: "3.1.2.1077"

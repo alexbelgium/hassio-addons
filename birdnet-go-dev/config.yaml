@@ -120,6 +120,7 @@ schema:
   mariadb_auto_config: bool?
   mqtt_auto_config: bool?
   networkdisks: str?
+  nfsversions: str?
 services:
   - mysql:want
   - mqtt:want
@@ -127,5 +128,5 @@ slug: birdnet-go-dev
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "20260901.4"
+version: "20260906"
 video: true

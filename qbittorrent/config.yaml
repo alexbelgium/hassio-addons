@@ -127,6 +127,7 @@ schema:
   keyfile: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   openvpn_config: str?
   openvpn_enabled: bool?
   openvpn_password: str?
@@ -143,4 +144,4 @@ schema:
 slug: qbittorrent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "5.2.3.3"
+version: "5.2.4"

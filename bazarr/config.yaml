@@ -109,7 +109,8 @@ schema:
   connection_mode: list(ingress_noauth|noingress_auth|ingress_auth)
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: bazarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/bazarr
-version: "1.6.0.2"
+version: "1.6.0.3"

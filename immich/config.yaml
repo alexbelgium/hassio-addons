@@ -136,11 +136,12 @@ schema:
   library_location: str?
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   skip_permissions_check: bool?
 slug: immich
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "3.1.0.1"
+version: "3.1.0.2"
 video: true
 webui: http://[HOST]:[PORT:8080]

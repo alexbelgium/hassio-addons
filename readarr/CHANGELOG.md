@@ -1,3 +1,6 @@
+## 0.4.18-3 (2026-09-06)
+- Add `nfsversions` option: configure the NFS protocol versions tried when mounting NFS shares (comma or space separated, e.g. `4.2, 4.1, 4, 3`). Defaults to the previous built-in `4.2 4.1 4 3` ladder when unset, so existing installs are unchanged
+
 ## 0.4.18-2 (2026-01-08)
 - Remove CONFIG_LOCATION option now that config lives under /addon_configs by default
 

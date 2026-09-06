@@ -134,9 +134,10 @@ schema:
   data_location: str?
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: webtop-kde
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "4.16.0.95.7"
+version: "4.16.0.95.8"
 video: true

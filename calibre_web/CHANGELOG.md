@@ -1,3 +1,6 @@
+## 0.6.27.5 (2026-09-06)
+- Add `nfsversions` option: configure the NFS protocol versions tried when mounting NFS shares (comma or space separated, e.g. `4.2, 4.1, 4, 3`). Defaults to the previous built-in `4.2 4.1 4 3` ladder when unset, so existing installs are unchanged
+
  
 ## 0.6.27.4 (2026-09-04)
 - Fix: Kobo sync could not be enabled, failing with "Kepubify binary not found" even when the path was set by hand. The LinuxServer base image installs the converter as `/usr/bin/kepubify` with `curl -o`, which leaves it mode 0644 and gives it a name calibre-web does not accept : `binary_helper.py` only takes `kepubify-linux-64bit` or `kepubify-linux-32bit`, and only when `os.access(X_OK)` passes. The addon now makes the binary executable and publishes it as `/opt/kepubify/kepubify-linux-64bit`, the directory calibre-web's own autodetection already probes, so the path is filled in without any manual step (https://github.com/alexbelgium/hassio-addons/issues/3040)

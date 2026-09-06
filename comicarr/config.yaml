@@ -98,8 +98,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   smbv1: bool?
 slug: comicarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/comicarr
-version: "0.38.7"
+version: "0.38.8"

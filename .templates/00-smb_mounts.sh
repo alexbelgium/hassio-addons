@@ -215,6 +215,22 @@ if bashio::config.has_value 'networkdisks'; then
     PGID=",gid=$(bashio::config 'PGID')"
   fi
 
+  # NFS protocol versions tried, in order, when mounting an NFS share.
+  # Defaults to the built-in ladder; user can override via the 'nfsversions' option
+  # (comma or space separated, e.g. "4.2, 4.1, 4, 3").
+  NFS_VERSIONS_DEFAULT="4.2 4.1 4 3"
+  NFS_VERSIONS="$NFS_VERSIONS_DEFAULT"
+  if bashio::config.has_value 'nfsversions'; then
+    NFS_VERSIONS_RAW="$(bashio::config 'nfsversions')"
+    # Normalise separators (commas/newlines/tabs -> spaces) and trim.
+    NFS_VERSIONS_RAW="$(echo "$NFS_VERSIONS_RAW" | tr ',\r\n\t' '    ')"
+    NFS_VERSIONS_RAW="$(echo "$NFS_VERSIONS_RAW" | sed -E 's/[[:space:]]+/ /g; s/^ //; s/ $//')"
+    if [[ -n "$NFS_VERSIONS_RAW" ]]; then
+      NFS_VERSIONS="$NFS_VERSIONS_RAW"
+      echo "... using custom NFS version order: $NFS_VERSIONS"
+    fi
+  fi
+
   IFS=',' read -r -a DISK_LIST <<< "$MOREDISKS"
 
   for disk in "${DISK_LIST[@]}"; do
@@ -298,7 +314,8 @@ if bashio::config.has_value 'networkdisks'; then
         retry_cifs_with_vers_ladder_on_dialect_failure
       fi
     else
-      mount_drive "rw,nfsvers=4.2,proto=tcp,hard,timeo=600,retrans=2"
+      NFS_FIRST_VERSION="${NFS_VERSIONS%% *}"
+      mount_drive "rw,nfsvers=${NFS_FIRST_VERSION},proto=tcp,hard,timeo=600,retrans=2"
     fi
 
     if [[ "$MOUNTED" == "false" ]]; then
@@ -414,7 +431,7 @@ if bashio::config.has_value 'networkdisks'; then
           bashio::log.warning "...... nmap not available; skipping NFS port reachability test"
         fi
 
-        for NFVER in 4.2 4.1 4 3; do
+        for NFVER in $NFS_VERSIONS; do
           if [[ "$MOUNTED" == "false" ]]; then
             mount_drive "rw,nfsvers=${NFVER},proto=tcp"
           fi

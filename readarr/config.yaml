@@ -104,7 +104,8 @@ schema:
   connection_mode: list(ingress_noauth|noingress_auth|ingress_auth)
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: readarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/readarr
-version: "0.4.18-2"
+version: "0.4.18-3"

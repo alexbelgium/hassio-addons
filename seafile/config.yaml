@@ -122,11 +122,12 @@ schema:
   database: list(sqlite|mariadb_addon)
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   url: str
 services:
   - mysql:want
 slug: seafile
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/seafile
-version: "12.0.18-4"
+version: "12.0.18-5"
 webui: http://[HOST]:[PORT:8000]

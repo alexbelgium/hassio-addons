@@ -98,7 +98,8 @@ schema:
   csrf_allowed: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: codex
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.2.11"
+version: "2.2.12"

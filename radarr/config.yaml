@@ -105,7 +105,8 @@ schema:
   connection_mode: list(ingress_noauth|noingress_auth|ingress_auth)
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
 slug: radarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/radarr
-version: "6.3.0.10514.1"
+version: "6.3.0.10514.2"

@@ -109,6 +109,7 @@ schema:
   keyfile: str
   localdisks: str?
   networkdisks: str?
+  nfsversions: str?
   pi_password: password
   ssl: bool
 services:
@@ -118,5 +119,5 @@ tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/battybirdnet-pi
 usb: true
-version: "2026.02.28"
+version: "2026.09.06"
 video: true

@@ -109,6 +109,7 @@ schema:
   log_level: str
   music_folder: str
   networkdisks: str?
+  nfsversions: str?
   password_encryption_key: str?
   scan_schedule: str?
   spotify_id: str?
@@ -119,5 +120,5 @@ schema:
 slug: navidrome
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/navidrome
-version: "0.63.2"
+version: "0.63.3"
 webui: "[PROTO:ssl]://[HOST]:[PORT:4533]"
