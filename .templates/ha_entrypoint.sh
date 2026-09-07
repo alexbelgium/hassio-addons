@@ -29,6 +29,13 @@ fi
 # boundary, so whatever external command is in flight reaps first.
 terminate() {
   local local_pid
+  # Best-effort, so errexit must not apply: this runs with `set -e` in force (validate_shebang
+  # leaves it on), and under errexit the first failing command aborts the handler and exits with
+  # its status, skipping the child-kill loop and the `exit 0` below. Every command in the body
+  # here is already guarded, but add-ons patch this function at build time -- postgres_15 and
+  # postgres_17 sed an unguarded `pg_ctl ... stop` in right after the echo -- and that command
+  # fails whenever the stop arrives before the database is up.
+  set +e
   echo "Termination signal received, forwarding to subprocesses..."
   if command -v pgrep >/dev/null 2>&1; then
     while read -r pid; do
