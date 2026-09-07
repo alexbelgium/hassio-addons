@@ -8,8 +8,9 @@
 #   pr_review.sh resolve <PR> <THREAD_ID...|--all>   --all = every unresolved, asks first
 #   pr_review.sh watch   <PR> [minutes]        poll checks (run this backgrounded)
 #
-# watch exits 0 only when every blocking check passed, 1 on failure, 2 if it ran out of
-# minutes. Codacy is advisory here: printed every poll, excluded from the verdict.
+# watch exits 0 when every blocking check passed *or was skipped* — a PR touching no add-on
+# skips all three gates, and it says so — 1 on failure, 2 if it ran out of minutes. Codacy is
+# advisory here: printed every poll, excluded from the verdict.
 #
 # Reviewers seen here: coderabbitai (deepest; reviews ~9 min after open, or on
 # "@coderabbitai review"), chatgpt-codex-connector, Copilot, Codacy.
@@ -24,7 +25,7 @@ REPO="${HASSIO_REPO:-}"
 [ -z "$REPO" ] && { echo "cannot determine repo; set HASSIO_REPO=owner/name" >&2; exit 1; }
 echo "repo: $REPO" >&2
 CMD="${1:-}"; PR="${2:-}"
-[ -z "$CMD" ] || [ -z "$PR" ] && { sed -n '2,19p' "$0" | sed 's/^# \?//'; exit 1; }
+[ -z "$CMD" ] || [ -z "$PR" ] && { sed -n '2,20p' "$0" | sed 's/^# \?//'; exit 1; }
 
 case "$CMD" in
 list)
@@ -102,11 +103,17 @@ watch)
     wfail=2            # not 0: running out of minutes with checks still pending is not a pass
     c=""; bstates=""; adv=""
     for i in $(seq 1 "$MINS"); do
-        # gh pr checks emits TAB-separated columns, and every blocking gate here has spaces in its
-        # name ("Addon linting (wger)", "Test addon build (wger)", "Check if CHANGELOG.md changed
-        # (wger)"). awk's default separator split those on whitespace, so "Codacy Static Code
-        # Analysis<TAB>fail" became "Codacy=Static" and the state column was never read at all:
-        # watch printed "all passing" on a red #3044, and could not see a pending build either.
+        # gh pr checks emits TAB-separated columns with no header when its output is not a TTY,
+        # which inside this $(... | awk) it never is. (Attached to a terminal it prints a wholly
+        # different ANSI table; --json would be sturdier still but does not exist before gh 2.36,
+        # and 2.23 ships here.) Every blocking gate has spaces in its name — "Addon linting
+        # (wger)", "Test addon build (wger)" — so awk's default separator split them on
+        # whitespace: "Codacy Static Code Analysis<TAB>fail" became "Codacy=Static" and the state
+        # column was never read at all. watch printed "all passing" on a red #3044 and on #3042
+        # with the linter failing, and could not see a pending build either.
+        # If that format ever does change, the allowlist below fails safe rather than passing: a
+        # header row lands in the failure branch, and a space-aligned table parses to no rows,
+        # which keeps watch waiting instead of returning 0.
         rows=$(gh pr checks "$PR" 2> /dev/null | awk -F'\t' -v ADV="$ADVISORY_CHECKS" '
             BEGIN { n = split(ADV, a, "\n"); for (j = 1; j <= n; j++) adv[a[j]] = 1 }
             NF >= 2 { print (($1 in adv) ? "A" : "B") "\t" $1 "=" $2 "\t" $2 }')

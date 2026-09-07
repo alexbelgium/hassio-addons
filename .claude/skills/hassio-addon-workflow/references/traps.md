@@ -277,6 +277,15 @@ alone (never the joined `name=state` text, or a check named `flaky-fail-detector
 failure), and treat an unrecognised state as a failure instead of letting it reach the passing
 branch. Fixed in #3052.
 
+The TSV is gh's *non-TTY* renderer, which is what `$(gh pr checks ... | awk)` always gets; attached
+to a terminal the same command prints a coloured, aligned table with a summary line, so never
+sanity-check the format by eye in a shell and assume the script sees that. `gh pr checks --json`
+would be sturdier, and Copilot recommends it (#3052), but it does not exist before gh 2.36 and the
+add-on ships 2.23 — it fails with `unknown flag: --json`. The parse is therefore built to fail
+safe instead: states are allowlisted, so a header row would land in the failure branch and a
+space-aligned table would parse to zero rows and keep `watch` waiting. Either way it cannot
+return a false pass.
+
 **CHANGELOG heading dates are ISO, whatever the bots' defaults say.** Match the format already in
 the add-on's file. Repo-wide that is `## <version> (YYYY-MM-DD)`: 7705 dated headings against 363
 in `DD-MM-YYYY`, and the newest entry is ISO in 125 of 135 add-ons. Copilot flags an ISO file that
