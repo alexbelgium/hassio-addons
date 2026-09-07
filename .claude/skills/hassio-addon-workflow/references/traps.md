@@ -275,7 +275,7 @@ red, and on #3042 printed "settled — all passing" while the HA add-on linter w
 also have called a build that had not started a pass. Use `awk -F'\t'`, judge the state column
 alone (never the joined `name=state` text, or a check named `flaky-fail-detector` reads as a
 failure), and treat an unrecognised state as a failure instead of letting it reach the passing
-branch. Fixed in PR_PLACEHOLDER.
+branch. Fixed in #3052.
 
 **CHANGELOG heading dates are ISO, whatever the bots' defaults say.** Match the format already in
 the add-on's file. Repo-wide that is `## <version> (YYYY-MM-DD)`: 7705 dated headings against 363
