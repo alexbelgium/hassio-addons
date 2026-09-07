@@ -1,3 +1,6 @@
+## 0.6.1.1 (2026-09-07)
+- Fix the add-on refusing to stop: Home Assistant reported an Error status after a few seconds and the container kept running and serving the web UI. `cont-init.d/99-run.sh` started nginx in the foreground, and `ha_entrypoint.sh` runs every cont-init script in the foreground, so the entrypoint never reached the point where it installs the `terminate()` handler that forwards SIGTERM to the application on shutdown. The application is now started in the background, and `init: false` makes the entrypoint run as PID 1 so the orphaned process is reparented to it and receives that signal. Closes #3049.
+
 
 ## 0.6.1 (2025-11-18)
 - Added `env_vars` option to allow passing custom environment variables from the add-on configuration.
