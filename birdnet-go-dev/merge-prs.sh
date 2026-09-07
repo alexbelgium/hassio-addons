@@ -11,6 +11,15 @@
 # stamping) is written to the directory given as $1 so the Docker build can
 # compile it.
 #
+# With --check the script does not build anything: it performs the exact same
+# merge sequence, skips (instead of failing on) every conflicting PR, and prints
+# one "!!! CONFLICT pr=#N conflicts-with=... files=... " line per offender before
+# exiting 2. Use it to find conflicts *before* a build burns on them. This is a
+# different question from GitHub's `mergeable` field, which compares a PR against
+# its own base ref - for a stacked PR that base is another feature branch (often
+# stale, sometimes belonging to a closed PR), so GitHub can report CLEAN for a PR
+# that does not merge onto main at all.
+#
 # Environment:
 #   BIRDNET_FORK       owner/repo of the fork           (default alexbelgium/birdnet-go)
 #   BIRDNET_UPSTREAM   owner/repo of the upstream        (default tphakala/birdnet-go)
@@ -19,7 +28,17 @@
 #
 set -euo pipefail
 
-TARGET_DIR="${1:?usage: merge-prs.sh <target-dir>}"
+CHECK_ONLY="${MERGE_PRS_CHECK:-0}"
+TARGET_DIR=""
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --check) CHECK_ONLY=1 ;;
+        -*) echo "unknown option: $1" >&2; exit 64 ;;
+        *) TARGET_DIR="$1" ;;
+    esac
+    shift
+done
+: "${TARGET_DIR:?usage: merge-prs.sh [--check] <target-dir>}"
 
 FORK="${BIRDNET_FORK:-alexbelgium/birdnet-go}"
 UPSTREAM="${BIRDNET_UPSTREAM:-tphakala/birdnet-go}"
@@ -32,6 +51,22 @@ API_URL="https://api.github.com/repos/${FORK}/pulls?state=open&per_page=100"
 GH_TOKEN="${GH_TOKEN:-${GITHUB_TOKEN:-}}"
 
 log() { echo ">>> $*"; }
+
+# Conflicting PRs collected in --check mode: "number|scope|files|title".
+conflicting=()
+
+# Does ${1} merge cleanly onto the pristine upstream-synced main? Probed in a
+# throwaway worktree so the accumulated tree is left untouched. Tells apart a PR
+# that is simply stale against main (fixable inside that PR's own branch) from
+# one that only clashes with another open PR (needs a cross-PR decision).
+merges_onto_main() {
+    local sha="$1" probe rc=0
+    probe="$(mktemp -d)/probe"
+    git worktree add --quiet --detach "${probe}" "${MAIN_SYNCED}"
+    git -C "${probe}" merge --no-edit --no-ff -m probe "${sha}" >/dev/null 2>&1 || rc=1
+    git worktree remove --force "${probe}" >/dev/null 2>&1 || true
+    return "${rc}"
+}
 
 git config --global user.email "addon-builder@users.noreply.github.com"
 git config --global user.name "BirdNET-Go Addon Builder"
@@ -47,6 +82,7 @@ git remote add upstream "${UPSTREAM_URL}"
 git fetch --no-tags upstream main
 # --no-ff keeps an explicit sync commit; a no-op when main is already current.
 git merge --no-edit --no-ff upstream/main
+MAIN_SYNCED="$(git rev-parse HEAD)"
 
 log "Querying open non-draft PRs from ${FORK}"
 auth_header=()
@@ -94,12 +130,36 @@ for entry in "${prs[@]}"; do
             if [ "${#conflicted_files[@]}" -gt 0 ]; then
                 printf '!!! Conflicting file: %s\n' "${conflicted_files[@]}" >&2
             fi
-            echo "!!! Resolve the conflict in the fork or pause this PR, then rebuild." >&2
             git merge --abort || true
+
+            if [ "${CHECK_ONLY}" = "1" ]; then
+                scope="accumulated"
+                merges_onto_main "${sha}" || scope="main"
+                conflicting+=("${number}|${scope}|${conflicted_files[*]:-}|${title}")
+                log "check mode: skipping PR #${number}, continuing with the rest"
+                continue
+            fi
+
+            echo "!!! Resolve the conflict in the fork or pause this PR, then rebuild." >&2
             exit 1
         fi
     fi
 done
+
+if [ "${CHECK_ONLY}" = "1" ]; then
+    if [ "${#conflicting[@]}" -eq 0 ]; then
+        log "CHECK OK: every open non-draft PR merges into the combined build tree"
+        exit 0
+    fi
+    echo "!!! CHECK FAILED: ${#conflicting[@]} PR(s) would break the add-on build" >&2
+    for entry in "${conflicting[@]}"; do
+        IFS='|' read -r number scope files title <<<"${entry}"
+        echo "!!! CONFLICT pr=#${number} conflicts-with=${scope} files=${files} title=${title}" >&2
+    done
+    echo "!!! conflicts-with=main     -> the PR is stale against main; merge main into its branch and resolve there." >&2
+    echo "!!! conflicts-with=accumulated -> the PR only clashes with another open PR; decide which one owns the hunk." >&2
+    exit 2
+fi
 
 log "Merged HEAD: $(git rev-parse --short HEAD)"
 log "Source tree ready at ${TARGET_DIR}"
