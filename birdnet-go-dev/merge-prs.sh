@@ -34,7 +34,16 @@ while [ "$#" -gt 0 ]; do
     case "$1" in
         --check) CHECK_ONLY=1 ;;
         -*) echo "unknown option: $1" >&2; exit 64 ;;
-        *) TARGET_DIR="$1" ;;
+        *)
+            # Last-one-wins would silently clone into the wrong directory if a caller ever
+            # appended an argument; the pre-flag script used "${1}", so refuse rather than
+            # quietly change which operand counts.
+            if [ -n "${TARGET_DIR}" ]; then
+                echo "usage: merge-prs.sh [--check] <target-dir>" >&2
+                exit 64
+            fi
+            TARGET_DIR="$1"
+            ;;
     esac
     shift
 done
@@ -55,16 +64,46 @@ log() { echo ">>> $*"; }
 # Conflicting PRs collected in --check mode: "number|scope|files|title".
 conflicting=()
 
+LOCKFILE="frontend/package-lock.json"
+
+# The single place that decides whether a conflicted merge is still acceptable.
+# package-lock.json is generated content and stacked PRs can carry an older copy even when
+# their source changes merge cleanly, so keep the lockfile already assembled on the base side
+# — but only when it is the sole conflict. Any source conflict stays fatal.
+# Returns 0 when it resolved and committed such a merge, 1 when the conflict is real.
+# BOTH the real merge and the --check probe must go through here: when only the real merge
+# applied the policy, the probe called a PR "conflicts-with=main" that the build would have
+# merged fine, and printed the opposite remediation to the true one.
+resolve_sole_lockfile() {
+    local dir="$1"
+    local -a conflicted
+    mapfile -t conflicted < <(git -C "${dir}" diff --name-only --diff-filter=U)
+    if [ "${#conflicted[@]}" -ne 1 ] || [ "${conflicted[0]}" != "${LOCKFILE}" ]; then
+        return 1
+    fi
+    log "Resolving generated ${LOCKFILE} conflict using the base tree"
+    git -C "${dir}" checkout --ours -- "${LOCKFILE}" || return 1
+    git -C "${dir}" add "${LOCKFILE}" || return 1
+    git -C "${dir}" commit --no-edit > /dev/null || return 1
+}
+
 # Does ${1} merge cleanly onto the pristine upstream-synced main? Probed in a
 # throwaway worktree so the accumulated tree is left untouched. Tells apart a PR
 # that is simply stale against main (fixable inside that PR's own branch) from
 # one that only clashes with another open PR (needs a cross-PR decision).
 merges_onto_main() {
-    local sha="$1" probe rc=0
-    probe="$(mktemp -d)/probe"
+    local sha="$1" tmpdir probe rc=0
+    tmpdir="$(mktemp -d)"
+    probe="${tmpdir}/probe"
     git worktree add --quiet --detach "${probe}" "${MAIN_SYNCED}"
-    git -C "${probe}" merge --no-edit --no-ff -m probe "${sha}" >/dev/null 2>&1 || rc=1
-    git worktree remove --force "${probe}" >/dev/null 2>&1 || true
+    if ! git -C "${probe}" merge --no-edit --no-ff -m probe "${sha}" > /dev/null 2>&1; then
+        # Same policy as the real merge, or this misclassifies a lockfile-only clash.
+        resolve_sole_lockfile "${probe}" > /dev/null 2>&1 || rc=1
+    fi
+    git worktree remove --force "${probe}" > /dev/null 2>&1 || true
+    # worktree remove only takes the child back; without this the mktemp parent is left behind
+    # on every checked conflict.
+    rmdir "${tmpdir}" > /dev/null 2>&1 || true
     return "${rc}"
 }
 
@@ -115,16 +154,8 @@ for entry in "${prs[@]}"; do
     if ! git merge --no-edit --no-ff -m "Merge PR #${number}: ${title}" "${sha}"; then
         mapfile -t conflicted_files < <(git diff --name-only --diff-filter=U)
 
-        # package-lock.json is generated content and stacked PRs can carry an
-        # older copy even when their source changes merge cleanly. Keep the
-        # lockfile already assembled from upstream and earlier PRs, but only
-        # when it is the sole conflict. Any source conflict remains fatal.
-        if [ "${#conflicted_files[@]}" -eq 1 ] \
-            && [ "${conflicted_files[0]}" = "frontend/package-lock.json" ]; then
-            log "Resolving generated frontend/package-lock.json conflict using the accumulated tree"
-            git checkout --ours -- frontend/package-lock.json
-            git add frontend/package-lock.json
-            git commit --no-edit
+        if resolve_sole_lockfile .; then
+            : # generated lockfile only - the merge is committed and the build continues
         else
             echo "!!! Merge conflict while merging PR #${number} (${title})." >&2
             if [ "${#conflicted_files[@]}" -gt 0 ]; then
