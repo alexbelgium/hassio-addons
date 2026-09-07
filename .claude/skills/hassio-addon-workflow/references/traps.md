@@ -254,12 +254,28 @@ without your involvement — another reason a shared checkout goes stale mid-tas
 **Reviewers**: CodeRabbit (deepest — often runs scripts to prove a claim; reviews ~9 minutes
 after the PR opens, or on `@coderabbitai review`), chatgpt-codex-connector, Copilot, Codacy.
 
-**Codacy `action_required` is this repo's normal state.** Other open PRs show the same. It
-exposes no annotations via the API, so its findings are only visible in the maintainer's Codacy
-account. Note it and move on rather than guessing.
+**Codacy is red on essentially every add-on PR and gates nothing.** `gh pr checks` reports it as
+`fail` (older runs showed `action_required`); #3019, #3044 and #3050 all merged with it failing,
+and `master` carries no branch protection, so no check is required in the GitHub sense. It exposes
+no annotations via the API, so its findings are only visible in the maintainer's Codacy account.
+Note it and move on rather than guessing. `pr_review.sh watch` therefore prints it every poll but
+keeps it out of the verdict — the one check on that list, which is a denylist of known noise, not
+an allowlist of gates, so a job added to CI later counts as blocking until someone exempts it.
 
 **Resolving a review thread requires GraphQL** (`resolveReviewThread`); the REST API cannot do it.
 `scripts/pr_review.sh` wraps fetch / reply / resolve.
+
+**`gh pr checks` output is TAB-separated, and every blocking gate here has spaces in its name.**
+Parsing it with awk's default field splitting truncates each check to its first word and reads the
+wrong column as the state: `Codacy Static Code Analysis<TAB>fail` becomes `Codacy=Static`, and
+`Test addon build (wger)<TAB>pending` becomes `Test=addon`. A `case` over that string then matches
+neither `*fail*` nor `*pending*` and falls through to the "all passing" branch — the failure mode
+that makes a CI-reporting command lie. `pr_review.sh watch` called #3044 green while Codacy was
+red, and on #3042 printed "settled — all passing" while the HA add-on linter was failing; it would
+also have called a build that had not started a pass. Use `awk -F'\t'`, judge the state column
+alone (never the joined `name=state` text, or a check named `flaky-fail-detector` reads as a
+failure), and treat an unrecognised state as a failure instead of letting it reach the passing
+branch. Fixed in PR_PLACEHOLDER.
 
 **CHANGELOG heading dates are ISO, whatever the bots' defaults say.** Match the format already in
 the add-on's file. Repo-wide that is `## <version> (YYYY-MM-DD)`: 7705 dated headings against 363
