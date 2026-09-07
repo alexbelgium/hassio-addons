@@ -17,6 +17,47 @@ else
 fi
 
 ##########################################
+# Install the stop handler               #
+##########################################
+
+# As namespace PID 1 -- which is what "init: false" makes this script -- the kernel
+# discards any signal whose handler is still SIG_DFL. Installed at the end of startup,
+# as it used to be, the handler missed every stop that arrived while the Supervisor
+# probe or the cont-init chain was still running: Home Assistant waited out the grace
+# period for a SIGKILL and reported the add-on as failed. Nothing here is interrupted
+# mid-write by the move -- only PID 1 is signalled, and bash runs a trap at a command
+# boundary, so whatever external command is in flight reaps first.
+terminate() {
+  local local_pid
+  echo "Termination signal received, forwarding to subprocesses..."
+  if command -v pgrep >/dev/null 2>&1; then
+    while read -r pid; do
+      [ -n "$pid" ] || continue
+      echo "Terminating child PID $pid"
+      kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
+    done < <(pgrep -P "$$" || true)
+  else
+    for p in /proc/[0-9]*/; do
+      local_pid="${p#/proc/}"
+      local_pid="${local_pid%/}"
+      if [ "$local_pid" -ne 1 ] && grep -q "^PPid:[[:space:]]*$$" "/proc/$local_pid/status" 2>/dev/null; then
+        echo "Terminating child PID $local_pid"
+        kill -TERM "$local_pid" 2>/dev/null || echo "Failed to terminate PID $local_pid"
+      fi
+    done
+  fi
+  wait || true
+  echo "All subprocesses terminated. Exiting."
+  exit 0
+}
+
+# Only when this script is PID 1. Under Docker's own init the entrypoint is an ordinary
+# child and the signal handling above belongs to that init, not to us.
+if $PID1; then
+  trap terminate SIGTERM SIGINT
+fi
+
+##########################################
 # Pick an exec-capable directory         #
 ##########################################
 
@@ -428,31 +469,6 @@ if $PID1; then
   echo " "
   echo -e "\033[0;32mEverything started!\033[0m"
 
-  terminate() {
-    local local_pid
-    echo "Termination signal received, forwarding to subprocesses..."
-    if command -v pgrep >/dev/null 2>&1; then
-      while read -r pid; do
-        [ -n "$pid" ] || continue
-        echo "Terminating child PID $pid"
-        kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
-      done < <(pgrep -P "$$" || true)
-    else
-      for p in /proc/[0-9]*/; do
-        local_pid="${p#/proc/}"
-        local_pid="${local_pid%/}"
-        if [ "$local_pid" -ne 1 ] && grep -q "^PPid:[[:space:]]*$$" "/proc/$local_pid/status" 2>/dev/null; then
-          echo "Terminating child PID $local_pid"
-          kill -TERM "$local_pid" 2>/dev/null || echo "Failed to terminate PID $local_pid"
-        fi
-      done
-    fi
-    wait || true
-    echo "All subprocesses terminated. Exiting."
-    exit 0
-  }
-
-  trap terminate SIGTERM SIGINT
   while :; do
     sleep infinity &
     wait $!
