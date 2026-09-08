@@ -1,3 +1,5 @@
+## 20260908 (08-09-2026)
+- Synced with upstream birdnet-go (7 commits); re-merges the open fork PRs
 ## 20260907 (07-09-2026)
 - Rebuild: re-merges the open fork PRs, picking up the updated fork PR #57
 ## 20260901.4 (01-09-2026)
