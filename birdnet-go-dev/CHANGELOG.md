@@ -1,3 +1,5 @@
+## 20260908.1 (08-09-2026)
+- Synced with upstream birdnet-go (4 commits); re-merges the open fork PRs, adding fork PR #62 (reanalyze a clip with every loaded model + one-click correction)
 ## 20260908 (08-09-2026)
 - Synced with upstream birdnet-go (7 commits); re-merges the open fork PRs
 ## 20260907 (07-09-2026)
