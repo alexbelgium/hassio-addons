@@ -1,3 +1,5 @@
+## 20260909.6 (10-09-2026)
+- Document the fork-only "first daily detection consensus" setting (alexbelgium/birdnet-go#63): requires a second model to confirm each bird species' first detection of the day. Off by default; no behaviour change unless enabled.
 ## 20260909.5 (09-09-2026)
 - Minor bugs fixed
 ## 20260909.4 (09-09-2026)
