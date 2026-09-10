@@ -1,3 +1,5 @@
+## 20260909.7 (10-09-2026)
+- Correct the "first daily detection consensus" README section (review feedback on PR #3056): a merged-upstream setting stays in the build rather than disappearing, every attempt for a species is held back until one is accepted rather than only the first, and the "known to every active bird model" exemption is scoped per audio source, matching the implementation.
 ## 20260909.6 (10-09-2026)
 - Document the fork-only "first daily detection consensus" setting (alexbelgium/birdnet-go#63): requires a second model to confirm each bird species' first detection of the day. Off by default; no behaviour change unless enabled.
 ## 20260909.5 (09-09-2026)

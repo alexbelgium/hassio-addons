@@ -67,11 +67,11 @@ Additional environment variables can be configured there
 
 ### Fork-only settings
 
-These come from pull requests open on the [`alexbelgium/birdnet-go`](https://github.com/alexbelgium/birdnet-go) fork and are **not** in the standard add-on. They disappear from this build once the corresponding PR is merged upstream or closed.
+These are currently fork-only settings from the [`alexbelgium/birdnet-go`](https://github.com/alexbelgium/birdnet-go) fork and are **not** in the standard add-on. [`merge-prs.sh`](./merge-prs.sh) syncs the fork's `main` with upstream before applying open PRs, so once a PR merges upstream the setting stays in this build — it just arrives via that sync instead of the PR-merge step, and stops being fork-only. Only a PR that is **closed without merging** drops its setting from later builds.
 
 #### First daily detection consensus
 
-Requires a second model to confirm the **first** detection of each bird species each day. Every later detection of that species that day behaves exactly as it does today, on a single model.
+Requires a second model to confirm the **first** detection of each bird species each day. Until one is accepted, every attempt for that species is held to the same two-model bar; only once a detection clears it does every later detection that day behave exactly as it does today, on a single model.
 
 The first detection of a species in a day is the weakest evidence the pipeline produces, and it is the one that creates a "new species today" entry. Asking two models to agree on just that one detection removes most spurious new-species entries without slowing anything else down.
 
@@ -89,11 +89,11 @@ It deliberately does **nothing** in these cases, all of which keep today's singl
 
 - you run only one bird model (the default) — a second opinion does not exist, so the rule can never trigger
 - the species is not a bird — bats and the non-bird sound classes Perch reports (insects, amphibians, mammals, `power_tool`, and so on)
-- the species is not known to *every* active bird model — a species only one model can name could never reach two confirmations
+- the species is not known to *every* active bird model analyzing that audio source — a species only one of them can name could never reach two confirmations. With several sources running different model combinations, this is decided per source, not add-on-wide
 - a dynamic threshold has actually lowered the bar for that species, meaning you asked for a more permissive gate
 - the taxonomy or the database cannot be consulted — it fails open and accepts the detection
 
-In practice it only bites when you run two or more bird models (for example BirdNET plus Perch) on species both of them can identify. The trade is fewer false new-species entries, at the cost of occasionally delaying a genuine first sighting until a second model agrees.
+In practice it only bites when a single audio source has two or more bird models (for example BirdNET plus Perch) analyzing it, on species all of them can identify. The trade is fewer false new-species entries, at the cost of occasionally delaying a genuine first sighting until a second model agrees.
 
 Requires [alexbelgium/birdnet-go#63](https://github.com/alexbelgium/birdnet-go/pull/63).
 
