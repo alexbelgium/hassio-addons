@@ -4,7 +4,7 @@ description: >-
   Workflow for alexbelgium/hassio-addons Home Assistant add-on work: diagnose with real
   measurements, independent Codex review, implement, open a PR, resolve CodeRabbit / Copilot /
   Codex bot review comments, verify in production. Use for any task touching an add-on in this
-  repo — bugs, RAM/CPU/performance tuning, Dockerfile, config.yaml or config.json, build.json,
+  repo — bugs, RAM/CPU/performance tuning, Dockerfile, config.yaml, build.json,
   updater.json, cont-init.d, services.d or s6 changes, version and CHANGELOG bumps, a failing
   add-on CI check, opening or iterating PRs — and, on an add-on task, when asked to "check with
   codex", "verify with chatgpt", or resolve bot comments. Cheap for small asks: a light path skips
@@ -129,15 +129,15 @@ Full loop only, before writing code: get Codex's independent read on the plan, d
 
 Read the `references/traps.md` section matching what you're about to touch. It is ~18 KB and all
 but one section is irrelevant to any given edit, so print the one you need rather than reading the
-file — `bash "$SKILL/scripts/traps.sh"` with no argument lists the sections:
+file — run it with no argument to list the sections:
 
 | Touching | Run |
 | --- | --- |
-| an option or anything a base-image service reads | `traps.sh passing` |
-| a file the app also writes itself | `traps.sh "app's own"` |
-| shell, bashio, a symlinked script | `traps.sh bashio` |
-| `Dockerfile`, `build.json`, an arch guard | `traps.sh dockerfile` |
-| Chromium, Electron, Xvfb | `traps.sh chromium` |
+| an option or anything a base-image service reads | `bash "$SKILL/scripts/traps.sh" passing` |
+| a file the app also writes itself | `bash "$SKILL/scripts/traps.sh" "app's own"` |
+| shell, bashio, a symlinked script | `bash "$SKILL/scripts/traps.sh" bashio` |
+| `Dockerfile`, `build.json`, an arch guard | `bash "$SKILL/scripts/traps.sh" dockerfile` |
+| Chromium, Electron, Xvfb | `bash "$SKILL/scripts/traps.sh" chromium` |
 
 Then validate with `scripts/validate.sh <addon> --vs-master`, and write behavioural tests for
 anything with branches, targeting **the regression a reviewer described**, not just the happy

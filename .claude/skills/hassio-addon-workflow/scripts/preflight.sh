@@ -5,10 +5,14 @@
 # Usage: preflight.sh [repo-path] [addon-slug]
 set -uo pipefail
 
-# Default to the checkout this is run from, not a fixed path: the fixed path silently inspected
-# the main checkout while the caller worked in a worktree, so the branch it reported was not the
-# branch under edit — the exact stale-checkout trap this script exists to catch.
-REPO="${1:-$(git rev-parse --show-toplevel 2> /dev/null || echo /data/claude/hassio-addons)}"
+# Default to the checkout this is run from, never a fixed path: a fixed path silently inspected
+# the main checkout while the caller worked in a worktree, reporting a branch nobody was editing —
+# the exact stale-checkout trap this script exists to catch. Falling back to one when git cannot
+# answer would recreate it, so refuse instead and make the caller say which repo they mean.
+REPO="${1:-}"
+if [ -z "$REPO" ]; then
+    REPO=$(git rev-parse --show-toplevel 2> /dev/null) || REPO=""
+fi
 SLUG="${2:-}"
 
 echo "== tools =="
@@ -29,9 +33,14 @@ fi
 echo
 echo "== repo =="
 # git-aware check: in a worktree .git is a file, not a directory
+if [ -z "$REPO" ]; then
+    echo "  not inside a git checkout, and no repo path given"
+    echo "  -> pass one explicitly: preflight.sh <repo-path> [addon-slug]"
+    exit 1
+fi
 if ! git -C "$REPO" rev-parse --git-dir > /dev/null 2>&1; then
     echo "  no git repo at $REPO"
-    exit 0
+    exit 1
 fi
 cd "$REPO" || exit 0
 branch=$(git branch --show-current 2> /dev/null || echo "(detached)")
