@@ -127,16 +127,17 @@ Full loop only, before writing code: get Codex's independent read on the plan, d
 
 ## 4. Implement
 
-Read the `references/traps.md` section matching what you're about to touch — it is ~290 lines, so
-go to the anchor rather than the whole file:
+Read the `references/traps.md` section matching what you're about to touch. It is ~18 KB and all
+but one section is irrelevant to any given edit, so print the one you need rather than reading the
+file — `bash "$SKILL/scripts/traps.sh"` with no argument lists the sections:
 
-| Touching | Section |
+| Touching | Run |
 | --- | --- |
-| an option or anything a base-image service reads | `#passing-values-into-base-image-services` |
-| a file the app also writes itself | `#writing-into-an-apps-own-config` |
-| shell, bashio, a symlinked script | `#shell-and-bashio` |
-| `Dockerfile`, `build.json`, an arch guard | `#dockerfile-and-architecture` |
-| Chromium, Electron, Xvfb | `#chromium--electron-under-xvfb` |
+| an option or anything a base-image service reads | `traps.sh passing` |
+| a file the app also writes itself | `traps.sh "app's own"` |
+| shell, bashio, a symlinked script | `traps.sh bashio` |
+| `Dockerfile`, `build.json`, an arch guard | `traps.sh dockerfile` |
+| Chromium, Electron, Xvfb | `traps.sh chromium` |
 
 Then validate with `scripts/validate.sh <addon> --vs-master`, and write behavioural tests for
 anything with branches, targeting **the regression a reviewer described**, not just the happy
