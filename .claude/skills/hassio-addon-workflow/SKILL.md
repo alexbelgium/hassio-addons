@@ -4,29 +4,30 @@ description: >-
   Workflow for alexbelgium/hassio-addons Home Assistant add-on work: diagnose with real
   measurements, independent Codex review, implement, open a PR, resolve CodeRabbit / Copilot /
   Codex bot review comments, verify in production. Use for any task touching an add-on in this
-  repo — bugs, RAM/CPU/performance tuning, Dockerfile, config.yaml, cont-init.d or s6 changes,
-  version bumps, opening or iterating PRs — and when asked to "check with codex", "verify with
-  chatgpt", or resolve bot comments. Cheap for small asks: a light path skips the heavy steps.
+  repo — bugs, RAM/CPU/performance tuning, Dockerfile, config.yaml or config.json, build.json,
+  updater.json, cont-init.d, services.d or s6 changes, version and CHANGELOG bumps, a failing
+  add-on CI check, opening or iterating PRs — and, on an add-on task, when asked to "check with
+  codex", "verify with chatgpt", or resolve bot comments. Cheap for small asks: a light path skips
+  the heavy steps.
 ---
 
 # Home Assistant add-on workflow
 
-**Answer style.** Chat replies are terse: no pleasantries, no tool-call narration, no decorative
-tables or emoji, no dumped logs — quote the shortest decisive line, and don't re-read or re-print
-what is already in context. Fragments and dropped articles are fine. Never compressed: uncertainty
-markers ("likely", "assumed", "not verified"), negations (`not`/`never`/`no`/`only`), numbers,
-units, technical terms, code blocks, error strings — step 9's Verified/Checked/Assumed distinction
-outranks brevity every time. Write in full prose, not fragments, for security warnings,
-irreversible-action confirmations, and any multi-step sequence a fragment could make ambiguous.
-Persisted text is prose too: commits, CHANGELOG entries, PR bodies, review-thread replies, the
-step 10 report.
+**Answer style.** Chat replies are terse — no pleasantries, tool-call narration, decorative tables,
+emoji or dumped logs; quote the shortest decisive line and don't re-print what is already in
+context. Telegraphic fragments are fine *there*. Two things outrank brevity, because dropping a
+word from either changes the meaning rather than shortening it: never compress uncertainty markers
+("likely", "assumed", "not verified"), negations, numbers, units, technical terms, code or error
+strings — step 9's Verified/Checked/Assumed distinction wins every time; and write full prose
+wherever a fragment could be read two ways — security warnings, irreversible-action confirmations,
+multi-step sequences, and everything persisted (commits, CHANGELOG entries, PR bodies, review-thread
+replies, the step 10 report).
 
 Triage first, then one of two paths:
 
 - **Light** — typo/doc fixes, CHANGELOG edits, version bumps, one-file edits at ladder levels
-  1-3 (below), simple questions: scope → implement → validate (`$SKILL/scripts/validate.sh
-  <addon> --vs-master`; `$SKILL` defined below) → PR (version bump + CHANGELOG still required) →
-  resolve bot comments.
+  1-3 (below), simple questions: scope → implement → validate (step 4) → PR (version bump +
+  CHANGELOG still required) → resolve bot comments.
 - **Full loop** — performance/RAM/CPU work, diagnosis, anything changing a shipped default,
   ladder levels 4-6, or an explicit Codex-check request: scope → measure → plan → Codex reviews
   the plan → implement → simplify → Codex reviews the code → **simplify again** → PR → resolve
@@ -47,9 +48,8 @@ reasoning about a hypothetical *host* either. A defensive branch is complexity l
 the input that reaches it and the image or host where that happens, or delete it and let the case
 fail visibly instead.
 
-**Repo layout.** `alexbelgium/hassio-addons`; each add-on is a top-level directory. This skill is
-checked in at `.claude/skills/hassio-addon-workflow/` (canonical copy). Set the skill root once,
-then every `scripts/…` and `references/…` path below is relative to it:
+**Skill root.** The canonical copy lives at `.claude/skills/hassio-addon-workflow/`. Set it once;
+every `scripts/…` and `references/…` path below is relative to it:
 
 ```bash
 SKILL="$(git rev-parse --show-toplevel)/.claude/skills/hassio-addon-workflow"
@@ -63,9 +63,10 @@ bash "$SKILL/scripts/preflight.sh"        # and likewise for the other scripts
 
 **Delegate heavy output to a subagent.** Codex reviews and multi-thread PR triage produce output
 you don't need verbatim in your own context. For Codex's plan review (step 3), Codex's code
-review (step 6), and PR-comment listing when there are more than ~5 threads (step 8): launch a
-subagent to run the command and report back only the objections/findings and your assessment of
-each, not the raw transcript.
+review (step 6), and PR-comment listing when there are more than ~5 threads (step 8): if subagents
+are available, launch one to run the command and report back only the objections/findings and your
+assessment of each, not the raw transcript. Otherwise redirect the output to a file and read the
+parts you need.
 
 ---
 
@@ -85,9 +86,11 @@ Measure the running add-on rather than reasoning from source (`$BUILD_VERSION` s
 - Is this flag/driver/package actually present? → inspect the artifact: `/proc/<pid>/cmdline`,
   `command -v`, `/var/log/apt/history.log`
 
-Verify you're reading the right revision first — `scripts/preflight.sh` catches a stale branch
-before it costs a full analysis pass. Measurement methodology, gotchas, and real failure examples:
-`references/evidence.md`.
+Verify you're reading the right revision first — `scripts/preflight.sh` compares the checkout
+against the running `$BUILD_VERSION`, which catches the usual stale branch before it costs a full
+analysis pass (a version match does not prove the source is identical). Read
+`references/evidence.md` before interpreting any number you did not get straight from
+`measure.sh`, and for the failure modes this step exists to prevent.
 
 ## 3. Plan — choose the mechanism level, then Codex reviews it (full loop)
 
@@ -117,45 +120,59 @@ Attack your own plan before implementing:
 - What am I **inferring** that I could instead **detect at runtime** or **record explicitly**?
   Highest-yield question here — see `references/evidence.md`'s failure-mode section.
 - For every branch that exists **only to survive something going wrong**: name the image or host
-  where that input actually arrives, and go and look. Naming is the bar, not reproducing it here —
-  `references/simplify.md` works the `/dev/shm` guard and the `s6-dumpenv` fallback through that
-  distinction.
+  where that input arrives (the standing rule above) and go and look, before you write it.
 
-Full loop only, before writing code: get Codex's independent read on the plan. Spawn a subagent
-whose prompt includes the path `references/codex-review.md` and tells it to follow that file's
-invocation, then report back only Codex's objections and an assessment of each — not the raw
-transcript.
+Full loop only, before writing code: get Codex's independent read on the plan, delegated as above —
+`references/codex-review.md` has the invocation and how to write the prompt.
 
 ## 4. Implement
 
-Touching a shell script, Dockerfile, or env option? Read `references/traps.md` first — skim the
-headings, read the sections you're about to touch; the bashio, s6-env, arch-guard and versioning
-traps are all live. (The light-path facts it holds — versioning format, CHANGELOG heading — are
-already inline in step 7.) Validate with `scripts/validate.sh <addon> --vs-master`. Write
-behavioural tests for anything with branches, targeting **the regression a reviewer described**,
-not just the happy path.
+Read the `references/traps.md` section matching what you're about to touch — it is ~290 lines, so
+go to the anchor rather than the whole file:
+
+| Touching | Section |
+| --- | --- |
+| an option or anything a base-image service reads | `#passing-values-into-base-image-services` |
+| a file the app also writes itself | `#writing-into-an-apps-own-config` |
+| shell, bashio, a symlinked script | `#shell-and-bashio` |
+| `Dockerfile`, `build.json`, an arch guard | `#dockerfile-and-architecture` |
+| Chromium, Electron, Xvfb | `#chromium--electron-under-xvfb` |
+
+Then validate with `scripts/validate.sh <addon> --vs-master`, and write behavioural tests for
+anything with branches, targeting **the regression a reviewer described**, not just the happy
+path.
 
 ## 5. Simplify
 
-Before requesting review, check: did the diff stay at the ladder level chosen in step 3? Can this
-be solved by deleting instead of adding? Is the fix bigger than what it fixes? How does it fail in
-three years? And on reuse: does any hunk reimplement something `.templates/`, another script in
-this add-on, or a sibling add-on already does — and if a future add-on hits this same problem,
-will it find one way to solve it or two? Fold a near-duplicate into the existing mechanism, or
-justify the divergence in the PR body — but never at the cost of an isolation rule
-`references/traps.md` documents: scripts shared by symlink with the webtop add-ons take a new
-numbered script, not an edit. Case studies of what happens when this check is skipped:
-`references/simplify.md`.
+Six questions over your own diff, before anyone else reads it:
+
+- **Level** — did the diff stay at the ladder level chosen in step 3, or creep up one?
+- **Deletion** — can this be solved by deleting instead of adding?
+- **Size** — is the fix bigger than the thing it fixes?
+- **Reuse** — does any hunk reimplement what `.templates/`, another script in this add-on, or a
+  sibling add-on already does? If a future add-on hits this problem, will it find one way to solve
+  it or two? Fold near-duplicates in, or justify the divergence in the PR body.
+- **Depth** — is this a special case bolted onto shared infrastructure? Fix the shared mechanism
+  instead once more than one add-on hits it; generalising from a single case is how bespoke
+  designs get built, so below that bar the special case is the right call.
+- **Longevity** — how does this fail in three years, when the base image or upstream has moved?
+
+The standing exception to Reuse and Depth: scripts shared by symlink with the webtop add-ons take a
+new numbered script, never an edit (`references/traps.md#shell-and-bashio`). Case studies for the rest, including
+what shipped when this pass was skipped: `references/simplify.md`.
 
 ## 6. Codex attacks the code, then simplify what the review added (full loop only)
 
 Same delegated invocation, pointed at `git diff origin/master...HEAD` plus your reasoning per
 hunk. Details in `references/codex-review.md`.
 
-Then run step 5's checks again over the hunks the review changed. Adversarial review only ever
-argues *for* another branch — that is its job — so accepting objections ratchets the diff upward,
-and nothing else in the loop walks it back down. For each accepted objection: is the case it
-defends one you have now demonstrated, or one you have merely been told about? Taking a
+Then run step 5's checks again over the hunks the review changed. Adversarial review mostly argues
+*for* another branch — that is what it is asked to do — so accepting objections tends to ratchet
+the diff upward, and nothing else in the loop walks it back down. Sort each objection before you
+write anything:
+**"this is wrong"** is a bug and you fix it; **"this is undefended"** is a claim about some host,
+and it needs the same demonstration you would demand of a measurement — is the case it defends one
+you have now demonstrated, or one you have merely been told about? Taking a
 correctness objection often deletes the code that made it necessary, and a fix that collapses back
 to fewer lines than you started the review with is the normal outcome, not a suspicious one.
 
@@ -165,20 +182,23 @@ kind of edit that leaves a stray `fi` behind.
 
 ## 7. Open the PR
 
-CI gates on a PR: **`CHANGELOG.md` updated** (hard fail), the **HA add-on linter**
-(`frenck/action-addon-linter`, blocking — not the weekly Super-Linter, which is non-blocking), and
-the **add-on image build**. Bump `version` anyway (`X.Y.Z.N`, never `X.Y.Z-N`, see
-`references/traps.md#versioning`) — Supervisor won't offer a rebuild without it. Update
-`README.md` if you added options; write the CHANGELOG heading as `## <version> (<date>)`,
-matching the date format already in that file — almost always ISO `YYYY-MM-DD`, see
-`references/traps.md#ci-and-review-bots`.
+Three hard gates — **`CHANGELOG.md` updated**, the **HA add-on linter**
+(`frenck/action-addon-linter`), and the **add-on image build** — but only on a PR that changes a
+top-level `config.*`. On a PR that doesn't (docs, `.github/`, `.claude/`) they *skip*, which is not
+the same as passing. Super-Linter runs on every PR and is `continue-on-error`, so it never blocks;
+fix its real findings anyway. Nothing checks the version bump, so bump it yourself — Supervisor
+won't offer a rebuild without one, and `CLAUDE.md` has the format. Update `README.md` if you added
+options; write the CHANGELOG heading as `## <version> (<date>)`, matching the date format already
+in that file — almost always ISO `YYYY-MM-DD`, see `references/traps.md#ci-and-review-bots`.
 
 Write the body to a file, `gh pr create --body-file`: state what was measured, what changed,
 **what is not verified**, and how to roll back the riskiest hunk alone.
 
 ## 8. Resolve review comments
 
-`scripts/pr_review.sh list|reply|resolve|status|watch <PR>`. For every comment, **reproduce the
+`scripts/pr_review.sh list|status|watch <PR>` to read, `reply <PR> <COMMENT_ID> <text|@file>` and
+`resolve <PR> <THREAD_ID…|--all>` to answer; run it with no arguments for the full usage. For every
+comment, **reproduce the
 claim before agreeing or disagreeing** — reviewers are frequently right and occasionally
 confidently wrong; a reproduction takes a minute and decides it either way. Reply with the
 evidence, then resolve. **Push back when you're right**, on the thread — a resolved-but-wrong
@@ -192,13 +212,12 @@ work" — either it was exercised, or say plainly it wasn't.
 
 Light path: verification is `validate.sh` plus CI; anything beyond that is Assumed. Full loop: CI
 passing proves the build works, not that the change does anything — re-run the measurement that
-motivated the work once the rebuilt add-on is running. After merge, `git fetch origin master`
-(the tracking ref is stale otherwise), then confirm the *changes* survived — `git diff
-origin/master -- <the paths you touched>` comes back empty. Ancestry is not the check: a revert
-leaves your commit in history and undoes its tree, so `--contains` reports success either way. The
-builder's revert-on-failure job can revert a merge for reasons unrelated to your diff (see
-`references/traps.md#ci-and-review-bots`). Real "merged and inert" examples, and what
-to do when a fix can't be self-verified: `references/evidence.md`.
+motivated the work once the rebuilt add-on is running. Real "merged and inert" examples, and what
+to do when a fix cannot be self-verified: `references/evidence.md`. Then confirm the change
+survived the merge: `git fetch origin master` first (the tracking ref is stale otherwise), then
+`git diff origin/master -- <the paths you touched>` must come back empty. Ancestry is not the
+check, and the builder reverts merges for reasons unrelated to your diff — both explained in
+`references/traps.md#ci-and-review-bots`.
 
 ## 10. Calibrate and report
 

@@ -2,9 +2,7 @@
 
 Used for step 3 (plan review) and step 6 (code review), full loop only. Codex is a genuinely
 different model reading the files itself; on this workload it has repeatedly been worth the
-minutes. Delegate the invocation to a subagent (see SKILL.md's subagent-delegation note) so its
-output doesn't land verbatim in your context — have the subagent return only Codex's objections
-and your assessment of each.
+minutes. Run it through a subagent, per SKILL.md's delegation note.
 
 ## Invocation
 
@@ -12,11 +10,12 @@ and your assessment of each.
 on ~4 KB prompts (2026-08-03); the CLI with the same content succeeded. The MCP tool is still fine
 for short questions.
 
-`--sandbox read-only` lets Codex read files but blocks writes and command execution, and
-`approval_policy=never` means it will not be prompted for permission to run anything either — so
-paste every number into the prompt rather than expecting Codex to gather it. `- <` feeds the
-prompt file on stdin. Run it in the background so you are not blocked for the several minutes it
-takes (`&` here, or your harness's background-task mechanism):
+`--sandbox read-only` blocks writes, not reads, and `approval_policy=never` stops it asking for
+permission rather than stopping it acting — so it can still run read-only commands and often
+falls back to fetching the repo from GitHub instead of reading your worktree. Paste every number
+into the prompt rather than expecting it to gather them, and treat what it reports about *local*
+state as unverified. `- <` feeds the prompt file on stdin. Run it in the background so you are not
+blocked for the several minutes it takes (`&` here, or your harness's background-task mechanism):
 
 ```bash
 codex exec --model gpt-5.6-sol --sandbox read-only --skip-git-repo-check \
@@ -40,9 +39,5 @@ codex exec --model gpt-5.6-sol --sandbox read-only --skip-git-repo-check \
 confidently, and separately caught a genuine methodology error in the same review. Treat its
 confirmations with the same scepticism as its objections — especially about the build.
 
-**Its objections ratchet complexity upward.** An adversarial reviewer is asked to find what could
-go wrong, so its output is a list of arguments for more code; it is never asked whether the branch
-it wants is reachable. Separate "this is wrong" from "this is undefended" before you write
-anything: the first is a bug and you fix it, the second is a claim about some host, and it needs
-the same demonstration you would demand of a measurement. That is what step 6's second simplify
-pass is for.
+**Its objections only ever argue for more code** — it is asked what could go wrong, never whether
+the branch it wants is reachable. Sort them before writing anything; SKILL.md step 6 is that pass.
