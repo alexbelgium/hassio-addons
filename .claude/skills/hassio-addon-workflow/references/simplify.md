@@ -30,28 +30,24 @@ Being able to build the complicated thing is not a reason to.
   It took the maintainer asking "is this the simplest way possible?" to run the pass that step 6
   now requires.
 
-## Checks worth running against your own diff
+## Where SKILL.md step 5's questions get hard
 
-- **Did the diff stay at the ladder level chosen in step 3?** If it crept up a level, either
-  justify that out loud or redo it at the level you chose.
-- **Can this be solved by deleting instead of adding?** A flag that shouldn't be passed, a
-  process that shouldn't start, a registration that shouldn't be duplicated. Deleting usually
-  shrinks the regression surface — but not always: the `/dev/shm` case in
-  `references/evidence.md` is a removal that reintroduced a crash loop on hosts unlike this one.
-  A removal that depends on a host default still needs the same verification as an addition.
-- **Is the fix bigger than the thing it fixes?** That is a smell, not a rule — but it usually
-  means the problem was framed one level too deep.
-- **For each defensive branch: what input reaches it, on which image or host?** Go and check,
-  the way you would check a measurement. The bar is being able to **name** the case, not to
-  reproduce it here: Docker's 64 MB `/dev/shm` default is documented behaviour that HA does not
-  override, so the bullet above keeps that guard even though this host measured 7.7 GB. Nobody
-  could name a single image shipping `with-contenv` without `s6-dumpenv`, so that fallback went.
-  If you cannot name the case, delete the branch — the situation then fails the way it already
-  fails today, visibly, instead of through a second path that is never exercised and silently
-  rots as the base images move. Weigh the cost too: a one-flag guard against a crash you cannot
-  rule out is cheap, a second code path that degrades to the pre-fix behaviour anyway is not.
-  Write down in the PR body what you cut and why, so the next person does not re-add it from the
-  same reasoning.
-- **How does this fail in three years**, when the base image, Electron, or upstream has moved?
-  Code that reads a documented knob keeps working. Code that reaches into private internals
-  does not.
+**Deletion is not automatically the safe direction.** The `/dev/shm` case in `evidence.md` is a
+removal that reintroduced a crash loop on hosts unlike this one. A removal that depends on a host
+default needs the same verification as an addition.
+
+**Naming the case is the bar for a defensive branch, not reproducing it.** Docker's 64 MB
+`/dev/shm` default is documented behaviour that Home Assistant does not override, so that guard
+stays even though this host measured 7.7 GB. Nobody could name a single image shipping
+`with-contenv` without `s6-dumpenv`, so that fallback went. If you cannot name the case, delete the
+branch: the situation then fails the way it already fails today, visibly, instead of through a
+second path that is never exercised and silently rots as the base images move. Weigh the cost both
+ways — a one-flag guard against a crash you cannot rule out is cheap; a second code path that
+degrades to the pre-fix behaviour anyway is not. Write in the PR body what you cut and why, so the
+next person does not re-add it from the same reasoning.
+
+**"Bigger than the thing it fixes" is a smell, not a rule** — but it usually means the problem was
+framed one level too deep.
+
+**Three-year failure** favours code that reads a documented knob. Code that reaches into private
+internals does not survive the base image moving.

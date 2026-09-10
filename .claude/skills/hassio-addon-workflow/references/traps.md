@@ -9,7 +9,6 @@ workflows and lint rules — that is not repeated here.
 ## Contents
 
 - [Environment and workspace](#environment-and-workspace)
-- [Measurement](#measurement)
 - [Passing values into base-image services](#passing-values-into-base-image-services)
 - [Writing into an app's own config](#writing-into-an-apps-own-config)
 - [Shell and bashio](#shell-and-bashio)
@@ -45,20 +44,6 @@ git worktree add --detach /data/claude/.work/<task> origin/master
 gate. One observed run took ~3 hours, with 20+ runs queued against 2 executing — that was account
 runner contention, not the diff. Check `gh run list` before concluding your PR is stuck. Poll in
 a background task, and never claim the build is verified when it hasn't run.
-
-## Measurement
-
-**Summed RSS overstates savings.** Shared library pages are counted once per process, so removing
-a duplicate frees its *private* memory, not its RSS. Measured example: four MCP shims summed to
-882 MB RSS but 643 MB PSS / 564 MB private, and per-process private ranged 54 MB down to 2 MB —
-which completely changes which duplicate is worth removing. Quote private when arguing "removing
-this saves N MB".
-
-**A large mapping is often not resident.** SysV/tmpfs segments are lazily populated. Xvfb's
-506 MB framebuffer shows `Rss: 0` in `/proc/<pid>/smaps`. Check before calling anything a leak.
-
-**`/proc/meminfo` and `free` show host figures** — there is no memory cgroup namespace here.
-Never attribute those totals to the add-on.
 
 **`rtk` filters some command output.** For a complete listing, redirect to a file and read that
 (`ps ... > $SP/ps.txt`), or use `rtk proxy <cmd>`.
@@ -190,11 +175,9 @@ build.
 
 ## Versioning
 
-**`X.Y.Z.N`, never `X.Y.Z-N`.** A hyphen parses as a semver pre-release, which Supervisor treats
-as *older* than `X.Y.Z` — the update is never offered.
-
-Date-based versions (`2026.08.03`) are common here. Check whether master has already moved to the
-version you were about to use.
+`CLAUDE.md` owns the format (`X.Y.Z.N`, never `X.Y.Z-N`, and why). The one thing it does not say:
+date-based versions (`2026.08.03`) are common here, so check whether master has already moved to
+the version you were about to use before you pick it.
 
 ## Chromium / Electron under Xvfb
 

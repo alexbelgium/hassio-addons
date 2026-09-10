@@ -1,16 +1,24 @@
 # Evidence — measurement methodology and case studies
 
-## Why summed RSS and reserved-vs-resident both matter
+## How to read the numbers
 
-- **Summed RSS double-counts shared pages.** Removing a duplicate process frees its *private*
-  memory, not its RSS. `scripts/measure.sh` reports PSS and private alongside RSS — quote
-  **private** when arguing "removing this saves N MB".
-- **A big mapping is not necessarily resident.** Large SysV/tmpfs segments are lazily populated;
-  reserved size is reported separately from resident for this reason.
-- `/proc/meminfo` and `free` show **host** figures (no memory cgroup namespace here) — never
-  attribute those to the add-on.
-- Sample duration matters: a 3 s CPU sample measured 2.3% where a 20 s sample measured 21.6% for
-  the same process. Use ≥20 s for anything you report.
+**Summed RSS overstates savings.** Shared library pages are counted once per process, so removing
+a duplicate frees its *private* memory, not its RSS. Measured example: four MCP shims summed to
+882 MB RSS but 643 MB PSS / 564 MB private, and per-process private ranged 54 MB down to 2 MB —
+which completely changes which duplicate is worth removing. Quote private when arguing "removing
+this saves N MB".
+
+**A large mapping is often not resident.** SysV/tmpfs segments are lazily populated. Xvfb's
+506 MB framebuffer shows `Rss: 0` in `/proc/<pid>/smaps`. Check before calling anything a leak.
+
+**`/proc/meminfo` and `free` show host figures** — there is no memory cgroup namespace here.
+Never attribute those totals to the add-on.
+
+**A short CPU sample is not a CPU measurement.** A 3 s sample measured 2.3% where a 20 s sample
+measured 21.6% for the same process. Use >= 20 s for anything you report.
+
+`scripts/measure.sh` already reports PSS and private alongside RSS, and resident separately from
+reserved, so these three only bite when you compute a figure yourself or quote one from `ps`.
 
 ## Before asserting anything, ask what would show it false
 
