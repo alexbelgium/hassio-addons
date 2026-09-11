@@ -1,3 +1,6 @@
+ 
+## 3.28.0 (2026-09-12)
+- Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 3.26.0 (2026-09-05)
