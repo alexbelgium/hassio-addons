@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 26.9.0 (2026-09-05)
 - Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)

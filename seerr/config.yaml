@@ -71,7 +71,7 @@ ingress: true
 ingress_stream: true
 init: false
 map:
-  - addon_config:rw
+  - app_config:rw
 name: Seerr
 options:
   NODE_MEMORY_LIMIT: 512

@@ -1,6 +1,7 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2.1.37-4 (2026-01-08)
 - Automatic login with ingress
-- Align configuration mapping with addon_config and homeassistant_config
+- Align configuration mapping with app_config and homeassistant_config
 - Migrate legacy /homeassistant/addons_config/joal data to the addon config folder
 
 ## 2.1.37 (2025-12-23)

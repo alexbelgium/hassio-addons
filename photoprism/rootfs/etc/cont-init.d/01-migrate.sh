@@ -15,9 +15,9 @@ fi
 old_config_dir="$(dirname "$old_config_location")"
 
 if [ "$old_config_dir" != "$new_config_dir" ] && [ -d "$old_config_dir" ]; then
-    echo "Migrating $old_config_dir to /addon_configs/xxx-$slug"
+    echo "Migrating $old_config_dir to /app_configs/xxx-$slug"
     cp -rnf "$old_config_dir"/. "$new_config_dir"/ || true
-    echo "Migrated to internal config folder accessible at /addon_configs/xxx-$slug" \
+    echo "Migrated to internal config folder accessible at /app_configs/xxx-$slug" \
         > "$old_config_dir/.migrate"
 fi
 

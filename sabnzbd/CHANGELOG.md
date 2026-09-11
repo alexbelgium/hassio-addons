@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 5.1.2 (2026-08-29)
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
@@ -47,7 +48,7 @@
 
 ## 4.4.1-2 (2025-02-10)
 
-- New config logic, files migrated to /addon_configs/xxx-sabnzbd
+- New config logic, files migrated to /app_configs/xxx-sabnzbd
 
 ## 4.4.1 (2024-12-21)
 

@@ -80,7 +80,7 @@ ingress: true
 init: false
 map:
   - share:rw
-  - addon_config:rw
+  - app_config:rw
 name: Scrutiny
 options:
   env_vars: []

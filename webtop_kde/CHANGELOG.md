@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 4.16.0.96 (2026-09-05)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)

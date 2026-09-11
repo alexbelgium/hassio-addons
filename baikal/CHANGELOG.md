@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 0.12.1 (2026-09-03)
 
 - Update to Baikal 0.12.1 from 0.10.1 (changelog : <https://github.com/sabre-io/Baikal/releases>). This includes the 0.12.1 fix for an XSS vulnerability that let an authenticated user take over the admin interface by renaming a calendar
@@ -28,7 +29,7 @@
 ## 0.9.5 (2024-04-27)
 - Update to latest version from ckulka/baikal-docker (changelog : https://github.com/ckulka/baikal-docker/releases)
 ## 0.9.4-3 (2024-04-26)
-- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/baikal to a folder only accessible from my Filebrowser addon called /addon_configs/something-baikal. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/baikal to a folder only accessible from my Filebrowser addon called /app_configs/something-baikal. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
 ## 0.9.4-2 (2024-01-14)
 

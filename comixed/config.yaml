@@ -59,7 +59,7 @@ hassio_api: true
 homeassistant_api: true
 image: ghcr.io/alexbelgium/comixed-{arch}
 map:
-  - addon_config:rw
+  - app_config:rw
   - media:rw
   - share:rw
 name: Comixed

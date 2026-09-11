@@ -8,7 +8,7 @@ environment:
 image: ghcr.io/alexbelgium/collabora-{arch}
 init: false
 map:
-  - addon_config:rw
+  - app_config:rw
   - ssl:ro
 name: Collabora
 options:

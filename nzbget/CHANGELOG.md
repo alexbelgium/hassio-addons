@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## v26.3.262 (2026-09-05)
 - Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
@@ -254,7 +255,7 @@
 
 ## v24.5-ls180-3 (2025-02-10)
 
-- New config logic, files migrated to /addon_configs/xxx-nzbget
+- New config logic, files migrated to /app_configs/xxx-nzbget
 
 ## v24.5-ls180 (2025-02-08)
 

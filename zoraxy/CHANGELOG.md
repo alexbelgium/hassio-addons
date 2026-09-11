@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 3.3.4 (2026-08-29)
 - Update to latest version from tobychui/zoraxy (changelog : https://github.com/tobychui/zoraxy/releases)

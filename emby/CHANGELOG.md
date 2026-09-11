@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 
 ## 4.9.5.0 (2026-05-19)
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
@@ -14,7 +15,7 @@
 ## 4.8.11.0-2 (2025-08-02)
 - Minor bugs fixed
 ## 4.8.11.0 (2025-04-22)
-- WARNING : migration of config to addon_config instead of homeassistant config folder. Allows automatic backups. The location of the database however is not changed.
+- WARNING : migration of config to app_config instead of homeassistant config folder. Allows automatic backups. The location of the database however is not changed.
 
 ## 4.9.0.48 (2025-04-19)
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)

@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2.1.0 (2026-08-24)
 
 - Updated the pinned upstream from Free Games Claimer Remaster 1.1 to 1.6,

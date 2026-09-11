@@ -12,7 +12,7 @@ ingress: true
 init: false
 map:
   - share:rw
-  - addon_config:rw
+  - app_config:rw
 name: scrutiny_fa_original
 options:
   env_vars: []

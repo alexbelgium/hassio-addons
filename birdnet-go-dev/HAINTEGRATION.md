@@ -25,7 +25,7 @@ MQTT password : Ri5ahV1aipeiw0aelerooteixai5ohtoeNg6oo3mo0thi5te0phiezuge4Phoore
 MQTT broker : tcp://core-mosquitto:1883
 ---
 
-Edit this section of config.yaml found in addon_configs/db21ed7f_birdnet-go/:
+Edit this section of config.yaml found in app_configs/db21ed7f_birdnet-go/:
     mqtt:
         enabled: true # true to enable MQTT
         broker: tcp://core-mosquitto:1883 # MQTT (tcp://host:port)

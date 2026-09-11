@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 0.6.27.4 (2026-09-04)
 - Fix: Kobo sync could not be enabled, failing with "Kepubify binary not found" even when the path was set by hand. The LinuxServer base image installs the converter as `/usr/bin/kepubify` with `curl -o`, which leaves it mode 0644 and gives it a name calibre-web does not accept : `binary_helper.py` only takes `kepubify-linux-64bit` or `kepubify-linux-32bit`, and only when `os.access(X_OK)` passes. The addon now makes the binary executable and publishes it as `/opt/kepubify/kepubify-linux-64bit`, the directory calibre-web's own autodetection already probes, so the path is filled in without any manual step (https://github.com/alexbelgium/hassio-addons/issues/3040)
@@ -28,7 +29,7 @@
 - Update to latest version from linuxserver/docker-calibre-web (changelog : https://github.com/linuxserver/docker-calibre-web/releases)
 ## 0.6.24-10 (2025-05-28)
 - Fix migration script
-- Allow access to Calibre folder through /addon_configs/xxx-Calibre
+- Allow access to Calibre folder through /app_configs/xxx-Calibre
 
 ## 0.6.24 (2024-11-23)
 - Update to latest version from linuxserver/docker-calibre-web (changelog : https://github.com/linuxserver/docker-calibre-web/releases)
@@ -44,7 +45,7 @@
 - Minor bugs fixed
 ## 0.6.21-5 (2024-01-12)
 
-- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/calibre-web to a folder only accessible from my Filebrowser addon called /addon_configs/something-calibre-web. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/ https://github.com/alexbelgium/hassio-addons/issues/1177
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/calibre-web to a folder only accessible from my Filebrowser addon called /app_configs/something-calibre-web. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/ https://github.com/alexbelgium/hassio-addons/issues/1177
 
 ## 0.6.21-2 (2023-11-05)
 

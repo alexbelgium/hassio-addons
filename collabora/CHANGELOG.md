@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 26.04.3.2.1 (2026-09-05)
 - Update to latest version from collabora/code

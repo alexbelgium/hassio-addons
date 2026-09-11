@@ -7,7 +7,7 @@ arch:
   - aarch64
   - amd64
 map:
-  - addon_config:rw
+  - app_config:rw
 environment:
   PORT: "3000"
 image: ghcr.io/alexbelgium/social_to_mealie-{arch}

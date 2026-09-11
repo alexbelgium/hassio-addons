@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 0.6.1.2 (2026-09-07)
 - Rebuild to pick up a shared `ha_entrypoint.sh` fix: the SIGTERM/SIGINT handler is now installed at the top of the entrypoint instead of at the end of startup. With `init: false` the entrypoint is namespace PID 1, and the kernel discards a signal that PID 1 has no handler for, so a stop arriving while the Supervisor probe or the `cont-init.d` chain was still running was lost entirely and the add-on died only when the grace period expired into SIGKILL. Stops are now honoured from the first moment of startup. No change to add-on behaviour otherwise.
 

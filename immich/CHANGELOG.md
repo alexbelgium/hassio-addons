@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 3.1.0.1 (2026-08-17)
 - Fix `password authentication failed for user` when `DB_PASSWORD` contains special characters. Passwords are now URI-encoded before being used in the psql connection string, and SQL-escaped before being used in `CREATE`/`ALTER USER` statements
@@ -211,7 +212,7 @@
 - NEW FUNCTION : allow to define a library path outside of the data location. For example, if you specify /mnt/NAS/MyPictures as "library_location", and /mnt/NAS/Immich as "data_location", it will then create the whole structure in /mnt/NAS/Immich including the /mnt/NAS/Immich/library. However, this will just be a symlink to /mnt/NAS/MyPictures ; allowing people to still manage their hard drives in a more linear manner
 - Ensure host is reachable before starting
 - Autocorrect homeassistant.local to local ip
-- Align configuration with /addon_configs
+- Align configuration with /app_configs
 - Add gpu access
 
 ## 1.126.1 (2025-02-15)
@@ -383,7 +384,7 @@
 - Update to latest version from imagegenius/docker-immich
 - &#9888; PLEASE BACKUP before updating! Non reversible changes
 - &#9888; BREAKING change : dependency on the update postgres image for vector.rs support, it will not work if you do not update postgres !
-- &#9888; Database location changed from /data to /addon_configs/xxx-postgres : no expected user impact other that all configuration files will also be located in this folder accessible with addons such as Filebrowser
+- &#9888; Database location changed from /data to /app_configs/xxx-postgres : no expected user impact other that all configuration files will also be located in this folder accessible with addons such as Filebrowser
 
 ## 1.90.2 (2023-12-09)
 

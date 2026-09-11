@@ -76,7 +76,7 @@ environment:
 image: ghcr.io/alexbelgium/paperless_ng-{arch}
 init: false
 map:
-  - addon_config:rw
+  - app_config:rw
   - homeassistant_config:rw
   - share:rw
   - media:rw

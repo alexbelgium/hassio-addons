@@ -69,7 +69,7 @@ devices:
 image: ghcr.io/alexbelgium/navidrome-{arch}
 init: false
 map:
-  - addon_config:rw
+  - app_config:rw
   - media
   - share:rw
   - ssl:rw

@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2026.08.15 (15-08-2026)
 
 - Fix: `ALSA_CARD` now really selects the microphone. Its value was copied as-is into `REC_CARD`, but BirdNET-Pi hands `REC_CARD` to `arecord -D` / `ffmpeg -f alsa -i`, which expect an ALSA PCM name: a card index such as `1` gave `Unknown PCM 1` and no recording at all. It is now converted to `plughw:CARD=<value>,DEV=0`, while a value that already is a PCM name (`dsnoop:CARD=Audio,DEV=0`, `default`, `null`, `pulse`, `pipewire`, ...) is used as provided
@@ -156,7 +157,7 @@
 - [ALL] Fix non-avx2 cpu support
 
 ## 2025.02.23 (2025-02-16)
-- WARNING 2025.02.14/16 was buggy. If you installed it you need to restore a backup or delete manually your /addon_configs/xxx-birdnet-pi/birdnet.conf file and recreate it
+- WARNING 2025.02.14/16 was buggy. If you installed it you need to restore a backup or delete manually your /app_configs/xxx-birdnet-pi/birdnet.conf file and recreate it
 - Allow usage as a standalone container (thanks @gotschi) https://github.com/mcguirepr89/BirdNET-Pi/issues/211#issuecomment-2650095952
 - Corrected a bug preventing to create db
 - Corrected a bug to ensure the the most up-to-date birdnet.conf on fresh start

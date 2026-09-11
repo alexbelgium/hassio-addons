@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 2.63.23 (2026-08-01)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
@@ -241,7 +242,7 @@
 
 ## 2.23.0_reverted5 (2023-11-21)
 
-- MAJOR CHANGE : new HA config logic implemented. Files are now located in the addon config file, that can be accessed from the addon_configs folder from my filebrowser or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- MAJOR CHANGE : new HA config logic implemented. Files are now located in the addon config file, that can be accessed from the app_configs folder from my filebrowser or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 - Homeassistant config accessible in /homeassistant folder ; all addons config in /addons_config ; this addon config in /config
 
 ## 2.23.0_reverted (2023-09-29)

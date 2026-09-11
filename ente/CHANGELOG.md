@@ -1,3 +1,4 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 4.4.27 (2026-09-05)
 - Update to latest version from ente/ente (changelog : https://github.com/ente/ente/releases)

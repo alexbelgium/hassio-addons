@@ -77,8 +77,8 @@ image: ghcr.io/alexbelgium/calibre_web-{arch}
 ingress: true
 init: false
 map:
-  - addon_config:rw
-  - all_addon_configs:rw
+  - app_config:rw
+  - all_app_configs:rw
   - homeassistant_config:rw
   - media:rw
   - share:rw

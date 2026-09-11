@@ -55,7 +55,7 @@ Webui can be found at <http://homeassistant:4545> or through the sidebar using I
 Configurations can be done through the app webUI, except for the following options.
 
 The default username/password is described in the startup log.
-Run the addon first, then customize the config file created in `/addon_configs/db21ed7f_requestrr` using the Filebrowser addon.
+Run the addon first, then customize the config file created in `/app_configs/db21ed7f_requestrr` using the Filebrowser addon.
 
 ### Options
 

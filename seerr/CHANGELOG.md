@@ -1,3 +1,5 @@
+- Migrate legacy add-on configuration map names to current app configuration terminology.
+ 
 ## 3.4.1.3 (2026-08-18)
 
 - Fixed the `404: Not Found` on **Discover** persisting for browsers that had already opened Seerr through ingress, even after 3.4.1.1 and 3.4.1.2 were installed (#2975). Seerr serves its JavaScript bundle with `Cache-Control: public, max-age=31536000, immutable`, and the add-on's nginx rewrites that bundle to carry the ingress prefix - which strips the `ETag` and `Last-Modified` a browser would revalidate with. Since every add-on version served the same upstream build, the chunk URLs never changed either, so a browser kept replaying the broken 3.4.1/3.4.1.1 JavaScript from its own cache for up to a year and no fix could reach it. That is why the report persisted on the origin the reporter uses daily (`https://<domain>/`) while a browser that had never cached it (`http://<ip>:8123/`) already showed the fixed behaviour. The asset paths now carry the add-on version, so each release has its own URLs and the first page load after an update fetches the current bundle. Only ingress was affected; the directly published port 5055 always worked.

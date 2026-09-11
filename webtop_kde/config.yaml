@@ -75,7 +75,7 @@ image: ghcr.io/alexbelgium/webtop_kde-{arch}
 ingress: true
 init: false
 map:
-  - addon_config:rw
+  - app_config:rw
   - media:rw
   - share:rw
   - ssl

@@ -63,7 +63,7 @@ COPY bashio-standalone.sh /usr/local/lib/bashio-standalone.sh
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
 # Bypass the original /entrypoint.sh (which mounts /config as VOLUME).
-# Our wrapper symlinks /app/config → HA addon_config and starts ./Cleanuparr directly.
+# Our wrapper symlinks /app/config → HA app_config and starts ./Cleanuparr directly.
 ENTRYPOINT ["/ha_entrypoint.sh"]
 CMD ["./Cleanuparr"]
 
