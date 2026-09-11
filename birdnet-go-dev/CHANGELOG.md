@@ -1,3 +1,4 @@
+## 20260910 (11-09-2026)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 20260909.7 (10-09-2026)
 - Correct the "first daily detection consensus" README section (review feedback on PR #3056): a merged-upstream setting stays in the build rather than disappearing, every attempt for a species is held back until one is accepted rather than only the first, and the "known to every active bird model" exemption is scoped per audio source, matching the implementation.
