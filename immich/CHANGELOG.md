@@ -1,3 +1,6 @@
+ 
+## 3.2.0 (2026-09-12)
+- Update to latest version from immich-app/immich (changelog : https://github.com/immich-app/immich/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 3.1.0.1 (2026-08-17)
