@@ -1,4 +1,7 @@
  
+## 0.38.15 (2026-09-12)
+- Update to latest version from frankieramirez/comicarr (changelog : https://github.com/frankieramirez/comicarr/releases)
+ 
 ## 0.38.7 (2026-09-05)
 - Update to latest version from frankieramirez/comicarr (changelog : https://github.com/frankieramirez/comicarr/releases)
  
