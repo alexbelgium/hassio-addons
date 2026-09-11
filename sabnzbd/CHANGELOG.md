@@ -1,3 +1,6 @@
+ 
+## 5.1.3 (2026-09-12)
+- Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 5.1.2 (2026-08-29)
