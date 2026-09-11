@@ -1,9 +1,9 @@
 {
   "github_beta": "false",
-  "last_update": "2026-09-05",
+  "last_update": "2026-09-12",
   "repository": "alexbelgium/hassio-addons",
   "slug": "ente",
   "source": "github",
   "upstream_repo": "ente/ente",
-  "upstream_version": "1.7.28"
+  "upstream_version": "1.7.29"
 }
