@@ -1,3 +1,6 @@
+ 
+## 4.10.0.40 (2026-09-12)
+- Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 
 ## 4.9.5.0 (2026-05-19)
