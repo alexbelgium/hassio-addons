@@ -1,3 +1,6 @@
+ 
+## 4.0.20.3012 (2026-09-12)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 4.0.19.3009 (2026-09-05)
