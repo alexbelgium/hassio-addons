@@ -70,10 +70,28 @@ service run scripts including `svc-xorg`, and Xvfb runs with `-vfbdevice /dev/dr
 
 - `00-global_var.sh` is cont-init **00**. Any cont-init script numbered higher runs *after* the
   injection, so it cannot change what a service will see through stage 2.
-- LSIO's `svc-xorg` starts `#!/usr/bin/env bashio`, **not** `with-contenv`, so it never reads
-  stage 3 at all. Writing `container_environment` for it is a silent no-op — that shipped: the
-  file was written 6 seconds before Xvfb started, and Xvfb still came up at the base-image
-  default.
+- **Whether a service's own shebang still decides stage 3 depends on whether `ha_entrypoint.sh`
+  runs as PID 1** — i.e. whether the add-on replaces the base `ENTRYPOINT ["/init"]` with one that
+  makes `ha_entrypoint.sh` itself the container's entrypoint (live today in `ente` and
+  `free_games_claimer`; `wger` has the override written into its Dockerfile but commented out, so
+  it is not currently one of these — check the Dockerfile, not this list). Under the normal
+  `/init` path this script runs as the stage-2 hook, `$PID1` is false, and it never touches
+  `services.d/*/run` or `s6-overlay/s6-rc.d/*/run` at all (`.templates/ha_entrypoint.sh:430`,
+  gated on `if $PID1`) — s6's own stage 1 already created `/run/s6/container_environment` before
+  any cont-init script ran, so a service's shipped `with-contenv` shebang reads it normally.
+  Only the `ENTRYPOINT`-override path breaks this, and it breaks it twice over: s6 stage 1 never
+  runs, so nothing ever creates the envdir; and because `ha_entrypoint.sh` is now PID 1, it
+  rewrites the first line of every service `run` file to whichever shebang its own
+  `candidate_shebangs` probe landed on. That probe's first candidate,
+  `/command/with-contenv bashio`, fails precisely because the envdir was never created, so it
+  falls through to `/usr/bin/env bashio` for every service — the real mechanism behind the shipped
+  `svc-xorg` failure (its envdir file was written 6 seconds before Xvfb started, and Xvfb still
+  came up at the base-image default). `cont-init.d` scripts are a separate case: `run_one_script`
+  rewrites their shebang unconditionally, with no `$PID1` gate, so a cont-init script's own
+  shebang is never informative either way. `ha_entrypoint.sh` dumps the environment itself to
+  compensate for the missing envdir, and the envdir writes in `00-global_var.sh` /
+  `01-config_yaml.sh` are `if [ -d ]` guarded, so they take effect only once something has created
+  that directory.
 
 **Renaming an option to match a base-image env var moves validation out of your script and into
 the schema.** `00-global_var.sh` exports empty strings (only objects/arrays/nulls are dropped),
