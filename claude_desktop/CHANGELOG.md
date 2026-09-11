@@ -1,3 +1,7 @@
+ 
+## 07308545.7 (2026-09-12)
+- Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
+- Upstream tag : v3.2.4+claude1.49585.0
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 07308545.6 (2026-09-05)
