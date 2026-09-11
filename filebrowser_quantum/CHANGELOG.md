@@ -1,4 +1,4 @@
-- Breaking change : only appears for admins
+- Breaking change : only appears in ingress for admins
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 1.5.6 (2026-09-05)
