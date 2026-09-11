@@ -1,3 +1,5 @@
+## 20260910.2 (11-09-2026)
+- Minor bugs fixed
 ## 20260910 (11-09-2026)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 20260909.7 (10-09-2026)
