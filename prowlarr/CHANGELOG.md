@@ -1,3 +1,7 @@
+ 
+## 2.6.4.5611.15 (2026-09-12)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : nightly-2.6.4.5611-ls15
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 2.6.3.5608.14 (2026-09-05)
