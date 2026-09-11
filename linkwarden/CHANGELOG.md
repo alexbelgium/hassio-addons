@@ -1,3 +1,6 @@
+ 
+## 2.16.3 (2026-09-12)
+- Update to latest version from linkwarden/linkwarden (changelog : https://github.com/linkwarden/linkwarden/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 2.16.1 (2026-08-22)
