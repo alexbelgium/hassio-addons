@@ -70,10 +70,19 @@ service run scripts including `svc-xorg`, and Xvfb runs with `-vfbdevice /dev/dr
 
 - `00-global_var.sh` is cont-init **00**. Any cont-init script numbered higher runs *after* the
   injection, so it cannot change what a service will see through stage 2.
-- LSIO's `svc-xorg` starts `#!/usr/bin/env bashio`, **not** `with-contenv`, so it never reads
-  stage 3 at all. Writing `container_environment` for it is a silent no-op — that shipped: the
-  file was written 6 seconds before Xvfb started, and Xvfb still came up at the base-image
-  default.
+- **Whether stage 3 is read at all is decided once, for every service, by
+  `ha_entrypoint.sh`.** It rewrites the first line of every `cont-init.d` script and every
+  `services.d/*/run` and `s6-overlay/s6-rc.d/*/run` to a single shebang chosen by probing
+  `candidate_shebangs` in order. The first candidate is `/command/with-contenv bashio`; in add-ons
+  that override the base `ENTRYPOINT ["/init"]` the s6 stage 1 that creates
+  `/run/s6/container_environment` never runs, that candidate fails, and the probe falls through to
+  `/usr/bin/env bashio` — so **no** service reads stage 3, whatever its shebang said in the image.
+  That is the real mechanism behind the shipped `svc-xorg` failure (the envdir file was written
+  6 seconds before Xvfb started and Xvfb still came up at the base-image default); the shebang in
+  the upstream image is not what decides it. `ha_entrypoint.sh` dumps the environment itself to
+  compensate, and the envdir writes in `00-global_var.sh` / `01-config_yaml.sh` are `if [ -d ]`
+  guarded, so they are live only once something has created that directory. Read the file before
+  reasoning about which stage a given add-on actually has.
 
 **Renaming an option to match a base-image env var moves validation out of your script and into
 the schema.** `00-global_var.sh` exports empty strings (only objects/arrays/nulls are dropped),
