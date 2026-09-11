@@ -1,3 +1,7 @@
+ 
+## 2.1.1 (2026-09-12)
+- Update to latest version from P-Adamiec/Free-Games-Claimer-Remaster (changelog : https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases)
+- Upstream tag : 1.9
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2.1.0 (2026-08-24)
 
