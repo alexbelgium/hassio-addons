@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-05-22",
+  "last_update": "2026-09-12",
   "repository": "alexbelgium/hassio-addons",
   "slug": "joplin",
   "source": "github",
   "upstream_repo": "etechonomy/joplin-server",
-  "upstream_version": "3.7.1"
+  "upstream_version": "3.7.2"
 }
