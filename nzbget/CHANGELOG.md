@@ -1,3 +1,7 @@
+ 
+## v26.3.263 (2026-09-12)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
+- Upstream tag : v26.3-ls263
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## v26.3.262 (2026-09-05)
