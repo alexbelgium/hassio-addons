@@ -30,5 +30,5 @@ schema:
   ENCRYPTION_KEY: str?
 slug: spotify_to_plex
 url: https://github.com/alexbelgium/hassio-addons/tree/master/spotify_to_plex
-version: "1.0.104"
+version: "1.0.107"
 webui: "http://[HOST]:[PORT:9030]"

@@ -17,7 +17,7 @@ ARG BUILD_REF
 ARG BUILD_REPOSITORY
 ARG BUILD_VERSION
 ARG UPSTREAM_REPOSITORY="P-Adamiec/Free-Games-Claimer-Remaster"
-ARG UPSTREAM_REF="cca4992354215cef8807b748575af797606627f4"
+ARG BUILD_UPSTREAM="1.6"
 
 ENV S6_CMD_WAIT_FOR_SERVICES="1" \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME="0" \
@@ -27,10 +27,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES="1" \
     WIDTH="1280" \
     HEIGHT="720" \
     DEPTH="24" \
-    SHOW="1" \
-    COMMIT="${UPSTREAM_REF}" \
-    BRANCH="main" \
-    NOW="${BUILD_DATE}"
+    SHOW="1"
 
 # Install the dependencies used by Free Games Claimer Remaster. The upstream
 # Dockerfile supports both amd64 (Google Chrome) and arm64 (Chromium), so the
@@ -87,6 +84,11 @@ RUN apt-get update \
     else \
         apt-get install -y --no-install-recommends chromium; \
     fi \
+    && printf '#!/bin/sh\nexit 0\n' > /usr/bin/xdg-open \
+    && chmod +x /usr/bin/xdg-open \
+    && mkdir -p /etc/opt/chrome/policies/managed /etc/chromium/policies/managed \
+    && printf '%s\n' '{"AutoLaunchProtocolsFromOrigins":[{"protocol":"aliexpress","allowed_origins":["*"]},{"protocol":"aliexpresshd","allowed_origins":["*"]},{"protocol":"aecmd","allowed_origins":["*"]},{"protocol":"alibaba","allowed_origins":["*"]},{"protocol":"alipay","allowed_origins":["*"]},{"protocol":"alipays","allowed_origins":["*"]},{"protocol":"tmall","allowed_origins":["*"]},{"protocol":"taobao","allowed_origins":["*"]},{"protocol":"market","allowed_origins":["*"]},{"protocol":"intent","allowed_origins":["*"]}]}' \
+       | tee /etc/opt/chrome/policies/managed/fgc-autolaunch.json /etc/chromium/policies/managed/fgc-autolaunch.json > /dev/null \
     && ln -sf /usr/share/novnc/vnc_auto.html /usr/share/novnc/index.html \
     && ln -sf /usr/bin/python3 /usr/bin/python \
     && apt-get purge -y gnupg \
@@ -94,13 +96,20 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /var/cache/* /var/tmp/* /tmp/* /usr/share/doc/*
 
-# Install a deterministic snapshot of the replacement upstream. Updating the
-# upstream reference is intentionally explicit so image contents cannot change
-# without an add-on version bump.
+# Install the upstream release named by BUILD_UPSTREAM. The repository updater
+# bumps that value together with the add-on version. A release tag is a mutable
+# reference: rebuilding the same BUILD_UPSTREAM installs whatever the tag points
+# at today, which is the accepted cost of tracking upstream automatically.
+# Upstream tags its releases "v1.6", but the tag name is downloaded without the
+# prefix as well so that an unattended update does not fail the build if
+# upstream ever drops it.
 WORKDIR /fgc
-RUN curl --proto "=https" --tlsv1.2 -fsSL \
-        "https://github.com/${UPSTREAM_REPOSITORY}/archive/${UPSTREAM_REF}.tar.gz" \
+RUN (curl --proto "=https" --tlsv1.2 -fsSL \
+        "https://github.com/${UPSTREAM_REPOSITORY}/archive/v${BUILD_UPSTREAM}.tar.gz" \
         -o /tmp/free-games-claimer-remaster.tar.gz \
+        || curl --proto "=https" --tlsv1.2 -fsSL \
+            "https://github.com/${UPSTREAM_REPOSITORY}/archive/${BUILD_UPSTREAM}.tar.gz" \
+            -o /tmp/free-games-claimer-remaster.tar.gz) \
     && tar -xzf /tmp/free-games-claimer-remaster.tar.gz --strip-components=1 -C /fgc \
     && python3 -m pip install --no-cache-dir --break-system-packages -r requirements.txt \
     && dos2unix ./*.sh \
@@ -155,4 +164,4 @@ LABEL \
     org.opencontainers.image.created="${BUILD_DATE}" \
     org.opencontainers.image.revision="${BUILD_REF}" \
     org.opencontainers.image.version="${BUILD_VERSION}" \
-    io.hass.upstream="https://github.com/${UPSTREAM_REPOSITORY}/tree/${UPSTREAM_REF}"
+    io.hass.upstream="https://github.com/${UPSTREAM_REPOSITORY}/releases"

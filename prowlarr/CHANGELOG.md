@@ -1,5 +1,29 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 2.6.3.5608.14 (2026-09-05)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : nightly-2.6.3.5608-ls14
+ 
+## 2.6.2.5583.12 (2026-08-29)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : nightly-2.6.2.5583-ls12
+ 
+## 2.6.2.5581.11 (2026-08-29)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : nightly-2.6.2.5581-ls11
+ 
+## 2.6.2.5558.10 (2026-08-22)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : nightly-2.6.2.5558-ls10
+ 
+## 2.6.2.5548.10 (2026-08-13)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : nightly-2.6.2.5548-ls10
+ 
+## 2.6.2.5534.9 (2026-08-11)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : nightly-2.6.2.5534-ls9
+ 
 ## 2.6.2.5517.9 (2026-08-02)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.2.5517-ls9

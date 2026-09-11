@@ -30,7 +30,7 @@ RUN set -eux; \
 
 # Pull the web source
 WORKDIR /src
-RUN git clone --depth 1 --branch "${ENTE_WEB_TAG}" https://github.com/ente-io/ente.git .
+RUN git clone --depth 1 --branch "${ENTE_WEB_TAG}" https://github.com/ente/ente.git .
 
 # Build web workspace (lives in ./web)
 WORKDIR /src/web
@@ -52,7 +52,7 @@ RUN npm run build:memories
 #################
 # 1) Base image #
 #################
-FROM ghcr.io/ente-io/server:latest
+FROM ghcr.io/ente/server:latest
 
 ##################
 # 2) Tune image  #

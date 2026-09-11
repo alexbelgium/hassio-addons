@@ -23,7 +23,10 @@ Consider only comments authored by `coderabbitai[bot]`. Ignore its collapsed
 ## Hard limits (a workflow step enforces the first)
 
 1. **Never modify `.github/` or `.templates/`.** Repo-wide infrastructure.
-2. **Never touch the `version` or `upstream` fields in `config.yaml`.**
+2. **Leave `version` in `config.yaml` alone, and never edit `updater.json`.** The rest of
+   `config.yaml` is fair game. Unlike the fix sweep, you are amending a pull
+   request that has *already* bumped the local patch counter — one bump covers
+   the whole PR, so incrementing it again here would just churn the diff.
 3. **Stay within this PR's scope and branch.** Do not open a new PR, do not
    touch other add-ons, do not merge, do not mark ready/draft.
 

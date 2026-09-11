@@ -28,9 +28,14 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 
+# The upstream image no longer ships database defaults; settings/main.py reads
+# DJANGO_DB_ENGINE and DJANGO_DB_DATABASE with no fallback, so they must be set here
 ENV SYNC_EXERCISES_ON_STARTUP=True \
     DOWNLOAD_EXERCISE_IMAGES_ON_STARTUP=True \
     FROM_EMAIL='wger Workout Manager <wger@example.com>' \
+    DJANGO_DB_ENGINE="django.db.backends.sqlite3" \
+    DJANGO_DB_DATABASE="/data/database.sqlite" \
+    DJANGO_PERFORM_MIGRATIONS=True \
     DJANGO_MEDIA_ROOT="/data/media" \
     DJANGO_STATIC_ROOT="/data/static"
 

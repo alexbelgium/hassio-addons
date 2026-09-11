@@ -35,11 +35,9 @@ RUN \
     && echo '#!/bin/sh' > /usr/bin/xdg-desktop-menu && chmod +x /usr/bin/xdg-desktop-menu \
     && echo '#!/bin/sh' > /usr/bin/xdg-mime && chmod +x /usr/bin/xdg-mime
 
-# Install calibre binaries (provides calibredb required for book downloads)
-# hadolint ignore=DL4006
-RUN \
-    wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin install_dir=/opt/calibre
-ENV PATH="/opt/calibre:${PATH}"
+# By default the calibre binaries (calibredb, ebook-convert, ebook-meta) are installed at start by
+# the linuxserver/mods:universal-calibre docker mod, set as the default DOCKER_MODS in config.yaml.
+# The xdg-* stubs above keep its calibre_postinstall step quiet.
 
 # Global LSIO modifications
 COPY ha_lsio.sh /ha_lsio.sh
@@ -47,8 +45,23 @@ ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 # Specific images modifications
+# The base image installs kepubify with "curl -o /usr/bin/kepubify", which both leaves it mode
+# 0644 and gives it a name calibre-web does not accept : binary_helper.py only takes
+# "kepubify-linux-64bit" or "kepubify-linux-32bit", and only when os.access(X_OK) passes. Both
+# defects have to be fixed, which is why enabling Kobo sync failed with "Kepubify binary not
+# found" even when the path was set by hand. Publish it under an accepted name in /opt/kepubify,
+# the directory calibre-web's own autodetect_kepubify_binary() already probes, so calibre-web
+# fills the setting in itself. The second link keeps /usr/bin working as well : that is the value
+# already stored by anyone who applied the "ln -sf /usr/bin/kepubify /usr/bin/kepubify-linux-64bit"
+# workaround, and their setting is not empty, so it is left alone below and has to keep resolving.
+# Unguarded on purpose: if a future base image stops shipping the binary, the build must fail here
+# rather than ship a silently broken add-on.
 RUN \
-    usermod --home /config abc
+    usermod --home /config abc \
+    && chmod 0755 /usr/bin/kepubify \
+    && mkdir -p /opt/kepubify \
+    && ln -s /usr/bin/kepubify /opt/kepubify/kepubify-linux-64bit \
+    && ln -s /usr/bin/kepubify /usr/bin/kepubify-linux-64bit
 
 ##################
 # 3 Install apps #

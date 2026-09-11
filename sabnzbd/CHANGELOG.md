@@ -1,5 +1,21 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 5.1.2 (2026-08-29)
+- Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
+ 
+## 5.1.1.3 (2026-08-25)
+- Fixed ingress returning `403 External internet access denied` when Home Assistant is reached from outside the local network. SABnzbd's `verify_xff_header` option, which is on by default, refuses any request whose `X-Forwarded-For` chain contains a non-local address, so the proxy no longer forwards that header.
+
+## 5.1.1.2 (2026-08-25)
+- Ingress is now enabled: the WebUI opens directly in the Home Assistant sidebar, and the "Open Web UI" button now goes there. Access by ip:port is unchanged, but has to be typed rather than clicked, as Home Assistant does not allow an add-on to offer both.
+- Note for users who set a "Host verification" whitelist in SABnzbd: ingress sends `Host: 127.0.0.1:8080` upstream, because SABnzbd rejects any Host that is not an IP literal. That whitelist therefore no longer filters the ingress route, which is gated by Home Assistant authentication instead. Direct ip:port access is unchanged and still filtered.
+
+## 5.1.1 (2026-08-22)
+- Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
+ 
+## 5.1.0 (2026-08-13)
+- Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
+ 
 ## 5.0.4 (2026-06-11)
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 

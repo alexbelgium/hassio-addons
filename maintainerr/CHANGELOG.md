@@ -1,5 +1,20 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 3.26.0 (2026-09-05)
+- Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
+ 
+## 3.25.0 (2026-08-29)
+- Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
+ 
+## 3.24.0 (2026-08-22)
+- Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
+ 
+## 3.22.1 (2026-08-13)
+- Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
+ 
+## 3.22.0 (2026-08-08)
+- Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
+ 
 ## 3.21.1 (2026-08-02)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
  

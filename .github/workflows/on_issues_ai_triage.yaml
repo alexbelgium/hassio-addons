@@ -21,6 +21,10 @@
 #
 # Auth: Claude Pro/Max subscription via the CR_PAT GitHub Environment, which
 # holds the CLAUDE_CODE_OAUTH_TOKEN secret (generate with `claude setup-token`).
+# GitHub side is GITHUB_TOKEN throughout — no PAT. The classify job pairs it
+# with `allowed_non_write_users` so an outside reporter's issue-open event can
+# get past the action's write-permission gate; the catch-up job pairs it with a
+# job-level actions:write so it can dispatch. See the comments at each site.
 
 name: AI issue triage
 
@@ -37,6 +41,16 @@ on:
       issue:
         description: "Issue number to (re-)triage manually"
         required: true
+      source:
+        # Explicit provenance, set only by the catch-up job below. Previously
+        # this was inferred from github.actor, which is brittle: a re-run, a
+        # dispatch via a PAT or App, or another maintainer all change it, and
+        # the dangerous direction is the false negative — an automated retry
+        # that is never recognised as one keeps retrying forever. An input the
+        # scheduler sets explicitly cannot drift with GitHub's actor semantics.
+        description: "Set to 'catchup' by the daily catch-up job; leave blank for a manual re-triage"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -127,9 +141,17 @@ jobs:
         with:
           fetch-depth: 1
           persist-credentials: false
+          # .templates holds the shared build/runtime scripts (ha_entrypoint.sh,
+          # ha_automodules.sh, the cont-init modules) that nearly every add-on
+          # depends on, so a large share of reports can only be explained by
+          # reading them. Without it the classifier burned 6 of its turns on
+          # #2949 hunting for files that were not checked out, then died on
+          # max_turns. It is a small directory — cheaper to ship than to search
+          # for and not find.
           sparse-checkout: |
             .github/prompts
             .github/scripts
+            .templates
           sparse-checkout-cone-mode: false
 
       - name: Build context bundle
@@ -144,7 +166,7 @@ jobs:
         id: classify
         if: github.event_name != 'issue_comment' || steps.claim.outputs.go == 'true'
         continue-on-error: true
-        uses: anthropics/claude-code-action@be7b93b1907a4abad570368f3c74b6fe3807510b  # v1
+        uses: anthropics/claude-code-action@d75b94d5ad426cb8546e6628b6f5f19b84e5cce1  # v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # Without this the action falls back to the OIDC -> Claude App token
@@ -153,21 +175,99 @@ jobs:
           # opened the issue or replied to a needs-info request. Same token the
           # step already exports as GH_TOKEN; classify only reads.
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # THE fix for tier 1. `issues` and `issue_comment` are "entity"
+          # contexts in the action (src/github/context.ts), so it runs
+          # checkWritePermissions() against github.actor — which on an
+          # issue-open event is the outside reporter, who never has write.
+          # Every run failed there ("Actor does not have write permissions")
+          # and continue-on-error painted it green. The bypass branch in
+          # src/github/validation/permissions.ts needs BOTH github_token
+          # (above) and a non-empty allowed_non_write_users — hence this.
+          # `schedule` / `workflow_dispatch` are "automation" contexts and skip
+          # the check entirely, which is why the catch-up path below does not
+          # need it.
+          #
+          # This is the case the input exists for (docs/security.md: "designed
+          # for automation workflows where user permissions are already
+          # restricted by the workflow's permission scope"). The scope here is
+          # contents:read + issues:write, the model gets no credentials and no
+          # Bash, and every value it produces is validated in Apply verdict.
+          allowed_non_write_users: "*"
+          # Separate gate from the one above, and it bit the catch-up path in
+          # production: checkHumanActor (src/github/validation/actor.ts)
+          # rejects any actor whose account type is not User. The catch-up
+          # dispatches with GITHUB_TOKEN, so those runs arrive as
+          # github-actions[bot] and died with "Workflow initiated by non-human
+          # actor". allowed_non_write_users does NOT cover this — it is only
+          # consulted for User accounts.
+          # Named rather than "*": only this repo's own workflows can dispatch
+          # as github-actions, whereas "*" would also admit any other App that
+          # can reach a trigger. The matcher lowercases and strips a trailing
+          # [bot], so this entry matches the github-actions[bot] actor.
+          # Scheduled runs are unaffected either way — they arrive as
+          # actor=alexbelgium, a User.
+          allowed_bots: "github-actions"
           show_full_output: true
+          # Stated up front, because a wrong guess about the environment costs
+          # turns the analysis then does not have. On #2949, under the earlier
+          # 12-turn budget, the model spent 3 turns retrying Bash and 6 hunting
+          # files outside the sparse checkout and died before reaching a
+          # verdict. The budget is 25 now, but it is meant to buy analysis, not
+          # more failed probing — keep this in step with --max-turns below.
           prompt: |
             Read /tmp/ai-triage/context.md, then follow the instructions in
             .github/prompts/issue-classify.md exactly.
 
-            Write your verdict as a single JSON object to
-            /tmp/ai-triage/verdict.json and write nothing else anywhere.
-            Do NOT comment on or label the issue yourself.
+            Before you start, two facts about this environment. Both are hard
+            limits, not preferences — working around them is not possible and
+            costs you turns you need for the analysis.
+
+            You have exactly three tools: Read, Glob and Grep. There is no
+            Bash. Do not try to run `find`, `ls`, `cat` or any other command;
+            those calls fail and are not retryable. Use Glob where you would
+            have used `find`, and Grep where you would have used `grep`.
+
+            This is a SPARSE checkout of a 100+ add-on monorepo. Only these
+            paths exist on disk — everything else is absent, and searching for
+            it will find nothing no matter how you phrase the search:
+              * .templates/          shared build and runtime scripts that most
+                                     add-ons rely on (ha_entrypoint.sh,
+                                     ha_automodules.sh, the cont-init modules)
+              * .github/prompts/, .github/scripts/
+              * the single add-on directory named in the context bundle, if it
+                was resolved — the bundle says which, or says UNRESOLVED
+            Other add-ons are NOT present. If the bundle says UNRESOLVED, no
+            add-on source is on disk at all: judge from the bundle alone and
+            set confidence accordingly rather than searching for the code.
+
+            You have a budget of 25 turns. The context bundle already contains
+            the issue, its comments, the add-on's config/Dockerfile/docs, its
+            recent commits and candidate duplicates — so read it first and
+            spend turns only on what it does not already answer.
+
+            Return your verdict as structured output. Do NOT comment on or
+            label the issue yourself.
+          # The model gets NO write capability of any kind — not Bash, not
+          # Write, and no GH_TOKEN in this step's env. That matters more here
+          # than usual: allowed_non_write_users above deliberately admits
+          # untrusted reporters, and the issue body it reads is their text.
+          # With a Write tool an injected instruction could drop a script on
+          # disk and append BASH_ENV=<that script> to the runner's $GITHUB_ENV
+          # file command (discoverable under $RUNNER_TEMP with Glob). The
+          # runner applies that between steps, so the next bash step — Apply
+          # verdict, holding an issues:write GH_TOKEN — would source it before
+          # any of the validation below ran. Delivering the verdict through the
+          # action's --json-schema structured output instead of a file removes
+          # the write primitive that chain starts from.
+          # Duplicate lookup is already done too: ai_triage_context.sh ran
+          # `gh search issues` and baked the candidates into context.md, so the
+          # model has nothing left to ask GitHub for either.
           claude_args: |
             --model claude-sonnet-5
             --effort low
-            --max-turns 12
-            --allowedTools "Read,Write,Glob,Grep,Bash(gh issue list:*),Bash(gh search issues:*)"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            --max-turns 25
+            --allowedTools "Read,Glob,Grep"
+            --json-schema '{"type":"object","properties":{"verdict":{"type":"string","enum":["owned","duplicate","needs-info","question","upstream-bug","addon-bug","feature-request"]},"addon":{"type":"string"},"confidence":{"type":"string","enum":["high","medium","low"]},"duplicate_of":{"type":"integer"},"labels":{"type":"array","items":{"type":"string"},"maxItems":2},"root_cause_hint":{"type":"string"},"comment":{"type":"string"}},"required":["verdict","confidence"]}'
 
       - name: Apply verdict
         if: github.event_name != 'issue_comment' || steps.claim.outputs.go == 'true'
@@ -176,31 +276,245 @@ jobs:
           ISSUE: ${{ github.event.issue.number || inputs.issue }}
           REPO: ${{ github.repository }}
           EVENT_NAME: ${{ github.event_name }}
+          # Distinguishes the automated catch-up retry from a manual
+          # re-triage — see is_automated_retry below.
+          DISPATCH_SOURCE: ${{ inputs.source }}
+          CLASSIFY_OUTCOME: ${{ steps.classify.outcome }}
+          # Through env, never interpolated into the script body: this string
+          # is model output and "${{ }}" inline would splice it into the shell
+          # source itself.
+          STRUCTURED: ${{ steps.classify.outputs.structured_output }}
+          # Written by the action even when it fails (setExecutionFileOutputIfPresent
+          # runs in its catch block), which is what lets the max-turns check below
+          # work on exactly the runs that need it.
+          EXECUTION_FILE: ${{ steps.classify.outputs.execution_file }}
         run: |
           set -euo pipefail
+          mkdir -p /tmp/ai-triage
           F=/tmp/ai-triage/verdict.json
-          if [ ! -s "$F" ] || ! jq -e . "$F" >/dev/null 2>&1; then
-            echo "::warning::no usable verdict produced, leaving issue untouched"
-            # A reporter reply consumed ai:needs-info in the claim step above.
-            # With no verdict we would otherwise leave the issue with the flag
-            # gone, so the next reply could never re-trigger — restore it.
-            if [ "${EVENT_NAME:-}" = "issue_comment" ]; then
-              gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-info >/dev/null 2>&1 || true
+
+          # A reporter reply consumed ai:needs-info in the claim step above, so
+          # every early exit below has to restore it or the next reply could
+          # never re-trigger. Defined once here rather than repeated per exit.
+          restore_needs_info() {
+            [ "${EVENT_NAME:-}" = "issue_comment" ] || return 0
+            gh issue edit "$ISSUE" --repo "$REPO" --add-label ai:needs-info >/dev/null 2>&1 || true
+          }
+
+          # Is this the automated second look, rather than a first attempt?
+          # EVENT_NAME alone is not enough: workflow_dispatch is BOTH the daily
+          # catch-up retry and the maintainer's manual re-triage, so keying on
+          # it alone escalates a hand-dispatched first attempt immediately.
+          # The catch-up therefore states its provenance explicitly via the
+          # `source` input. Inferring it from github.actor instead was rejected:
+          # a re-run, a PAT- or App-issued dispatch, or a different maintainer
+          # all change the actor, and the failure that matters is the false
+          # NEGATIVE — an automated retry not recognised as one would never
+          # escalate and would retry that issue forever.
+          # Unknown provenance is treated as "not the automated retry", which
+          # is safe here because every non-escalating max-turns path below ends
+          # in a red run rather than a silent green one.
+          is_automated_retry() {
+            [ "${EVENT_NAME:-}" = "workflow_dispatch" ] && [ "${DISPATCH_SOURCE:-}" = "catchup" ]
+          }
+
+          # Hand the issue to a human and take it out of the retry rotation.
+          # Returns non-zero if the labels did not actually land — callers must
+          # treat that as a failure rather than reporting a hand-off that never
+          # happened, which would leave the issue unlabelled and back in the
+          # retry rotation it was supposed to leave.
+          escalate_to_human() {
+            # Best effort: the label usually exists, and `gh issue edit` fails
+            # on its own below if it does not.
+            gh label create ai:needs-human --repo "$REPO" --color ededed >/dev/null 2>&1 || true
+            # NOT suppressed with `|| true`. ai-triage and ai:needs-info come
+            # off in the same call: leaving ai-triage would keep an issue we
+            # just escalated sitting in tier 2's unattended queue, and leaving
+            # ai:needs-info would let a reporter reply silently re-trigger
+            # classification behind the human's back. Removing a label the
+            # issue does not carry is a no-op, so this cannot fail spuriously.
+            gh issue edit "$ISSUE" --repo "$REPO" \
+              --add-label ai:needs-human \
+              --remove-label ai-triage --remove-label ai:needs-info >/dev/null 2>&1
+          }
+
+          # Did the run die on its turn budget rather than on a workflow fault?
+          # The execution file is a JSON array of SDK messages; the terminal
+          # result object carries subtype "error_max_turns".
+          #
+          # This MUST fail closed: a false positive here downgrades a genuine
+          # workflow failure from a red run to a warning, which is the exact
+          # silent-failure class this workflow was rebuilt to remove. Hence the
+          # explicit `type == "array"` root check — without it `.[]?` happily
+          # iterates the VALUES of an object, so if the action ever changed the
+          # file's shape, {"result":{"subtype":"error_max_turns"}} would match
+          # and mask the failure. Anything that is not the array we expect is
+          # treated as "not max turns" and falls through to the loud path.
+          # The `?` and per-element type check keep a non-object element from
+          # aborting the step under set -e.
+          hit_max_turns() {
+            [ -n "${EXECUTION_FILE:-}" ] && [ -s "${EXECUTION_FILE:-}" ] || return 1
+            jq -e '(type == "array") and
+                   any(.[]?;
+                       (type == "object") and
+                       (((.subtype? // "") == "error_max_turns") or
+                        ((.terminal_reason? // "") == "max_turns")))' \
+               "$EXECUTION_FILE" >/dev/null 2>&1
+          }
+
+          # Did the run die because the Claude credential is bad? The action
+          # reports this uselessly — a revoked token surfaces as "--json-schema
+          # was provided but Claude did not return structured_output", which
+          # points at the schema and not at auth. The execution file carries the
+          # truth: api_retry / result objects with error "authentication_failed"
+          # and a 401. Same array guard and fail-closed posture as above; an
+          # unrecognised shape simply is not an auth failure and falls through
+          # to the generic branch.
+          hit_auth_failure() {
+            [ -n "${EXECUTION_FILE:-}" ] && [ -s "${EXECUTION_FILE:-}" ] || return 1
+            jq -e '(type == "array") and
+                   any(.[]?;
+                       (type == "object") and
+                       (((.error? // "") == "authentication_failed") or
+                        ((.error_status? // 0) == 401) or
+                        ((.api_error_status? // 0) == 401)))' \
+               "$EXECUTION_FILE" >/dev/null 2>&1
+          }
+
+          # GATE 1 — did the action itself run? This is checked BEFORE looking
+          # at the payload, because the action can fail *after* having written
+          # a valid structured output: the object would sail through the shape
+          # check below, labels and a comment would be applied, and the step
+          # would exit 0 — a green run on a failed action, which is the exact
+          # silent-failure mode this workflow was rebuilt to eliminate.
+          # A failed action means its output is not trustworthy, full stop.
+          #
+          # This branch is also deliberately label-neutral. An action failure
+          # (auth, config, an outage) is systemic — it hits every issue the
+          # same way — so quarantining here would silently bury a batch a day
+          # while the real fault sits in the workflow. Fail red, add nothing,
+          # let the catch-up retry once it's fixed. Classify carries
+          # continue-on-error so this step still runs at all; without the
+          # explicit exit 1 the job would report success.
+          if [ "${CLASSIFY_OUTCOME:-}" = "failure" ]; then
+            restore_needs_info
+
+            # Checked before anything else, because it is the one failure with
+            # a specific remedy and it takes down every tier at once — tier 1
+            # cannot label, so tier 2's batch is empty and the whole pipeline
+            # goes quiet while each run still fails in a way that reads like a
+            # per-issue problem. Say plainly what is wrong and what to do.
+            if hit_auth_failure; then
+              echo "::error::CLAUDE_CODE_OAUTH_TOKEN is rejected (HTTP 401 / authentication_failed). This is NOT a problem with issue #$ISSUE — every AI workflow is down until the credential is replaced. Regenerate it with 'claude setup-token' and update the CLAUDE_CODE_OAUTH_TOKEN secret in the CR_PAT environment. Set the AI_DISABLED repo variable to 'true' to silence these runs meanwhile."
+              exit 1
+            fi
+
+            # ...with one exception. Exhausting the turn budget is NOT a
+            # workflow fault: the action ran fine and this particular issue was
+            # just too tangled to finish inside the turn budget. Treating it as systemic
+            # meant #2949 failed red and stayed unlabelled, so the catch-up
+            # re-dispatched it every day forever — and being the newest issue
+            # it took the first of only five daily slots each time.
+            # So it is handled like GATE 2 below instead: one retry, then a
+            # human. Warning rather than error, because a red run per day for a
+            # per-issue condition is alarm fatigue, and the outcome is recorded
+            # durably on the issue itself rather than only in a run log.
+            # A green run is only ever justified once the outcome is recorded
+            # somewhere durable. On the automated second look that is the
+            # ai:needs-human label, and only if it actually landed. On a first
+            # attempt nothing is recorded anywhere but this annotation, so
+            # exiting 0 there would be precisely the "green run, work silently
+            # dead" state that left triage broken for weeks. It costs at most
+            # one red run per problem issue, not one per day, because the
+            # second look ends the retry rotation either way.
+            if hit_max_turns; then
+              if is_automated_retry; then
+                echo "::warning::second attempt for #$ISSUE also ran out of turns, handing it to a human"
+                if ! escalate_to_human; then
+                  echo "::error::could not label #$ISSUE ai:needs-human — it is NOT escalated and stays in the retry rotation"
+                  exit 1
+                fi
+                exit 0
+              fi
+              echo "::error::classification for #$ISSUE ran out of turns; leaving it for the catch-up to retry once, after which it goes to a human"
+              exit 1
+            fi
+
+            echo "::error::the Classify action failed for #$ISSUE — this is usually a workflow-level fault affecting every issue, so the issue is left untouched for a retry. See the Classify step."
+            exit 1
+          fi
+
+          # The verdict arrives as the action's schema-validated structured
+          # output rather than a file the model wrote — see the Classify step.
+          printf '%s' "${STRUCTURED:-}" > "$F"
+
+          # GATE 2 — the action ran, but is the payload usable? `jq -e .` alone
+          # accepts any truthy JSON, so a verdict of `[1,2]` or `"hi"` would
+          # pass and then die on `.verdict` below with "Cannot index array with
+          # string", killing the step under set -e before the restore. Require
+          # an object.
+          #
+          # Reaching here means the failure is specific to THIS issue — the
+          # model looked at it and produced nothing usable — so a retry is
+          # worth exactly one attempt. Only a dispatch carrying source=catchup
+          # counts as that second attempt (is_automated_retry above); a manual
+          # workflow_dispatch is a first look and does NOT escalate, leaving
+          # the issue unlabelled so the catch-up still gets its own go. On the
+          # automated retry, hand it to a human rather than re-dispatching the
+          # same issue every day forever; ai:needs-human is in the catch-up
+          # exclusion search, so it drops out of the queue instead of starving
+          # newer issues behind it.
+          if [ ! -s "$F" ] || ! jq -e 'type == "object"' "$F" >/dev/null 2>&1; then
+            restore_needs_info
+            echo "::warning::no usable verdict produced for #$ISSUE"
+            if is_automated_retry; then
+              echo "::warning::second attempt produced no verdict, handing #$ISSUE to a human"
+              if ! escalate_to_human; then
+                echo "::error::could not label #$ISSUE ai:needs-human — it is NOT escalated and stays in the retry rotation"
+                exit 1
+              fi
             fi
             exit 0
           fi
 
           echo "--- verdict ---"; jq . "$F"; echo "---------------"
 
+          # Everything below is derived from a file the model wrote after
+          # reading an attacker-controlled issue body, so treat all of it as
+          # untrusted input and validate before it reaches a `gh` call.
           VERDICT=$(jq -r '.verdict // "unknown"' "$F")
           CONF=$(jq -r '.confidence // "low"' "$F")
           COMMENT=$(jq -r '.comment // ""' "$F")
-          # Model-supplied labels are cosmetic only (e.g. "bug"). ai-triage /
-          # ai:classified / ai:needs-human are workflow-owned control labels;
-          # strip anything in that namespace so a verdict can't self-trigger
-          # tier 2 (the deterministic add below is the only legitimate source
-          # of ai-triage).
-          mapfile -t LABELS < <(jq -r '.labels[]? // empty' "$F" | grep -vE '^ai[:-]' || true)
+
+          case "$VERDICT" in
+            owned|duplicate|needs-info|question|upstream-bug|addon-bug|feature-request) ;;
+            *) echo "::warning::unrecognised verdict '$VERDICT', treating as low confidence"
+               VERDICT="unknown"; CONF="low" ;;
+          esac
+          case "$CONF" in high|medium|low) ;; *) CONF="low" ;; esac
+
+          # A triage comment is a duplicate one-liner or a <=4-item checklist.
+          # Anything longer is a malfunction or an attempt to use the bot's
+          # identity to post a wall of text / mention spam, so cap it.
+          if [ "${#COMMENT}" -gt 4000 ]; then
+            echo "::warning::comment was ${#COMMENT} chars, suppressing it and flagging a human"
+            COMMENT=""; CONF="low"
+          fi
+
+          # Model-supplied labels are cosmetic only, so this is an explicit
+          # allowlist rather than "any existing label that isn't ai:*". The repo
+          # carries labels that steer things — automerge, Priority, codex,
+          # wontfix, dependency-update, no-ai — and a crafted issue body must not
+          # be able to reach any of them through the classifier. These two are
+          # the only ones tier 1's verdicts actually map onto (addon-bug /
+          # upstream-bug -> bug, feature-request -> enhancement); both already
+          # exist, so nothing is ever created from model output. Cap at 2, as
+          # issue-classify.md already specifies.
+          mapfile -t LABELS < <(
+            jq -r '.labels[]? // empty' "$F" \
+              | grep -xE 'bug|enhancement' \
+              | head -n 2 || true
+          )
 
           # Someone already owns this one: ping_submitter did its job. Best-
           # effort clear of a manual re-triage's stale control labels (e.g. a
@@ -238,16 +552,23 @@ jobs:
           fi
           LABELS+=("ai:classified")
 
-          # No --force: an existing label (e.g. a model-supplied cosmetic
-          # "bug") must be left as-is. --force would update it, recoloring
-          # every such label to ededed as a side effect of triage. Without it,
-          # create fails harmlessly on labels that already exist (|| true),
-          # and still creates the workflow-owned ones the first time.
-          for l in "${LABELS[@]}"; do
+          # Only the workflow-owned control labels are ever created here; the
+          # cosmetic ones were already filtered down to labels that exist. No
+          # --force, so an existing label keeps its colour instead of being
+          # recoloured to ededed as a side effect of triage.
+          for l in ai-triage ai:classified ai:needs-human ai:needs-info; do
             gh label create "$l" --repo "$REPO" --color ededed >/dev/null 2>&1 || true
           done
-          gh issue edit "$ISSUE" --repo "$REPO" \
-            "${LABELS[@]/#/--add-label=}"
+          # LABELS always picks up ai:classified above, so it cannot be empty
+          # today — but an empty array would expand to zero arguments and make
+          # `gh issue edit` fail with no option supplied, killing the step under
+          # set -e. Guard it so a future branch can't reintroduce that.
+          if [ "${#LABELS[@]}" -gt 0 ]; then
+            gh issue edit "$ISSUE" --repo "$REPO" \
+              "${LABELS[@]/#/--add-label=}"
+          else
+            echo "::warning::no labels selected, skipping the add"
+          fi
 
           # Manual re-triage can flip the verdict (e.g. a prior addon-bug
           # re-run now comes back needs-info/upstream-bug): clear whichever
@@ -265,6 +586,13 @@ jobs:
           fi
 
           if [ -n "$COMMENT" ]; then
+            # The comment body is model prose written after reading an
+            # attacker-controlled issue. Defuse @mentions in it so a crafted
+            # issue can't turn the bot into a notification cannon: the empty
+            # HTML comment stops GitHub linkifying (and notifying) the handle
+            # while still rendering as plain "@name". The footer's own mention
+            # of the maintainer is added below, after this, so it still works.
+            COMMENT=$(printf '%s' "$COMMENT" | sed 's/@\([A-Za-z0-9]\)/@<!-- -->\1/g')
             {
               printf '%s\n\n' "$COMMENT"
               printf -- '---\n'
@@ -283,13 +611,26 @@ jobs:
     if: ${{ github.event_name == 'schedule' && vars.AI_DISABLED != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment: CR_PAT
+    # No `environment: CR_PAT` — this job holds no Claude call and now uses
+    # GITHUB_TOKEN, so it needs nothing from that environment's secrets.
+    # Job-level, so only this job gets actions:write — the classify job above
+    # keeps the workflow-level contents:read + issues:write, which is what
+    # allowed_non_write_users is safe under.
+    permissions:
+      contents: read
+      issues: read
+      actions: write
     steps:
       - name: Re-dispatch untriaged issues
         env:
-          # AI_PR_TOKEN (repo scope) can dispatch workflows; GITHUB_TOKEN would
-          # need actions:write added to the whole workflow.
-          GH_TOKEN: ${{ secrets.AI_PR_TOKEN }}
+          # Was secrets.AI_PR_TOKEN, which is a fine-grained PAT WITHOUT the
+          # actions scope: every dispatch returned "HTTP 403: Resource not
+          # accessible by personal access token" and the `|| echo ::warning::`
+          # below swallowed it, so the safety net never caught anything.
+          # GITHUB_TOKEN + the job-level actions:write above needs no PAT at
+          # all, and workflow_dispatch is explicitly exempt from the rule that
+          # GITHUB_TOKEN-triggered events don't start new runs.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
@@ -313,9 +654,20 @@ jobs:
 
           COUNT=$(grep -c . /tmp/todo.txt || true)
           echo "untriaged issues to re-dispatch: $COUNT"
+          FAILED=0
           while IFS= read -r n; do
             [ -n "$n" ] || continue
             echo "re-dispatching tier 1 for #$n"
-            gh workflow run "AI issue triage" --repo "$REPO" -f issue="$n" || \
-              echo "::warning::could not dispatch classify for #$n"
+            gh workflow run "AI issue triage" --repo "$REPO" -f issue="$n" -f source=catchup || {
+              echo "::error::could not dispatch classify for #$n"
+              FAILED=$((FAILED + 1))
+            }
           done < /tmp/todo.txt
+
+          # This job IS the safety net. A net that fails silently is worse than
+          # no net — it reported success every day for weeks while dispatching
+          # nothing. Fail the run so the breakage is visible.
+          if [ "$FAILED" -gt 0 ]; then
+            echo "::error::$FAILED of $COUNT catch-up dispatches failed"
+            exit 1
+          fi

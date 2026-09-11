@@ -1,4 +1,52 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
+## 20260909.7 (10-09-2026)
+- Correct the "first daily detection consensus" README section (review feedback on PR #3056): a merged-upstream setting stays in the build rather than disappearing, every attempt for a species is held back until one is accepted rather than only the first, and the "known to every active bird model" exemption is scoped per audio source, matching the implementation.
+## 20260909.6 (10-09-2026)
+- Document the fork-only "first daily detection consensus" setting (alexbelgium/birdnet-go#63): requires a second model to confirm each bird species' first detection of the day. Off by default; no behaviour change unless enabled.
+## 20260909.5 (09-09-2026)
+- Minor bugs fixed
+## 20260909.4 (09-09-2026)
+- Minor bugs fixed
+## 20260909.3 (09-09-2026)
+- Minor bugs fixed
+## 20260909.2 (09-09-2026)
+- Minor bugs fixed
+## 20260909 (09-09-2026)
+- Minor bugs fixed
+## 20260908.2 (08-09-2026)
+- Minor bugs fixed
+## 20260908.1 (08-09-2026)
+- Synced with upstream birdnet-go (4 commits); re-merges the open fork PRs, adding fork PR #62 (reanalyze a clip with every loaded model + one-click correction)
+## 20260908 (08-09-2026)
+- Synced with upstream birdnet-go (7 commits); re-merges the open fork PRs
+## 20260907 (07-09-2026)
+- Rebuild: re-merges the open fork PRs, picking up the updated fork PR #57
+## 20260901.4 (01-09-2026)
+- Minor bugs fixed
+## 20260901.3 (01-09-2026)
+- Rebuild: live spectrogram in Currently Hearing now uses the same SoX recipe, palette and 2:1 ratio as the detection spectrograms, with a kHz axis overlay (fork PR #61)
+## 20260901.2 (01-09-2026)
+- Rebuild: re-merges the open fork PRs, adding a static SoX spectrogram of the chunk being analysed to the Currently Hearing card (fork PR #61)
+## 20260901.1 (01-09-2026)
+- Minor bugs fixed
+## 20260901 (01-09-2026)
+- Synced with upstream birdnet-go (7 commits, incl. Go 1.27 upgrade); build image bumped to golang:1.27-trixie to match; resolved merge conflict in fork PR #6
+## 20260829.2 (29-08-2026)
+- Minor bugs fixed
+## 20260829.1 (29-08-2026)
+- Minor bugs fixed
+## 20260829 (29-08-2026)
+- Minor bugs fixed
+## 20260828.2 (28-08-2026)
+- Synced with upstream birdnet-go; fork PR #57 updated
+## 20260828.1 (28-08-2026)
+- Synced with upstream birdnet-go; resolved merge conflict in fork PR #6
+## 20260828 (28-08-2026)
+- Minor bugs fixed
+## 20260826.1 (26-08-2026)
+- Synced with upstream birdnet-go; new/updated PRs pending in fork
+## 20260826 (26-08-2026)
+- Minor bugs fixed
 ## 20260729.1 (2026-08-01)
 
 - Version renamed from `source-20260729.1`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged

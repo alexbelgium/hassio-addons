@@ -1,5 +1,13 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 2026.09.05 (2026-09-05)
+- Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)
+- Upstream tag : version-d39975b5
+ 
+## 2026.08.13 (2026-08-13)
+- Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)
+- Upstream tag : version-e8713bf7
+ 
 ## 2026.08.01.1 (2026-08-01)
 - Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)
 - Upstream tag : version-e2e1ec9c

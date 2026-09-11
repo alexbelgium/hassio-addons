@@ -1,4 +1,24 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
+ 
+## v26.3.262 (2026-09-05)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
+- Upstream tag : v26.3-ls262
+ 
+## v26.3.261 (2026-08-29)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
+- Upstream tag : v26.3-ls261
+ 
+## v26.2.260 (2026-08-22)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
+- Upstream tag : v26.2-ls260
+ 
+## v26.2.258 (2026-08-15)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
+- Upstream tag : v26.2-ls258
+ 
+## v26.2.257 (2026-08-08)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
+- Upstream tag : v26.2-ls257
 ## v26.2.256 (2026-08-01)
 
 - Version renamed from `v26.2-ls256`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged

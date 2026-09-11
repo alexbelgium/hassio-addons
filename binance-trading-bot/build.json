@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "chrisleekr/binance-trading-bot:latest",
-    "amd64": "chrisleekr/binance-trading-bot:latest"
+    "aarch64": "chrisleekr/binance-trading-bot:0.0.101",
+    "amd64": "chrisleekr/binance-trading-bot:0.0.101"
   }
 }

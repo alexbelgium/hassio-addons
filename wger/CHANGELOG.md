@@ -1,3 +1,10 @@
+## 2.6.4 (2026-09-04)
+
+- Fix the add-on failing to start on a fresh install with `django.core.exceptions.ImproperlyConfigured: Set the DJANGO_DB_ENGINE environment variable`. The upstream `wger/server` image stopped shipping database defaults, and `settings/main.py` reads `DJANGO_DB_ENGINE` and `DJANGO_DB_DATABASE` with no fallback, so the add-on now sets them explicitly to sqlite at `/data/database.sqlite` — the same location the previous startup rewrite produced, so existing databases keep working.
+- Set `DJANGO_PERFORM_MIGRATIONS=True`, as upstream's own docker deployment does, so an existing database gets new migrations applied when the add-on is rebuilt against a newer upstream release.
+- Drop the startup rewrite of the database path in the Python settings: upstream no longer hardcodes `/home/wger/db/database.sqlite` anywhere, so the rewrite silently did nothing and only logged a warning.
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration file will have migrated from /config/addons_config/wger to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-wger. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration is automatic only for a config.yaml sitting at the default /config/addons_config/wger/config.yaml. If you had pointed CONFIG_LOCATION somewhere else inside the homeassistant config folder, or had a custom script at /homeassistant/addons_autoscripts/wger.sh, move the file to /addon_configs/xxx-wger/ by hand and update the option. Please be sure to update all your links ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+
 ## 2.6.3 (2026-08-01)
 
 - Version renamed from `2.6-dev-3`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged

@@ -1,0 +1,9 @@
+{
+  "source": "dockerhub",
+  "upstream_repo": "library/couchdb",
+  "upstream_version": "3.5.2",
+  "last_update": "2026-08-12",
+  "paused": true,
+  "paused_reason": "Tracks two upstreams (couchdb and jc21/nginx-proxy-manager) which the updater cannot resolve together, and inherits the NPM base image build constraint from issue #4. Bump by hand.",
+  "slug": "obsidian_syncserver_npm"
+}

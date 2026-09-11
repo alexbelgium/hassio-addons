@@ -13,8 +13,10 @@ streamed desktop.
   offline until a fresh sign-in was done from a computer). v1.35 switched to
   `--password-store=basic` plus a cont-init script that re-syncs the persistent openbox
   `autostart` from the image on every boot — **but that flag alone does nothing**, and the bug
-  survived it untouched. Actually fixed in v1.37, which adds the application-side opt-in the
-  `basic` backend requires; see "Why v1.35 did not work" below.
+  survived it untouched. v1.37 added the application-side opt-in the `basic` backend requires;
+  see "Why v1.35 did not work" below. That patcher then regressed silently when upstream's
+  bundle output changed shape — fixed again in 07308543.1; see "Why v1.37 stopped working"
+  below.
 - **Planned only:** Problem A (in-desktop browser for OAuth) is intentionally not implemented.
   The image ships no browser; complete the login with the user-side workaround below.
 
@@ -170,10 +172,40 @@ The third row is the one that matters: it is the restart survival this add-on ne
    reaches upgrades, not just fresh installs.
 4. `gnome-keyring` stays out of the Dockerfile.
 
+### Why v1.37 stopped working
+
+`claude-safestorage-patch.js` only knew how to inject its opt-in *after* a leading
+`"use strict"` directive in the app's main bundle, and refused to patch (leaving the app
+unpatched and the session un-persisted) if that directive wasn't there. Confirmed live on the
+running add-on: Claude Desktop 1.30096.1's main bundle (`.vite/build/index.pre.js`) no longer
+opens with a `"use strict"` directive — it now opens directly with a bare IIFE
+(`(function(){try{var e=typeof window...`). Upstream's build output changed shape at some point
+after v1.37 shipped, the patcher's one injection point stopped existing, and it had been
+silently refusing to patch on every boot since — the app's `main.log` kept showing exactly the
+same `Encryption not available, returning empty env vars` warning documented above, and the
+session went back to not surviving restarts.
+
+`applyPatch()` now falls back to inserting the opt-in as the bundle's first real statement when
+no `"use strict"` directive is found, rather than refusing outright. It skips past any leading
+BOM, hashbang, or banner comment first (`skipPrologue()`), so a directive hidden behind a
+comment is still found and protected instead of being pushed out of the first-statement
+position by a naive prepend — Vite/esbuild banners commonly put a license comment ahead of the
+directive. A bundle with no directive at all has nothing to protect, so prepending the opt-in
+there is unconditionally safe: the injected code is a complete `try{}catch(e){}` statement, and
+a statement can never merge with what follows it via ASI the way a bare expression could.
+
+Verified by copying the live production `app.asar` and running the patcher against it directly
+(outside the container's boot sequence): the previously-refused bundle now patches
+successfully, the marker lands at the front of the main entry, a second run correctly reports
+"Already patched" (idempotent), and unit tests cover the bare-IIFE, comment-hidden-directive,
+hashbang, and unterminated-comment cases.
+
 ### One-time step after upgrading
 The previously-stored session is already stale. Complete **one** sign-in from a computer
 (mobile still can't finish the OAuth flow itself, per Problem A) — the session then persists
-normally and dispatch stays online regardless of which device connects first afterward.
+normally and dispatch stays online regardless of which device connects first afterward. This
+applies again after the 07308543.1 fix above, since the affected sessions were never persisted
+in the first place.
 
 ---
 
@@ -185,7 +217,10 @@ normally and dispatch stays online regardless of which device connects first aft
 - `claude_desktop/rootfs/etc/cont-init.d/86-claude_safestorage.sh` and
   `claude_desktop/rootfs/usr/local/bin/claude-safestorage-patch.js` — new in v1.37; the
   app-side `safeStorage` opt-in that makes `--password-store=basic` actually take effect.
+  `claude-safestorage-patch.js` updated again in 07308543.1 to also patch bundles with no
+  leading `"use strict"` directive, and to look past leading comments/hashbang when deciding
+  whether one is present.
 - `claude_desktop/Dockerfile` — corrected stale comment (gnome-keyring is not installed).
-- `claude_desktop/CHANGELOG.md` / `config.yaml` — v1.35, then v1.37.
+- `claude_desktop/CHANGELOG.md` / `config.yaml` — v1.35, then v1.37, then 07308543.1.
 
 Problem A (in-desktop browser for OAuth) remains planned-only; not touched by this change.

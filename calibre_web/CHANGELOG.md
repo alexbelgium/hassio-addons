@@ -1,4 +1,22 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
+ 
+## 0.6.27.4 (2026-09-04)
+- Fix: Kobo sync could not be enabled, failing with "Kepubify binary not found" even when the path was set by hand. The LinuxServer base image installs the converter as `/usr/bin/kepubify` with `curl -o`, which leaves it mode 0644 and gives it a name calibre-web does not accept : `binary_helper.py` only takes `kepubify-linux-64bit` or `kepubify-linux-32bit`, and only when `os.access(X_OK)` passes. The addon now makes the binary executable and publishes it as `/opt/kepubify/kepubify-linux-64bit`, the directory calibre-web's own autodetection already probes, so the path is filled in without any manual step (https://github.com/alexbelgium/hassio-addons/issues/3040)
+- Fix: on installs created before that change, calibre-web had already run its autodetection once, found nothing usable and stored an empty path, and it never retries. An empty path is now reset so calibre-web detects the converter itself at the next start. A path set by hand is left alone
+- Fix: `/usr/bin` also keeps working as a converter path, so the setting stored by anyone who applied the manual `ln -sf /usr/bin/kepubify /usr/bin/kepubify-linux-64bit` workaround keeps resolving after the update instead of silently breaking again
+
+## 0.6.27.3 (2026-08-30)
+- Doc: explain in the README that Calibre-Web's optional extras (metadata, kobo, gdrive, gmail, goodreads, ldap, oauth, comics) are already installed by the LinuxServer base image, that `pip install calibreweb[...]` inside the container is useless and not persistent, and that the cover fields on the Edit Metadata page are gated on `Enable Uploads` plus the user's `Upload` permission (https://github.com/alexbelgium/hassio-addons/issues/1143)
+- Fix: remove the Dockerfile step that claimed to install the Calibre binaries into `/opt/calibre`. There is no `wget` in the image, so the command failed silently and left the layer empty; the binaries are and were provided at start by the default `linuxserver/mods:universal-calibre` docker mod
+
+## 0.6.27.2 (2026-08-23)
+- Fix: trust the whole supervisor network range for the ingress auth header instead of the addon's own address, which changes across restarts. The list is only written when that range is missing, so an entry added in the calibre-web admin page is no longer erased on every start (https://github.com/alexbelgium/hassio-addons/pull/3010)
+
+## 0.6.27.1 (2026-08-23)
+- Fix: Ingress login was rejected since 0.6.27, which only accepts the reverse proxy auth header from trusted source addresses. The addon now adds its own ip to that list (https://github.com/alexbelgium/hassio-addons/issues/3003)
+
+## 0.6.27 (2026-08-13)
+- Update to latest version from linuxserver/docker-calibre-web (changelog : https://github.com/linuxserver/docker-calibre-web/releases)
 
 ## 0.6.26-2 (2026-04-06)
 - Fix: Install calibre (calibredb) at build time to fix 500 error when downloading books

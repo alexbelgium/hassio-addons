@@ -1,3 +1,21 @@
+ 
+## 2.44.0.2 (2026-08-29)
+- Update to latest version from portainer/agent
+- Upstream tag : sts
+## 2.44.0.1 (2026-08-24)
+
+- Rebuild to pick up a fix in the shared entrypoint: when `ha_entrypoint.sh` runs as PID 1, as it does in this add-on, it now populates `/run/s6/container_environment`, so a script carrying a `#!/usr/bin/with-contenv` shebang gets a populated environment including `SUPERVISOR_TOKEN` instead of failing at its shebang. Nothing shipped in this add-on still uses that shebang (the healthcheck moved to plain bash in 2.44.0), so this changes nothing about the agent itself; it matters for a `script.sh` added by the user, and it is the add-on that build-tests the shared change
+
+## 2.44.0 (2026-08-23)
+
+- Fix: Use `portainer/agent:alpine-sts` to match the STS release channel configured in `updater.json`
+- Fix: Align add-on versioning with Portainer STS releases
+
+## 2025.12.7 (2026-08-23)
+
+- Fix: Docker reported the addon as `unhealthy` in Portainer. The healthcheck script could never run because its shebang required the s6-overlay environment, which this addon's entrypoint does not set up (https://github.com/alexbelgium/hassio-addons/issues/3002)
+- Remove the unused and broken `wait-for-signal` script; nothing invoked it
+
 ## 2025.12.6 (2026-08-01)
 
 - Version renamed from `2025.12-6`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged

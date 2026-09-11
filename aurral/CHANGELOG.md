@@ -1,5 +1,20 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 2.8.0 (2026-09-05)
+- Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
+ 
+## 2.7.0 (2026-08-29)
+- Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
+ 
+## 2.5.1 (2026-08-22)
+- Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
+ 
+## 2.4.0 (2026-08-13)
+- Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
+ 
+## 2.1.0 (2026-08-08)
+- Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
+ 
 ## 2.0.3 (2026-08-01)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
  

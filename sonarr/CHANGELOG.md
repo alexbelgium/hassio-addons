@@ -1,5 +1,18 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 4.0.19.3009 (2026-09-05)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
+ 
+## 4.0.19.3007 (2026-08-29)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
+ 
+## 4.0.19.3001 (2026-08-11)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
+- Upstream tag : develop-4.0.19.3001-ls184
+ 
+## 4.0.19.2997 (2026-08-08)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
+ 
 ## 4.0.19.2995 (2026-08-01)
 - Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
  

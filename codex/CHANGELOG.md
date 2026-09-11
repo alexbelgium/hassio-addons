@@ -1,5 +1,14 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 2.2.11 (2026-08-29)
+- Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
+ 
+## 2.2.8 (2026-08-22)
+- Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
+ 
+## 2.2.6 (2026-08-08)
+- Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
+ 
 ## 2.2.5 (2026-08-02)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
  

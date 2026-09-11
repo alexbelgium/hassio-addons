@@ -1,5 +1,23 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 4.10.0.30 (2026-09-05)
+- Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
+ 
+## 4.10.0.29 (2026-08-29)
+- Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
+ 
+## 4.10.0.28 (2026-08-29)
+- Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
+ 
+## 4.10.0.26 (2026-08-22)
+- Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
+ 
+## 4.10.0.25 (2026-08-15)
+- Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
+ 
+## 4.10.0.24 (2026-08-13)
+- Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
+ 
 ## 4.10.0.22 (2026-08-01)
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
  

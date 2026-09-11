@@ -1,5 +1,20 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 1.94.121-ls127 (2026-09-05)
+- Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
+ 
+## 1.94.117-ls125 (2026-08-29)
+- Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
+ 
+## 1.93.138-ls124 (2026-08-22)
+- Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
+ 
+## 1.93.136-ls122 (2026-08-13)
+- Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
+ 
+## 1.93.134-ls121 (2026-08-08)
+- Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
+ 
 ## 1.93.129-ls119 (2026-08-01)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
  

@@ -38,7 +38,7 @@ jobs:
         run: |
           set -euo pipefail
           CHANGED_FILES=$(git diff --name-only "$DIFF_RANGE")
-          UNICODE_SPACES_REGEX=$'[\\u00A0\\u2002\\u2003\\u2007\\u2008\\u2009\\u202F\\u205F\\u3000\\u200B]'
+          UNICODE_SPACES_REGEX='[\x{00A0}\x{2002}\x{2003}\x{2007}\x{2008}\x{2009}\x{202F}\x{205F}\x{3000}\x{200B}]'
           for file in $CHANGED_FILES; do
             if [ -f "$file" ]; then
               MIME_TYPE=$(file --mime-type -b "$file")
@@ -89,7 +89,7 @@ jobs:
       - name: Fix non-printable Unicode spaces in all text files
         run: |
           set -euo pipefail
-          UNICODE_SPACES_REGEX=$'[\\u00A0\\u2002\\u2003\\u2007\\u2008\\u2009\\u202F\\u205F\\u3000\\u200B]'
+          UNICODE_SPACES_REGEX='[\x{00A0}\x{2002}\x{2003}\x{2007}\x{2008}\x{2009}\x{202F}\x{205F}\x{3000}\x{200B}]'
           find . -type f ! -path "./.git/*" | while read -r file; do
             MIME_TYPE=$(file --mime-type -b "$file")
             if [[ "$MIME_TYPE" == text/* ]]; then

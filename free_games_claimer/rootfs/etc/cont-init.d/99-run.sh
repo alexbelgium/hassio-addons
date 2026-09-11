@@ -36,6 +36,12 @@ set -a
 source "${RUNTIME_CONFIG}"
 set +a
 
+# Upstream checks GitHub for newer releases and then tells the user to run
+# "docker compose pull", which is wrong here: the add-on is updated through the
+# Home Assistant add-on store. Default the check off, but honour an explicit
+# NOTIFY_UPDATES from config.env.
+export NOTIFY_UPDATES="${NOTIFY_UPDATES:-false}"
+
 # The Home Assistant port mapping is intentionally kept at 6080 for a seamless
 # upgrade from the previous add-on, even though the new upstream defaults to 7080.
 if [ -n "${NOVNC_PORT:-}" ] && [ "${NOVNC_PORT}" != "6080" ]; then

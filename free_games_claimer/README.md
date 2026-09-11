@@ -24,14 +24,19 @@ This add-on is based on
 [Free Games Claimer Remaster](https://github.com/P-Adamiec/Free-Games-Claimer-Remaster).
 It can claim free games from:
 
-- Epic Games Store
+- Epic Games Store, including its weekly free mobile game
+- Fab, Epic's asset marketplace (`fab`)
 - Amazon Prime Gaming
 - GOG
 - Steam
+- Ubisoft giveaways (`ubisoft`)
+- AliExpress daily coin check-in (`aliexpress`)
 - GamerPower-supported stores, when explicitly enabled
 
 For compatibility with previous add-on releases, the default store selection
-remains Epic Games, Prime Gaming, and GOG.
+remains Epic Games, Prime Gaming, and GOG. The other stores are enabled by
+adding them to `STORES`, for example `epic,prime,gog,fab,ubisoft`, and each
+needs its own credentials in `config.env`.
 
 ## Web interface
 
@@ -98,6 +103,11 @@ NOTIFY=tgram://bot-token/chat-id
 # DISCORD_WEBHOOK=https://discord.com/api/webhooks/...
 ```
 
+Upstream's release-update notification (`NOTIFY_UPDATES`) is disabled by the
+add-on, because it advises running `docker compose pull` while the add-on is
+actually updated through the Home Assistant add-on store. Setting
+`NOTIFY_UPDATES=true` in `config.env` re-enables it.
+
 Existing variables such as `EG_EMAIL`, `EG_PASSWORD`, `PG_EMAIL`,
 `PG_PASSWORD`, `PG_OTPKEY`, `GOG_EMAIL`, `GOG_PASSWORD`, `SHOW`, `WIDTH`,
 `HEIGHT`, `TIMEOUT`, `LOGIN_TIMEOUT`, `DRYRUN`, and `NOTIFY` remain compatible.
@@ -132,16 +142,31 @@ normally uses port `7080`.
 
 ## Upstream update policy
 
-The image is built from an explicit upstream commit in the Dockerfile. This
-keeps amd64 and aarch64 images reproducible and prevents an upstream branch or
-container tag from changing without an add-on review and version bump.
+The image is built from the upstream release named by `ARG BUILD_UPSTREAM` in
+the Dockerfile, downloaded as the matching `v<version>` source tarball. The
+repository updater tracks upstream releases and bumps that value, the add-on
+version and `CHANGELOG.md` together, so a new upstream release reaches the
+add-on without a manual edit.
 
-The repository updater is intentionally paused for this add-on because the
-add-on uses its own `2.x` version series while the replacement upstream uses a
-`1.x` version series. An automatic replacement would risk a Home Assistant
-version regression and would not safely update the pinned commit. A maintainer
-upstream update must therefore update `UPSTREAM_REF`, `upstream_version`, the
-add-on version, and `CHANGELOG.md` together.
+A release tag is a mutable reference. Rebuilding the same `BUILD_UPSTREAM`
+installs whatever that tag points at, so an upstream tag that is force-moved or
+deleted would change or fail the build without an add-on change. That is the
+accepted cost of automatic tracking, and it is the same trade-off every other
+automatically updated add-on in this repository makes; the previous commit pin
+was immutable but could only be advanced by hand.
+
+Upstream's development tags (`v1.7d` and similar) are filtered out through
+`"github_exclude": "d"` in `updater.json`. Without it the updater reports the
+`v1.7d` tag as release `1.7`, for which GitHub serves no source archive, and
+the build would fail.
+
+The add-on version does not track the upstream version. The add-on uses a `2.x`
+series while upstream is on `1.x`, and Home Assistant only offers an update
+when the new version sorts strictly higher, so the updater increments the
+add-on version (`2.1.0` to `2.1.1`) instead of publishing a lower-sorting
+upstream number. The upstream release actually installed is recorded in
+`upstream_version` in `updater.json`, in `CHANGELOG.md`, and in the add-on's
+startup banner.
 
 ## Installation
 

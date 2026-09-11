@@ -1,5 +1,17 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 2.56.3 (2026-09-05)
+- Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
+ 
+## 2.56.0 (2026-08-22)
+- Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
+ 
+## 2.55.4 (2026-08-13)
+- Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
+ 
+## 2.55.3 (2026-08-08)
+- Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
+ 
 ## 2.55.2 (2026-08-01)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
  

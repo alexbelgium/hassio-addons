@@ -2,7 +2,7 @@
 arch:
   - aarch64
   - amd64
-description: "Automatically claims free games from Epic Games Store, Amazon Prime Gaming, GOG, Steam, and optional GamerPower-supported stores"
+description: "Claims free games from Epic, Prime, GOG, Steam, Ubisoft and more"
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -96,5 +96,5 @@ schema:
 slug: free_games_claimer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.0.1"
+version: "2.1.0"
 webui: "[PROTO:ssl]://[HOST]:[PORT:6080]"

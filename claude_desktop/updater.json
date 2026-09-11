@@ -1,9 +1,9 @@
 {
   "source": "github",
-  "upstream_repo": "linuxserver/docker-baseimage-selkies",
+  "upstream_repo": "aaddrick/claude-desktop-debian",
   "github_fulltag": true,
   "slug": "claude_desktop",
   "paused": false,
-  "upstream_version": "ubunturesolute-version-3a10bef7",
-  "last_update": "2026-08-01"
+  "upstream_version": "v3.2.3+claude1.40609.1",
+  "last_update": "2026-09-05"
 }

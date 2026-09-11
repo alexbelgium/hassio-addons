@@ -183,6 +183,16 @@ if bashio::config.true 'install_codex_cli'; then
     if [ -x "$codex_bin" ]; then
         printf '%-30s %s\n' "installed" "$("$codex_bin" --version 2> /dev/null || echo 'FAILED TO RUN')"
         printf '%-30s %s\n' "installed version stamp" "$(cat /data/codex/bin/.version 2> /dev/null || echo 'MISSING')"
+        # Codex runs every shell and file-read tool call through this companion binary. When it is
+        # absent the CLI still starts, authenticates and answers, but each tool call fails and the
+        # run still exits 0 — so report it explicitly rather than leaving it to be inferred.
+        if [ -x /data/codex/bin/codex-code-mode-host ] \
+            && [ -f /data/codex/codex-package.json ] \
+            && [ -f /data/codex/bin/.version ]; then
+            printf '%-30s %s\n' "package layout" "complete"
+        else
+            printf '%-30s %s\n' "package layout" "INCOMPLETE - tool calls will fail; restart the add-on to reinstall"
+        fi
         printf '%-30s %s\n' "release policy" "latest stable, SHA-256 verified"
         printf '%-30s %s\n' "authentication policy" "ChatGPT subscription only"
 

@@ -1,5 +1,11 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 3.1.3 (2026-09-05)
+- Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
+ 
+## 3.1.0 (2026-08-29)
+- Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
+ 
 ## 3.0.5 (2026-08-02)
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
  

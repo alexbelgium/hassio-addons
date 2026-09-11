@@ -1,6 +1,6 @@
 {
     "build_from": {
-        "aarch64": "ghcr.io/mralucarddante/baikal-docker-hass:latest",
-        "amd64": "ghcr.io/mralucarddante/baikal-docker-hass:latest"
+        "aarch64": "ckulka/baikal:nginx-php8.2",
+        "amd64": "ckulka/baikal:nginx-php8.2"
     }
 }

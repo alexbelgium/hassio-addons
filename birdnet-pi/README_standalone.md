@@ -101,6 +101,17 @@ Ensure you have the following installed on your system:
 
 If rtsp feed doesn't work, perhaps you need to add "-rtsp-transport tcp" to your ffmpeg instruction, or allow udp on your network
 
+### Selecting the microphone
+
+By default the container records through PulseAudio (`REC_CARD=default` in `birdnet.conf`). To record directly from a USB microphone instead, find it on the host with `arecord -l`, then pass its card number (or its card id) as `ALSA_CARD`:
+
+```yaml
+    environment:
+      - ALSA_CARD=1  # "card 1: Audio [KT USB Audio]" in the output of "arecord -l"
+```
+
+At startup this writes `REC_CARD=plughw:CARD=1,DEV=0` into your `birdnet.conf`. A value that already is a full ALSA PCM name, as listed by `arecord -L`, is used as provided - for example `ALSA_CARD=dsnoop:CARD=Audio,DEV=0`, which allows the recording and the livestream services to read the same microphone at the same time.
+
 ## Updating to the Latest Version
 
 To check for new versions of the container and update:

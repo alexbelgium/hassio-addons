@@ -20,5 +20,13 @@ server {
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Host $http_host;
     proxy_set_header X-Forwarded-Host $http_host;
+
+    # Portainer gzips its own responses, which makes them chunked with no
+    # Content-Length. Home Assistant's ingress relay only buffers responses
+    # under 4 MB that carry a Content-Length, so everything else falls into
+    # its streaming path. Asking upstream for identity keeps the small
+    # responses buffered. The map in nginx.conf applies this to the ingress
+    # listener only, so direct access on 9099 keeps compression.
+    proxy_set_header Accept-Encoding $upstream_accept_encoding;
   }
 }

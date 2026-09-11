@@ -2,7 +2,7 @@
 
 <!-- markdownlint-disable MD033 -->
 
-## 💖 Support development
+## Support development
 
 I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
 
@@ -56,28 +56,34 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 137
-- Installed : 612843
+- In the repository : 143
+- Installed : 334103
 
 ### Top 3
 
-1. Arpspoof (102274x)
-2. Sponsorblockcast (98951x)
-3. Jellyfin (88956x)
+1. Arpspoof (105194x)
+2. Flaresolverr (91401x)
+3. Portainer (19664x)
 
 ### Architectures used
 
-- amd64: 89%
-- aarch64: 11%
+- amd64: 84%
+- aarch64: 16%
 
-### Stars evolution
+### Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date)](https://star-history.com/#alexbelgium/hassio-addons&Date)
+<a href="https://www.star-history.com/?type=date&repos=alexbelgium%2Fhassio-addons">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=alexbelgium/hassio-addons&type=date&theme=dark&legend=top-left&sealed_token=Ft6D4rx2V8l-M626J7uFACNWFJexZTQuLZvFi-nQ_FnbQ0KFnkzPBnnQdui7CREsxlWJ5rdTXvx5PVjpFxxQwump2HCc5SDviHt_iZPdJB3ckWEjXp0V3w" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=alexbelgium/hassio-addons&type=date&legend=top-left&sealed_token=Ft6D4rx2V8l-M626J7uFACNWFJexZTQuLZvFi-nQ_FnbQ0KFnkzPBnnQdui7CREsxlWJ5rdTXvx5PVjpFxxQwump2HCc5SDviHt_iZPdJB3ckWEjXp0V3w" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=alexbelgium/hassio-addons&type=date&legend=top-left&sealed_token=Ft6D4rx2V8l-M626J7uFACNWFJexZTQuLZvFi-nQ_FnbQ0KFnkzPBnnQdui7CREsxlWJ5rdTXvx5PVjpFxxQwump2HCc5SDviHt_iZPdJB3ckWEjXp0V3w" />
+ </picture>
+</a>
 
 ## Add-ons provided by this repository
 
-%%ADDONS_LIST%%
-&#10003;  [Arpspoof (102274x)](arpspoof/) : block internet connection for local network devices
+
+&#10003;  [Arpspoof (105194x)](arpspoof/) : block internet connection for local network devices
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fupdater.json)
@@ -132,6 +138,7 @@ If you want to do add the repository manually, please follow the procedure highl
 &#10003; ![image](https://api.iconify.design/mdi/file-pdf-box.svg) [BentoPDF](bentopdf/) : Privacy-first PDF toolkit. 50+ tools, all processing client-side in the browser. Files never leave your device.
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbentopdf%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbentopdf%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
@@ -303,6 +310,16 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
+&#10003; ![image](https://api.iconify.design/mdi/book-open-page-variant.svg) [Comicarr](comicarr/) : Automated comic book and manga downloader and library manager with a modern React UI
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcomicarr%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcomicarr%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
+
 &#10003; ![image](https://api.iconify.design/mdi/book-open.svg) [Comixed](comixed/) : managing digital comics
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcomixed%2Fconfig.yaml)
@@ -411,7 +428,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003;  [Free Games Claimer](free_games_claimer/) : Automatically claims free games from Epic Games Store, Amazon Prime Gaming, GOG, Steam, and optional GamerPower-supported stores
+&#10003;  [Free Games Claimer](free_games_claimer/) : Claims free games from Epic, Prime, GOG, Steam, Ubisoft and more
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffree_games_claimer%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffree_games_claimer%2Fupdater.json)
@@ -522,7 +539,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/billiards-rack.svg) [Jellyfin (88956x) NAS](jellyfin/) : A free Software Media System that puts you in control of managing and streaming your media
+&#10003; ![image](https://api.iconify.design/mdi/billiards-rack.svg) [Jellyfin NAS](jellyfin/) : A free Software Media System that puts you in control of managing and streaming your media
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyfin%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyfin%2Fupdater.json)
@@ -554,12 +571,32 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
+&#10003; ![image](https://api.iconify.design/mdi/book-multiple.svg) [Kapowarr](zzz_archived_kapowarr/) : Comic book library manager, fitting in the *arr suite of software
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_kapowarr%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_kapowarr%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
+
 &#10003;  [Kometa](kometa/) : Python script to update metadata information for movies, shows, and collections as well as automatically build collections
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fkometa%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fkometa%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/book-open-page-variant.svg) [Komga](komga/) : Free and open source comics/mangas media server
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fkomga%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fkomga%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/speedometer.svg) [LibreSpeed](librespeed/) : A very lightweight speed test implemented in Javascript, using XMLHttpRequest and Web Workers
 
@@ -585,7 +622,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/movie-search.svg) [Maintainerr](maintainerr/) : Rule-based media cleanup tool for Plex, Jellyfin (88956x) and Emby. Creates collections and optionally deletes unwatched content.
+&#10003; ![image](https://api.iconify.design/mdi/movie-search.svg) [Maintainerr](maintainerr/) : Rule-based media cleanup tool for Plex, Jellyfin and Emby. Creates collections and optionally deletes unwatched content.
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmaintainerr%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmaintainerr%2Fupdater.json)
@@ -702,6 +739,27 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
+&#10003;  [Obsidian Sync Server](obsidian_syncserver_solo/) : Self-hosted Obsidian LiveSync backend on CouchDB. Plain HTTP — put your own reverse proxy in front for TLS.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_solo%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_solo%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+
+&#10003;  [Obsidian Sync Server NPM](obsidian_syncserver_npm/) : Self-hosted Obsidian LiveSync backend on CouchDB, bundled with Nginx Proxy Manager for TLS and certificate management.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_npm%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_npm%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+
+&#10003;  [Obsidian Sync Server SSL](obsidian_syncserver_ssl/) : Self-hosted Obsidian LiveSync backend on CouchDB, serving HTTPS with your own certificates from /ssl. Supports mobile Obsidian.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_ssl%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fobsidian_syncserver_ssl%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+
 &#10003;  [Omada (obsolete)](zzz_archived_omada/) : TP-Link Omada Controller (obsolete, use https://github.com/jkunczik/home-assistant-omada)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_omada%2Fconfig.yaml)
@@ -780,7 +838,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (19664x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
@@ -788,7 +846,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![ingress][ingress-badge]
 
-&#10003;  [Portainer Agent](portainer_agent/) : An agent used to manage all the resources in a Swarm cluster
+&#10003;  [Portainer (19664x) Agent](portainer_agent/) : An agent used to manage all the resources in a Swarm cluster
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_agent%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_agent%2Fupdater.json)
@@ -796,7 +854,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![full_access][full_access-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer Business Edition](portainer_be/) : Manage your Docker environment with ease (Business Edition)
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (19664x) Business Edition](portainer_be/) : Manage your Docker environment with ease (Business Edition)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_be%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_be%2Fupdater.json)
@@ -877,6 +935,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsabnzbd%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
@@ -907,7 +966,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/movie-search.svg) [Seerr](seerr/) : Open-source media request and discovery manager for Jellyfin (88956x), Plex, and Emby
+&#10003; ![image](https://api.iconify.design/mdi/movie-search.svg) [Seerr](seerr/) : Open-source media request and discovery manager for Jellyfin, Plex, and Emby
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fseerr%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fseerr%2Fupdater.json)

@@ -8,6 +8,7 @@ When an issue mentions one of these add-ons (in the title or body), a GitHub Act
 
 | Add-on folder | Initial submitter |
 | --- | --- |
+| `bentopdf` | [@ToledoEM](https://github.com/ToledoEM) |
 | `emby` | [@petersendev](https://github.com/petersendev) |
 | `gitea` | [@baldarn](https://github.com/baldarn) |
 | `kometa` | [@akrigator](https://github.com/akrigator) |
@@ -15,6 +16,10 @@ When an issue mentions one of these add-ons (in the title or body), a GitHub Act
 | `manyfold` | [@ToledoEM](https://github.com/ToledoEM) |
 | `navidrome` | [@baldarn](https://github.com/baldarn) |
 | `netalertx` | [@jokob-sk](https://github.com/jokob-sk) |
+| `nginx_webserver_proxy` | [@ToledoEM](https://github.com/ToledoEM) |
+| `obsidian_syncserver_npm` | [@ToledoEM](https://github.com/ToledoEM) |
+| `obsidian_syncserver_solo` | [@ToledoEM](https://github.com/ToledoEM) |
+| `obsidian_syncserver_ssl` | [@ToledoEM](https://github.com/ToledoEM) |
 | `openproject` | [@baldarn](https://github.com/baldarn) |
 | `resiliosync` | [@tyjtyj](https://github.com/tyjtyj) |
 | `spotweb` | [@woutercoppens](https://github.com/woutercoppens) |

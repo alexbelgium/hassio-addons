@@ -1,13 +1,19 @@
 # Global build args — must be declared before the first FROM to be usable in FROM instructions
 ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.23
-ARG BUILD_VERSION=2.8.2
+ARG BUILD_VERSION=2.8.8
+# Upstream BentoPDF release to fetch. Tracked separately from BUILD_VERSION so
+# the add-on can carry a local patch counter (e.g. 2.8.8.1) without breaking the
+# release URLs, which only exist for real upstream tags.
+ARG BUILD_UPSTREAM=2.8.8
 
-# Stage 1: Download and extract the BentoPDF dist release (includes bundled WASM)
+# Stage 1: Download and extract the BentoPDF Simple Mode dist release (includes
+# bundled WASM). Simple Mode drops the bentopdf.com marketing UI and keeps every
+# PDF tool, so it is the only build shipped here.
 FROM alpine:3.21 AS dist
-ARG BUILD_VERSION
+ARG BUILD_UPSTREAM
 # hadolint ignore=DL3018
 RUN apk add --no-cache curl unzip \
-    && curl -fsSL "https://github.com/alam00000/bentopdf/releases/download/v${BUILD_VERSION}/dist-${BUILD_VERSION}.zip" \
+    && curl -fsSL "https://github.com/alam00000/bentopdf/releases/download/v${BUILD_UPSTREAM}/dist-simple-${BUILD_UPSTREAM}.zip" \
        -o /tmp/bentopdf.zip \
     && unzip /tmp/bentopdf.zip -d /tmp/dist
 

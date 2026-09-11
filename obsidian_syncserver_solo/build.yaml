@@ -1,0 +1,4 @@
+---
+build_from:
+  aarch64: couchdb:3.5.2
+  amd64: couchdb:3.5.2

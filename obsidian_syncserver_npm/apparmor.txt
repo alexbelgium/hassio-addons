@@ -1,0 +1,37 @@
+#include <tunables/global>
+
+profile hassio-addons/obsidian_syncserver_npm flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/bash>
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+
+  # Baseline profile covering both CouchDB (Erlang VM) and Nginx Proxy
+  # Manager (s6-overlay, nginx, node). Both need broad file and network
+  # access plus the ability to drop privileges.
+  file,
+  network,
+
+  capability chown,
+  capability dac_override,
+  capability fowner,
+  capability kill,
+  capability net_bind_service,
+  capability setgid,
+  capability setuid,
+
+  signal (send) set=(kill,term,int,hup,cont),
+
+  # s6-overlay boot chain
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /command/** ix,
+  /package/** ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /etc/s6-overlay/** rwix,
+
+  deny /proc/kcore rwklx,
+  deny /proc/sysrq-trigger rwklx,
+  deny /sys/firmware/** rwklx,
+}

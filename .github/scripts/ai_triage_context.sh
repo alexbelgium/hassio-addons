@@ -77,7 +77,10 @@ if [ -n "$ADDON" ]; then
   {
     echo
     echo "## Addon files: ${ADDON}/"
-    if ! git sparse-checkout set --no-cone .github/prompts .github/scripts "$ADDON" 2>&1; then
+    # `set` REPLACES the checkout list, so .templates has to be repeated here
+    # or the workflow's sparse-checkout of it is silently undone at this point
+    # — which is exactly the state that starved #2949 of its turn budget.
+    if ! git sparse-checkout set --no-cone .github/prompts .github/scripts .templates "$ADDON" 2>&1; then
       # Swallowing this used to leave ADDON resolved with no files behind it,
       # so the classifier could still reach high confidence off the addon
       # name alone. Say so explicitly, in the same word Rule 2 already keys

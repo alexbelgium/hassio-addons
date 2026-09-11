@@ -1,6 +1,12 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 - Fix persistent data directory: the entrypoint now writes to the `/config` mount (the container-side path of the `app_config` map) instead of an unmounted `/app_configs/cleanuparr` path, so Cleanuparr's data survives container recreation.
  
+## 2.10.5 (2026-08-13)
+- Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
+ 
+## 2.10.3 (2026-08-08)
+- Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
+ 
 ## 2.10.2 (2026-08-01)
 - Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
  

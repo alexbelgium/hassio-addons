@@ -9,8 +9,8 @@ workflows and lint rules — that is not repeated here.
 ## Contents
 
 - [Environment and workspace](#environment-and-workspace)
-- [Measurement](#measurement)
 - [Passing values into base-image services](#passing-values-into-base-image-services)
+- [Writing into an app's own config](#writing-into-an-apps-own-config)
 - [Shell and bashio](#shell-and-bashio)
 - [Dockerfile and architecture](#dockerfile-and-architecture)
 - [Versioning](#versioning)
@@ -45,20 +45,6 @@ gate. One observed run took ~3 hours, with 20+ runs queued against 2 executing �
 runner contention, not the diff. Check `gh run list` before concluding your PR is stuck. Poll in
 a background task, and never claim the build is verified when it hasn't run.
 
-## Measurement
-
-**Summed RSS overstates savings.** Shared library pages are counted once per process, so removing
-a duplicate frees its *private* memory, not its RSS. Measured example: four MCP shims summed to
-882 MB RSS but 643 MB PSS / 564 MB private, and per-process private ranged 54 MB down to 2 MB —
-which completely changes which duplicate is worth removing. Quote private when arguing "removing
-this saves N MB".
-
-**A large mapping is often not resident.** SysV/tmpfs segments are lazily populated. Xvfb's
-506 MB framebuffer shows `Rss: 0` in `/proc/<pid>/smaps`. Check before calling anything a leak.
-
-**`/proc/meminfo` and `free` show host figures** — there is no memory cgroup namespace here.
-Never attribute those totals to the add-on.
-
 **`rtk` filters some command output.** For a complete listing, redirect to a file and read that
 (`ps ... > $SP/ps.txt`), or use `rtk proxy <cmd>`.
 
@@ -84,10 +70,28 @@ service run scripts including `svc-xorg`, and Xvfb runs with `-vfbdevice /dev/dr
 
 - `00-global_var.sh` is cont-init **00**. Any cont-init script numbered higher runs *after* the
   injection, so it cannot change what a service will see through stage 2.
-- LSIO's `svc-xorg` starts `#!/usr/bin/env bashio`, **not** `with-contenv`, so it never reads
-  stage 3 at all. Writing `container_environment` for it is a silent no-op — that shipped: the
-  file was written 6 seconds before Xvfb started, and Xvfb still came up at the base-image
-  default.
+- **Whether a service's own shebang still decides stage 3 depends on whether `ha_entrypoint.sh`
+  runs as PID 1** — i.e. whether the add-on replaces the base `ENTRYPOINT ["/init"]` with one that
+  makes `ha_entrypoint.sh` itself the container's entrypoint (live today in `ente` and
+  `free_games_claimer`; `wger` has the override written into its Dockerfile but commented out, so
+  it is not currently one of these — check the Dockerfile, not this list). Under the normal
+  `/init` path this script runs as the stage-2 hook, `$PID1` is false, and it never touches
+  `services.d/*/run` or `s6-overlay/s6-rc.d/*/run` at all (`.templates/ha_entrypoint.sh:430`,
+  gated on `if $PID1`) — s6's own stage 1 already created `/run/s6/container_environment` before
+  any cont-init script ran, so a service's shipped `with-contenv` shebang reads it normally.
+  Only the `ENTRYPOINT`-override path breaks this, and it breaks it twice over: s6 stage 1 never
+  runs, so nothing ever creates the envdir; and because `ha_entrypoint.sh` is now PID 1, it
+  rewrites the first line of every service `run` file to whichever shebang its own
+  `candidate_shebangs` probe landed on. That probe's first candidate,
+  `/command/with-contenv bashio`, fails precisely because the envdir was never created, so it
+  falls through to `/usr/bin/env bashio` for every service — the real mechanism behind the shipped
+  `svc-xorg` failure (its envdir file was written 6 seconds before Xvfb started, and Xvfb still
+  came up at the base-image default). `cont-init.d` scripts are a separate case: `run_one_script`
+  rewrites their shebang unconditionally, with no `$PID1` gate, so a cont-init script's own
+  shebang is never informative either way. `ha_entrypoint.sh` dumps the environment itself to
+  compensate for the missing envdir, and the envdir writes in `00-global_var.sh` /
+  `01-config_yaml.sh` are `if [ -d ]` guarded, so they take effect only once something has created
+  that directory.
 
 **Renaming an option to match a base-image env var moves validation out of your script and into
 the schema.** `00-global_var.sh` exports empty strings (only objects/arrays/nulls are dropped),
@@ -116,6 +120,26 @@ place for filesystem and permission setup.
 the openbox autostart. (ANGLE's OpenGL backend, for instance, fails with "Could not open the
 default X display".)
 
+## Writing into an app's own config
+
+**A field your cont-init script writes may also be user-editable in the app's UI.** An
+unconditional `UPDATE`/overwrite on every boot silently erases whatever the user added there,
+and containers are recreated on restart so it re-erases forever (calibre-web
+`config_reverse_proxy_trusted_ips`, #3004 — flagged by two review bots, fixed in #3010).
+Prepend/merge with an idempotence guard instead of assigning.
+
+**Prefer values that are constant across boots.** The add-on's own IP changes every restart,
+so injecting it forces a rewrite-every-boot design plus stale-entry cleanup (a stale trusted IP
+can be handed to a *different* add-on later). Trusting the whole supervisor range
+`172.30.32.0/23` is constant, written once. For dual-stack listeners the IPv4 form never
+matches IPv4-mapped addresses — also list the mapped form (`::ffff:172.30.32.0/119`).
+
+Constant is not free when the value gates **authentication**: trusting the whole range means any
+add-on on the supervisor network can send the auth header and impersonate a user. #3010 shipped
+that as an explicit, stated trade-off with the maintainer's sign-off. State the blast radius in
+the PR body and get the maintainer's call before widening trust — never present it as a neutral
+simplification.
+
 ## Shell and bashio
 
 **`bashio::config` for lists**: `while read ... < <(bashio::config ...)` silently yields an empty
@@ -142,6 +166,26 @@ the running image (`command -v <tool>`), and cross-check `/var/log/apt/history.l
 matching `apt-get install` line. An `if` block whose condition never matched leaves no trace and
 no error — one such block sat dead for weeks while appearing to guarantee driver verification.
 
+**Adding a build stage above `ARG BUILD_FROM` breaks the final `FROM`.** Global build args must
+be declared *before the first* `FROM` in the file; an `ARG` that follows one belongs to that stage
+only. Inserting a tools stage at the top of an add-on Dockerfile therefore demotes the
+`ARG BUILD_FROM` below it, and the final `FROM ${BUILD_FROM}` expands empty:
+`failed to solve: base name (${BUILD_FROM}) should not be blank`. Move `ARG BUILD_FROM` (and
+`ARG BUILD_VERSION`) above the new stage. `netalertx` does not hit this only because it hardcodes
+its base image instead of using `${BUILD_FROM}` — do not copy its ordering blindly
+(PR #3024).
+
+**A base image can lose its package manager between upstream releases.** Zoraxy v3.3.4 added
+`/sbin/apk` to the upstream cleanup step, so `ha_automodules.sh` failed with
+`apt-get: not found / apk: not found` (exit 127) on both architectures. The removal deleted only
+the binary — `/etc/apk` (repositories, keys, world) and `/lib/apk/db` survived, confirmed by a
+single `sbin/.wh.apk` whiteout in the layer — so copying `apk.static` from an
+`apk-tools-static` build stage restores package management in one line. Diff the upstream image
+configs across the two tags (`.history[].created_by` from the registry config blob) before
+theorising; it names the changed step exactly. Note `build_from` is often a floating `:latest`
+tag, so the builder's revert-on-failure does **not** restore a working build — the next rebuild
+fails identically until the Dockerfile is fixed (PR #3024).
+
 **Don't test for distro-specific filenames.** A guard on
 `/usr/share/vulkan/icd.d/intel_icd.x86_64.json` named a file Debian does not ship (it installs
 `intel_icd.json`), so fixing the arch variable alone would have turned dead code into a failing
@@ -149,11 +193,9 @@ build.
 
 ## Versioning
 
-**`X.Y.Z.N`, never `X.Y.Z-N`.** A hyphen parses as a semver pre-release, which Supervisor treats
-as *older* than `X.Y.Z` — the update is never offered.
-
-Date-based versions (`2026.08.03`) are common here. Check whether master has already moved to the
-version you were about to use.
+`CLAUDE.md` owns the format (`X.Y.Z.N`, never `X.Y.Z-N`, and why). The one thing it does not say:
+date-based versions (`2026.08.03`) are common here, so check whether master has already moved to
+the version you were about to use before you pick it.
 
 ## Chromium / Electron under Xvfb
 
@@ -180,14 +222,31 @@ cannot be determined, because the crash it prevents is worse than its overhead.
 
 ## CI and review bots
 
-**What CI actually gates** — checked against the workflows, because assuming costs a cycle:
+**What CI actually gates** — checked against the workflows, because assuming costs a cycle.
 
-- **CHANGELOG updated** — the only hard gate (`onpr_check-pr.yaml`, its single `exit 1`).
-- **Add-on image build** — real, and slow; one run took ~3 h.
-- **Lint** — `lint.yml` runs super-linter with `continue-on-error: true` at both call sites, so
-  it *cannot* fail a PR. Fix real findings anyway, but do not treat lint as a blocker.
+All three hard gates below are matrixed over `check-addon-changes.outputs.changedAddons` and
+`if:`-skipped when it is `[]`, so a PR that touches no add-on directory (docs, `.github/`,
+`.claude/`) shows them as *skipping*, not passing — do not read that as a green build.
+
+- **CHANGELOG updated** — hard gate (`onpr_check-pr.yaml` exits 1 without it).
+- **HA add-on linter** — hard gate: `frenck/action-addon-linter` in `onpr_check-pr.yaml` has no
+  `continue-on-error`, so a config.yaml schema error fails the PR.
+- **Add-on image build** — hard gate, and slow; one run took ~3 h.
+- **Weekly super-linter** — `lint.yml` runs with `continue-on-error: true` at both call sites, so
+  it *cannot* fail a PR. Fix real findings anyway, but do not treat it as a blocker.
 - **Version bump** — no workflow checks it. It is repo convention, and required for Supervisor to
   offer the rebuild, but it will not fail CI.
+
+**"Merged" is not "on master".** The push builder's revert-on-failure job reverts the merge
+commit when its prebuild step fails — including failures unrelated to your diff. A seerr fix
+merged at 05:15 and was reverted one minute later because `EndBug/add-and-commit`'s floating
+`v11` tag had moved to a broken release (#2993, reapplied verbatim in #2997). After merge,
+`git fetch origin master` first — the remote-tracking ref is stale otherwise and would "confirm"
+against pre-merge state — then check that `git diff origin/master -- <the paths you touched>` is
+empty before declaring done. Scope it to your paths: master moves under you, so whole-tree
+equality fails on unrelated commits. Ancestry is not the check either — this repo squash-merges,
+so a merged PR head is never an ancestor of `master` (verified on #3010, whose fix is live), and
+a revert leaves the original commit an ancestor anyway.
 
 **CI rewrites your shell scripts.** `lint.yml` runs `shfmt -w -i 4 -ci -bn -sr` over every `*.sh`
 and `run`, plus a `chmod +x` pass, on schedule. Repo-wide reformatting commits land on master
@@ -196,12 +255,47 @@ without your involvement — another reason a shared checkout goes stale mid-tas
 **Reviewers**: CodeRabbit (deepest — often runs scripts to prove a claim; reviews ~9 minutes
 after the PR opens, or on `@coderabbitai review`), chatgpt-codex-connector, Copilot, Codacy.
 
-**Codacy `action_required` is this repo's normal state.** Other open PRs show the same. It
-exposes no annotations via the API, so its findings are only visible in the maintainer's Codacy
-account. Note it and move on rather than guessing.
+**Codacy is red on essentially every add-on PR and gates nothing.** `gh pr checks` reports it as
+`fail` (older runs showed `action_required`); #3019, #3044 and #3050 all merged with it failing,
+and `master` carries no branch protection, so no check is required in the GitHub sense. It exposes
+no annotations via the API, so its findings are only visible in the maintainer's Codacy account.
+Note it and move on rather than guessing. `pr_review.sh watch` therefore prints it every poll but
+keeps it out of the verdict — the one check on that list, which is a denylist of known noise, not
+an allowlist of gates, so a job added to CI later counts as blocking until someone exempts it.
 
 **Resolving a review thread requires GraphQL** (`resolveReviewThread`); the REST API cannot do it.
 `scripts/pr_review.sh` wraps fetch / reply / resolve.
+
+**`gh pr checks` output is TAB-separated, and every blocking gate here has spaces in its name.**
+Parsing it with awk's default field splitting truncates each check to its first word and reads the
+wrong column as the state: `Codacy Static Code Analysis<TAB>fail` becomes `Codacy=Static`, and
+`Test addon build (wger)<TAB>pending` becomes `Test=addon`. A `case` over that string then matches
+neither `*fail*` nor `*pending*` and falls through to the "all passing" branch — the failure mode
+that makes a CI-reporting command lie. `pr_review.sh watch` called #3044 green while Codacy was
+red, and on #3042 printed "settled — all passing" while the HA add-on linter was failing; it would
+also have called a build that had not started a pass. Use `awk -F'\t'`, judge the state column
+alone (never the joined `name=state` text, or a check named `flaky-fail-detector` reads as a
+failure), and treat an unrecognised state as a failure instead of letting it reach the passing
+branch. Fixed in #3052.
+
+The TSV is gh's *non-TTY* renderer, which is what `$(gh pr checks ... | awk)` always gets; attached
+to a terminal the same command prints a coloured, aligned table with a summary line, so never
+sanity-check the format by eye in a shell and assume the script sees that. `gh pr checks --json`
+would be sturdier, and Copilot recommends it (#3052), but it does not exist before gh 2.36 and the
+add-on ships 2.23 — it fails with `unknown flag: --json`. The parse is therefore built to fail
+safe instead: states are allowlisted, so a header row would land in the failure branch and a
+space-aligned table would parse to zero rows and keep `watch` waiting. Either way it cannot
+return a false pass.
+
+**CHANGELOG heading dates are ISO, whatever the bots' defaults say.** Match the format already in
+the add-on's file. Repo-wide that is `## <version> (YYYY-MM-DD)`: 7705 dated headings against 363
+in `DD-MM-YYYY`, and the newest entry is ISO in 125 of 135 add-ons. Copilot flags an ISO file that
+gets a `DD-MM-YYYY` entry (#3019). `DD-MM-YYYY` is not invented — it is what `onpush_builder.yaml`
+writes with `date '+%d-%m-%Y'` when it has to insert a heading you forgot, and what the
+addons_updater bot writes when its `date_iso8601` option is off (`99-run.sh`; it is on in
+production here) — but neither is a reason to write it yourself. The builder's duplicate check is
+`grep -q "^## ${version} ("`, keyed on the exact `config.yaml` version and blind to the date, so
+an ISO heading you wrote yourself still suppresses the bot's insertion.
 
 **The repo's `.markdownlint.yaml` does not disable MD022/MD032**, so a CHANGELOG will show
 dozens of pre-existing heading/list findings. They are noise because lint is `continue-on-error`,
