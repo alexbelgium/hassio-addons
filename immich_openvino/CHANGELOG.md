@@ -1,3 +1,7 @@
+ 
+## 3.2.0.2 (2026-09-12)
+- Update to latest version from ghcr.io/imagegenius/immich:3-openvino
+- Upstream tag : 3.2.0
 
 ## 3.2.0.1 (2026-09-12)
 - Track the version inside `ghcr.io/imagegenius/immich:3-openvino` instead of the releases of `immich-app/immich`
