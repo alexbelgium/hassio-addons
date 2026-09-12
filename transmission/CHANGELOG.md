@@ -1,3 +1,6 @@
+## 4.1.3.1 (2026-09-12)
+- Add `incomplete_dir_enabled` (default `true`): set to `false` to permanently disable the incomplete-downloads directory. Restarting the add-on always overwrote Transmission's own Web UI toggle for this back to enabled (#3059); this option is read on every restart instead, so it actually sticks
+- Fix a latent bug in the same code: an install where `incomplete_dir` was entirely absent from options (rather than emptied) would create and use a directory literally named `null`
  
 ## 4.1.3 (2026-07-04)
 - Update to latest version from linuxserver/docker-transmission (changelog : https://github.com/linuxserver/docker-transmission/releases)
