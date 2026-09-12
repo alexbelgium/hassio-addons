@@ -33,11 +33,20 @@ Triage first, then one of two paths:
   the plan → implement → simplify → Codex reviews the code → **simplify again** → PR → resolve
   comments → verify in production → report.
 
+Before implementing, on **either** path, ask yourself the proportionality question and answer
+it in the plan (a one-line plan, for a light task) — in writing, naming the smaller version you
+rejected and why:
+
+> What is the smallest thing that solves this? What would you delete from what I just proposed?
+> If it had to be written in ten lines, in the idiom of the code it sits beside, what would be
+> lost — and is any of that a case I have actually demonstrated?
+
 Escalate mid-flight if a light task grows — touches a default, needs a new script or service,
 reveals a deeper problem, or turns out to need more than the one file once you have honestly
-answered "what is the smallest version of this?". A light task never skips that question; it skips
-Codex only while the answer stays inside one file. Adding a **new file or a new mechanism** puts it
-on the full loop, however small the diff looks.
+answered that question. A light task never skips it; it skips **Codex** only while the answer
+stays inside one file. Adding a **new file or a new mechanism** puts it on the full loop, however
+small the diff looks — a version bump and its CHANGELOG entry are release bookkeeping, not a new
+file for this purpose, and never trigger it on their own.
 
 **Standing rule:** ship the simplest solution that works, and build it out of what already
 exists — a `.templates/` module, an existing cont-init script, the pattern a sibling add-on
@@ -116,20 +125,13 @@ plan:
 Levels 4-6 need a reason that survives being said out loud ("upstream has no knob for this, and I
 checked" is one; "it felt cleaner" is not) and mean full loop.
 
-**Then ask the proportionality question, before writing anything — of yourself first, and of Codex
-second.** Not "is this correct" but:
-
-> What is the smallest thing that solves this? What would you delete from what I just proposed?
-> If it had to be written in ten lines, in the idiom of the code it sits beside, what would be
-> lost — and is any of that a case I have actually demonstrated?
-
-Answer it in the plan, in writing, naming the smaller version you rejected and why you rejected
-it. Then put it to Codex as a numbered question of its own, with the smaller alternative sketched
-out for it to argue for. Every other question in the loop asks what could go wrong, which only
-ever argues for more code; this is the one place that pushes the other way, and it is worthless
-unless asked outright — see `references/codex-review.md`. Where the two candidates differ enough
-to matter, build the smaller one and run it: a sketch costs minutes and settles the argument with
-a measurement instead of a preference.
+**Full loop adds Codex to the proportionality question already asked above** — put it to Codex as
+a numbered question of its own, with the smaller alternative sketched out for it to argue for.
+Every other question in the loop asks what could go wrong, which only ever argues for more code;
+this is the one place that pushes the other way, and it is worthless unless asked outright — see
+`references/codex-review.md`. Where the two candidates differ enough to matter, build the smaller
+one and run it: a sketch costs minutes and settles the argument with a measurement instead of a
+preference.
 
 Attack your own plan before implementing:
 - What does this do on a host **unlike this one** — no GPU, small `/dev/shm`, aarch64, a VM?
@@ -164,7 +166,7 @@ path.
 
 ## 5. Simplify
 
-Six questions over your own diff, before anyone else reads it:
+Seven questions over your own diff, before anyone else reads it:
 
 - **Level** — did the diff stay at the ladder level chosen in step 3, or creep up one?
 - **Deletion** — can this be solved by deleting instead of adding?

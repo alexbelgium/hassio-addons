@@ -30,8 +30,8 @@ Being able to build the complicated thing is not a reason to.
   It took the maintainer asking "is this the simplest way possible?" to run the pass that step 6
   now requires.
 
-- The immich updater fix (issue #3060, PR #3061) shipped a **309-line Python registry client** to
-  read one OCI label, into a script whose neighbouring `dockerhub` branch does the same kind of
+- The immich updater fix (issue #3060, PR #3061) initially proposed a **309-line Python registry
+  client** to read one OCI label, into a script whose neighbouring `dockerhub` branch does the same kind of
   job in a handful of inline `curl | jq` lines. Both the plan review and the code review passed
   it, because both were asked what could break rather than what it should cost. Asked "is this the
   simplest way possible?", Codex answered "delete all 309 lines"; the inline version came to 21
