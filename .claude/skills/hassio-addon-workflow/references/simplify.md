@@ -30,6 +30,17 @@ Being able to build the complicated thing is not a reason to.
   It took the maintainer asking "is this the simplest way possible?" to run the pass that step 6
   now requires.
 
+- The immich updater fix (issue #3060, PR #3061) shipped a **309-line Python registry client** to
+  read one OCI label, into a script whose neighbouring `dockerhub` branch does the same kind of
+  job in a handful of inline `curl | jq` lines. Both the plan review and the code review passed
+  it, because both were asked what could break rather than what it should cost. Asked "is this the
+  simplest way possible?", Codex answered "delete all 309 lines"; the inline version came to 21
+  and was measured to return byte-identical output on all five images. About a third of what went
+  was defending cases never observed in this repo — an architecture mismatch, a hostile label, an
+  unsupported registry — each of which already failed closed on its own. Second time the
+  maintainer has had to ask the question, which is why step 3 now asks it before any code exists
+  and step 5 asks whether the hunk looks like its neighbours.
+
 ## Where SKILL.md step 5's questions get hard
 
 **Deletion is not automatically the safe direction.** The `/dev/shm` case in `evidence.md` is a

@@ -27,6 +27,10 @@ codex exec --model gpt-5.6-sol --sandbox read-only --skip-git-repo-check \
 - **Plan review (step 3):** include the files to read, your measurements **with numbers**, the
   proposed changes, and explicit instructions to challenge you. Ask direct questions ("is this
   really add-on-fixable?", "give the precise flag set") rather than "review this".
+- **The proportionality question, in both reviews, as a numbered question of its own:** "is this
+  the simplest way possible, and what exactly would you delete?" Sketch the smaller alternative in
+  the prompt and ask it to argue for that, and quote the repo's standing simplicity rule so it has
+  the bar to hold you to. Ask for lines and functions to delete, not a direction.
 - **Code review (step 6):** point it at `git diff origin/master...HEAD` plus the reasoning behind
   each hunk. Ask specifically what breaks: upgrade paths, hosts unlike this one, users who
   configured things by hand. Ask directly whether a simpler mechanism would achieve the same
@@ -41,3 +45,8 @@ confirmations with the same scepticism as its objections — especially about th
 
 **Its objections only ever argue for more code** — it is asked what could go wrong, never whether
 the branch it wants is reachable. Sort them before writing anything; SKILL.md step 6 is that pass.
+
+**Unprompted it will never say "this is too much".** Asked outright it will, bluntly and usefully:
+on PR #3061 it answered "delete all 309 lines" of a helper both its earlier reviews had passed
+without comment. Expect it to reverse an earlier position when you ask it to re-examine one — a
+stance it drops that easily was never strongly held, which is itself the answer.
