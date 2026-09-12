@@ -129,9 +129,11 @@ checked" is one; "it felt cleaner" is not) and mean full loop.
 a numbered question of its own, with the smaller alternative sketched out for it to argue for.
 Every other question in the loop asks what could go wrong, which only ever argues for more code;
 this is the one place that pushes the other way, and it is worthless unless asked outright — see
-`references/codex-review.md`. Where the two candidates differ enough to matter, build the smaller
-one and run it: a sketch costs minutes and settles the argument with a measurement instead of a
-preference.
+`references/codex-review.md`. Nothing is built yet at this step, so "test" means against the real
+requirement, not against the other candidate — sketch the smaller one and check it against what
+the add-on actually needs; that sketch is what you go on to implement if it holds up, not one of
+two things you build. A sketch costs minutes and settles the argument with a measurement instead
+of a preference.
 
 Attack your own plan before implementing:
 - What does this do on a host **unlike this one** — no GPU, small `/dev/shm`, aarch64, a VM?
@@ -203,7 +205,10 @@ correctness objection often deletes the code that made it necessary, and a fix t
 to fewer lines than you started the review with is the normal outcome, not a suspicious one.
 
 Then ask the proportionality question again, of the diff this time — it is cheap, and by now
-there is real code to point at rather than a plan.
+there is real code to point at rather than a plan. This is where "build the smaller one and test
+both" is actually free: the larger candidate already exists as the diff, so sketch the smaller
+alternative and diff its output against the shipped code on the same inputs, the way #3061 was
+settled (`references/simplify.md`) — rather than against the requirement alone.
 
 These edits land after step 4's checks already ran, so re-run them: `scripts/validate.sh <addon>
 --vs-master` plus the behavioural tests, over the final diff. Deleting a branch is exactly the
