@@ -109,6 +109,7 @@ for f in */; do
         EXCLUDE_TEXT="${EXCLUDE_TEXT:-zzzzzzzzzzzzzzzz}"
         PAUSED=$(jq -r .paused updater.json)
         DATE="$(date "$DATE_FORMAT")"
+        LASTDIGEST=""
         BYDATE=$(jq -r .dockerhub_by_date updater.json)
 
         # Number of elements to check in dockerhub
@@ -194,6 +195,45 @@ for f in */; do
                 && DATE="$(date -d "$DATE" "$DATE_FORMAT")" \
                 && LASTVERSION="$LASTVERSION-$DATE"
             LOGINFO="... $SLUG : bydate is true, version is $LASTVERSION" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+
+        elif [[ "$SOURCE" = container ]]; then
+            # The addon builds FROM an image someone else publishes rather
+            # than from the application itself, so the version to publish is
+            # the one inside that image and not the newest release of the
+            # application repository, which the image can lag by weeks
+            LOGINFO="... Source is container" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+
+            ACCEPT="application/vnd.oci.image.index.v1+json,application/vnd.docker.distribution.manifest.list.v2+json,application/vnd.oci.image.manifest.v1+json,application/vnd.docker.distribution.manifest.v2+json"
+            REGISTRY="${UPSTREAM%%/*}"
+            IMAGE="${UPSTREAM#*/}"
+            IMAGEREPO="${IMAGE%:*}"
+            BASEURL="https://$REGISTRY/v2/$IMAGEREPO"
+            HEADERS="$(mktemp)"
+
+            # The digest the tag resolves to is the one the registry answers
+            # with, and it moves whenever anything behind the tag does
+            TOKEN="$(curl -f -L -s "https://$REGISTRY/token?scope=repository:$IMAGEREPO:pull&service=$REGISTRY" | jq -r '.token // empty')" || true
+            MANIFEST="$(curl -f -L -s -D "$HEADERS" -H "Authorization: Bearer $TOKEN" -H "Accept: $ACCEPT" "$BASEURL/manifests/${IMAGE##*:}")" || true
+            LASTDIGEST="$(sed -n 's/^[Dd]ocker-[Cc]ontent-[Dd]igest:[[:space:]]*//p' "$HEADERS" | tr -d '\r')"
+            rm -f "$HEADERS"
+
+            # A multi architecture tag answers with an index, whose first
+            # image is read: the attestations buildx attaches alongside
+            # describe no architecture and hold no image configuration
+            CHILD="$(echo "$MANIFEST" | jq -r 'first(.manifests[]? | select(.platform.os == "linux" and .platform.architecture != "unknown") | .digest) // empty')" || true
+            if [ -n "$CHILD" ]; then
+                MANIFEST="$(curl -f -L -s -H "Authorization: Bearer $TOKEN" -H "Accept: $ACCEPT" "$BASEURL/manifests/$CHILD")" || true
+            fi
+
+            # Publishers record the application version of an image in its
+            # OCI label, which is what the addon actually ships
+            LASTVERSION="$(curl -f -L -s -H "Authorization: Bearer $TOKEN" "$BASEURL/blobs/$(echo "$MANIFEST" | jq -r '.config.digest // empty')" \
+                | jq -r '.config.Labels["org.opencontainers.image.version"] // empty')" || true
+
+            if [ -z "$LASTVERSION" ] || [ -z "$LASTDIGEST" ]; then
+                bashio::log.warning "... $SLUG : no version could be read from $UPSTREAM, skipping"
+                continue
+            fi
 
         else
 
@@ -344,8 +384,19 @@ for f in */; do
             continue
         fi
 
+        # What the addon was last built against. A container source adds the
+        # digest of the image: a publisher rebuilding the same version, for a
+        # base image fix or a packaging revision, repoints the tag at new
+        # content under an unchanged label, and only the digest says so
+        CURRENTSTATE="$CURRENT"
+        LASTSTATE="$LASTVERSION"
+        if [[ "$SOURCE" = container ]]; then
+            CURRENTSTATE="$CURRENT $(jq -r '.upstream_digest // ""' updater.json)"
+            LASTSTATE="$LASTVERSION $LASTDIGEST"
+        fi
+
         # Update if needed
-        if [ "${CURRENT}" != "${LASTVERSION}" ]; then
+        if [ "${CURRENTSTATE}" != "${LASTSTATE}" ]; then
             LOGINFO="... $SLUG : update from ${CURRENT} to ${LASTVERSION}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
             ADDONFOLDER="/data/${BASENAME}/${SLUG}"
@@ -405,7 +456,9 @@ for f in */; do
 
             # Replace upstream tag and date, keeping the file intact if jq
             # fails as a truncated updater.json would lose the addon source
-            if ! UPDATERJSON="$(jq --arg version "$LASTVERSION" --arg date "$DATE" '.upstream_version = $version | .last_update = $date' "$ADDONFOLDER/updater.json")"; then
+            if ! UPDATERJSON="$(jq --arg version "$LASTVERSION" --arg date "$DATE" --arg digest "${LASTDIGEST:-}" \
+                '.upstream_version = $version | .last_update = $date | if $digest == "" then . else .upstream_digest = $digest end' \
+                "$ADDONFOLDER/updater.json")"; then
                 bashio::log.error "... $SLUG : updater.json could not be updated, reverting"
                 git checkout -- "$ADDONFOLDER"
                 continue

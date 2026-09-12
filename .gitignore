@@ -1,0 +1,2 @@
+# Bytecode of the python helpers in the addons, which rootfs/ copies into the image
+__pycache__/

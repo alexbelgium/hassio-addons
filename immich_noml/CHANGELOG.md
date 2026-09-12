@@ -1,3 +1,9 @@
+
+## 3.2.0.1 (2026-09-12)
+- Track the version inside `ghcr.io/imagegenius/immich:3-noml` instead of the releases of `immich-app/immich`
+- The add-on is now rebuilt whenever imagegenius repoints `:3-noml`, whether the immich version changed or the image was simply republished
+- The add-on has never built immich itself, it builds on top of the imagegenius rebuild, which lags immich upstream by days to weeks. Version `3.2.0` was published while the image still contained immich `3.1.0` (issue #3060), and nothing would have rebuilt the add-on once the image caught up
+- This build still contains immich **3.1.0**, and will be updated automatically once imagegenius publishes a newer image. Home Assistant cannot offer a version lower than the one installed, so the add-on number stays in the `3.2.0.x` range until the image moves past 3.2.0
  
 ## 3.2.0 (2026-09-12)
 - Update to latest version from immich-app/immich (changelog : https://github.com/immich-app/immich/releases)
