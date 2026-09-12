@@ -33,8 +33,20 @@ Triage first, then one of two paths:
   the plan → implement → simplify → Codex reviews the code → **simplify again** → PR → resolve
   comments → verify in production → report.
 
-Escalate mid-flight if a light task grows — touches a default, needs a new script or service, or
-reveals a deeper problem.
+Before implementing, on **either** path, ask yourself the proportionality question and answer
+it in the plan (a one-line plan, for a light task) — in writing, naming the smaller version you
+rejected and why:
+
+> What is the smallest thing that solves this? What would you delete from what I just proposed?
+> If it had to be written in ten lines, in the idiom of the code it sits beside, what would be
+> lost — and is any of that a case I have actually demonstrated?
+
+Escalate mid-flight if a light task grows — touches a default, needs a new script or service,
+reveals a deeper problem, or turns out to need more than the one file once you have honestly
+answered that question. A light task never skips it; it skips **Codex** only while the answer
+stays inside one file. Adding a **new file or a new mechanism** puts it on the full loop, however
+small the diff looks — a version bump and its CHANGELOG entry are release bookkeeping, not a new
+file for this purpose, and never trigger it on their own.
 
 **Standing rule:** ship the simplest solution that works, and build it out of what already
 exists — a `.templates/` module, an existing cont-init script, the pattern a sibling add-on
@@ -113,6 +125,16 @@ plan:
 Levels 4-6 need a reason that survives being said out loud ("upstream has no knob for this, and I
 checked" is one; "it felt cleaner" is not) and mean full loop.
 
+**Full loop adds Codex to the proportionality question already asked above** — put it to Codex as
+a numbered question of its own, with the smaller alternative sketched out for it to argue for.
+Every other question in the loop asks what could go wrong, which only ever argues for more code;
+this is the one place that pushes the other way, and it is worthless unless asked outright — see
+`references/codex-review.md`. Nothing is built yet at this step, so "test" means against the real
+requirement, not against the other candidate — sketch the smaller one and check it against what
+the add-on actually needs; that sketch is what you go on to implement if it holds up, not one of
+two things you build. A sketch costs minutes and settles the argument with a measurement instead
+of a preference.
+
 Attack your own plan before implementing:
 - What does this do on a host **unlike this one** — no GPU, small `/dev/shm`, aarch64, a VM?
 - What happens on **upgrade** to someone who configured this by hand?
@@ -123,7 +145,8 @@ Attack your own plan before implementing:
   where that input arrives (the standing rule above) and go and look, before you write it.
 
 Full loop only, before writing code: get Codex's independent read on the plan, delegated as above —
-`references/codex-review.md` has the invocation and how to write the prompt.
+`references/codex-review.md` has the invocation and how to write the prompt. The proportionality
+question above goes in that prompt every time, and in the step 6 prompt too.
 
 ## 4. Implement
 
@@ -145,7 +168,7 @@ path.
 
 ## 5. Simplify
 
-Six questions over your own diff, before anyone else reads it:
+Seven questions over your own diff, before anyone else reads it:
 
 - **Level** — did the diff stay at the ladder level chosen in step 3, or creep up one?
 - **Deletion** — can this be solved by deleting instead of adding?
@@ -153,6 +176,10 @@ Six questions over your own diff, before anyone else reads it:
 - **Reuse** — does any hunk reimplement what `.templates/`, another script in this add-on, or a
   sibling add-on already does? If a future add-on hits this problem, will it find one way to solve
   it or two? Fold near-duplicates in, or justify the divergence in the PR body.
+- **Idiom** — does this look like the code it sits beside? The same kind of job done two ways in
+  one file costs every later reader more than the nicer of the two ways saves. Reuse asks whether
+  the mechanism already exists; Idiom asks whether you wrote yours the way the neighbours are
+  written.
 - **Depth** — is this a special case bolted onto shared infrastructure? Fix the shared mechanism
   instead once more than one add-on hits it; generalising from a single case is how bespoke
   designs get built, so below that bar the special case is the right call.
@@ -176,6 +203,12 @@ and it needs the same demonstration you would demand of a measurement — is the
 you have now demonstrated, or one you have merely been told about? Taking a
 correctness objection often deletes the code that made it necessary, and a fix that collapses back
 to fewer lines than you started the review with is the normal outcome, not a suspicious one.
+
+Then ask the proportionality question again, of the diff this time — it is cheap, and by now
+there is real code to point at rather than a plan. This is where "build the smaller one and test
+both" is actually free: the larger candidate already exists as the diff, so sketch the smaller
+alternative and diff its output against the shipped code on the same inputs, the way #3061 was
+settled (`references/simplify.md`) — rather than against the requirement alone.
 
 These edits land after step 4's checks already ran, so re-run them: `scripts/validate.sh <addon>
 --vs-master` plus the behavioural tests, over the final diff. Deleting a branch is exactly the
