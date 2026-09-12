@@ -63,7 +63,9 @@ incomplete_dir=$(bashio::config 'incomplete_dir')
 # (upgrade from before this key existed) would count as a 4-character dir and
 # create one literally named "null"
 [ "$incomplete_dir" = "null" ] && incomplete_dir=""
-incomplete_dir_enabled=$(bashio::config 'incomplete_dir_enabled' true)
+# Enabled unless explicitly false: an absent key reads as "null" in bashio and
+# as "" in the standalone shim, which ignores bashio::config's default argument
+incomplete_dir_enabled=$(bashio::config 'incomplete_dir_enabled')
 CONFIG=$(< $CONFIGDIR/settings.json)
 
 # Permissions
@@ -75,7 +77,7 @@ chown "$PUID:$PGID" "$download_dir"
 # Web UI toggle is overwritten here regardless, so a permanent "off" has to come
 # from an option this script reads, not from the Web UI (issue #3059). A dir
 # shorter than 2 characters (empty, "/") is treated as unset either way.
-if bashio::var.true "$incomplete_dir_enabled" && [ ${#incomplete_dir} -ge 2 ]; then
+if [ "$incomplete_dir_enabled" != "false" ] && [ ${#incomplete_dir} -ge 2 ]; then
     echo "Incomplete dir set: $incomplete_dir"
     CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
     mkdir -p "$incomplete_dir"
