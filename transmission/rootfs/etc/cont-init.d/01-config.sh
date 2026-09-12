@@ -57,6 +57,13 @@ bashio::log.warning "If UI was changed, you need to clear browser cache for it t
 echo "Creating config"
 download_dir=$(bashio::config 'download_dir')
 incomplete_dir=$(bashio::config 'incomplete_dir')
+# bashio::config prints the literal string "null" for an absent option (its
+# own default-value argument cannot be an empty string: bash's ${2:-null}
+# treats "" the same as unset). Without this, an option missing entirely
+# (upgrade from before this key existed) would count as a 4-character dir and
+# create one literally named "null"
+[ "$incomplete_dir" = "null" ] && incomplete_dir=""
+incomplete_dir_enabled=$(bashio::config 'incomplete_dir_enabled' true)
 CONFIG=$(< $CONFIGDIR/settings.json)
 
 # Permissions
@@ -64,8 +71,11 @@ echo "Updating permissions"
 mkdir -p "$download_dir"
 chown "$PUID:$PGID" "$download_dir"
 
-# if incomplete dir > 2, to allow both null and '', set it as existing
-if [ ${#incomplete_dir} -ge 2 ]; then
+# The addon's own toggle wins on every restart, which is the point: Transmission's
+# Web UI toggle is overwritten here regardless, so a permanent "off" has to come
+# from an option this script reads, not from the Web UI (issue #3059). A dir
+# shorter than 2 characters (empty, "/") is treated as unset either way.
+if bashio::var.true "$incomplete_dir_enabled" && [ ${#incomplete_dir} -ge 2 ]; then
     echo "Incomplete dir set: $incomplete_dir"
     CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
     mkdir -p "$incomplete_dir"
