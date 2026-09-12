@@ -3,7 +3,7 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich",
   "source": "container",
-  "upstream_digest": "sha256:8e10fe2fb3e887b04b353e82e793eeb90771977edf8523fc1342a34cac710bb2",
+  "upstream_digest": "sha256:add917873d443da472353ac36b7a74e259810293d6c54cd2a64992a9465c9a78",
   "upstream_repo": "ghcr.io/imagegenius/immich:3-noml",
-  "upstream_version": "3.1.0"
+  "upstream_version": "3.2.0"
 }
