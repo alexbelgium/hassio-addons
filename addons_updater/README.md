@@ -67,11 +67,45 @@ You can add the following tags in the file :
 - repository: 'name/repo' coming from github
 - paused: true # Pauses the updates
 - slug: the slug name from your addon
-- source: dockerhub/github,gitlab,bitbucket,pip,hg,sf,website-feed,local,helm_chart,wiki,system,wp,codeberg (Codeberg is supported via its Gitea API, which is configured automatically)
-- upstream_repo: name/repo, example is 'linuxserver/docker-emby'
+- source: container/dockerhub/github,gitlab,bitbucket,pip,hg,sf,website-feed,local,helm_chart,wiki,system,wp,codeberg (Codeberg is supported via its Gitea API, which is configured automatically)
+- upstream_repo: name/repo, example is 'linuxserver/docker-emby'. With `source: container` it is instead a full image reference, example is 'ghcr.io/imagegenius/immich:3'
 - upstream_version: automatically populated, corresponds to the current upstream version referenced in the addon
 - dockerhub_by_date: in dockerhub, uses the last_update date instead of the version
 - dockerhub_list_size: in dockerhub, how many containers to consider for latest version
+
+### Addons built on someone else's image
+
+An addon that does not build the application itself, but builds `FROM` an image a third party
+publishes, must publish the version that image holds and not the newest release of the
+application. `ghcr.io/imagegenius/immich:3` is a rebuild of immich lagging its upstream by days
+to weeks: tracking `immich-app/immich` published a version the addon did not contain, and left
+the addon with no reason to rebuild once the image finally caught up.
+
+`source: container` reads the version out of the image itself. Set `upstream_repo` to the exact
+image reference used in `build.json`, tag included:
+
+```json
+{
+  "source": "container",
+  "upstream_repo": "ghcr.io/imagegenius/immich:3"
+}
+```
+
+The version comes from the image's `org.opencontainers.image.version` label, read from the first
+linux image the tag publishes, and the addon is left alone when there is no label to read. Written
+against `ghcr.io`, which serves anonymous pull tokens from `https://ghcr.io/token`; a registry
+authenticating differently, such as Docker Hub, yields no version and the addon is skipped.
+
+The manifest digest is recorded next to the version, in `upstream_digest`, and the addon is
+rebuilt when either of the two moves. A publisher rebuilding the same version, for a base image
+security fix or a packaging revision, repoints the tag at new content under an unchanged label,
+and the digest is the only thing that says so. `upstream_digest` is populated automatically; seed
+it by hand when migrating an addon to this source, or the first run counts the unknown digest as
+a change and rebuilds once for nothing.
+
+The label is metadata the publisher chooses. Some images carry none, and some record their own
+packaging revision rather than the application version, so this source is opt-in per addon and
+never a default.
 
 ### Addon version numbering
 

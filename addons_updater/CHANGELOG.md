@@ -1,4 +1,8 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
+## 2026.09 (2026-09-12)
+
+- New `source: container` for addons that build `FROM` an image published by someone else. The version is read from the `org.opencontainers.image.version` label of the exact image reference in `updater.json`, instead of from the releases of the application's own repository. Written against `ghcr.io`; an image with no such label leaves the addon untouched
+- `source: container` also records the manifest digest in `upstream_digest` and rebuilds when it moves, so a publisher republishing the same version under a new image is no longer invisible
 ## 2026.08 (2026-08-01)
 
 - Addon versions written in config.yaml now always comply with Home Assistant versioning: an upstream tag Home Assistant cannot order (`version-bf9e0b4f`, `ubuntu-2026-06-01`, ...) or would sort as older (`1.2.3-2`, `1.2.3+4`) no longer lands in config.yaml. The addon number is incremented instead, while the raw upstream tag stays in updater.json so the same release is never published twice

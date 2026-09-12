@@ -1,10 +1,9 @@
 {
-  "github_beta": "false",
-  "github_exclude": "",
   "last_update": "2026-09-12",
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich",
-  "source": "github",
-  "upstream_repo": "immich-app/immich",
-  "upstream_version": "3.2.0"
+  "source": "container",
+  "upstream_digest": "sha256:e618fe718bb1d62f17ebc9f908a87608f28722776d71819afe38a242ee88845f",
+  "upstream_repo": "ghcr.io/imagegenius/immich:3",
+  "upstream_version": "3.1.0"
 }
