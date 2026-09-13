@@ -30,8 +30,14 @@ VAR="${1:?usage: env_trace.sh <VAR> [process-name-or-pid]}"
 TARGET="${2:-}"
 # VAR is interpolated into grep/sed patterns below — restrict it to a valid env var name
 case "$VAR" in
-    [A-Za-z_]*) [ -z "${VAR//[A-Za-z0-9_]/}" ] || { echo "invalid env var name: $VAR" >&2; exit 1; } ;;
-    *) echo "invalid env var name: $VAR" >&2; exit 1 ;;
+    [A-Za-z_]*) [ -z "${VAR//[A-Za-z0-9_]/}" ] || {
+        echo "invalid env var name: $VAR" >&2
+        exit 1
+    } ;;
+    *)
+        echo "invalid env var name: $VAR" >&2
+        exit 1
+        ;;
 esac
 
 echo "== tracing ${VAR} =="
@@ -39,7 +45,7 @@ echo
 
 echo "1. /data/options.json (the user's saved options)"
 if [ -f /data/options.json ]; then
-    python3 - "$VAR" <<'PY'
+    python3 - "$VAR" << 'PY'
 import json, sys
 var = sys.argv[1]
 try:
@@ -80,7 +86,8 @@ echo "3. s6 container_environment (only read by services using #!/usr/bin/with-c
 seen3=0
 for d in /var/run/s6/container_environment /run/s6/container_environment; do
     if [ -f "$d/$VAR" ]; then
-        echo "   $d/$VAR = [$(cat "$d/$VAR")]"; seen3=1
+        echo "   $d/$VAR = [$(cat "$d/$VAR")]"
+        seen3=1
     fi
 done
 [ "$seen3" -eq 0 ] && echo "   not present in either envdir"
@@ -122,8 +129,8 @@ else
                 done
             fi
             # What it was actually launched with beats any theory about its environment.
-            tr '\0' '\n' < "/proc/$pid/cmdline" 2> /dev/null | tail -n +2 |
-                grep -iE "res|screen|${VAR}" | head -3 | sed 's/^/     argv: /'
+            tr '\0' '\n' < "/proc/$pid/cmdline" 2> /dev/null | tail -n +2 \
+                | grep -iE "res|screen|${VAR}" | head -3 | sed 's/^/     argv: /'
         done
     fi
 fi

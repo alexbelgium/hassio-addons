@@ -65,7 +65,7 @@ Unpackerr monitors completed downloads and extracts archives automatically.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `PGID` | int | `1000` | Group ID for file permissions |
 | `PUID` | int | `1000` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |

@@ -26,7 +26,7 @@ and converted the way you want them.
 ## Configuration
 
 | Option | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `PUID` / `PGID` | Ownership applied to the add-on configuration directory, and the user Kapowarr runs as. Defaults to `0` (root). |
 | `TZ` | Timezone, e.g. `Europe/Paris`. |
 | `localdisks` | Local disks to mount, e.g. `sda1` or a disk label. |

@@ -1,4 +1,4 @@
- 
+
 ## 2.1.1 (2026-09-12)
 - Update to latest version from P-Adamiec/Free-Games-Claimer-Remaster (changelog : https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases)
 - Upstream tag : 1.9

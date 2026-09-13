@@ -12,7 +12,7 @@ export HOSTNAME="${container_name}"
 
 args=()
 if bashio::config.has_value 'PORTAINER_AGENT_ARGS'; then
-  read -r -a args <<<"$(bashio::config 'PORTAINER_AGENT_ARGS')"
+    read -r -a args <<< "$(bashio::config 'PORTAINER_AGENT_ARGS')"
 fi
 
 ./agent "${args[@]}"

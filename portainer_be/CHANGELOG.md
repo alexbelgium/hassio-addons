@@ -3,7 +3,7 @@
 
 - Version renamed from `sts`, which Home Assistant could not order and therefore could not reliably offer as an update: the previous version held no number that could order it, so the date of this change is used. The addon itself and the upstream version it tracks are unchanged
 
- 
+
 ## sts (2026-08-01)
 - Update to latest version from portainer/portainer-ee
 ## 2.43.0 (2026-07-27)

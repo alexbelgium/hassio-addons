@@ -44,7 +44,7 @@ The default username is `guacadmin` with password `guacadmin`. It is strongly re
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `EXTENSIONS` | str | `auth-totp` | Guacamole extensions to enable (e.g., `auth-totp`, `history-recording-storage`) |
 | `recording_search_path` | str | `/config/recordings` | Directory added to `guacamole.properties` as the `recording-search-path` used by the history recording storage extension |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |

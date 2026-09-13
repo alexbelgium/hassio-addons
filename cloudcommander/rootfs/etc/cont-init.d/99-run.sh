@@ -103,7 +103,7 @@ for candidate in "${cloudcmd_candidates[@]}"; do
     fi
 done
 
-if [ -z "$CLOUDCMD_BIN" ] && command -v cloudcmd >/dev/null 2>&1; then
+if [ -z "$CLOUDCMD_BIN" ] && command -v cloudcmd > /dev/null 2>&1; then
     CLOUDCMD_BIN=$(command -v cloudcmd)
 fi
 

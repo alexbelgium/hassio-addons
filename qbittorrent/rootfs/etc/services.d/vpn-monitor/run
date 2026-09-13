@@ -33,7 +33,7 @@ _fetch_public_ip() {
     mapfile -t shuffled_urls < <(printf "%s\n" "${urls[@]}" | shuf)
 
     for url in "${shuffled_urls[@]}"; do
-        resp=$(curl -fsS --max-time 5 "${curl_iface_opts[@]}" "${url}" 2>/dev/null || true)
+        resp=$(curl -fsS --max-time 5 "${curl_iface_opts[@]}" "${url}" 2> /dev/null || true)
         resp="${resp//[[:space:]]/}"
 
         if [[ "${resp}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || [[ "${resp}" =~ ^[0-9a-fA-F:]+$ ]]; then
@@ -81,7 +81,7 @@ get_ip_info() {
             url="${info_url%/}/${ip}/json"
         fi
 
-        if json="$(curl -fsS --max-time 10 "${url}" 2>/dev/null || true)" && [[ -n "${json}" ]]; then
+        if json="$(curl -fsS --max-time 10 "${url}" 2> /dev/null || true)" && [[ -n "${json}" ]]; then
             country="$(
                 printf '%s\n' "${json}" \
                     | sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
@@ -151,7 +151,7 @@ elif [[ "${vpn_wireguard}" == true ]]; then
     VPN_INTERFACE=$(cat "/var/run/wireguard/interface")
     bashio::log.info "VPN monitor set to query external IP through interface ${VPN_INTERFACE} (interface binding)."
 fi
-if [[ -z "${VPN_INTERFACE}" ]] || ! ip link show "${VPN_INTERFACE}" > /dev/null 2>&1 ; then
+if [[ -z "${VPN_INTERFACE}" ]] || ! ip link show "${VPN_INTERFACE}" > /dev/null 2>&1; then
     bashio::log.error "VPN interface not found."
     bashio::addon.stop
     exit 1
@@ -178,7 +178,8 @@ read -r VPN_IP VPN_COUNTRY <<< "${VPN_INFO_OUT}"
 bashio::log.info "VPN external IP: ${VPN_IP} (${VPN_COUNTRY})"
 
 while true; do
-    sleep "${VPN_CHECK_INTERVAL}" & wait $!
+    sleep "${VPN_CHECK_INTERVAL}" &
+    wait $!
 
     if ! current_out="$(get_ip_info)"; then
         bashio::log.warning "Failed to refresh external IP; keeping previous assumptions."

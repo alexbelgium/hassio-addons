@@ -42,7 +42,7 @@ See https://www.navidrome.org/docs/usage/configuration-options/ for additional c
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `base_url` | str | `/` | Base URL to configure Navidrome behind a proxy |
 | `music_folder` | str | `/data/music` | Folder where your music library is stored |
 | `data_folder` | str | `/data` | Folder to store application data (DB) |

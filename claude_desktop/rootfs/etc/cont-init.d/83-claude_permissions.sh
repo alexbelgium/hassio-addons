@@ -19,7 +19,7 @@ esac
 # only while it still holds one of those managed values — a defaultMode the user set by hand
 # is never deleted. Ownership of the written file is reconciled by 84-claude_runtime_ownership.sh.
 mkdir -p "$(dirname "$SETTINGS_PATH")"
-PERMISSION_MODE="$PERMISSION_MODE" SETTINGS_PATH="$SETTINGS_PATH" python3 - <<'PY'
+PERMISSION_MODE="$PERMISSION_MODE" SETTINGS_PATH="$SETTINGS_PATH" python3 - << 'PY'
 import json
 import os
 from pathlib import Path

@@ -36,7 +36,7 @@ if bashio::config.has_value "wireguard_config"; then
 fi
 if [[ -z "${wireguard_config}" ]]; then
     bashio::log.info 'wireguard_config option left empty. Attempting automatic selection.'
-        mapfile -t configs < <(find /config/wireguard -maxdepth 1 -type f -name '*.conf' -print)
+    mapfile -t configs < <(find /config/wireguard -maxdepth 1 -type f -name '*.conf' -print)
     if [ "${#configs[@]}" -eq 0 ]; then
         bashio::log.fatal 'WireGuard is enabled but no .conf file was found in /config/wireguard.'
         bashio::addon.stop
@@ -71,7 +71,7 @@ wireguard_runtime_config="${WIREGUARD_STATE_DIR}/${interface_name}.conf"
 cp "${wireguard_config}" "${wireguard_runtime_config}"
 chmod 600 "${wireguard_runtime_config}"
 
-dos2unix "${wireguard_runtime_config}" >/dev/null 2>&1 || true
+dos2unix "${wireguard_runtime_config}" > /dev/null 2>&1 || true
 sed -i '/^[[:space:]]*[;#]/d' "${wireguard_runtime_config}"
 sed -i 's/#.*//' "${wireguard_runtime_config}"
 sed -i '/^[[:space:]]*$/d' "${wireguard_runtime_config}"

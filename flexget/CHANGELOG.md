@@ -1,38 +1,38 @@
- 
+
 ## 3.20.9 (2026-09-05)
 - Update to latest version from wiserain/flexget
 - Upstream tag : ci
- 
+
 ## 3.20.8 (2026-08-29)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.20.6 (2026-08-22)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.20.5 (2026-08-15)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.20.2 (2026-08-08)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.19.31 (2026-08-01)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.19.30 (2026-07-25)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.19.28 (2026-07-22)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.19.26 (2026-07-04)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.19.25 (2026-06-23)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.19.24 (2026-06-20)
 - Update to latest version from wiserain/flexget
- 
+
 ## 3.19.23 (2026-06-06)
 - Update to latest version from wiserain/flexget
 

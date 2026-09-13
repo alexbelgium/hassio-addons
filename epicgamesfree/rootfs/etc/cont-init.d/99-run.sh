@@ -22,7 +22,7 @@ if bashio::config.true 'disable_cron'; then
     fi
 
     if bashio::command.exists service; then
-        service cron stop >/dev/null 2>&1 || true
+        service cron stop > /dev/null 2>&1 || true
     fi
 fi
 

@@ -8,19 +8,19 @@ set -euo pipefail
 # ==============================================================================
 
 create_or_load_secret() {
-  local secret_file="$1"
-  local generator="$2"
-  local generated=""
+    local secret_file="$1"
+    local generator="$2"
+    local generated=""
 
-  if [[ -f "$secret_file" ]]; then
-    cat "$secret_file"
-    return
-  fi
+    if [[ -f "$secret_file" ]]; then
+        cat "$secret_file"
+        return
+    fi
 
-  generated=$(eval "$generator")
-  echo "$generated" > "$secret_file"
-  chmod 600 "$secret_file"
-  echo "$generated"
+    generated=$(eval "$generator")
+    echo "$generated" > "$secret_file"
+    chmod 600 "$secret_file"
+    echo "$generated"
 }
 
 DATA_DIR="/config/netbird"
@@ -34,20 +34,20 @@ RELAY_PORT=8084
 RELAY_METRICS_PORT=9093
 
 if [[ -z "$DOMAIN" || "$DOMAIN" == "netbird.example.com" ]]; then
-  result=$(bashio::api.supervisor GET /core/api/config true || true)
-  external_host="$(bashio::jq "$result" '.external_url' | cut -d'/' -f3 | cut -d':' -f1)"
-  internal_host="$(bashio::jq "$result" '.internal_url' | cut -d'/' -f3 | cut -d':' -f1)"
+    result=$(bashio::api.supervisor GET /core/api/config true || true)
+    external_host="$(bashio::jq "$result" '.external_url' | cut -d'/' -f3 | cut -d':' -f1)"
+    internal_host="$(bashio::jq "$result" '.internal_url' | cut -d'/' -f3 | cut -d':' -f1)"
 
-  if [[ -n "$external_host" && "$external_host" != "null" ]]; then
-    DOMAIN="$external_host"
-    bashio::log.warning "Domain not set; using Home Assistant external_url host: ${DOMAIN}"
-  elif [[ -n "$internal_host" && "$internal_host" != "null" ]]; then
-    DOMAIN="$internal_host"
-    bashio::log.warning "Domain not set; using Home Assistant internal_url host: ${DOMAIN}"
-  else
-    bashio::log.error "Set a valid domain in the add-on configuration (domain cannot be empty or netbird.example.com)."
-    bashio::exit.nok
-  fi
+    if [[ -n "$external_host" && "$external_host" != "null" ]]; then
+        DOMAIN="$external_host"
+        bashio::log.warning "Domain not set; using Home Assistant external_url host: ${DOMAIN}"
+    elif [[ -n "$internal_host" && "$internal_host" != "null" ]]; then
+        DOMAIN="$internal_host"
+        bashio::log.warning "Domain not set; using Home Assistant internal_url host: ${DOMAIN}"
+    else
+        bashio::log.error "Set a valid domain in the add-on configuration (domain cannot be empty or netbird.example.com)."
+        bashio::exit.nok
+    fi
 fi
 
 NETBIRD_PORT=443
@@ -56,11 +56,11 @@ NETBIRD_RELAY_PROTO="rels"
 CADDY_SECURE_DOMAIN=", ${DOMAIN}:${NETBIRD_PORT}"
 
 mkdir -p "$DATA_DIR" \
-  "$DATA_DIR/management" \
-  "$DATA_DIR/secrets" \
-  "$DATA_DIR/dashboard" \
-  "$DATA_DIR/relay" \
-  "$DATA_DIR/caddy"
+    "$DATA_DIR/management" \
+    "$DATA_DIR/secrets" \
+    "$DATA_DIR/dashboard" \
+    "$DATA_DIR/relay" \
+    "$DATA_DIR/caddy"
 
 DATASTORE_ENC_KEY=$(create_or_load_secret "$DATA_DIR/secrets/management_datastore_key" "openssl rand -base64 32")
 RELAY_AUTH_SECRET=$(create_or_load_secret "$DATA_DIR/secrets/relay_auth_secret" "openssl rand -base64 32 | sed 's/=//g'")
@@ -68,8 +68,8 @@ RELAY_AUTH_SECRET=$(create_or_load_secret "$DATA_DIR/secrets/relay_auth_secret" 
 # Generate management config if missing
 MANAGEMENT_CONFIG="$DATA_DIR/management/management.json"
 if [[ ! -f "$MANAGEMENT_CONFIG" ]]; then
-  bashio::log.info "Generating management config at ${MANAGEMENT_CONFIG}."
-  cat <<CONFIG > "$MANAGEMENT_CONFIG"
+    bashio::log.info "Generating management config at ${MANAGEMENT_CONFIG}."
+    cat << CONFIG > "$MANAGEMENT_CONFIG"
 {
   "Stuns": [
     {
@@ -99,14 +99,14 @@ if [[ ! -f "$MANAGEMENT_CONFIG" ]]; then
 }
 CONFIG
 else
-  bashio::log.info "Using existing management config at ${MANAGEMENT_CONFIG}."
+    bashio::log.info "Using existing management config at ${MANAGEMENT_CONFIG}."
 fi
 
 # Generate relay env file if missing
 RELAY_ENV_FILE="$DATA_DIR/relay/relay.env"
 if [[ ! -f "$RELAY_ENV_FILE" ]]; then
-  bashio::log.info "Generating relay env file at ${RELAY_ENV_FILE}."
-  cat <<CONFIG > "$RELAY_ENV_FILE"
+    bashio::log.info "Generating relay env file at ${RELAY_ENV_FILE}."
+    cat << CONFIG > "$RELAY_ENV_FILE"
 NB_LOG_LEVEL=info
 NB_LISTEN_ADDRESS=:${RELAY_PORT}
 NB_EXPOSED_ADDRESS=${NETBIRD_RELAY_PROTO}://${DOMAIN}:${NETBIRD_PORT}
@@ -118,14 +118,14 @@ NB_STUN_PORTS=${NETBIRD_STUN_PORT}
 CONFIG
 fi
 if ! grep -q '^NB_METRICS_PORT=' "$RELAY_ENV_FILE"; then
-  echo "NB_METRICS_PORT=${RELAY_METRICS_PORT}" >> "$RELAY_ENV_FILE"
+    echo "NB_METRICS_PORT=${RELAY_METRICS_PORT}" >> "$RELAY_ENV_FILE"
 fi
 
 # Generate dashboard env file if missing
 DASHBOARD_ENV_FILE="$DATA_DIR/dashboard/env"
 if [[ ! -f "$DASHBOARD_ENV_FILE" ]]; then
-  bashio::log.info "Generating dashboard env file at ${DASHBOARD_ENV_FILE}."
-  cat <<CONFIG > "$DASHBOARD_ENV_FILE"
+    bashio::log.info "Generating dashboard env file at ${DASHBOARD_ENV_FILE}."
+    cat << CONFIG > "$DASHBOARD_ENV_FILE"
 # Endpoints
 NETBIRD_MGMT_API_ENDPOINT=${NETBIRD_HTTP_PROTOCOL}://${DOMAIN}
 NETBIRD_MGMT_GRPC_API_ENDPOINT=${NETBIRD_HTTP_PROTOCOL}://${DOMAIN}
@@ -143,15 +143,15 @@ NGINX_SSL_PORT=443
 # Letsencrypt
 LETSENCRYPT_DOMAIN=none
 CONFIG
-  chmod 600 "$DASHBOARD_ENV_FILE"
+    chmod 600 "$DASHBOARD_ENV_FILE"
 fi
 sed -i 's/^AUTH_SUPPORTED_SCOPES=openid profile email groups$/AUTH_SUPPORTED_SCOPES="openid profile email groups"/' "$DASHBOARD_ENV_FILE"
 
 # Generate Caddyfile if missing
 CADDYFILE="$DATA_DIR/Caddyfile"
 if [[ ! -f "$CADDYFILE" ]]; then
-  bashio::log.info "Generating Caddyfile at ${CADDYFILE}."
-  cat <<CONFIG > "$CADDYFILE"
+    bashio::log.info "Generating Caddyfile at ${CADDYFILE}."
+    cat << CONFIG > "$CADDYFILE"
 {
   servers :80,:443 {
     protocols h1 h2c h2 h3
@@ -186,7 +186,7 @@ if [[ ! -f "$CADDYFILE" ]]; then
 }
 CONFIG
 else
-  bashio::log.info "Using existing Caddyfile at ${CADDYFILE}."
+    bashio::log.info "Using existing Caddyfile at ${CADDYFILE}."
 fi
 
 mkdir -p /run/nginx

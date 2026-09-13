@@ -1,20 +1,20 @@
- 
+
 ## v1.74.1 (2026-09-12)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
- 
+
 ## v1.70.0 (2026-08-29)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
+
 ## v1.69.1 (2026-08-22)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
+
 ## v1.69.0 (2026-08-15)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
+
 ## v1.68.0 (2026-08-01)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
+
 ## v1.67.0-8 (2026-07-18)
 - Keep content-level backup validation and atomic replacement tests while removing a blocking synthetic FIFO test fixture from cross-architecture builds.
 
@@ -32,19 +32,19 @@
 
 ## v1.67.0 (2026-07-18)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
+
 ## v1.66.0 (2026-07-13)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
+
 ## v1.65.0 (2026-07-04)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
+
 ## v1.64.0 (2026-06-20)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
+
 ## v1.63.0 (2026-06-13)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
- 
+
 ## v1.62.4 (2026-06-11)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
 ## v1.62.3 (2026-06-05)

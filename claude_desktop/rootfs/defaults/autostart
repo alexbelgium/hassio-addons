@@ -55,9 +55,9 @@
 # shared memory into ordinary files for no benefit. If the size cannot be determined, keep the
 # flag — the crash it prevents is worse than the overhead it costs.
 SHM_FLAGS="--disable-dev-shm-usage"
-SHM_KB="$(df -k /dev/shm 2> /dev/null | awk 'NR==2 {print $2}')"
+SHM_KB="$(df -k /dev/shm 2>/dev/null | awk 'NR==2 {print $2}')"
 if [ -n "$SHM_KB" ] && [ "$SHM_KB" -ge 262144 ]; then
-    SHM_FLAGS=""
+	SHM_FLAGS=""
 fi
 
 # SHM_FLAGS must stay unquoted so it expands to a separate argument, or to nothing at all.

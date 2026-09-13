@@ -90,7 +90,10 @@ set +u
 # container_environment, which is read by `with-contenv` when each service starts.
 S6_ENV_DIR=""
 for candidate in /var/run/s6/container_environment /run/s6/container_environment; do
-    if [ -d "$candidate" ]; then S6_ENV_DIR="$candidate"; break; fi
+    if [ -d "$candidate" ]; then
+        S6_ENV_DIR="$candidate"
+        break
+    fi
 done
 
 # For all relevant variables

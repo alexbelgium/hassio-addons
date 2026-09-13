@@ -46,7 +46,7 @@ The addon automatically discovers local Chromecast devices and monitors YouTube 
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `CSS_CATEGORIES` | str | `sponsor, intro, outro, selfpromo` | SponsorBlock categories to skip (comma-separated) |
 | `CSS_DISCOVER_INTERVAL` | str | `5m` | Interval to restart the DNS discovery client |
 | `CSS_DEVICES` | str | `[]` | Comma-separated list of device addresses; disables discovery |

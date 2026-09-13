@@ -62,7 +62,7 @@ The server port is `8266` for connecting external Tdarr nodes.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `CONFIG_LOCATION` | str | `/config/addons_config/tdarr` | Path where Tdarr config is stored |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |

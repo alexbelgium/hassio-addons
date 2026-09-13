@@ -10,13 +10,13 @@ set -euo pipefail
 RELAY_ENV_FILE="/config/netbird/relay/relay.env"
 
 if [[ -f "$RELAY_ENV_FILE" ]]; then
-  set -a
-  # shellcheck disable=SC1090
-  . "$RELAY_ENV_FILE"
-  set +a
+    set -a
+    # shellcheck disable=SC1090
+    . "$RELAY_ENV_FILE"
+    set +a
 else
-  bashio::log.error "Missing relay env file at ${RELAY_ENV_FILE}."
-  bashio::exit.nok
+    bashio::log.error "Missing relay env file at ${RELAY_ENV_FILE}."
+    bashio::exit.nok
 fi
 
 bashio::log.info "Starting NetBird Relay..."

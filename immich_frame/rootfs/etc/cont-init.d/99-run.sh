@@ -9,13 +9,13 @@ if [ -L /config/Config ]; then
     bashio::log.info "Migrating legacy /config/Config symlink to real directory"
     mkdir -p /config/Config.migrate
     # Copy contents from the symlink target into the new real directory
-    cp -a /config/Config/. /config/Config.migrate/ 2>/dev/null || true
+    cp -a /config/Config/. /config/Config.migrate/ 2> /dev/null || true
     rm -f /config/Config
     mv /config/Config.migrate /config/Config
 fi
 
 if [ -d /app/Config ] && [ ! -L /app/Config ]; then
-    cp -n /app/Config/* /config/Config/ 2>/dev/null || true
+    cp -n /app/Config/* /config/Config/ 2> /dev/null || true
     rm -rf /app/Config
 fi
 if [ ! -e /app/Config ]; then
@@ -35,10 +35,10 @@ in_list() { [[ "$2" == *" $1 "* ]]; }
 
 # Helper: read a value from options.json handling booleans and nulls correctly
 config_val() {
-    jq -r "($1) as \$v | if \$v == null then \"\" else (\$v | tostring) end" /data/options.json 2>/dev/null
+    jq -r "($1) as \$v | if \$v == null then \"\" else (\$v | tostring) end" /data/options.json 2> /dev/null
 }
 config_has() {
-    jq -e "($1) != null" /data/options.json >/dev/null 2>&1
+    jq -e "($1) != null" /data/options.json > /dev/null 2>&1
 }
 
 # Helper: write a YAML key-value pair with proper formatting
@@ -82,7 +82,7 @@ yaml_kv() {
 declare -A GENERAL_ENVS
 declare -A ACCOUNT_ENVS
 
-ENV_COUNT=$(jq '.env_vars // [] | length' /data/options.json 2>/dev/null || echo 0)
+ENV_COUNT=$(jq '.env_vars // [] | length' /data/options.json 2> /dev/null || echo 0)
 if [ "$ENV_COUNT" -gt 0 ]; then
     bashio::log.info "Processing ${ENV_COUNT} env_var(s) for Settings.yaml"
 fi
@@ -91,7 +91,7 @@ for idx in $(seq 0 $((ENV_COUNT - 1))); do
     EVALUE=$(jq -r ".env_vars[${idx}].value // \"\"" /data/options.json)
     [ -z "$ENAME" ] && continue
     [ -z "$EVALUE" ] && continue
-    [ "$ENAME" = "TZ" ] && continue  # TZ is a system env var, not an ImmichFrame setting
+    [ "$ENAME" = "TZ" ] && continue # TZ is a system env var, not an ImmichFrame setting
 
     if in_list "$ENAME" "$ACCOUNT_KEYS"; then
         ACCOUNT_ENVS["$ENAME"]="$EVALUE"
@@ -121,7 +121,10 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
 
     for opt in $GENERAL_SCHEMA_OPTS; do
         if config_has ".$opt"; then
-            $GENERAL_STARTED || { echo "General:"; GENERAL_STARTED=true; }
+            $GENERAL_STARTED || {
+                echo "General:"
+                GENERAL_STARTED=true
+            }
             yaml_kv "  " "$opt" "$(config_val ".$opt")"
         fi
     done
@@ -129,13 +132,16 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
     # Add general env_vars (skip if already set via schema option)
     for key in "${!GENERAL_ENVS[@]}"; do
         if ! config_has ".$key"; then
-            $GENERAL_STARTED || { echo "General:"; GENERAL_STARTED=true; }
+            $GENERAL_STARTED || {
+                echo "General:"
+                GENERAL_STARTED=true
+            }
             yaml_kv "  " "$key" "${GENERAL_ENVS[$key]}"
         fi
     done
 
     # -- Accounts section --
-    ACCOUNT_COUNT=$(jq '.Accounts // [] | length' /data/options.json 2>/dev/null || echo 0)
+    ACCOUNT_COUNT=$(jq '.Accounts // [] | length' /data/options.json 2> /dev/null || echo 0)
 
     if [ "$ACCOUNT_COUNT" -gt 0 ]; then
         bashio::log.info "Configuring ${ACCOUNT_COUNT} account(s) from Accounts list"

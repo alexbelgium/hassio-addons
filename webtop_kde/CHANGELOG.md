@@ -1,13 +1,13 @@
- 
+
 ## 4.16.0.97 (2026-09-12)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 - Upstream tag : 4.16-r0-ls93
 - Migrate legacy add-on configuration map names to current app configuration terminology.
- 
+
 ## 4.16.0.96 (2026-09-05)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 - Upstream tag : 4.16-r0-ls92
- 
+
 ## 4.16.0.95 (2026-08-29)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 - Upstream tag : 4.16-r0-ls95
@@ -15,7 +15,7 @@
 
 - Version renamed from `4.16-r0-ls94`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
 
- 
+
 ## 4.16-r0-ls94 (2026-08-01)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 ## 4.16-r0-ls93.2 (28-07-2026)
@@ -28,19 +28,19 @@
 
 - Share the Selkies startup scripts with the `claude_desktop` add-on by symlink (`20-folders.sh`, `21-gpu_permissions.sh`, `80-configuration.sh`, `90-ingress.sh` and the nginx includes), so the fixes made there now apply here too. This brings in: GPU render-node permissions granted before the graphical services start (fixes `libEGL warning: failed to open /dev/dri/card0: Permission denied` and the resulting "waiting for stream" hang); the s6 envdir and `XDG_RUNTIME_DIR` created up front; the cache redirected to tmpfs; `/tmp/.X11-unix` pre-created so Xorg can bind its socket as a non-root user; the `init-video` and `init-selkies-config` oneshots made non-fatal so a partially permitted device setup no longer crash-loops the add-on; and an ingress config that keeps the correct (non-SSL) nginx server block. The Microsoft Edge install moves to its own webtop-only `81-microsoft_edge.sh`, which also picks up the ownership fixup that previously ran in `20-folders.sh` before Edge was installed and so never matched anything.
 
- 
+
 ## 4.16-r0-ls93 (2026-07-21)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
- 
+
 ## 4.16-r0-ls95 (2026-07-18)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
- 
+
 ## 4.16-r0-ls94 (2026-06-23)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
- 
+
 ## 4.16-r0-ls93 (2026-06-20)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
- 
+
 ## 4.16-r0-ls92 (2026-06-11)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 ## 4.16-r0-ls95 (2026-06-05)
@@ -49,7 +49,7 @@
 ## 4.16-r0-ls94 (2026-05-23)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-##  (2026-05-22)
+## (2026-05-22)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
 ## 4.16-r0-ls94 (2026-05-22)

@@ -51,7 +51,7 @@ Webui can be found at `<your-ip>:8080`. PostgreSQL can be either internal or ext
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `data_location` | str | `/share/immich` | Path where Immich data is stored |
 | `library_location` | str | | Path to photo/video library |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |

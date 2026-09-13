@@ -1,4 +1,4 @@
- 
+
 ## 2.44.0.2 (2026-08-29)
 - Update to latest version from portainer/agent
 - Upstream tag : sts
@@ -59,7 +59,7 @@
 ## alpine-sts (2025-12-24)
 - Update to latest version from portainer/agent
 
-##  (2025-12-23)
+## (2025-12-23)
 - Update to latest version from portainer/agent
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 

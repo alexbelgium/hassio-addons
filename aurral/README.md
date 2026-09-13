@@ -6,7 +6,7 @@ This addon is based on the docker image <https://github.com/lklynet/aurral>
 ## Configuration
 
 | Option | Default | Description |
-|---|---|---|
+| --- | --- | --- |
 | `download_folder` | `/share/aurral/downloads` | Path where Aurral writes flow downloads. Must be under `/share`. |
 | `weekly_flow_folder` | `weekly-flow` | Subfolder name appended to `download_folder` for weekly flow files. The full path will be `download_folder/weekly_flow_folder`. |
 

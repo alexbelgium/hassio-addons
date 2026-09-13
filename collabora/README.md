@@ -51,7 +51,7 @@ Webui can be found at `https://homeassistant:9980/browser/dist/admin/admin.html`
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `aliasgroup1` | str | | External address of the **Nextcloud** server allowed to use this Collabora (e.g. `https://nextcloud_domain\.com:443`) |
 | `aliasgroup2` | str | | A second Nextcloud server, same format as `aliasgroup1` |
 | `aliasgroup3` | str | | A third Nextcloud server, same format as `aliasgroup1` |

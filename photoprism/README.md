@@ -67,7 +67,7 @@ Configurations can be done through the app webUI, except for the following optio
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `ssl` | bool | `false` | Enable HTTPS for the web interface |
 | `certfile` | str | `fullchain.pem` | SSL certificate file (must be in /ssl) |
 | `keyfile` | str | `privkey.pem` | SSL key file (must be in /ssl) |

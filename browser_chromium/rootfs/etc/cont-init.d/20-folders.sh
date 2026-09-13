@@ -7,7 +7,6 @@ set -e
 PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
 
-
 # Create cache
 #mkdir -p /.cache
 #chmod 755 /.cache

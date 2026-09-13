@@ -43,7 +43,7 @@ Configuration details are available in the addon logs.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `secret_token` | str | `lrMY24Byhx` | Authentication token for the web interface |
 | `ui_path` | str | `joal` | Web UI path |
 | `run_duration` | str | `12h` | Runtime duration (e.g., 5s, 2m, 12h, 5d) |

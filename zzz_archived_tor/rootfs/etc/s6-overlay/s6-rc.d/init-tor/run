@@ -38,8 +38,7 @@ fi
 # Checks if client names where configured when using stealth mode
 if bashio::config.true 'hidden_services' \
     && bashio::config.true 'stealth' \
-    && ! bashio::config.has_value 'client_names';
-then
+    && ! bashio::config.has_value 'client_names'; then
     bashio::log.fatal
     bashio::log.fatal 'Add-on configuration is incomplete.'
     bashio::log.fatal
@@ -62,19 +61,19 @@ chmod -R 0700 /ssl/tor
 # Find the matching Tor log level
 if bashio::config.has_value 'log_level'; then
     case "$(bashio::string.lower "$(bashio::config 'log_level')")" in
-        all|trace)
+        all | trace)
             log_level="debug"
             ;;
         debug)
             log_level="info"
             ;;
-        info|notice)
+        info | notice)
             log_level="notice"
             ;;
         warning)
             log_level="warn"
             ;;
-        error|fatal|off)
+        error | fatal | off)
             log_level="err"
             ;;
     esac
@@ -99,7 +98,7 @@ if bashio::config.true 'hidden_services'; then
     echo "HiddenServiceDir ${hidden_service_dir}" >> "${torrc}"
 
     for port in $(bashio::config 'ports'); do
-        count=$(echo "${port}" | sed 's/[^:]//g'| awk '{ print length }')
+        count=$(echo "${port}" | sed 's/[^:]//g' | awk '{ print length }')
         if [[ "${count}" == 0 ]]; then
             host='homeassistant'
             virtual_port="${port}"
@@ -132,8 +131,7 @@ fi
 
 # Configure bridges
 if bashio::config.exists 'bridges' \
-    && ! bashio::config.is_empty 'bridges';
-then
+    && ! bashio::config.is_empty 'bridges'; then
     bashio::log.info 'Use bridges:'
     echo "UseBridges 1" >> "${torrc}"
 
@@ -164,10 +162,10 @@ if bashio::config.true 'hidden_services'; then
         sleep 1
     done
 
-    address=$(<"${hostname_file}")
-    grep -m 1 "Bootstrapped 100% (done): Done" <&3 >/dev/null 2>&1
+    address=$(< "${hostname_file}")
+    grep -m 1 "Bootstrapped 100% (done): Done" <&3 > /dev/null 2>&1
 
-    kill "$(pgrep tor)" >/dev/null 2>&1
+    kill "$(pgrep tor)" > /dev/null 2>&1
 
     bashio::log.info '---------------------------------------------------------'
     bashio::log.info 'Your Home Assistant instance is available on Tor!'
@@ -176,14 +174,12 @@ if bashio::config.true 'hidden_services'; then
 fi
 
 # Configure stealth mode
-if bashio::config.true 'hidden_services' && bashio::config.true 'stealth';
-then
+if bashio::config.true 'hidden_services' && bashio::config.true 'stealth'; then
     # Following the documentation at:
     # https://community.torproject.org/onion-services/advanced/client-auth/
     while read -r clientname; do
         # Generate key is they do not exist yet
-        if ! bashio::fs.file_exists "${authorized_clients_dir}/${clientname}.auth"
-        then
+        if ! bashio::fs.file_exists "${authorized_clients_dir}/${clientname}.auth"; then
             key=$(openssl genpkey -algorithm x25519)
 
             private_key=$(
@@ -198,12 +194,12 @@ then
 
             public_key=$(
                 openssl pkey -pubout \
-                <<< "${key}" \
-                | sed -e '/----.*PUBLIC KEY----\|^[[:space:]]*$/d' \
-                | base64 -d \
-                | tail -c 32 \
-                | base32 \
-                | sed 's/=//g'
+                    <<< "${key}" \
+                    | sed -e '/----.*PUBLIC KEY----\|^[[:space:]]*$/d' \
+                    | base64 -d \
+                    | tail -c 32 \
+                    | base32 \
+                    | sed 's/=//g'
             )
 
             # Create authorized client file

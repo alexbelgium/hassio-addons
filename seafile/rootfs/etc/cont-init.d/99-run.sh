@@ -40,7 +40,7 @@ done
 # Apply extra environment variables   #
 #######################################
 
-if jq -e '.env_vars? | length > 0' "${JSONSOURCE}" >/dev/null; then
+if jq -e '.env_vars? | length > 0' "${JSONSOURCE}" > /dev/null; then
     bashio::log.info "Applying env_vars"
     while IFS=$'\t' read -r ENV_NAME ENV_VALUE; do
         if [[ -z "${ENV_NAME}" || "${ENV_NAME}" == "null" ]]; then
@@ -57,7 +57,7 @@ if jq -e '.env_vars? | length > 0' "${JSONSOURCE}" >/dev/null; then
 
         ENV_VALUE_ESCAPED=$(printf "%q" "${ENV_VALUE}")
         ENV_LINE="export ${ENV_NAME}=${ENV_VALUE_ESCAPED}"
-        sed -i "1a ${ENV_LINE}" /home/seafile/*.sh 2>/dev/null
+        sed -i "1a ${ENV_LINE}" /home/seafile/*.sh 2> /dev/null
         find /opt/seafile -name '*.sh' -print0 | xargs -0 sed -i "1a ${ENV_LINE}"
     done < <(jq -r '.env_vars[] | [.name, .value] | @tsv' "${JSONSOURCE}")
 fi
@@ -108,8 +108,8 @@ sed -i "s|/shared|$DATA_LOCATION|g" /home/seafile/*.sh
 ADMIN_EMAIL_VAL="$(bashio::config 'SEAFILE_ADMIN_EMAIL')"
 ADMIN_PASSWORD_VAL="$(bashio::config 'SEAFILE_ADMIN_PASSWORD')"
 
-if [[ -n "${ADMIN_EMAIL_VAL}" && "${ADMIN_EMAIL_VAL}" != "null" \
-    && -n "${ADMIN_PASSWORD_VAL}" && "${ADMIN_PASSWORD_VAL}" != "null" ]]; then
+if [[ -n "${ADMIN_EMAIL_VAL}" && "${ADMIN_EMAIL_VAL}" != "null" &&
+    -n "${ADMIN_PASSWORD_VAL}" && "${ADMIN_PASSWORD_VAL}" != "null" ]]; then
     bashio::log.info "Seeding admin credentials"
 
     mkdir -p "${DATA_LOCATION}/conf"
@@ -126,13 +126,13 @@ if [[ -n "${ADMIN_EMAIL_VAL}" && "${ADMIN_EMAIL_VAL}" != "null" \
     sed -i '/^SEAFILE_ADMIN_PASSWORD=/d' "${SEAFILE_ENV_FILE}"
 
     case "${ADMIN_EMAIL_VAL}" in
-        *$'\n'*|*$'\r'*)
+        *$'\n'* | *$'\r'*)
             bashio::exit.nok "SEAFILE_ADMIN_EMAIL must not contain newlines"
             ;;
     esac
 
     case "${ADMIN_PASSWORD_VAL}" in
-        *$'\n'*|*$'\r'*)
+        *$'\n'* | *$'\r'*)
             bashio::exit.nok "SEAFILE_ADMIN_PASSWORD must not contain newlines"
             ;;
     esac
@@ -223,7 +223,7 @@ done
 URLEOF
 chmod +x /home/seafile/apply_addon_urls.sh
 sed -i '/print "Launching seafile"/i /home/seafile/apply_addon_urls.sh' /home/seafile/launch.sh
-if ! grep -q 'apply_addon_urls.sh' /home/seafile/launch.sh 2>/dev/null; then
+if ! grep -q 'apply_addon_urls.sh' /home/seafile/launch.sh 2> /dev/null; then
     bashio::log.warning "Could not inject URL configuration into launch.sh; URLs may use upstream defaults"
 fi
 
@@ -237,7 +237,7 @@ bashio::log.info "Defining database"
 # provided (Home Assistant stores multi-select options this way). Fallback to
 # the raw value to stay compatible with older configurations that used a
 # string.
-DATABASE_SELECTION=$(bashio::config 'database[0]' 2>/dev/null || true)
+DATABASE_SELECTION=$(bashio::config 'database[0]' 2> /dev/null || true)
 DATABASE_SELECTION=${DATABASE_SELECTION:-$(bashio::config 'database')}
 
 case "${DATABASE_SELECTION}" in

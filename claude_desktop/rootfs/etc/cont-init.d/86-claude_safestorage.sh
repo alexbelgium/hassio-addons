@@ -36,7 +36,7 @@ fi
 # archive stays unpatched, so every later boot would retry under a new pid and strand another
 # copy until the container runs out of space.
 cleanup_tmp() {
-    find "$(dirname "$ASAR")" -maxdepth 1 -name ".$(basename "$ASAR").addon-tmp.*" -delete 2>/dev/null || true
+    find "$(dirname "$ASAR")" -maxdepth 1 -name ".$(basename "$ASAR").addon-tmp.*" -delete 2> /dev/null || true
 }
 
 if output=$(timeout 120 node "$PATCHER" "$ASAR" 2>&1); then

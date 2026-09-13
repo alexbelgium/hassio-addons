@@ -52,7 +52,7 @@ Webui can be found at <http://homeassistant:PORT>.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `ENTE_ENDPOINT_URL` | str | `http://homeassistant.local:8280` | The URL where Ente API will be accessible (used by web UI) |
 | `DB_PASSWORD` | str | `ente` | Database password for internal PostgreSQL |
 | `USE_EXTERNAL_DB` | bool | `false` | Use external PostgreSQL database |
@@ -63,7 +63,7 @@ Webui can be found at <http://homeassistant:PORT>.
 If you want to use an external PostgreSQL database, set `USE_EXTERNAL_DB: true` and configure:
 
 | Option | Type | Description |
-|--------|------|-------------|
+| -------- | ------ | ------------- |
 | `DB_HOSTNAME` | str | PostgreSQL server hostname |
 | `DB_PORT` | int | PostgreSQL server port (default: 5432) |
 | `DB_USERNAME` | str | PostgreSQL username |

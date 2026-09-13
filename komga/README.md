@@ -28,7 +28,7 @@ search index on first boot.
 ## Configuration
 
 | Option | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `PUID` / `PGID` | Ownership applied to the add-on configuration directory. Defaults to `0` (root). |
 | `TZ` | Timezone, e.g. `Europe/Paris`. |
 | `localdisks` | Local disks to mount, e.g. `sda1` or a disk label. |

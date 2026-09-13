@@ -100,7 +100,7 @@ _pnat_get_gw() {
             for n in {1..254}; do
                 local try_ip="$(echo "${ipv4}" | cut -d'.' -f1-3).${n}"
                 if [ "${try_ip}" != "${ipv4}" ]; then
-                    if nc -4 -vw1 "${try_ip}" 1 &>/dev/null 2>&1; then
+                    if nc -4 -vw1 "${try_ip}" 1 &> /dev/null 2>&1; then
                         config["IPv4Gateway"]=${try_ip}
                         return 0
                     fi
@@ -174,7 +174,7 @@ _qbt_check_sid() {
     fi
 }
 
-_qbt_isreachable(){
+_qbt_isreachable() {
     _cmd "nc -4 -vw 5 ${config["Server"]} ${config["Port"]} &>/dev/null 2>&1"
     return $?
 }
@@ -249,13 +249,13 @@ pnat_set() {
 
 _parse_config "/config/qBittorrent/qBittorrent.conf"
 
-config["Interval"]=$(( ${VPN_UPNP_INTERVAL} + (${VPN_UPNP_INTERVAL} / 2) ))
+config["Interval"]=$((${VPN_UPNP_INTERVAL} + (${VPN_UPNP_INTERVAL} / 2)))
 
 bashio::log.info "VPN UPnP enabled, starting NAT-PMP/UPnP monitor with an interval of ${VPN_UPNP_INTERVAL} seconds (UPnP lease interval: ${config["Interval"]} seconds)."
 
-while true;
-do
-    sleep ${VPN_UPNP_INTERVAL} & wait $!
+while true; do
+    sleep ${VPN_UPNP_INTERVAL} &
+    wait $!
 
     if pnat_set; then
         bashio::log.info "NAT-PMP/UPnP Ok!"

@@ -1,20 +1,20 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
- 
+
 ## 26.8.1 (2026-08-29)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
- 
+
 ## 26.8.0 (2026-08-15)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
- 
+
 ## 26.7.1 (2026-08-01)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
- 
+
 ## 26.7.0 (2026-07-22)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
- 
+
 ## 26.6.2 (2026-06-23)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
- 
+
 ## 26.6.1 (2026-06-11)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
 ## 26.6.0 (2026-06-05)

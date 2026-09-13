@@ -48,7 +48,7 @@ This addon fetches gas consumption data from GRDF (French gas utility) and publi
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `CONFIG_LOCATION` | str | `/config/gazpar2mqtt/config.yaml` | Path to configuration file |
 | `TZ` | str | `Europe/Paris` | Timezone (e.g., `Europe/London`) |
 | `mqtt_autodiscover` | bool | `true` | Enable MQTT autodiscovery |

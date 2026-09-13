@@ -44,7 +44,7 @@ for pr in $PRS; do
         echo "$BAD"
         # Ensure the label exists before adding it — with set -e a missing
         # label would abort the whole loop and skip any PRs behind this one.
-        gh label create "ai:blocked" --repo "$REPO" --color ededed >/dev/null 2>&1 || true
+        gh label create "ai:blocked" --repo "$REPO" --color ededed > /dev/null 2>&1 || true
         gh pr ready "$pr" --repo "$REPO" --undo || true
         gh pr edit "$pr" --repo "$REPO" --add-label "ai:blocked"
         gh pr comment "$pr" --repo "$REPO" --body \

@@ -17,140 +17,140 @@ DEFAULT_MAX_FILE_EXTRACT_SIZE="1073741824"
 DEFAULT_PUBLIC_HOSTNAME="homeassistant.local"
 
 log() {
-  echo "[manyfold-addon] $*"
+    echo "[manyfold-addon] $*"
 }
 
 die() {
-  echo "[manyfold-addon] ERROR: $*" >&2
-  exit 1
+    echo "[manyfold-addon] ERROR: $*" >&2
+    exit 1
 }
 
 read_opt() {
-  local key="$1"
-  jq -er --arg k "$key" '.[$k] // empty' "$OPTIONS_JSON" 2>/dev/null || true
+    local key="$1"
+    jq -er --arg k "$key" '.[$k] // empty' "$OPTIONS_JSON" 2> /dev/null || true
 }
 
 strip_hostname() {
-  local raw="$1"
+    local raw="$1"
 
-  raw="${raw#http://}"
-  raw="${raw#https://}"
-  raw="${raw%%/*}"
+    raw="${raw#http://}"
+    raw="${raw#https://}"
+    raw="${raw%%/*}"
 
-  if [[ "$raw" =~ ^(\[[^]]+\])(:[0-9]+)?$ ]]; then
-    raw="${BASH_REMATCH[1]}"
-  else
-    raw="${raw%%:*}"
-  fi
+    if [[ "$raw" =~ ^(\[[^]]+\])(:[0-9]+)?$ ]]; then
+        raw="${BASH_REMATCH[1]}"
+    else
+        raw="${raw%%:*}"
+    fi
 
-  printf '%s\n' "$raw"
+    printf '%s\n' "$raw"
 }
 
 detect_ha_public_hostname() {
-  local supervisor_url="${SUPERVISOR:-http://supervisor}"
-  local response external_url external_host
+    local supervisor_url="${SUPERVISOR:-http://supervisor}"
+    local response external_url external_host
 
-  if [[ -z "${SUPERVISOR_TOKEN:-}" ]] || ! command -v curl >/dev/null 2>&1; then
+    if [[ -z "${SUPERVISOR_TOKEN:-}" ]] || ! command -v curl > /dev/null 2>&1; then
+        printf '%s\n' "$DEFAULT_PUBLIC_HOSTNAME"
+        return
+    fi
+
+    response="$(curl -fsSL \
+        -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
+        "${supervisor_url}/core/api/config" 2> /dev/null || true)"
+    external_url="$(jq -er '.external_url // empty' <<< "$response" 2> /dev/null || true)"
+    external_host="$(strip_hostname "$external_url")"
+
+    if [[ -n "$external_host" && "$external_host" != "null" ]]; then
+        printf '%s\n' "$external_host"
+        return
+    fi
+
     printf '%s\n' "$DEFAULT_PUBLIC_HOSTNAME"
-    return
-  fi
-
-  response="$(curl -fsSL \
-    -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
-    "${supervisor_url}/core/api/config" 2>/dev/null || true)"
-  external_url="$(jq -er '.external_url // empty' <<< "$response" 2>/dev/null || true)"
-  external_host="$(strip_hostname "$external_url")"
-
-  if [[ -n "$external_host" && "$external_host" != "null" ]]; then
-    printf '%s\n' "$external_host"
-    return
-  fi
-
-  printf '%s\n' "$DEFAULT_PUBLIC_HOSTNAME"
 }
 
 normalize_path() {
-  local raw="$1"
-  if command -v realpath >/dev/null 2>&1; then
-    realpath -m "$raw"
-    return
-  fi
+    local raw="$1"
+    if command -v realpath > /dev/null 2>&1; then
+        realpath -m "$raw"
+        return
+    fi
 
-  case "$raw" in
-    /*) printf '%s\n' "$raw" ;;
-    *) printf '/%s\n' "$raw" ;;
-  esac
+    case "$raw" in
+        /*) printf '%s\n' "$raw" ;;
+        *) printf '/%s\n' "$raw" ;;
+    esac
 }
 
 is_allowed_path() {
-  local resolved="$1"
-  case "$resolved" in
-    /share|/share/*|/media|/media/*|/config|/config/*)
-      return 0
-      ;;
-    *)
-      return 1
-      ;;
-  esac
+    local resolved="$1"
+    case "$resolved" in
+        /share | /share/* | /media | /media/* | /config | /config/*)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
 }
 
 require_mapped_path() {
-  local label="$1"
-  local raw="$2"
-  local resolved
+    local label="$1"
+    local raw="$2"
+    local resolved
 
-  resolved="$(normalize_path "$raw")"
-  if ! is_allowed_path "$resolved"; then
-    die "${label} '${raw}' resolves to '${resolved}', which is outside /share, /media, and /config"
-  fi
+    resolved="$(normalize_path "$raw")"
+    if ! is_allowed_path "$resolved"; then
+        die "${label} '${raw}' resolves to '${resolved}', which is outside /share, /media, and /config"
+    fi
 
-  printf '%s\n' "$resolved"
+    printf '%s\n' "$resolved"
 }
 
 ensure_dir() {
-  local dir="$1"
-  mkdir -p "$dir"
+    local dir="$1"
+    mkdir -p "$dir"
 }
 
 ensure_existing_or_create() {
-  local label="$1"
-  local dir="$2"
+    local label="$1"
+    local dir="$2"
 
-  if [[ -d "$dir" ]]; then
-    return
-  fi
+    if [[ -d "$dir" ]]; then
+        return
+    fi
 
-  if mkdir -p "$dir" 2>/dev/null; then
-    return
-  fi
+    if mkdir -p "$dir" 2> /dev/null; then
+        return
+    fi
 
-  die "${label} '${dir}' does not exist and could not be created. Create it on the host or choose a writable path under /config."
+    die "${label} '${dir}' does not exist and could not be created. Create it on the host or choose a writable path under /config."
 }
 
 chown_recursive_if_writable() {
-  local owner="$1"
-  local path="$2"
+    local owner="$1"
+    local path="$2"
 
-  if [[ ! -e "$path" ]]; then
-    log "Skipping ownership update for ${path} (missing path)"
-    return
-  fi
+    if [[ ! -e "$path" ]]; then
+        log "Skipping ownership update for ${path} (missing path)"
+        return
+    fi
 
-  if [[ -w "$path" ]]; then
-    chown -R "$owner" "$path"
-    return
-  fi
+    if [[ -w "$path" ]]; then
+        chown -R "$owner" "$path"
+        return
+    fi
 
-  log "Skipping ownership update for ${path} (read-only mapping)"
+    log "Skipping ownership update for ${path} (read-only mapping)"
 }
 
 generate_secret() {
-  if command -v openssl >/dev/null 2>&1; then
-    openssl rand -hex 64
-    return
-  fi
+    if command -v openssl > /dev/null 2>&1; then
+        openssl rand -hex 64
+        return
+    fi
 
-  head -c 64 /dev/urandom | od -An -tx1 | tr -d ' \n'
+    head -c 64 /dev/urandom | od -An -tx1 | tr -d ' \n'
 }
 
 # Manyfold's production.rb sets config.assume_ssl = PUBLIC_HOSTNAME.present?,
@@ -162,11 +162,11 @@ generate_secret() {
 # via an initializer dropped into whichever app directory is found, since we
 # still need PUBLIC_HOSTNAME set for correct link generation elsewhere.
 disable_assume_ssl() {
-  local app_dir="$1"
-  local initializer_dir="${app_dir}/config/initializers"
-  [[ -d "$initializer_dir" ]] || return 0
+    local app_dir="$1"
+    local initializer_dir="${app_dir}/config/initializers"
+    [[ -d "$initializer_dir" ]] || return 0
 
-  cat > "${initializer_dir}/manyfold_addon_disable_assume_ssl.rb" << 'EOF'
+    cat > "${initializer_dir}/manyfold_addon_disable_assume_ssl.rb" << 'EOF'
 # Added by the Manyfold Home Assistant add-on: this add-on has no
 # SSL-terminating reverse proxy in front of it, so assuming SSL produces
 # incorrect https:// redirects on a plain-HTTP port.
@@ -175,73 +175,86 @@ EOF
 }
 
 start_manyfold() {
-  if [[ -x /usr/src/app/bin/docker-entrypoint.sh ]]; then
-    log "Starting Manyfold via /usr/src/app/bin/docker-entrypoint.sh foreman start"
-    cd /usr/src/app
-    disable_assume_ssl /usr/src/app
-    exec ./bin/docker-entrypoint.sh foreman start
-  fi
-
-  if [[ -x /app/bin/docker-entrypoint.sh ]]; then
-    log "Starting Manyfold via /app/bin/docker-entrypoint.sh foreman start"
-    cd /app
-    disable_assume_ssl /app
-    exec ./bin/docker-entrypoint.sh foreman start
-  fi
-
-  local candidate
-  for candidate in \
-    /usr/local/bin/docker-entrypoint.sh \
-    /usr/local/bin/docker-entrypoint \
-    /docker-entrypoint.sh \
-    /entrypoint.sh
-  do
-    if [[ -x "$candidate" ]]; then
-      log "Starting Manyfold via ${candidate}"
-      if [[ "$candidate" == *docker-entrypoint* ]]; then
-        exec "$candidate" foreman start
-      fi
-      exec "$candidate"
+    if [[ -x /usr/src/app/bin/docker-entrypoint.sh ]]; then
+        log "Starting Manyfold via /usr/src/app/bin/docker-entrypoint.sh foreman start"
+        cd /usr/src/app
+        disable_assume_ssl /usr/src/app
+        exec ./bin/docker-entrypoint.sh foreman start
     fi
-  done
 
-  if command -v docker-entrypoint >/dev/null 2>&1; then
-    log "Starting Manyfold via docker-entrypoint"
-    exec docker-entrypoint foreman start
-  fi
+    if [[ -x /app/bin/docker-entrypoint.sh ]]; then
+        log "Starting Manyfold via /app/bin/docker-entrypoint.sh foreman start"
+        cd /app
+        disable_assume_ssl /app
+        exec ./bin/docker-entrypoint.sh foreman start
+    fi
 
-  if [[ -d /usr/src/app ]]; then
-    cd /usr/src/app
-    disable_assume_ssl /usr/src/app
-  elif [[ -d /app ]]; then
-    cd /app
-    disable_assume_ssl /app
-  fi
+    local candidate
+    for candidate in \
+        /usr/local/bin/docker-entrypoint.sh \
+        /usr/local/bin/docker-entrypoint \
+        /docker-entrypoint.sh \
+        /entrypoint.sh; do
+        if [[ -x "$candidate" ]]; then
+            log "Starting Manyfold via ${candidate}"
+            if [[ "$candidate" == *docker-entrypoint* ]]; then
+                exec "$candidate" foreman start
+            fi
+            exec "$candidate"
+        fi
+    done
 
-  if command -v bundle >/dev/null 2>&1; then
-    log "Starting Manyfold via rails server fallback"
-    exec bundle exec rails server -b 0.0.0.0 -p 3214
-  fi
+    if command -v docker-entrypoint > /dev/null 2>&1; then
+        log "Starting Manyfold via docker-entrypoint"
+        exec docker-entrypoint foreman start
+    fi
 
-  die "Could not find a known Manyfold entrypoint"
+    if [[ -d /usr/src/app ]]; then
+        cd /usr/src/app
+        disable_assume_ssl /usr/src/app
+    elif [[ -d /app ]]; then
+        cd /app
+        disable_assume_ssl /app
+    fi
+
+    if command -v bundle > /dev/null 2>&1; then
+        log "Starting Manyfold via rails server fallback"
+        exec bundle exec rails server -b 0.0.0.0 -p 3214
+    fi
+
+    die "Could not find a known Manyfold entrypoint"
 }
 
 [[ -f "$OPTIONS_JSON" ]] || die "Missing options file at ${OPTIONS_JSON}"
 
-PUID="$(read_opt puid)"; PUID="${PUID:-1000}"
-PGID="$(read_opt pgid)"; PGID="${PGID:-1000}"
-MULTIUSER="$(read_opt multiuser)"; MULTIUSER="${MULTIUSER:-true}"
-LIBRARY_PATH_RAW="$(read_opt library_path)"; LIBRARY_PATH_RAW="${LIBRARY_PATH_RAW:-$DEFAULT_LIBRARY_PATH}"
-THUMBNAILS_PATH_RAW="$(read_opt thumbnails_path)"; THUMBNAILS_PATH_RAW="${THUMBNAILS_PATH_RAW:-$DEFAULT_THUMBNAILS_PATH}"
-LOG_LEVEL="$(read_opt log_level)"; LOG_LEVEL="${LOG_LEVEL:-$DEFAULT_LOG_LEVEL}"
-WEB_CONCURRENCY="$(read_opt web_concurrency)"; WEB_CONCURRENCY="${WEB_CONCURRENCY:-$DEFAULT_WEB_CONCURRENCY}"
-RAILS_MAX_THREADS="$(read_opt rails_max_threads)"; RAILS_MAX_THREADS="${RAILS_MAX_THREADS:-$DEFAULT_RAILS_MAX_THREADS}"
-DEFAULT_WORKER_CONCURRENCY="$(read_opt default_worker_concurrency)"; DEFAULT_WORKER_CONCURRENCY="${DEFAULT_WORKER_CONCURRENCY:-$DEFAULT_DEFAULT_WORKER_CONCURRENCY}"
-PERFORMANCE_WORKER_CONCURRENCY="$(read_opt performance_worker_concurrency)"; PERFORMANCE_WORKER_CONCURRENCY="${PERFORMANCE_WORKER_CONCURRENCY:-$DEFAULT_PERFORMANCE_WORKER_CONCURRENCY}"
-MAX_FILE_UPLOAD_SIZE="$(read_opt max_file_upload_size)"; MAX_FILE_UPLOAD_SIZE="${MAX_FILE_UPLOAD_SIZE:-$DEFAULT_MAX_FILE_UPLOAD_SIZE}"
-MAX_FILE_EXTRACT_SIZE="$(read_opt max_file_extract_size)"; MAX_FILE_EXTRACT_SIZE="${MAX_FILE_EXTRACT_SIZE:-$DEFAULT_MAX_FILE_EXTRACT_SIZE}"
-SECRET_KEY_BASE="$(read_opt secret_key_base)"; SECRET_KEY_BASE="${SECRET_KEY_BASE:-}"
-PUBLIC_HOSTNAME_RAW="$(read_opt public_hostname)"; PUBLIC_HOSTNAME_RAW="${PUBLIC_HOSTNAME_RAW:-}"
+PUID="$(read_opt puid)"
+PUID="${PUID:-1000}"
+PGID="$(read_opt pgid)"
+PGID="${PGID:-1000}"
+MULTIUSER="$(read_opt multiuser)"
+MULTIUSER="${MULTIUSER:-true}"
+LIBRARY_PATH_RAW="$(read_opt library_path)"
+LIBRARY_PATH_RAW="${LIBRARY_PATH_RAW:-$DEFAULT_LIBRARY_PATH}"
+THUMBNAILS_PATH_RAW="$(read_opt thumbnails_path)"
+THUMBNAILS_PATH_RAW="${THUMBNAILS_PATH_RAW:-$DEFAULT_THUMBNAILS_PATH}"
+LOG_LEVEL="$(read_opt log_level)"
+LOG_LEVEL="${LOG_LEVEL:-$DEFAULT_LOG_LEVEL}"
+WEB_CONCURRENCY="$(read_opt web_concurrency)"
+WEB_CONCURRENCY="${WEB_CONCURRENCY:-$DEFAULT_WEB_CONCURRENCY}"
+RAILS_MAX_THREADS="$(read_opt rails_max_threads)"
+RAILS_MAX_THREADS="${RAILS_MAX_THREADS:-$DEFAULT_RAILS_MAX_THREADS}"
+DEFAULT_WORKER_CONCURRENCY="$(read_opt default_worker_concurrency)"
+DEFAULT_WORKER_CONCURRENCY="${DEFAULT_WORKER_CONCURRENCY:-$DEFAULT_DEFAULT_WORKER_CONCURRENCY}"
+PERFORMANCE_WORKER_CONCURRENCY="$(read_opt performance_worker_concurrency)"
+PERFORMANCE_WORKER_CONCURRENCY="${PERFORMANCE_WORKER_CONCURRENCY:-$DEFAULT_PERFORMANCE_WORKER_CONCURRENCY}"
+MAX_FILE_UPLOAD_SIZE="$(read_opt max_file_upload_size)"
+MAX_FILE_UPLOAD_SIZE="${MAX_FILE_UPLOAD_SIZE:-$DEFAULT_MAX_FILE_UPLOAD_SIZE}"
+MAX_FILE_EXTRACT_SIZE="$(read_opt max_file_extract_size)"
+MAX_FILE_EXTRACT_SIZE="${MAX_FILE_EXTRACT_SIZE:-$DEFAULT_MAX_FILE_EXTRACT_SIZE}"
+SECRET_KEY_BASE="$(read_opt secret_key_base)"
+SECRET_KEY_BASE="${SECRET_KEY_BASE:-}"
+PUBLIC_HOSTNAME_RAW="$(read_opt public_hostname)"
+PUBLIC_HOSTNAME_RAW="${PUBLIC_HOSTNAME_RAW:-}"
 
 [[ "$PUID" =~ ^[0-9]+$ ]] || die "puid must be a non-negative integer"
 [[ "$PGID" =~ ^[0-9]+$ ]] || die "pgid must be a non-negative integer"
@@ -256,15 +269,15 @@ LIBRARY_PATH="$(require_mapped_path "library_path" "$LIBRARY_PATH_RAW")"
 THUMBNAILS_PATH="$(require_mapped_path "thumbnails_path" "$THUMBNAILS_PATH_RAW")"
 
 if [[ -n "$PUBLIC_HOSTNAME_RAW" ]]; then
-  PUBLIC_HOSTNAME="$(strip_hostname "$PUBLIC_HOSTNAME_RAW")"
+    PUBLIC_HOSTNAME="$(strip_hostname "$PUBLIC_HOSTNAME_RAW")"
 else
-  PUBLIC_HOSTNAME="$(detect_ha_public_hostname)"
+    PUBLIC_HOSTNAME="$(detect_ha_public_hostname)"
 fi
 [[ -n "$PUBLIC_HOSTNAME" && "$PUBLIC_HOSTNAME" != "null" ]] || PUBLIC_HOSTNAME="$DEFAULT_PUBLIC_HOSTNAME"
 
 case "$THUMBNAILS_PATH" in
-  /config|/config/*) ;;
-  *) die "thumbnails_path must resolve under /config for persistence" ;;
+    /config | /config/*) ;;
+    *) die "thumbnails_path must resolve under /config for persistence" ;;
 esac
 
 ensure_dir "$CONFIG_DIR"
@@ -274,19 +287,19 @@ ensure_dir "$THUMBNAILS_PATH"
 [[ -r "$LIBRARY_PATH" ]] || die "library_path '${LIBRARY_PATH}' is not readable"
 
 if [[ -z "$SECRET_KEY_BASE" ]]; then
-  if [[ -s "$SECRET_FILE" ]]; then
-    SECRET_KEY_BASE="$(cat "$SECRET_FILE")"
-    log "Loaded SECRET_KEY_BASE from ${SECRET_FILE}"
-  else
-    SECRET_KEY_BASE="$(generate_secret)"
+    if [[ -s "$SECRET_FILE" ]]; then
+        SECRET_KEY_BASE="$(cat "$SECRET_FILE")"
+        log "Loaded SECRET_KEY_BASE from ${SECRET_FILE}"
+    else
+        SECRET_KEY_BASE="$(generate_secret)"
+        printf '%s' "$SECRET_KEY_BASE" > "$SECRET_FILE"
+        chmod 600 "$SECRET_FILE"
+        log "Generated and stored SECRET_KEY_BASE at ${SECRET_FILE}"
+    fi
+else
     printf '%s' "$SECRET_KEY_BASE" > "$SECRET_FILE"
     chmod 600 "$SECRET_FILE"
-    log "Generated and stored SECRET_KEY_BASE at ${SECRET_FILE}"
-  fi
-else
-  printf '%s' "$SECRET_KEY_BASE" > "$SECRET_FILE"
-  chmod 600 "$SECRET_FILE"
-  log "Saved provided SECRET_KEY_BASE to ${SECRET_FILE}"
+    log "Saved provided SECRET_KEY_BASE to ${SECRET_FILE}"
 fi
 
 export SECRET_KEY_BASE

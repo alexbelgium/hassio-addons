@@ -48,7 +48,7 @@ Initial setup requires starting the addon once to initialize configuration templ
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `CONFIG_LOCATION` | str | `/config/myelectricaldata/config.yaml` | Path to configuration file |
 | `TZ` | str | `Europe/Paris` | Timezone (e.g., `Europe/London`) |
 | `mqtt_autodiscover` | bool | `true` | Enable MQTT autodiscovery |
