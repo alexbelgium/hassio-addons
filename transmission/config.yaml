@@ -87,6 +87,7 @@ options:
   customUI: flood-for-transmission
   download_dir: /share/downloads
   incomplete_dir: /share/incomplete
+  incomplete_dir_enabled: true
 panel_admin: false
 panel_icon: mdi:transmission-tower
 ports:
@@ -114,6 +115,7 @@ schema:
   customUI: list(standard|transmission-web-control|kettu|flood-for-transmission)
   download_dir: str
   incomplete_dir: str?
+  incomplete_dir_enabled: bool?
   localdisks: str?
   networkdisks: str?
   pass: str?
@@ -124,4 +126,4 @@ schema:
 slug: transmission_ls
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "4.1.3"
+version: "4.1.3.1"

@@ -62,6 +62,7 @@ Configurations can be done through the app webUI, except for the following optio
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 | `download_dir` | str | `/share/downloads` | Directory for completed downloads |
 | `incomplete_dir` | str | `/share/incomplete` | Directory for incomplete downloads |
+| `incomplete_dir_enabled` | bool | `true` | Set to `false` to permanently disable the incomplete-downloads directory. Transmission's own Web UI toggle for this is overwritten on every add-on restart, so use this option instead |
 | `watch_dir` | str | | Directory to watch for torrent files |
 | `customUI` | list | `flood-for-transmission` | Web UI (standard/transmission-web-control/kettu/flood-for-transmission) |
 | `user` | str | | Web UI username |
