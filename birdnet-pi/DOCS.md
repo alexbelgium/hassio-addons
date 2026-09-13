@@ -9,9 +9,9 @@ Here are some example tests I did (the whole threads are really interesting also
 
 **My recommendation:**
 
-- **Best entry system (< 50 €):** Boya By-lm40 (30 €) + deadcat (10 €)
-- **Best middle end system (< 150 €):** Clippy EM272 TRS/TRRS (55 €) + Rode AI micro trs/trrs to usb (70 €) + Rycote deadcat (27 €)
-- **Best high end system (<400 €):** Clippy EM272 XLR (85 €) or LOM Ucho Pro (75 €) + Focusrite Scarlet 2i2 4th Gen (200 €) + Bubblebee Pro Extreme deadcat (45 €)
+- **Best entry system (< 50 €):** Boya By-lm40 (30 €) + deadcat (10 €)
+- **Best middle end system (< 150 €):** Clippy EM272 TRS/TRRS (55 €) + Rode AI micro trs/trrs to usb (70 €) + Rycote deadcat (27 €)
+- **Best high end system (<400 €):** Clippy EM272 XLR (85 €) or LOM Ucho Pro (75 €) + Focusrite Scarlet 2i2 4th Gen (200 €) + Bubblebee Pro Extreme deadcat (45 €)
 
 **Sources for high end microphones in Europe:**
 

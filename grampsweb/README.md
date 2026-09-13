@@ -53,7 +53,7 @@ Webui can be found at <http://homeassistant:5000>.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `CELERY_NUM_WORKERS` | int | `2` | Number of Celery workers for background tasks |
 | `GUNICORN_NUM_WORKERS` | int | `8` | Number of Gunicorn workers for web requests |
 | `GRAMPSWEB_SECRET_KEY` | str | - | Secret key for session security (auto-generated if not set) |
@@ -65,7 +65,7 @@ Webui can be found at <http://homeassistant:5000>.
 ### Email Configuration (Optional)
 
 | Option | Type | Description |
-|--------|------|-------------|
+| -------- | ------ | ------------- |
 | `GRAMPSWEB_EMAIL_HOST` | str | SMTP server hostname |
 | `GRAMPSWEB_EMAIL_PORT` | int | SMTP server port |
 | `GRAMPSWEB_EMAIL_USE_SSL` | bool | Use SSL encryption (for port 465) |

@@ -132,7 +132,7 @@ case $(bashio::config 'DB_CONNECTION') in
         export DB_PORT && bashio::log.blue "DB_PORT=$DB_PORT"
         export DB_DATABASE && bashio::log.blue "DB_DATABASE=$DB_DATABASE"
         export DB_USERNAME && bashio::log.blue "DB_USERNAME=$DB_USERNAME"
-        export DB_PASSWORD  # do not log password
+        export DB_PASSWORD # do not log password
 
         bashio::log.warning "Firefly-iii is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"

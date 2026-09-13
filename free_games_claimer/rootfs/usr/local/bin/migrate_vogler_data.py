@@ -47,8 +47,10 @@ def normalize_timestamp(value: Any) -> str:
             return parsed.isoformat(sep=" ", timespec="seconds")
         except ValueError:
             pass
-    return datetime.now(timezone.utc).replace(tzinfo=None).isoformat(
-        sep=" ", timespec="seconds"
+    return (
+        datetime.now(timezone.utc)
+        .replace(tzinfo=None)
+        .isoformat(sep=" ", timespec="seconds")
     )
 
 
@@ -99,8 +101,7 @@ def iter_records(store: str, payload: Any, source: Path) -> Iterator[dict[str, A
 
 
 def ensure_schema(connection: sqlite3.Connection) -> None:
-    connection.executescript(
-        """
+    connection.executescript("""
         CREATE TABLE IF NOT EXISTS claimed_games (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             store VARCHAR(32) NOT NULL,
@@ -117,8 +118,7 @@ def ensure_schema(connection: sqlite3.Connection) -> None:
         CREATE INDEX IF NOT EXISTS ix_claimed_games_store ON claimed_games (store);
         CREATE INDEX IF NOT EXISTS ix_claimed_games_user ON claimed_games (user);
         CREATE INDEX IF NOT EXISTS ix_claimed_games_game_id ON claimed_games (game_id);
-        """
-    )
+        """)
 
 
 def migrate() -> int:
@@ -209,7 +209,12 @@ def migrate() -> int:
 
                     connection.commit()
                     log(f"Imported {source_imported} record(s) from {source}")
-                except (OSError, ValueError, json.JSONDecodeError, sqlite3.Error) as err:
+                except (
+                    OSError,
+                    ValueError,
+                    json.JSONDecodeError,
+                    sqlite3.Error,
+                ) as err:
                     connection.rollback()
                     message = f"Failed to import {source}: {err}"
                     errors.append(message)

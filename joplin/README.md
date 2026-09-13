@@ -43,7 +43,7 @@ Webui can be found at `<your-ip>:22300`.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `APP_BASE_URL` | str | `http://your_domain:port` | Base public URL where the service will be running |
 | `data_location` | str | `/config/addons_config/joplin` | Path where Joplin data is stored |
 | `DB_CLIENT` | str | | Database client type. Only `pg` (PostgreSQL) is supported. MariaDB/MySQL is NOT supported. |

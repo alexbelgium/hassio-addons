@@ -61,7 +61,7 @@ Connect using the TeamSpeak client at `homeassistant.local:9987`.
 ### Ports
 
 | Port | Protocol | Description |
-|------|----------|-------------|
+| ------ | ---------- | ------------- |
 | `9987` | UDP | Voice communication |
 | `10011` | TCP | ServerQuery (raw) |
 | `30033` | TCP | File transfer |

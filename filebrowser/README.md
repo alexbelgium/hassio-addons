@@ -59,7 +59,7 @@ The web UI can be found at `<your-ip>:8071` or through the Home Assistant sideba
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `ssl` | bool | `false` | Enable HTTPS for web interface |
 | `certfile` | str | `fullchain.pem` | SSL certificate file (in `/ssl/`) |
 | `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |

@@ -1,41 +1,41 @@
- 
+
 ## 2.3.0 (2026-09-12)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
- 
+
 ## 2.2.11 (2026-08-29)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.2.8 (2026-08-22)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.2.6 (2026-08-08)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.2.5 (2026-08-02)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.2.4 (2026-08-01)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.2.2 (2026-07-25)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.2.0 (2026-07-16)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.1.2 (2026-07-11)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.1.0 (2026-07-04)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.0.3 (2026-06-23)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 2.0.0 (2026-06-20)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
- 
+
 ## 1.12.8 (2026-06-17)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
 

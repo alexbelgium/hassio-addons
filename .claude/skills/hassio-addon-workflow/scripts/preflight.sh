@@ -59,7 +59,10 @@ if [ -n "${BUILD_VERSION:-}" ]; then
     if [ -z "$SLUG" ] && [ -n "${HOSTNAME:-}" ]; then
         base=$(printf '%s' "$HOSTNAME" | sed 's/^[0-9a-f]\{8\}-//')
         for cand in "$(printf '%s' "$base" | tr '-' '_')" "$base"; do
-            [ -f "$REPO/$cand/config.yaml" ] && { SLUG="$cand"; break; }
+            [ -f "$REPO/$cand/config.yaml" ] && {
+                SLUG="$cand"
+                break
+            }
         done
         [ -z "$SLUG" ] && SLUG="$base"
     fi
@@ -81,8 +84,8 @@ if [ -n "${BUILD_VERSION:-}" ]; then
         else
             echo "  MISMATCH — this branch is NOT what is running."
             git fetch origin master --quiet 2> /dev/null
-            master=$(git show origin/master:"$SLUG/config.yaml" 2> /dev/null |
-                grep -E '^version:' | head -1 | tr -d "\"'" | awk '{print $2}')
+            master=$(git show origin/master:"$SLUG/config.yaml" 2> /dev/null \
+                | grep -E '^version:' | head -1 | tr -d "\"'" | awk '{print $2}')
             echo "  origin/master version = ${master:-unknown}"
             echo "  -> work from origin/master; analysing this branch will mislead you."
             echo

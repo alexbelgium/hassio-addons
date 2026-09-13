@@ -147,7 +147,7 @@ manual actions with precedence. Prompts live in `.github/prompts/`, shared shell
 in `.github/scripts/`.
 
 | Workflow | Model | Trigger | Role |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `on_issues_ai_triage.yaml` | Sonnet-low | issue opened (+ author reply, daily catch-up) | Tier 1: classify, dedupe, answer, ask for info; label `ai-triage` for real add-on bugs |
 | `daily_ai_fix.yaml` | Opus 5-xhigh | daily 03:00 | Tier 2: diagnose the `ai-triage` batch; small+confident → ready PR (`ai:fixed`); else write a plan (`ai:plan-pending`) |
 | `on_issue_approved.yaml` | Opus 5-high | maintainer adds `ai:approved` | Tier 3: execute the approved plan → ready PR |
@@ -176,7 +176,7 @@ prompt-only, not machine-enforced.
 ## Linting Rules
 
 | Tool | Config | Key ignores |
-|------|--------|------------|
+| ------ | -------- | ------------ |
 | Hadolint | `.hadolint.yaml` | DL3002, DL3006-9, DL3018 (no pinning required) |
 | ShellCheck | `.shellcheckrc` | SC2002 |
 | Markdownlint | `.markdownlint.yaml` | MD013 (line length), MD025, MD033, MD041 |

@@ -141,7 +141,7 @@ release_info=""
 if curl -fsSL --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 30 \
     -o "$release_metadata" "$CODEX_RELEASE_API"; then
     release_info="$(
-        CODEX_ASSET="$CODEX_ASSET" python3 - "$release_metadata" <<'PY' 2> /dev/null || true
+        CODEX_ASSET="$CODEX_ASSET" python3 - "$release_metadata" << 'PY' 2> /dev/null || true
 import json
 import os
 import re
@@ -249,7 +249,7 @@ fi
 {
     printf '#!/usr/bin/env bash\n'
     printf 'CODEX_REAL=%q\n' "$CODEX_REAL"
-    cat <<'SH'
+    cat << 'SH'
 RUNTIME_HOME="$(getent passwd abc | cut -d: -f6)"
 if [ -z "$RUNTIME_HOME" ]; then
     echo "codex: unable to resolve the abc runtime home" >&2
@@ -338,8 +338,7 @@ ln -sfn "$CODEX_BIN" "$CODEX_LINK"
 CODEX_SANDBOX_MODE="$(bashio::config 'codex_sandbox_mode' 'danger-full-access')"
 run_as_runtime_user mkdir -p "$RUNTIME_HOME/.codex"
 CODEX_SANDBOX_MODE="$CODEX_SANDBOX_MODE" RUNTIME_HOME="$RUNTIME_HOME" \
-    run_as_runtime_user python3 - <<'PY' \
-    || bashio::log.warning "Unable to update the managed Codex configuration block"
+    run_as_runtime_user python3 - << 'PY' || bashio::log.warning "Unable to update the managed Codex configuration block"
 import os
 import re
 import tomllib

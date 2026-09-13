@@ -31,7 +31,7 @@ awk '{t+=$2} END{printf "  threads=%d\n", t}' <(ps -eo pid,nlwp --no-headers 2> 
 echo
 echo "== per-process memory (top 20 by PSS) =="
 printf '  %-28s %8s %8s %8s\n' COMMAND RSS PSS PRIVATE
-python3 - "$OUT" <<'PY'
+python3 - "$OUT" << 'PY'
 import os, sys
 rows = []
 for pid in filter(str.isdigit, os.listdir('/proc')):
@@ -62,17 +62,17 @@ PY
 
 echo
 echo "== reserved-but-not-resident (lazy allocations, NOT leaks) =="
-ipcs -m 2>/dev/null | awk 'NR>3 && $5 ~ /^[0-9]+$/ && $5 > 50000000 {printf "  SysV shm %.0f MB (owner %s) — check Rss in /proc/<pid>/smaps before calling it used\n", $5/1048576, $3}'
+ipcs -m 2> /dev/null | awk 'NR>3 && $5 ~ /^[0-9]+$/ && $5 > 50000000 {printf "  SysV shm %.0f MB (owner %s) — check Rss in /proc/<pid>/smaps before calling it used\n", $5/1048576, $3}'
 
 echo
 echo "== CPU over ${SAMPLE}s (idle unless you are driving the UI) =="
 # utime+stime. Parsed after the LAST ')' because field 2 is (comm) and may contain spaces —
 # a plain $14+$15 is wrong for anything like 'npm exec @foo' and silently reports a fabricated
 # number rather than failing.
-jiffies() { awk -F') ' '{n=split($NF,a," "); print a[12]+a[13]}' "/proc/$1/stat" 2>/dev/null; }
+jiffies() { awk -F') ' '{n=split($NF,a," "); print a[12]+a[13]}' "/proc/$1/stat" 2> /dev/null; }
 
 # jiffies are USER_HZ units — almost always 100, but read it rather than assume it
-HZ=$(getconf CLK_TCK 2>/dev/null) && [ "$HZ" -gt 0 ] 2>/dev/null || HZ=100
+HZ=$(getconf CLK_TCK 2> /dev/null) && [ "$HZ" -gt 0 ] 2> /dev/null || HZ=100
 
 # Sample EVERY readable process, not the top-N of ps.txt: that list is sorted by RSS,
 # and the busiest process is not necessarily a big one.
@@ -86,14 +86,14 @@ for pid in "${!t0[@]}"; do
     [ -r "/proc/$pid/stat" ] || continue
     t1=$(jiffies "$pid") || continue
     [ -n "$t1" ] && [ -n "${t0[$pid]}" ] || continue
-    delta=$(( t1 - ${t0[$pid]} ))
+    delta=$((t1 - ${t0[$pid]}))
     [ "$delta" -gt 0 ] || continue
     pct=$(awk -v d="$delta" -v s="$SAMPLE" -v hz="$HZ" 'BEGIN{printf "%.2f", d*100/(hz*s)}')
-    comm=$(tr -d '\0' < "/proc/$pid/comm" 2>/dev/null)
+    comm=$(tr -d '\0' < "/proc/$pid/comm" 2> /dev/null)
     echo "$pct $pid $comm"
 done | sort -rn | head -12 | awk '{printf "  %6s%%  %-8s %s\n", $1, $2, $3}'
 
 echo
-echo "  established conns on :8082/:3000/:3001 = $(ss -tn 2>/dev/null | grep -cE 'ESTAB.*:(8082|3000|3001)')"
+echo "  established conns on :8082/:3000/:3001 = $(ss -tn 2> /dev/null | grep -cE 'ESTAB.*:(8082|3000|3001)')"
 echo "  (those are claude_desktop/webtop viewer ports; 0 here means CPU above is idle burn)"
 echo "  raw ps: $OUT/ps.txt"

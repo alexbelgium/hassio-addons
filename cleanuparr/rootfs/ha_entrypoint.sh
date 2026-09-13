@@ -33,7 +33,7 @@ mkdir -p "$HA_DATA_DIR"
 # Symlink /app/config → HA persistent storage
 # The .NET app uses /app/config, NOT /config at the filesystem root
 if [ -d /app/config ] && [ ! -L /app/config ]; then
-    cp -rn /app/config/. "$HA_DATA_DIR/" 2>/dev/null || true
+    cp -rn /app/config/. "$HA_DATA_DIR/" 2> /dev/null || true
     rm -rf /app/config
 fi
 ln -sfn "$HA_DATA_DIR" /app/config

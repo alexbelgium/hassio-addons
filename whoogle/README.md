@@ -42,7 +42,7 @@ Configurations can be done through the app webUI, except for the following optio
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `TZ` | str | `Europe/Amsterdam` | Timezone |
 | `WHOOGLE_CONFIG_LANGUAGE` | str | `lang_en` | Interface language |
 | `WHOOGLE_CONFIG_URL` | str | | Base URL for the service |

@@ -1,4 +1,4 @@
- 
+
 ## 3.2.0.2 (2026-09-12)
 - Update to latest version from ghcr.io/imagegenius/immich:3
 - Upstream tag : 3.2.0
@@ -8,17 +8,17 @@
 - The add-on is now rebuilt whenever imagegenius repoints `:3`, whether the immich version changed or the image was simply republished
 - The add-on has never built immich itself, it builds on top of the imagegenius rebuild, which lags immich upstream by days to weeks. Version `3.2.0` was published while the image still contained immich `3.1.0` (issue #3060), and nothing would have rebuilt the add-on once the image caught up
 - This build still contains immich **3.1.0**, and will be updated automatically once imagegenius publishes a newer image. Home Assistant cannot offer a version lower than the one installed, so the add-on number stays in the `3.2.0.x` range until the image moves past 3.2.0
- 
+
 ## 3.2.0 (2026-09-12)
 - Update to latest version from immich-app/immich (changelog : https://github.com/immich-app/immich/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
- 
+
 ## 3.1.0.1 (2026-08-17)
 - Fix `password authentication failed for user` when `DB_PASSWORD` contains special characters. Passwords are now URI-encoded before being used in the psql connection string, and SQL-escaped before being used in `CREATE`/`ALTER USER` statements
- 
+
 ## 3.1.0 (2026-08-01)
 - Update to latest version from immich-app/immich (changelog : https://github.com/immich-app/immich/releases)
- 
+
 ## 3.0.3 (2026-07-22)
 - Update to latest version from immich-app/immich (changelog : https://github.com/immich-app/immich/releases)
 ## 3.0.1-2 (04-07-2026)

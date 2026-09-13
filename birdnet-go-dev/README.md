@@ -75,7 +75,7 @@ Requires a second model to confirm the **first** detection of each bird species 
 
 The first detection of a species in a day is the weakest evidence the pipeline produces, and it is the one that creates a "new species today" entry. Asking two models to agree on just that one detection removes most spurious new-species entries without slowing anything else down.
 
-**Off by default.** Turn it on in the web UI under *Settings → Filters → First Daily Detection Consensus*, or in `config.yaml`:
+**Off by default.** Turn it on in the web UI under _Settings → Filters → First Daily Detection Consensus_, or in `config.yaml`:
 
 ```yaml
 realtime:
@@ -89,7 +89,7 @@ It deliberately does **nothing** in these cases, all of which keep today's singl
 
 - you run only one bird model (the default) — a second opinion does not exist, so the rule can never trigger
 - the species is not a bird — bats and the non-bird sound classes Perch reports (insects, amphibians, mammals, `power_tool`, and so on)
-- the species is not known to *every* active bird model analyzing that audio source — a species only one of them can name could never reach two confirmations. With several sources running different model combinations, this is decided per source, not add-on-wide
+- the species is not known to _every_ active bird model analyzing that audio source — a species only one of them can name could never reach two confirmations. With several sources running different model combinations, this is decided per source, not add-on-wide
 - a dynamic threshold has actually lowered the bar for that species, meaning you asked for a more permissive gate
 - the taxonomy or the database cannot be consulted — it fails open and accepts the detection
 

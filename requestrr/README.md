@@ -60,7 +60,7 @@ Run the addon first, then customize the config file created in `/app_configs/db2
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `PGID` | int | `0` | Group ID for file permissions |
 | `PUID` | int | `0` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |

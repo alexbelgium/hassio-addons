@@ -1,9 +1,9 @@
 - Breaking change : only appears in ingress for admins
 - Migrate legacy add-on configuration map names to current app configuration terminology.
- 
+
 ## 1.5.6 (2026-09-05)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
- 
+
 ## 1.5.3.3 (2026-08-31)
 - Complete the iOS companion app fix from 1.5.3.2. The "no preview available"
   screen -- what you get for a `.zip`, `.bin` or anything else FileBrowser
@@ -17,7 +17,7 @@
   fixed for the download button in the file list. Links the app opens without
   a link element, such as the public-share sidebar download, are still
   affected.
- 
+
 ## 1.5.3.2 (2026-08-30)
 - Fix Download in the Home Assistant iOS companion app (iOS 17 and later),
   where a file opened and showed its content with no way to save it.
@@ -28,7 +28,7 @@
   own download link. "Open file" still opens, and the public-share sidebar's
   own download button is not covered. Desktop browsers already downloaded
   these and are unchanged, as is direct access on port 8071.
- 
+
 ## 1.5.3.1 (2026-08-29)
 - Fix "open parent directory" in Tools -> File Size Analyzer under Home
   Assistant ingress. FileBrowser opened the parent folder in a new tab, which
@@ -39,13 +39,13 @@
   item" action on search results, which open a new tab the same way. Download
   and preview popups, links pointing out of the add-on, and direct access on
   port 8071 are unchanged.
- 
+
 ## 1.5.3 (2026-08-29)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
- 
+
 ## 1.5.2 (2026-08-22)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
- 
+
 ## 1.5.1.2 (2026-08-19)
 - Fix direct access on port 8071, which was broken in 1.5.1.1: the root
   redirect pointed at the container-internal port 8072 instead of the
@@ -62,12 +62,12 @@
 
 ## 1.5.1 (2026-08-08)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
- 
+
 ## 1.5.0 (2026-07-22)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
 ## 1.4.0-2 (16-07-2026)
 - Minor bugs fixed
- 
+
 ## 1.4.0 (2026-06-20)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
 ## 1.3.3-8 (2026-06-03)

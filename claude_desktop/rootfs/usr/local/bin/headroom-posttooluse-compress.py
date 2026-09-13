@@ -76,7 +76,11 @@ def main() -> int:
 
     # Find big string/array fields before paying the headroom import cost.
     def is_string_array(value):
-        return isinstance(value, list) and len(value) > ARRAY_KEEP and all(isinstance(v, str) for v in value)
+        return (
+            isinstance(value, list)
+            and len(value) > ARRAY_KEEP
+            and all(isinstance(v, str) for v in value)
+        )
 
     if isinstance(response, str):
         string_candidates = ["__whole__"] if len(response) >= MIN_CHARS else []
@@ -85,10 +89,14 @@ def main() -> int:
         string_candidates = [
             key
             for key, value in response.items()
-            if key not in SKIP_KEYS and isinstance(value, str) and len(value) >= MIN_CHARS
+            if key not in SKIP_KEYS
+            and isinstance(value, str)
+            and len(value) >= MIN_CHARS
         ]
         array_candidates = [
-            key for key, value in response.items() if key not in SKIP_KEYS and is_string_array(value)
+            key
+            for key, value in response.items()
+            if key not in SKIP_KEYS and is_string_array(value)
         ]
     else:
         string_candidates = []

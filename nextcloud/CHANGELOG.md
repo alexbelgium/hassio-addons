@@ -1,17 +1,17 @@
- 
+
 ## 34.0.4 (2026-09-12)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
- 
+
 ## 34.0.3 (2026-08-13)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
- 
+
 ## 34.0.2 (2026-07-25)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
- 
+
 ## 34.0.1 (2026-06-27)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
- 
+
 ## 34.0.0 (2026-06-11)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 ## 33.0.5 (2026-06-05)

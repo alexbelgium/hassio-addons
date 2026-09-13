@@ -30,7 +30,7 @@ manage_claude_md_block() {
         fi
     elif [ -f "$CLAUDE_MD" ] && grep -qF "$begin" "$CLAUDE_MD"; then
         bashio::log.info "Removing ${name} guidance from CLAUDE.md"
-        CLAUDE_MD="$CLAUDE_MD" BLOCK_NAME="$name" python3 - <<'PY' || bashio::log.warning "Unable to remove the ${name} guidance automatically"
+        CLAUDE_MD="$CLAUDE_MD" BLOCK_NAME="$name" python3 - << 'PY' || bashio::log.warning "Unable to remove the ${name} guidance automatically"
 import os
 import re
 from pathlib import Path
@@ -58,7 +58,7 @@ PY
 manage_settings_hook() {
     # manage_settings_hook <event> <matcher> <command> <add|remove>
     HOOK_EVENT="$1" HOOK_MATCHER="$2" HOOK_COMMAND="$3" HOOK_ACTION="$4" \
-        python3 - <<'PY' || bashio::log.warning "Unable to update the $1 hook for '$3'"
+        python3 - << 'PY' || bashio::log.warning "Unable to update the $1 hook for '$3'"
 import json
 import os
 from pathlib import Path
@@ -389,14 +389,14 @@ bashio::log.info "MCP servers for Claude Desktop: ${MCP_SERVERS_DESKTOP}"
 bashio::log.info "MCP servers for Claude Code: ${MCP_SERVERS_CODE}"
 
 HEADROOM_ENABLED="$HEADROOM_ENABLED" HEADROOM_BIN="$(command -v headroom || echo headroom)" \
-    HEADROOM_HF_HOME="${HOME}/.headroom/hf" \
-    TOKENSAVE_ENABLED="$TOKENSAVE_ENABLED" TOKENSAVE_BIN="$(command -v tokensave || echo tokensave)" \
-    CODEX_ENABLED="$CODEX_ENABLED" CODEX_BIN="$CODEX_BIN" CODEX_SANDBOX_MODE="$CODEX_SANDBOX_MODE" \
-    HA_MCP_ENABLED="$HA_MCP_ENABLED" HA_MCP_URL="$HA_MCP_URL" HA_MCP_TOKEN="$HA_MCP_TOKEN" \
-    MCP_PROXY_BIN="$(command -v mcp-proxy || echo mcp-proxy)" \
-    MCP_SERVERS_DESKTOP="$MCP_SERVERS_DESKTOP" MCP_SERVERS_CODE="$MCP_SERVERS_CODE" \
-    CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" CLAUDE_CODE_CONFIG="$CLAUDE_CODE_CONFIG" \
-    python3 - <<'PY' || bashio::log.warning "Unable to update the MCP server registrations automatically"
+HEADROOM_HF_HOME="${HOME}/.headroom/hf" \
+TOKENSAVE_ENABLED="$TOKENSAVE_ENABLED" TOKENSAVE_BIN="$(command -v tokensave || echo tokensave)" \
+CODEX_ENABLED="$CODEX_ENABLED" CODEX_BIN="$CODEX_BIN" CODEX_SANDBOX_MODE="$CODEX_SANDBOX_MODE" \
+HA_MCP_ENABLED="$HA_MCP_ENABLED" HA_MCP_URL="$HA_MCP_URL" HA_MCP_TOKEN="$HA_MCP_TOKEN" \
+MCP_PROXY_BIN="$(command -v mcp-proxy || echo mcp-proxy)" \
+MCP_SERVERS_DESKTOP="$MCP_SERVERS_DESKTOP" MCP_SERVERS_CODE="$MCP_SERVERS_CODE" \
+CLAUDE_DESKTOP_CONFIG="$CLAUDE_DESKTOP_CONFIG" CLAUDE_CODE_CONFIG="$CLAUDE_CODE_CONFIG" \
+    python3 - << 'PY' || bashio::log.warning "Unable to update the MCP server registrations automatically"
 import json
 import os
 from pathlib import Path
@@ -607,7 +607,7 @@ PY
 # Guide Claude to actually use the Headroom compression tools so the MCP integration produces
 # real savings when transparent proxying is unavailable.
 if $HEADROOM_ENABLED; then
-    manage_claude_md_block headroom add <<'MD'
+    manage_claude_md_block headroom add << 'MD'
 ## Headroom context compression
 
 A local Headroom proxy (127.0.0.1:8787) backs the `headroom` MCP tools. To save context tokens:
@@ -636,7 +636,7 @@ if $HEADROOM_ENABLED && bashio::config.true 'headroom_wrap_claude_code'; then
 else
     HEADROOM_ROUTE_ACTION="remove"
 fi
-HEADROOM_ROUTE_ACTION="$HEADROOM_ROUTE_ACTION" python3 - <<'PY' || bashio::log.warning "Unable to manage the Claude Code proxy routing env"
+HEADROOM_ROUTE_ACTION="$HEADROOM_ROUTE_ACTION" python3 - << 'PY' || bashio::log.warning "Unable to manage the Claude Code proxy routing env"
 import json
 import os
 from pathlib import Path
@@ -703,7 +703,7 @@ manage_settings_hook PostToolUse "Bash|Grep|Glob|WebFetch" "$HEADROOM_HOOK_CMD" 
 # Tell Claude Code that it can configure Home Assistant over the Core API via the shipped
 # `ha-cli` helper (no /config filesystem mount needed).
 if bashio::config.true 'enable_ha_api_helper'; then
-    manage_claude_md_block ha-api-helper add <<'MD'
+    manage_claude_md_block ha-api-helper add << 'MD'
 ## Configuring Home Assistant
 
 You can configure this Home Assistant instance through its Core API using the `ha-cli`
@@ -731,7 +731,7 @@ fi
 # Registering the MCP server is not enough on its own: without guidance the model rarely reaches
 # for a second agent, the same gap the Headroom block above exists to close.
 if $CODEX_ENABLED; then
-    manage_claude_md_block codex add <<'MD'
+    manage_claude_md_block codex add << 'MD'
 ## Delegating to ChatGPT Codex
 
 The `codex` MCP server runs OpenAI's Codex agent locally, signed in with the user's ChatGPT

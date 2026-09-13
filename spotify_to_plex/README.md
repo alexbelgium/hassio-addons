@@ -41,7 +41,7 @@ Before starting the add-on you need a Spotify developer application (https://dev
 Fill the add-on options:
 
 | Option | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `SPOTIFY_API_CLIENT_ID` | Client ID of your Spotify developer application |
 | `SPOTIFY_API_CLIENT_SECRET` | Client secret of your Spotify developer application |
 | `SPOTIFY_API_REDIRECT_URI` | OAuth redirect URI (must match the one configured in your Spotify app) |

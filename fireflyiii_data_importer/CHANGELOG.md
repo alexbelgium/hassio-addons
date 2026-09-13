@@ -1,5 +1,5 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
- 
+
 ## 2.3.4 (2026-07-04)
 - Update to latest version from firefly-iii/data-importer (changelog : https://github.com/firefly-iii/data-importer/releases)
 ## 2.3.2-5 (28-05-2026)

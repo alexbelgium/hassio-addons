@@ -41,14 +41,14 @@ restore_apt_sources_if_missing() {
                 mirror="http://ports.ubuntu.com/ubuntu-ports"
                 security_mirror="$mirror"
             fi
-            cat > /etc/apt/sources.list <<EOF2
+            cat > /etc/apt/sources.list << EOF2
 deb ${mirror} ${codename} main restricted universe multiverse
 deb ${mirror} ${codename}-updates main restricted universe multiverse
 deb ${security_mirror} ${codename}-security main restricted universe multiverse
 EOF2
             ;;
         debian)
-            cat > /etc/apt/sources.list <<EOF2
+            cat > /etc/apt/sources.list << EOF2
 deb http://deb.debian.org/debian ${codename} main contrib non-free non-free-firmware
 deb http://deb.debian.org/debian ${codename}-updates main contrib non-free non-free-firmware
 deb http://deb.debian.org/debian-security ${codename}-security main contrib non-free non-free-firmware

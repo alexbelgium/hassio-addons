@@ -39,7 +39,7 @@ rest are on you: nothing checks them, so breaking one ships silently.
    that value, and compare:
 
    | `version` vs `U` | what to do | example |
-   |---|---|---|
+   | --- | --- | --- |
    | identical | **append** `.1` | sonarr `4.0.19.3001` -> `4.0.19.3001.1` |
    | `U` + `.` + digits | **increment** those digits | radarr `6.3.0.10514.1` -> `6.3.0.10514.2` |
    | anything else | **leave it alone** | plex, readarr, joal |

@@ -42,6 +42,5 @@ if [[ ! -f /data/version || "$current_version" != "$(cat /data/version)" ]]; the
     fi
 fi
 
-
 bashio::log.info "Starting application"
 sudo -u "$USER" -s /bin/sh -c "/home/node/signalk/startup.sh"

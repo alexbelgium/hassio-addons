@@ -12,7 +12,10 @@
 set -uo pipefail
 
 TRAPS="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/references/traps.md"
-[ -f "$TRAPS" ] || { echo "not found: $TRAPS" >&2; exit 1; }
+[ -f "$TRAPS" ] || {
+    echo "not found: $TRAPS" >&2
+    exit 1
+}
 
 # The Contents list duplicates the headings; grep the headings themselves so the list cannot drift.
 list() {
@@ -20,13 +23,16 @@ list() {
     grep '^## ' "$TRAPS" | grep -v '^## Contents' | sed 's/^## /  /'
 }
 
-[ $# -eq 0 ] && { list; exit 0; }
+[ $# -eq 0 ] && {
+    list
+    exit 0
+}
 
 # awk over exact heading text: section names contain '/' and other characters that would need
 # escaping in a sed address, and a keyword matching several headings should be an error, not a
 # silent pick of the first.
-mapfile -t matches < <(grep '^## ' "$TRAPS" | grep -v '^## Contents' |
-    grep -iF -- "$1" | sed 's/^## //')
+mapfile -t matches < <(grep '^## ' "$TRAPS" | grep -v '^## Contents' \
+    | grep -iF -- "$1" | sed 's/^## //')
 
 case "${#matches[@]}" in
     0)

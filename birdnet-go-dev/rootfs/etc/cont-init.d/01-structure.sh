@@ -43,8 +43,8 @@ if [ ! -f "$CONFIG_LOCATION" ]; then
     # config. (We can't remove the file and continue — subsequent yq calls
     # under set -e would abort the init script.)
     if ! curl -fL -s -S \
-            https://raw.githubusercontent.com/tphakala/birdnet-go/refs/heads/main/internal/conf/config.yaml \
-            -o "$CONFIG_LOCATION"; then
+        https://raw.githubusercontent.com/tphakala/birdnet-go/refs/heads/main/internal/conf/config.yaml \
+        -o "$CONFIG_LOCATION"; then
         bashio::log.warning "Could not download default config.yaml; seeding an empty document so addon defaults can populate it"
         echo '{}' > "$CONFIG_LOCATION"
     fi
@@ -190,5 +190,5 @@ LOG_DIR="/config/logs"
 if [ -d "$LOG_DIR" ]; then
     bashio::log.info "Trimming log files older than ${LOG_MAX_AGE_DAYS} days in ${LOG_DIR}"
     ln -sf "$LOG_DIR" /logs
-    find "$LOG_DIR" -type f -name "*.log*" -mtime +"$LOG_MAX_AGE_DAYS" -delete 2>/dev/null || true
+    find "$LOG_DIR" -type f -name "*.log*" -mtime +"$LOG_MAX_AGE_DAYS" -delete 2> /dev/null || true
 fi

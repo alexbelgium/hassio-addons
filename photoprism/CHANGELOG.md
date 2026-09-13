@@ -3,7 +3,7 @@
 
 - Version renamed from `ubuntu-2026-07-28`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged
 
- 
+
 ## ubuntu-2026-07-28 (2026-07-28)
 - Update to latest version from photoprism/photoprism
 ## ubuntu-2026-06-01 (2026-06-01)
@@ -25,7 +25,7 @@
 ## ubuntu-2025-11-30 (2025-11-30)
 - Update to latest version from photoprism/photoprism
 
-##  (2025-12-23)
+## (2025-12-23)
 - Update to latest version from photoprism/photoprism
 ## ubuntu-2025-11-30-2 (2025-12-06)
 - Increase healthcheck interval to reduce background CPU usage

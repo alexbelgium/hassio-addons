@@ -44,8 +44,8 @@ if ! bashio::config.true 'mariadb_auto_config'; then
         # Only revert if config.yaml points at the HA MariaDB host we would have
         # written — a mysql block pointing at a different host was set manually.
         # shellcheck disable=SC2016
-        CURRENT_MYSQL_HOST="$(yq -r '.output.mysql.host // empty' "$CONFIG_LOCATION" 2>/dev/null || true)"
-        if yq -e '.output.mysql.enabled == true' "$CONFIG_LOCATION" >/dev/null 2>&1 \
+        CURRENT_MYSQL_HOST="$(yq -r '.output.mysql.host // empty' "$CONFIG_LOCATION" 2> /dev/null || true)"
+        if yq -e '.output.mysql.enabled == true' "$CONFIG_LOCATION" > /dev/null 2>&1 \
             && [ "${CURRENT_MYSQL_HOST}" = "${MYSQL_HOST}" ]; then
             yq -i -y \
                 '.output.mysql.enabled = false
@@ -71,7 +71,7 @@ bashio::log.green "---"
 # Resolve MariaDB hostname to IPv4: on HAOS >=17.3 the Supervisor network
 # gained IPv6, but the MariaDB addon only grants its user from the IPv4
 # subnet. Fall back to the raw hostname if resolution fails.
-MYSQL_HOST_RESOLVED="$(getent ahostsv4 "${MYSQL_HOST}" 2>/dev/null | awk '{print $1; exit}')"
+MYSQL_HOST_RESOLVED="$(getent ahostsv4 "${MYSQL_HOST}" 2> /dev/null | awk '{print $1; exit}')"
 MYSQL_HOST_RESOLVED="${MYSQL_HOST_RESOLVED:-${MYSQL_HOST}}"
 if [ "${MYSQL_HOST_RESOLVED}" != "${MYSQL_HOST}" ]; then
     bashio::log.blue "Resolved ${MYSQL_HOST} -> ${MYSQL_HOST_RESOLVED} (forcing IPv4)"

@@ -184,7 +184,7 @@ done
 if [ "$PACKMANAGER" = "apt" ]; then apt-get update > /dev/null; fi
 if [ "$PACKMANAGER" = "pacman" ]; then pacman -Sy > /dev/null; fi
 if [ "$PACKMANAGER" = "apk" ] && [ -f /etc/apk/repositories ] && ! grep -q "community" /etc/apk/repositories; then
-    ALPINE_VER=$(cat /etc/alpine-release 2>/dev/null | cut -d. -f1,2)
+    ALPINE_VER=$(cat /etc/alpine-release 2> /dev/null | cut -d. -f1,2)
     if [ -n "$ALPINE_VER" ]; then
         echo "https://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VER}/community" >> /etc/apk/repositories
         apk update > /dev/null
@@ -228,7 +228,7 @@ for files in "/etc/services.d" "/etc/cont-init.d"; do
     if ! ls $files 1> /dev/null 2>&1; then continue; fi
 
     # Bashio
-    if grep -q -rnw "${files}" -e 'bashio' 2>/dev/null && [ ! -f "/usr/bin/bashio" ]; then
+    if grep -q -rnw "${files}" -e 'bashio' 2> /dev/null && [ ! -f "/usr/bin/bashio" ]; then
         [ "$VERBOSE" = true ] && echo "install bashio"
         BASHIO_VERSION="v0.17.5"
         mkdir -p /tmp/bashio

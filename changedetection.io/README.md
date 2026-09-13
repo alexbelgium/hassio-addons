@@ -52,7 +52,7 @@ You can add a shortcut pointing to your Changedetection.io instance with the fol
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `PGID` | int | `0` | Group ID for file permissions |
 | `PUID` | int | `0` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |

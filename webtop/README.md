@@ -49,7 +49,7 @@ See all potential ENV variables here : https://docs.linuxserver.io/images/docker
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `PGID` | int | `0` | Group ID for file permissions |
 | `PUID` | int | `0` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |

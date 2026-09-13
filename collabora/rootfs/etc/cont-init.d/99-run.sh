@@ -27,9 +27,9 @@ normalise_wopi_host() {
 # server_name is a literal "hostname[:port]", not a regex and not a URL
 normalise_server_name() {
     local value="$1"
-    value="${value//\\/}"  # never escaped, drop backslashes if any were copied over
-    value="${value#*://}"  # strip the scheme
-    value="${value%%/*}"   # strip any path
+    value="${value//\\/}" # never escaped, drop backslashes if any were copied over
+    value="${value#*://}" # strip the scheme
+    value="${value%%/*}"  # strip any path
     printf '%s' "$value"
 }
 

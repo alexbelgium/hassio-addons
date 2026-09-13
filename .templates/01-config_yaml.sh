@@ -138,9 +138,9 @@ append_unique_line() {
     # $1=file, $2=line
     local _file="$1"
     local _line="$2"
-    mkdir -p "$(dirname "$_file")" 2>/dev/null || true
-    touch "$_file" 2>/dev/null || true
-    grep -qxF -- "$_line" "$_file" 2>/dev/null || echo "$_line" >> "$_file"
+    mkdir -p "$(dirname "$_file")" 2> /dev/null || true
+    touch "$_file" 2> /dev/null || true
+    grep -qxF -- "$_line" "$_file" 2> /dev/null || echo "$_line" >> "$_file"
 }
 
 while IFS= read -r line; do

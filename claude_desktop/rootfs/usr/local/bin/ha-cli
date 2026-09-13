@@ -96,7 +96,7 @@ def resolve_endpoint():
 def _url(base, path):
     path = path.lstrip("/")
     if path.startswith("api/"):
-        path = path[len("api/"):]
+        path = path[len("api/") :]
     return base.rstrip("/") + "/" + path
 
 
@@ -133,7 +133,9 @@ def rest(method, base, token, path, body=None):
     if body is not None:
         data = json.dumps(body).encode("utf-8")
         headers["Content-Type"] = "application/json"
-    req = urllib.request.Request(_url(base, path), data=data, method=method, headers=headers)
+    req = urllib.request.Request(
+        _url(base, path), data=data, method=method, headers=headers
+    )
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
             text = resp.read().decode("utf-8")
@@ -141,7 +143,9 @@ def rest(method, base, token, path, body=None):
         detail = exc.read().decode("utf-8", "replace").strip()
         sys.exit(f"ha-cli: HTTP {exc.code} {exc.reason} on {method} {path}\n{detail}")
     except urllib.error.URLError as exc:
-        sys.exit(f"ha-cli: cannot reach Home Assistant ({exc.reason}) on {method} {path}")
+        sys.exit(
+            f"ha-cli: cannot reach Home Assistant ({exc.reason}) on {method} {path}"
+        )
     try:
         return json.loads(text) if text.strip() else None
     except ValueError:
@@ -214,7 +218,9 @@ def main(argv):
             sys.exit("usage: ha-cli call <domain.service> [BODY]")
         domain, service = args[0].split(".", 1)
         body = _read_body(args[1]) if len(args) > 1 else None
-        _print(rest("POST", rest_base, token, f"services/{domain}/{service}", body or {}))
+        _print(
+            rest("POST", rest_base, token, f"services/{domain}/{service}", body or {})
+        )
     elif cmd == "states":
         path = f"states/{args[0]}" if args else "states"
         _print(rest("GET", rest_base, token, path))

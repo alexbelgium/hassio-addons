@@ -30,7 +30,7 @@ database.
 ## Configuration
 
 | Option | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `PUID` / `PGID` | Ownership applied to the add-on configuration directory. Defaults to `0` (root). See the note below before changing it. |
 | `TZ` | Timezone, e.g. `Europe/Paris`. |
 | `localdisks` | Local disks to mount, e.g. `sda1` or a disk label. |

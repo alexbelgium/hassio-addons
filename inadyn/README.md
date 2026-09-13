@@ -57,7 +57,7 @@ For detailed configuration information, see the [official documentation](https:/
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `verify_address` | bool | | Verify the IP address with check IP service |
 | `fake_address` | bool | | Use fake address for testing |
 | `allow_ipv6` | bool | | Enable IPv6 support |
@@ -73,7 +73,7 @@ For detailed configuration information, see the [official documentation](https:/
 Each provider in the `providers` list supports these options:
 
 | Option | Type | Description |
-|--------|------|-------------|
+| -------- | ------ | ------------- |
 | `provider` | str | Provider name or custom identifier |
 | `custom_provider` | bool | Whether this is a custom provider |
 | `username` | str | Username or token for authentication |

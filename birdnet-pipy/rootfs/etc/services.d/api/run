@@ -10,10 +10,10 @@ cd /app
 # and core.main reach the API locally, satisfying the wait_for in nginx/run +
 # main/run). Heavy admin jobs cooperatively yield to keep this worker live.
 exec gunicorn wsgi:application \
-  --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker \
-  --workers 1 \
-  --bind 127.0.0.1:5002 \
-  --timeout 120 \
-  --graceful-timeout 30 \
-  --keep-alive 65 \
-  --error-logfile -
+    --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker \
+    --workers 1 \
+    --bind 127.0.0.1:5002 \
+    --timeout 120 \
+    --graceful-timeout 30 \
+    --keep-alive 65 \
+    --error-logfile -

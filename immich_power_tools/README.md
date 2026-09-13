@@ -48,7 +48,7 @@ Webui can be found at `<your-ip>:8001`.
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `IMMICH_URL` | str | **Required** | Internal Immich server URL (e.g., `http://homeassistant:3001`) |
 | `EXTERNAL_IMMICH_URL` | str | **Required** | External Immich server URL for browser access |
 | `IMMICH_API_KEY` | str | **Required** | Immich API key for authentication |

@@ -33,7 +33,10 @@ TARGET_DIR=""
 while [ "$#" -gt 0 ]; do
     case "$1" in
         --check) CHECK_ONLY=1 ;;
-        -*) echo "unknown option: $1" >&2; exit 64 ;;
+        -*)
+            echo "unknown option: $1" >&2
+            exit 64
+            ;;
         *)
             # Last-one-wins would silently clone into the wrong directory if a caller ever
             # appended an argument; the pre-flag script used "${1}", so refuse rather than
@@ -184,7 +187,7 @@ if [ "${CHECK_ONLY}" = "1" ]; then
     fi
     echo "!!! CHECK FAILED: ${#conflicting[@]} PR(s) would break the add-on build" >&2
     for entry in "${conflicting[@]}"; do
-        IFS='|' read -r number scope files title <<<"${entry}"
+        IFS='|' read -r number scope files title <<< "${entry}"
         echo "!!! CONFLICT pr=#${number} conflicts-with=${scope} files=${files} title=${title}" >&2
     done
     echo "!!! conflicts-with=main     -> the PR is stale against main; merge main into its branch and resolve there." >&2
