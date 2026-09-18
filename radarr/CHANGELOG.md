@@ -1,3 +1,6 @@
+ 
+## 6.4.4.10685 (2026-09-19)
+- Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 6.3.0.10514.1 (2026-08-11)
