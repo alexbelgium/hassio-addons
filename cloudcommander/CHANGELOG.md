@@ -1,3 +1,6 @@
+ 
+## 19.21.0 (2026-09-19)
+- Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 19.20.5 (2026-09-05)
