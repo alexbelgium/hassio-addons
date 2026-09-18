@@ -1,4 +1,7 @@
  
+## 3.2.2 (2026-09-19)
+- Update to latest version from ghcr.io/imagegenius/immich:3-cuda
+ 
 ## 3.2.0.2 (2026-09-12)
 - Update to latest version from ghcr.io/imagegenius/immich:3-cuda
 - Upstream tag : 3.2.0
