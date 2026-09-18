@@ -1,3 +1,6 @@
+## 5.0.0.5.4 (18-09-2026)
+
+- Fix contact search returning HTTP 500 ("first_name is not sortable") by backporting monicahq/monica#7806 so Meilisearch can sort contacts by name (#3067)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 5.0.0.5.3 (2026-08-01)
 
