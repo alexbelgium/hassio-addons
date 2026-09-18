@@ -93,7 +93,10 @@ RUN grep -rl "could you verify your email address by clicking on the link we jus
     done && \
     \
     # Fix dummy password
-    sed -i "s|admin123|Changeme123\\!|g" /var/www/html/app/Console/Commands/Local/SetupDummyAccount.php
+    sed -i "s|admin123|Changeme123\\!|g" /var/www/html/app/Console/Commands/Local/SetupDummyAccount.php && \
+    \
+    # Make contacts sortable by name in Meilisearch (backport of monicahq/monica#7806, #3067)
+    sed -i "/Contact::class => \[/,/sortableAttributes/ s|'sortableAttributes' => \['updated_at'\]|'sortableAttributes' => ['updated_at', 'first_name', 'last_name']|" /var/www/html/config/scout.php
 
 # Add entrypoint
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
