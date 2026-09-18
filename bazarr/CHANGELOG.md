@@ -1,3 +1,6 @@
+ 
+## 1.6.1 (2026-09-19)
+- Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 
 ## 1.6.0.2 (2026-07-27)
