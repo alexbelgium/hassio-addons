@@ -1,4 +1,7 @@
  
+## 1.37.3 (2026-09-19)
+- Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
+ 
 ## 1.37.2 (2026-08-29)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
  
