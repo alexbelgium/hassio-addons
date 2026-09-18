@@ -1,3 +1,6 @@
+ 
+## v3.27.0 (2026-09-19)
+- Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## v3.25.1 (2026-09-05)

@@ -25,7 +25,7 @@ FROM node:24 AS frontend-builder
 ARG SUB_PATH="/mealie/"
 ENV SUB_PATH=$SUB_PATH
 
-ENV MEALIE_VERSION="v3.25.1"
+ENV MEALIE_VERSION="v3.27.0"
 
 RUN npm install --global pnpm@11
 
