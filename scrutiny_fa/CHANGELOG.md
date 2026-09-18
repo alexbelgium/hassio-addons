@@ -1,4 +1,7 @@
  
+## v1.74.3 (2026-09-19)
+- Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
+ 
 ## v1.74.1 (2026-09-12)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
