@@ -1,3 +1,6 @@
+ 
+## 0.64.0 (2026-09-19)
+- Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 0.63.2 (2026-07-18)
