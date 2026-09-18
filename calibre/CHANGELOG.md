@@ -1,3 +1,6 @@
+ 
+## 9.15.0 (2026-09-19)
+- Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 9.14.0 (2026-08-29)
