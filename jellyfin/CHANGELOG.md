@@ -1,4 +1,7 @@
  
+## 12.1 (2026-09-19)
+- Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
+ 
 ## 12.0 (2026-09-12)
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
