@@ -1,4 +1,8 @@
  
+## 2.6.5.5623.161 (2026-09-19)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : 2.6.5.5623-ls161
+ 
 ## 2.6.4.5611.15 (2026-09-12)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-2.6.4.5611-ls15
