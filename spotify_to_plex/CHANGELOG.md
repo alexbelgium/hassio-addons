@@ -1,4 +1,7 @@
  
+## 1.0.111 (2026-09-19)
+- Update to latest version from jjdenhertog/spotify-to-plex
+ 
 ## 1.0.109 (2026-09-12)
 - Update to latest version from jjdenhertog/spotify-to-plex
 - Migrate legacy add-on configuration map names to current app configuration terminology.
