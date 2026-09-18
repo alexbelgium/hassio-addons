@@ -1,4 +1,7 @@
  
+## 2.3.3 (2026-09-19)
+- Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
+ 
 ## 2.3.0 (2026-09-12)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
