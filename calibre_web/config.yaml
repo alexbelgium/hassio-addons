@@ -112,9 +112,10 @@ schema:
   cifsusername: str?
   ingress_user: str?
   localdisks: str?
+  login_with_ha_user: bool?
   networkdisks: str?
 slug: calibre-web
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/calibre_web
-version: "0.6.27.4"
+version: "0.6.27.5"
 video: true

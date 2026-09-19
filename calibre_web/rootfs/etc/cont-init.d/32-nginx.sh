@@ -45,6 +45,15 @@ if bashio::config.has_value 'ingress_user'; then
     ingress_user=$(bashio::config 'ingress_user')
 fi
 
+# Log in as the Home Assistant user instead : the Supervisor sends its username with every
+# ingress request (X-Remote-User-Name). No username, or no calibre-web account with that name,
+# leaves the header empty or unmatched and calibre-web shows its normal login page.
+if bashio::config.true 'login_with_ha_user'; then
+    # shellcheck disable=SC2016
+    ingress_user='$http_x_remote_user_name'
+    bashio::log.info "Ingress logs in as the Home Assistant username"
+fi
+
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 #ha_port=$(bashio::core.port)
