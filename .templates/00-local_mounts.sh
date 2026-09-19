@@ -134,7 +134,7 @@ if bashio::config.has_value 'localdisks'; then
                     error="the folder $subfolder of $disk could not be bound to /mnt/$target."
                 fi
                 if ! umount -l "$staging"; then
-                    [ -n "$error" ] || umount /mnt/"$target" || true
+                    [ -n "$error" ] || umount -l /mnt/"$target" || true
                     error="${error:-the disk $disk could not be unmounted from $staging.}"
                 fi
             fi
