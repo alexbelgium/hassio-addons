@@ -75,10 +75,28 @@ if [[ "$DATABASE_URL" == *"localhost"* ]]; then
     # Set password
     sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'homeassistant';"
 
-    # Create database if does not exist
-    echo "CREATE DATABASE linkwarden; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;
+    # Create database if does not exist (UTF8 is required for the ICU collations used by Linkwarden migrations)
+    echo "CREATE DATABASE linkwarden TEMPLATE template0 ENCODING 'UTF8' LC_COLLATE 'C' LC_CTYPE 'C'; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;
     \q" > setup_postgres.sql
     sudo -u postgres bash -c 'cat setup_postgres.sql | psql "postgres://postgres:homeassistant@localhost:5432"' || true
+
+    # Databases created by older versions are SQL_ASCII, where the "und-x-icu" collation fails (Prisma P3018/P3009)
+    # One-time conversion: copy into a new UTF8 database, keep the original as linkwarden_sql_ascii_backup
+    if [ "$(sudo -u postgres psql -tAc "SELECT pg_encoding_to_char(encoding) FROM pg_database WHERE datname='linkwarden'")" = "SQL_ASCII" ]; then
+        bashio::log.warning "Database linkwarden uses SQL_ASCII encoding, converting it to UTF8"
+        sudo -u postgres psql -v ON_ERROR_STOP=1 -c "DROP DATABASE IF EXISTS linkwarden_utf8;" \
+            -c "CREATE DATABASE linkwarden_utf8 TEMPLATE template0 ENCODING 'UTF8' LC_COLLATE 'C' LC_CTYPE 'C';"
+        if sudo -u postgres bash -o pipefail -c 'pg_dump -d linkwarden | psql -q -v ON_ERROR_STOP=1 -d linkwarden_utf8 >/dev/null'; then
+            # Let Prisma re-apply the migration that failed on SQL_ASCII
+            sudo -u postgres psql -v ON_ERROR_STOP=1 -d linkwarden_utf8 -c "UPDATE \"_prisma_migrations\" SET rolled_back_at=NOW() WHERE migration_name='20260818000000_case_insensitive_name_sorting' AND finished_at IS NULL AND rolled_back_at IS NULL;"
+            sudo -u postgres psql -v ON_ERROR_STOP=1 -c "ALTER DATABASE linkwarden RENAME TO linkwarden_sql_ascii_backup;" \
+                -c "ALTER DATABASE linkwarden_utf8 RENAME TO linkwarden;"
+            bashio::log.info "Database converted to UTF8, original kept as linkwarden_sql_ascii_backup"
+        else
+            sudo -u postgres psql -c "DROP DATABASE IF EXISTS linkwarden_utf8;"
+            bashio::log.error "Conversion to UTF8 failed, the original database was left untouched"
+        fi
+    fi
 fi
 
 ########################
