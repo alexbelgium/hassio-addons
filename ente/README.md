@@ -57,6 +57,7 @@ Webui can be found at <http://homeassistant:PORT>.
 | `DB_PASSWORD` | str | `ente` | Database password for internal PostgreSQL |
 | `USE_EXTERNAL_DB` | bool | `false` | Use external PostgreSQL database |
 | `TZ` | str | `Europe/Paris` | Timezone setting |
+| `localdisks` | str | | Local drives to mount by name or label (e.g. `sda1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
 
 ### External Database Configuration
 
@@ -68,7 +69,6 @@ If you want to use an external PostgreSQL database, set `USE_EXTERNAL_DB: true` 
 | `DB_PORT` | int | PostgreSQL server port (default: 5432) |
 | `DB_USERNAME` | str | PostgreSQL username |
 | `DB_DATABASE_NAME` | str | PostgreSQL database name |
-| `localdisks` | str | Local drives to mount by name or label (e.g. `sda1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
 
 ### Example Configuration
 

@@ -1,5 +1,6 @@
-## 4.16.0.95.8 (19-09-2026)
-- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+## 4.16.0.95.8 (2026-09-19)
+
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 
 ## 4.16.0.95.7 (2026-08-01)
 

@@ -1,11 +1,11 @@
+## 0.6.27.6 (2026-09-19)
+
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 
 ## 0.6.27.5 (2026-09-19)
 - New: optional `login_with_ha_user` option. When enabled, Ingress logs you into calibre-web as your Home Assistant username, which the Supervisor forwards with every ingress request, instead of the fixed `ingress_user`. A calibre-web account with the same name must exist; otherwise the normal calibre-web login page is shown. Off by default, so existing installs keep logging in as `ingress_user` exactly as before (https://github.com/alexbelgium/hassio-addons/issues/3072)
  
-## 0.6.27.5 (2026-09-19)
-- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
-
 ## 0.6.27.4 (2026-09-04)
 - Fix: Kobo sync could not be enabled, failing with "Kepubify binary not found" even when the path was set by hand. The LinuxServer base image installs the converter as `/usr/bin/kepubify` with `curl -o`, which leaves it mode 0644 and gives it a name calibre-web does not accept : `binary_helper.py` only takes `kepubify-linux-64bit` or `kepubify-linux-32bit`, and only when `os.access(X_OK)` passes. The addon now makes the binary executable and publishes it as `/opt/kepubify/kepubify-linux-64bit`, the directory calibre-web's own autodetection already probes, so the path is filled in without any manual step (https://github.com/alexbelgium/hassio-addons/issues/3040)
 - Fix: on installs created before that change, calibre-web had already run its autodetection once, found nothing usable and stored an empty path, and it never retries. An empty path is now reset so calibre-web detects the converter itself at the next start. A path set by hand is left alone

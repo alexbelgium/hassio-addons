@@ -45,10 +45,11 @@ if bashio::config.has_value 'localdisks'; then
         subfolder=""
 
         # "disk/sub/folder" mounts only that folder of the disk, at /mnt/disk/sub/folder.
-        # Only when the text after the last slash is not itself a device, so values
-        # like "/dev/sda1" keep resolving exactly as before
-        if [[ "$entry" == [!/]*/?* && ! -e /dev/"$disk" && ! -e /dev/disk/by-uuid/"$disk" && ! -e /dev/disk/by-label/"$disk" ]]; then
-            disk="${entry%%/*}"
+        # Only when the text before the first slash is a disk, so values like
+        # "/dev/sda1" or "disk/by-label/NAS" keep resolving exactly as before
+        prefix="${entry%%/*}"
+        if [[ "$entry" == [!/]*/?* && (-b /dev/"$prefix" || -b /dev/disk/by-uuid/"$prefix" || -b /dev/disk/by-label/"$prefix") ]]; then
+            disk="$prefix"
             subfolder="${entry#*/}"
             if [[ "/$subfolder/" == */../* ]]; then
                 bashio::log.fatal "$entry : the folder can't contain '..'"
@@ -118,7 +119,9 @@ if bashio::config.has_value 'localdisks'; then
             mounted=false
             # shellcheck disable=SC2086
             if mount -t $type "$devpath"/"$disk" "$staging" -o $options; then
-                [ -d "$staging/$subfolder" ] && mount --bind "$staging/$subfolder" /mnt/"$target" && mounted=true
+                # Resolve symlinks, and refuse a folder that points outside the disk
+                source="$(readlink -f "$staging/$subfolder")" || true
+                [[ -d "$source" && "$source" == "$(readlink -f "$staging")"/* ]] && mount --bind "$source" /mnt/"$target" && mounted=true
                 umount "$staging"
             fi
             rmdir "$staging" /mnt/.localdisks 2> /dev/null || true

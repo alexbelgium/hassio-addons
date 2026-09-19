@@ -1,6 +1,7 @@
  
-## 07308545.10 (19-09-2026)
-- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+## 07308545.10 (2026-09-19)
+
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 
 ## 07308545.9 (2026-09-19)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)

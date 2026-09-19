@@ -1,6 +1,7 @@
 
 ## 12.0.18.5 (2026-09-19)
-- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 
 ## 12.0.18-4 (2026-05-10)
 - Fix admin account creation by writing `conf/admin.txt` and seeding `seafile.env` with `SEAFILE_ADMIN_EMAIL`/`SEAFILE_ADMIN_PASSWORD` so the upstream `check_init_admin.py` no longer falls back to an interactive prompt (#2685)
