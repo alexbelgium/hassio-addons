@@ -1,5 +1,8 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
+## 20260827.1 (19-09-2026)
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
 ## 20260827 (2026-08-29)
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 - Upstream tag : 20260823

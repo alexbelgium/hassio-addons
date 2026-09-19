@@ -1,5 +1,8 @@
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
+## 2201.1.0.1 (2026-09-19)
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
 ## 2201.1.0 (2023-08-26)
 
 - Update to latest version from linuxserver/docker-booksonic-air

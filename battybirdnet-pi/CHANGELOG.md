@@ -1,4 +1,7 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
+## 2026.02.28.1 (19-09-2026)
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
 ## 2026.02.28 (28-02-2026)
 - Minor bugs fixed
 ## 2026.02.25-2 (25-02-2026)

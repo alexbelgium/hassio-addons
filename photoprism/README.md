@@ -79,7 +79,7 @@ Configurations can be done through the app webUI, except for the following optio
 | `UPLOAD_NSFW` | bool | `true` | Allow uploads that may be offensive |
 | `graphic_drivers` | list | | Graphics driver (mesa) |
 | `ingress_disabled` | bool | | Disable ingress for direct IP:port access |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |

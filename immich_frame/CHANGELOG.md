@@ -1,4 +1,7 @@
  
+## 1.0.38.0.1 (19-09-2026)
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
 ## 1.0.38.0 (2026-09-19)
 - Update to latest version from immichFrame/ImmichFrame (changelog : https://github.com/immichFrame/ImmichFrame/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.

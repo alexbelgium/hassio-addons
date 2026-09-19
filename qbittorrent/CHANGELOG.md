@@ -1,5 +1,8 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 
+## 5.2.3.4 (19-09-2026)
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
 ## 5.2.3.3 (2026-08-13)
 
 - Fix : with WireGuard, IPv6 traffic was silently dropped. When the WireGuard config declared an IPv6 `Address` (Mullvad, AirVPN and ProtonVPN all do), `vpn` added a default IPv6 route into the tunnel but never added `::/0` to the peer's `allowed-ips`, so WireGuard discarded every outgoing IPv6 packet. `::/0` is now allowed for IPv6 tunnels, mirroring the existing `0.0.0.0/0` handling for IPv4

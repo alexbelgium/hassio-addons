@@ -1,5 +1,8 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 
+## 2.2.6.2 (2026-09-19)
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
 ## 2.2.6.1 (2026-08-05)
 - Fix custom modules failing to install from the webtrees UI (e.g. with the Custom Module Manager plugin) : /config/modules_v4 was left owned by the base image's original www-data uid (33) while the app runs as PUID:PGID, so it was not writable (https://github.com/alexbelgium/hassio-addons/issues/2940)
 

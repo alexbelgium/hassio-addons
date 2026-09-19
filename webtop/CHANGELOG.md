@@ -1,3 +1,6 @@
+## 4.16.0.95.8 (19-09-2026)
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
 ## 4.16.0.95.7 (2026-08-01)
 
 - Version renamed from `4.16-r0-ls95-7`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged

@@ -1,4 +1,7 @@
  
+## 1.43.4.10903.324.1 (19-09-2026)
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
 ## 1.43.4.10903.324 (2026-09-12)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 - Upstream tag : 1.43.4.10903-e5521bd8c-ls324

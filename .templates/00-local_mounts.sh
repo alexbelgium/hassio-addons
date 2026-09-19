@@ -38,10 +38,19 @@ if bashio::config.has_value 'localdisks'; then
 
     # Separate comma separated values
     # shellcheck disable=SC2086
-    for disk in ${MOREDISKS//,/ }; do
+    for entry in ${MOREDISKS//,/ }; do
 
         # Remove text until last slash
-        disk="${disk##*/}"
+        disk="${entry##*/}"
+        subfolder=""
+
+        # "disk/sub/folder" mounts only that folder of the disk, at /mnt/disk/sub/folder.
+        # Only when the text after the last slash is not itself a device, so values
+        # like "/dev/sda1" keep resolving exactly as before
+        if [[ "$entry" == [!/]*/?* && ! -e /dev/"$disk" && ! -e /dev/disk/by-uuid/"$disk" && ! -e /dev/disk/by-label/"$disk" ]]; then
+            disk="${entry%%/*}"
+            subfolder="${entry#*/}"
+        fi
 
         # Function to check what is the type of device
         if [ -e /dev/"$disk" ]; then
@@ -59,11 +68,12 @@ if bashio::config.has_value 'localdisks'; then
         fi
 
         # Creates dir
-        mkdir -p /mnt/"$disk"
+        target="$disk${subfolder:+/$subfolder}"
+        mkdir -p /mnt/"$target"
         if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
             PUID="$(bashio::config 'PUID')"
             PGID="$(bashio::config 'PGID')"
-            chown "$PUID:$PGID" /mnt/"$disk"
+            chown "$PUID:$PGID" /mnt/"$target"
         fi
 
         # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)
@@ -95,6 +105,28 @@ if bashio::config.has_value 'localdisks'; then
                 type="squashfs"
                 ;;
         esac
+
+        if [ -n "$subfolder" ]; then
+            # Mount the whole disk out of sight, bind only the folder, then drop
+            # the whole-disk mount so the rest of the disk stays hidden
+            staging=/mnt/.localdisks/"$disk"
+            mkdir -p "$staging"
+            mounted=false
+            # shellcheck disable=SC2086
+            if mount -t $type "$devpath"/"$disk" "$staging" -o $options; then
+                [ -d "$staging/$subfolder" ] && mount --bind "$staging/$subfolder" /mnt/"$target" && mounted=true
+                umount "$staging"
+            fi
+            rmdir "$staging" /mnt/.localdisks 2> /dev/null || true
+            if "$mounted"; then
+                bashio::log.info "Success! $subfolder of $disk mounted to /mnt/$target"
+            else
+                bashio::log.fatal "Unable to mount $subfolder of $disk! Please check the disk name and that the folder exists on it."
+                rmdir /mnt/"$target" 2> /dev/null || true
+                bashio::addon.stop
+            fi
+            continue
+        fi
 
         # Legacy mounting : mount to share if still exists (avoid breaking changes)
         dirpath="/mnt"

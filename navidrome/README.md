@@ -60,7 +60,7 @@ See https://www.navidrome.org/docs/usage/configuration-options/ for additional c
 | `lastfm_secret` | str | | Last.fm secret for scrobbling |
 | `spotify_id` | str | | Spotify client ID for metadata |
 | `spotify_secret` | str | | Spotify client secret for metadata |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |

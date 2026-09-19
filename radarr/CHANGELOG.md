@@ -1,4 +1,7 @@
  
+## 6.4.4.10685.1 (19-09-2026)
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/sda1/public`). Existing values are unchanged.
+
 ## 6.4.4.10685 (2026-09-19)
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
