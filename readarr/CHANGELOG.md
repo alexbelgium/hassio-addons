@@ -1,8 +1,5 @@
-## 0.4.18.3 (2026-09-19)
-
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
-
 ## 0.4.18-2 (2026-01-08)
 - Remove CONFIG_LOCATION option now that config lives under /app_configs by default
 

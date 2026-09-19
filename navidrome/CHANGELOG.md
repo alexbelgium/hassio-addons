@@ -1,8 +1,5 @@
- 
-## 0.64.0.1 (2026-09-19)
-
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
-
+ 
 ## 0.64.0 (2026-09-19)
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.

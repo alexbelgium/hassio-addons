@@ -1,8 +1,5 @@
- 
-## 3.2.2.1 (2026-09-19)
-
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
-
+ 
 ## 3.2.2 (2026-09-19)
 - Update to latest version from ghcr.io/imagegenius/immich:3-noml
  
