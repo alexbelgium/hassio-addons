@@ -50,6 +50,10 @@ if bashio::config.has_value 'localdisks'; then
         if [[ "$entry" == [!/]*/?* && ! -e /dev/"$disk" && ! -e /dev/disk/by-uuid/"$disk" && ! -e /dev/disk/by-label/"$disk" ]]; then
             disk="${entry%%/*}"
             subfolder="${entry#*/}"
+            if [[ "/$subfolder/" == */../* ]]; then
+                bashio::log.fatal "$entry : the folder can't contain '..'"
+                continue
+            fi
         fi
 
         # Function to check what is the type of device
