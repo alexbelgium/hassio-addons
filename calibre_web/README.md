@@ -69,6 +69,7 @@ Default password: admin123
 | `DOCKER_MODS` | str | | Docker modifications to apply |
 | `OAUTHLIB_RELAX_TOKEN_SCOPE` | str | | OAuth token scope relaxation |
 | `ingress_user` | str | | Username for ingress authentication |
+| `login_with_ha_user` | bool | `false` | Log in through Ingress as your Home Assistant username instead of `ingress_user` |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
