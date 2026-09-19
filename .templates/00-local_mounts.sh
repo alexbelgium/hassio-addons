@@ -53,6 +53,7 @@ if bashio::config.has_value 'localdisks'; then
             subfolder="${entry#*/}"
             if [[ "/$subfolder/" == */../* ]]; then
                 bashio::log.fatal "$entry : the folder can't contain '..'"
+                bashio::addon.stop
                 continue
             fi
         fi
@@ -73,7 +74,6 @@ if bashio::config.has_value 'localdisks'; then
         fi
 
         # Creates dir (a folder mount creates it only once the folder is found on the disk)
-        target="$disk${subfolder:+/$subfolder}"
         if [ -z "$subfolder" ]; then
             mkdir -p /mnt/"$disk"
             if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
@@ -117,6 +117,7 @@ if bashio::config.has_value 'localdisks'; then
             # Mount the whole disk out of sight, bind only the folder, then drop
             # the whole-disk mount so the rest of the disk stays hidden.
             # Any failure leaves nothing mounted and stops the addon, like a disk failure
+            target="$disk/$subfolder"
             staging=/mnt/.localdisks/"$disk"
             mkdir -p "$staging"
             error=""
@@ -132,7 +133,7 @@ if bashio::config.has_value 'localdisks'; then
                 elif ! { mkdir -p /mnt/"$target" && mount --bind "$source" /mnt/"$target"; }; then
                     error="the folder $subfolder of $disk could not be bound to /mnt/$target."
                 fi
-                if ! umount "$staging" && ! umount -l "$staging"; then
+                if ! umount -l "$staging"; then
                     [ -n "$error" ] || umount /mnt/"$target" || true
                     error="${error:-the disk $disk could not be unmounted from $staging.}"
                 fi
