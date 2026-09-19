@@ -72,13 +72,15 @@ if bashio::config.has_value 'localdisks'; then
             continue
         fi
 
-        # Creates dir
+        # Creates dir (a folder mount creates it only once the folder is found on the disk)
         target="$disk${subfolder:+/$subfolder}"
-        mkdir -p /mnt/"$target"
-        if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
-            PUID="$(bashio::config 'PUID')"
-            PGID="$(bashio::config 'PGID')"
-            chown "$PUID:$PGID" /mnt/"$target"
+        if [ -z "$subfolder" ]; then
+            mkdir -p /mnt/"$disk"
+            if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+                PUID="$(bashio::config 'PUID')"
+                PGID="$(bashio::config 'PGID')"
+                chown "$PUID:$PGID" /mnt/"$disk"
+            fi
         fi
 
         # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)
@@ -113,24 +115,34 @@ if bashio::config.has_value 'localdisks'; then
 
         if [ -n "$subfolder" ]; then
             # Mount the whole disk out of sight, bind only the folder, then drop
-            # the whole-disk mount so the rest of the disk stays hidden
+            # the whole-disk mount so the rest of the disk stays hidden.
+            # Any failure leaves nothing mounted and stops the addon, like a disk failure
             staging=/mnt/.localdisks/"$disk"
             mkdir -p "$staging"
-            mounted=false
+            error=""
             # shellcheck disable=SC2086
-            if mount -t $type "$devpath"/"$disk" "$staging" -o $options; then
-                # Resolve symlinks, and refuse a folder that points outside the disk
+            if ! mount -t $type "$devpath"/"$disk" "$staging" -o $options; then
+                error="the disk $disk could not be mounted. Please check the name."
+            else
                 source="$(readlink -f "$staging/$subfolder")" || true
-                [[ -d "$source" && "$source" == "$(readlink -f "$staging")"/* ]] && mount --bind "$source" /mnt/"$target" && mounted=true
-                umount "$staging"
+                if [ ! -d "$source" ]; then
+                    error="the folder $subfolder does not exist on $disk. Please check its name (case sensitive)."
+                elif [[ "$source" != "$(readlink -f "$staging")"/* ]]; then
+                    error="the folder $subfolder is a link pointing outside of $disk."
+                elif ! { mkdir -p /mnt/"$target" && mount --bind "$source" /mnt/"$target"; }; then
+                    error="the folder $subfolder of $disk could not be bound to /mnt/$target."
+                fi
+                if ! umount "$staging" && ! umount -l "$staging"; then
+                    [ -n "$error" ] || umount /mnt/"$target" || true
+                    error="${error:-the disk $disk could not be unmounted from $staging.}"
+                fi
             fi
             rmdir "$staging" /mnt/.localdisks 2> /dev/null || true
-            if "$mounted"; then
-                bashio::log.info "Success! $subfolder of $disk mounted to /mnt/$target"
-            else
-                bashio::log.fatal "Unable to mount $subfolder of $disk! Please check the disk name and that the folder exists on it."
-                rmdir /mnt/"$target" 2> /dev/null || true
+            if [ -n "$error" ]; then
+                bashio::log.fatal "Unable to mount $entry : $error"
                 bashio::addon.stop
+            else
+                bashio::log.info "Success! $subfolder of $disk mounted to /mnt/$target"
             fi
             continue
         fi
