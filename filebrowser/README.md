@@ -66,7 +66,7 @@ The web UI can be found at `<your-ip>:8071` or through the Home Assistant sideba
 | `NoAuth` | bool | `true` | Disable authentication (resets database when changed) |
 | `disable_thumbnails` | bool | `true` | Disable thumbnail generation for improved performance |
 | `base_folder` | str | _(optional)_ | Root folder for file browser (defaults to all mapped folders) |
-| `localdisks` | str | _(optional)_ | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `localdisks` | str | _(optional)_ | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
 | `networkdisks` | str | _(optional)_ | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | _(optional)_ | SMB username for network shares |
 | `cifspassword` | str | _(optional)_ | SMB password for network shares |

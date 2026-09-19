@@ -1,3 +1,4 @@
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
  
 ## 0.11.0 (2026-08-22)
 - Update to latest version from linuxserver/docker-mylar3 (changelog : https://github.com/linuxserver/docker-mylar3/releases)

@@ -38,10 +38,25 @@ if bashio::config.has_value 'localdisks'; then
 
     # Separate comma separated values
     # shellcheck disable=SC2086
-    for disk in ${MOREDISKS//,/ }; do
+    for entry in ${MOREDISKS//,/ }; do
 
         # Remove text until last slash
-        disk="${disk##*/}"
+        disk="${entry##*/}"
+        subfolder=""
+
+        # "disk/sub/folder" mounts only that folder of the disk, at /mnt/disk/sub/folder.
+        # Only when the text before the first slash is a disk, so values like
+        # "/dev/sda1", "dev/sda1" or "disk/by-label/NAS" keep resolving exactly as before
+        prefix="${entry%%/*}"
+        if [[ "$entry" == [!/]*/?* && "$prefix" != dev && "$prefix" != disk && (-b /dev/"$prefix" || -b /dev/disk/by-uuid/"$prefix" || -b /dev/disk/by-label/"$prefix") ]]; then
+            disk="$prefix"
+            subfolder="${entry#*/}"
+            if [[ "/$subfolder/" == */../* ]]; then
+                bashio::log.fatal "$entry : the folder can't contain '..'"
+                bashio::addon.stop
+                continue
+            fi
+        fi
 
         # Function to check what is the type of device
         if [ -e /dev/"$disk" ]; then
@@ -58,12 +73,14 @@ if bashio::config.has_value 'localdisks'; then
             continue
         fi
 
-        # Creates dir
-        mkdir -p /mnt/"$disk"
-        if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
-            PUID="$(bashio::config 'PUID')"
-            PGID="$(bashio::config 'PGID')"
-            chown "$PUID:$PGID" /mnt/"$disk"
+        # Creates dir (a folder mount creates it only once the folder is found on the disk)
+        if [ -z "$subfolder" ]; then
+            mkdir -p /mnt/"$disk"
+            if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+                PUID="$(bashio::config 'PUID')"
+                PGID="$(bashio::config 'PGID')"
+                chown "$PUID:$PGID" /mnt/"$disk"
+            fi
         fi
 
         # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)
@@ -95,6 +112,41 @@ if bashio::config.has_value 'localdisks'; then
                 type="squashfs"
                 ;;
         esac
+
+        if [ -n "$subfolder" ]; then
+            # Mount the whole disk out of sight, bind only the folder, then drop
+            # the whole-disk mount so the rest of the disk stays hidden.
+            # Any failure leaves nothing mounted and stops the addon, like a disk failure
+            target="$disk/$subfolder"
+            staging=/mnt/.localdisks/"$disk"
+            mkdir -p "$staging"
+            error=""
+            # shellcheck disable=SC2086
+            if ! mount -t $type "$devpath"/"$disk" "$staging" -o $options; then
+                error="the disk $disk could not be mounted. Please check the name."
+            else
+                source="$(readlink -f "$staging/$subfolder")" || true
+                if [ ! -d "$source" ]; then
+                    error="the folder $subfolder does not exist on $disk. Please check its name (case sensitive)."
+                elif [[ "$source" != "$(readlink -f "$staging")"/* ]]; then
+                    error="the folder $subfolder is a link pointing outside of $disk."
+                elif ! { mkdir -p /mnt/"$target" && mount --bind "$source" /mnt/"$target"; }; then
+                    error="the folder $subfolder of $disk could not be bound to /mnt/$target."
+                fi
+                if ! umount -l "$staging"; then
+                    [ -n "$error" ] || umount -l /mnt/"$target" || true
+                    error="${error:-the disk $disk could not be unmounted from $staging.}"
+                fi
+            fi
+            rmdir "$staging" /mnt/.localdisks 2> /dev/null || true
+            if [ -n "$error" ]; then
+                bashio::log.fatal "Unable to mount $entry : $error"
+                bashio::addon.stop
+            else
+                bashio::log.info "Success! $subfolder of $disk mounted to /mnt/$target"
+            fi
+            continue
+        fi
 
         # Legacy mounting : mount to share if still exists (avoid breaking changes)
         dirpath="/mnt"

@@ -1,3 +1,4 @@
+- Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 ## 20260919 (18-09-2026)
 - Minor bugs fixed
 ## 20260918 (18-09-2026)

@@ -59,7 +59,7 @@ See all potential ENV variables here : https://docs.linuxserver.io/images/docker
 | `KEYBOARD` | str | `en-us-qwerty` | Keyboard layout |
 | `PASSWORD` | str | | Custom password for web interface |
 | `data_location` | str | | Custom data storage path |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1`) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |

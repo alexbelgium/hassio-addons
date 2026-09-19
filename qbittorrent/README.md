@@ -67,7 +67,7 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `whitelist` | str | `localhost,127.0.0.1,...` | IP subnets that don't need password |
 | `customUI` | list | `vuetorrent` | Alternative web UI (default/vuetorrent/qbit-matUI/qb-web/custom) |
 | `DNS_server` | str | `8.8.8.8,1.1.1.1` | Custom DNS servers |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |

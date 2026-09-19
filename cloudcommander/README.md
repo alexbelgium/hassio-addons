@@ -43,7 +43,7 @@ Configurations can be done through the app webUI, except for the following optio
 |--------|------|---------|-------------|
 | `CUSTOM_OPTIONS` | str | | Custom CLI options (e.g., `--name Homeassistant`) |
 | `DROPBOX_TOKEN` | str | | Dropbox integration token (see https://cloudcmd.io/) |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |

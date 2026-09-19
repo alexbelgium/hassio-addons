@@ -62,7 +62,7 @@ Webui can be found at `<your-ip>:port`.
 | `env_memory_limit` | str | `512M` | PHP memory limit |
 | `env_post_max_size` | str | `512M` | Maximum POST size |
 | `env_upload_max_filesize` | str | `512M` | Maximum upload file size |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |

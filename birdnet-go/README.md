@@ -39,7 +39,7 @@ This addon is based on their docker image.
 Install, then start the addon a first time. Webui can be found at <http://homeassistant:8080>.
 You'll need a microphone : either use one connected to HA or the audio stream of a rstp camera.
 
-The audio clips folder can be stored on an external or SMB drive by mounting it from the addon options, then specifying the path instead of "clips/". For example, "/mnt/NAS/Birdnet/"
+The audio clips folder can be stored on an external or SMB drive by mounting it from the addon options, then specifying the path instead of "clips/". For example, "/mnt/NAS/Birdnet/". With `localdisks`, a folder can be given after the drive name to mount only that folder: `NAS/Birdnet` mounts just it, at the same `/mnt/NAS/Birdnet/` path.
 
 Options can be configured through three ways :
 
