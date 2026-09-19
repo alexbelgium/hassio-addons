@@ -1,4 +1,7 @@
  
+## 2.16.3.1 (19-09-2026)
+- Fix startup failure (Prisma P3018/P3009, collation "und-x-icu" for encoding "SQL_ASCII" does not exist) after the 2.16.3 update (#3073): a local database created as SQL_ASCII by older versions is converted once to UTF8 at startup, the original is kept as `linkwarden_sql_ascii_backup`. New databases are created as UTF8.
+
 ## 2.16.3 (2026-09-12)
 - Update to latest version from linkwarden/linkwarden (changelog : https://github.com/linkwarden/linkwarden/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
