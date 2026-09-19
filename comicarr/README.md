@@ -33,7 +33,7 @@ database.
 |--------|-------------|
 | `PUID` / `PGID` | Ownership applied to the add-on configuration directory. Defaults to `0` (root). See the note below before changing it. |
 | `TZ` | Timezone, e.g. `Europe/Paris`. |
-| `localdisks` | Local disks to mount, e.g. `sda1` or a disk label. Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
+| `localdisks` | Local disks to mount, e.g. `sda1` or a disk label. Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19. |
 | `networkdisks` | SMB shares to mount, e.g. `//192.168.1.2/comics`. Mounted under `/mnt`. |
 | `cifsusername` / `cifspassword` / `cifsdomain` | Credentials for the SMB shares. |
 | `smbv1` | Allow the legacy SMBv1 protocol. |

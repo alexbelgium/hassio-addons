@@ -117,7 +117,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `github_token` | | Optional GitHub token used to authenticate `gh` and Git operations. |
 | `github_username` | | Optional global Git author name. |
 | `github_email` | | Optional global Git author email. |
-| `localdisks` | | Local drives to mount by name or label (e.g. `sda1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
+| `localdisks` | | Local drives to mount by name or label (e.g. `sda1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19. |
 | `enable_ha_mcp` | `false` | Register Home Assistant's MCP server in Claude (requires `ha_mcp_token`). |
 | `ha_mcp_url` | `http://homeassistant:8123/api/mcp` | Streamable HTTP endpoint of Home Assistant's MCP Server integration. |
 | `ha_mcp_token` | | Home Assistant long-lived access token used by the MCP bridge. |

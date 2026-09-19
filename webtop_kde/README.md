@@ -53,7 +53,7 @@ TZ: timezone ; Country/City according to https://manpages.ubuntu.com/manpages/tr
 additional_apps: engrampa,thunderbird # Allows installation of apps, as they are not persistent
 DRINODE: specify a custom graphic device, default is /dev/dri/renderD128
 DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS... Add a folder to mount only it, ex. MYNAS/public mounts at /mnt/MYNAS/public
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS... Add a folder to mount only it, ex. MYNAS/public mounts at /mnt/MYNAS/public (add-on versions released after 2026-09-19)
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password

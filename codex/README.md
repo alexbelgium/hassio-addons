@@ -69,7 +69,7 @@ You can place the user folder from the theme/skeleton in /share/codex/www/user,
 | `CODEX_RESET_ADMIN` | Reset admin user and password to defaults | - | `1` |
 | `CODEX_SKIP_INTEGRITY_CHECK` | Skip database integrity repair on startup | - | `1` |
 | `csrf_allowed` | Comma separated list of addresses allowed to access the app | `http://homeassistant.local:8123,https://homeassistant.local:8123` | `http://localhost:8123` |
-| `localdisks` | Hardware name of drives to mount (comma separated). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. | - | `sda1,sdb1,MYNAS` |
+| `localdisks` | Hardware name of drives to mount (comma separated). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19. | - | `sda1,sdb1,MYNAS` |
 | `networkdisks` | SMB servers to mount (comma separated) | - | `//SERVER/SHARE` |
 | `cifsusername` | SMB username for all shares | - | `username` |
 | `cifspassword` | SMB password | - | `password` |

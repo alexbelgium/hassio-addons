@@ -66,7 +66,7 @@ Webui can be found at `<your-ip>:8080`. PostgreSQL can be either internal or ext
 | `data_location` | str | `/share/immich` | Path where Immich data is stored |
 | `library_location` | str | | Path to photo/video library |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |
@@ -115,7 +115,7 @@ This addon supports mounting both local drives and remote SMB shares:
 
 To save Immich data to a mounted local disk:
 
-1. Set the `localdisks` option to your drive name (e.g., `sda1`). The drive will be mounted at `/mnt/sda1`. To mount only one folder of the drive, add it after the name, e.g. `sda1/immich` mounts just that folder at `/mnt/sda1/immich`.
+1. Set the `localdisks` option to your drive name (e.g., `sda1`). The drive will be mounted at `/mnt/sda1`. To mount only one folder of the drive, add it after the name, e.g. `sda1/immich` mounts just that folder at `/mnt/sda1/immich`. Folder mounts need an add-on version released after 2026-09-19.
 2. Set the `data_location` option to a path on the mounted drive, for example `/mnt/sda1/immich`.
 
 Example configuration:

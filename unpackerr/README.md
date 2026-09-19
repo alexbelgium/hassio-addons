@@ -71,7 +71,7 @@ Unpackerr monitors completed downloads and extracts archives automatically.
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 | `extraction_path` | str | `/share/downloads_packed` | Path where downloaded archives are located |
 | `watch_path` | str | `/share/downloads_unpacked` | Path where extracted files are placed |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |
