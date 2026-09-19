@@ -71,7 +71,7 @@ Use_tphakala_model_v2: false # switch to BirdNET-Go classifier files
 PROCESSED_FOLDER_ENABLED : if enabled, you need to set in the birdnet.conf (or the setting of birdnet) the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 pi_password: set the user password to access the web terminal
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS... Add a folder to mount only it, ex. MYNAS/public mounts at /mnt/MYNAS/public
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS... Add a folder to mount only it, ex. MYNAS/public mounts at /mnt/MYNAS/public (add-on versions released after 2026-09-19)
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password

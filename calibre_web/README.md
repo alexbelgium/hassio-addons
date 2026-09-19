@@ -70,7 +70,7 @@ Default password: admin123
 | `OAUTHLIB_RELAX_TOKEN_SCOPE` | str | | OAuth token scope relaxation |
 | `ingress_user` | str | | Username for ingress authentication |
 | `login_with_ha_user` | bool | `false` | Log in through Ingress as your Home Assistant username instead of `ingress_user` |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |

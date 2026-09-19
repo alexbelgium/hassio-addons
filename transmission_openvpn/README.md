@@ -57,7 +57,7 @@ Complete transmission options are in /config/addons_config/transmission (make su
 
 WEBPROXY_ENABLED : the webproxy is enabled by default on port 8118 but can be disabled using the addon option "WEBPROXY_ENABLED". More informations : https://haugene.github.io/docker-transmission-openvpn/web-proxy/ (thanks @tutorempire)
 
-Local drives : the `localdisks` option mounts drives by name or label (e.g. `sda1,MYNAS`) at `/mnt/<name>`. Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`.
+Local drives : the `localdisks` option mounts drives by name or label (e.g. `sda1,MYNAS`) at `/mnt/<name>`. Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19.
 
 Webui can be found at `<your-ip>:9091`.
 

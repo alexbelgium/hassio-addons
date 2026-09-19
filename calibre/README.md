@@ -68,7 +68,7 @@ Please read the upstream container documentation for further info: https://githu
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 | `PASSWORD` | str | | Optional password for GUI access |
 | `CLI_ARGS` | str | | Optional CLI start arguments for Calibre |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |
