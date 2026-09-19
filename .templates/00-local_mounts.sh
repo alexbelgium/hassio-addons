@@ -46,9 +46,9 @@ if bashio::config.has_value 'localdisks'; then
 
         # "disk/sub/folder" mounts only that folder of the disk, at /mnt/disk/sub/folder.
         # Only when the text before the first slash is a disk, so values like
-        # "/dev/sda1" or "disk/by-label/NAS" keep resolving exactly as before
+        # "/dev/sda1", "dev/sda1" or "disk/by-label/NAS" keep resolving exactly as before
         prefix="${entry%%/*}"
-        if [[ "$entry" == [!/]*/?* && (-b /dev/"$prefix" || -b /dev/disk/by-uuid/"$prefix" || -b /dev/disk/by-label/"$prefix") ]]; then
+        if [[ "$entry" == [!/]*/?* && "$prefix" != dev && "$prefix" != disk && (-b /dev/"$prefix" || -b /dev/disk/by-uuid/"$prefix" || -b /dev/disk/by-label/"$prefix") ]]; then
             disk="$prefix"
             subfolder="${entry#*/}"
             if [[ "/$subfolder/" == */../* ]]; then
