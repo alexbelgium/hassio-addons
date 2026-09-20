@@ -37,6 +37,7 @@ schema:
   ApiKey: str?
   ImmichServerUrl: str?
   TZ: str?
+  IMMICHFRAME_ADMIN_PASSWORD: password?
   Interval: int?
   TransitionDuration: float?
   ShowClock: bool?
@@ -70,5 +71,5 @@ schema:
   RefreshAlbumPeopleInterval: int?
 slug: immich_frame
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.0.38.0"
+version: "1.0.38.0-1"
 webui: http://[HOST]:[PORT:8080]

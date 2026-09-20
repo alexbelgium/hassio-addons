@@ -24,6 +24,8 @@ fi
 
 # ---- Settings.yaml generation ----
 SETTINGS_FILE="/config/Config/Settings.yaml"
+SETTINGS_DB="/config/Config/immichframe.db"
+SETTINGS_HASH_FILE="/config/Config/.addon-settings.sha256"
 
 # Known account-level setting names (ImmichFrame v2 config)
 ACCOUNT_KEYS=" ImmichServerUrl ApiKey ApiKeyFile Albums ExcludedAlbums People Tags ShowFavorites ShowMemories ShowArchived ShowVideos ImagesFromDays ImagesFromDate ImagesUntilDate Rating "
@@ -127,7 +129,7 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
     done
 
     # Add general env_vars (skip if already set via schema option)
-    for key in "${!GENERAL_ENVS[@]}"; do
+    for key in $(printf '%s\n' "${!GENERAL_ENVS[@]}" | LC_ALL=C sort); do
         if ! config_has ".$key"; then
             $GENERAL_STARTED || { echo "General:"; GENERAL_STARTED=true; }
             yaml_kv "  " "$key" "${GENERAL_ENVS[$key]}"
@@ -153,7 +155,7 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
             done
 
             # Apply account-level env_vars (only if not already set in this account's schema)
-            for key in "${!ACCOUNT_ENVS[@]}"; do
+            for key in $(printf '%s\n' "${!ACCOUNT_ENVS[@]}" | LC_ALL=C sort); do
                 in_list "$key" " ImmichServerUrl ApiKey " && continue
                 if ! config_has ".Accounts[${i}].${key}"; then
                     yaml_kv "    " "$key" "${ACCOUNT_ENVS[$key]}"
@@ -172,7 +174,7 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
         echo "    ApiKey: '${KEY//\'/\'\'}'"
 
         # Apply account-level env_vars to the single account
-        for key in "${!ACCOUNT_ENVS[@]}"; do
+        for key in $(printf '%s\n' "${!ACCOUNT_ENVS[@]}" | LC_ALL=C sort); do
             in_list "$key" " ImmichServerUrl ApiKey " && continue
             yaml_kv "    " "$key" "${ACCOUNT_ENVS[$key]}"
         done
@@ -183,7 +185,7 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
         echo "  - ImmichServerUrl: '${ACCOUNT_ENVS[ImmichServerUrl]//\'/\'\'}'"
         echo "    ApiKey: '${ACCOUNT_ENVS[ApiKey]//\'/\'\'}'"
 
-        for key in "${!ACCOUNT_ENVS[@]}"; do
+        for key in $(printf '%s\n' "${!ACCOUNT_ENVS[@]}" | LC_ALL=C sort); do
             in_list "$key" " ImmichServerUrl ApiKey " && continue
             yaml_kv "    " "$key" "${ACCOUNT_ENVS[$key]}"
         done
@@ -196,9 +198,35 @@ ACCOUNT_SCHEMA_OPTS="Albums ExcludedAlbums People Tags ShowFavorites ShowMemorie
 chmod 600 "${SETTINGS_FILE}"
 bashio::log.info "Settings.yaml generated at ${SETTINGS_FILE}"
 
+# ImmichFrame 1.0.38+ imports Settings.yaml only once, then reads its SQLite
+# database on subsequent starts. Keep add-on option changes effective while
+# preserving settings changed through the upstream admin UI when the generated
+# add-on configuration has not changed.
+CURRENT_SETTINGS_HASH="$(sha256sum "${SETTINGS_FILE}" | awk '{print $1}')"
+PREVIOUS_SETTINGS_HASH="$(cat "${SETTINGS_HASH_FILE}" 2>/dev/null || true)"
+
+if [ -f "${SETTINGS_DB}" ] && [ "${CURRENT_SETTINGS_HASH}" != "${PREVIOUS_SETTINGS_HASH}" ]; then
+    if [ -n "${PREVIOUS_SETTINGS_HASH}" ]; then
+        bashio::log.info "Add-on configuration changed; refreshing the ImmichFrame settings database"
+    else
+        bashio::log.info "Migrating the ImmichFrame settings database to add-on managed configuration"
+    fi
+
+    # Preserve the previous database files so an admin-UI configuration can be
+    # recovered if needed, then let ImmichFrame re-import Settings.yaml.
+    for database_file in "${SETTINGS_DB}" "${SETTINGS_DB}-wal" "${SETTINGS_DB}-shm"; do
+        if [ -e "${database_file}" ]; then
+            mv -f "${database_file}" "${database_file}.addon-backup"
+        fi
+    done
+fi
+
+printf '%s\n' "${CURRENT_SETTINGS_HASH}" > "${SETTINGS_HASH_FILE}"
+chmod 600 "${SETTINGS_HASH_FILE}"
+
 # Log contents (mask sensitive values)
 bashio::log.info "--- Generated Settings.yaml ---"
-sed -E 's/(ApiKey:).*/\1 *****/;s/(AuthenticationSecret:).*/\1 *****/;s/(WeatherApiKey:).*/\1 *****/' "${SETTINGS_FILE}" | while IFS= read -r line; do
+sed -E 's/((ApiKey|AuthenticationSecret|WeatherApiKey|AdminPassword|IMMICHFRAME_ADMIN_PASSWORD):).*/\1 *****/' "${SETTINGS_FILE}" | while IFS= read -r line; do
     bashio::log.info "$line"
 done
 bashio::log.info "-------------------------------"
