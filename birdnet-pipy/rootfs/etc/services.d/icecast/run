@@ -3,14 +3,25 @@
 set -euo pipefail
 export PULSE_SERVER="${PULSE_SERVER:-unix:/run/pulse/native}"
 
-# Ensure the log directory and file are writable by the icecast2 user.
-# /app/data/logs is created as root by 01-structure.sh, but start-icecast.sh
-# runs via gosu icecast2 and would otherwise fail with "Permission denied"
-# on the first log write, taking icecast down before it can boot.
+AUDIO_DIR=/usr/local/lib/birdnet-audio
+export STREAM_SUPERVISOR="${AUDIO_DIR}/stream_supervisor.py"
 mkdir -p /app/data/logs
-touch /app/data/logs/icecast.log
-# Use `icecast2:` (trailing colon) so chown picks the user's primary group,
-# which is `icecast` on Debian, not `icecast2`.
-chown icecast2: /app/data/logs /app/data/logs/icecast.log
 
-gosu icecast2 /usr/local/bin/start-icecast.sh
+if [ -f "${STREAM_SUPERVISOR}" ]; then
+  # Upstream ships the Python stream supervisor (after 0.8.8): run as root.
+  # start-icecast.sh hands the Icecast daemon to icecast2 itself through
+  # <changeowner>; the supervisor keeps root because the API service (also
+  # root) writes user_settings.json with mode 0600 into the root-owned data
+  # directory, which the supervisor must read, and it writes
+  # streaming_status.json beside it.
+  exec "${AUDIO_DIR}/start-icecast.sh"
+fi
+
+# Upstream without the supervisor (0.8.8 and earlier): the script owns its
+# FFmpeg processes itself and Icecast refuses to start as root, so drop to
+# icecast2. /app/data/logs is created by root in 01-structure.sh, so make the
+# first log write possible. Use `icecast2:` so chown picks the account's
+# primary group (`icecast` on Debian).
+touch /app/data/logs/icecast.log
+chown icecast2: /app/data/logs /app/data/logs/icecast.log
+exec gosu icecast2 "${AUDIO_DIR}/start-icecast.sh"

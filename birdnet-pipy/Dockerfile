@@ -98,8 +98,11 @@ RUN sed -i \
     -e "s/BIRDNET_HOST = 'model-server'/BIRDNET_HOST = '127.0.0.1'/" \
     /app/config/settings.py
 
-COPY --from=frontend-builder /src/deployment/audio/scripts/start-icecast.sh /usr/local/bin/start-icecast.sh
-RUN chown icecast2 /usr/local/bin/start-icecast.sh && chmod 755 /usr/local/bin/start-icecast.sh
+# Icecast startup scripts, copied as a directory so the build succeeds whether
+# or not this upstream ships the Python stream supervisor (added after 0.8.8).
+# rootfs/etc/services.d/icecast/run picks the matching startup mode.
+COPY --from=frontend-builder /src/deployment/audio/scripts/ /usr/local/lib/birdnet-audio/
+RUN chmod 755 /usr/local/lib/birdnet-audio/*.sh
 
 COPY --from=frontend-builder /src/frontend/dist /usr/share/nginx/html
 
