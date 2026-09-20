@@ -47,6 +47,7 @@ Webui can be found at `<your-ip>:8171`.
 | `ApiKey` | str | Immich API key for authentication. Used for single-account setup. |
 | `Accounts` | list | List of Immich accounts for multi-account support. Each entry requires `ImmichServerUrl` and `ApiKey`, plus optional per-account filters (see below). |
 | `TZ` | str | Timezone (e.g., `Europe/London`) |
+| `IMMICHFRAME_ADMIN_PASSWORD` | password | Optional password for ImmichFrame's `/admin` settings page |
 
 #### General (Display) Options
 
@@ -135,6 +136,8 @@ TZ: "Europe/London"
 ```
 
 When using the `Accounts` list, the `ApiKey` and `ImmichServerUrl` top-level options are not needed. Images will be drawn from each account proportionally based on the total number of images present in each account.
+
+Starting with ImmichFrame 1.0.38, settings are stored in an upstream SQLite database. The add-on automatically imports its generated configuration on first start and whenever its add-on options change. Settings changed through ImmichFrame's `/admin` page are preserved across restarts as long as the add-on options remain unchanged. Changing an add-on option makes the add-on configuration authoritative again; the previous database is kept beside the active database with an `.addon-backup` suffix before it is re-imported.
 
 For more configuration options, see the [ImmichFrame documentation](https://immichframe.dev/docs/getting-started/configuration).
 
