@@ -20,8 +20,9 @@ fi
 if [ -d /etc/cont-init.d ]; then
     for script in /etc/cont-init.d/*.sh; do
         [ -f "$script" ] || continue
+        sed -i '1s|.*|#!/usr/bin/env bashio|' "$script"
         echo "[Cleanuparr] Running init script: $script"
-        bash "$script"
+        bashio "$script"
     done
 fi
 
@@ -44,6 +45,18 @@ chown -R "${PUID:-0}:${PGID:-0}" "$HA_DATA_DIR"
 # See /etc/nginx/nginx.conf for why ingress needs a proxy at all.
 echo "[Cleanuparr] Starting ingress proxy on port 8099..."
 nginx
+
+# ─── Add-on options as environment variables ─────────────────────────────────
+# 00-global_var.sh turns /data/options.json, the env_vars list included, into
+# /.env. It runs as a child of this script, so sourcing its output here is what
+# actually puts those variables in Cleanuparr's environment. Deliberately after
+# nginx has started: an env_vars entry cannot then affect the ingress proxy.
+if [ -f /.env ]; then
+    set -a
+    # shellcheck disable=SC1091
+    . /.env
+    set +a
+fi
 
 # ─── Start Cleanuparr directly (bypass original /entrypoint.sh) ──────────────
 echo "[Cleanuparr] Starting application on port ${HTTP_PORTS:-11011}..."

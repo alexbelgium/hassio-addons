@@ -36,10 +36,11 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # 3 Install apps #
 ##################
 
-# Install nginx, which proxies Home Assistant ingress (see rootfs/etc/nginx/nginx.conf).
+# nginx proxies Home Assistant ingress (see rootfs/etc/nginx/nginx.conf); jq is
+# required by bashio and by 00-global_var.sh, and the upstream image ships neither.
 # Installed before the rootfs is copied so dpkg does not own our nginx.conf.
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends nginx && \
+    apt-get install -y --no-install-recommends nginx jq && \
     rm -rf /var/lib/apt/lists/*
 
 # Add rootfs
@@ -55,7 +56,7 @@ RUN BASHIO_VERSION="0.14.3" && \
     rm -rf /tmp/bashio
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh"
+ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh"
 
 # Automatic modules download
 COPY ha_automodules.sh /ha_automodules.sh
