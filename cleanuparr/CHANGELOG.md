@@ -1,4 +1,22 @@
  
+## 2.10.6.1 (2026-09-23)
+- Fix ingress: the add-on declared `ingress: true` without `ingress_port`, so Home
+  Assistant proxied the sidebar entry and "Open Web UI" to the default port 8099,
+  where nothing listened. An nginx proxy now serves that port and rewrites the base
+  path Cleanuparr's web UI builds its asset, API and SignalR URLs from, so they
+  resolve under the ingress path instead of the Home Assistant root. Direct access
+  on port 11011 is unchanged (#3084)
+- Remove `webui`, which the add-on linter rejects when ingress is enabled and which
+  the repository's other 55 ingress add-ons do not set; "Open Web UI" uses ingress
+  and port 11011 stays published
+- Fix `env_vars`: the add-on declared the env-var passthrough in its schema but never
+  installed `00-global_var.sh`, the module that converts it, and could not have run it —
+  the image has no `jq`, and cont-init scripts were started with plain `bash`, so the
+  module's bashio guard always took its no-Supervisor branch and exited. Install `jq`,
+  add the module, run the init scripts under bashio as the Maintainerr add-on does, and
+  source the generated `/.env` before starting Cleanuparr. `PUID`/`PGID` are still read
+  from the image's defaults for the data-directory `chown` — see the pull request
+ 
 ## 2.10.6 (2026-09-19)
 - Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
