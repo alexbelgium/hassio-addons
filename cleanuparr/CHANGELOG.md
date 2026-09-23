@@ -1,4 +1,12 @@
  
+## 2.10.6.1 (2026-09-23)
+- Fix ingress: the add-on declared `ingress: true` without `ingress_port`, so Home
+  Assistant proxied the sidebar entry and "Open Web UI" to the default port 8099,
+  where nothing listened. An nginx proxy now serves that port and rewrites the base
+  path Cleanuparr's web UI builds its asset, API and SignalR URLs from, so they
+  resolve under the ingress path instead of the Home Assistant root. Direct access
+  on port 11011 is unchanged (#3084)
+ 
 ## 2.10.6 (2026-09-19)
 - Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.

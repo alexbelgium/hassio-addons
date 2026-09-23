@@ -36,6 +36,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # 3 Install apps #
 ##################
 
+# Install nginx, which proxies Home Assistant ingress (see rootfs/etc/nginx/nginx.conf).
+# Installed before the rootfs is copied so dpkg does not own our nginx.conf.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends nginx && \
+    rm -rf /var/lib/apt/lists/*
+
 # Add rootfs
 COPY rootfs/ /
 RUN find /. -type f \( -name "*.sh" \) -print -exec chmod +x {} \;

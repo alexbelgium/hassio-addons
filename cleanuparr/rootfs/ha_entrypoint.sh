@@ -40,6 +40,11 @@ ln -sfn "$HA_DATA_DIR" /app/config
 
 chown -R "${PUID:-0}:${PGID:-0}" "$HA_DATA_DIR"
 
+# ─── Ingress proxy ───────────────────────────────────────────────────────────
+# See /etc/nginx/nginx.conf for why ingress needs a proxy at all.
+echo "[Cleanuparr] Starting ingress proxy on port 8099..."
+nginx
+
 # ─── Start Cleanuparr directly (bypass original /entrypoint.sh) ──────────────
 echo "[Cleanuparr] Starting application on port ${HTTP_PORTS:-11011}..."
 cd /app
