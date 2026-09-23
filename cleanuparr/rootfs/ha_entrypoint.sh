@@ -51,6 +51,11 @@ nginx
 # /.env. It runs as a child of this script, so sourcing its output here is what
 # actually puts those variables in Cleanuparr's environment. Deliberately after
 # nginx has started: an env_vars entry cannot then affect the ingress proxy.
+#
+# Sourcing is only safe because 00-global_var.sh is the sole writer of /.env
+# here and quotes every value. 01-config_yaml.sh appends bare KEY=VALUE lines,
+# so `MY_VAR: hello world` would run `world` as a command: do not add that
+# module to MODULES without quoting its output first.
 if [ -f /.env ]; then
     set -a
     # shellcheck disable=SC1091
