@@ -92,4 +92,3 @@ schema:
 slug: cleanuparr
 url: https://github.com/alexbelgium/hassio-addons/tree/master/cleanuparr
 version: "2.10.6.1"
-webui: "[PROTO:ssl]://[HOST]:[PORT:11011]"

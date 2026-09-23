@@ -6,6 +6,9 @@
   path Cleanuparr's web UI builds its asset, API and SignalR URLs from, so they
   resolve under the ingress path instead of the Home Assistant root. Direct access
   on port 11011 is unchanged (#3084)
+- Remove `webui`, which the add-on linter rejects when ingress is enabled and which
+  the repository's other 55 ingress add-ons do not set; "Open Web UI" uses ingress
+  and port 11011 stays published
  
 ## 2.10.6 (2026-09-19)
 - Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
