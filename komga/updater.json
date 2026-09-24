@@ -1,9 +1,9 @@
 {
   "github_beta": "false",
-  "last_update": "2026-09-19",
+  "last_update": "2026-09-24",
   "repository": "alexbelgium/hassio-addons",
   "slug": "komga",
   "source": "github",
   "upstream_repo": "gotson/komga",
-  "upstream_version": "1.27.0"
+  "upstream_version": "1.27.1"
 }
