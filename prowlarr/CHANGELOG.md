@@ -1,3 +1,7 @@
+ 
+## 2.6.5.5623.162 (2026-09-24)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : 2.6.5.5623-ls162
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
  
 ## 2.6.5.5623.161 (2026-09-19)
