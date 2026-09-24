@@ -8,6 +8,7 @@ set -e
 declare port
 declare certfile
 declare ingress_interface
+declare ingress_user
 declare ingress_port
 declare keyfile
 
@@ -32,6 +33,24 @@ ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
+
+# The auth-header extension reads REMOTE_USER. Default to guacadmin, which is what
+# this add-on has always sent; with login_with_ha_user, send the Home Assistant
+# username that the Supervisor puts in X-Remote-User-Name on every ingress request.
+ingress_user='guacadmin'
+if bashio::config.true 'login_with_ha_user'; then
+    # shellcheck disable=SC2016
+    ingress_user='$http_x_remote_user_name'
+    bashio::log.info "Ingress logs in with the Home Assistant username"
+fi
+sed -i "s|%%ingress_user%%|${ingress_user}|g" /etc/nginx/servers/ingress.conf
+
+# auth-header trusts any REMOTE_USER header, and the published port reaches Tomcat without nginx
+if [[ "$(bashio::config 'EXTENSIONS')" == *auth-header* ]] && bashio::var.has_value "$(bashio::addon.port 8080)"; then
+    bashio::log.warning "SECURITY RISK: the auth-header extension is enabled and port 8080 is published on host port $(bashio::addon.port 8080)."
+    bashio::log.warning "Anyone who can reach that port can send a REMOTE_USER header and log in as any Guacamole user, including guacadmin."
+    bashio::log.warning "Disable the port in the add-on Network settings and use Ingress, or remove auth-header from EXTENSIONS."
+fi
 
 # Implement SUBFOLDER value
 if [ -f /etc/s6-overlay/s6-rc.d/svc-autostart/run ]; then sed -i "1a SUBFOLDER=$(bashio::addon.ingress_url)" /etc/s6-overlay/s6-rc.d/svc-autostart/run; fi
