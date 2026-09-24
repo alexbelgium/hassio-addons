@@ -47,6 +47,7 @@ The default username is `guacadmin` with password `guacadmin`. It is strongly re
 |--------|------|---------|-------------|
 | `EXTENSIONS` | str | `auth-totp` | Guacamole extensions to enable (e.g., `auth-totp`, `history-recording-storage`) |
 | `recording_search_path` | str | `/config/recordings` | Directory added to `guacamole.properties` as the `recording-search-path` used by the history recording storage extension |
+| `login_with_ha_user` | bool | `false` | Log in through Ingress as your Home Assistant username instead of always `guacadmin` (needs the `auth-header` extension) |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 
 ### Example Configuration
@@ -56,6 +57,25 @@ EXTENSIONS: "auth-totp,history-recording-storage"
 recording_search_path: "/config/recordings"
 TZ: "Europe/London"
 ```
+
+### Home Assistant single sign-on
+
+Set `EXTENSIONS: "auth-header"` and `login_with_ha_user: true`, then create a Guacamole user for
+each Home Assistant username that should have access. Ingress then signs each person in as their
+own Home Assistant user instead of always `guacadmin`. A Home Assistant user with no matching
+Guacamole account gets the normal login form instead.
+
+Notes:
+
+- The option feeds the `auth-header` extension through its default header, `REMOTE_USER`. If you
+  previously added an `http-auth-header:` line to `/config/guacamole.properties`, remove it, or
+  the extension will keep reading the header you named there and this option will do nothing.
+- Stick to plain ASCII usernames. Accented or non-Latin characters have to survive nginx, Tomcat
+  and Java without an agreed encoding, and they are not guaranteed to match the Guacamole account.
+- Guacamole's header authentication trusts whoever sends the `REMOTE_USER` header, and this add-on
+  also publishes port `8080/tcp` straight to Guacamole, bypassing the Ingress proxy. Do not publish
+  that port while the `auth-header` extension is enabled — anyone who can reach it can send the
+  header themselves and log in as any user.
 
 ### Database Setup
 

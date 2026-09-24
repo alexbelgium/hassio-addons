@@ -1,3 +1,6 @@
+## 1.6.0-bullseye-4 (24-09-2026)
+- Ingress: new `login_with_ha_user` option to sign in with your Home Assistant username instead of always `guacadmin` (#3087)
+
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 1.6.0-bullseye-3 (13-03-2026)
 - Fix PROXY_ALLOWED_IPS_REGEX default from invalid regex "*" to ".*"
