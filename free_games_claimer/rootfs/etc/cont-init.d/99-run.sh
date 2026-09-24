@@ -27,7 +27,10 @@ fi
 
 # The remaster reads /fgc/data/config.env. /fgc/data is linked to /config/data
 # by the Dockerfile, so the runtime copy is visible under /addon_configs.
-install -m 0600 "${CONFIG_FILE}" "${RUNTIME_CONFIG}"
+# CONFIG_LOCATION may itself be /config/data/config.env, in which case the two
+# paths are the same file and install would fail.
+[ "${CONFIG_FILE}" -ef "${RUNTIME_CONFIG}" ] || install "${CONFIG_FILE}" "${RUNTIME_CONFIG}"
+chmod 0600 "${RUNTIME_CONFIG}"
 sed -i 's/\r$//' "${RUNTIME_CONFIG}"
 
 # Export values needed by the VNC entrypoint as well as by the Python app.

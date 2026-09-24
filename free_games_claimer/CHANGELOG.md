@@ -7,9 +7,10 @@
   the `screenshots/` captures, the `browser/` profiles, `TurboVNC.log` and
   upstream's debug dumps (#3081).
 - An existing `/data` payload is copied over once on the first start of this
-  version: `fgc.db` and its pre-migration backup, `browser/`, `screenshots/`,
-  `prime-gaming.json`, the legacy `data/` directory and the migration marker.
-  Logs and last-run debug dumps are not copied, because the application
+  version: `fgc.db` with its rollback journal and its pre-migration backup,
+  `browser/`, `screenshots/`, the `epic-games.json`, `prime-gaming.json` and
+  `gog.json` claim histories, the legacy `data/` directory and the migration
+  marker. Logs and last-run debug dumps are not copied, because the application
   regenerates them. The copy is staged and renamed into place, so an interrupted
   migration is retried rather than leaving a half-copied database or browser
   profile. Nothing is deleted from `/data`: the migration needs temporary free
