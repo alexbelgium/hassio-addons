@@ -72,10 +72,14 @@ Notes:
   the extension will keep reading the header you named there and this option will do nothing.
 - Stick to plain ASCII usernames. Accented or non-Latin characters have to survive nginx, Tomcat
   and Java without an agreed encoding, and they are not guaranteed to match the Guacamole account.
-- Guacamole's header authentication trusts whoever sends the `REMOTE_USER` header, and this add-on
-  also publishes port `8080/tcp` straight to Guacamole, bypassing the Ingress proxy. Do not publish
-  that port while the `auth-header` extension is enabled — anyone who can reach it can send the
-  header themselves and log in as any user.
+
+> [!WARNING]
+> **Security risk: `auth-header` with the published port.** Guacamole's header authentication
+> trusts whoever sends the `REMOTE_USER` header, and port `8080/tcp` (host port `4822` by default)
+> goes straight to Guacamole, bypassing the Ingress proxy. While `auth-header` is enabled, anyone
+> who can reach that port can send the header themselves and log in as any user, including
+> `guacadmin`. The add-on prints a `SECURITY RISK` warning in its startup log in that case. Clear
+> the port in the add-on's Network settings and use Ingress only, or remove `auth-header`.
 
 ### Database Setup
 
