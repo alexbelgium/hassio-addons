@@ -1,4 +1,7 @@
  
+## 26.9.1 (2026-09-24)
+- Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
+ 
 ## 26.9.0 (2026-09-19)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
