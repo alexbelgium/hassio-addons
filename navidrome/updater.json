@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-09-19",
+  "last_update": "2026-09-24",
   "repository": "alexbelgium/hassio-addons",
   "slug": "navidrome",
   "source": "github",
   "upstream_repo": "navidrome/navidrome",
-  "upstream_version": "0.64.0"
+  "upstream_version": "0.64.1"
 }
