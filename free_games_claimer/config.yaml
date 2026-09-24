@@ -96,5 +96,5 @@ schema:
 slug: free_games_claimer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.1.1"
+version: "2.2.0"
 webui: "[PROTO:ssl]://[HOST]:[PORT:6080]"

@@ -67,6 +67,31 @@ the default and preserves the behavior of the former vogler-based add-on.
 With `RUN_ONCE: false`, the remaster remains running and uses its internal
 scheduler. Set `SCHEDULER_HOURS` in `config.env` to control the interval.
 
+## Application data
+
+The add-on stores everything the application writes in `/config/data`, which
+Home Assistant exposes as `/addon_configs/xxx-free_games_claimer/data`. It can
+be inspected with a file browser add-on without a `docker exec`, and contains:
+
+| Path | Contents |
+|------|----------|
+| `fgc.db` | SQLite claim history |
+| `screenshots/<store>/` | Screenshots taken during a claiming run |
+| `browser/` | Chromium profiles, one per store |
+| `TurboVNC.log` | Virtual display server log |
+| `config.env` | Runtime copy of `CONFIG_LOCATION` |
+
+**This directory is secret.** `browser/` holds signed-in store sessions and
+`config.env` holds the account credentials, so anyone with access to
+`addon_configs` — the File Editor and Samba add-ons, for instance — can use
+them. Do not share or publish it.
+
+Versions up to 2.1.1 kept this data in the private `/data` volume. An existing
+payload is copied to `/config/data` once, on the first start of version 2.2.0. The copy needs temporary free space roughly equal to the
+existing data and can take a few minutes when the browser profile is large.
+Nothing is removed from `/data`, so a downgrade keeps working; the old copy can
+be deleted by hand once the new location is confirmed to work.
+
 ## Environment configuration
 
 The add-on keeps its configuration in `CONFIG_LOCATION`, which defaults to
@@ -124,12 +149,13 @@ The add-on performs the following migration automatically on first start:
 
 1. The existing `config.env` remains at the same configured location.
 2. Legacy `epic-games.json`, `prime-gaming.json`, and `gog.json` claim history
-   is imported into the remaster SQLite database at `/data/fgc.db`.
+   is imported into the remaster SQLite database at `/config/data/fgc.db`.
 3. Existing database rows are detected and are not duplicated if migration is
    retried.
 4. A pre-migration database backup is created when an existing `fgc.db` is
    present.
-5. All old files remain under `/data/data` for rollback or manual recovery.
+5. All old files remain under `/config/data/data` for rollback or manual
+   recovery.
 
 Browser sessions cannot be converted because the old add-on used a shared
 Firefox profile while the remaster uses separate Chromium profiles per store.

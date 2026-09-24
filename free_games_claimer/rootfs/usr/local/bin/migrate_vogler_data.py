@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
-DATA_DIR = Path(os.environ.get("FGC_DATA_DIR", "/data"))
+DATA_DIR = Path(os.environ.get("FGC_DATA_DIR", "/config/data"))
 LEGACY_DIR = DATA_DIR / "data"
 DATABASE = DATA_DIR / "fgc.db"
 MARKER = DATA_DIR / ".vogler-remaster-migrated-v1.json"
@@ -220,7 +220,7 @@ def migrate() -> int:
 
     if legacy_browser.exists():
         log(
-            "Legacy Firefox browser data remains in /data/data/browser. It is "
+            "Legacy Firefox browser data remains in /config/data/data/browser. It is "
             "not compatible with Chromium, so use noVNC for a one-time login if needed."
         )
 

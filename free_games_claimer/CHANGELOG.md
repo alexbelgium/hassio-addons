@@ -1,3 +1,34 @@
+## 2.2.0 (2026-09-24)
+
+- Moved the application data out of the add-on's private `/data` volume and
+  into `/config/data`, so it is visible from Home Assistant as
+  `/addon_configs/xxx-free_games_claimer/data` instead of needing a
+  `docker exec`. Everything the application writes now lands there: `fgc.db`,
+  the `screenshots/` captures, the `browser/` profiles, `TurboVNC.log` and
+  upstream's debug dumps (#3081).
+- An existing `/data` payload is copied over once on the first start of this
+  version: `fgc.db` with its rollback journal and its pre-migration backup,
+  `browser/`, `screenshots/`, the `epic-games.json`, `prime-gaming.json` and
+  `gog.json` claim histories, the legacy `data/` directory and the migration
+  marker. Logs and last-run debug dumps are not copied, because the application
+  regenerates them. The copy is staged and renamed into place, so an interrupted
+  migration is retried rather than leaving a half-copied database or browser
+  profile. Nothing is deleted from `/data`: the migration needs temporary free
+  space roughly equal to the existing data, can take a few minutes for a large
+  browser profile, and leaves the old copy in place so a downgrade still
+  works.
+- **The migrated `browser/` directory holds authenticated store sessions and
+  `config.env` holds the account credentials. Both are now readable by any
+  add-on with access to `addon_configs`, such as File Editor or Samba. Treat
+  that directory as secret and do not share or back it up publicly.**
+- Removed the `cp -rnf /fgc/* /data/` line from `20-folders.sh`, which copied
+  the whole upstream source tree into the persistent volume on every start.
+  Nothing read those copies. They are left in `/data` and can be deleted by
+  hand.
+- Stopped applying a recursive `chmod 777` to the configuration directory on
+  every start, which would otherwise have made the migrated browser profile
+  and credentials world-writable.
+
  
 ## 2.1.1 (2026-09-12)
 - Update to latest version from P-Adamiec/Free-Games-Claimer-Remaster (changelog : https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases)

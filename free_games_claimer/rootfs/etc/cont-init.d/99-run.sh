@@ -7,9 +7,9 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     CONFIG_FILE="$(bashio::config 'CONFIG_LOCATION')"
 fi
 CONFIG_DIR="$(dirname "${CONFIG_FILE}")"
-RUNTIME_CONFIG="/data/config.env"
+RUNTIME_CONFIG="/config/data/config.env"
 
-mkdir -p "${CONFIG_DIR}" /data
+mkdir -p "${CONFIG_DIR}" /config/data
 
 # Recover from an old add-on bug that could create config.env as a directory.
 if [ -d "${CONFIG_FILE}" ]; then
@@ -25,9 +25,13 @@ else
     bashio::log.info "Using configuration from ${CONFIG_FILE}"
 fi
 
-# The remaster reads /fgc/data/config.env. /fgc/data is linked to Home
-# Assistant's persistent /data volume by the Dockerfile.
-install -m 0600 "${CONFIG_FILE}" "${RUNTIME_CONFIG}"
+# The remaster reads /fgc/data/config.env. /fgc/data is linked to /config/data
+# by the Dockerfile, so the runtime copy is visible under /addon_configs.
+# CONFIG_LOCATION may itself be /config/data/config.env, in which case the two
+# paths are the same file and install would fail. install applies the mode as it
+# creates the file; the chmod is for that same-file case.
+[ "${CONFIG_FILE}" -ef "${RUNTIME_CONFIG}" ] || install -m 0600 "${CONFIG_FILE}" "${RUNTIME_CONFIG}"
+chmod 0600 "${RUNTIME_CONFIG}"
 sed -i 's/\r$//' "${RUNTIME_CONFIG}"
 
 # Export values needed by the VNC entrypoint as well as by the Python app.
