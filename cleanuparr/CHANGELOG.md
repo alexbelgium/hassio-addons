@@ -1,4 +1,7 @@
  
+## 2.10.7 (2026-09-24)
+- Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
+ 
 ## 2.10.6.1 (2026-09-23)
 - Fix ingress: the add-on declared `ingress: true` without `ingress_port`, so Home
   Assistant proxied the sidebar entry and "Open Web UI" to the default port 8099,
