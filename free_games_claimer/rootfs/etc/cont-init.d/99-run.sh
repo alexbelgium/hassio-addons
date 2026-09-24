@@ -28,8 +28,9 @@ fi
 # The remaster reads /fgc/data/config.env. /fgc/data is linked to /config/data
 # by the Dockerfile, so the runtime copy is visible under /addon_configs.
 # CONFIG_LOCATION may itself be /config/data/config.env, in which case the two
-# paths are the same file and install would fail.
-[ "${CONFIG_FILE}" -ef "${RUNTIME_CONFIG}" ] || install "${CONFIG_FILE}" "${RUNTIME_CONFIG}"
+# paths are the same file and install would fail. install applies the mode as it
+# creates the file; the chmod is for that same-file case.
+[ "${CONFIG_FILE}" -ef "${RUNTIME_CONFIG}" ] || install -m 0600 "${CONFIG_FILE}" "${RUNTIME_CONFIG}"
 chmod 0600 "${RUNTIME_CONFIG}"
 sed -i 's/\r$//' "${RUNTIME_CONFIG}"
 
