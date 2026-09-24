@@ -118,7 +118,7 @@ RUN (curl --proto "=https" --tlsv1.2 -fsSL \
     && chmod 0755 /usr/local/bin/docker-entrypoint.sh \
     && rm -f /tmp/free-games-claimer-remaster.tar.gz \
     && rm -rf /fgc/data \
-    && ln -s /data /fgc/data
+    && ln -s /config/data /fgc/data
 
 # Add Home Assistant integration files and shared helper modules.
 COPY rootfs/ /
