@@ -1,4 +1,7 @@
  
+## 2.33.0 (2026-09-24)
+- Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
+ 
 ## 2.32.0 (2026-09-12)
 - Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
