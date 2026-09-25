@@ -1,4 +1,7 @@
  
+## 2.5.1 (2026-09-26)
+- Update to latest version from linuxserver/docker-kometa (changelog : https://github.com/linuxserver/docker-kometa/releases)
+ 
 ## 2.5.0 (2026-09-24)
 - Update to latest version from linuxserver/docker-kometa (changelog : https://github.com/linuxserver/docker-kometa/releases)
  
