@@ -7,20 +7,13 @@ CONFIGSOURCE="/config/addons_config/fireflyiii_fints_importer"
 # Create directory
 mkdir -p "$CONFIGSOURCE"
 
-# If no file, provide example
-if [ ! "$(ls -A "${CONFIGSOURCE}")" ] && [ -f /data/configurations ]; then
-    cp -r /data/configurations/* "$CONFIGSOURCE"/ || true
-    rm -r /data/configurations
+# Remove the self-referencing link created by previous versions
+if [ -L "$CONFIGSOURCE/fireflyiii_fints_importer" ]; then
+    rm "$CONFIGSOURCE/fireflyiii_fints_importer"
 fi
 
-if [ ! "$(ls -A "${CONFIGSOURCE}")" ] && [ -f /app/configurations ]; then
-    cp -r /app/configurations/* "$CONFIGSOURCE"/ || true
-    rm -r /app/configurations
-fi
-
-ln -sf "$CONFIGSOURCE" /data/configurations
-mkdir -p /app
-ln -sf "$CONFIGSOURCE" /app/configurations
+# The app reads data/configurations; -n replaces the link kept in /data instead of nesting a new one inside it
+ln -sfn "$CONFIGSOURCE" /data/configurations
 
 # Make sure permissions are right
 chown -R "$(id -u):$(id -g)" "$CONFIGSOURCE"

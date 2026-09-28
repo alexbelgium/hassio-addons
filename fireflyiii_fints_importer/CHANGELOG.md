@@ -1,3 +1,7 @@
+## 1.3.0.8 (28-09-2026)
+
+- Fix the configurations folder nesting inside itself on every restart, which made the web UI show `ConfigurationFactory.php` errors (#3091). The leftover self-referencing link is removed at startup, and the configurations are now linked only once, at `data/configurations`.
+
 ## 1.3.0.7 (23-09-2026)
 
 - Rebuilt against the current upstream `benkl/firefly-iii-fints-importer`
