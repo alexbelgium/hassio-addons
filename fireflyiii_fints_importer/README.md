@@ -79,8 +79,10 @@ The `Updates` option allows you to schedule automatic imports:
 
 ### Configuration Storage
 
-Bank configurations and import settings are stored in:
-`/config/addons_config/fireflyiii_fints_importer/`
+Bank configurations (`.json` files) and import settings are stored in the add-on config folder:
+`/addon_configs/xxx_fireflyiii_fints_importer/configurations/`
+
+Files from the previous location `/config/addons_config/fireflyiii_fints_importer/` are moved there automatically on first start.
 
 For configuration file format, see: https://github.com/bnw/firefly-iii-fints-importer#storing-configurations
 

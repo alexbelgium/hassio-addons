@@ -70,7 +70,8 @@ environment:
   TRUSTED_PROXIES: "**"
 image: ghcr.io/alexbelgium/fireflyiii_fints_importer-{arch}
 map:
-  - config:rw
+  - app_config:rw
+  - homeassistant_config:rw
   - share:rw
   - ssl
 name: Firefly iii FinTS Importer
@@ -89,5 +90,5 @@ schema:
 slug: fireflyiii_fints_importer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 1.3.0.7
+version: 1.3.0.8
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
