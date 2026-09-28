@@ -16,4 +16,4 @@ fi
 
 chown nextjs /app/entrypoint.sh
 chmod +x /app/entrypoint.sh
-exec gosu nextjs /app/entrypoint.sh node --run start
+exec gosu nextjs /app/entrypoint.sh node server.js
