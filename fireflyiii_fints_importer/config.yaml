@@ -70,7 +70,8 @@ environment:
   TRUSTED_PROXIES: "**"
 image: ghcr.io/alexbelgium/fireflyiii_fints_importer-{arch}
 map:
-  - config:rw
+  - app_config:rw
+  - homeassistant_config:rw
   - share:rw
   - ssl
 name: Firefly iii FinTS Importer

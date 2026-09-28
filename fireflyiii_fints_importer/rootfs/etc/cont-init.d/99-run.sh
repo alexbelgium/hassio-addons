@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -e
 
-CONFIGSOURCE="/config/addons_config/fireflyiii_fints_importer"
+CONFIGSOURCE="/config/configurations"
 
 #################
 # CONFIG IMPORT #

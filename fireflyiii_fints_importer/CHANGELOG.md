@@ -1,6 +1,7 @@
 ## 1.3.0.8 (28-09-2026)
 
-- Fix the configurations folder nesting inside itself on every restart, which made the web UI show `ConfigurationFactory.php` errors (#3091). The leftover self-referencing link is removed at startup, and the configurations are now linked only once, at `data/configurations`.
+- Fix the configurations folder nesting inside itself on every restart, which made the web UI show `ConfigurationFactory.php` errors (#3091).
+- Configurations now live in the add-on config folder, `/addon_configs/xxx_fireflyiii_fints_importer/configurations`. Files in the previous location `/homeassistant/addons_config/fireflyiii_fints_importer` are moved there automatically on first start, and the old folder is marked with a `migrated` file. A custom `addons_autoscripts/fireflyiii-fints-importer.sh` is moved to the add-on config folder as well.
 
 ## 1.3.0.7 (23-09-2026)
 
