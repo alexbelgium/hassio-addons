@@ -1,3 +1,5 @@
+## 20260929 (29-09-2026)
+- Synced with upstream; merged open PRs (conflicts in #62, #63, #79 resolved)
 ## 20260920.2 (19-09-2026)
 - Minor bugs fixed
 ## 20260920 (19-09-2026)
