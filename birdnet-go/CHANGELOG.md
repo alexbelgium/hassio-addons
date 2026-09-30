@@ -1,5 +1,3 @@
-## 20260827.1 (30-09-2026)
-- Security: the ingress web server now only accepts connections from the Home Assistant Supervisor, as Home Assistant requires.
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
