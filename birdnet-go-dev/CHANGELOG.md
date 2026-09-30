@@ -1,3 +1,6 @@
+## 20260929.1 (30-09-2026)
+- New `INGRESS_SKIP_AUTH` option (default `false`): when `true`, BirdNET-Go no longer asks for its own login when opened through the Home Assistant sidebar (ingress), since Home Assistant has already signed you in. Direct access on port 8080 still requires the login.
+- Security: the ingress web server now only accepts connections from the Home Assistant Supervisor, as Home Assistant requires.
 ## 20260929 (29-09-2026)
 - Synced with upstream; merged open PRs (conflicts in #62, #63, #79 resolved)
 ## 20260920.2 (19-09-2026)

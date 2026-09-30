@@ -92,6 +92,7 @@ options:
   homeassistant_microphone: false
   mqtt_auto_config: false
   mariadb_auto_config: false
+  INGRESS_SKIP_AUTH: false
 panel_admin: false
 panel_icon: mdi:bird
 ports:
@@ -110,6 +111,7 @@ schema:
       value: str?
   BIRDSONGS_FOLDER: str?
   LOG_MAX_SIZE_MB: int(1,1000)?
+  INGRESS_SKIP_AUTH: bool?
   LOG_MAX_AGE_DAYS: int(1,365)?
   TZ: str?
   cifsdomain: str?
@@ -127,5 +129,5 @@ slug: birdnet-go-dev
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "20260929"
+version: "20260929.1"
 video: true
