@@ -4,7 +4,6 @@ arch:
 audio: true
 description: "Claude Desktop with Headroom, RTK, and TokenSave optimization"
 devices:
-devices:
   - /dev/sda
   - /dev/sdb
   - /dev/sdc
