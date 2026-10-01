@@ -69,7 +69,9 @@ if bashio::config.has_value 'localdisks'; then
             echo "... $disk is a device by label"
             devpath=/dev/disk/by-label
         else
-            bashio::log.fatal "$disk does not match any known physical device, UUID, or label. "
+            hint=""
+            [[ "$entry" == */* ]] && hint="For a folder, the text before the first '/' must be the disk. "
+            bashio::log.fatal "$entry does not match any known physical device, UUID, or label. $hint"
             continue
         fi
 

@@ -1,3 +1,6 @@
+## 07308545.13 (01-10-2026)
+- Fix: the image kept the `.templates/` scripts of its first build, because a rebuild reused the cached download layer. Template fixes never reached this add-on, so `localdisks: NAS/folder` still failed with `folder does not match any known physical device`. The layer is now refreshed on every build, which brings in the `disk/folder` support of `localdisks`.
+
 ## 07308545.12 (01-10-2026)
 - Minor bugs fixed
 ## 2026.10.01 (01-10-2026)
