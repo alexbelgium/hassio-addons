@@ -1,3 +1,5 @@
+## 2026.10.01 (01-10-2026)
+- Minor bugs fixed
  
 ## 07308545.11 (2026-09-24)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
