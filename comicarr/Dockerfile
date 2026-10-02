@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="0.38.16"
+ARG BUILD_UPSTREAM="0.41.1"
 FROM ghcr.io/frankieramirez/comicarr:${BUILD_UPSTREAM}
 
 ##################
