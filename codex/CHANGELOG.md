@@ -1,4 +1,7 @@
  
+## 2.5.1 (2026-10-03)
+- Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
+ 
 ## 2.4.3 (2026-09-24)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
