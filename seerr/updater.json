@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-08-01",
+  "last_update": "2026-10-03",
   "repository": "alexbelgium/hassio-addons",
   "slug": "seerr",
   "source": "github",
   "upstream_repo": "seerr-team/seerr",
-  "upstream_version": "3.4.1"
+  "upstream_version": "3.5.0"
 }
