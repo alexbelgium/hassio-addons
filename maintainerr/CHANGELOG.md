@@ -1,4 +1,7 @@
  
+## 3.30.0 (2026-10-03)
+- Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
+ 
 ## 3.29.0 (2026-09-19)
 - Update to latest version from maintainerr/maintainerr (changelog : https://github.com/maintainerr/maintainerr/releases)
  
