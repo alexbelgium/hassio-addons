@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "2026-09-24",
+  "last_update": "2026-10-03",
   "repository": "alexbelgium/hassio-addons",
   "slug": "chromium",
   "source": "github",
   "upstream_repo": "linuxserver/docker-chromium",
-  "upstream_version": "version-c32effc9"
+  "upstream_version": "version-d759a0f5"
 }
