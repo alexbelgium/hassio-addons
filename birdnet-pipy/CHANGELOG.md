@@ -1,4 +1,7 @@
  
+## 0.8.11 (2026-10-03)
+- Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
+ 
 ## 0.8.10 (2026-09-24)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
