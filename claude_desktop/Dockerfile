@@ -218,8 +218,14 @@ RUN if [ -f /etc/s6-overlay/s6-rc.d/svc-selkies/run ]; then \
 # Modules
 ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-dns_set.sh"
 
+# BUILD_DATE changes on every CI run, busting this layer's cache. The builder reuses
+# the layers of the previous image, so without it a rebuild keeps the .templates/
+# scripts downloaded by the first build and never picks up later template changes
+ARG BUILD_DATE=unknown
+
 # Automatic modules download
-RUN curl -fsSL --retry 3 --retry-delay 2 \
+RUN echo "Build date marker: ${BUILD_DATE}" && \
+    curl -fsSL --retry 3 --retry-delay 2 \
         -o /ha_automodules.sh "${TEMPLATE_BASE_URL}/ha_automodules.sh" && \
     chmod 744 /ha_automodules.sh && \
     /ha_automodules.sh "$MODULES" && \
