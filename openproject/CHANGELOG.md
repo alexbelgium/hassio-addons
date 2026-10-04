@@ -1,3 +1,6 @@
+ 
+## 17.9.1 (2026-10-03)
+- Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 17.8.0 (2026-09-05)

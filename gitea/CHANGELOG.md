@@ -1,3 +1,6 @@
+ 
+## 28.0.0 (2026-10-03)
+- Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
  
 ## 1.27.3 (2026-09-05)

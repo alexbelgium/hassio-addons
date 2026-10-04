@@ -16,8 +16,7 @@ LABEL \
     io.hass.version="${BUILD_VERSION}" \
     maintainer="petruknw"
 
-ENV DOWNLOAD_FOLDER=/share/aurral/downloads \
-    WEEKLY_FLOW_FOLDER=/share/aurral/downloads/weekly-flow
+ENV DOWNLOAD_FOLDER=/share/aurral/downloads
 
 # Replace the upstream data/downloads dirs with symlinks into HA persistent storage.
 # Must be done at build time — the dirs are owned by a non-root user at runtime.

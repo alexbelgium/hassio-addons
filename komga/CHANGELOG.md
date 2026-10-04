@@ -1,4 +1,7 @@
  
+## 1.28.1 (2026-10-03)
+- Update to latest version from gotson/komga (changelog : https://github.com/gotson/komga/releases)
+ 
 ## 1.27.1 (2026-09-24)
 - Update to latest version from gotson/komga (changelog : https://github.com/gotson/komga/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.

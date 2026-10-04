@@ -1,4 +1,7 @@
  
+## 2.93.01 (2026-10-03)
+- Update to latest version from haveagitgat/tdarr
+ 
 ## 2.90.01 (2026-09-24)
 - Update to latest version from haveagitgat/tdarr
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
