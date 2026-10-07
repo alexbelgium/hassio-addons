@@ -57,9 +57,15 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
 # Modules
 ARG MODULES="00-local_mounts.sh 00-smb_mounts.sh"
 
+# BUILD_DATE changes on every CI run, busting this layer's cache. The builder reuses
+# the layers of the previous image, and ha_automodules.sh downloads the .templates/
+# scripts at build time, so without it a rebuild keeps the scripts of an earlier build
+ARG BUILD_DATE=unknown
+
 # Automatic modules download
 COPY ha_automodules.sh /ha_automodules.sh
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+RUN echo "Build date marker: ${BUILD_DATE}" && \
+    chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
 ENV PACKAGES="alsa-utils libasound2-plugins nginx yq"

@@ -1,6 +1,9 @@
+## 20260827.1 (07-10-2026)
+
+- Fix: the image kept the `.templates/` scripts of an earlier build, because a rebuild reused the cached module-download layer (the 2026-08-28 image still carried 2026-08-26 scripts). The layer is now refreshed on every build, so template fixes reach this add-on.
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
- 
+
 ## 20260827 (2026-08-29)
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 - Upstream tag : 20260823
