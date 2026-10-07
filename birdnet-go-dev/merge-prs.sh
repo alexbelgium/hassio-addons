@@ -148,6 +148,12 @@ for entry in "${prs[@]}"; do
     number="$(printf '%s' "${entry}" | cut -f1)"
     sha="$(printf '%s' "${entry}" | cut -f2)"
     title="$(printf '%s' "${entry}" | cut -f3-)"
+    # This PR revision fails Go compilation (undefined isSpectrogramFileFor);
+    # allow a corrected head to merge automatically.
+    if [ "${number}:${sha}" = "79:30e9c29f5530a1d25c79b841fe44d668ccd7fe11" ]; then
+        log "Skipping non-building PR #${number} revision ${sha}"
+        continue
+    fi
     log "Merging PR #${number}: ${title} (${sha})"
     # Fetch the PR head commit by number; works unauthenticated for public repos.
     git fetch --no-tags origin "refs/pull/${number}/head"
