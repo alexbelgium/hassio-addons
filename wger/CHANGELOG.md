@@ -1,4 +1,7 @@
  
+## 2.8.0-dev.1 (2026-10-10)
+- Update to latest version from wger/server
+ 
 ## 2.8.0-dev.0 (2026-09-12)
 - Update to latest version from wger/server
 ## 2.6.4 (2026-09-04)
