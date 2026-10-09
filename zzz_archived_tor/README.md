@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [❓ [qBittorrent] OpenVPN Port Forwarding (opened 2024-10-10)](https://github.com/alexbelgium/hassio-addons/issues/1599) by [@fullstackdelay](https://github.com/fullstackdelay)
 ## &#9888; Open Request : [✨ [REQUEST] transmission, document where torrent files are stored (opened 2026-07-14)](https://github.com/alexbelgium/hassio-addons/issues/2852) by [@bilogic](https://github.com/bilogic)
 # Hass.io Add-ons: Tor with bridges
 
