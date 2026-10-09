@@ -1,4 +1,7 @@
  
+## 3.3.1 (2026-10-10)
+- Update to latest version from ghcr.io/imagegenius/immich:3-cuda
+ 
 ## 3.2.4 (2026-10-03)
 - Update to latest version from ghcr.io/imagegenius/immich:3-cuda
  
