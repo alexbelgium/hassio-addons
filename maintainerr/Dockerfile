@@ -11,7 +11,7 @@
 #=== Home Assistant Addon ===#
 
 # ARGs used in FROM must be declared before any FROM instruction
-ARG BUILD_UPSTREAM="3.30.0"
+ARG BUILD_UPSTREAM="3.30.1"
 
 ############################
 # 0) Tools stage           #
