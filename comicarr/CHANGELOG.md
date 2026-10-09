@@ -1,4 +1,7 @@
  
+## 0.47.1 (2026-10-10)
+- Update to latest version from frankieramirez/comicarr (changelog : https://github.com/frankieramirez/comicarr/releases)
+ 
 ## 0.41.1 (2026-10-03)
 - Update to latest version from frankieramirez/comicarr (changelog : https://github.com/frankieramirez/comicarr/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
