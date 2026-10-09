@@ -1,4 +1,7 @@
  
+## 1.88.0 (2026-10-10)
+- Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
+ 
 ## 1.87.0 (2026-09-26)
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
