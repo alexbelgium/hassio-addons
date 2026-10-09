@@ -1,3 +1,6 @@
+ 
+## 0.25.0 (2026-10-10)
+- Update to latest version from varun-raj/immich-power-tools (changelog : https://github.com/varun-raj/immich-power-tools/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
  
 ## 0.24.0 (2026-09-19)
