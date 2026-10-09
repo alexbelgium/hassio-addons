@@ -1,3 +1,7 @@
+ 
+## 07308545.14 (2026-10-10)
+- Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
+- Upstream tag : v3.3.9+claude2.26454.2
 ## 07308545.13 (01-10-2026)
 - Fix: the image kept the `.templates/` scripts of its first build, because a rebuild reused the cached download layer. Template fixes never reached this add-on, so `localdisks: NAS/folder` still failed with `folder does not match any known physical device`. The layer is now refreshed on every build, which brings in the `disk/folder` support of `localdisks`.
  
