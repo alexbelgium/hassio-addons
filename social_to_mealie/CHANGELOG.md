@@ -1,3 +1,6 @@
+ 
+## 1.8.1 (2026-10-10)
+- Update to latest version from GerardPolloRebozado/social-to-mealie (changelog : https://github.com/GerardPolloRebozado/social-to-mealie/releases)
 ## 1.8.0.1 (28-09-2026)
 - Start the app with `node server.js`: upstream 1.8.0 switched to Next.js standalone output, which no longer ships the `next` binary (fixes #3092)
 
