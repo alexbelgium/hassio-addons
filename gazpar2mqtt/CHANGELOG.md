@@ -1,4 +1,6 @@
 
+## 0.2.5.1 (2026-10-10)
+- Fix build: drop the stray version string the updater had written into `PACKAGES`, which made the build try to install a package named after the upstream version
 ## 0.2.5 (2026-03-28)
 - Update to latest version from ssenart/gazpar2mqtt
 ## 0.2.4 (2025-12-24)
