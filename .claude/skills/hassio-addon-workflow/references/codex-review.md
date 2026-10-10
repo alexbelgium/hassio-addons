@@ -8,9 +8,9 @@ and your assessment of each.
 
 ## Invocation
 
-**Use the CLI, not the MCP tool, for prompts of this size.** The `codex` MCP tool timed out twice
-on ~4 KB prompts (2026-08-03); the CLI with the same content succeeded. The MCP tool is still fine
-for short questions.
+**Use the CLI, never the MCP tool.** The `codex` MCP integration is broken — it timed out twice on
+~4 KB prompts (2026-08-03) while the CLI with the same content succeeded — so invoke Codex only
+through `codex exec`, whatever the prompt size.
 
 `--sandbox read-only` lets Codex read files but blocks writes and command execution, and
 `approval_policy=never` means it will not be prompted for permission to run anything either — so

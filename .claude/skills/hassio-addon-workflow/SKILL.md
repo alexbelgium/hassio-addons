@@ -67,6 +67,13 @@ review (step 6), and PR-comment listing when there are more than ~5 threads (ste
 subagent to run the command and report back only the objections/findings and your assessment of
 each, not the raw transcript.
 
+**Models.** Run the session itself on **Opus 5.5** — it owns scoping, diagnosis, the plan, and
+every final call. Delegate simpler or secondary subtasks (log/thread triage, mechanical edits,
+first-pass review) to **Sonnet 5.5** subagents, and independent review passes to **Codex
+(`gpt-5.6-sol`)** via the CLI only (`codex exec …`, see `references/codex-review.md`) — never the
+`codex` MCP integration, which is broken. Delegates report back; Opus verifies their claims
+against real data before acting.
+
 ---
 
 ## 1. Scope
