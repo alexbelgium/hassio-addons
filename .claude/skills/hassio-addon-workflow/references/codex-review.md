@@ -6,9 +6,9 @@ minutes. Run it through a subagent, per SKILL.md's delegation note.
 
 ## Invocation
 
-**Use the CLI, not the MCP tool, for prompts of this size.** The `codex` MCP tool timed out twice
-on ~4 KB prompts (2026-08-03); the CLI with the same content succeeded. The MCP tool is still fine
-for short questions.
+**Use the CLI, never the MCP tool.** The `codex` MCP integration is broken — it timed out twice on
+~4 KB prompts (2026-08-03) while the CLI with the same content succeeded — so invoke Codex only
+through `codex exec`, whatever the prompt size.
 
 `--sandbox read-only` blocks writes, not reads, and `approval_policy=never` stops it asking for
 permission rather than stopping it acting — so it can still run read-only commands and often
