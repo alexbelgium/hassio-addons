@@ -1,3 +1,7 @@
+
+## 3.22.2 (2026-10-10)
+- Update to latest version from wiserain/flexget (fixes #3102)
+- Fix updater: exclude the upstream `ci` Docker Hub tag, which `sort -V` ranked above every numbered release and froze updates at 3.20.9
  
 ## 3.20.9 (2026-09-05)
 - Update to latest version from wiserain/flexget
