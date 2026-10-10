@@ -72,15 +72,12 @@ RUN set -eux; \
     rm /ha_lsio.sh
 
 # --- MinIO, psql client etc.
+# dl.min.io stopped serving community MinIO binaries (HTTP 410); use Alpine's packages
 RUN set -eux; \
-    BUILD_ARCH="$(uname -m)"; \
-    echo "${BUILD_ARCH}"; \
-    ARCH="amd64"; \
-    if echo "${BUILD_ARCH}" | grep -Eq 'aarch64|armv8|arm64'; then ARCH="arm64"; fi; \
     apk add --no-cache bash curl ca-certificates wget jq tini postgresql15-client; \
-    curl -fsSL "https://dl.min.io/server/minio/release/linux-${ARCH}/minio" -o /usr/local/bin/minio; \
-    curl -fsSL "https://dl.min.io/client/mc/release/linux-${ARCH}/mc" -o /usr/local/bin/mc; \
-    chmod +x /usr/local/bin/minio /usr/local/bin/mc
+    apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community minio minio-client; \
+    ln -s /usr/bin/minio /usr/local/bin/minio; \
+    ln -s /usr/bin/mcli /usr/local/bin/mc
 
 RUN apk add --no-cache \
     lsb-release curl gnupg wget tini jq sudo \

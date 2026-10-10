@@ -1,3 +1,5 @@
+## 4.4.28.1 (2026-10-10)
+- Fix build: MinIO no longer serves its community binaries from dl.min.io (HTTP 410); install MinIO and its client from Alpine packages instead
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
  
 ## 4.4.28 (2026-09-12)
