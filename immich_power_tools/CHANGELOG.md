@@ -1,5 +1,5 @@
 ## 0.25.0.1 (2026-10-10)
-- Pull the upstream image from its new registry (ghcr.io/immich-power-tools/immich-power-tools); the old varun-raj image stopped updating in February 2026, so the add-on shipped an outdated app (#3105)
+- Pull the upstream image from its new registry (ghcr.io/immich-power-tools/immich-power-tools) and track releases from the new immich-power-tools/immich-power-tools repository; the old varun-raj image stopped updating in February 2026, so the add-on shipped an outdated app (#3105)
 
 ## 0.25.0 (2026-10-10)
 - Update to latest version from varun-raj/immich-power-tools (changelog : https://github.com/varun-raj/immich-power-tools/releases)
