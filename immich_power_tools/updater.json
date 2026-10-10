@@ -4,6 +4,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich-power-tools",
   "source": "github",
-  "upstream_repo": "varun-raj/immich-power-tools",
+  "upstream_repo": "immich-power-tools/immich-power-tools",
   "upstream_version": "0.25.0"
 }
