@@ -1,7 +1,15 @@
  
 ## 2.0.0.1 (2026-10-11)
-- Fix startup on 2.0.0 (fresh installs and upgrades): write the v2 config format (`http.port`/`listen`/`baseURL`, `server.database.path`) and drop the deprecated `FILEBROWSER_DATABASE` variable (#3109) - Upgrade from 1.x: the old `/config/config.yaml` is saved as `config.yaml.v1.bak` and replaced by the 2.0 default (1.x keys are rejected by 2.0), and the 1.x `/config/database.db` is migrated to `/config/database.sqlite` on first start
-- Set `http.trustProxyHeaders: true` (the add-on always runs behind nginx on a subpath), and use upstream's `/health` endpoint for the container healthcheck
+- Fix startup on 2.0.0, for fresh installs and upgrades (#3109).
+  - The add-on now writes the v2 config format: `http.port`, `http.listen`, `http.baseURL` and `server.database.path`.
+  - The deprecated `FILEBROWSER_DATABASE` variable is dropped.
+- Upgrade from 1.x: `/config/config.yaml` is converted in place. A backup is saved as `config.yaml.v1.bak`.
+  - Keys that 2.0 moved are now under `http:`.
+  - Keys that 2.0 removed are dropped: `userDefaults`, source `conditionals` and `indexingIntervalMinutes`, rule `fileNames` and `folderNames`, `trustedHeaders` and `exiftoolPath`.
+  - Everything else is kept, including extra sources and auth/OIDC settings.
+  - Users, shares and settings in `/config/database.db` are migrated to `/config/database.sqlite` on first start.
+- `http.trustProxyHeaders` is set to `true`, because the add-on always runs behind nginx on a subpath.
+- The container healthcheck now uses upstream's `/health` endpoint.
 
 ## 2.0.0 (2026-10-10)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
