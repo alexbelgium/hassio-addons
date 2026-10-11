@@ -10,7 +10,7 @@
   - Everything else is kept, including extra sources and auth/OIDC settings.
   - Users, shares and settings in `/config/database.db` are migrated to `/config/database.sqlite` on first start.
 - `http.trustProxyHeaders` is set to `true`, because the add-on always runs behind nginx on a subpath.
-- The container healthcheck now uses upstream's `/health` endpoint.
+- The container healthcheck now checks FileBrowser directly on port 8080 instead of an nginx stub.
 - Direct access on port 8071 no longer passes on a client-supplied `X-Forwarded-For`, so the IP-based login lockout cannot be bypassed now that proxy headers are trusted. Ingress keeps the forwarded chain.
 
 ## 2.0.0 (2026-10-10)
