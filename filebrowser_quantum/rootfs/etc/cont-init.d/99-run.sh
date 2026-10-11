@@ -98,7 +98,7 @@ bashio::log.info "... set server"
 yq e -i ".http.port = 8080"              "$FILEBROWSER_CONFIG"
 yq e -i ".http.listen = \"0.0.0.0\""    "$FILEBROWSER_CONFIG"
 yq e -i ".server.database = {\"path\": \"/config/database.sqlite\"}" "$FILEBROWSER_CONFIG"
-# Import the 1.x BoltDB; upstream skips it once the SQLite file is populated
+# Migrate the 1.x BoltDB on first start (done once; v2 keeps checking the file exists)
 if [ -s /config/database.db ]; then
     yq e -i ".server.database.migrateFrom = \"/config/database.db\"" "$FILEBROWSER_CONFIG"
 fi
