@@ -1,0 +1,107 @@
+arch:
+  - amd64
+audio: true
+description: Joplin desktop note-taking app accessible via any modern web browser
+devices:
+  - /dev/dri
+  - /dev/dri/card0
+  - /dev/dri/card1
+  - /dev/dri/renderD128
+  - /dev/sda
+  - /dev/sdb
+  - /dev/sdc
+  - /dev/sdd
+  - /dev/sde
+  - /dev/sdf
+  - /dev/sdg
+  - /dev/nvme
+  - /dev/nvme0
+  - /dev/nvme0n1
+  - /dev/nvme0n1p1
+  - /dev/nvme0n1p2
+  - /dev/mmcblk
+  - /dev/sda1
+  - /dev/sdb1
+  - /dev/sdc1
+  - /dev/sdd1
+  - /dev/sde1
+  - /dev/sdf1
+  - /dev/sdg1
+  - /dev/sda2
+  - /dev/sdb2
+  - /dev/sdc2
+  - /dev/sdd2
+  - /dev/sde2
+  - /dev/sdf2
+  - /dev/sdg2
+  - /dev/sda3
+  - /dev/sdb3
+  - /dev/sda4
+  - /dev/sdb4
+  - /dev/sda5
+  - /dev/sda6
+  - /dev/sda7
+  - /dev/sda8
+  - /dev/nvme1
+  - /dev/nvme2
+environment:
+  FM_HOME: /config/data
+  HOME: /config/data
+  START_DOCKER: "false"
+  TITLE: Joplin
+image: ghcr.io/alexbelgium/joplin_desktop-{arch}
+ingress: true
+init: false
+map:
+  - app_config:rw
+  - media:rw
+  - share:rw
+  - ssl
+name: Joplin Desktop
+options:
+  env_vars: []
+  DNS_server: 8.8.8.8
+  PGID: 1000
+  PUID: 1000
+  additional_apps: ""
+  certfile: fullchain.pem
+  data_location: /config/data
+  keyfile: privkey.pem
+  use_own_certs: false
+panel_admin: false
+panel_icon: mdi:notebook-edit
+ports:
+  3000/tcp: null
+  3001/tcp: null
+ports_description:
+  3000/tcp: Web interface (http)
+  3001/tcp: Web interface (https)
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
+  DNS_server: str?
+  DRINODE: list(/dev/dri/card0|/dev/dri/card1|/dev/dri/card2|/dev/dri/renderD128|/dev/dri/renderD129|)?
+  KEYBOARD: list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?
+  PASSWORD: password?
+  PGID: int
+  PUID: int
+  TZ: match([A-Z][a-z]*./[A-Z][a-z]*.)?
+  additional_apps: str?
+  certfile: str
+  cifsdomain: str?
+  cifspassword: password?
+  cifsusername: str?
+  data_location: str?
+  keyfile: str
+  localdisks: str?
+  networkdisks: str?
+  use_own_certs: bool?
+slug: joplin_desktop
+udev: true
+url: https://github.com/alexbelgium/hassio-addons/tree/master/joplin_desktop
+version: "3.7.21"
+video: true

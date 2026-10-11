@@ -1,0 +1,5 @@
+{
+  "build_from": {
+    "amd64": "lscr.io/linuxserver/joplin:latest"
+  }
+}
