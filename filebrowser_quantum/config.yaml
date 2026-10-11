@@ -94,7 +94,6 @@ options:
   env_vars: []
   auth_method: noauth
   default_user_scope: "/"
-panel_admin: true
 panel_icon: mdi:file-search
 ports:
   8072/tcp: 8071
