@@ -57,13 +57,6 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
 
-# Docker's default /dev/shm is 64 MB and Home Assistant ignores an add-on's shm_size, while
-# LinuxServer documents 1 GB as needed for Electron apps. Make Chromium keep its shared memory
-# out of /dev/shm, as claude_desktop does when /dev/shm is small. The grep fails the build if a
-# future upstream wrapper no longer has the --no-sandbox anchor, instead of shipping without it.
-RUN sed -i 's|--no-sandbox|--no-sandbox --disable-dev-shm-usage|' /usr/bin/joplin && \
-    grep -q -- '--disable-dev-shm-usage' /usr/bin/joplin
-
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
