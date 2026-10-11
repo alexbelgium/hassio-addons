@@ -79,6 +79,21 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 mkdir -p /config /cache
 
+# 1.x config (string server.database): both versions reject unknown keys, so
+# move or drop the keys 2.0 removed and keep everything else (users and shares
+# are in the database, imported below)
+if [ -f "$FILEBROWSER_CONFIG" ] && [ "$(yq e '.server.database | tag' "$FILEBROWSER_CONFIG")" = "!!str" ]; then
+    bashio::log.warning "Converting FileBrowser 1.x config to 2.0, backup saved to ${FILEBROWSER_CONFIG}.v1.bak"
+    cp "$FILEBROWSER_CONFIG" "${FILEBROWSER_CONFIG}.v1.bak"
+    yq e -i '
+        .http *= (.server | pick(["socket", "tlsCert", "tlsKey", "externalUrl", "internalUrl", "disableWebDAV"])) |
+        del(.server.database, .server.port, .server.listen, .server.baseURL, .server.socket, .server.tlsCert, .server.tlsKey, .server.externalUrl, .server.internalUrl, .server.disableWebDAV) |
+        del(.http.trustedHeaders, .integrations.media.exiftoolPath, .userDefaults) |
+        del(.server.sources[].config.conditionals, .server.sources[].config.indexingIntervalMinutes) |
+        del(.server.sources[].config.rules[].fileNames, .server.sources[].config.rules[].folderNames)
+    ' "$FILEBROWSER_CONFIG"
+fi
+
 # Copy default config if not existing
 if [ ! -f "$FILEBROWSER_CONFIG" ]; then
     cp /home/filebrowser/data/config.yaml "$FILEBROWSER_CONFIG"
@@ -88,9 +103,14 @@ bashio::log.info "Updating FileBrowser config..."
 
 # --- Server (hardcoded values) ---
 bashio::log.info "... set server"
-yq e -i ".server.port = 8080"            "$FILEBROWSER_CONFIG"
-yq e -i ".server.listen = \"0.0.0.0\""  "$FILEBROWSER_CONFIG"
-yq e -i ".server.database = \"/config/database.db\"" "$FILEBROWSER_CONFIG"
+yq e -i ".http.port = 8080"              "$FILEBROWSER_CONFIG"
+yq e -i ".http.listen = \"0.0.0.0\""    "$FILEBROWSER_CONFIG"
+yq e -i ".http.trustProxyHeaders = true" "$FILEBROWSER_CONFIG"
+yq e -i ".server.database.path = \"/config/database.sqlite\" | del(.server.database.migrateFrom)" "$FILEBROWSER_CONFIG"
+# Import the 1.x BoltDB until the SQLite database exists
+if [ -s /config/database.db ] && [ ! -s /config/database.sqlite ]; then
+    yq e -i ".server.database.migrateFrom = \"/config/database.db\"" "$FILEBROWSER_CONFIG"
+fi
 yq e -i ".server.cacheDir = \"/cache\""  "$FILEBROWSER_CONFIG"
 
 # --- Default user scope / source path ---
@@ -117,7 +137,7 @@ yq e -i ".server.sources[0].config.defaultUserScope = \"${DEFAULT_USER_SCOPE}\""
 # --- Base URL (from env or config) ---
 bashio::log.info "... set base URL to allow ingress"
 BASE_URL=$(bashio::config 'base_url' "${FB_BASEURL:-/}")
-yq e -i ".server.baseURL = \"${BASE_URL}\"" "$FILEBROWSER_CONFIG"
+yq e -i ".http.baseURL = \"${BASE_URL}\"" "$FILEBROWSER_CONFIG"
 
 # --- Auth method ---
 AUTH_METHOD=$(bashio::config 'auth_method' 'password')

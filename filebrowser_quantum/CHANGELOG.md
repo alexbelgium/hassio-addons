@@ -1,4 +1,18 @@
  
+## 2.0.0.1 (2026-10-11)
+- ⚠️ **Back up before updating.** FileBrowser 2.0 changes the config format and the database. This add-on converts both automatically, but you should first create a Home Assistant backup of the add-on, or copy `/addon_configs/*filebrowser_quantum*/` (`config.yaml` and `database.db`). Your 1.x `database.db` is left untouched, but downgrading after the migration loses any changes made in 2.0.
+- Fix startup on 2.0.0, for fresh installs and upgrades (#3109).
+  - The add-on now writes the v2 config format: `http.port`, `http.listen`, `http.baseURL` and `server.database.path`.
+  - The deprecated `FILEBROWSER_DATABASE` variable is dropped.
+- Upgrade from 1.x: `/config/config.yaml` is converted in place. A backup is saved as `config.yaml.v1.bak`.
+  - Keys that 2.0 moved are now under `http:`.
+  - Keys that 2.0 removed are dropped: `userDefaults`, source `conditionals` and `indexingIntervalMinutes`, rule `fileNames` and `folderNames`, `trustedHeaders` and `exiftoolPath`.
+  - Everything else is kept, including extra sources and auth/OIDC settings.
+  - Users, shares and settings in `/config/database.db` are migrated to `/config/database.sqlite` on first start.
+- `http.trustProxyHeaders` is set to `true`, because the add-on always runs behind nginx on a subpath.
+- The container healthcheck now checks FileBrowser directly on port 8080 instead of an nginx stub.
+- Direct access on port 8071 no longer passes on a client-supplied `X-Forwarded-For`, so the IP-based login lockout cannot be bypassed now that proxy headers are trusted. Ingress keeps the forwarded chain.
+
 ## 2.0.0 (2026-10-10)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
