@@ -103,5 +103,5 @@ schema:
 slug: joplin_desktop
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/joplin_desktop
-version: "3.7.21"
+version: "3.7.21.1"
 video: true
