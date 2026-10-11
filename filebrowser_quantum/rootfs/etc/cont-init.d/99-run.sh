@@ -79,6 +79,13 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 mkdir -p /config /cache
 
+# A 1.x config (string server.database, written below before 2.0.0) holds keys
+# that v2 rejects: keep a copy and start again from the v2 default
+if [ -f "$FILEBROWSER_CONFIG" ] && [ "$(yq e '.server.database | tag' "$FILEBROWSER_CONFIG")" = "!!str" ]; then
+    bashio::log.warning "FileBrowser 1.x config saved to ${FILEBROWSER_CONFIG}.v1.bak, starting from the 2.0 default config"
+    mv "$FILEBROWSER_CONFIG" "${FILEBROWSER_CONFIG}.v1.bak"
+fi
+
 # Copy default config if not existing
 if [ ! -f "$FILEBROWSER_CONFIG" ]; then
     cp /home/filebrowser/data/config.yaml "$FILEBROWSER_CONFIG"
@@ -88,8 +95,6 @@ bashio::log.info "Updating FileBrowser config..."
 
 # --- Server (hardcoded values) ---
 bashio::log.info "... set server"
-# v2 moved port/listen/baseURL under http: and rejects the 1.x keys
-yq e -i "del(.server.port, .server.listen, .server.baseURL)" "$FILEBROWSER_CONFIG"
 yq e -i ".http.port = 8080"              "$FILEBROWSER_CONFIG"
 yq e -i ".http.listen = \"0.0.0.0\""    "$FILEBROWSER_CONFIG"
 yq e -i ".server.database = {\"path\": \"/config/database.sqlite\"}" "$FILEBROWSER_CONFIG"

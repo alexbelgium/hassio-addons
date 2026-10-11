@@ -1,6 +1,6 @@
  
 ## 2.0.0.1 (2026-10-11)
-- Fix startup on 2.0.0 (fresh installs and upgrades): write the v2 config format (`http.port`/`listen`/`baseURL`, `server.database.path`), drop the deprecated `FILEBROWSER_DATABASE` variable, and migrate an existing 1.x `/config/database.db` to `/config/database.sqlite` on first start (#3109)
+- Fix startup on 2.0.0 (fresh installs and upgrades): write the v2 config format (`http.port`/`listen`/`baseURL`, `server.database.path`) and drop the deprecated `FILEBROWSER_DATABASE` variable (#3109) - Upgrade from 1.x: the old `/config/config.yaml` is saved as `config.yaml.v1.bak` and replaced by the 2.0 default (1.x keys are rejected by 2.0), and the 1.x `/config/database.db` is migrated to `/config/database.sqlite` on first start
 
 ## 2.0.0 (2026-10-10)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
