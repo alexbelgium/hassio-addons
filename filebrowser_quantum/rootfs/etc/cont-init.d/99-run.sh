@@ -87,7 +87,7 @@ if [ -f "$FILEBROWSER_CONFIG" ] && [ "$(yq e '.server.database | tag' "$FILEBROW
     cp "$FILEBROWSER_CONFIG" "${FILEBROWSER_CONFIG}.v1.bak"
     yq e -i '
         .http *= (.server | pick(["socket", "tlsCert", "tlsKey", "externalUrl", "internalUrl", "disableWebDAV"])) |
-        del(.server.port, .server.listen, .server.baseURL, .server.socket, .server.tlsCert, .server.tlsKey, .server.externalUrl, .server.internalUrl, .server.disableWebDAV) |
+        del(.server.database, .server.port, .server.listen, .server.baseURL, .server.socket, .server.tlsCert, .server.tlsKey, .server.externalUrl, .server.internalUrl, .server.disableWebDAV) |
         del(.http.trustedHeaders, .integrations.media.exiftoolPath, .userDefaults) |
         del(.server.sources[].config.conditionals, .server.sources[].config.indexingIntervalMinutes) |
         del(.server.sources[].config.rules[].fileNames, .server.sources[].config.rules[].folderNames)
@@ -106,8 +106,7 @@ bashio::log.info "... set server"
 yq e -i ".http.port = 8080"              "$FILEBROWSER_CONFIG"
 yq e -i ".http.listen = \"0.0.0.0\""    "$FILEBROWSER_CONFIG"
 yq e -i ".http.trustProxyHeaders = true" "$FILEBROWSER_CONFIG"
-# Whole-object assignment also drops migrateFrom once the migration is done
-yq e -i ".server.database = {\"path\": \"/config/database.sqlite\"}" "$FILEBROWSER_CONFIG"
+yq e -i ".server.database.path = \"/config/database.sqlite\" | del(.server.database.migrateFrom)" "$FILEBROWSER_CONFIG"
 # Import the 1.x BoltDB until the SQLite database exists
 if [ -s /config/database.db ] && [ ! -s /config/database.sqlite ]; then
     yq e -i ".server.database.migrateFrom = \"/config/database.db\"" "$FILEBROWSER_CONFIG"
