@@ -220,6 +220,14 @@ Assistant **ignores** the add-on's `shm_size`, so the real size varies per insta
 on one host. Detect at runtime rather than assuming either way; keep the flag when the size
 cannot be determined, because the crash it prevents is worse than its overhead.
 
+**Not every Electron app accepts arbitrary Chromium switches.** Joplin parses its own argv
+against an allow-list and aborts on anything else: `--disable-dev-shm-usage` produced
+`An error occurred: Unknown flag: --disable-dev-shm-usage` and no app window
+(`packages/lib/utils/processStartFlags.ts`; it accepts `--no-sandbox`, `--ozone-platform=`,
+`--disable-gpu` and a few others). The build-time `grep` that "verified" the flag only proved
+the text was in the wrapper, not that the app tolerated it. Check the app's argument parser before
+passing a Chromium flag to anything that is not Chromium itself (joplin_desktop, PR #3112, fixed in the follow-up PR).
+
 ## CI and review bots
 
 **What CI actually gates** — checked against the workflows, because assuming costs a cycle.
