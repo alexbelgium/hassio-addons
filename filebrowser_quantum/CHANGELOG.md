@@ -1,4 +1,7 @@
  
+## 2.0.0.1 (2026-10-11)
+- Fix startup on 2.0.0 (fresh installs and upgrades): write the v2 config format (`http.port`/`listen`/`baseURL`, `server.database.path`), drop the deprecated `FILEBROWSER_DATABASE` variable, and migrate an existing 1.x `/config/database.db` to `/config/database.sqlite` on first start (#3109)
+
 ## 2.0.0 (2026-10-10)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
