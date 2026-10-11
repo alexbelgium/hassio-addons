@@ -1,0 +1,1 @@
+../../../../claude_desktop/rootfs/etc/cont-init.d/90-ingress.sh

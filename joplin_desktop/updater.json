@@ -1,0 +1,9 @@
+{
+  "github_fulltag": "false",
+  "last_update": "2026-10-11",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "joplin_desktop",
+  "source": "github",
+  "upstream_repo": "linuxserver/docker-joplin",
+  "upstream_version": "3.7.21"
+}
