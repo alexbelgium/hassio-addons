@@ -79,10 +79,19 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 mkdir -p /config /cache
 
-# 1.x config (string server.database) has keys v2 rejects: back it up, use the v2 default
+# 1.x config (string server.database): both versions reject unknown keys, so
+# move or drop the keys 2.0 removed and keep everything else (users and shares
+# are in the database, imported below)
 if [ -f "$FILEBROWSER_CONFIG" ] && [ "$(yq e '.server.database | tag' "$FILEBROWSER_CONFIG")" = "!!str" ]; then
-    bashio::log.warning "FileBrowser 1.x config saved to ${FILEBROWSER_CONFIG}.v1.bak, starting from the 2.0 default config"
-    mv "$FILEBROWSER_CONFIG" "${FILEBROWSER_CONFIG}.v1.bak"
+    bashio::log.warning "Converting FileBrowser 1.x config to 2.0, backup saved to ${FILEBROWSER_CONFIG}.v1.bak"
+    cp "$FILEBROWSER_CONFIG" "${FILEBROWSER_CONFIG}.v1.bak"
+    yq e -i '
+        .http = ((.http // {}) * (.server | pick(["socket", "tlsCert", "tlsKey", "externalUrl", "internalUrl", "disableWebDAV"]))) |
+        del(.server.port, .server.listen, .server.baseURL, .server.socket, .server.tlsCert, .server.tlsKey, .server.externalUrl, .server.internalUrl, .server.disableWebDAV) |
+        del(.http.trustedHeaders, .integrations.media.exiftoolPath, .userDefaults) |
+        del(.server.sources[].config.conditionals, .server.sources[].config.indexingIntervalMinutes) |
+        del(.server.sources[].config.rules[].fileNames, .server.sources[].config.rules[].folderNames)
+    ' "$FILEBROWSER_CONFIG"
 fi
 
 # Copy default config if not existing
