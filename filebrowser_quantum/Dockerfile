@@ -116,4 +116,4 @@ LABEL \
 #################
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:3001/health || exit 1
+  CMD b="$(yq '.http.baseURL' /config/config.yaml)" && curl -f "http://localhost:8080${b%/}/health" || exit 1
