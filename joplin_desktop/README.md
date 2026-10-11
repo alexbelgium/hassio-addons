@@ -39,7 +39,7 @@ Only amd64 is supported, because Joplin does not publish a Linux arm64 build.
 
 ## Configuration
 
-Webui can be found with ingress or at <http://homeassistant:3000> (or <https://homeassistant:3001>). The ports are disabled by default and can be enabled in the add-on network settings. If you open a port, set `PASSWORD`: the web interface then asks for user `abc` and that password.
+The recommended way in is ingress (the sidebar panel). You can also enable the https port 3001 in the add-on network settings and open <https://homeassistant:3001>; the browser streaming features need HTTPS, so do not use the plain http port 3000 directly — it is only meant to sit behind your own TLS reverse proxy. If you open a port, set `PASSWORD`: the web interface then asks for user `abc` and that password. This basic authentication is only suitable on a trusted local network; for access from the internet use a reverse proxy with stronger authentication.
 
 Joplin's profile (notes, settings, plugins) is stored in `data_location`, by default `/config/data`, which is the add-on's own folder under `/addon_configs/` on your Home Assistant host. It is kept across restarts and updates and included in backups.
 
@@ -50,7 +50,7 @@ PUID: 1000 # user id of the desktop user and owner of the data folder
 PGID: 1000 # group id of the desktop user
 TZ: Europe/Paris # timezone, Country/City according to https://manpages.ubuntu.com/manpages/trusty/man3/DateTime::TimeZone::Catalog.3pm.html
 KEYBOARD: fr-fr-azerty # keyboard layout
-PASSWORD: "mypassword" # basic authentication on the web interface (user abc). Recommended if you open a port
+PASSWORD: "mypassword" # basic authentication on the web interface (user abc). Set it if you open port 3001; trusted local networks only
 DRINODE: /dev/dri/renderD128 # GPU device used for rendering and encoding, if the default does not work
 data_location: /config/data # where Joplin's profile is stored; must be in /config, /share, /data or /mnt
 additional_apps: "" # comma-separated apt packages to install at every start (not persistent otherwise)

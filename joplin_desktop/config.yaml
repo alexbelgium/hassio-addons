@@ -68,7 +68,7 @@ options:
   data_location: /config/data
   keyfile: privkey.pem
   use_own_certs: false
-panel_admin: false
+panel_admin: true
 panel_icon: mdi:notebook-edit
 ports:
   3000/tcp: null
