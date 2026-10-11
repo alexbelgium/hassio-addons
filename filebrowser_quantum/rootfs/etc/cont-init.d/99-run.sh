@@ -86,7 +86,7 @@ if [ -f "$FILEBROWSER_CONFIG" ] && [ "$(yq e '.server.database | tag' "$FILEBROW
     bashio::log.warning "Converting FileBrowser 1.x config to 2.0, backup saved to ${FILEBROWSER_CONFIG}.v1.bak"
     cp "$FILEBROWSER_CONFIG" "${FILEBROWSER_CONFIG}.v1.bak"
     yq e -i '
-        .http = ((.http // {}) * (.server | pick(["socket", "tlsCert", "tlsKey", "externalUrl", "internalUrl", "disableWebDAV"]))) |
+        .http *= (.server | pick(["socket", "tlsCert", "tlsKey", "externalUrl", "internalUrl", "disableWebDAV"])) |
         del(.server.port, .server.listen, .server.baseURL, .server.socket, .server.tlsCert, .server.tlsKey, .server.externalUrl, .server.internalUrl, .server.disableWebDAV) |
         del(.http.trustedHeaders, .integrations.media.exiftoolPath, .userDefaults) |
         del(.server.sources[].config.conditionals, .server.sources[].config.indexingIntervalMinutes) |

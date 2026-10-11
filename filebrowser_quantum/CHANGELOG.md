@@ -1,5 +1,6 @@
  
 ## 2.0.0.1 (2026-10-11)
+- ⚠️ **Back up before updating.** FileBrowser 2.0 changes the config format and the database. This add-on converts both automatically, but you should first create a Home Assistant backup of the add-on, or copy `/addon_configs/*filebrowser_quantum*/` (`config.yaml` and `database.db`). Your 1.x `database.db` is left untouched, but downgrading after the migration loses any changes made in 2.0.
 - Fix startup on 2.0.0, for fresh installs and upgrades (#3109).
   - The add-on now writes the v2 config format: `http.port`, `http.listen`, `http.baseURL` and `server.database.path`.
   - The deprecated `FILEBROWSER_DATABASE` variable is dropped.
