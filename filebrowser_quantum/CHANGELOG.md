@@ -1,6 +1,6 @@
  
 ## 2.0.0.2 (2026-10-11)
-- Remove the empty band above the search bar in the Home Assistant app: 2.0 padded its header for the phone status bar, which HA already does. This applies to ingress only.
+- Remove the empty band above the search bar in the Home Assistant app (portrait): 2.0 padded its header for the phone status bar, which HA already does. The top inset is set to 0 on ingress only.
 
 ## 2.0.0.1 (2026-10-11)
 - ⚠️ **Back up before updating.** FileBrowser 2.0 changes the config format and the database. This add-on converts both automatically, but you should first create a Home Assistant backup of the add-on, or copy `/addon_configs/*filebrowser_quantum*/` (`config.yaml` and `database.db`). Your 1.x `database.db` is left untouched, but downgrading after the migration loses any changes made in 2.0.
