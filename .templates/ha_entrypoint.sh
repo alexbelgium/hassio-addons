@@ -438,20 +438,23 @@ if $PID1; then
       restart_count=0
       max_restarts=5
       # terminate() signals only PID 1's direct children, which are these loop subshells.
-      # Run each service in the background and forward the stop to it, so it shuts down
-      # cleanly instead of being SIGKILLed when PID 1 exits, and is not restarted after.
+      # Give each background job its own process group and forward the stop to the whole
+      # group, so wrappers and their daemons can shut down before PID 1 exits.
+      set -m
       stopping=false
       service_pid=
-      trap 'stopping=true; [ -z "$service_pid" ] || kill -TERM "$service_pid" 2>/dev/null || true' TERM INT
+      trap 'stopping=true; [ -z "$service_pid" ] || kill -TERM -- "-$service_pid" 2>/dev/null || true' TERM INT
       wait_for_service() {
         local pid="$service_pid"
         if $stopping; then
-          kill -TERM "$pid" 2>/dev/null || true
+          kill -TERM -- "-$pid" 2>/dev/null || true
         fi
         _svc_rc=0
-        wait "$pid" || _svc_rc=$?
+        wait "$pid" 2>/dev/null || _svc_rc=$?
         if $stopping; then
           wait "$pid" 2>/dev/null || true
+          # A run file that does not exec its daemon dies first; wait for the whole group
+          while kill -0 -- "-$pid" 2>/dev/null; do sleep 0.2; done
           service_pid=
           return 1
         fi
