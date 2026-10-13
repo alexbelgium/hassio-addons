@@ -1,5 +1,6 @@
  
-## 3.7.2.1 (13-10-2026)
+## 3.7.2.1 (2026-10-13)
+
 - Add optional SSL: set `ssl: true` with `certfile`/`keyfile` from /ssl to serve the web interface over https on port 22300 (#3114)
 
 ## 3.7.2 (2026-09-12)
