@@ -141,6 +141,19 @@ bashio::config.has_value 'MAILER_ENABLED' && export MAILER_ENABLED="$(bashio::co
 export APP_BASE_URL="$(bashio::config 'APP_BASE_URL')"
 export ALLOWED_HOSTS="*"
 
+# -------------------
+# SSL
+# -------------------
+if bashio::config.true 'ssl'; then
+    bashio::config.require.ssl
+    sed -i "s|%%certfile%%|$(bashio::config 'certfile')|g" /etc/nginx/servers/ssl.conf
+    sed -i "s|%%keyfile%%|$(bashio::config 'keyfile')|g" /etc/nginx/servers/ssl.conf
+    # nginx terminates TLS on 22300 and proxies to Joplin on 22301
+    export APP_PORT=22301
+    nginx &
+    bashio::log.info "Ssl enabled, please use https for connection"
+fi
+
 bashio::log.info 'Starting Joplin. Initial user is "admin@localhost" with password "admin"'
 
 cd /home/joplin || exit 1

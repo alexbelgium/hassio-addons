@@ -56,7 +56,7 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="procps sqlite3 postgresql-client"
+ENV PACKAGES="procps sqlite3 postgresql-client nginx"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh

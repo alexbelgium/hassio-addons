@@ -46,6 +46,9 @@ Webui can be found at `<your-ip>:22300`.
 |--------|------|---------|-------------|
 | `APP_BASE_URL` | str | `http://your_domain:port` | Base public URL where the service will be running |
 | `data_location` | str | `/config/addons_config/joplin` | Path where Joplin data is stored |
+| `ssl` | bool | `false` | Serve the web interface over https on port 22300 |
+| `certfile` | str | `fullchain.pem` | Certificate file in `/ssl` (used when `ssl` is true) |
+| `keyfile` | str | `privkey.pem` | Private key file in `/ssl` (used when `ssl` is true) |
 | `DB_CLIENT` | str | | Database client type. Only `pg` (PostgreSQL) is supported. MariaDB/MySQL is NOT supported. |
 | `POSTGRES_HOST` | str | | PostgreSQL server hostname |
 | `POSTGRES_PORT` | int | | PostgreSQL server port |
@@ -81,6 +84,15 @@ MAILER_AUTH_PASSWORD: "your-app-password"
 MAILER_NOREPLY_NAME: "Joplin Server"
 MAILER_NOREPLY_EMAIL: "noreply@yourdomain.com"
 ```
+
+### HTTPS
+
+Joplin Server only accepts requests whose host (and port) match `APP_BASE_URL` exactly. To reach it securely from outside:
+
+1. Put your certificate and key in `/ssl` (the DuckDNS and Let's Encrypt add-ons already write `fullchain.pem` and `privkey.pem` there).
+2. Set `ssl: true` (and `certfile`/`keyfile` if your files have other names).
+3. Set `APP_BASE_URL` to the exact URL you will type, for example `https://yourname.duckdns.org:22300`.
+4. Forward port 22300 on your router to Home Assistant, restart the add-on, and use that same URL in browsers and in the Joplin clients.
 
 ### Database Setup
 
