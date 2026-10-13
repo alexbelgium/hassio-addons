@@ -92,7 +92,7 @@ Joplin Server only accepts requests whose host (and port) match `APP_BASE_URL` e
 1. Put your certificate and key in `/ssl` (the DuckDNS and Let's Encrypt add-ons already write `fullchain.pem` and `privkey.pem` there).
 2. Set `ssl: true` (and `certfile`/`keyfile` if your files have other names).
 3. Set `APP_BASE_URL` to the exact URL you will type, for example `https://yourname.duckdns.org:22300`.
-4. Forward port 22300 on your router to Home Assistant, restart the add-on, and use that same URL in browsers and in the Joplin clients.
+4. Forward port 22300 on your router to Home Assistant, restart the add-on, and use that same URL in browsers and in the Joplin clients. Use it on your LAN too: if that fails at home, your router lacks hairpin NAT, so add a local DNS entry pointing the domain to your Home Assistant IP.
 
 ### Database Setup
 
