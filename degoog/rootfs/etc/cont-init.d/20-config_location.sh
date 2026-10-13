@@ -12,8 +12,3 @@ bashio::log.info "Data stored in /config"
 # themes are installed by the app itself, so a PUID change must hand them over
 # too. Numbered 20- so it sorts after 00-global_var.sh, which exports PUID/PGID.
 chown -R "${PUID:-0}:${PGID:-0}" /config
-
-if [ -n "${TZ:-}" ] && [ -f "/usr/share/zoneinfo/${TZ}" ]; then
-    ln -sf "/usr/share/zoneinfo/${TZ}" /etc/localtime
-    echo "${TZ}" > /etc/timezone
-fi
