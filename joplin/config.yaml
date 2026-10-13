@@ -70,11 +70,15 @@ image: ghcr.io/alexbelgium/joplin-{arch}
 map:
   - config:rw
   - share:rw
+  - ssl
 name: Joplin Server
 options:
   env_vars: []
   APP_BASE_URL: http://your_domain:port
+  certfile: fullchain.pem
   data_location: /config/addons_config/joplin
+  keyfile: privkey.pem
+  ssl: false
 ports:
   22300/tcp: 22300
 ports_description:
@@ -100,9 +104,12 @@ schema:
   POSTGRES_PASSWORD: str?
   POSTGRES_PORT: int?
   POSTGRES_USER: str?
+  certfile: str?
   data_location: str?
+  keyfile: str?
+  ssl: bool?
 slug: joplin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "3.7.2"
+version: "3.7.2.1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:22300]"
