@@ -33,8 +33,8 @@ providers are installed from its built-in store.
 | `env_vars` | Extra environment variables passed to Degoog, e.g. `DEGOOG_PUBLIC_INSTANCE` or `DEGOOG_I18N`. See the [upstream list](https://degoog-org.github.io/docs/environment-variables.html) and the [wiki](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2). |
 
 The add-on sets `DEGOOG_BASE_URL`, `DEGOOG_DATA_DIR`, `DEGOOG_PORT` and `DEGOOG_BIND_ADDRESS`
-itself, because ingress, the direct port and the health check are built around them: setting
-them in `env_vars` has no effect.
+itself, and clears `DEGOOG_UNIX_SOCKET`, because ingress, the direct port and the health check
+are built around them: setting them in `env_vars` has no effect.
 
 ## Ingress, direct access and search-engine use
 

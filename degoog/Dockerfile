@@ -62,8 +62,8 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ################
 
 # The upstream image ships no s6-overlay, so ha_entrypoint runs as pid 1 : it
-# executes /etc/cont-init.d, then supervises /etc/services.d. The upstream
-# /entrypoint.sh is still what services.d/degoog/run starts the app with.
+# executes /etc/cont-init.d, then supervises /etc/services.d. It replaces the
+# upstream /entrypoint.sh, whose su-exec start services.d/degoog/run reproduces.
 COPY ha_entrypoint.sh /ha_entrypoint.sh
 RUN chmod 0755 /ha_entrypoint.sh
 ENTRYPOINT ["/ha_entrypoint.sh"]
