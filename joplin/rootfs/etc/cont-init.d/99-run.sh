@@ -146,11 +146,12 @@ export ALLOWED_HOSTS="*"
 # -------------------
 if bashio::config.true 'ssl'; then
     bashio::config.require.ssl
-    sed -i "s|%%certfile%%|$(bashio::config 'certfile')|g" /etc/nginx/servers/ssl.conf
-    sed -i "s|%%keyfile%%|$(bashio::config 'keyfile')|g" /etc/nginx/servers/ssl.conf
+    sed -i "s|%%certfile%%|$(bashio::config 'certfile')|g" /etc/nginx/joplin.conf
+    sed -i "s|%%keyfile%%|$(bashio::config 'keyfile')|g" /etc/nginx/joplin.conf
     # nginx terminates TLS on 22300 and proxies to Joplin on 22301
     export APP_PORT=22301
-    nginx &
+    nginx -c /etc/nginx/joplin.conf -t -q || bashio::exit.nok "Invalid ssl certificate or key, check certfile and keyfile"
+    nginx -c /etc/nginx/joplin.conf &
     bashio::log.info "Ssl enabled, please use https for connection"
 fi
 
