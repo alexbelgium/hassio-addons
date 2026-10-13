@@ -437,9 +437,31 @@ if $PID1; then
     (
       restart_count=0
       max_restarts=5
+      # terminate() signals only PID 1's direct children, which are these loop subshells.
+      # Run each service in the background and forward the stop to it, so it shuts down
+      # cleanly instead of being SIGKILLed when PID 1 exits, and is not restarted after.
+      stopping=false
+      service_pid=
+      trap 'stopping=true; [ -z "$service_pid" ] || kill -TERM "$service_pid" 2>/dev/null || true' TERM INT
+      wait_for_service() {
+        local pid="$service_pid"
+        if $stopping; then
+          kill -TERM "$pid" 2>/dev/null || true
+        fi
+        _svc_rc=0
+        wait "$pid" || _svc_rc=$?
+        if $stopping; then
+          wait "$pid" 2>/dev/null || true
+          service_pid=
+          return 1
+        fi
+        service_pid=
+      }
       while true; do
         _svc_rc=0
-        "$runfile" || _svc_rc=$?
+        "$runfile" &
+        service_pid=$!
+        wait_for_service || break
         if [ "$_svc_rc" -eq 126 ] && [ -n "${BASHIO_LIB:-}" ]; then
           echo "Direct exec of $runfile failed (rc=126, likely E2BIG), retrying via source..."
           _svc_rc=0
@@ -448,7 +470,9 @@ if $PID1; then
             . "$BASHIO_LIB" 2>/dev/null || true
             # shellcheck disable=SC1090
             . "$runfile"
-          ) || _svc_rc=$?
+          ) &
+          service_pid=$!
+          wait_for_service || break
         fi
         rc=$_svc_rc
         if [ "$rc" -eq 0 ]; then
@@ -461,7 +485,9 @@ if $PID1; then
           break
         fi
         echo -e "\e[38;5;214m$(date) WARNING: $runfile exited (code $rc), restarting (#${restart_count}/${max_restarts}) in 5s...\e[0m"
-        sleep 5
+        sleep 5 &
+        service_pid=$!
+        wait_for_service || break
       done
     ) &
   done
