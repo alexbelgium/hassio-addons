@@ -1,0 +1,32 @@
+arch:
+  - aarch64
+  - amd64
+description:
+  Search aggregator that queries many engines at once, with themes and a
+  plugin store
+image: ghcr.io/alexbelgium/degoog-{arch}
+ingress: true
+init: false
+map:
+  - addon_config:rw
+name: Degoog
+options:
+  env_vars: []
+  PGID: 0
+  PUID: 0
+panel_icon: mdi:magnify
+ports:
+  4444/tcp: 4444
+ports_description:
+  4444/tcp: Web interface
+schema:
+  DEGOOG_SETTINGS_PASSWORDS: password?
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
+  PGID: int
+  PUID: int
+  TZ: str?
+slug: degoog
+url: https://github.com/alexbelgium/hassio-addons/tree/master/degoog
+version: "1.1.0"

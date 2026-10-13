@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+# Every route Degoog serves, and every url it generates, lives under
+# DEGOOG_BASE_URL. Setting it to the ingress entry makes the pages correct under
+# ingress as they are ; nginx maps the direct port onto the same path.
+# The listener is forced because nginx and the healthcheck are built around it.
+DEGOOG_BASE_URL="$(bashio::addon.ingress_entry)"
+export DEGOOG_BASE_URL
+export DEGOOG_DATA_DIR=/config
+export DEGOOG_PORT=4445
+export DEGOOG_BIND_ADDRESS=127.0.0.1
+unset DEGOOG_UNIX_SOCKET
+
+# Started here rather than through the upstream /entrypoint.sh : 00-global_var.sh
+# injects the env_vars option right after that script's shebang, which would put
+# a user's DEGOOG_PORT or DEGOOG_DATA_DIR back over the values above. The same
+# block lands at the top of this file, before them. The entrypoint's only other
+# work is a chown of /app/data, which is unused here (20-config_location.sh).
+bashio::log.info "Starting Degoog..."
+cd /app
+exec su-exec "${PUID:-0}:${PGID:-0}" bun run src/server/index.ts
