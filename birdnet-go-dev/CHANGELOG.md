@@ -1,3 +1,7 @@
+## 20261013.1 (13-10-2026)
+
+- Rebuild against the current open PRs of the fork, after fixing two that did not compile: the species-workspace PR called an undefined `isSpectrogramFileFor` (now the shared `specfile` grammar), and the reanalyze PR called `DetectionCache.Flush`, which does not exist (now `Invalidate`). The 20261006 and first 20261013 builds failed on those and were auto-reverted.
+
 ## 20260929.1 (30-09-2026)
 - New `INGRESS_SKIP_AUTH` option (default `false`): when `true`, BirdNET-Go no longer asks for its own login when opened through the Home Assistant sidebar (ingress), since Home Assistant has already signed you in. Direct access on port 8080 still requires the login.
 - Security: the ingress web server now only accepts connections from the Home Assistant Supervisor, as Home Assistant requires.
