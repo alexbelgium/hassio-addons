@@ -1,0 +1,10 @@
+{
+  "github_beta": "false",
+  "github_fulltag": false,
+  "last_update": "2026-10-13",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "degoog",
+  "source": "github",
+  "upstream_repo": "degoog-org/degoog",
+  "upstream_version": "1.1.0"
+}

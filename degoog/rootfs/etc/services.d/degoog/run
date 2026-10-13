@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+# Every route Degoog serves, and every url it generates, lives under
+# DEGOOG_BASE_URL. Setting it to the ingress entry makes the pages correct under
+# ingress as they are ; nginx maps the direct port onto the same path.
+# The port and bind address are forced because nginx and the healthcheck are
+# built around them.
+DEGOOG_BASE_URL="$(bashio::addon.ingress_entry)"
+export DEGOOG_BASE_URL
+export DEGOOG_DATA_DIR=/config
+export DEGOOG_PORT=4445
+export DEGOOG_BIND_ADDRESS=127.0.0.1
+
+bashio::log.info "Starting Degoog..."
+cd /app
+exec /entrypoint.sh
