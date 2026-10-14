@@ -1,4 +1,5 @@
- 
+- Exclude **/artwork/hashed/** @theodorx7
+
 ## 0.64.2 (2026-09-26)
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
  
