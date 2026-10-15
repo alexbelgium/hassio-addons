@@ -1,4 +1,7 @@
  
+## 07308545.15 (15-10-2026)
+- Fix terminal Claude Code sessions failing to start with `Error: CLI context tools (rtk, lean-ctx) have been removed from Headroom`. The `/usr/local/bin/claude` wrapper exported `HEADROOM_CONTEXT_TOOL=rtk` before `headroom wrap`, and Headroom 0.36 now rejects that variable. The export is gone. RTK is still configured by the add-on through its own `rtk hook claude` hook (`install_rtk`), which Headroom's leftover cleanup does not touch.
+
 ## 07308545.14 (2026-10-10)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
 - Upstream tag : v3.3.9+claude2.26454.2

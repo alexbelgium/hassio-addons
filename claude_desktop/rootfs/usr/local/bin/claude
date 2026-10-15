@@ -42,7 +42,6 @@ if bashio::config.true 'install_headroom' && bashio::config.true 'headroom_wrap_
     if [ -x "$HEADROOM_BIN" ] && curl -fsS --max-time 2 "${HEADROOM_URL}/health" > /dev/null 2>&1; then
         # Put /usr/bin before /usr/local/bin while Headroom resolves its upstream `claude`
         # executable; otherwise it would resolve this wrapper recursively.
-        export HEADROOM_CONTEXT_TOOL="rtk"
         exec env PATH="/usr/bin:/bin:/usr/local/bin" \
             "$HEADROOM_BIN" wrap claude --no-proxy -- \
             "${CLAUDE_PERMISSION_ARGS[@]}" "$@"
