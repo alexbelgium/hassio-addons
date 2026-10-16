@@ -1,4 +1,8 @@
  
+## 3.3.1.1 (2026-10-16)
+- Update to latest version from ghcr.io/imagegenius/immich:3-openvino
+- Upstream tag : 3.3.1
+ 
 ## 3.3.1 (2026-10-10)
 - Update to latest version from ghcr.io/imagegenius/immich:3-openvino
  
