@@ -1,4 +1,7 @@
  
+## 3.5.3-nouveau (2026-10-16)
+- Update to latest version from library/couchdb
+ 
 ## 3.5.2.1 (2026-08-13)
 - Update to latest version from library/couchdb
 - Upstream tag : 3.5.2.1-nouveau
