@@ -1,3 +1,7 @@
+## 20261016 (16-10-2026)
+
+- Rebuild against the current open PRs of the fork. The first two 20261016 builds failed and were auto-reverted. In the first, the first-daily-consensus PR no longer merged onto upstream main (`processApprovedDetection` gained a `settings` argument). In the second, the reanalyze PR still imported `internal/audiocore/convert`, which upstream removed; it now decodes with go-audio-dsp. Both PR branches have been updated with main.
+
 ## 20261013.1 (13-10-2026)
 
 - Rebuild against the current open PRs of the fork, after fixing two that did not compile: the species-workspace PR called an undefined `isSpectrogramFileFor` (now the shared `specfile` grammar), and the reanalyze PR called `DetectionCache.Flush`, which does not exist (now `Invalidate`). The 20261006 and first 20261013 builds failed on those and were auto-reverted.
