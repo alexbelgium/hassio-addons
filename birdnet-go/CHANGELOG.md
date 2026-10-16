@@ -1,3 +1,6 @@
+ 
+## 20261014 (2026-10-16)
+- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 ## 20260827.1 (07-10-2026)
 
 - Fix: the image kept the `.templates/` scripts of an earlier build, because a rebuild reused the cached module-download layer (the 2026-08-28 image still carried 2026-08-26 scripts). The layer is now refreshed on every build, so template fixes reach this add-on.
