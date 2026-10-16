@@ -1,4 +1,7 @@
  
+## 35.0.2 (2026-10-16)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
+ 
 ## 35.0.1 (2026-09-26)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
