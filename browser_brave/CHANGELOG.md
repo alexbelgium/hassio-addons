@@ -1,4 +1,7 @@
  
+## 1.97.57-ls137 (2026-10-16)
+- Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
+ 
 ## 1.97.56-ls135 (2026-10-10)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
  
