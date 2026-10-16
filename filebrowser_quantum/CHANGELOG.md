@@ -1,4 +1,7 @@
  
+## 2.0.1 (2026-10-16)
+- Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
+ 
 ## 2.0.0.2 (2026-10-11)
 - Remove the empty band above the search bar in the Home Assistant app (portrait): 2.0 padded its header for the phone status bar, which HA already does. The top inset is set to 0 on ingress only.
 
