@@ -1,4 +1,7 @@
- 
+## 2.8.0-dev.1.1 (16-10-2026)
+
+- Fix blank dashboard and non-working menus caused by 404s on frontend assets (bootstrap, htmx, fontawesome, react components). Upstream's entrypoint only collects static files when `DJANGO_DEBUG` is explicitly `False`, which the add-on never set; it is now set in the image (#3123).
+
 ## 2.8.0-dev.1 (2026-10-10)
 - Update to latest version from wger/server
  
