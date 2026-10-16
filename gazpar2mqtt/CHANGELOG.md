@@ -1,3 +1,7 @@
+ 
+## 0.2.6.2 (2026-10-16)
+- Update to latest version from ssenart/gazpar2mqtt
+- Upstream tag : 0.2.6a2
 
 ## 0.2.5.1 (2026-10-10)
 - Fix build: drop the stray version string the updater had written into `PACKAGES`, which made the build try to install a package named after the upstream version
