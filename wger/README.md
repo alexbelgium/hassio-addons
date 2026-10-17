@@ -77,10 +77,12 @@ SQLite database into the PostgreSQL one. Two things are guaranteed about that:
   `PS_DATABASE_URI` again puts wger straight back onto it — remove it from *everywhere*
   you set it, both the `env_vars` option and the `CONFIG_LOCATION` file, since either
   one takes precedence over the SQLite default.
-- **An import only ever happens into an empty PostgreSQL database.** "Empty" here means
-  one with no user accounts at all, which is wger's own test for a database that was
-  never set up. So if you turn PowerSync off and on again later, whatever is already in
-  PostgreSQL is left alone and nothing is overwritten.
+- **An import only ever happens into a PostgreSQL database with no user accounts.** That
+  is wger's own test for a database that was never set up, since its bootstrap creates
+  the admin user as the very last step. So once your data is in PostgreSQL, turning
+  PowerSync off and on again later imports nothing and leaves it alone. The test is that
+  one and no more: a PostgreSQL database holding rows but no users at all — a half-built
+  one, say — still counts as never set up and would be imported into.
 
 What the import does not do is keep the two databases in step. After the switch,
 PostgreSQL is the live database and the SQLite file is a frozen copy of the moment you

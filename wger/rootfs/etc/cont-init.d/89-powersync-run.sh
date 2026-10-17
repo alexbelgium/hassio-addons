@@ -67,6 +67,28 @@ fi
 
 bashio::log.info "PowerSync is enabled"
 
+# From here on the marker is armed rather than written on failure. Anything that stops
+# this script - a refused prerequisite, a failed import, an error nobody anticipated -
+# then leaves it in place, and the patched upstream entrypoint refuses to start wger.
+#
+# That is the fail-safe direction. Letting the boot continue is what loses the data: the
+# entrypoint would bootstrap the empty Postgres database into a new instance with its own
+# admin user, and from then on this script would see a database holding users and skip
+# the import for good. The rows would still be in the SQLite file, and the add-on would
+# never offer to move them again.
+#
+# It is armed only when Django is actually about to use Postgres and there is something
+# to move, so none of this applies to a database wger is not being pointed at. The two
+# places that clear it are a completed import and a target that already holds data.
+case "${PS_DATABASE_URI:-}" in
+    postgres://* | postgresql://*)
+        if [ -s "${DJANGO_DB_DATABASE:-/data/database.sqlite}" ]; then
+            mkdir -p "$(dirname "$IMPORT_FAILED_MARKER")"
+            touch "$IMPORT_FAILED_MARKER"
+        fi
+        ;;
+esac
+
 #########################
 # Refuse bad prerequisites
 #########################
@@ -260,6 +282,7 @@ import_sqlite_data() {
 
     if [ ! -s "$sqlite_db" ]; then
         bashio::log.info "No SQLite database at $sqlite_db, nothing to import"
+        rm -f "$IMPORT_FAILED_MARKER"
         return 0
     fi
 
@@ -279,6 +302,7 @@ import_sqlite_data() {
 
     if [ "$state" = "populated" ]; then
         bashio::log.info "The Postgres database already holds wger data; leaving it as it is and importing nothing"
+        rm -f "$IMPORT_FAILED_MARKER"
         return 0
     fi
 
@@ -341,23 +365,19 @@ import_sqlite_data() {
     fi
 
     rm -rf "$IMPORT_DIR"
+    rm -f "$IMPORT_FAILED_MARKER"
     bashio::log.info "Import finished. wger is now running on Postgres; $sqlite_db is left behind unchanged in case you want to go back"
     return 0
 }
 
 if ! prepare; then
+    # The marker armed above is deliberately left in place; see the comment there.
     exit 0
 fi
 
 if ! import_sqlite_data; then
-    # Letting the boot continue here is what loses the data: the upstream entrypoint
-    # would bootstrap the empty Postgres database into a new instance, complete with its
-    # own admin user, and from then on this script would see a database that holds users
-    # and skip the import for good. So leave a marker the patched entrypoint checks, and
-    # let the add-on fail to start with the reason in the log instead.
     bashio::log.error "PowerSync not started: the SQLite import did not complete, see above."
     bashio::log.error "wger will not be started, so that the empty Postgres database is not set up as a new instance and your SQLite data stays importable. Fix the cause, or remove PS_DATABASE_URI to go back to SQLite."
-    touch "$IMPORT_FAILED_MARKER"
     exit 0
 fi
 
