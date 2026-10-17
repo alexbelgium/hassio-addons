@@ -1,4 +1,9 @@
- 
+## 2.8.0-dev.1.1 (2026-10-16)
+
+- Fix blank dashboard and non-working menus caused by 404s on frontend assets (bootstrap, htmx, fontawesome, react components). Upstream's entrypoint only collects static files when `DJANGO_DEBUG` is explicitly `False`, which the add-on never set; it is now set in the image (#3123).
+- Set `DJANGO_DEBUG=False` in the default `env_vars` option for new installs; the image keeps it as a fallback for existing installs, whose options are not updated.
+- Generate `SECRET_KEY`, `JWT_PRIVATE_KEY` and `JWT_PUBLIC_KEY` on first start and store them in `/data/secrets.env`. This fixes the wger mobile app login failing with a 500 error, and keeps web sessions across restarts. Values set through `env_vars` still take precedence.
+
 ## 2.8.0-dev.1 (2026-10-10)
 - Update to latest version from wger/server
  
