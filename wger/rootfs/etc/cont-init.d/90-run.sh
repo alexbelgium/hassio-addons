@@ -68,21 +68,33 @@ prepare_writable_dir /data/static
 prepare_writable_dir /data/media
 migrate_database
 
+echo "... generate persistent secrets"
+# Without JWT keys the mobile app login fails with a 500, and without SECRET_KEY
+# sessions are lost at every restart. Generated once, env_vars still override them.
+if ! grep -qs '^JWT_PRIVATE_KEY=' /data/secrets.env; then
+    {
+        echo "SECRET_KEY=$(python3 -c 'import secrets; print(secrets.token_urlsafe(50))')"
+        (cd /home/wger/src && sudo -u wger -E HOME=/home/wger python3 manage.py generate-jwt-keys 2> /dev/null | grep '^JWT_')
+    } > /data/secrets.env || bashio::log.warning "Unable to generate JWT keys"
+    chmod 600 /data/secrets.env
+fi
+
 echo "... add env variables"
 (
     set -o posix
     export -p
 ) > /data/env.sh
 
-if [ -f /.env ]; then
+for envfile in /data/secrets.env /.env; do
+    [ -f "$envfile" ] || continue
     while IFS= read -r line; do
         [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
         var="${line%%=*}"
         [[ "$var" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]] || continue
         sed -i "/^export[[:space:]]\+$var=/d" /data/env.sh
         echo "export $line" >> /data/env.sh
-    done < /.env
-fi
+    done < "$envfile"
+done
 
 chown wger /data/env.sh || bashio::log.warning "Unable to set /data/env.sh ownership to wger"
 chmod 0644 /data/env.sh || bashio::log.warning "Unable to make /data/env.sh readable"
