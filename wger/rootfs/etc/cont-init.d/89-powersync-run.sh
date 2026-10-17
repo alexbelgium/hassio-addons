@@ -9,6 +9,13 @@
 #
 # Runs at 89 so the nginx snippet is in place before 90-run.sh starts nginx, and so
 # generated JWT keys land in /.env before 90-run.sh folds that file into /data/env.sh.
+#
+# The "-run" in the name is load-bearing. Settings reach a cont-init script by being
+# injected after its shebang, and the two mechanisms use different globs:
+# 00-global_var.sh (add-on options and env_vars) injects into /etc/cont-init.d/*.sh,
+# while 01-config_yaml.sh (the CONFIG_LOCATION file this add-on documents for extra
+# variables) injects into /etc/cont-init.d/*run* . Matching both is what lets this
+# script see the same settings 90-run.sh hands to Django.
 
 set -u
 
@@ -22,7 +29,7 @@ ENV_FILE=/.env
 # before gunicorn answers, which upstream and the add-on README both put in the
 # tens of minutes. The barrier has to outlast that, not a typical restart.
 DJANGO_WAIT_SECONDS=1800
-DJANGO_WAIT_LOG_EVERY=60
+DJANGO_WAIT_LOG_EVERY=300
 
 # ha_entrypoint.sh's own service supervisor is unreachable here: it only runs when
 # ha_entrypoint.sh is PID 1, and in this add-on it is a child of the upstream
@@ -34,37 +41,12 @@ DJANGO_WAIT_LOG_EVERY=60
 RESTART_DELAY_MIN=5
 RESTART_DELAY_MAX=60
 
-#########################
-# Settings from the config.yaml file
-#########################
-
-# Two mechanisms feed settings in, and only one of them reaches this script on its own.
-# 00-global_var.sh injects add-on options and env_vars into every /etc/cont-init.d/*.sh,
-# but 01-config_yaml.sh - the CONFIG_LOCATION file this add-on documents for extra
-# variables - only writes to /.env and injects into /etc/cont-init.d/*run* , which this
-# script is deliberately not named. So read /.env, which both of them write.
-#
-# /.env wins over the environment on purpose: that is the precedence 90-run.sh produces
-# for Django further down, and this script has to validate the values Django will use.
-# It is sourced in a subshell because the quoting in there is the shell's own, and the
-# same content is already sourced by the upstream entrypoint by way of /data/env.sh.
-env_file_value() {
-    local name="$1"
-    [ -f "$ENV_FILE" ] || return 0
-    (
-        set +u
-        # shellcheck source=/dev/null
-        . "$ENV_FILE" > /dev/null 2>&1 || true
-        printf '%s' "${!name}"
-    )
-}
-
-for _setting in POWERSYNC_ENABLED PS_DATABASE_URI PS_STORAGE_PG_URI SITE_URL \
-    JWT_PUBLIC_KEY JWT_PRIVATE_KEY; do
-    _value="$(env_file_value "$_setting")"
-    [ -n "$_value" ] && export "$_setting=$_value"
-done
-unset _setting _value
+# The one-off SQLite import runs here in cont-init, which is before the upstream
+# entrypoint migrates and bootstraps, so waiting here is what stops that bootstrap from
+# racing the import: cont-init is synchronous. The Postgres add-on starts before regular
+# add-ons, so this is a margin rather than an expected wait.
+POSTGRES_WAIT_SECONDS=300
+IMPORT_DIR=/data/powersync/import
 
 # The Supervisor destroys and recreates the container on every add-on start, so this
 # file is normally absent already. An out-of-band restart (docker restart, Portainer)
@@ -108,6 +90,19 @@ django_manage() {
     (cd /home/wger/src && sudo -u wger -E python3 manage.py "$@")
 }
 
+# The same, pointed at a SQLite file instead. PS_DATABASE_URI has to go: wger's
+# settings/main.py checks it before the DJANGO_DB_* block, so it would win.
+sqlite_manage() {
+    local database="$1"
+    shift
+    (
+        cd /home/wger/src && sudo -u wger -E env -u PS_DATABASE_URI \
+            DJANGO_DB_ENGINE=django.db.backends.sqlite3 \
+            DJANGO_DB_DATABASE="$database" \
+            python3 manage.py "$@"
+    )
+}
+
 # Both halves present, one line each. Checked on the way out of generation and again on
 # reuse, since the file is at a path a user can reach and edit.
 jwt_file_is_complete() {
@@ -141,7 +136,7 @@ prepare() {
         "") refuse "SITE_URL is not set. The app is handed <SITE_URL>/ps/ as the sync endpoint, so it has to be the URL your phone reaches wger on." || return 1 ;;
         http://localhost | http://localhost:* | https://localhost | https://localhost:*)
             refuse "SITE_URL is still the default ${SITE_URL}, which no phone can reach. Set it to the URL you open wger on." || return 1 ;;
-        http:// | https://) refuse "SITE_URL has no host: ${SITE_URL}" || return 1 ;;
+        http:// | https:// | http://:* | https://:*) refuse "SITE_URL has no host: ${SITE_URL}" || return 1 ;;
         http://*/* | https://*/*) refuse "SITE_URL must not contain a path: ${SITE_URL}" || return 1 ;;
         # wger appends "/<path>/" to SITE_URL, so a query or fragment here would swallow
         # the /ps/ it is meant to produce.
@@ -194,17 +189,147 @@ prepare() {
     # 90-run.sh keeps the last assignment it reads out of /.env.
     if [ "$use_persisted_keys" = true ]; then
         # 90-run.sh reads /.env back and re-exports every KEY=VALUE line into
-        # /data/env.sh, which the upstream entrypoint sources before Django starts.
+        # /data/env.sh, which the upstream entrypoint sources before Django starts, so
+        # only the two lines this script put there may travel: anything else in an
+        # edited key file would become an assignment the entrypoint evaluates.
         # The values are the URL-safe base64 that generate-jwt-keys prints, so they
         # contain nothing that needs escaping inside double quotes.
         while IFS= read -r line; do
-            [ -n "$line" ] || continue
+            case "$line" in
+                JWT_PUBLIC_KEY=* | JWT_PRIVATE_KEY=*) ;;
+                *) continue ;;
+            esac
             printf '%s="%s"\n' "${line%%=*}" "${line#*=}" >> "$ENV_FILE"
         done < "$JWT_FILE"
     fi
 }
 
+#########################
+# One-off SQLite import
+#########################
+
+# Mirrors wger's own database_initialised() in wger/tasks.py: a database that cannot be
+# reached is an error rather than an empty database, and "no users at all" is upstream's
+# definition of a database that was never set up, because the admin user is created as
+# the last step of its bootstrap. Prints unreachable, fresh (reachable, no tables yet),
+# empty (tables but no users) or populated.
+target_database_state() {
+    django_manage shell 2> /dev/null << 'PROBE' | tail -n 1
+from django.db import DatabaseError, connection
+
+try:
+    connection.ensure_connection()
+except Exception:
+    print('unreachable')
+else:
+    from django.contrib.auth.models import User
+
+    try:
+        print('populated' if User.objects.exists() else 'empty')
+    except DatabaseError:
+        print('fresh')
+PROBE
+}
+
+# Copy the contents of the add-on's SQLite database into the configured Postgres one,
+# once, the first time PowerSync is enabled.
+#
+# The SQLite file is never opened by this: it is copied first and every read happens
+# against the copy, so disabling PowerSync again (by removing PS_DATABASE_URI) returns
+# to the original database exactly as it was.
+#
+# It also never overwrites: an import happens only into a Postgres database that holds
+# no users, so re-enabling the feature later leaves whatever is already in Postgres
+# alone. The two databases do not stay in sync afterwards - whichever one wger is
+# pointed at is the live one.
+import_sqlite_data() {
+    local sqlite_db="${DJANGO_DB_DATABASE:-/data/database.sqlite}"
+    local waited=0 state=""
+    local dump="$IMPORT_DIR/dump.json" copy="$IMPORT_DIR/database.sqlite"
+
+    if [ ! -s "$sqlite_db" ]; then
+        bashio::log.info "No SQLite database at $sqlite_db, nothing to import"
+        return 0
+    fi
+
+    bashio::log.info "Checking whether the Postgres database already holds wger data"
+    while true; do
+        state="$(target_database_state)"
+        [ "$state" != "unreachable" ] && break
+        if [ "$waited" -ge "$POSTGRES_WAIT_SECONDS" ]; then
+            bashio::log.error "PowerSync: the Postgres database is still unreachable after ${POSTGRES_WAIT_SECONDS}s"
+            bashio::log.error "PowerSync: your SQLite data has NOT been imported. Fix the connection and restart the add-on BEFORE using wger, or the empty Postgres database will be set up as a new instance."
+            bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
+            return 1
+        fi
+        [ "$waited" -eq 0 ] && bashio::log.info "PowerSync: waiting for the Postgres database"
+        sleep 5
+        waited=$((waited + 5))
+    done
+
+    if [ "$state" = "populated" ]; then
+        bashio::log.info "The Postgres database already holds wger data; leaving it as it is and importing nothing"
+        return 0
+    fi
+
+    bashio::log.info "Importing the SQLite database into Postgres (one-off, $sqlite_db is only read)"
+    # The dump holds every row of the database, password hashes included, and the copy
+    # is a second copy of the same file. Both are removed again below.
+    rm -rf "$IMPORT_DIR"
+    mkdir -p "$IMPORT_DIR"
+    chmod 0700 "$IMPORT_DIR"
+    chown wger "$IMPORT_DIR" || bashio::log.warning "Unable to give $IMPORT_DIR to the wger user"
+
+    if ! cp -p "$sqlite_db" "$copy"; then
+        bashio::log.error "PowerSync: could not copy the SQLite database, skipping the import"
+        rm -rf "$IMPORT_DIR"
+        return 1
+    fi
+    chown wger "$copy" || true
+
+    # Dumped from the copy, with the tables Django rebuilds for itself left out: content
+    # types and permissions are recreated by migrate, and admin log entries and sessions
+    # point at them. --natural-foreign keeps those references resolvable; primary keys
+    # are deliberately kept as they are so the rows land unchanged.
+    if ! sqlite_manage "$copy" dumpdata \
+        --natural-foreign \
+        --exclude contenttypes \
+        --exclude auth.Permission \
+        --exclude admin.logentry \
+        --exclude sessions.session \
+        --output "$dump"; then
+        bashio::log.error "PowerSync: reading the SQLite database failed, nothing was written to Postgres"
+        bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
+        rm -rf "$IMPORT_DIR"
+        return 1
+    fi
+
+    if ! django_manage migrate --no-input; then
+        bashio::log.error "PowerSync: creating the schema in Postgres failed, the import is incomplete"
+        rm -rf "$IMPORT_DIR"
+        return 1
+    fi
+
+    # loaddata resets the Postgres sequences for every model it loaded, so the next
+    # insert does not collide with an imported primary key.
+    if ! django_manage loaddata "$dump"; then
+        bashio::log.error "PowerSync: writing the data into Postgres failed. The Postgres database is now half-populated: empty it before trying again."
+        bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
+        rm -rf "$IMPORT_DIR"
+        return 1
+    fi
+
+    rm -rf "$IMPORT_DIR"
+    bashio::log.info "Import finished. wger is now running on Postgres; $sqlite_db is left behind unchanged in case you want to go back"
+    return 0
+}
+
 if ! prepare; then
+    exit 0
+fi
+
+if ! import_sqlite_data; then
+    bashio::log.error "PowerSync not started: the SQLite import did not complete, see above."
     exit 0
 fi
 
@@ -216,7 +341,7 @@ fi
 # here, so with the feature off the glob matches nothing.
 mkdir -p "$NGINX_PS_DIR"
 cat > "$NGINX_PS_DIR/location.conf" << 'EOF'
-# Generated by 89-powersync.sh. Mirrors wger-project/docker config/nginx.conf.
+# Generated by 89-powersync-run.sh. Mirrors wger-project/docker config/nginx.conf.
 location /ps/ {
     proxy_pass http://127.0.0.1:8080/;
 
@@ -268,20 +393,16 @@ start_powersync() {
     # Postgres only writes the logical WAL that PowerSync reads when wal_level is
     # logical, and the default in both Postgres add-ons is replica. Without this the
     # feature looks enabled and silently never syncs.
-    wal_errors="$(mktemp)"
+    # stderr is left alone on purpose: when this fails it is usually a database that
+    # cannot be reached rather than the setting, and the reason belongs in the log.
     wal_level="$(django_manage shell -c \
         "from django.db import connection; c = connection.cursor(); c.execute('SHOW wal_level'); print(c.fetchone()[0])" \
-        2> "$wal_errors" | tail -n 1)"
+        | tail -n 1)"
     if [ "$wal_level" != "logical" ]; then
         bashio::log.error "PowerSync: the database reports wal_level=${wal_level:-unknown}, logical replication needs 'logical'"
         bashio::log.error "PowerSync: add \"wal_level = logical\" to the Postgres add-on configuration and restart it"
-        # Most often this is not the setting at all but a database that cannot be
-        # reached, and then the reason is only in here.
-        [ -s "$wal_errors" ] && bashio::log.error "PowerSync: $(tail -n 3 "$wal_errors")"
-        rm -f "$wal_errors"
         return 1
     fi
-    rm -f "$wal_errors"
 
     # Idempotent, and creates the storage role with exactly the credentials in
     # PS_STORAGE_PG_URI, so whatever the user put there is what gets created.
@@ -300,7 +421,9 @@ start_powersync() {
             sudo -u wger -E "$POWERSYNC_DIR/bin/node" service/lib/entry.js start -r unified || rc=$?
             if [ "$rc" -eq 0 ]; then
                 # Same rule ha_entrypoint.sh applies to its own services: a clean exit
-                # is not a crash, and restarting one fights the add-on shutting down.
+                # is not a crash. Nothing signals this process at shutdown - it is
+                # orphaned when cont-init returns, exactly like the nginx 90-run.sh
+                # starts - so the container runtime is what finally stops it.
                 bashio::log.info "PowerSync exited cleanly, not restarting"
                 break
             fi

@@ -46,7 +46,7 @@ ENV SYNC_EXERCISES_ON_STARTUP=True \
     DJANGO_MEDIA_ROOT="/data/media" \
     DJANGO_STATIC_ROOT="/data/static"
 
-# PowerSync defaults. Inert unless 89-powersync.sh starts the service: PS_PORT and
+# PowerSync defaults. Inert unless 89-powersync-run.sh starts the service: PS_PORT and
 # PS_JWKS_URL are read only by PowerSync itself, and the wger settings already default
 # PS_STORAGE_PG_URI, which the user has to override to a reachable database anyway.
 ENV PS_PORT=8080 \

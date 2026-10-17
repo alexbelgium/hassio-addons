@@ -63,22 +63,37 @@ The official wger mobile app (2.0.3 and newer) syncs offline through a
 `<SITE_URL>/ps/`. The add-on ships that service and can run it alongside wger, off by
 default. Turn it on with the `POWERSYNC_ENABLED` option.
 
-### ⚠ Read this first: enabling PowerSync means leaving SQLite behind
+### Switching to PostgreSQL, and switching back
 
 PowerSync cannot replicate from SQLite, which is what this add-on uses by default, and
-wger's integration with it is built around PostgreSQL. So enabling PowerSync means
-pointing wger at a PostgreSQL database.
+wger's integration with it is built around PostgreSQL. Enabling PowerSync therefore means
+pointing wger at a PostgreSQL database — and the add-on moves your data across for you.
 
-**The add-on provides no migration from its SQLite database to PostgreSQL.** When you
-switch, wger builds a fresh, empty database: your workouts, weight entries, nutrition
-logs **and your user accounts** do not come with it — you will create and log in to a new
-account. The SQLite file is left untouched at `/data/database.sqlite` in the add-on's data
-directory, and removing `PS_DATABASE_URI` again puts you back on it exactly as it was.
+The first time you start it with PowerSync enabled, the add-on copies the contents of its
+SQLite database into the PostgreSQL one. Two things are guaranteed about that:
 
-Moving the data across is possible by hand — Django's `dumpdata`/`loaddata` or a
-SQLite-to-PostgreSQL conversion tool — but none of that is automated or supported here.
-Do not switch an instance you care about without doing that first, or without accepting
-that you are starting over.
+- **The SQLite database is never written to.** It is copied first, and everything is read
+  from the copy, so the original is left byte for byte as it was. Removing
+  `PS_DATABASE_URI` again puts wger straight back onto it — remove it from *everywhere*
+  you set it, both the `env_vars` option and the `CONFIG_LOCATION` file, since either
+  one takes precedence over the SQLite default.
+- **An import only ever happens into an empty PostgreSQL database.** "Empty" here means
+  one with no user accounts at all, which is wger's own test for a database that was
+  never set up. So if you turn PowerSync off and on again later, whatever is already in
+  PostgreSQL is left alone and nothing is overwritten.
+
+What the import does not do is keep the two databases in step. After the switch,
+PostgreSQL is the live database and the SQLite file is a frozen copy of the moment you
+switched. If you go back to SQLite, anything you did in the meantime stays in PostgreSQL,
+and vice versa. You will also be logged out of the web interface once, because sessions
+are deliberately not carried over.
+
+If the import cannot finish — the database is unreachable, or the copy or the load fails
+— the add-on says so in the log, does not start PowerSync, and leaves the SQLite database
+alone. One case is worth knowing about: if PostgreSQL never becomes reachable at all, your
+data is not imported, and wger will go on to set the empty PostgreSQL database up as a
+brand new instance. Fix the connection and restart the add-on before using wger if you
+see that in the log.
 
 ### What you need
 
@@ -103,7 +118,14 @@ that you are starting over.
    GRANT CREATE ON DATABASE wger TO wger;
    ```
 
-   On PostgreSQL 16 and later — which includes the Postgres 17 add-on — that is not
+   The same role — the one in `PS_DATABASE_URI`, not `powersync_storage` — also needs
+   `REPLICATION`, which is how PowerSync reads the logical WAL:
+
+   ```sql
+   ALTER ROLE wger REPLICATION;
+   ```
+
+   On PostgreSQL 16 and later — which includes the Postgres 17 add-on — that is still not
    quite enough. Creating the schema runs `CREATE SCHEMA ... AUTHORIZATION
    powersync_storage`, and
    [the documentation](https://www.postgresql.org/docs/17/sql-createschema.html) requires
@@ -116,15 +138,17 @@ that you are starting over.
    ALTER ROLE wger SET createrole_self_grant = 'set, inherit';
    ```
 
-   If the storage role already exists from an earlier attempt, grant it directly instead:
+   If the storage role already exists from an earlier attempt, grant it directly instead
+   — this one has to be run by a role allowed to hand out that membership, normally the
+   superuser:
 
    ```sql
    GRANT powersync_storage TO wger WITH ADMIN OPTION, SET TRUE;
    ```
 
-   The role also needs `REPLICATION` for PowerSync to read the logical WAL. The Postgres
-   superuser has all of this, which is why pointing at it works and is the quickest way
-   to get going, but a role with just these grants is the better choice.
+   The PostgreSQL superuser has all of this already, which is why pointing at it works
+   and is the quickest way to get going, but a role with just these grants is the better
+   choice.
 3. The URL your phone uses to reach wger, in `SITE_URL`. The app is handed
    `<SITE_URL>/ps/` as its sync endpoint, so a LAN-only address will not work from
    outside your network.
