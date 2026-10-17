@@ -3,6 +3,7 @@
 
 - Add optional PowerSync support, so the official wger mobile app (2.0.3 and newer) can sync offline (#2950). Set the new `POWERSYNC_ENABLED` option to start a PowerSync service inside the add-on, reached at `<SITE_URL>/ps/` through the add-on's own nginx, exactly as upstream's docker deployment serves it.
 - ⚠ PowerSync cannot replicate from SQLite. Enabling it therefore means pointing wger at a Postgres database (for example the Postgres 17 add-on) with `PS_DATABASE_URI`, and **the add-on provides no migration for an existing SQLite database — the Postgres database starts empty, and your current workouts, weight and nutrition data and your user accounts do not follow.** The SQLite file is left untouched, so removing the setting puts you back on it. Read the PowerSync section of the add-on documentation before switching.
+- PowerSync settings can be supplied either through the add-on's `env_vars` option or through the `CONFIG_LOCATION` config.yaml file; both are read.
 - With `POWERSYNC_ENABLED` unset, nothing changes: the option defaults to off, the nginx configuration is unchanged, no new process runs and the SQLite database stays the default. The PowerSync files ship in the image either way, which makes it about 90 MB larger to download.
 
 ## 2.8.0-dev.1 (2026-10-10)

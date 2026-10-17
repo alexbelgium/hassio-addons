@@ -34,6 +34,38 @@ DJANGO_WAIT_LOG_EVERY=60
 RESTART_DELAY_MIN=5
 RESTART_DELAY_MAX=60
 
+#########################
+# Settings from the config.yaml file
+#########################
+
+# Two mechanisms feed settings in, and only one of them reaches this script on its own.
+# 00-global_var.sh injects add-on options and env_vars into every /etc/cont-init.d/*.sh,
+# but 01-config_yaml.sh - the CONFIG_LOCATION file this add-on documents for extra
+# variables - only writes to /.env and injects into /etc/cont-init.d/*run* , which this
+# script is deliberately not named. So read /.env, which both of them write.
+#
+# /.env wins over the environment on purpose: that is the precedence 90-run.sh produces
+# for Django further down, and this script has to validate the values Django will use.
+# It is sourced in a subshell because the quoting in there is the shell's own, and the
+# same content is already sourced by the upstream entrypoint by way of /data/env.sh.
+env_file_value() {
+    local name="$1"
+    [ -f "$ENV_FILE" ] || return 0
+    (
+        set +u
+        # shellcheck source=/dev/null
+        . "$ENV_FILE" > /dev/null 2>&1 || true
+        printf '%s' "${!name}"
+    )
+}
+
+for _setting in POWERSYNC_ENABLED PS_DATABASE_URI PS_STORAGE_PG_URI SITE_URL \
+    JWT_PUBLIC_KEY JWT_PRIVATE_KEY; do
+    _value="$(env_file_value "$_setting")"
+    [ -n "$_value" ] && export "$_setting=$_value"
+done
+unset _setting _value
+
 # The Supervisor destroys and recreates the container on every add-on start, so this
 # file is normally absent already. An out-of-band restart (docker restart, Portainer)
 # does reuse the writable layer, and then a route left over from a previous run would

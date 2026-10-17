@@ -103,9 +103,28 @@ that you are starting over.
    GRANT CREATE ON DATABASE wger TO wger;
    ```
 
+   On PostgreSQL 16 and later — which includes the Postgres 17 add-on — that is not
+   quite enough. Creating the schema runs `CREATE SCHEMA ... AUTHORIZATION
+   powersync_storage`, and
+   [the documentation](https://www.postgresql.org/docs/17/sql-createschema.html) requires
+   that you "must be able to SET ROLE to that role". A `CREATEROLE` user is only given
+   `ADMIN OPTION` on the roles it creates, not `SET`, because
+   [`createrole_self_grant`](https://www.postgresql.org/docs/17/runtime-config-client.html#GUC-CREATEROLE-SELF-GRANT)
+   defaults to empty. Grant it for the roles wger is about to create:
+
+   ```sql
+   ALTER ROLE wger SET createrole_self_grant = 'set, inherit';
+   ```
+
+   If the storage role already exists from an earlier attempt, grant it directly instead:
+
+   ```sql
+   GRANT powersync_storage TO wger WITH ADMIN OPTION, SET TRUE;
+   ```
+
    The role also needs `REPLICATION` for PowerSync to read the logical WAL. The Postgres
-   superuser has all of this, which is why pointing at it works, but a role with just
-   these three grants is the better choice.
+   superuser has all of this, which is why pointing at it works and is the quickest way
+   to get going, but a role with just these grants is the better choice.
 3. The URL your phone uses to reach wger, in `SITE_URL`. The app is handed
    `<SITE_URL>/ps/` as its sync endpoint, so a LAN-only address will not work from
    outside your network.
@@ -113,7 +132,7 @@ that you are starting over.
 ### Add-on configuration
 
 Set `POWERSYNC_ENABLED` to `true` and add the following through the add-on's `env_vars`
-option:
+option (the `CONFIG_LOCATION` config.yaml file documented above works for these too):
 
 ```yaml
 env_vars:
@@ -133,6 +152,13 @@ env_vars:
   with a different role name and a password of your choosing; that is the role the
   add-on creates. It must be set, it has no useful default.
 - `SITE_URL` must be an absolute `http://` or `https://` URL with no path.
+
+> **The two URIs contain passwords, and the add-on prints every variable it loads to its
+> log at startup.** The shared startup code masks values whose variable name looks like a
+> secret, and these two names do not, so both PostgreSQL passwords appear in the add-on
+> log in full — including when the value comes from `!secret`. Treat the add-on log as
+> sensitive, and prefer a dedicated wger role with a password you are willing to see
+> there over reusing credentials from elsewhere.
 
 The add-on generates the RS256 JWT keypair the app and PowerSync need on first start and
 keeps it at `/data/powersync/jwt.env`, so app sessions survive restarts. If you would
