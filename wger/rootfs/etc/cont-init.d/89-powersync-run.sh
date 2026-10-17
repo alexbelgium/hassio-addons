@@ -47,12 +47,18 @@ RESTART_DELAY_MAX=60
 # add-ons, so this is a margin rather than an expected wait.
 POSTGRES_WAIT_SECONDS=300
 IMPORT_DIR=/data/powersync/import
+IMPORT_FAILED_MARKER=/data/powersync/import-failed
 
 # The Supervisor destroys and recreates the container on every add-on start, so this
 # file is normally absent already. An out-of-band restart (docker restart, Portainer)
 # does reuse the writable layer, and then a route left over from a previous run would
 # point /ps/ at a service this run is not going to start.
 rm -f "$NGINX_PS_DIR/location.conf"
+
+# Cleared here and written only when an import fails, so it can never outlive the boot
+# that created it. The upstream entrypoint refuses to start wger while it exists; see
+# the import function and the sed in the Dockerfile.
+rm -f "$IMPORT_FAILED_MARKER"
 
 enabled="${POWERSYNC_ENABLED:-false}"
 if [ "${enabled,,}" != "true" ]; then
@@ -165,7 +171,12 @@ prepare() {
     else
         bashio::log.info "Generating a JWT keypair for PowerSync (kept at $JWT_FILE)"
         mkdir -p "$JWT_DIR"
-        chmod 0700 "$JWT_DIR"
+        # 0755, not 0700: the import directory lives under this one and is read by the
+        # wger user, which needs search permission on every component of the path. The
+        # key file itself is what is protected, by its own 0600 below. The chmod is
+        # explicit so that a 0700 left here by an earlier version of the add-on - /data
+        # survives upgrades - is repaired rather than inherited.
+        chmod 0755 "$JWT_DIR"
 
         jwt_tmp="$JWT_FILE.tmp"
         rm -f "$jwt_tmp"
@@ -258,7 +269,6 @@ import_sqlite_data() {
         [ "$state" != "unreachable" ] && break
         if [ "$waited" -ge "$POSTGRES_WAIT_SECONDS" ]; then
             bashio::log.error "PowerSync: the Postgres database is still unreachable after ${POSTGRES_WAIT_SECONDS}s"
-            bashio::log.error "PowerSync: your SQLite data has NOT been imported. Fix the connection and restart the add-on BEFORE using wger, or the empty Postgres database will be set up as a new instance."
             bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
             return 1
         fi
@@ -277,15 +287,26 @@ import_sqlite_data() {
     # is a second copy of the same file. Both are removed again below.
     rm -rf "$IMPORT_DIR"
     mkdir -p "$IMPORT_DIR"
+    # dumpdata and loaddata run as the wger user, which needs search permission on
+    # every component down to the files below, so the parent cannot stay root-only.
+    chmod 0755 "$(dirname "$IMPORT_DIR")"
     chmod 0700 "$IMPORT_DIR"
-    chown wger "$IMPORT_DIR" || bashio::log.warning "Unable to give $IMPORT_DIR to the wger user"
+    if ! chown wger "$IMPORT_DIR"; then
+        bashio::log.error "PowerSync: could not give $IMPORT_DIR to the wger user, which is what reads the database"
+        rm -rf "$IMPORT_DIR"
+        return 1
+    fi
 
     if ! cp -p "$sqlite_db" "$copy"; then
         bashio::log.error "PowerSync: could not copy the SQLite database, skipping the import"
         rm -rf "$IMPORT_DIR"
         return 1
     fi
-    chown wger "$copy" || true
+    if ! chown wger "$copy"; then
+        bashio::log.error "PowerSync: could not give the database copy to the wger user"
+        rm -rf "$IMPORT_DIR"
+        return 1
+    fi
 
     # Dumped from the copy, with the tables Django rebuilds for itself left out: content
     # types and permissions are recreated by migrate, and admin log entries and sessions
@@ -329,7 +350,14 @@ if ! prepare; then
 fi
 
 if ! import_sqlite_data; then
+    # Letting the boot continue here is what loses the data: the upstream entrypoint
+    # would bootstrap the empty Postgres database into a new instance, complete with its
+    # own admin user, and from then on this script would see a database that holds users
+    # and skip the import for good. So leave a marker the patched entrypoint checks, and
+    # let the add-on fail to start with the reason in the log instead.
     bashio::log.error "PowerSync not started: the SQLite import did not complete, see above."
+    bashio::log.error "wger will not be started, so that the empty Postgres database is not set up as a new instance and your SQLite data stays importable. Fix the cause, or remove PS_DATABASE_URI to go back to SQLite."
+    touch "$IMPORT_FAILED_MARKER"
     exit 0
 fi
 

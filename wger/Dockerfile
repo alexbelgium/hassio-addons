@@ -55,9 +55,14 @@ ENV PS_PORT=8080 \
 
 USER root
 
+# The third sed is the guard that stops a failed SQLite import from turning into a
+# fresh instance: 89-powersync-run.sh writes that marker and the add-on stops here,
+# before "wger bootstrap" can create an admin user in the empty Postgres database and
+# make the import look unnecessary for ever after.
 RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     sed -i "1a sudo -E /./ha_entrypoint.sh" /home/wger/entrypoint.sh && \
-    sed -i "/ha_entrypoint/a . /data/env.sh" /home/wger/entrypoint.sh
+    sed -i "/ha_entrypoint/a . /data/env.sh" /home/wger/entrypoint.sh && \
+    sed -i '/data\/env.sh/a if [ -f /data/powersync/import-failed ]; then echo "The SQLite import into Postgres did not complete; refusing to start wger so the data stays importable. See the errors above."; exit 1; fi' /home/wger/entrypoint.sh
 
 ##################
 # 3 Install apps #

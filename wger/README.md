@@ -89,11 +89,16 @@ and vice versa. You will also be logged out of the web interface once, because s
 are deliberately not carried over.
 
 If the import cannot finish — the database is unreachable, or the copy or the load fails
-— the add-on says so in the log, does not start PowerSync, and leaves the SQLite database
-alone. One case is worth knowing about: if PostgreSQL never becomes reachable at all, your
-data is not imported, and wger will go on to set the empty PostgreSQL database up as a
-brand new instance. Fix the connection and restart the add-on before using wger if you
-see that in the log.
+— **the add-on refuses to start wger at all**, with the reason in the log. That is
+deliberate: if it carried on, wger would set the empty PostgreSQL database up as a brand
+new instance, complete with its own admin user, and from then on the add-on would see a
+database that already holds data and would never import your SQLite rows again. Stopping
+instead keeps them importable.
+
+So if the add-on will not start and the log says the import did not complete, fix the
+cause — most often the database connection or the privileges above — and start it again.
+To abandon the move entirely, remove `PS_DATABASE_URI` and the add-on goes back to the
+SQLite database as if nothing had happened.
 
 ### What you need
 
