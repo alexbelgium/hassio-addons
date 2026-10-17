@@ -110,7 +110,7 @@ that you are starting over.
    `<SITE_URL>/ps/` as its sync endpoint, so a LAN-only address will not work from
    outside your network.
 
-### Configuration
+### Add-on configuration
 
 Set `POWERSYNC_ENABLED` to `true` and add the following through the add-on's `env_vars`
 option:
