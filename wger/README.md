@@ -56,6 +56,113 @@ Additional variables can be set as ENV variables by adding them in the config.ya
 
 The complete list of ENV variables can be seen here : not available
 
+## Mobile app offline sync (PowerSync)
+
+The official wger mobile app (2.0.3 and newer) syncs offline through a
+[PowerSync](https://powersync.com/) service, which it expects to find at
+`<SITE_URL>/ps/`. The add-on ships that service and can run it alongside wger, off by
+default. Turn it on with the `POWERSYNC_ENABLED` option.
+
+### ⚠ Read this first: enabling PowerSync means leaving SQLite behind
+
+PowerSync cannot replicate from SQLite, which is what this add-on uses by default, and
+wger's integration with it is built around PostgreSQL. So enabling PowerSync means
+pointing wger at a PostgreSQL database.
+
+**The add-on provides no migration from its SQLite database to PostgreSQL.** When you
+switch, wger builds a fresh, empty database: your workouts, weight entries, nutrition
+logs **and your user accounts** do not come with it — you will create and log in to a new
+account. The SQLite file is left untouched at `/data/database.sqlite` in the add-on's data
+directory, and removing `PS_DATABASE_URI` again puts you back on it exactly as it was.
+
+Moving the data across is possible by hand — Django's `dumpdata`/`loaddata` or a
+SQLite-to-PostgreSQL conversion tool — but none of that is automated or supported here.
+Do not switch an instance you care about without doing that first, or without accepting
+that you are starting over.
+
+### What you need
+
+1. A PostgreSQL server the add-on can reach — the **Postgres 17** add-on from this
+   repository works. PowerSync reads the logical write-ahead log, so the server needs
+   `wal_level = logical`, which is not the default. With the Postgres add-on, add
+
+   ```conf
+   wal_level = logical
+   ```
+
+   to the file its `CONFIG_LOCATION` option points at, then restart it. The add-on
+   checks this on startup and tells you in the log if it is still `replica`.
+2. A database and a role for wger. PowerSync's bucket storage lives in a dedicated role
+   and schema inside that same database, and the add-on creates them on every startup
+   with upstream's idempotent `manage.py setup-powersync-storage`. The wger role
+   therefore needs `CREATEROLE`, and `CREATE` on the database, **for as long as
+   PowerSync is enabled** — not just for the first start:
+
+   ```sql
+   ALTER ROLE wger CREATEROLE;
+   GRANT CREATE ON DATABASE wger TO wger;
+   ```
+
+   The role also needs `REPLICATION` for PowerSync to read the logical WAL. The Postgres
+   superuser has all of this, which is why pointing at it works, but a role with just
+   these three grants is the better choice.
+3. The URL your phone uses to reach wger, in `SITE_URL`. The app is handed
+   `<SITE_URL>/ps/` as its sync endpoint, so a LAN-only address will not work from
+   outside your network.
+
+### Configuration
+
+Set `POWERSYNC_ENABLED` to `true` and add the following through the add-on's `env_vars`
+option:
+
+```yaml
+env_vars:
+  - name: PS_DATABASE_URI
+    value: postgres://wger:yourpassword@192.168.1.10:5432/wger
+  - name: PS_STORAGE_PG_URI
+    value: postgres://powersync_storage:anotherpassword@192.168.1.10:5432/wger
+  - name: SITE_URL
+    value: https://wger.yourdomain.com
+```
+
+- `PS_DATABASE_URI` is wger's own database. Setting it takes precedence over the
+  `DJANGO_DB_*` variables, so this single value both moves wger onto PostgreSQL and tells
+  PowerSync what to replicate: in the shipped configuration they read the same URI, so
+  they cannot be pointed at different databases by accident.
+- `PS_STORAGE_PG_URI` is PowerSync's bucket storage. Point it at the **same** database
+  with a different role name and a password of your choosing; that is the role the
+  add-on creates. It must be set, it has no useful default.
+- `SITE_URL` must be an absolute `http://` or `https://` URL with no path.
+
+The add-on generates the RS256 JWT keypair the app and PowerSync need on first start and
+keeps it at `/data/powersync/jwt.env`, so app sessions survive restarts. If you would
+rather manage it yourself, generate one with
+`python3 manage.py generate-jwt-keys` and pass both `JWT_PUBLIC_KEY` and
+`JWT_PRIVATE_KEY` as env vars — both halves or neither.
+
+Your PostgreSQL server also has to be a version PowerSync supports, and the sync rules
+shipped with the add-on come from the upstream wger project. If replication fails for a
+reason other than `wal_level`, the add-on log carries PowerSync's own error.
+
+### Checking it works
+
+With everything in place the add-on log reports the PowerSync URL, and
+`<SITE_URL>/ps/probes/liveness` answers instead of logging `Not Found: /ps/probes/liveness`.
+If a prerequisite is missing the add-on still starts wger normally and the log says
+exactly which variable is wrong; `/ps/` stays unrouted in that case.
+
+If you put your own reverse proxy in front of the add-on, nothing extra is needed: the
+`/ps/` route forwards an incoming `X-Forwarded-Proto` unchanged and only falls back to
+its own scheme when there is none, so PowerSync sees the external scheme your proxy
+terminated.
+
+### Licence
+
+The bundled PowerSync service is published by Journey Mobile, Inc. under the
+[Functional Source License 1.1 with an Apache 2.0 future grant](https://www.powersync.com/legal/fsl)
+(FSL-1.1-ALv2). Its licence text ships in the image at `/opt/powersync/LICENSE`. The
+service is pinned to a specific upstream release rather than tracking `latest`.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in
