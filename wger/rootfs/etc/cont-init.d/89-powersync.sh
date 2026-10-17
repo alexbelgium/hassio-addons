@@ -83,45 +83,23 @@ bashio::log.info "PowerSync is enabled"
 # Refuse bad prerequisites
 #########################
 
-# A cont-init script that exits nonzero is only logged by ha_entrypoint.sh, which
-# then carries on, so there is nothing to be gained by failing hard here: say exactly
-# what is missing, leave /ps/ unrouted, and let wger itself start normally.
+# A cont-init script that exits nonzero is only logged by ha_entrypoint.sh, which then
+# carries on, so there is nothing to be gained by failing hard here: say exactly what is
+# missing, leave /ps/ unrouted, and let wger itself start normally.
+#
+# refuse() returns rather than exits, and the single caller below turns that into a
+# top-level exit. ha_entrypoint.sh can run a cont-init script either way - it execs it,
+# or with ha_entry_source=true it rewrites "exit N" to "return N || exit N" and sources
+# it - and an exit inside a function would, in the second mode, return from the function
+# only and let the rest of this script run on a configuration it had just rejected.
 refuse() {
     bashio::log.error "PowerSync not started: $1"
     bashio::log.error "See the PowerSync section of the add-on documentation."
-    exit 0
+    return 1
 }
 
-case "${PS_DATABASE_URI:-}" in
-    postgres://* | postgresql://*) ;;
-    "") refuse "PS_DATABASE_URI is not set. PowerSync replicates from PostgreSQL only; wger must be pointed at a Postgres database with this variable." ;;
-    *) refuse "PS_DATABASE_URI is not a PostgreSQL URI (${PS_DATABASE_URI%%:*}:...). PowerSync cannot replicate from anything else, SQLite included." ;;
-esac
-
-case "${PS_STORAGE_PG_URI:-}" in
-    postgres://* | postgresql://*) ;;
-    "") refuse "PS_STORAGE_PG_URI is not set. PowerSync keeps its sync buckets in a dedicated role inside the same Postgres database; set it to postgres://powersync_storage:<password>@<host>:<port>/<database>." ;;
-    *) refuse "PS_STORAGE_PG_URI is not a PostgreSQL URI." ;;
-esac
-
-# wger builds the endpoint the app connects to as "<SITE_URL>/ps/", so only the scheme
-# and a non-empty host are checked here, plus the shipped default, which no phone can
-# reach. A trailing slash is tolerated.
-site_url="${SITE_URL:-}"
-site_url="${site_url%/}"
-
-case "$site_url" in
-    "") refuse "SITE_URL is not set. The app is handed <SITE_URL>/ps/ as the sync endpoint, so it has to be the URL your phone reaches wger on." ;;
-    http://localhost | http://localhost:* | https://localhost | https://localhost:*)
-        refuse "SITE_URL is still the default ${SITE_URL}, which no phone can reach. Set it to the URL you open wger on." ;;
-    http:// | https://) refuse "SITE_URL has no host: ${SITE_URL}" ;;
-    http://*/* | https://*/*) refuse "SITE_URL must not contain a path: ${SITE_URL}" ;;
-    http://* | https://*) ;;
-    *) refuse "SITE_URL must be an absolute http:// or https:// URL, got ${SITE_URL}" ;;
-esac
-
 #########################
-# Django management helper
+# Helpers
 #########################
 
 # The image's own ENV already carries PYTHONPATH and DJANGO_SETTINGS_MODULE, and
@@ -130,68 +108,101 @@ django_manage() {
     (cd /home/wger/src && sudo -u wger -E python3 manage.py "$@")
 }
 
-#########################
-# JWT keypair
-#########################
-
-# The same RS256 pair signs the app's tokens and the PowerSync token, and PowerSync
-# fetches the public half back from Django over PS_JWKS_URL. Rotating it logs every
-# app session out, so a pair is generated exactly once and then reused.
-public_key="${JWT_PUBLIC_KEY:-}"
-private_key="${JWT_PRIVATE_KEY:-}"
-use_persisted_keys=false
-
-# Both halves present, one line each. Checked on the way out of generation and again
-# on reuse, since the file is at a path a user can reach and edit.
+# Both halves present, one line each. Checked on the way out of generation and again on
+# reuse, since the file is at a path a user can reach and edit.
 jwt_file_is_complete() {
     [ -f "$1" ] \
         && [ "$(grep -c '^JWT_PUBLIC_KEY=.' "$1")" -eq 1 ] \
         && [ "$(grep -c '^JWT_PRIVATE_KEY=.' "$1")" -eq 1 ]
 }
 
-if [ -n "$public_key" ] && [ -n "$private_key" ]; then
-    bashio::log.info "Using the JWT keypair from the add-on configuration"
-elif [ -n "$public_key" ] || [ -n "$private_key" ]; then
-    refuse "only one half of the JWT keypair is configured. Set both JWT_PUBLIC_KEY and JWT_PRIVATE_KEY, or neither to have a pair generated."
-elif [ -f "$JWT_FILE" ]; then
-    jwt_file_is_complete "$JWT_FILE" \
-        || refuse "$JWT_FILE does not hold one JWT_PUBLIC_KEY and one JWT_PRIVATE_KEY line. Delete it to have a fresh pair generated, which logs every app session out."
-    bashio::log.info "Reusing the JWT keypair generated on a previous start"
-    use_persisted_keys=true
-else
-    bashio::log.info "Generating a JWT keypair for PowerSync (kept at $JWT_FILE)"
-    mkdir -p "$JWT_DIR"
-    chmod 0700 "$JWT_DIR"
+# Everything that can reject the configuration lives here, so a rejection is a return
+# and the single caller below turns it into one top-level exit.
+prepare() {
+    case "${PS_DATABASE_URI:-}" in
+        postgres://* | postgresql://*) ;;
+        "") refuse "PS_DATABASE_URI is not set. PowerSync replicates from PostgreSQL only; wger must be pointed at a Postgres database with this variable." || return 1 ;;
+        *) refuse "PS_DATABASE_URI is not a PostgreSQL URI (${PS_DATABASE_URI%%:*}:...). PowerSync cannot replicate from anything else, SQLite included." || return 1 ;;
+    esac
 
-    jwt_tmp="$JWT_FILE.tmp"
-    rm -f "$jwt_tmp"
-    if ! django_manage generate-jwt-keys \
-        | grep -E '^JWT_(PUBLIC|PRIVATE)_KEY=.+' > "$jwt_tmp"; then
-        rm -f "$jwt_tmp"
-        refuse "could not generate a JWT keypair (manage.py generate-jwt-keys failed)."
-    fi
-    if ! jwt_file_is_complete "$jwt_tmp"; then
-        rm -f "$jwt_tmp"
-        refuse "generate-jwt-keys did not return exactly one public and one private key."
-    fi
-    chmod 0600 "$jwt_tmp"
-    # Rename last, so an interrupted start never leaves half a keypair behind.
-    mv "$jwt_tmp" "$JWT_FILE"
-    use_persisted_keys=true
-fi
+    case "${PS_STORAGE_PG_URI:-}" in
+        postgres://* | postgresql://*) ;;
+        "") refuse "PS_STORAGE_PG_URI is not set. PowerSync keeps its sync buckets in a dedicated role inside the same Postgres database; set it to postgres://powersync_storage:<password>@<host>:<port>/<database>." || return 1 ;;
+        *) refuse "PS_STORAGE_PG_URI is not a PostgreSQL URI." || return 1 ;;
+    esac
 
-# Only when the persisted pair is the one in use. A configured pair is already in the
-# environment, and exporting the generated one on top of it would win: 90-run.sh keeps
-# the last assignment it reads out of /.env.
-if [ "$use_persisted_keys" = true ]; then
-    # 90-run.sh reads /.env back and re-exports every KEY=VALUE line into
-    # /data/env.sh, which the upstream entrypoint sources before Django starts.
-    # The values are the URL-safe base64 that generate-jwt-keys prints, so they
-    # contain nothing that needs escaping inside double quotes.
-    while IFS= read -r line; do
-        [ -n "$line" ] || continue
-        printf '%s="%s"\n' "${line%%=*}" "${line#*=}" >> "$ENV_FILE"
-    done < "$JWT_FILE"
+    # wger builds the endpoint the app connects to as "<SITE_URL>/ps/", so only the
+    # scheme and a non-empty host are checked here, plus the shipped default, which no
+    # phone can reach. A trailing slash is tolerated.
+    site_url="${SITE_URL:-}"
+    site_url="${site_url%/}"
+
+    case "$site_url" in
+        "") refuse "SITE_URL is not set. The app is handed <SITE_URL>/ps/ as the sync endpoint, so it has to be the URL your phone reaches wger on." || return 1 ;;
+        http://localhost | http://localhost:* | https://localhost | https://localhost:*)
+            refuse "SITE_URL is still the default ${SITE_URL}, which no phone can reach. Set it to the URL you open wger on." || return 1 ;;
+        http:// | https://) refuse "SITE_URL has no host: ${SITE_URL}" || return 1 ;;
+        http://*/* | https://*/*) refuse "SITE_URL must not contain a path: ${SITE_URL}" || return 1 ;;
+        http://* | https://*) ;;
+        *) refuse "SITE_URL must be an absolute http:// or https:// URL, got ${SITE_URL}" || return 1 ;;
+    esac
+
+    # The same RS256 pair signs the app's tokens and the PowerSync token, and PowerSync
+    # fetches the public half back from Django over PS_JWKS_URL. Rotating it logs every
+    # app session out, so a pair is generated exactly once and then reused.
+    local public_key="${JWT_PUBLIC_KEY:-}"
+    local private_key="${JWT_PRIVATE_KEY:-}"
+    local jwt_tmp line
+    use_persisted_keys=false
+
+    if [ -n "$public_key" ] && [ -n "$private_key" ]; then
+        bashio::log.info "Using the JWT keypair from the add-on configuration"
+    elif [ -n "$public_key" ] || [ -n "$private_key" ]; then
+        refuse "only one half of the JWT keypair is configured. Set both JWT_PUBLIC_KEY and JWT_PRIVATE_KEY, or neither to have a pair generated." || return 1
+    elif [ -f "$JWT_FILE" ]; then
+        jwt_file_is_complete "$JWT_FILE" \
+            || { refuse "$JWT_FILE does not hold one JWT_PUBLIC_KEY and one JWT_PRIVATE_KEY line. Delete it to have a fresh pair generated, which logs every app session out."; return 1; }
+        bashio::log.info "Reusing the JWT keypair generated on a previous start"
+        use_persisted_keys=true
+    else
+        bashio::log.info "Generating a JWT keypair for PowerSync (kept at $JWT_FILE)"
+        mkdir -p "$JWT_DIR"
+        chmod 0700 "$JWT_DIR"
+
+        jwt_tmp="$JWT_FILE.tmp"
+        rm -f "$jwt_tmp"
+        if ! django_manage generate-jwt-keys \
+            | grep -E '^JWT_(PUBLIC|PRIVATE)_KEY=.+' > "$jwt_tmp"; then
+            rm -f "$jwt_tmp"
+            refuse "could not generate a JWT keypair (manage.py generate-jwt-keys failed)." || return 1
+        fi
+        if ! jwt_file_is_complete "$jwt_tmp"; then
+            rm -f "$jwt_tmp"
+            refuse "generate-jwt-keys did not return exactly one public and one private key." || return 1
+        fi
+        chmod 0600 "$jwt_tmp"
+        # Rename last, so an interrupted start never leaves half a keypair behind.
+        mv "$jwt_tmp" "$JWT_FILE"
+        use_persisted_keys=true
+    fi
+
+    # Only when the persisted pair is the one in use. A configured pair is already in
+    # the environment, and exporting the generated one on top of it would win:
+    # 90-run.sh keeps the last assignment it reads out of /.env.
+    if [ "$use_persisted_keys" = true ]; then
+        # 90-run.sh reads /.env back and re-exports every KEY=VALUE line into
+        # /data/env.sh, which the upstream entrypoint sources before Django starts.
+        # The values are the URL-safe base64 that generate-jwt-keys prints, so they
+        # contain nothing that needs escaping inside double quotes.
+        while IFS= read -r line; do
+            [ -n "$line" ] || continue
+            printf '%s="%s"\n' "${line%%=*}" "${line#*=}" >> "$ENV_FILE"
+        done < "$JWT_FILE"
+    fi
+}
+
+if ! prepare; then
+    exit 0
 fi
 
 #########################
