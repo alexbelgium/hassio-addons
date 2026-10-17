@@ -71,13 +71,12 @@ migrate_database
 echo "... generate persistent secrets"
 # Without JWT keys the mobile app login fails with a 500, and without SECRET_KEY
 # sessions are lost at every restart. Generated once, env_vars still override them.
-if ! grep -qs '^JWT_PRIVATE_KEY=' /data/secrets.env; then
-    {
-        echo "SECRET_KEY=$(python3 -c 'import secrets; print(secrets.token_urlsafe(50))')"
-        (cd /home/wger/src && sudo -u wger -E HOME=/home/wger python3 manage.py generate-jwt-keys 2> /dev/null | grep '^JWT_')
-    } > /data/secrets.env || bashio::log.warning "Unable to generate JWT keys"
-    chmod 600 /data/secrets.env
-fi
+grep -qs '^SECRET_KEY=' /data/secrets.env ||
+    echo "SECRET_KEY=$(python3 -c 'import secrets; print(secrets.token_urlsafe(50))')" >> /data/secrets.env
+grep -qs '^JWT_PRIVATE_KEY=' /data/secrets.env ||
+    (cd /home/wger/src && sudo -u wger -E HOME=/home/wger python3 manage.py generate-jwt-keys | grep '^JWT_') >> /data/secrets.env ||
+    bashio::log.warning "Unable to generate JWT keys"
+chmod 600 /data/secrets.env
 
 echo "... add env variables"
 (
