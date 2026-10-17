@@ -21,8 +21,9 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
   CONFIG_LOCATION: str
+  POWERSYNC_ENABLED: bool?
 slug: wger
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.8.0-dev.1"
+version: "2.8.0-dev.1.2"
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"

@@ -16,6 +16,13 @@
 
 ARG BUILD_VERSION
 ARG BUILD_FROM
+
+# PowerSync is only started when the POWERSYNC_ENABLED option is set, but its files
+# always ship in the image: an add-on is a single container, so there is nowhere else
+# to put them. Pinned on purpose - the service tree is copied onto an Ubuntu 24.04
+# base, so the glibc/libstdc++ floor of its node binary has to stay a known quantity.
+FROM docker.io/journeyapps/powersync-service:1.27.0 AS powersync
+
 FROM wger/server:latest
 
 ##################
@@ -39,15 +46,45 @@ ENV SYNC_EXERCISES_ON_STARTUP=True \
     DJANGO_MEDIA_ROOT="/data/media" \
     DJANGO_STATIC_ROOT="/data/static"
 
+# PowerSync defaults. Inert unless 89-powersync-run.sh starts the service: PS_PORT and
+# PS_JWKS_URL are read only by PowerSync itself, and the wger settings already default
+# PS_STORAGE_PG_URI, which the user has to override to a reachable database anyway.
+ENV PS_PORT=8080 \
+    PS_JWKS_URL="http://127.0.0.1:8000/api/v2/powersync-keys" \
+    POWERSYNC_CONFIG_PATH=/etc/powersync/powersync.yaml
+
 USER root
 
+# The third sed is the guard that stops a failed SQLite import from turning into a
+# fresh instance: 89-powersync-run.sh writes that marker and the add-on stops here,
+# before "wger bootstrap" can create an admin user in the empty Postgres database and
+# make the import look unnecessary for ever after.
 RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     sed -i "1a sudo -E /./ha_entrypoint.sh" /home/wger/entrypoint.sh && \
-    sed -i "/ha_entrypoint/a . /data/env.sh" /home/wger/entrypoint.sh
+    sed -i "/ha_entrypoint/a . /data/env.sh" /home/wger/entrypoint.sh && \
+    sed -i '/data\/env.sh/a if [ -f /data/powersync/import-failed ]; then echo "The SQLite import into Postgres did not complete; refusing to start wger so the data stays importable. See the errors above."; exit 1; fi' /home/wger/entrypoint.sh
 
 ##################
 # 3 Install apps #
 ##################
+
+# PowerSync service tree and its own node runtime. Copying node from the upstream
+# image rather than installing one keeps the exact runtime it was built against; the
+# version check below fails the build loudly if that binary cannot run on this base.
+# FSL-1.1-ALv2 permits this redistribution and requires the licence to travel with it.
+COPY --from=powersync /app /opt/powersync
+COPY --from=powersync /usr/local/bin/node /opt/powersync/bin/node
+# node --version exercises the full dynamic link of the interpreter; the ldd clauses
+# then assert that the tree's one native module was found and that every library it
+# needs resolves on this base. Between them the build fails loudly here rather than
+# at runtime if a future PowerSync release raises its ABI floor.
+RUN /opt/powersync/bin/node --version && \
+    find /opt/powersync -name '*.node' -exec ldd {} + > /tmp/ldd.out && \
+    grep -c "=> /" /tmp/ldd.out && \
+    ! grep "not found" /tmp/ldd.out && \
+    rm /tmp/ldd.out && \
+    mkdir -p /opt/powersync/.probes /etc/nginx/ps && \
+    chown -R wger:wger /opt/powersync/.probes
 
 # Add rootfs
 COPY rootfs/ /
