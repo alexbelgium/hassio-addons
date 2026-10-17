@@ -143,6 +143,9 @@ prepare() {
             refuse "SITE_URL is still the default ${SITE_URL}, which no phone can reach. Set it to the URL you open wger on." || return 1 ;;
         http:// | https://) refuse "SITE_URL has no host: ${SITE_URL}" || return 1 ;;
         http://*/* | https://*/*) refuse "SITE_URL must not contain a path: ${SITE_URL}" || return 1 ;;
+        # wger appends "/<path>/" to SITE_URL, so a query or fragment here would swallow
+        # the /ps/ it is meant to produce.
+        *\?* | *'#'*) refuse "SITE_URL must not contain a query or fragment: ${SITE_URL}" || return 1 ;;
         http://* | https://*) ;;
         *) refuse "SITE_URL must be an absolute http:// or https:// URL, got ${SITE_URL}" || return 1 ;;
     esac
