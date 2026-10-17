@@ -153,6 +153,12 @@ env_vars:
   add-on creates. It must be set, it has no useful default.
 - `SITE_URL` must be an absolute `http://` or `https://` URL with no path.
 
+Set these through the `env_vars` option rather than the `CONFIG_LOCATION` file if the
+password contains a `$` or a backtick. Both routes work, but the config.yaml route
+writes the value unquoted into the add-on's environment file, where the shell expands
+those characters and silently truncates the password — wger would get the mangled value
+too, not just PowerSync.
+
 > **The two URIs contain passwords, and the add-on prints every variable it loads to its
 > log at startup.** The shared startup code masks values whose variable name looks like a
 > secret, and these two names do not, so both PostgreSQL passwords appear in the add-on
