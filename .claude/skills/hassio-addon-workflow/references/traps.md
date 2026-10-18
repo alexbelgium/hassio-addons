@@ -107,6 +107,47 @@ option is safe on upgrade. The `monica` add-on shipped exactly such a rename
 tolerated. The base image has an `init-migrations` oneshot reading `/migrations` if a migration
 is needed. Confirm before renaming a shipped option.
 
+**Which values a new cont-init script receives depends on its filename, and in an add-on without
+s6 that is the whole story.** Three mechanisms carry values in and none of them covers
+everything:
+
+- `00-global_var.sh:344` injects an `export` block into `/etc/cont-init.d/*.sh` — add-on options
+  and `env_vars`. Only `.sh` files: the repo's one extensionless cont-init script,
+  `spotweb/rootfs/etc/cont-init.d/90-spotweb`, is reached by none of these globs.
+- `01-config_yaml.sh:195-200` injects the `CONFIG_LOCATION` config.yaml file's values, but only
+  into `/entrypoint.sh`, `/*/entrypoint.sh`, `/etc/services.d/*/*run*` and
+  `/etc/cont-init.d/*run*`.
+- `01-config_yaml.sh:203` also writes s6's `container_environment` envdir when it exists, and
+  `ha_entrypoint.sh`'s `candidate_shebangs` prefers `with-contenv bashio` when the base image
+  has it. **Where that applies, every cont-init script receives the value whatever its name is**,
+  and the globs above stop mattering.
+
+Both templates also append to `/.env`, which a script can source explicitly — at the cost of
+sourcing a user-controlled file.
+
+So the filename only decides this in an add-on whose image has no s6, and therefore no envdir and
+no `with-contenv` (`wger/server` is one). There, a new script called `89-powersync.sh` received
+options but silently *not* file-configured values, while the add-on's existing `90-run.sh`
+received both: the app saw `PS_DATABASE_URI` while the new script, validating that same setting,
+refused to start because it looked unset. It also generated a JWT keypair over a file-configured
+one and won, because its pair was appended to `/.env` after the file's own lines and the last
+assignment wins.
+
+Renaming the script `89-powersync-run.sh` fixed it in zero lines. The bespoke `/.env` parser
+written first was the wrong answer — 35 lines, sourcing that file six times as root, and it still
+got precedence wrong for an explicitly empty value. Check a new script's name against both globs,
+and check whether the image gives you `with-contenv` at all, before reaching for anything else
+(wger #2950, fixed in #3125; the gap was caught by three review bots, the rename by Codex, the
+scope of this entry by two more on #3127).
+
+**`01-config_yaml.sh` writes values into `/.env` unquoted.** Line 188 appends the raw
+`KEY=VALUE`, where `00-global_var.sh` puts its values through `dotenv_quote()` first. Anything
+that sources `/.env` — including a `90-run.sh` that re-exports it into `/data/env.sh` for the app
+— then expands `$`, backticks and `$(…)`, so a password like `p@ss$w0rd` arrives as `p@ss`,
+truncated and silent, at the app as well as at anything else reading it. Point users at the
+`env_vars` option for password-bearing values; it round-trips `$`, backticks, `#`, quotes,
+backslashes and spaces intact (#3125).
+
 Whichever mechanism you use, verify the service actually received it:
 
 ```bash
