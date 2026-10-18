@@ -1,4 +1,11 @@
  
+## 2.8.0-dev.1.2 (2026-10-17)
+
+- Add optional PowerSync support, so the official wger mobile app (2.0.3 and newer) can sync offline (#2950). Set the new `POWERSYNC_ENABLED` option to start a PowerSync service inside the add-on, reached at `<SITE_URL>/ps/` through the add-on's own nginx, exactly as upstream's docker deployment serves it.
+- ⚠ PowerSync cannot replicate from SQLite, so enabling it means pointing wger at a Postgres database (for example the Postgres 17 add-on) with `PS_DATABASE_URI`. **The add-on copies your SQLite data across for you on the first start.** It never writes to the SQLite file — it reads a copy — and it only ever imports into a Postgres database with no user accounts at all, which is wger's own test for a database that was never set up, so once your data is there turning PowerSync off and on again later imports nothing and leaves it alone. The two databases do not stay in step afterwards: whichever one wger is pointed at is the live one. If the import cannot finish, the add-on refuses to start wger rather than let the empty Postgres database be set up as a new instance, which would make the SQLite data look unnecessary for ever after. Read the PowerSync section of the add-on documentation before switching.
+- PowerSync settings can be supplied either through the add-on's `env_vars` option or through the `CONFIG_LOCATION` config.yaml file; both are read.
+- With `POWERSYNC_ENABLED` unset, the option defaults to off, no new process runs, no database is touched and the SQLite database stays the default. Two things are different even then, both harmless: a `/ps/` route left behind by an earlier enabled run is removed at startup, and nginx parses one additional `map` that nothing uses. The PowerSync files ship in the image either way, which makes it about 90 MB larger to download.
+
 ## 2.8.0-dev.1 (2026-10-10)
 - Update to latest version from wger/server
  
