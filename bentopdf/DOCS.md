@@ -45,6 +45,9 @@ Yes. The certificate secures the connection between **your browser and your own 
 | Option | Default | Description |
 |--------|---------|-------------|
 | `log_level` | `info` | Log verbosity: `info`, `debug`, `warn`, `error` |
+| `ssl` | `false` | Serve port 8443 with your own certificate from `/ssl` instead of the self-signed one |
+| `certfile` | `fullchain.pem` | Certificate file in `/ssl`, used when `ssl` is true |
+| `keyfile` | `privkey.pem` | Private key file in `/ssl`, used when `ssl` is true |
 
 ## Support
 

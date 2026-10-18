@@ -1,6 +1,6 @@
 # Global build args — must be declared before the first FROM to be usable in FROM instructions
 ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.23
-ARG BUILD_VERSION=2.8.8
+ARG BUILD_VERSION=2.8.8.1
 # Upstream BentoPDF release to fetch. Tracked separately from BUILD_VERSION so
 # the add-on can carry a local patch counter (e.g. 2.8.8.1) without breaking the
 # release URLs, which only exist for real upstream tags.
@@ -43,3 +43,10 @@ LABEL \
   io.hass.arch="aarch64|amd64"
 
 ENTRYPOINT ["/init"]
+
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD curl -s -f "http://127.0.0.1:8080/" >/dev/null || exit 1

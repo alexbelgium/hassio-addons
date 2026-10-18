@@ -1,3 +1,8 @@
+## 2.8.8.1 (18-10-2026)
+
+- Added `ssl`, `certfile` and `keyfile` options: when `ssl` is true, port 8443 serves your own certificate from `/ssl` (e.g. Let's Encrypt) instead of the self-signed one. Off by default, so nothing changes unless you enable it (#3126)
+- Replaced the obsolete Supervisor `watchdog` with a Docker `HEALTHCHECK` on the same endpoint. Also dropped `stage` and `startup`, which were set to their default values (add-on linter)
+
 ## 2.8.8 (03-09-2026)
 
 - Now builds upstream's Simple Mode release instead of the standard one. It leaves out the bentopdf.com marketing pages (nav bar, hero, features, FAQ, footer). Both builds carry the same 130 tool pages and the same LibreOffice WebAssembly payload, so the served payload just gets smaller: about 228 MB, down from about 258 MB.
