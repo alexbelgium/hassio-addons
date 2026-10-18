@@ -107,6 +107,31 @@ option is safe on upgrade. The `monica` add-on shipped exactly such a rename
 tolerated. The base image has an `init-migrations` oneshot reading `/migrations` if a migration
 is needed. Confirm before renaming a shipped option.
 
+**A cont-init script only sees `CONFIG_LOCATION` values if its own name matches `*run*`.** Two
+templates inject env vars and their globs differ. `00-global_var.sh:344` covers
+`/etc/cont-init.d/*.sh`, so add-on options and `env_vars` reach *every* cont-init script.
+`01-config_yaml.sh:195-200` — the `CONFIG_LOCATION` config.yaml file many add-ons document for
+extra variables — covers only `/entrypoint.sh`, `/*/entrypoint.sh`, `/etc/services.d/*/*run*` and
+`/etc/cont-init.d/*run*`. So a new script called `89-powersync.sh` received options but silently
+*not* file-configured values, while the add-on's existing `90-run.sh` received both: the app saw
+`PS_DATABASE_URI` and the new script, validating the very same setting, refused to start because
+it looked unset. It also generated a JWT keypair over a file-configured one and won, because its
+pair was appended to `/.env` after the file's own lines and the last assignment wins.
+
+Renaming the script `89-powersync-run.sh` fixed it in zero lines. Writing a bespoke `/.env`
+parser was the first answer and the wrong one — 35 lines, sourcing a user-controlled file six
+times as root, and it still got precedence wrong for an explicitly empty value. Check the name
+against both globs before reaching for anything else (wger #2950, fixed in #3125; the gap was
+caught by three review bots, the rename by Codex).
+
+**`01-config_yaml.sh` writes values into `/.env` unquoted.** Line 188 appends the raw
+`KEY=VALUE`, where `00-global_var.sh` puts its values through `dotenv_quote()` first. Anything
+that sources `/.env` — including a `90-run.sh` that re-exports it into `/data/env.sh` for the app
+— then expands `$`, backticks and `$(…)`, so a password like `p@ss$w0rd` arrives as `p@ss`,
+truncated and silent, at the app as well as at anything else reading it. Point users at the
+`env_vars` option for password-bearing values; it round-trips `$`, backticks, `#`, quotes,
+backslashes and spaces intact (#3125).
+
 Whichever mechanism you use, verify the service actually received it:
 
 ```bash
