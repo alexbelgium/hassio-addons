@@ -1,6 +1,7 @@
 ## 2.8.8.1 (18-10-2026)
 
 - Added `ssl`, `certfile` and `keyfile` options: when `ssl` is true, port 8443 serves your own certificate from `/ssl` (e.g. Let's Encrypt) instead of the self-signed one. Off by default, so nothing changes unless you enable it (#3126)
+- Replaced the obsolete Supervisor `watchdog` with a Docker `HEALTHCHECK` on the same endpoint. Also dropped `stage` and `startup`, which were set to their default values (add-on linter)
 
 ## 2.8.8 (03-09-2026)
 

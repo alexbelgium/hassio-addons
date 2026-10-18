@@ -43,3 +43,10 @@ LABEL \
   io.hass.arch="aarch64|amd64"
 
 ENTRYPOINT ["/init"]
+
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD curl -s -f "http://127.0.0.1:8080/" >/dev/null || exit 1

@@ -7,9 +7,7 @@ url: "https://github.com/alexbelgium/hassio-addons/tree/master/bentopdf"
 arch:
   - amd64
   - aarch64
-startup: application
 init: false
-stage: stable
 
 map:
   - ssl:ro
@@ -18,11 +16,10 @@ ports:
   8080/tcp: 8080
   8443/tcp: 8443
 ports_description:
-  8080/tcp: "BentoPDF HTTP (watchdog / redirect to HTTPS)"
+  8080/tcp: "BentoPDF HTTP (healthcheck / redirect to HTTPS)"
   8443/tcp: "BentoPDF HTTPS Web UI"
 
 webui: "https://[HOST]:[PORT:8443]"
-watchdog: "http://[HOST]:[PORT:8080]/"
 
 panel_icon: mdi:file-pdf-box
 panel_title: BentoPDF
