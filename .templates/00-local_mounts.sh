@@ -163,4 +163,16 @@ if bashio::config.has_value 'localdisks'; then
             )
     done
 
+else
+
+    # An env_vars entry is stored under .env_vars[] in /data/options.json, so
+    # bashio::config never sees it and the mount block above is skipped without a
+    # word (alexbelgium/hassio-addons#3129). 00-global_var.sh exports every option
+    # and every env_vars entry, so the variable is in the environment either way:
+    # say something only when it is there, and do not guess which of the two it was
+    if [ -n "${localdisks:-}" ]; then
+        bashio::log.warning "localdisks is set in the environment, but not as an addon option, so no local disk was mounted."
+        bashio::log.warning "Mounting reads the addon's own localdisks option : if you added localdisks to env_vars, set it in the addon configuration instead."
+    fi
+
 fi
