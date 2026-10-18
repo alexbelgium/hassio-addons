@@ -285,9 +285,16 @@ export_var() {
 ################################################################################
 # JSON parsing (jq bug fixed: use "? //", not "?//")
 # Order: 1) top-level addon options first, 2) env_vars second
-# An env_vars entry named like an add-on option is refused: the option wins.
+# An env_vars entry named like an add-on option is refused, even when that
+# option is left empty: options.json omits unset options, so the names come from
+# the add-on schema as well.
 ################################################################################
 declare -A addon_options=()
+while IFS= read -r k; do
+    if [[ -n "$k" && "$k" != env_vars ]]; then
+        addon_options["$k"]=1
+    fi
+done < <(bashio::api.supervisor GET /addons/self/info false '.schema[]?.name')
 while IFS= read -r -d $'\0' src && IFS= read -r -d $'\0' k && IFS= read -r v; do
     if [[ "$src" == option ]]; then
         addon_options["$k"]=1
