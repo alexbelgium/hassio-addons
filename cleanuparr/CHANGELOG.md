@@ -1,4 +1,7 @@
  
+## 2.10.11 (2026-10-17)
+- Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
+ 
 ## 2.10.10 (2026-10-16)
 - Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
  
