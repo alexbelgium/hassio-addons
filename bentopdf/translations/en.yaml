@@ -2,6 +2,15 @@ configuration:
   log_level:
     name: Log level
     description: Controls the verbosity of add-on logging.
+  ssl:
+    name: Use own certificate
+    description: Serve port 8443 with your own certificate from /ssl.
+  certfile:
+    name: Certificate file
+    description: Certificate file in /ssl.
+  keyfile:
+    name: Key file
+    description: Private key file in /ssl.
 
 network:
   8080/tcp: Web UI port (direct access, not used for Ingress)

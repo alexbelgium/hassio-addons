@@ -1,6 +1,6 @@
 # Global build args — must be declared before the first FROM to be usable in FROM instructions
 ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.23
-ARG BUILD_VERSION=2.8.8
+ARG BUILD_VERSION=2.8.8.1
 # Upstream BentoPDF release to fetch. Tracked separately from BUILD_VERSION so
 # the add-on can carry a local patch counter (e.g. 2.8.8.1) without breaking the
 # release URLs, which only exist for real upstream tags.

@@ -1,7 +1,16 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-# Generate a self-signed TLS certificate for HTTPS access on LAN.
-# The cert is stored under /config/bentopdf/ssl/ so it persists across restarts.
+# Serve HTTPS with the user's certificate from /ssl when `ssl` is enabled,
+# otherwise generate a self-signed one under /config/bentopdf/ssl/.
+
+if bashio::config.true 'ssl'; then
+    bashio::config.require.ssl
+    CERT="/ssl/$(bashio::config 'certfile')"
+    KEY="/ssl/$(bashio::config 'keyfile')"
+    sed -i "s|ssl_certificate .*;|ssl_certificate     ${CERT};|; s|ssl_certificate_key .*;|ssl_certificate_key ${KEY};|" /etc/nginx/nginx.conf
+    bashio::log.info "[50-ssl] Using certificate ${CERT}"
+    exit 0
+fi
 
 SSL_DIR=/config/bentopdf/ssl
 CERT="${SSL_DIR}/cert.pem"
