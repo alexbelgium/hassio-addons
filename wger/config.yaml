@@ -10,7 +10,9 @@ map:
   - ssl:ro
 name: Wger
 options:
-  env_vars: []
+  env_vars:
+    - name: DJANGO_DEBUG
+      value: "False"
   CONFIG_LOCATION: /config/config.yaml
 ports:
   80/tcp: 9927
@@ -25,5 +27,5 @@ schema:
 slug: wger
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.8.0-dev.1"
+version: "2.8.0-dev.1.1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
