@@ -284,13 +284,28 @@ export_var() {
 
 ################################################################################
 # JSON parsing (jq bug fixed: use "? //", not "?//")
-# Order: 1) top-level addon options first, 2) env_vars second (can override)
+# Order: 1) top-level addon options first, 2) env_vars second
+# An env_vars entry named like an add-on option is refused, even when that
+# option is left empty: options.json omits unset options, so the names come from
+# the add-on schema as well.
 ################################################################################
-while IFS= read -r -d $'\0' k && IFS= read -r v; do
+declare -A addon_options=()
+while IFS= read -r k; do
+    if [[ -n "$k" && "$k" != env_vars ]]; then
+        addon_options["$k"]=1
+    fi
+done < <(bashio::api.supervisor GET /addons/self/info false '.schema[]?.name')
+while IFS= read -r -d $'\0' src && IFS= read -r -d $'\0' k && IFS= read -r v; do
+    if [[ "$src" == option ]]; then
+        addon_options["$k"]=1
+    elif [[ -n "$k" && -n "${addon_options[$k]:-}" ]]; then
+        bashio::log.error "env_vars: $k is already an add-on option. Set it in the add-on options instead; this env_vars entry is ignored."
+        continue
+    fi
     export_var "$k" "$v"
 done < <(
     jq -r '
-        def emit(k; v): "\((k|tostring))\u0000\((v|tostring))";
+        def emit(s; k; v): "\(s)\u0000\((k|tostring))\u0000\((v|tostring))";
 
         . as $root
         | (
@@ -299,23 +314,23 @@ done < <(
             | to_entries[]
             | select(.key != "env_vars")
             | select((.value|type) != "object" and (.value|type) != "array" and (.value|type) != "null")
-            | emit(.key; .value)
+            | emit("option"; .key; .value)
           ),
           (
-            # 2) env_vars[] (processed second, overrides addon options if same key)
+            # 2) env_vars[] (processed second; names matching an option are refused)
             ($root.env_vars? // [])[] as $e
             | if ($e|type) == "object" then
                   if ($e|has("name") and has("value")) then
-                      emit($e.name; ($e.value // ""))
+                      emit("env"; $e.name; ($e.value // ""))
                   else
-                      $e|to_entries[]|emit(.key; (.value // ""))
+                      $e|to_entries[]|emit("env"; .key; (.value // ""))
                   end
               else
                   # string "KEY=VALUE" form (value may contain '=')
                   ($e|tostring) as $s
                   | if ($s|test("^[^=]+=")) then
                         ($s|capture("^(?<k>[^=]+)=(?<v>.*)$")) as $m
-                        | emit($m.k; $m.v)
+                        | emit("env"; $m.k; $m.v)
                     else empty end
               end
           )
