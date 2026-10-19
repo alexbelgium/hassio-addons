@@ -112,9 +112,10 @@ ENV PACKAGES="sudo nginx"
 COPY ha_autoapps.sh /ha_autoapps.sh
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" || true && rm /ha_autoapps.sh
 
-# Ensure sudoers entry exists after sudo package installation
-# (installing sudo may overwrite /etc/sudoers with its default conffile)
-RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+# /etc/sudoers was created above holding only the wger rule, so installing sudo keeps it
+# and parks its default (with the root rule) as sudoers.dpkg-new. The cont-init scripts
+# run as root and call "sudo -u wger", which fails without a root rule.
+RUN echo "root ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 ################
 # 4 Entrypoint #
