@@ -1,3 +1,7 @@
+## 2.8.0-dev.1.2 (2026-10-19)
+
+- Fix `root is not in the sudoers file` at startup, which made the PowerSync SQLite import fail (and wger refuse to start), and stopped the JWT keys from being generated. The image's `/etc/sudoers` only allowed the `wger` user; it now allows root too (#3123).
+
 ## 2.8.0-dev.1.1 (2026-10-16)
 
 - BACKUP FIRST
