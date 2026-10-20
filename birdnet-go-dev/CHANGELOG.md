@@ -1,3 +1,7 @@
+## 20261020 (20-10-2026)
+
+- Synced with upstream and rebuilt against the current open PRs of the fork. Fork PR #60 (Safari/WebKit live spectrogram) no longer merged onto main after the audio source-node cache refactor; its branch has been updated with main.
+
 ## 20261016 (16-10-2026)
 
 - Rebuild against the current open PRs of the fork. The first two 20261016 builds failed and were auto-reverted. In the first, the first-daily-consensus PR no longer merged onto upstream main (`processApprovedDetection` gained a `settings` argument). In the second, the reanalyze PR still imported `internal/audiocore/convert`, which upstream removed; it now decodes with go-audio-dsp. Both PR branches have been updated with main.
