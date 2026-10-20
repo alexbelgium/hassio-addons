@@ -1,6 +1,7 @@
 ## 2.8.0-dev.1.3 (2026-10-20)
 
 - Fix the PowerSync SQLite import failing with `CommandError: Unknown model: admin.logentry`, which kept wger from starting. wger does not install Django's admin app, so the import no longer asks `dumpdata` to exclude its log table (#3134).
+- README: correct when `/ps/` stays unrouted and when wger still starts. A wrong `wal_level` is detected only after wger is up, so `/ps/` then answers 502 rather than being unrouted (#3134).
 
 ## 2.8.0-dev.1.2 (2026-10-19)
 
