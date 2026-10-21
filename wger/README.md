@@ -211,8 +211,15 @@ reason other than `wal_level`, the add-on log carries PowerSync's own error.
 
 With everything in place the add-on log reports the PowerSync URL, and
 `<SITE_URL>/ps/probes/liveness` answers instead of logging `Not Found: /ps/probes/liveness`.
-If a prerequisite is missing the add-on still starts wger normally and the log says
-exactly which variable is wrong; `/ps/` stays unrouted in that case.
+If a variable is missing or invalid, the log says exactly which one and `/ps/` stays
+unrouted. wger itself still starts, unless `PS_DATABASE_URI` points at Postgres while
+there is SQLite data waiting to be imported: then it refuses to start, so the empty
+Postgres database is not set up as a new instance. Fix the variable, or remove
+`PS_DATABASE_URI` to go back to SQLite.
+
+The `wal_level` check and the PowerSync storage setup only run once wger is up, after
+`/ps/` is already routed. If either fails, the log says so, PowerSync is not started,
+and `/ps/` answers `502 Bad Gateway` until you fix the cause and restart the add-on.
 
 If you put your own reverse proxy in front of the add-on, nothing extra is needed: the
 `/ps/` route forwards an incoming `X-Forwarded-Proto` unchanged and only falls back to

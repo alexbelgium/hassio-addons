@@ -333,14 +333,15 @@ import_sqlite_data() {
     fi
 
     # Dumped from the copy, with the tables Django rebuilds for itself left out: content
-    # types and permissions are recreated by migrate, and admin log entries and sessions
-    # point at them. --natural-foreign keeps those references resolvable; primary keys
-    # are deliberately kept as they are so the rows land unchanged.
+    # types and permissions are recreated by migrate, and sessions point at them. wger
+    # does not install django.contrib.admin, so there is no admin.logentry to exclude:
+    # naming it makes dumpdata fail with "Unknown model" (#3134). --natural-foreign keeps
+    # those references resolvable; primary keys are deliberately kept as they are so the
+    # rows land unchanged.
     if ! sqlite_manage "$copy" dumpdata \
         --natural-foreign \
         --exclude contenttypes \
         --exclude auth.Permission \
-        --exclude admin.logentry \
         --exclude sessions.session \
         --output "$dump"; then
         bashio::log.error "PowerSync: reading the SQLite database failed, nothing was written to Postgres"
