@@ -24,6 +24,7 @@ NGINX_PS_DIR=/etc/nginx/ps
 JWT_DIR=/data/powersync
 JWT_FILE="$JWT_DIR/jwt.env"
 ENV_FILE=/.env
+SECRETS_FILE=/data/secrets.env
 
 # A fresh install runs bootstrap, collectstatic, migrations and the exercise sync
 # before gunicorn answers, which upstream and the add-on README both put in the
@@ -116,6 +117,19 @@ refuse() {
 # cont-init runs under "sudo -E", so -E is all that is needed to hand them on.
 django_manage() {
     (cd /home/wger/src && sudo -u wger -E python3 manage.py "$@")
+}
+
+# On the first boot 90-run.sh has not generated SECRET_KEY yet, so one warning is expected.
+prepare_secret_key() {
+    local secret_key=""
+
+    [ -n "${SECRET_KEY:-}" ] && return 0
+    if [ -f "$SECRETS_FILE" ]; then
+        secret_key="$(sed -n 's/^SECRET_KEY=//p' "$SECRETS_FILE" | head -n 1)"
+    fi
+    if [ -n "$secret_key" ]; then
+        export SECRET_KEY="$secret_key"
+    fi
 }
 
 # The same, pointed at a SQLite file instead. PS_DATABASE_URI has to go: wger's
@@ -244,16 +258,27 @@ prepare() {
 # Mirrors wger's own database_initialised() in wger/tasks.py: a database that cannot be
 # reached is an error rather than an empty database, and "no users at all" is upstream's
 # definition of a database that was never set up, because the admin user is created as
-# the last step of its bootstrap. Prints unreachable, fresh (reachable, no tables yet),
-# empty (tables but no users) or populated.
+# the last step of its bootstrap. Only connection failures that waiting cannot fix are
+# fatal; every other OperationalError is retried. Prints a state, a tab and a one-line
+# detail.
 target_database_state() {
     django_manage shell 2> /dev/null << 'PROBE' | tail -n 1
-from django.db import DatabaseError, connection
+from django.db import DatabaseError, OperationalError, connection
 
 try:
     connection.ensure_connection()
-except Exception:
-    print('unreachable')
+except Exception as error:
+    # psycopg can spread one failure over several lines, one per address tried.
+    message = ' '.join(str(error).split()) or type(error).__name__
+    fatal_messages = (
+        'password authentication failed',
+        'does not exist',
+        'no pg_hba.conf entry',
+    )
+    fatal = not isinstance(error, OperationalError) or any(
+        text in message.lower() for text in fatal_messages
+    )
+    print(f"{'fatal' if fatal else 'retryable'}\t{message}")
 else:
     from django.contrib.auth.models import User
 
@@ -277,7 +302,7 @@ PROBE
 # pointed at is the live one.
 import_sqlite_data() {
     local sqlite_db="${DJANGO_DB_DATABASE:-/data/database.sqlite}"
-    local waited=0 state=""
+    local waited=0 probe="" state="" detail=""
     local dump="$IMPORT_DIR/dump.json" copy="$IMPORT_DIR/database.sqlite"
 
     if [ ! -s "$sqlite_db" ]; then
@@ -288,16 +313,33 @@ import_sqlite_data() {
 
     bashio::log.info "Checking whether the Postgres database already holds wger data"
     while true; do
-        state="$(target_database_state)"
-        [ "$state" != "unreachable" ] && break
-        if [ "$waited" -ge "$POSTGRES_WAIT_SECONDS" ]; then
-            bashio::log.error "PowerSync: the Postgres database is still unreachable after ${POSTGRES_WAIT_SECONDS}s"
+        probe="$(target_database_state)"
+        IFS=$'\t' read -r state detail <<< "$probe"
+        case "$state" in
+        fresh | empty | populated)
+            break
+            ;;
+        retryable)
+            if [ "$waited" -ge "$POSTGRES_WAIT_SECONDS" ]; then
+                bashio::log.error "PowerSync: the Postgres database is still unreachable after ${POSTGRES_WAIT_SECONDS}s: ${detail:-no error detail}"
+                bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
+                return 1
+            fi
+            [ "$waited" -eq 0 ] && bashio::log.info "PowerSync: waiting for the Postgres database: ${detail:-no error detail}"
+            sleep 5
+            waited=$((waited + 5))
+            ;;
+        fatal)
+            bashio::log.error "PowerSync: the Postgres connection error cannot be fixed by waiting: ${detail:-no error detail}"
             bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
             return 1
-        fi
-        [ "$waited" -eq 0 ] && bashio::log.info "PowerSync: waiting for the Postgres database"
-        sleep 5
-        waited=$((waited + 5))
+            ;;
+        *)
+            bashio::log.error "PowerSync: the Postgres probe returned an unexpected result: ${probe:-no output}"
+            bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
+            return 1
+            ;;
+        esac
     done
 
     if [ "$state" = "populated" ]; then
@@ -370,6 +412,8 @@ import_sqlite_data() {
     bashio::log.info "Import finished. wger is now running on Postgres; $sqlite_db is left behind unchanged in case you want to go back"
     return 0
 }
+
+prepare_secret_key
 
 if ! prepare; then
     # The marker armed above is deliberately left in place; see the comment there.

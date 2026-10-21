@@ -168,9 +168,9 @@ option (the `CONFIG_LOCATION` config.yaml file documented above works for these 
 ```yaml
 env_vars:
   - name: PS_DATABASE_URI
-    value: postgres://wger:yourpassword@192.168.1.10:5432/wger
+    value: postgres://wger:yourpassword@db21ed7f-postgres-latest:5432/wger
   - name: PS_STORAGE_PG_URI
-    value: postgres://powersync_storage:anotherpassword@192.168.1.10:5432/wger
+    value: postgres://powersync_storage:anotherpassword@db21ed7f-postgres-latest:5432/wger
   - name: SITE_URL
     value: https://wger.yourdomain.com
 ```
@@ -183,6 +183,15 @@ env_vars:
   with a different role name and a password of your choosing; that is the role the
   add-on creates. It must be set, it has no useful default.
 - `SITE_URL` must be an absolute `http://` or `https://` URL with no path.
+
+`db21ed7f-postgres-latest` is the internal hostname of this repository's Postgres 17
+add-on, so it works without exposing port 5432. A LAN IP also works when PostgreSQL is
+running on an external server.
+
+Use passwords made only of letters, digits and `-._~`. Characters such as `@`, `:`,
+`/`, `?`, `#` or `%` break the URI, and percent-encoding them is no way out: wger
+decodes `%40` back to `@`, but PowerSync passes it to PostgreSQL unchanged, so its
+connections fail to authenticate.
 
 Set these through the `env_vars` option rather than the `CONFIG_LOCATION` file if the
 password contains a `$` or a backtick. Both routes work, but the config.yaml route
