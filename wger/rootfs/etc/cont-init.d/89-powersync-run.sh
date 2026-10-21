@@ -272,6 +272,7 @@ except Exception as error:
     message = ' '.join(str(error).split()) or type(error).__name__
     fatal_messages = (
         'password authentication failed',
+        'no password supplied',
         'does not exist',
         'no pg_hba.conf entry',
     )
