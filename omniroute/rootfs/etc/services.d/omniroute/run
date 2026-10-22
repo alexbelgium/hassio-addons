@@ -1,0 +1,40 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+CONFIG_LOCATION="/config"
+mkdir -p "$CONFIG_LOCATION"
+
+# Symlink /app/data to HA persistent storage
+if [ -d /app/data ] && [ ! -L /app/data ]; then
+    cp -rn /app/data/. "$CONFIG_LOCATION/" 2>/dev/null || true
+    rm -rf /app/data
+fi
+ln -sfn "$CONFIG_LOCATION" /app/data
+
+# Sourcing /.env (which has add-on options from 00-global_var.sh)
+if [ -f /.env ]; then
+    set -a
+    # shellcheck disable=SC1091
+    . /.env
+    set +a
+fi
+
+# Do not export an empty password (let upstream generate or handle default)
+if [ -z "${INITIAL_PASSWORD:-}" ]; then
+    unset INITIAL_PASSWORD
+fi
+
+export DATA_DIR="$CONFIG_LOCATION"
+export PORT="20129"
+export HOSTNAME="127.0.0.1"
+
+chown -R "${PUID:-0}:${PGID:-0}" "$CONFIG_LOCATION" 2>/dev/null || true
+
+bashio::log.info "Starting OmniRoute backend on internal port 20129..."
+cd /app
+if [ -x /app/check-permissions.sh ]; then
+    exec /app/check-permissions.sh node dev/run-standalone.mjs
+else
+    exec node dev/run-standalone.mjs
+fi
