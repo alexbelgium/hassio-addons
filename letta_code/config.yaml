@@ -29,7 +29,7 @@ schema:
   TZ: str?
   backend: list(local|cloud)
   env_vars:
-    - name: match(^[A-Za-z0-9_]+$)
+    - name: match(^[A-Za-z_][A-Za-z0-9_]*$)
       value: str?
   openai_api: bool
   token: password?

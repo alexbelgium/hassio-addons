@@ -19,7 +19,7 @@ Stateful AI agent platform and App Server with long-term memory, skills, and mul
 2. Install the **Letta Code** add-on.
 3. Configure your API keys in the add-on's **Configuration** tab (see below).
 4. Start the add-on.
-5. Access the status endpoint from the sidebar (Ingress) or connect clients to `http://homeassistant:4500`.
+5. Access the status endpoint from the sidebar (Ingress). To connect clients directly, first enable port `4500` in the add-on's Network configuration, then use `http://homeassistant:4500`.
 
 ## Configuration
 
