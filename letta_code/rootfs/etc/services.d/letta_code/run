@@ -1,0 +1,40 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+declare backend
+declare computer_name
+declare channels
+declare -a args
+
+backend="local"
+if bashio::config.has_value 'backend'; then
+    backend="$(bashio::config 'backend')"
+fi
+
+args=(
+    "server"
+    "--backend" "$backend"
+    "--listen" "ws://127.0.0.1:4501"
+    "--ws-auth" "capability-token"
+    "--ws-token-file" "/config/app-server-token"
+)
+
+if bashio::config.true 'openai_api' || ! bashio::config.has_value 'openai_api'; then
+    args+=("--openai-api")
+fi
+
+if bashio::config.has_value 'computer_name'; then
+    computer_name="$(bashio::config 'computer_name')"
+    args+=("--computer-name" "$computer_name")
+fi
+
+if bashio::config.has_value 'channels'; then
+    channels="$(bashio::config 'channels')"
+    args+=("--channels" "$channels" "--install-channel-runtimes")
+fi
+
+bashio::log.info "Starting Letta Code App Server on 127.0.0.1:4501..."
+cd /config/workspace
+exec letta "${args[@]}"

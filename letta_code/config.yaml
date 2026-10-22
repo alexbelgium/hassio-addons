@@ -1,0 +1,40 @@
+arch:
+  - aarch64
+  - amd64
+description:
+  Stateful AI agent platform and App Server with long-term memory, skills,
+  and multi-agent reasoning
+image: ghcr.io/alexbelgium/letta_code-{arch}
+ingress: true
+ingress_stream: true
+init: false
+map:
+  - addon_config:rw
+  - share:rw
+name: Letta Code
+options:
+  PGID: 0
+  PUID: 0
+  backend: local
+  env_vars: []
+  openai_api: true
+panel_icon: mdi:brain
+ports:
+  4500/tcp: 4500
+ports_description:
+  4500/tcp: Letta App Server (WebSocket, HTTP & OpenAI API)
+schema:
+  PGID: int
+  PUID: int
+  TZ: str?
+  backend: list(local|cloud)
+  channels: str?
+  computer_name: str?
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
+  openai_api: bool
+  token: password?
+slug: letta_code
+url: https://github.com/alexbelgium/hassio-addons/tree/master/letta_code
+version: "0.34.19"
