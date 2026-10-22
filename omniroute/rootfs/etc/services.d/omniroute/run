@@ -29,12 +29,22 @@ export DATA_DIR="$CONFIG_LOCATION"
 export PORT="20129"
 export HOSTNAME="127.0.0.1"
 
-chown -R "${PUID:-0}:${PGID:-0}" "$CONFIG_LOCATION" 2>/dev/null || true
+if [ "${PUID:-0}" != "0" ] || [ "${PGID:-0}" != "0" ]; then
+    chown -R "${PUID:-0}:${PGID:-0}" "$CONFIG_LOCATION" 2>/dev/null || true
+    chown -R "${PUID:-0}:${PGID:-0}" /home/node 2>/dev/null || true
+fi
 
 bashio::log.info "Starting OmniRoute backend on internal port 20129..."
 cd /app
-if [ -x /app/check-permissions.sh ]; then
-    exec /app/check-permissions.sh node dev/run-standalone.mjs
+
+if [ "${PUID:-0}" != "0" ]; then
+    DROP_PRIVS=(setpriv --reuid="${PUID}" --regid="${PGID:-${PUID}}" --init-groups)
 else
-    exec node dev/run-standalone.mjs
+    DROP_PRIVS=()
+fi
+
+if [ -x /app/check-permissions.sh ]; then
+    exec "${DROP_PRIVS[@]}" /app/check-permissions.sh node dev/run-standalone.mjs
+else
+    exec "${DROP_PRIVS[@]}" node dev/run-standalone.mjs
 fi
