@@ -244,16 +244,28 @@ prepare() {
 # Mirrors wger's own database_initialised() in wger/tasks.py: a database that cannot be
 # reached is an error rather than an empty database, and "no users at all" is upstream's
 # definition of a database that was never set up, because the admin user is created as
-# the last step of its bootstrap. Prints unreachable, fresh (reachable, no tables yet),
-# empty (tables but no users) or populated.
+# the last step of its bootstrap. Only connection failures that waiting cannot fix are
+# fatal; every other OperationalError is retried. Prints a state, a tab and a one-line
+# detail.
 target_database_state() {
     django_manage shell 2> /dev/null << 'PROBE' | tail -n 1
-from django.db import DatabaseError, connection
+from django.db import DatabaseError, OperationalError, connection
 
 try:
     connection.ensure_connection()
-except Exception:
-    print('unreachable')
+except Exception as error:
+    # psycopg can spread one failure over several lines, one per address tried.
+    message = ' '.join(str(error).split()) or type(error).__name__
+    fatal_messages = (
+        'password authentication failed',
+        'no password supplied',
+        'does not exist',
+        'no pg_hba.conf entry',
+    )
+    fatal = not isinstance(error, OperationalError) or any(
+        text in message.lower() for text in fatal_messages
+    )
+    print(f"{'fatal' if fatal else 'retryable'}\t{message}")
 else:
     from django.contrib.auth.models import User
 
@@ -277,7 +289,7 @@ PROBE
 # pointed at is the live one.
 import_sqlite_data() {
     local sqlite_db="${DJANGO_DB_DATABASE:-/data/database.sqlite}"
-    local waited=0 state=""
+    local waited=0 probe state detail
     local dump="$IMPORT_DIR/dump.json" copy="$IMPORT_DIR/database.sqlite"
 
     if [ ! -s "$sqlite_db" ]; then
@@ -288,16 +300,33 @@ import_sqlite_data() {
 
     bashio::log.info "Checking whether the Postgres database already holds wger data"
     while true; do
-        state="$(target_database_state)"
-        [ "$state" != "unreachable" ] && break
-        if [ "$waited" -ge "$POSTGRES_WAIT_SECONDS" ]; then
-            bashio::log.error "PowerSync: the Postgres database is still unreachable after ${POSTGRES_WAIT_SECONDS}s"
+        probe="$(target_database_state)"
+        IFS=$'\t' read -r state detail <<< "$probe"
+        case "$state" in
+        fresh | empty | populated)
+            break
+            ;;
+        retryable)
+            if [ "$waited" -ge "$POSTGRES_WAIT_SECONDS" ]; then
+                bashio::log.error "PowerSync: the Postgres database is still unreachable after ${POSTGRES_WAIT_SECONDS}s: $detail"
+                bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
+                return 1
+            fi
+            [ "$waited" -eq 0 ] && bashio::log.info "PowerSync: waiting for the Postgres database: $detail"
+            sleep 5
+            waited=$((waited + 5))
+            ;;
+        fatal)
+            bashio::log.error "PowerSync: the Postgres connection error cannot be fixed by waiting: $detail"
             bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
             return 1
-        fi
-        [ "$waited" -eq 0 ] && bashio::log.info "PowerSync: waiting for the Postgres database"
-        sleep 5
-        waited=$((waited + 5))
+            ;;
+        *)
+            bashio::log.error "PowerSync: the Postgres probe returned an unexpected result: ${probe:-no output}"
+            bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
+            return 1
+            ;;
+        esac
     done
 
     if [ "$state" = "populated" ]; then
@@ -332,6 +361,15 @@ import_sqlite_data() {
         return 1
     fi
 
+    # Upstream-deleted models leave content types whose permissions groups still hold,
+    # and loaddata cannot resolve those in a freshly migrated Postgres.
+    if ! sqlite_manage "$copy" remove_stale_contenttypes --no-input; then
+        bashio::log.error "PowerSync: removing stale content types from the database copy failed, nothing was written to Postgres"
+        bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
+        rm -rf "$IMPORT_DIR"
+        return 1
+    fi
+
     # Dumped from the copy, with the tables Django rebuilds for itself left out: content
     # types and permissions are recreated by migrate, and sessions point at them. wger
     # does not install django.contrib.admin, so there is no admin.logentry to exclude:
@@ -357,9 +395,10 @@ import_sqlite_data() {
     fi
 
     # loaddata resets the Postgres sequences for every model it loaded, so the next
-    # insert does not collide with an imported primary key.
+    # insert does not collide with an imported primary key. It runs in one transaction,
+    # so a failure leaves the schema without rows and the next start imports again.
     if ! django_manage loaddata "$dump"; then
-        bashio::log.error "PowerSync: writing the data into Postgres failed. The Postgres database is now half-populated: empty it before trying again."
+        bashio::log.error "PowerSync: writing the data into Postgres failed and was rolled back; the import is retried on the next start"
         bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
         rm -rf "$IMPORT_DIR"
         return 1
@@ -370,6 +409,14 @@ import_sqlite_data() {
     bashio::log.info "Import finished. wger is now running on Postgres; $sqlite_db is left behind unchanged in case you want to go back"
     return 0
 }
+
+# 90-run.sh generates SECRET_KEY but runs after this script, so the manage.py calls here
+# read it themselves; env_vars keep precedence. The first boot of a new install still
+# gets upstream's missing-key warning once.
+if [ -z "${SECRET_KEY:-}" ] && [ -f /data/secrets.env ]; then
+    secret_key="$(sed -n '/^SECRET_KEY=/{s///p;q}' /data/secrets.env)"
+    [ -n "$secret_key" ] && export SECRET_KEY="$secret_key"
+fi
 
 if ! prepare; then
     # The marker armed above is deliberately left in place; see the comment there.
