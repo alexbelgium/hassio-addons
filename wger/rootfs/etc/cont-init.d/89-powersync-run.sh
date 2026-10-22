@@ -24,7 +24,6 @@ NGINX_PS_DIR=/etc/nginx/ps
 JWT_DIR=/data/powersync
 JWT_FILE="$JWT_DIR/jwt.env"
 ENV_FILE=/.env
-SECRETS_FILE=/data/secrets.env
 
 # A fresh install runs bootstrap, collectstatic, migrations and the exercise sync
 # before gunicorn answers, which upstream and the add-on README both put in the
@@ -117,19 +116,6 @@ refuse() {
 # cont-init runs under "sudo -E", so -E is all that is needed to hand them on.
 django_manage() {
     (cd /home/wger/src && sudo -u wger -E python3 manage.py "$@")
-}
-
-# On the first boot 90-run.sh has not generated SECRET_KEY yet, so one warning is expected.
-prepare_secret_key() {
-    local secret_key=""
-
-    [ -n "${SECRET_KEY:-}" ] && return 0
-    if [ -f "$SECRETS_FILE" ]; then
-        secret_key="$(sed -n 's/^SECRET_KEY=//p' "$SECRETS_FILE" | head -n 1)"
-    fi
-    if [ -n "$secret_key" ]; then
-        export SECRET_KEY="$secret_key"
-    fi
 }
 
 # The same, pointed at a SQLite file instead. PS_DATABASE_URI has to go: wger's
@@ -303,7 +289,7 @@ PROBE
 # pointed at is the live one.
 import_sqlite_data() {
     local sqlite_db="${DJANGO_DB_DATABASE:-/data/database.sqlite}"
-    local waited=0 probe="" state="" detail=""
+    local waited=0 probe state detail
     local dump="$IMPORT_DIR/dump.json" copy="$IMPORT_DIR/database.sqlite"
 
     if [ ! -s "$sqlite_db" ]; then
@@ -322,16 +308,16 @@ import_sqlite_data() {
             ;;
         retryable)
             if [ "$waited" -ge "$POSTGRES_WAIT_SECONDS" ]; then
-                bashio::log.error "PowerSync: the Postgres database is still unreachable after ${POSTGRES_WAIT_SECONDS}s: ${detail:-no error detail}"
+                bashio::log.error "PowerSync: the Postgres database is still unreachable after ${POSTGRES_WAIT_SECONDS}s: $detail"
                 bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
                 return 1
             fi
-            [ "$waited" -eq 0 ] && bashio::log.info "PowerSync: waiting for the Postgres database: ${detail:-no error detail}"
+            [ "$waited" -eq 0 ] && bashio::log.info "PowerSync: waiting for the Postgres database: $detail"
             sleep 5
             waited=$((waited + 5))
             ;;
         fatal)
-            bashio::log.error "PowerSync: the Postgres connection error cannot be fixed by waiting: ${detail:-no error detail}"
+            bashio::log.error "PowerSync: the Postgres connection error cannot be fixed by waiting: $detail"
             bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
             return 1
             ;;
@@ -375,8 +361,8 @@ import_sqlite_data() {
         return 1
     fi
 
-    # Run on the disposable copy, so the original is never written. Deleted upstream
-    # models leave content types whose permissions groups still reference.
+    # Upstream-deleted models leave content types whose permissions groups still hold,
+    # and loaddata cannot resolve those in a freshly migrated Postgres.
     if ! sqlite_manage "$copy" remove_stale_contenttypes --no-input; then
         bashio::log.error "PowerSync: removing stale content types from the database copy failed, nothing was written to Postgres"
         bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
@@ -423,7 +409,13 @@ import_sqlite_data() {
     return 0
 }
 
-prepare_secret_key
+# 90-run.sh generates SECRET_KEY but runs after this script, so the manage.py calls here
+# read it themselves; env_vars keep precedence. The first boot of a new install still
+# gets upstream's missing-key warning once.
+if [ -z "${SECRET_KEY:-}" ] && [ -f /data/secrets.env ]; then
+    secret_key="$(sed -n '/^SECRET_KEY=/{s///p;q}' /data/secrets.env)"
+    [ -n "$secret_key" ] && export SECRET_KEY="$secret_key"
+fi
 
 if ! prepare; then
     # The marker armed above is deliberately left in place; see the comment there.
