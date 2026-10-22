@@ -395,9 +395,10 @@ import_sqlite_data() {
     fi
 
     # loaddata resets the Postgres sequences for every model it loaded, so the next
-    # insert does not collide with an imported primary key.
+    # insert does not collide with an imported primary key. It runs in one transaction,
+    # so a failure leaves the schema without rows and the next start imports again.
     if ! django_manage loaddata "$dump"; then
-        bashio::log.error "PowerSync: writing the data into Postgres failed. The Postgres database is now half-populated: empty it before trying again."
+        bashio::log.error "PowerSync: writing the data into Postgres failed and was rolled back; the import is retried on the next start"
         bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
         rm -rf "$IMPORT_DIR"
         return 1
