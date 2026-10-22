@@ -1,4 +1,6 @@
 - Local disks: when `localdisks` is set in the environment (for example added to `env_vars`) but not as the addon's own option, the startup log now says so instead of skipping the mount silently (#3129).
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
+- chore(nextcloud): trigger rebuild to pull upstream PHP 8.5.12 security patch (PHP2Shell fix)
  
 ## 35.0.2 (2026-10-16)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
