@@ -38,7 +38,7 @@ bashio::log.info "Starting OmniRoute backend on internal port 20129..."
 cd /app
 
 if [ "${PUID:-0}" != "0" ]; then
-    DROP_PRIVS=(setpriv --reuid="${PUID}" --regid="${PGID:-${PUID}}" --init-groups)
+    DROP_PRIVS=(setpriv --reuid="${PUID}" --regid="${PGID:-${PUID}}" --clear-groups)
 else
     DROP_PRIVS=()
 fi
