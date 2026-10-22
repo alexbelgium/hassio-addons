@@ -31,6 +31,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 [OmniRoute](https://github.com/cheaper-inference/OmniRoute) is an open-source, self-hosted AI inference gateway and proxy providing a unified OpenAI-compatible endpoint with intelligent fallbacks, load balancing, quota pooling, token compression, and routing across 350+ AI providers.
 
 Key features:
+
 - **Unified OpenAI-Compatible Gateway**: Drop-in replacement supporting `/v1/chat/completions`, native `/v1/responses`, vision, and tool calling.
 - **Smart Fallbacks & Quotas**: Seamlessly retries alternative providers or fallback models in milliseconds on rate limits, errors, or quota exhaustion.
 - **Context & Token Compression**: Built-in prompt and context compression engines to reduce token consumption and costs.
@@ -54,7 +55,7 @@ Web UI is accessible via Home Assistant Ingress. Direct network access and API g
 ### Options
 
 | Option | Type | Default | Description |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `INITIAL_PASSWORD` | str | `""` | Initial password for the administrator account on first setup. If empty, the default or auto-generated password is used. |
 | `REQUIRE_API_KEY` | bool | `true` | When true, proxy requests to `/v1` require a valid API key configured in OmniRoute. |
 | `OMNIROUTE_MEMORY_MB` | int | `1024` | Maximum Node.js V8 old space memory in megabytes for the inference gateway. |
@@ -66,5 +67,6 @@ Web UI is accessible via Home Assistant Ingress. Direct network access and API g
 ### Connecting Developer Tools
 
 Configure your coding assistants to connect to the OmniRoute gateway:
+
 - **Base URL**: `http://<homeassistant-ip>:20128/v1`
 - **API Key**: The API key generated in the OmniRoute dashboard (under API Keys)
