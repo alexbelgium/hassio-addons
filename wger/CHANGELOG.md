@@ -1,5 +1,6 @@
 ## 2.8.0-dev.1.4 (2026-10-21)
 
+- Fix importing long-lived SQLite databases into Postgres when groups still reference permissions for models removed by upstream (#3138).
 - Show the PostgreSQL connection error once while the PowerSync import check waits, retry transient connection failures, and fail immediately for errors such as a wrong password or missing role/database (#3123).
 - Reuse the persistent `SECRET_KEY` before PowerSync runs wger management commands, so the session-persistence warning no longer appears after the add-on has started once (#3123).
 - README: use the Postgres 17 add-on's internal hostname in the PowerSync example, so port 5432 can stay closed, and say which characters a database password can safely contain (#3123).

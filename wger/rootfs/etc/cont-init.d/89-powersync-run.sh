@@ -375,6 +375,15 @@ import_sqlite_data() {
         return 1
     fi
 
+    # Run on the disposable copy, so the original is never written. Deleted upstream
+    # models leave content types whose permissions groups still reference.
+    if ! sqlite_manage "$copy" remove_stale_contenttypes --no-input; then
+        bashio::log.error "PowerSync: removing stale content types from the database copy failed, nothing was written to Postgres"
+        bashio::log.error "PowerSync: the SQLite database itself is untouched at $sqlite_db"
+        rm -rf "$IMPORT_DIR"
+        return 1
+    fi
+
     # Dumped from the copy, with the tables Django rebuilds for itself left out: content
     # types and permissions are recreated by migrate, and sessions point at them. wger
     # does not install django.contrib.admin, so there is no admin.logentry to exclude:
