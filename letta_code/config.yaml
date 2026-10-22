@@ -20,7 +20,7 @@ options:
   openai_api: true
 panel_icon: mdi:brain
 ports:
-  4500/tcp: 4500
+  4500/tcp: null
 ports_description:
   4500/tcp: Letta App Server (WebSocket, HTTP & OpenAI API)
 schema:
@@ -28,8 +28,6 @@ schema:
   PUID: int
   TZ: str?
   backend: list(local|cloud)
-  channels: str?
-  computer_name: str?
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?

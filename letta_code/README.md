@@ -28,8 +28,6 @@ Stateful AI agent platform and App Server with long-term memory, skills, and mul
 | `backend` | `local` | Agent execution backend: `local` or `cloud`. |
 | `openai_api` | `true` | Enable OpenAI-compatible endpoints (`/v1/models`, `/v1/chat/completions`, etc.). |
 | `token` | *(generated)* | App Server capability token. If not specified, a secure random token is generated in `/config/app-server-token`. |
-| `computer_name` | *none* | Friendly machine name when connecting to Letta Cloud BYOM. |
-| `channels` | *none* | Optional comma-separated messaging channels (e.g. `discord,telegram,slack`). |
 | `PUID` / `PGID` | `0` / `0` | User and group ID to run the add-on as and own persistent files in `/config`. |
 | `TZ` | *none* | Container timezone (e.g. `America/New_York` or `UTC`). |
 | `env_vars` | `[]` | Extra environment variables such as `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, or `LETTA_API_KEY`. |
@@ -46,16 +44,15 @@ env_vars:
     value: sk-ant-...
 ```
 
-## Endpoints & API Access
+The add-on bundles an NGINX reverse proxy listening on the Home Assistant Ingress interface and internal port `4500`:
 
-The add-on bundles an NGINX reverse proxy listening on port `4500` and the Home Assistant Ingress interface:
-
-- **Ingress / Status:** Shows server readiness (`/readyz`)
-- **Health Check:** `http://homeassistant:4500/healthz`
-- **Readiness:** `http://homeassistant:4500/readyz`
-- **Server Info:** `http://homeassistant:4500/app-server-info`
-- **WebSocket Protocol:** `ws://homeassistant:4500/ws`
-- **OpenAI API Compatible:** `http://homeassistant:4500/v1/chat/completions`
+- **Ingress / Status:** Shows server readiness (`/readyz`) via the Home Assistant sidebar.
+- **Direct Access (Port 4500):** Port `4500` is disabled by default for security so capability tokens are not sent over unencrypted connections. To enable direct WebSocket and OpenAI API access, specify port `4500` under the **Network** section in the add-on's **Configuration** tab (or route through a reverse proxy terminating TLS/HTTPS):
+  - **Health Check:** `http://homeassistant:4500/healthz`
+  - **Readiness:** `http://homeassistant:4500/readyz`
+  - **Server Info:** `http://homeassistant:4500/app-server-info`
+  - **WebSocket Protocol:** `ws://homeassistant:4500/ws`
+  - **OpenAI API Compatible:** `http://homeassistant:4500/v1/chat/completions`
 
 ## Storage & Persistence
 

@@ -4,8 +4,6 @@ set -e
 # ==============================================================================
 
 declare backend
-declare computer_name
-declare channels
 declare -a args
 
 backend="local"
@@ -25,16 +23,8 @@ if bashio::config.true 'openai_api' || ! bashio::config.has_value 'openai_api'; 
     args+=("--openai-api")
 fi
 
-if bashio::config.has_value 'computer_name'; then
-    computer_name="$(bashio::config 'computer_name')"
-    args+=("--computer-name" "$computer_name")
-fi
-
-if bashio::config.has_value 'channels'; then
-    channels="$(bashio::config 'channels')"
-    args+=("--channels" "$channels" "--install-channel-runtimes")
-fi
 
 bashio::log.info "Starting Letta Code App Server on 127.0.0.1:4501..."
+export HOME=/config
 cd /config/workspace
-exec letta "${args[@]}"
+exec gosu "${PUID:-0}:${PGID:-0}" letta "${args[@]}"

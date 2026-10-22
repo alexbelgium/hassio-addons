@@ -17,7 +17,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="0.34.19"
-FROM ghcr.io/letta-ai/letta-code:${BUILD_UPSTREAM}
+FROM ${BUILD_FROM}
 
 ##################
 # 2 Modify Image #
@@ -46,7 +46,7 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="nginx"
+ENV PACKAGES="nginx gosu"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
