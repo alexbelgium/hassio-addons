@@ -7,7 +7,7 @@ mkdir -p "$CONFIG_LOCATION"
 
 # Symlink /app/data to HA persistent storage
 if [ -d /app/data ] && [ ! -L /app/data ]; then
-    cp -rn /app/data/. "$CONFIG_LOCATION/" 2>/dev/null || true
+    cp -rn /app/data/. "$CONFIG_LOCATION/"
     rm -rf /app/data
 fi
 ln -sfn "$CONFIG_LOCATION" /app/data
