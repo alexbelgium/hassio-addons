@@ -1,7 +1,9 @@
 arch:
   - aarch64
   - amd64
-description: Open-source AI inference gateway and router (OpenAI-compatible drop-in replacement)
+description:
+  Open-source AI inference gateway and router (OpenAI-compatible drop-in
+  replacement)
 image: ghcr.io/alexbelgium/omniroute-{arch}
 ingress: true
 init: false
@@ -16,7 +18,7 @@ panel_icon: mdi:router-network
 ports:
   20128/tcp: null
 ports_description:
-  20128/tcp: OmniRoute Web UI and OpenAI API Gateway (optional, opt-in for LAN access)
+  20128/tcp: OmniRoute Web UI and OpenAI API gateway (opt-in)
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
