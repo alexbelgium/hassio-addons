@@ -1,4 +1,7 @@
  
+## 26.04.5.2.1 (2026-10-24)
+- Update to latest version from collabora/code
+ 
 ## 26.04.5.1.1 (2026-10-10)
 - Update to latest version from collabora/code
  
