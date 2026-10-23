@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# ==============================================================================
+
+declare -a args
+
+args=(
+    "server"
+    "--backend" "$(bashio::config 'backend')"
+    "--listen" "ws://0.0.0.0:4500"
+    "--ws-auth" "capability-token"
+    "--ws-token-file" "/config/app-server-token"
+)
+bashio::config.true 'openai_api' && args+=("--openai-api")
+
+bashio::log.info "Starting Letta Code App Server on 0.0.0.0:4500..."
+export HOME=/config
+cd /config/workspace
+# The upstream entrypoint installs the cron jobs from ~/.letta and starts cron
+exec /usr/local/bin/letta-container-entrypoint letta "${args[@]}"
