@@ -8,7 +8,7 @@ set -e
 
 bashio::log.info "Configuring persistent storage in /config..."
 
-mkdir -p /config/.letta /config/workspace
+mkdir -p /config/.letta/system-cron /config/.letta/system-crontab /config/workspace
 
 if [ ! -L /root/.letta ]; then
     rm -rf /root/.letta
