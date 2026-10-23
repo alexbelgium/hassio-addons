@@ -1,9 +1,9 @@
 {
-  "last_update": "2026-10-17",
+  "last_update": "2026-10-24",
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich",
   "source": "container",
-  "upstream_digest": "sha256:c04bdd76f1f4fc7eb9045da63698ef94117b63f19c62fe28b634f49db47c42c9",
+  "upstream_digest": "sha256:657d7102e52a4fb9d97edc3c281a4bdc0eb1f1a9f6e5a07afb2b59e663f6d49c",
   "upstream_repo": "ghcr.io/imagegenius/immich:3-noml",
-  "upstream_version": "3.3.3"
+  "upstream_version": "3.3.5"
 }
