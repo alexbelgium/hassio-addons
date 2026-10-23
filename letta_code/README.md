@@ -11,7 +11,6 @@ Stateful AI agent platform and App Server with long-term memory, skills, and mul
 - OpenAI-compatible API (`/v1/models`, `/v1/chat/completions`, `/v1/responses`)
 - Local and cloud execution backends
 - Persistent workspace and agent storage in `/config`
-- Home Assistant Ingress status probe integration
 
 ## Installation
 
@@ -19,7 +18,7 @@ Stateful AI agent platform and App Server with long-term memory, skills, and mul
 2. Install the **Letta Code** add-on.
 3. Configure your API keys in the add-on's **Configuration** tab (see below).
 4. Start the add-on.
-5. Access the status endpoint from the sidebar (Ingress). To connect clients directly, first enable port `4500` in the add-on's Network configuration, then use `http://homeassistant:4500`.
+5. Enable port `4500` under the **Network** section in the add-on's **Configuration** tab, then connect clients to `http://homeassistant:4500` (or `ws://homeassistant:4500/ws`).
 
 ## Configuration
 
@@ -44,9 +43,10 @@ env_vars:
     value: sk-ant-...
 ```
 
-The add-on bundles an NGINX reverse proxy listening on the Home Assistant Ingress interface and internal port `4500`:
+## Endpoints & API Access
 
-- **Ingress / Status:** Shows server readiness (`/readyz`) via the Home Assistant sidebar.
+Letta Code serves its App Server on port `4500`:
+
 - **Direct Access (Port 4500):** Port `4500` is disabled by default for security so capability tokens are not sent over unencrypted connections. To enable direct WebSocket and OpenAI API access, specify port `4500` under the **Network** section in the add-on's **Configuration** tab (or route through a reverse proxy terminating TLS/HTTPS):
   - **Health Check:** `http://homeassistant:4500/healthz`
   - **Readiness:** `http://homeassistant:4500/readyz`

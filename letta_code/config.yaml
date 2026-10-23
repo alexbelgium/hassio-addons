@@ -5,12 +5,9 @@ description:
   Stateful AI agent platform and App Server with long-term memory, skills,
   and multi-agent reasoning
 image: ghcr.io/alexbelgium/letta_code-{arch}
-ingress: true
-ingress_stream: true
 init: false
 map:
   - addon_config:rw
-  - share:rw
 name: Letta Code
 options:
   PGID: 0
@@ -18,7 +15,6 @@ options:
   backend: local
   env_vars: []
   openai_api: true
-panel_icon: mdi:brain
 ports:
   4500/tcp: null
 ports_description:

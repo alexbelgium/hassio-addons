@@ -3,28 +3,18 @@
 set -e
 # ==============================================================================
 
-declare backend
 declare -a args
-
-backend="local"
-if bashio::config.has_value 'backend'; then
-    backend="$(bashio::config 'backend')"
-fi
 
 args=(
     "server"
-    "--backend" "$backend"
-    "--listen" "ws://127.0.0.1:4501"
+    "--backend" "$(bashio::config 'backend')"
+    "--listen" "ws://0.0.0.0:4500"
     "--ws-auth" "capability-token"
     "--ws-token-file" "/config/app-server-token"
 )
+bashio::config.true 'openai_api' && args+=("--openai-api")
 
-if bashio::config.true 'openai_api' || ! bashio::config.has_value 'openai_api'; then
-    args+=("--openai-api")
-fi
-
-
-bashio::log.info "Starting Letta Code App Server on 127.0.0.1:4501..."
+bashio::log.info "Starting Letta Code App Server on 0.0.0.0:4500..."
 export HOME=/config
 cd /config/workspace
-exec gosu "${PUID:-0}:${PGID:-0}" letta "${args[@]}"
+exec /usr/local/bin/letta-container-entrypoint gosu "${PUID:-0}:${PGID:-0}" letta "${args[@]}"

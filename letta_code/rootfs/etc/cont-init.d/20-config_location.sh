@@ -32,5 +32,7 @@ elif [ ! -f /config/app-server-token ]; then
     bashio::log.notice "Generated token stored in /config/app-server-token"
 fi
 
-# Chown persistent config
+# Recursive chown of /config : workspace files and agent skills are created
+# by the agent runtime, so a PUID/PGID change must hand them over too.
+# Numbered 20- so it sorts after 00-global_var.sh, which exports PUID/PGID.
 chown -R "${PUID:-0}:${PGID:-0}" /config

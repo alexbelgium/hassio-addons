@@ -11,18 +11,13 @@ profile letta_code_addon flags=(attach_disconnected,mediate_deleted) {
   capability sys_chroot,
   file,
   signal,
-  mount,
-  umount,
-  remount,
   network udp,
   network tcp,
   network dgram,
   network stream,
   network inet,
   network inet6,
-  network netlink raw,
   network unix dgram,
-
 
 # Entrypoint stack
   /init ix,
@@ -42,24 +37,15 @@ profile letta_code_addon flags=(attach_disconnected,mediate_deleted) {
   /init rix,
   /var/run/** mrwkl,
   /var/run/ mrwkl,
-  /dev/i2c-1 mrwkl,
-  # Files required
-  /dev/fuse mrwkl,
-  /dev/sda1 mrwkl,
-  /dev/sdb1 mrwkl,
-  /dev/nvme0 mrwkl,
-  /dev/nvme1 mrwkl,
-  /dev/mmcblk0p1 mrwkl,
-  /dev/* mrwkl,
   /tmp/** mrkwl,
 
   # Data access
   /data/** rw,
+  /config/** rw,
 
   # suppress ptrace denials when using 'docker ps' or using 'ps' inside a container
   ptrace (trace,read) peer=docker-default,
 
   # docker daemon confinement requires explicit allow rule for signal
   signal (receive) set=(kill,term) peer=/usr/bin/docker,
-
 }
