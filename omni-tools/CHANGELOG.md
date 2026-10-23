@@ -1,3 +1,6 @@
+ 
+## 0.7.0 (2026-10-24)
+- Update to latest version from iib0011/omni-tools (changelog : https://github.com/iib0011/omni-tools/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 0.6.1.2 (2026-09-07)
