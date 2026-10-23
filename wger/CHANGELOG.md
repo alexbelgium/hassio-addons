@@ -1,3 +1,7 @@
+ 
+## 2.8.0 (2026-10-24)
+- Update to latest version from wger/server
+- Upstream tag : 2.8.0-dev.2
 ## 2.8.0-dev.1.4 (2026-10-21)
 
 - Fix importing long-lived SQLite databases into Postgres when groups still reference permissions for models removed by upstream (#3138).
