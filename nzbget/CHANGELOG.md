@@ -1,4 +1,8 @@
  
+## v26.3.269 (2026-10-24)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
+- Upstream tag : v26.3-ls269
+ 
 ## v26.3.268 (2026-10-17)
 - Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
 - Upstream tag : v26.3-ls268
