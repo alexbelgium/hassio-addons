@@ -18,7 +18,7 @@ ARG BUILD_UPSTREAM="3.8.52"
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+FROM docker.io/diegosouzapw/omniroute:${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #
@@ -26,20 +26,9 @@ FROM ${BUILD_FROM}
 
 USER root
 
-# Set S6 wait time env (harmless, keeps pattern)
-ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
-
 ##################
 # 3 Install apps #
 ##################
-
-# Install curl, jq, ca-certificates, nginx
-# hadolint ignore=DL3008
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl jq ca-certificates nginx && \
-    rm -rf /var/lib/apt/lists/*
 
 # Add rootfs
 COPY rootfs/ /
@@ -58,7 +47,7 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES=""
+ENV PACKAGES="nginx"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
@@ -113,9 +102,9 @@ LABEL \
 #################
 
 ENV HEALTH_PORT="20128" \
-    HEALTH_URL=""
+    HEALTH_URL="/api/monitoring/health"
 HEALTHCHECK \
-    --interval=5s \
+    --interval=30s \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \

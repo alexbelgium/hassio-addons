@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "docker.io/diegosouzapw/omniroute:3.8.52",
-    "amd64": "docker.io/diegosouzapw/omniroute:3.8.52"
+    "aarch64": "docker.io/diegosouzapw/omniroute:latest",
+    "amd64": "docker.io/diegosouzapw/omniroute:latest"
   }
 }

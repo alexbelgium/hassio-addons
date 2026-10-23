@@ -2,10 +2,6 @@ arch:
   - aarch64
   - amd64
 description: Open-source AI inference gateway and router (OpenAI-compatible drop-in replacement)
-environment:
-  DATA_DIR: /config
-  PGID: "0"
-  PUID: "0"
 image: ghcr.io/alexbelgium/omniroute-{arch}
 ingress: true
 init: false
@@ -17,23 +13,18 @@ options:
   INITIAL_PASSWORD: ""
   REQUIRE_API_KEY: true
   OMNIROUTE_MEMORY_MB: 1024
-  PGID: 0
-  PUID: 0
-  TZ: Europe/Paris
 panel_icon: mdi:router-network
 ports:
-  20128/tcp: 20128
+  20128/tcp: null
 ports_description:
-  20128/tcp: OmniRoute Web UI and OpenAI API Gateway
+  20128/tcp: OmniRoute Web UI and OpenAI API Gateway (optional, opt-in for LAN access)
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
-  INITIAL_PASSWORD: str?
-  REQUIRE_API_KEY: bool?
+  INITIAL_PASSWORD: password?
+  REQUIRE_API_KEY: bool
   OMNIROUTE_MEMORY_MB: int?
-  PGID: int
-  PUID: int
   TZ: str?
 slug: omniroute
 url: https://github.com/alexbelgium/hassio-addons/tree/master/omniroute

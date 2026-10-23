@@ -46,22 +46,20 @@ Key features:
 2. Install the **OmniRoute** add-on.
 3. Configure the add-on options (e.g. set an `INITIAL_PASSWORD` for the admin web UI).
 4. Start the add-on.
-5. Click **Open Web UI** to access via Home Assistant Ingress, or browse to `http://<homeassistant-ip>:20128`.
+5. Click **Open Web UI** to access via Home Assistant Ingress.
 
 ## Configuration
 
-Web UI is accessible via Home Assistant Ingress. Direct network access and API gateway are exposed on port **20128**.
+Web UI is accessible via Home Assistant Ingress. Direct network access on port **20128** is disabled (`null`) by default for security; set a host port (e.g. `20128`) under the **Configuration** tab if you wish to expose the gateway directly on your LAN.
 
 ### Options
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `INITIAL_PASSWORD` | str | `""` | Initial password for the administrator account on first setup. If empty, the default or auto-generated password is used. |
+| `INITIAL_PASSWORD` | password | `""` | Initial password for the administrator account on first setup. If empty, the password is created via the onboarding wizard in the web UI. |
 | `REQUIRE_API_KEY` | bool | `true` | When true, proxy requests to `/v1` require a valid API key configured in OmniRoute. |
 | `OMNIROUTE_MEMORY_MB` | int | `1024` | Maximum Node.js V8 old space memory in megabytes for the inference gateway. |
 | `TZ` | str | `Europe/Paris` | Timezone for the container. |
-| `PUID` | int | `0` | User ID for file permissions in `/config`. |
-| `PGID` | int | `0` | Group ID for file permissions in `/config`. |
 | `env_vars` | list | `[]` | Arbitrary environment variables passed into OmniRoute. |
 
 ### Connecting Developer Tools

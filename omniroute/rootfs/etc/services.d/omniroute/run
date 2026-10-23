@@ -2,49 +2,12 @@
 # shellcheck shell=bash
 set -e
 
-CONFIG_LOCATION="/config"
-mkdir -p "$CONFIG_LOCATION"
+OMNIROUTE_BASE_PATH="$(bashio::addon.ingress_entry)"
+export OMNIROUTE_BASE_PATH="${OMNIROUTE_BASE_PATH:-/ingress}"
+export DATA_DIR=/config
+export PORT=20129
+export HOSTNAME=127.0.0.1
 
-# Symlink /app/data to HA persistent storage
-if [ -d /app/data ] && [ ! -L /app/data ]; then
-    cp -rn /app/data/. "$CONFIG_LOCATION/"
-    rm -rf /app/data
-fi
-ln -sfn "$CONFIG_LOCATION" /app/data
-
-# Sourcing /.env (which has add-on options from 00-global_var.sh)
-if [ -f /.env ]; then
-    set -a
-    # shellcheck disable=SC1091
-    . /.env
-    set +a
-fi
-
-# Do not export an empty password (let upstream generate or handle default)
-if [ -z "${INITIAL_PASSWORD:-}" ]; then
-    unset INITIAL_PASSWORD
-fi
-
-export DATA_DIR="$CONFIG_LOCATION"
-export PORT="20129"
-export HOSTNAME="127.0.0.1"
-
-if [ "${PUID:-0}" != "0" ] || [ "${PGID:-0}" != "0" ]; then
-    chown -R "${PUID:-0}:${PGID:-0}" "$CONFIG_LOCATION" 2>/dev/null || true
-    chown -R "${PUID:-0}:${PGID:-0}" /home/node 2>/dev/null || true
-fi
-
-bashio::log.info "Starting OmniRoute backend on internal port 20129..."
+bashio::log.info "Starting OmniRoute..."
 cd /app
-
-if [ "${PUID:-0}" != "0" ]; then
-    DROP_PRIVS=(setpriv --reuid="${PUID}" --regid="${PGID:-${PUID}}" --clear-groups)
-else
-    DROP_PRIVS=()
-fi
-
-if [ -x /app/check-permissions.sh ]; then
-    exec "${DROP_PRIVS[@]}" /app/check-permissions.sh node dev/run-standalone.mjs
-else
-    exec "${DROP_PRIVS[@]}" node dev/run-standalone.mjs
-fi
+exec /app/check-permissions.sh node dev/run-standalone.mjs
