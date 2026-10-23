@@ -1,4 +1,7 @@
  
+## 3.3.5 (2026-10-24)
+- Update to latest version from ghcr.io/imagegenius/immich:3-openvino
+ 
 ## 3.3.3 (2026-10-17)
 - Update to latest version from ghcr.io/imagegenius/immich:3-openvino
  
