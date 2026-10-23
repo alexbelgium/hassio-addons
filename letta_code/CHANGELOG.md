@@ -1,3 +1,6 @@
+ 
+## 0.34.23 (2026-10-24)
+- Update to latest version from letta-ai/letta-code (changelog : https://github.com/letta-ai/letta-code/releases)
 ## 0.34.19 (2026-10-22)
 
 - Initial release, based on upstream letta-ai/letta-code 0.34.19 (changelog: <https://github.com/letta-ai/letta-code/releases>)
