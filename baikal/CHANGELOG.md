@@ -1,3 +1,6 @@
+ 
+## 0.13.0 (2026-10-24)
+- Update to latest version from sabre-io/Baikal (changelog : https://github.com/sabre-io/Baikal/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 0.12.1 (2026-09-03)
 

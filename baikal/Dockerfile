@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="0.12.1"
+ARG BUILD_UPSTREAM="0.13.0"
 
 # ckulka/baikal-docker, which builds the base image, stopped publishing new
 # Baikal versions at 0.10.1 : the base image is used for its runtime only

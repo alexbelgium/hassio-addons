@@ -84,5 +84,5 @@ schema:
 slug: baikal
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "0.12.1"
+version: "0.13.0"
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
