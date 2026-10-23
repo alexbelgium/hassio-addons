@@ -1,4 +1,7 @@
  
+## 3.5.1 (2026-10-24)
+- Update to latest version from seerr-team/seerr (changelog : https://github.com/seerr-team/seerr/releases)
+ 
 ## 3.5.0 (2026-10-03)
 - Update to latest version from seerr-team/seerr (changelog : https://github.com/seerr-team/seerr/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
