@@ -6,6 +6,6 @@
 - Upstream version 3.8.52 from cheaper-inference/OmniRoute
 - OpenAI-compatible gateway and proxy supporting multi-provider routing, load balancing, and fallbacks
 - Full Home Assistant Ingress integration with bundled NGINX reverse proxy
-- Direct port 20128 exposed for external OpenAI API clients, coding tools, and direct web access
+- Optional direct port 20128 (disabled by default) for external OpenAI API clients, coding tools, and direct web access
 - Persistent configuration and SQLite database mapped to HA add-on config directory
 - Multi-architecture support for amd64 and aarch64

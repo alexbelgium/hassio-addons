@@ -10,7 +10,6 @@ map:
 name: OmniRoute
 options:
   env_vars: []
-  INITIAL_PASSWORD: ""
   REQUIRE_API_KEY: true
   OMNIROUTE_MEMORY_MB: 1024
 panel_icon: mdi:router-network
@@ -24,7 +23,7 @@ schema:
       value: str?
   INITIAL_PASSWORD: password?
   REQUIRE_API_KEY: bool
-  OMNIROUTE_MEMORY_MB: int?
+  OMNIROUTE_MEMORY_MB: int
   TZ: str?
 slug: omniroute
 url: https://github.com/alexbelgium/hassio-addons/tree/master/omniroute

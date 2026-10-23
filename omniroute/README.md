@@ -56,10 +56,10 @@ Web UI is accessible via Home Assistant Ingress. Direct network access on port *
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `INITIAL_PASSWORD` | password | `""` | Initial password for the administrator account on first setup. If empty, the password is created via the onboarding wizard in the web UI. |
+| `INITIAL_PASSWORD` | password | *(unset)* | Initial password for the administrator account on first setup. If unset, the password is created via the onboarding wizard in the web UI. |
 | `REQUIRE_API_KEY` | bool | `true` | When true, proxy requests to `/v1` require a valid API key configured in OmniRoute. |
 | `OMNIROUTE_MEMORY_MB` | int | `1024` | Maximum Node.js V8 old space memory in megabytes for the inference gateway. |
-| `TZ` | str | `Europe/Paris` | Timezone for the container. |
+| `TZ` | str | *(unset)* | Timezone for the container (e.g. `Europe/Paris`). |
 | `env_vars` | list | `[]` | Arbitrary environment variables passed into OmniRoute. |
 
 ### Connecting Developer Tools
