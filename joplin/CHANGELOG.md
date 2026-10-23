@@ -1,4 +1,7 @@
  
+## 3.7.3 (2026-10-24)
+- Update to latest version from etechonomy/joplin-server (changelog : https://github.com/etechonomy/joplin-server/releases)
+ 
 ## 3.7.2.1 (2026-10-13)
 
 - Add optional SSL: set `ssl: true` with `certfile`/`keyfile` from /ssl to serve the web interface over https on port 22300 (#3114)
