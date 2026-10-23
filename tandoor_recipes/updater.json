@@ -1,9 +1,9 @@
 {
   "github_beta": false,
-  "last_update": "2026-09-12",
+  "last_update": "2026-10-24",
   "repository": "alexbelgium/hassio-addons",
   "slug": "tandoor_recipes",
   "source": "github",
   "upstream_repo": "TandoorRecipes/recipes",
-  "upstream_version": "2.6.15"
+  "upstream_version": "2.7.1"
 }
