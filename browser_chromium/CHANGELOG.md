@@ -1,4 +1,8 @@
  
+## 2026.10.24 (2026-10-24)
+- Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)
+- Upstream tag : version-bf0d07d2
+ 
 ## 2026.10.16 (2026-10-16)
 - Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)
 - Upstream tag : version-d2f5e718
