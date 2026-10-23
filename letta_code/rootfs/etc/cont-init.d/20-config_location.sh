@@ -31,4 +31,3 @@ elif [ ! -f /config/app-server-token ]; then
     chmod 600 /config/app-server-token
     bashio::log.notice "Generated token stored in /config/app-server-token"
 fi
-
