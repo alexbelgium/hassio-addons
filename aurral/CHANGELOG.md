@@ -1,3 +1,6 @@
+ 
+## 2.11.0 (2026-10-24)
+- Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
 ## 2.10.0.1 (03-10-2026)
 - Apply the `download_folder` option; it was ignored and downloads always went to `/share/aurral/downloads/weekly-flow`
 - Stop setting `WEEKLY_FLOW_FOLDER`, which Aurral reads as a deprecated alias that overrides `DOWNLOAD_FOLDER`. Flows go to a subfolder of the download folder; `weekly_flow_folder` has no effect
