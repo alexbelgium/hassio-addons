@@ -8,7 +8,7 @@ set -e
 
 bashio::log.info "Configuring persistent storage in /config..."
 
-mkdir -p /config/.letta/system-cron /config/.letta/system-crontab /config/workspace
+mkdir -p /config/.letta /config/workspace
 
 if [ ! -L /root/.letta ]; then
     rm -rf /root/.letta
@@ -32,7 +32,3 @@ elif [ ! -f /config/app-server-token ]; then
     bashio::log.notice "Generated token stored in /config/app-server-token"
 fi
 
-# Recursive chown of /config : workspace files and agent skills are created
-# by the agent runtime, so a PUID/PGID change must hand them over too.
-# Numbered 20- so it sorts after 00-global_var.sh, which exports PUID/PGID.
-chown -R "${PUID:-0}:${PGID:-0}" /config

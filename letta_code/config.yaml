@@ -10,8 +10,6 @@ map:
   - addon_config:rw
 name: Letta Code
 options:
-  PGID: 0
-  PUID: 0
   backend: local
   env_vars: []
   openai_api: true
@@ -20,8 +18,6 @@ ports:
 ports_description:
   4500/tcp: Letta App Server (WebSocket, HTTP & OpenAI API)
 schema:
-  PGID: int
-  PUID: int
   TZ: str?
   backend: list(local|cloud)
   env_vars:

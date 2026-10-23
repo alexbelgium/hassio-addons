@@ -16,25 +16,6 @@ bashio::config.true 'openai_api' && args+=("--openai-api")
 
 bashio::log.info "Starting Letta Code App Server on 0.0.0.0:4500..."
 export HOME=/config
-# Safely restore persistent schedules from /config/.letta
-if [ "${PUID:-0}" -eq 0 ]; then
-    export LETTA_SYSTEM_CRON_DIR=/config/.letta/system-cron
-    export LETTA_SYSTEM_ROOT_CRONTAB=/config/.letta/system-crontab/root
-else
-    # In non-root mode, stage and sanitize jobs so agent-writable files cannot execute as root
-    export LETTA_SYSTEM_CRON_DIR=/run/letta/system-cron
-    export LETTA_SYSTEM_ROOT_CRONTAB=/run/letta/system-crontab/empty
-    mkdir -p /run/letta/system-cron /run/letta/system-crontab
-    touch /run/letta/system-crontab/empty
-
-    if [ -d /config/.letta/system-cron ]; then
-        for cron_file in /config/.letta/system-cron/*; do
-            [ -f "$cron_file" ] || continue
-            target="/run/letta/system-cron/$(basename "$cron_file")"
-            awk '{ if ($6 == "root") $6 = "node"; print $0 }' "$cron_file" > "$target"
-            chmod 0644 "$target"
-        done
-    fi
-fi
 cd /config/workspace
-exec /usr/local/bin/letta-container-entrypoint gosu "${PUID:-0}:${PGID:-0}" letta "${args[@]}"
+# The upstream entrypoint installs the cron jobs from ~/.letta and starts cron
+exec /usr/local/bin/letta-container-entrypoint letta "${args[@]}"

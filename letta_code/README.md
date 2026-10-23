@@ -27,7 +27,6 @@ Stateful AI agent platform and App Server with long-term memory, skills, and mul
 | `backend` | `local` | Agent execution backend: `local` or `cloud`. |
 | `openai_api` | `true` | Enable OpenAI-compatible endpoints (`/v1/models`, `/v1/chat/completions`, etc.). |
 | `token` | *(generated)* | App Server capability token. If not specified, a secure random token is generated in `/config/app-server-token`. |
-| `PUID` / `PGID` | `0` / `0` | User and group ID to run the add-on as and own persistent files in `/config`. |
 | `TZ` | *none* | Container timezone (e.g. `America/New_York` or `UTC`). |
 | `env_vars` | `[]` | Extra environment variables such as `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, or `LETTA_API_KEY`. |
 
