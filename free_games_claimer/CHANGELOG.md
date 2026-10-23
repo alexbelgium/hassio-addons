@@ -1,4 +1,8 @@
  
+## 2.2.4 (2026-10-24)
+- Update to latest version from P-Adamiec/Free-Games-Claimer-Remaster (changelog : https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases)
+- Upstream tag : 1.18
+ 
 ## 2.2.3 (2026-10-17)
 - Update to latest version from P-Adamiec/Free-Games-Claimer-Remaster (changelog : https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases)
 - Upstream tag : 1.16
