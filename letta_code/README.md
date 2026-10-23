@@ -47,6 +47,7 @@ env_vars:
 
 Letta Code serves its App Server on port `4500`:
 
+- **Authentication:** Read the token from `/config/app-server-token` (or use the configured `token` option) and send it as `Authorization: Bearer <token>` with HTTP requests and WebSocket connections.
 - **Direct Access (Port 4500):** Port `4500` is disabled by default for security so capability tokens are not sent over unencrypted connections. To enable direct WebSocket and OpenAI API access, specify port `4500` under the **Network** section in the add-on's **Configuration** tab (or route through a reverse proxy terminating TLS/HTTPS):
   - **Health Check:** `http://homeassistant:4500/healthz`
   - **Readiness:** `http://homeassistant:4500/readyz`

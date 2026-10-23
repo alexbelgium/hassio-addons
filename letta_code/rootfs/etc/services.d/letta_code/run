@@ -16,5 +16,9 @@ bashio::config.true 'openai_api' && args+=("--openai-api")
 
 bashio::log.info "Starting Letta Code App Server on 0.0.0.0:4500..."
 export HOME=/config
+# Keep system cron in root-controlled storage outside agent-writable /config
+export LETTA_SYSTEM_CRON_DIR=/etc/letta/system-cron
+export LETTA_SYSTEM_ROOT_CRONTAB=/etc/letta/system-crontab/root
+mkdir -p /etc/letta/system-cron /etc/letta/system-crontab
 cd /config/workspace
 exec /usr/local/bin/letta-container-entrypoint gosu "${PUID:-0}:${PGID:-0}" letta "${args[@]}"
