@@ -57,6 +57,10 @@ RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -e
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
+# The base sets TMPDIR=/run/plex-temp without creating it; package
+# maintainer scripts (e.g. ca-certificates postinst) fail on mktemp otherwise
+RUN mkdir -p "$TMPDIR"
+
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh 00-local_mounts.sh 00-smb_mounts.sh"
 

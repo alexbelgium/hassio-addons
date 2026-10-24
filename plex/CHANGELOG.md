@@ -1,4 +1,5 @@
  
+- Fix build: create the base image's `TMPDIR` (`/run/plex-temp`) before installing packages; the Ubuntu ca-certificates update failed in its postinst without it, breaking every later apt install
 ## 1.43.5.11029.329 (2026-10-24)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 - Upstream tag : 1.43.5.11029-6bf8af3f0-ls329
