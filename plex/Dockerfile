@@ -69,6 +69,10 @@ ENV PACKAGES="jq \
     cifs-utils \
     keyutils"
 
+# TEMP DEBUG (remove before merge): show the real apt error
+RUN set -x; cat /etc/os-release | head -3; ls -la /etc/apt/apt.conf.d /etc/apt/sources.list.d; cat /etc/apt/apt.conf.d/* 2>/dev/null | head -40; \
+    apt-get update; echo "update rc=$?"; apt-get install -y --no-install-recommends jq; echo "install rc=$?"; true
+
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
