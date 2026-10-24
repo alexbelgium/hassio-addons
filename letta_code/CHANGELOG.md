@@ -1,3 +1,7 @@
+## 0.34.21.1 (24-10-2026)
+
+- Fix `getcwd: cannot access parent directories` at startup: the image now starts from `/` instead of upstream's `/workspace`, which is replaced by a symlink to `/config/workspace` during init
+
 ## 0.34.21 (2026-10-24)
 
 - Update to latest version from letta-ai/letta-code (changelog: <https://github.com/letta-ai/letta-code/releases>)
