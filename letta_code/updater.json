@@ -1,6 +1,7 @@
 {
   "github_beta": false,
   "github_fulltag": false,
+  "github_havingasset": true,
   "last_update": "2026-10-24",
   "repository": "alexbelgium/hassio-addons",
   "slug": "letta_code",

@@ -2,6 +2,7 @@
 ## 0.34.21 (2026-10-24)
 - Update to latest version from letta-ai/letta-code (changelog : https://github.com/letta-ai/letta-code/releases)
 - Use 0.34.21: upstream tagged 0.34.22 and 0.34.23 but their image publish failed, so `ghcr.io/letta-ai/letta-code:0.34.23` does not exist
+- Updater: only follow GitHub releases with assets (`github_havingasset`), so tags whose image publish failed are skipped
 ## 0.34.19 (2026-10-22)
 
 - Initial release, based on upstream letta-ai/letta-code 0.34.19 (changelog: <https://github.com/letta-ai/letta-code/releases>)
