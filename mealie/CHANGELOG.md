@@ -1,4 +1,8 @@
  
+## v3.29.0 (2026-10-24)
+- Fix build: the v3.29.0 frontend imports locale files from the backend tree, so clone and build inside the full repository
+- Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
+ 
 ## v3.28.0 (2026-09-26)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
  
