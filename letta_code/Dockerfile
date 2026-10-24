@@ -25,6 +25,10 @@ FROM ghcr.io/letta-ai/letta-code:${BUILD_UPSTREAM}
 
 USER root
 
+# Upstream sets WORKDIR /workspace, which 20-config_location.sh replaces with a
+# symlink to /config/workspace; start from / so services do not inherit a deleted cwd
+WORKDIR /
+
 ##################
 # 3 Install apps #
 ##################
