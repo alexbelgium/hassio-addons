@@ -29,13 +29,12 @@ ENV MEALIE_VERSION="v3.29.0"
 
 RUN npm install --global pnpm@11
 
-# Clone the Mealie repository to get the frontend source code
-WORKDIR /frontend
-# hadolint ignore=DL3003
-RUN mkdir -p /frontend/tempdir && cd /frontend/tempdir && \
-    git clone --depth 1 --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/mealie.git . && \
-    cp -a frontend/. /frontend/ && cd /frontend && rm -rf tempdir && \
-    pnpm install --frozen-lockfile
+# Clone the whole Mealie repository: since v3.29.0 the frontend imports locale
+# files from the backend tree (../mealie/repos/seed/...)
+WORKDIR /src
+RUN git clone --depth 1 --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/mealie.git .
+WORKDIR /src/frontend
+RUN pnpm install --frozen-lockfile
 
 # Build the frontend
 RUN pnpm generate
@@ -45,7 +44,7 @@ FROM hkotel/mealie:latest
 
 # Copy the rebuilt frontend files into the final image
 WORKDIR /mealie
-COPY --from=frontend-builder /frontend/dist /mealie/frontend
+COPY --from=frontend-builder /src/frontend/dist /mealie/frontend
 
 ##################
 # 2 Modify Image #
