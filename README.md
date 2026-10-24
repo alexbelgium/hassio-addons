@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 145
+- In the repository : 147
 - Installed : 300983
 
 ### Top 3
@@ -616,6 +616,13 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
+&#10003;  [Letta Code](letta_code/) : Stateful AI agent platform and App Server with long-term memory, skills, and multi-agent reasoning
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fletta_code%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fletta_code%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+
 &#10003; ![image](https://api.iconify.design/mdi/speedometer.svg) [LibreSpeed](librespeed/) : A very lightweight speed test implemented in Javascript, using XMLHttpRequest and Web Workers
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Flibrespeed%2Fconfig.yaml)
@@ -805,6 +812,14 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fomni-tools%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/router-network.svg) [OmniRoute](omniroute/) : Open-source AI inference gateway and router (OpenAI-compatible drop-in replacement)
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fomniroute%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fomniroute%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
 
 &#10003;  [Openproject](openproject/) : Openproject for Home Assistant
 
