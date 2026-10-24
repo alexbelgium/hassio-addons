@@ -1,4 +1,7 @@
  
+## 0.13.0.1 (24-10-2026)
+- Fix DAV clients failing with "Too many redirects" after the update to 0.13.0 (#3148) : the add-on now runs the Baikal database upgrade itself at startup, instead of waiting for it to be confirmed in the web admin. As upstream recommends for 0.13.0, keep a backup of the add-on before updating
+
 ## 0.13.0 (2026-10-24)
 - Update to latest version from sabre-io/Baikal (changelog : https://github.com/sabre-io/Baikal/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
