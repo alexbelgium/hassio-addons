@@ -11,7 +11,9 @@ When an issue mentions one of these add-ons (in the title or body), a GitHub Act
 | `bentopdf` | [@ToledoEM](https://github.com/ToledoEM) |
 | `emby` | [@petersendev](https://github.com/petersendev) |
 | `gitea` | [@baldarn](https://github.com/baldarn) |
+| `hindsight` | [@veronoicc](https://github.com/veronoicc) |
 | `kometa` | [@akrigator](https://github.com/akrigator) |
+| `letta_code` | [@veronoicc](https://github.com/veronoicc) |
 | `librespeed` | [@el](https://github.com/el) |
 | `manyfold` | [@ToledoEM](https://github.com/ToledoEM) |
 | `navidrome` | [@baldarn](https://github.com/baldarn) |
@@ -20,6 +22,7 @@ When an issue mentions one of these add-ons (in the title or body), a GitHub Act
 | `obsidian_syncserver_npm` | [@ToledoEM](https://github.com/ToledoEM) |
 | `obsidian_syncserver_solo` | [@ToledoEM](https://github.com/ToledoEM) |
 | `obsidian_syncserver_ssl` | [@ToledoEM](https://github.com/ToledoEM) |
+| `omniroute` | [@veronoicc](https://github.com/veronoicc) |
 | `openproject` | [@baldarn](https://github.com/baldarn) |
 | `resiliosync` | [@tyjtyj](https://github.com/tyjtyj) |
 | `spotweb` | [@woutercoppens](https://github.com/woutercoppens) |
