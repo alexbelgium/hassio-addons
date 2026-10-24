@@ -23,7 +23,7 @@ chown -R nginx:nginx /data
 # After a version update Baikal redirects every request to its upgrade wizard
 # until the database is upgraded, and DAV clients loop on that redirect (#3148).
 # Run the wizard once nginx answers, as confirming it in the web admin would
-configured="$(sed -n "s/^ *configured_version: *['\"]\?\([^'\"]*\).*/\1/p" /data/config/baikal.yaml 2>/dev/null)"
+configured="$(sed -n "s/^ *configured_version: *['\"]\?\([^'\"]*\).*/\1/p" /data/config/baikal.yaml 2>/dev/null || true)"
 shipped="$(sed -n 's/^define("BAIKAL_VERSION", "\(.*\)");/\1/p' /data/Core/Distrib.php)"
 if [ -n "$configured" ] && [ "$configured" != "$shipped" ]; then
     echo "Upgrading the Baikal database from $configured to $shipped"
