@@ -1,8 +1,6 @@
  
-## v3.29.0.1 (2026-10-25)
-- README: document logging in with the Home Assistant user through Ingress (reverse proxy auth, Mealie v3.29.0+)
-
 ## v3.29.0 (2026-10-24)
+- README: document logging in with the Home Assistant user through Ingress (reverse proxy auth)
 - Fix build: the v3.29.0 frontend imports locale files from the backend tree, so clone and build inside the full repository
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
  
