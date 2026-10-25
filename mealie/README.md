@@ -84,6 +84,27 @@ You can add environment variables by creating `/homeassistant/addons_config/xxx-
 
 The complete list of options can be found here: https://nightly.mealie.io/documentation/getting-started/installation/backend-config/
 
+### Log in with your Home Assistant user (reverse proxy auth)
+
+Since Mealie v3.29.0, the Ingress panel can sign you in automatically with your Home Assistant user. Home Assistant Ingress sends the logged-in user's name in the `X-Remote-User-Name` header; add these entries to the `env_vars` option:
+
+```yaml
+env_vars:
+  - name: REVERSE_PROXY_AUTH_ENABLED
+    value: "true"
+  - name: REVERSE_PROXY_AUTH_HEADER
+    value: X-Remote-User-Name
+```
+
+A Mealie user with the same username as your Home Assistant user must already exist. To create it automatically instead, add one more entry:
+
+```yaml
+  - name: REVERSE_PROXY_AUTH_SIGNUP_ENABLED
+    value: "true"
+```
+
+Warning: Mealie trusts this header completely, and the direct web port (9090 by default) forwards it unchanged. Anyone who can reach that port could log in as any user, including an admin. When enabling this, disable the port in the add-on's Network section and use Ingress only. The REST sensor and camera examples below use that direct port, so they will not work once it is disabled. See the [upstream documentation](https://mealie.io/documentation/getting-started/installation/backend-config/#reverse-proxy-auth).
+
 ## Integration with HA
 
 ### Detailed infos (Thanks @michelangelonz)
