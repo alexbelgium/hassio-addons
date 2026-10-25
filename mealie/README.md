@@ -90,7 +90,8 @@ The complete list of options can be found here: https://nightly.mealie.io/docume
 With `login_with_ha_user` (on by default), the Ingress panel signs you in automatically as the Mealie user whose username matches your Home Assistant username. It uses Mealie's [reverse proxy auth](https://mealie.io/documentation/getting-started/installation/backend-config/#reverse-proxy-auth) with the `X-Remote-User-Name` header that Home Assistant Ingress sends.
 
 - If no Mealie user has that username, the normal login page is shown. To create the user automatically instead, add `REVERSE_PROXY_AUTH_SIGNUP_ENABLED` with value `true` to the `env_vars` option.
-- The direct web port (9090 by default) removes this header, so it always uses the normal Mealie login.
+- Matching ignores case, and also accepts the Mealie user's email.
+- Only Ingress can log in this way: it sends Mealie a secret generated at each start, so requests through the direct web port (9090 by default) always get the normal Mealie login.
 - Set `login_with_ha_user: false` to turn it off.
 
 ## Integration with HA

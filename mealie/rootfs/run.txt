@@ -119,13 +119,20 @@ if bashio::config.has_value "FORWARDED_ALLOW_IPS"; then
 fi
 
 # Log in through Ingress as the Home Assistant user: the Supervisor sends its username with every
-# ingress request (X-Remote-User-Name), and the direct port drops that header in ssl.conf.
-# No Mealie user with that name leaves the normal login page.
-if ! bashio::config.false "login_with_ha_user"; then
+# ingress request (X-Remote-User-Name). Mealie only trusts it with a per-boot secret that only the
+# ingress nginx server sends, so the direct ports cannot spoof it. No Mealie user with that name
+# leaves the normal login page.
+proxy_auth_secret=""
+if bashio::config.false "login_with_ha_user"; then
+    export REVERSE_PROXY_AUTH_ENABLED=false
+else
+    proxy_auth_secret="$(od -An -N32 -tx1 /dev/urandom | tr -d ' \n')"
     export REVERSE_PROXY_AUTH_ENABLED=true
     export REVERSE_PROXY_AUTH_HEADER=X-Remote-User-Name
+    export REVERSE_PROXY_AUTH_SECRET="$proxy_auth_secret"
     bashio::log.info "Ingress logs in as the Home Assistant username"
 fi
+sed -i "s|%%proxy_auth_secret%%|${proxy_auth_secret}|g" /etc/nginx/servers/ingress.conf
 
 # Unset allow_signup
 
