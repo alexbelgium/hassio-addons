@@ -84,7 +84,11 @@ map:
   - ssl:rw
 name: Mealie
 options:
-  env_vars: []
+  env_vars:
+    - name: REVERSE_PROXY_AUTH_ENABLED
+      value: "true"
+    - name: REVERSE_PROXY_AUTH_HEADER
+      value: X-Remote-User-Name
   ALLOW_SIGNUP: true
   DATA_DIR: /config
   PGID: 1000
@@ -114,4 +118,4 @@ schema:
 slug: mealie
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "v3.29.0"
+version: "v3.29.0.1"
