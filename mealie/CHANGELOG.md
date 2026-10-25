@@ -2,6 +2,7 @@
 ## v3.29.0.1 (2026-10-25)
 - New option `login_with_ha_user` (on by default): the Ingress panel logs in as the Mealie user matching your Home Assistant username, through Mealie's reverse proxy auth. Unmatched users get the normal login page
 - Only the ingress server can use it: it sends Mealie a per-boot shared secret (`REVERSE_PROXY_AUTH_SECRET`), and the ingress listener now accepts only the Supervisor
+- Reverse proxy auth through the direct web port is no longer possible: a proxy you run in front of port 9090 cannot send the per-boot secret. Set `login_with_ha_user: false` and configure it yourself through `env_vars` if you need that
 
 ## v3.29.0 (2026-10-24)
 - README: document logging in with the Home Assistant user through Ingress (reverse proxy auth)
