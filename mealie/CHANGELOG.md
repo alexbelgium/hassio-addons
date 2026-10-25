@@ -1,6 +1,6 @@
  
 ## v3.29.0.1 (2026-10-25)
-- Log in to the Ingress panel with your Home Assistant user: new installs enable Mealie reverse proxy auth through default `env_vars` (`REVERSE_PROXY_AUTH_ENABLED`, `REVERSE_PROXY_AUTH_HEADER=X-Remote-User-Name`); existing installs can add them, see README
+- New option `login_with_ha_user` (on by default): the Ingress panel logs in as the Mealie user matching your Home Assistant username, through Mealie's reverse proxy auth. Unmatched users get the normal login page
 - The direct web port now drops any client-sent `X-Remote-User-Name` header, so the user cannot be spoofed there
 
 ## v3.29.0 (2026-10-24)

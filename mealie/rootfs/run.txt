@@ -118,6 +118,15 @@ if bashio::config.has_value "FORWARDED_ALLOW_IPS"; then
     bashio::log.info "Configured FORWARDED_ALLOW_IPS for Gunicorn"
 fi
 
+# Log in through Ingress as the Home Assistant user: the Supervisor sends its username with every
+# ingress request (X-Remote-User-Name), and the direct port drops that header in ssl.conf.
+# No Mealie user with that name leaves the normal login page.
+if ! bashio::config.false "login_with_ha_user"; then
+    export REVERSE_PROXY_AUTH_ENABLED=true
+    export REVERSE_PROXY_AUTH_HEADER=X-Remote-User-Name
+    bashio::log.info "Ingress logs in as the Home Assistant username"
+fi
+
 # Unset allow_signup
 
 if bashio::config.false "ALLOW_SIGNUP"; then
