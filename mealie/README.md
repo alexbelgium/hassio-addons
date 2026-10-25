@@ -96,9 +96,14 @@ env_vars:
     value: X-Remote-User-Name
 ```
 
-A Mealie user with the same username as your Home Assistant user must already exist (set `REVERSE_PROXY_AUTH_SIGNUP_ENABLED: "true"` to create it automatically instead).
+A Mealie user with the same username as your Home Assistant user must already exist. To create it automatically instead, add one more entry:
 
-Warning: Mealie trusts this header completely, and the direct web port (9090 by default) forwards it unchanged. Anyone who can reach that port could log in as any user, including an admin. When enabling this, disable the port in the add-on's Network section and use Ingress only. See the [upstream documentation](https://mealie.io/documentation/getting-started/installation/backend-config/#reverse-proxy-auth).
+```yaml
+  - name: REVERSE_PROXY_AUTH_SIGNUP_ENABLED
+    value: "true"
+```
+
+Warning: Mealie trusts this header completely, and the direct web port (9090 by default) forwards it unchanged. Anyone who can reach that port could log in as any user, including an admin. When enabling this, disable the port in the add-on's Network section and use Ingress only. The REST sensor and camera examples below use that direct port, so they will not work once it is disabled. See the [upstream documentation](https://mealie.io/documentation/getting-started/installation/backend-config/#reverse-proxy-auth).
 
 ## Integration with HA
 
