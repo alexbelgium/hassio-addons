@@ -100,7 +100,7 @@ sed -i 's#pulseaudio --start#pulseaudio --start || pulseaudio --system#g' "$HOME
 RECORDING_SCRIPT="$HOME/BirdNET-Pi/scripts/birdnet_recording.sh"
 if grep -q '^[[:space:]]*sleep 1$' "$RECORDING_SCRIPT"; then
     echo "... backing off the recording retry loop"
-    sed 's|^\([[:space:]]*\)sleep 1$|\1RETRY_DELAY=$(( SECONDS - ${RETRY_LAST:-0} > 120 ? 1 : ${RETRY_DELAY:-1} ))\n\1RETRY_LAST=$SECONDS\n\1sleep "$RETRY_DELAY"\n\1RETRY_DELAY=$(( RETRY_DELAY < 64 ? RETRY_DELAY * 2 : 64 ))|' \
+    sed 's|^\([[:space:]]*\)sleep 1$|\1RETRY_DELAY=$(( SECONDS - ${RETRY_LAST:-0} > 120 ? 1 : ${RETRY_DELAY:-1} ))\n\1sleep "$RETRY_DELAY"\n\1RETRY_LAST=$SECONDS\n\1RETRY_DELAY=$(( RETRY_DELAY < 64 ? RETRY_DELAY * 2 : 64 ))|' \
         "$RECORDING_SCRIPT" > "$RECORDING_SCRIPT.backoff"
     # Only keep the patched script if it still parses, a broken recording script
     # would take down recording altogether
