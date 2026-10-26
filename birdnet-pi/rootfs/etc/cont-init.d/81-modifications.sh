@@ -114,6 +114,18 @@ if grep -q '^[[:space:]]*sleep 1$' "$RECORDING_SCRIPT"; then
     fi
 fi
 
+# Clear leftovers of the previous run when restarting the services
+# The systemctl replacement has no cgroups: it only stops the processes it can
+# still trace back to a living main process. If that one died first, its
+# children (loop_ffmpeg shells, ffmpeg, arecord) survive, and every restart adds
+# a second daily_plot.py or recording loop next to them. The [x] brackets keep
+# the pattern from matching the sudo/pkill command line itself.
+RESTART_SCRIPT="$HOME/BirdNET-Pi/scripts/restart_services.sh"
+if ! grep -qF '[d]aily_plot' "$RESTART_SCRIPT"; then
+    echo "... clearing leftover processes on service restarts"
+    sed -i '/systemctl stop birdnet_recording.service/a sudo pkill -f "[d]aily_plot.py --daemon|/usr/local/bin/[b]irdnet_recording.sh|[f]fmpeg .*StreamData/.*wav|[a]record .*StreamData/.*wav" || true' "$RESTART_SCRIPT"
+fi
+
 # Send services log to container logs
 echo "... redirecting services logs to container logs"
 while IFS= read -r file; do
