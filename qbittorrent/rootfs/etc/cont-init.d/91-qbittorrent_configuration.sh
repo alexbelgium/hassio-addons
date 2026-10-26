@@ -19,6 +19,9 @@ cd "$CONFIG_LOCATION"/ || true
 LINE=$(sed -n '/\[Preferences\]/=' qBittorrent.conf) || bashio::exit.nok "qBittorrent.conf not valid"
 LINE=$((LINE + 1))
 
+# qBittorrent >= 5.3 reads WebUI settings from [WebUI] instead of [Preferences]
+grep -q '^\[WebUI\]' qBittorrent.conf || printf '\n[WebUI]\n' >> qBittorrent.conf
+
 # Remove unused folders
 if [ -d "$CONFIG_LOCATION"/addons_config ]; then rm -r "$CONFIG_LOCATION"/addons_config; fi
 if [ -d "$CONFIG_LOCATION"/qBittorrent ]; then rm -r "$CONFIG_LOCATION"/qBittorrent; fi
@@ -72,11 +75,11 @@ chown -R "$PUID:$PGID" "$DOWNLOADS" || bashio::log.fatal "Error, please check de
 sed -i -e "/CSRFProtection/d" \
     -e "/ClickjackingProtection/d" \
     -e "/HostHeaderValidation/d" \
-    -e "/WebUI\\\Address/d" \
-    -e "/\[Preferences\]/a \WebUI\\\CSRFProtection=false" \
-    -e "/\[Preferences\]/a \WebUI\\\ClickjackingProtection=false" \
-    -e "/\[Preferences\]/a \WebUI\\\HostHeaderValidation=false" \
-    -e "/\[Preferences\]/a \WebUI\\\Address=\*" qBittorrent.conf
+    -e "/^\(WebUI\\\\\)\?Address=/d" \
+    -e "/^\[WebUI\]/a CSRFProtection=false" \
+    -e "/^\[WebUI\]/a ClickjackingProtection=false" \
+    -e "/^\[WebUI\]/a HostHeaderValidation=false" \
+    -e "/^\[WebUI\]/a Address=\*" qBittorrent.conf
 
 #sed -i '/WebUI\ReverseProxySupportEnabled/d' qBittorrent.conf
 #sed -i "$LINE i\WebUI\\\ReverseProxySupportEnabled=true" qBittorrent.conf
@@ -113,9 +116,9 @@ if bashio::config.true 'ssl'; then
     KEYFILE=$(bashio::config 'keyfile')
 
     #Modify configuration
-    sed -i "$LINE i\WebUI\\\HTTPS\\\Enabled=True" qBittorrent.conf
-    sed -i "$LINE i\WebUI\\\HTTPS\\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
-    sed -i "$LINE i\WebUI\\\HTTPS\\\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
+    sed -i "/^\[WebUI\]/a HTTPS\\\Enabled=True" qBittorrent.conf
+    sed -i "/^\[WebUI\]/a HTTPS\\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
+    sed -i "/^\[WebUI\]/a HTTPS\\\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
 fi
 
 ################
@@ -132,11 +135,11 @@ WHITELIST="${WHITELIST//,/,\ }"
 sed -i '/AuthSubnetWhitelist/d' qBittorrent.conf
 
 if [[ "${#WHITELIST}" -gt 5 ]]; then
-    sed -i "$LINE i\WebUI\\\AuthSubnetWhitelistEnabled=true" qBittorrent.conf
-    sed -i "$LINE i\WebUI\\\AuthSubnetWhitelist=$WHITELIST" qBittorrent.conf
+    sed -i "/^\[WebUI\]/a AuthSubnetWhitelistEnabled=true" qBittorrent.conf
+    sed -i "/^\[WebUI\]/a AuthSubnetWhitelist=$WHITELIST" qBittorrent.conf
     bashio::log.info "Whitelisted subsets will not require a password : $WHITELIST"
 else
-    sed -i "$LINE i\WebUI\\\AuthSubnetWhitelistEnabled=false" qBittorrent.conf
+    sed -i "/^\[WebUI\]/a AuthSubnetWhitelistEnabled=false" qBittorrent.conf
     bashio::log.info "Whitelisted subsets deactivated"
 fi
 
@@ -152,14 +155,14 @@ else
 fi
 
 #clean data
-sed -i '/WebUI\\\Username/d' qBittorrent.conf
+sed -i '/^\(WebUI\\\)\?Username=/d' qBittorrent.conf
 #add data
-sed -i "/\[Preferences\]/a\WebUI\\\Username=$USERNAME" qBittorrent.conf
+sed -i "/^\[WebUI\]/a Username=$USERNAME" qBittorrent.conf
 bashio::log.info "WEBUI username set to $USERNAME"
 
 # Add default password if not existing
 if ! grep -q Password_PBKDF2 qBittorrent.conf; then
-    sed -i "/\[Preferences\]/a\WebUI\\\Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
+    sed -i "/^\[WebUI\]/a Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
 fi
 
 ####################
@@ -232,8 +235,8 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     unzip -q /webui/release.zip -d /webui/"$CUSTOMUI"
     rm /webui/*.zip
     CUSTOMUIDIR="$(dirname "$(find /webui/"$CUSTOMUI" -iname "public" -type d)")"
-    sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" "$CONFIG_LOCATION"/qBittorrent.conf
-    sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" "$CONFIG_LOCATION"/qBittorrent.conf
+    sed -i "/^\[WebUI\]/a AlternativeUIEnabled=true" "$CONFIG_LOCATION"/qBittorrent.conf
+    sed -i "/^\[WebUI\]/a RootFolder=$CUSTOMUIDIR" "$CONFIG_LOCATION"/qBittorrent.conf
     # Set ingress ui
     if [[ "$CUSTOMUI" != qbit-matUI ]]; then
         sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf || true
