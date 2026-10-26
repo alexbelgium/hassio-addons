@@ -1,3 +1,7 @@
+## 2026.10.26 (26-10-2026)
+- Fix: restarting the services no longer leaves a previous `daily_plot.py` or recording loop running next to the new one. The `systemctl` replacement has no cgroups and skips the children of a main process that already died, so `restart_services.sh` now clears leftover `daily_plot.py`, `birdnet_recording.sh`, and `ffmpeg`/`arecord` recorders writing to `StreamData` once the recorder is stopped
+- Fix: an unreachable audio source (RTSP host switched off, missing soundcard) no longer causes a restart loop. The monitoring service treated a static `analyzing_now.txt` as a hung analyzer and ran `restart_services.sh` every two minutes, which stacked up a second `daily_plot.py` and a second recording loop each time, so RAM kept growing. It now reports the silent source instead of restarting when there is nothing queued to analyze, and limits that static `analyzing_now.txt` restart path to once every 30 minutes
+- Fix: the recording retry loop no longer restarts `ffmpeg` once per second while the audio source is unreachable (100%+ CPU). The retry delay now grows from 1s to 64s, and resets as soon as `ffmpeg` has run for more than two minutes, so a healthy stream that hiccups is still picked up straight away
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2026.08.15 (15-08-2026)
