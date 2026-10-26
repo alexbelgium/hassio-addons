@@ -1,4 +1,7 @@
  
+## 5.3.0.1 (26-10-2026)
+- Fix : WebUI and Ingress returned "Unauthorized" after a restart on qBittorrent 5.3.0. qBittorrent 5.3 moved its WebUI settings from `[Preferences]` to a new `[WebUI]` section, so the add-on's settings (host header validation, CSRF/clickjacking protection, username, whitelist, SSL, alternative UI) were written where they are no longer read. They are now written to `[WebUI]`
+
 ## 5.3.0 (2026-10-24)
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
  
