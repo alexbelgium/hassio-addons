@@ -130,6 +130,7 @@ else
     export REVERSE_PROXY_AUTH_ENABLED=true
     export REVERSE_PROXY_AUTH_HEADER=X-Remote-User-Name
     export REVERSE_PROXY_AUTH_SECRET="$proxy_auth_secret"
+    export REVERSE_PROXY_AUTH_SECRET_HEADER=X-Mealie-Reverse-Proxy-Secret
     bashio::log.info "Ingress logs in as the Home Assistant username"
 fi
 sed -i "s|%%proxy_auth_secret%%|${proxy_auth_secret}|g" /etc/nginx/servers/ingress.conf
