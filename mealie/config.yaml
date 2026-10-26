@@ -85,6 +85,7 @@ map:
 name: Mealie
 options:
   env_vars: []
+  login_with_ha_user: true
   ALLOW_SIGNUP: true
   DATA_DIR: /config
   PGID: 1000
@@ -104,6 +105,7 @@ schema:
       value: str?
   ALLOW_SIGNUP: bool
   FORWARDED_ALLOW_IPS: str?
+  login_with_ha_user: bool?
   BASE_URL: str?
   DATA_DIR: str?
   PGID: int
@@ -114,4 +116,4 @@ schema:
 slug: mealie
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "v3.29.0"
+version: "v3.29.0.1"

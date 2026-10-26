@@ -16,6 +16,7 @@ workflows and lint rules — that is not repeated here.
 - [Versioning](#versioning)
 - [Chromium / Electron under Xvfb](#chromium--electron-under-xvfb)
 - [CI and review bots](#ci-and-review-bots)
+- [Logging in as the Home Assistant user](#logging-in-as-the-home-assistant-user)
 
 ---
 
@@ -353,3 +354,19 @@ not because the config exempts them — don't cite the config as a reason to ign
 **Separate new lint findings from pre-existing ones** by linting the same file at `origin/master`
 and diffing the result sets — otherwise you chase warnings that were already there.
 `scripts/validate.sh --vs-master` does this.
+
+## Logging in as the Home Assistant user
+
+An app that trusts `X-Remote-User-Name` (the Supervisor sets it on every ingress request) lets
+anyone who can reach the app log in as any user, admins included, unless every path except
+Supervisor ingress is closed. Stripping the header on the published port is not enough. Two
+other paths remain:
+
+- **The app's own port.** It is usually bound to `0.0.0.0`, so any container on the hassio
+  network reaches it without going through nginx.
+- **The ingress listener.** It listens on the add-on IP, which every other add-on can reach.
+
+Restrict the ingress server to `allow 172.30.32.2; deny all;`. If the app supports a proxy
+secret, have only `ingress.conf` send a per-boot one; that covers the app's port and the
+published port with no rebinding. Codex caught both remaining paths on mealie #3151 after a
+9090-only header strip. `calibre_web` and `guacamole` predate this lesson.
