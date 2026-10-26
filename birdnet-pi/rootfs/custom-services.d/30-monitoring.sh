@@ -174,7 +174,6 @@ check_analyzing_now() {
         if ((wav_waiting == 0)); then
             log_red "$(date) INFO: no recordings to analyze - the audio source looks silent or unreachable. Not restarting."
             apprisealert "No new recordings: the audio source looks silent or unreachable"
-            same_file_counter=0
             return 1
         fi
 
@@ -182,7 +181,6 @@ check_analyzing_now() {
         now=$(date +%s)
         if ((now - last_restart_time < RESTART_MIN_INTERVAL)); then
             log_yellow "$(date) INFO: 'analyzing_now' still unchanged, but services were already restarted $(((now - last_restart_time) / 60)) minutes ago. Waiting."
-            same_file_counter=0
             return 1
         fi
 
