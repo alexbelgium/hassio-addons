@@ -1,3 +1,5 @@
+## 2026.10.26.1 (26-10-2026)
+- Fix: WebUI service actions (System Controls buttons, "Restart services", the chart restart after saving settings) work again. Since 2026.07.10-1 the build stripped `sudo` from every BirdNET-Pi script, so these ran `systemctl` as php-fpm's `caddy` user: the service-control buttons no longer matched the WebUI's allow-list (which still expects `sudo systemctl ...`) and were ignored, and the `systemctl` replacement looked for the running services in `/tmp/run` instead of root's `/run`, so it could neither see nor stop them. It also turned `sudo -u <user> ...` into a bare `-u <user> ...` in `config.php` (species list, test notification). `sudo` is kept again; `caddy` and `pi` already have passwordless sudo in the image
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2026.08.15 (15-08-2026)
