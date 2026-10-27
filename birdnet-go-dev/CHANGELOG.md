@@ -1,7 +1,3 @@
-## 20261027 (27-10-2026)
-
-- Synced with upstream and rebuilt against the current open PRs of the fork. Four PRs no longer merged onto main and their branches have been updated with it: #62 (reanalyze) and #71 (static spectrogram) lost the `goldenRoutes` table upstream replaced with a probe-based route test, #63 (first-daily consensus) had to follow the settings-update refactor and the Analysis page's new `ChangePair` change detection, and #79 (species workspace) lost the sox entries upstream dropped from the blocked-field tables. PR #71's own `MiniSpectrogram.test.ts` was superseded by the upstream file of the same name.
-
 ## 20261020 (20-10-2026)
 
 - Synced with upstream and rebuilt against the current open PRs of the fork. Fork PR #60 (Safari/WebKit live spectrogram) no longer merged onto main after the audio source-node cache refactor; its branch has been updated with main.
