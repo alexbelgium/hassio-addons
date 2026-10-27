@@ -1,4 +1,8 @@
  
+## 3.3.5.1 (2026-10-27)
+- Update to latest version from ghcr.io/imagegenius/immich:3-noml
+- Upstream tag : 3.3.5
+ 
 ## 3.3.5 (2026-10-24)
 - Update to latest version from ghcr.io/imagegenius/immich:3-noml
  
