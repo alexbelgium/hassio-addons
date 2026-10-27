@@ -1,4 +1,8 @@
  
+## 2026.10.25 (2026-10-25)
+- Update to latest version from charlocharlie/epicgames-freegames
+- Upstream tag : debian-2026-10-25
+ 
 ## 2026.10.21 (2026-10-21)
 - Update to latest version from charlocharlie/epicgames-freegames
 - Upstream tag : debian-2026-10-21
