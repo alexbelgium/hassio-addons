@@ -1,4 +1,7 @@
  
+## 1.98.60-ls141 (2026-10-27)
+- Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
+ 
 ## 1.98.60-ls140 (2026-10-24)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
  
