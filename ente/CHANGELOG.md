@@ -1,4 +1,8 @@
  
+## 4.4.28.4 (2026-10-27)
+- Update to latest version from ente/ente (changelog : https://github.com/ente/ente/releases)
+- Upstream tag : 1.7.31
+ 
 ## 4.4.28.3 (2026-10-24)
 - Update to latest version from ente/ente (changelog : https://github.com/ente/ente/releases)
 - Upstream tag : 1.3.66
