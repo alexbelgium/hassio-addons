@@ -1,4 +1,8 @@
  
+## 07308545.18 (2026-10-27)
+- Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
+- Upstream tag : v3.3.13+claude3.6556.2
+ 
 ## 07308545.17 (2026-10-24)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
 - Upstream tag : v3.3.13+claude3.6556.1
