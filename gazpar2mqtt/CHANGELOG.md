@@ -1,4 +1,8 @@
  
+## 0.2.6.3 (2026-10-27)
+- Update to latest version from ssenart/gazpar2mqtt
+- Upstream tag : 0.2.6a3
+ 
 ## 0.2.6.2 (2026-10-16)
 - Update to latest version from ssenart/gazpar2mqtt
 - Upstream tag : 0.2.6a2

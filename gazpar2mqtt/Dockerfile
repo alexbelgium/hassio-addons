@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_FROM
-ARG BUILD_UPSTREAM="0.2.6a2"
+ARG BUILD_UPSTREAM="0.2.6a3"
 FROM ssenart/gazpar2mqtt:latest
 
 ##################
