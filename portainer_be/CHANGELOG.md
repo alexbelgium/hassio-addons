@@ -1,3 +1,7 @@
+ 
+## 2026.10.27 (2026-10-27)
+- Update to latest version from portainer/portainer-ee
+- Upstream tag : alpine
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2026.08.01 (2026-08-01)
 
