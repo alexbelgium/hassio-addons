@@ -1,3 +1,6 @@
+ 
+## 3.1.6.5079 (2026-10-27)
+- Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 3.1.0.4875.1 (2026-08-01)
