@@ -27,4 +27,4 @@ schema:
   token: password?
 slug: letta_code
 url: https://github.com/alexbelgium/hassio-addons/tree/master/letta_code
-version: "0.34.21.1"
+version: "0.34.24"
