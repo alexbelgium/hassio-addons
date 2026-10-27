@@ -1,4 +1,7 @@
  
+## 1.0.115 (2026-10-27)
+- Update to latest version from jjdenhertog/spotify-to-plex
+ 
 ## 1.0.114 (2026-10-10)
 - Update to latest version from jjdenhertog/spotify-to-plex
  
