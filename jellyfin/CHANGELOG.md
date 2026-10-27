@@ -1,4 +1,7 @@
  
+## 12.4 (2026-10-27)
+- Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
+ 
 ## 12.3 (2026-10-24)
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
  
