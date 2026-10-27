@@ -1,5 +1,5 @@
 {
-  "github_exclude": "-",
+  "github_exclude": "s",
   "last_update": "2026-08-01",
   "repository": "alexbelgium/hassio-addons",
   "slug": "portainer_be",
