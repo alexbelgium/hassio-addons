@@ -1,3 +1,7 @@
+## 2026.10.1 (2026-10-28)
+
+- With `dockerhub_by_date: true`, skip the addon when no tag survives the filters, instead of publishing a version made of the date alone such as `-28-10-2026`
+
 ## 2026.10 (2026-10-28)
 
 - `github_tagfilter` accepts a regular expression when prefixed with `~`, now for every source: dockerhub and Codeberg tags are matched against it, as lastversion already did for the other sources. Values without the `~` prefix keep matching as before
