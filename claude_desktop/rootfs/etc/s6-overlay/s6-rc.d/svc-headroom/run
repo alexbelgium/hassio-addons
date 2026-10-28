@@ -3,10 +3,19 @@
 declare port=8787
 declare host=127.0.0.1
 
-# The dashboard is unauthenticated. Keep it container-local by default and bind all
-# interfaces only when the user explicitly opts in and maps port 8787.
+# Keep Headroom container-local by default and bind all interfaces only when the user
+# explicitly opts in and maps port 8787. Headroom >= 0.42 refuses a non-loopback bind
+# without HEADROOM_PROXY_TOKEN; the mapped port is published on the host's LAN, so set a
+# persisted token that non-loopback callers must present. Local clients stay exempt.
 if bashio::config.true 'expose_headroom_dashboard'; then
     host=0.0.0.0
+    if [ ! -s /config/headroom-proxy-token ]; then
+        openssl rand -hex 32 > /config/headroom-proxy-token
+        chmod 600 /config/headroom-proxy-token
+        bashio::log.notice "svc-headroom: generated proxy token in /config/headroom-proxy-token"
+    fi
+    HEADROOM_PROXY_TOKEN="$(< /config/headroom-proxy-token)"
+    export HEADROOM_PROXY_TOKEN
 fi
 
 if bashio::config.true 'install_headroom' && command -v headroom > /dev/null 2>&1; then
