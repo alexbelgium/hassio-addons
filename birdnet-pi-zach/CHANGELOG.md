@@ -1,3 +1,7 @@
+ 
+## 2026.10.28 (2026-10-28)
+- Update to latest version from zach7036/BirdNET-Pi-Enhanced-Version (changelog : https://github.com/zach7036/BirdNET-Pi-Enhanced-Version/releases)
+- Upstream tag : 2.8.4
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2026.08.15 (15-08-2026)
