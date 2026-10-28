@@ -43,7 +43,7 @@ function sed_replacement() {
     printf '%s' "$1" | sed -e 's/[\/&]/\\&/g'
 }
 
-# Drop the versions matching github_exclude: plain text, or a "~regex" as
+# Drop the versions matching github_exclude: unchanged sed match, or a "~regex" as
 # lastversion --exclude accepts for the other sources
 function exclude_versions() {
     if [[ "$EXCLUDE_TEXT" == "~"* ]]; then
