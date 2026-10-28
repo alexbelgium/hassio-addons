@@ -43,6 +43,16 @@ function sed_replacement() {
     printf '%s' "$1" | sed -e 's/[\/&]/\\&/g'
 }
 
+# Drop the versions matching github_exclude: plain text, or a "~regex" as
+# lastversion --exclude accepts for the other sources
+function exclude_versions() {
+    if [[ "$EXCLUDE_TEXT" == "~"* ]]; then
+        grep -Ev -- "${EXCLUDE_TEXT#\~}" || true
+    else
+        sed -e "/.*$EXCLUDE_TEXT.*/d"
+    fi
+}
+
 #Defining github value
 LOGINFO="... github authentification" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
@@ -160,7 +170,7 @@ for f in */; do
                     | sed -e '/.*dev.*/d' \
                     | sed -e '/.*nightly.*/d' \
                     | sed -e '/.*beta.*/d' \
-                    | sed -e "/.*$EXCLUDE_TEXT.*/d" \
+                    | exclude_versions \
                     | sort -V \
                     | tail -n 1
             )
@@ -171,7 +181,7 @@ for f in */; do
                         | jq '.results | .[] | .name' -r \
                         | sed -e '/.*latest.*/d' \
                         | sed -e '/.*dev.*/!d' \
-                        | sed -e "/.*$EXCLUDE_TEXT.*/d" \
+                        | exclude_versions \
                         | sort -V \
                         | tail -n 1
                 )
@@ -183,7 +193,7 @@ for f in */; do
                         | sed -e '/.*latest.*/d' \
                         | sed -e '/.*dev.*/d' \
                         | sed -e '/.*nightly.*/d' \
-                        | sed -e "/.*$EXCLUDE_TEXT.*/d" \
+                        | exclude_versions \
                         | sort -V \
                         | tail -n 1
                 ) \
@@ -351,7 +361,7 @@ for f in */; do
                     fi
 
                     if [ -n "$EXCLUDE_TEXT" ]; then
-                        CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | sed "/${EXCLUDE_TEXT}/d")
+                        CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | exclude_versions)
                     fi
 
                     CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | sed '/^$/d' | sort -V)

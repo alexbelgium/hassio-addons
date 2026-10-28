@@ -1,3 +1,6 @@
+## 2026.10 (2026-10-28)
+
+- `github_exclude` accepts a regular expression when prefixed with `~`, e.g. `"~-(rc|beta)[0-9]*$"`, now also for dockerhub and Codeberg tags (lastversion already read it this way for the other sources). Values without the `~` prefix keep matching as before
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2026.09 (2026-09-12)
 
