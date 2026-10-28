@@ -1,7 +1,3 @@
-## 0.8.11.1 (2026-10-28)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
  
 ## 0.8.11 (2026-10-03)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)

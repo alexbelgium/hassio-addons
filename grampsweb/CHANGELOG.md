@@ -1,7 +1,3 @@
-## 26.10.2.1 (2026-10-28)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
  
 ## 26.10.2 (2026-10-24)
 - Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)

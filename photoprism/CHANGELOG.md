@@ -1,7 +1,3 @@
-## 2026.10.07.1 (2026-10-28)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
  
 ## 2026.10.07 (2026-10-07)
 - Update to latest version from photoprism/photoprism

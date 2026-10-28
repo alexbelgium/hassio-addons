@@ -1,7 +1,3 @@
-## 0.60.10.1 (2026-10-28)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
  
 ## 0.60.10 (2026-10-27)
 - Update to latest version from linuxserver/docker-changedetection.io (changelog : https://github.com/linuxserver/docker-changedetection.io/releases)

@@ -29,4 +29,4 @@ schema:
   TZ: str?
 slug: degoog
 url: https://github.com/alexbelgium/hassio-addons/tree/master/degoog
-version: "1.1.1.1"
+version: "1.1.1"

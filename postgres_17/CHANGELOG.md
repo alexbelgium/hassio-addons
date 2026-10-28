@@ -1,7 +1,3 @@
-## 17.4.13.1 (2026-10-28)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 17.4.13 (2026-08-01)
 

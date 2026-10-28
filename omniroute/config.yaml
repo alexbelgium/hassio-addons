@@ -29,4 +29,4 @@ schema:
   TZ: str?
 slug: omniroute
 url: https://github.com/alexbelgium/hassio-addons/tree/master/omniroute
-version: "3.8.52.1"
+version: "3.8.52"

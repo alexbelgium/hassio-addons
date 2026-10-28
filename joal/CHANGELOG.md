@@ -1,7 +1,3 @@
-## 2.1.37.5 (2026-10-28)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2.1.37-4 (2026-01-08)
 - Automatic login with ingress

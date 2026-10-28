@@ -1,7 +1,3 @@
-## 3.7.21.2 (2026-10-28)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
 
 ## 3.7.21.1 (2026-10-11)
 - Fix Joplin not opening ("An error occurred: Unknown flag: --disable-dev-shm-usage"): Joplin only accepts its own list of command-line flags, so the extra Chromium flag added in 3.7.21 is removed

@@ -1,7 +1,3 @@
-## 5.0.0.5.5 (28-10-2026)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
 ## 5.0.0.5.4 (18-09-2026)
 
 - Fix contact search returning HTTP 500 ("first_name is not sortable") by backporting monicahq/monica#7806 so Meilisearch can sort contacts by name (#3067)

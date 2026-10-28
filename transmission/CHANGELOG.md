@@ -1,7 +1,3 @@
-## 4.1.3.2 (2026-10-28)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 ## 4.1.3.1 (2026-09-12)
 - Add `incomplete_dir_enabled` (default `true`): set to `false` to permanently disable the incomplete-downloads directory. Restarting the add-on always overwrote Transmission's own Web UI toggle for this back to enabled (#3059); this option is read on every restart instead, so it actually sticks

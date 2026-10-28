@@ -1,7 +1,3 @@
-## 1.6.0-bullseye-5 (28-10-2026)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
 ## 1.6.0-bullseye-4 (24-09-2026)
 - Ingress: new `login_with_ha_user` option to sign in with your Home Assistant username instead of always `guacadmin` (#3087)
 - Startup log and README warn when the `auth-header` extension is enabled while port 8080 is published, since that port bypasses Ingress and lets anyone log in as any user

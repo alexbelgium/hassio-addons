@@ -1,7 +1,3 @@
-## 1.29.2.1 (2026-10-28)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
  
 ## 1.29.2 (2026-10-28)
 - Update to latest version from gotson/komga (changelog : https://github.com/gotson/komga/releases)

@@ -1,7 +1,3 @@
-## 35.0.2.2 (28-10-2026)
-
-- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
-
 ## 35.0.2.1 (22-10-2026)
 - Local disks: when `localdisks` is set in the environment (for example added to `env_vars`) but not as the addon's own option, the startup log now says so instead of skipping the mount silently (#3129).
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
