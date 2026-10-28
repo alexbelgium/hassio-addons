@@ -62,7 +62,7 @@ You can add the following tags in the file :
 - github_beta: true/false ; should it look only for releases or prereleases ok
 - github_havingasset : true if there is a requirement that a release has binaries and not just source
 - github_tagfilter: filter a text in the release name
-- github_exclude: exclude a text in the release name. Prefix it with `~` to use a regular expression instead, e.g. `"~-(rc|beta)[0-9]*$"` ; keep to syntax that both Python and `grep -E` understand (`[0-9]` rather than `\d`)
+- github_exclude: exclude a text in the release name. Prefix it with `~` to use a regular expression instead, e.g. `"~-(rc|beta)[0-9]*$"` ; keep to syntax that both Python and `grep -E` understand (`[0-9]` rather than `\d`). To keep only numeric versions such as `1.2.3`, use `"~[^0-9.]"`, or `"~.[^0-9.]"` when the tags start with `v` (`v1.2.3`)
 - last_update: automatically populated, date of last upstream update
 - repository: 'name/repo' coming from github
 - paused: true # Pauses the updates
