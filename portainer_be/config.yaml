@@ -42,4 +42,4 @@ schema:
 slug: portainer_be
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2026.10.27"
+version: "2026.10.28"

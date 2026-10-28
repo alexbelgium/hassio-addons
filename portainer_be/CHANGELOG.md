@@ -1,4 +1,8 @@
  
+## 2026.10.28 (2026-10-28)
+- Update to latest version from portainer/portainer-ee
+- Upstream tag : 2.45.3
+ 
 ## 2026.10.27 (2026-10-27)
 - Update to latest version from portainer/portainer-ee
 - Upstream tag : alpine

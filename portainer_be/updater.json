@@ -1,9 +1,9 @@
 {
-"github_tagfilter": "~^v?[0-9.]+$",
-  "last_update": "2026-10-27",
+  "github_tagfilter": "~^v?[0-9.]+$",
+  "last_update": "2026-10-28",
   "repository": "alexbelgium/hassio-addons",
   "slug": "portainer_be",
   "source": "dockerhub",
   "upstream_repo": "portainer/portainer-ee",
-  "upstream_version": "alpine"
+  "upstream_version": "2.45.3"
 }
