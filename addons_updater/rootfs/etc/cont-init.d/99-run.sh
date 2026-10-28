@@ -43,14 +43,10 @@ function sed_replacement() {
     printf '%s' "$1" | sed -e 's/[\/&]/\\&/g'
 }
 
-# Drop the versions matching github_exclude: a "~regex" as lastversion
-# --exclude accepts for the other sources, else the caller's sed script $1
-function exclude_versions() {
-    if [[ "$EXCLUDE_TEXT" == "~"* ]]; then
-        grep -Ev -- "${EXCLUDE_TEXT#\~}" || true
-    else
-        sed -e "$1"
-    fi
+# Keep the versions matching a "~regex" github_tagfilter, as lastversion
+# --only reads it for the other sources; all of them when there is none
+function regex_versions() {
+    grep -E -- "$REGEX_TEXT" || true
 }
 
 #Defining github value
@@ -115,6 +111,10 @@ for f in */; do
         HAVINGASSET=$(jq -r .github_havingasset updater.json)
         SOURCE=$(jq -r .source updater.json)
         FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
+        REGEX_TEXT=""
+        if [[ "$FILTER_TEXT" == "~"* ]]; then
+            REGEX_TEXT="${FILTER_TEXT#\~}"
+        fi
         EXCLUDE_TEXT=$(jq -r .github_exclude updater.json)
         EXCLUDE_TEXT="${EXCLUDE_TEXT:-zzzzzzzzzzzzzzzz}"
         PAUSED=$(jq -r .paused updater.json)
@@ -151,6 +151,10 @@ for f in */; do
             #Prepare tag flag
             if [ "${FILTER_TEXT}" = "null" ] || [ "${FILTER_TEXT}" = "" ]; then
                 FILTER_TEXT=""
+            elif [[ "$FILTER_TEXT" == "~"* ]]; then
+                # Docker Hub only filters names by plain text, the regex is applied to its answer
+                LOGINFO="... $SLUG : filter_text regex is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                FILTER_TEXT=""
             else
                 LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
                 FILTER_TEXT="&name=$FILTER_TEXT"
@@ -166,11 +170,12 @@ for f in */; do
             LASTVERSION=$(
                 curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags?page_size=$LISTSIZE$FILTER_TEXT" \
                     | jq '.results | .[] | .name' -r \
+                    | regex_versions \
                     | sed -e '/.*latest.*/d' \
                     | sed -e '/.*dev.*/d' \
                     | sed -e '/.*nightly.*/d' \
                     | sed -e '/.*beta.*/d' \
-                    | exclude_versions "/.*$EXCLUDE_TEXT.*/d" \
+                    | sed -e "/.*$EXCLUDE_TEXT.*/d" \
                     | sort -V \
                     | tail -n 1
             )
@@ -179,9 +184,10 @@ for f in */; do
                 && LASTVERSION=$(
                     curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags?page_size=$LISTSIZE$FILTER_TEXT" \
                         | jq '.results | .[] | .name' -r \
+                        | regex_versions \
                         | sed -e '/.*latest.*/d' \
                         | sed -e '/.*dev.*/!d' \
-                        | exclude_versions "/.*$EXCLUDE_TEXT.*/d" \
+                        | sed -e "/.*$EXCLUDE_TEXT.*/d" \
                         | sort -V \
                         | tail -n 1
                 )
@@ -190,10 +196,11 @@ for f in */; do
                 && LASTVERSION=$(
                     curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags?page_size=${LISTSIZE}&ordering=last_updated$FILTER_TEXT" \
                         | jq '.results | .[] | .name' -r \
+                        | regex_versions \
                         | sed -e '/.*latest.*/d' \
                         | sed -e '/.*dev.*/d' \
                         | sed -e '/.*nightly.*/d' \
-                        | exclude_versions "/.*$EXCLUDE_TEXT.*/d" \
+                        | sed -e "/.*$EXCLUDE_TEXT.*/d" \
                         | sort -V \
                         | tail -n 1
                 ) \
@@ -357,11 +364,15 @@ for f in */; do
 
                 if [ -n "$CODEBERG_TAGS" ]; then
                     if [ -n "$FILTER_TEXT" ]; then
-                        CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | grep "$FILTER_TEXT" || true)
+                        if [[ "$FILTER_TEXT" == "~"* ]]; then
+                            CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | regex_versions)
+                        else
+                            CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | grep "$FILTER_TEXT" || true)
+                        fi
                     fi
 
                     if [ -n "$EXCLUDE_TEXT" ]; then
-                        CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | exclude_versions "/${EXCLUDE_TEXT}/d")
+                        CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | sed "/${EXCLUDE_TEXT}/d")
                     fi
 
                     CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | sed '/^$/d' | sort -V)

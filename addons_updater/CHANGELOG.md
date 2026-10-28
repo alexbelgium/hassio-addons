@@ -1,7 +1,7 @@
 ## 2026.10 (2026-10-28)
 
-- `github_exclude` accepts a regular expression when prefixed with `~`, e.g. `"~-(rc|beta)[0-9]*$"`, now also for dockerhub and Codeberg tags (lastversion already read it this way for the other sources). Values without the `~` prefix keep matching as before
-- Example, to keep only numeric versions: `"github_exclude": "~[^0-9.]"` drops any tag holding something other than digits and dots, such as `1.2.3-rc1`; use `"~.[^0-9.]"` when the tags start with `v` (`v1.2.3`)
+- `github_tagfilter` accepts a regular expression when prefixed with `~`, now for every source: dockerhub and Codeberg tags are matched against it, as lastversion already did for the other sources. Values without the `~` prefix keep matching as before
+- Example, to keep only numeric versions such as `1.2.3` or `v1.2.3`: `"github_tagfilter": "~^v?[0-9.]+$"`
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2026.09 (2026-09-12)
 
