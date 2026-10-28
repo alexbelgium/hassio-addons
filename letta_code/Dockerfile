@@ -16,8 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="0.34.26"
-FROM ghcr.io/letta-ai/letta-code:${BUILD_UPSTREAM}
+FROM $BUILD_FROM
 
 ##################
 # 2 Modify Image #
