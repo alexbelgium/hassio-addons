@@ -1,4 +1,7 @@
  
+## v1.77.0.1 (2026-10-28)
+- Make the web UI admin-only (`panel_admin: true`): this Full Access add-on requires Protection mode to be disabled
+ 
 ## v1.77.0 (2026-10-27)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
  
