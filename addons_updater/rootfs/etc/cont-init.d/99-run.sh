@@ -204,6 +204,7 @@ for f in */; do
                         | sort -V \
                         | tail -n 1
                 ) \
+                && [ -n "$LASTVERSION" ] \
                 && DATE=$(
                     curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=${LISTSIZE}&ordering=last_updated$FILTER_TEXT" \
                         | jq '.results[] | select(.name==$LASTVERSION) | .last_updated' -r --arg LASTVERSION "$LASTVERSION"
