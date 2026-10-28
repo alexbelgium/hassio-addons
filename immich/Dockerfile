@@ -55,6 +55,10 @@ RUN find /etc /usr/local/bin /usr/local/lib /usr/local/share \
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
+# Templates are downloaded from master below; using BUILD_VERSION here makes a version bump
+# re-run those downloads instead of reusing a cached layer
+ARG BUILD_VERSION
+
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh 00-local_mounts.sh 00-smb_mounts.sh"
 
