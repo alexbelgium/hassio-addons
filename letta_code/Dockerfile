@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM $BUILD_FROM
+FROM ${BUILD_FROM}
 
 ##################
 # 2 Modify Image #
