@@ -59,5 +59,5 @@ fi
 if [[ "$MIGRATED" == "true" ]]; then
     bashio::log.warning "Options were changed, restarting the addon"
     sleep 5
-    bashio::addon.restart
+    bashio::app.restart
 fi

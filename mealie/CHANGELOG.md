@@ -1,3 +1,7 @@
+## v3.29.0.2 (2026-10-28)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
  
 ## v3.29.0.1 (2026-10-25)
 - New option `login_with_ha_user` (on by default): the Ingress panel logs in as the Mealie user matching your Home Assistant username, through Mealie's reverse proxy auth. Unmatched users get the normal login page

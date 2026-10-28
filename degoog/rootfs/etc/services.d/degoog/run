@@ -7,7 +7,7 @@ set -e
 # DEGOOG_BASE_URL. Setting it to the ingress entry makes the pages correct under
 # ingress as they are ; nginx maps the direct port onto the same path.
 # The listener is forced because nginx and the healthcheck are built around it.
-DEGOOG_BASE_URL="$(bashio::addon.ingress_entry)"
+DEGOOG_BASE_URL="$(bashio::app.ingress_entry)"
 export DEGOOG_BASE_URL
 export DEGOOG_DATA_DIR=/config
 export DEGOOG_PORT=4445

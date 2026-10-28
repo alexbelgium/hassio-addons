@@ -32,7 +32,7 @@ fi
 # Is the directory valid
 if [[ "$datadirectory" == *"/mnt/"* ]] && [ ! -f "$datadirectory"/index.html ]; then
     bashio::log.fatal "Data directory does not seem to be valid. Is your drive connected? Stopping to avoid corrupting the data directory."
-    bashio::addon.stop
+    bashio::app.stop
 fi
 
 # Remove nginx conf if existing

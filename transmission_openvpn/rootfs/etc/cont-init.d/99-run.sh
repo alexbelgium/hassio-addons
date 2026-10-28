@@ -62,13 +62,13 @@ done
 # Migrate OPENVPN_CUSTOM_PROVIDER to OPENVPN_PROVIDER
 if bashio::config.true 'OPENVPN_CUSTOM_PROVIDER'; then
     # Use new option
-    bashio::addon.option "OPENVPN_PROVIDER" "custom"
+    bashio::app.option "OPENVPN_PROVIDER" "custom"
     # Remove previous option
-    bashio::addon.option "OPENVPN_CUSTOM_PROVIDER"
+    bashio::app.option "OPENVPN_CUSTOM_PROVIDER"
     # log
     bashio::log.yellow "OPENVPN_CUSTOM_PROVIDER actived, OPENVPN_PROVIDER set to custom"
     # Restart
-    bashio::addon.restart
+    bashio::app.restart
 fi
 
 # Function to check for files path
@@ -124,8 +124,8 @@ if [ "$(bashio::config "OPENVPN_PROVIDER")" == "custom" ]; then
     # If contains *.ovpn, clean option
     if [[ "$openvpn_config" == *".ovpn" ]]; then
         bashio::log.warning "OPENVPN_CONFIG should not end by ovpn, correcting"
-        bashio::addon.option 'OPENVPN_CONFIG' "${openvpn_config%.ovpn}"
-        bashio::addon.restart
+        bashio::app.option 'OPENVPN_CONFIG' "${openvpn_config%.ovpn}"
+        bashio::app.restart
     fi
 
     # Add ovpn

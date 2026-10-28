@@ -1,3 +1,7 @@
+## 20261014.1 (2026-10-28)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
  
 ## 20261014 (2026-10-16)
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)

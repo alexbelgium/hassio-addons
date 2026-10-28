@@ -12,7 +12,7 @@ declare keyfile
 # General values
 port=5001
 sed -i "s|%%port%%|$port|g" /etc/nginx/servers/ssl.conf
-sed -i "s|%%interface%%|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ssl.conf
+sed -i "s|%%interface%%|$(bashio::app.ip_address)|g" /etc/nginx/servers/ssl.conf
 
 # Ssl values
 if bashio::config.true 'ssl'; then
@@ -29,5 +29,5 @@ if bashio::config.true 'ssl'; then
     sed -i "s|default_server|ssl|g" /etc/nginx/servers/ssl.conf
     sed -i "/proxy_params.conf/a ssl_certificate /ssl/$certfile;" /etc/nginx/servers/ssl.conf
     sed -i "/proxy_params.conf/a ssl_certificate_key /ssl/$keyfile;" /etc/nginx/servers/ssl.conf
-    bashio::log.info "Ssl enabled, please use https for connection. UI is at https://YOURIP:$(bashio::addon.port "$port")"
+    bashio::log.info "Ssl enabled, please use https for connection. UI is at https://YOURIP:$(bashio::app.port "$port")"
 fi

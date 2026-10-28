@@ -86,7 +86,7 @@ RUN test -x /init && \
     bash -n /ha_entrypoint.sh && \
     grep -q 'Initialization hook complete' /ha_entrypoint.sh
 
-RUN sed -i "1a if ! bashio::require.unprotected; then bashio::addon.stop; fi" /etc/cont-init.d/90-run.sh
+RUN sed -i "1a if ! bashio::require.unprotected; then bashio::app.stop; fi" /etc/cont-init.d/90-run.sh
 
 # Scrutiny's image already includes s6-overlay and defines all services under
 # /etc/services.d. Keep /init as PID 1 so service readiness and s6-svc calls work.

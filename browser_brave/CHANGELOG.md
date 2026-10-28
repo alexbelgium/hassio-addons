@@ -1,3 +1,7 @@
+## 1.98.60-ls141.1 (2026-10-28)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
  
 ## 1.98.60-ls141 (2026-10-27)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)

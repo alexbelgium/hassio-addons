@@ -1,3 +1,7 @@
+## 0.0.101.2 (2026-10-28)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
 ## 0.0.101.1 (2026-08-08)
 - Fix broken builds: upstream retagged `:latest` to the v1.0.0 rewrite on 2026-07-31, so this add-on was building on an image its rootfs does not support. `build_from` is now pinned to `chrisleekr/binance-trading-bot:0.0.101`, the frozen v0 line this add-on targets.
 - This also resolves the `externally-managed-environment` (PEP 668) pip failure, which was a symptom of the same retag: the v1 image ships a much newer Alpine than the v0 line this add-on is built against.

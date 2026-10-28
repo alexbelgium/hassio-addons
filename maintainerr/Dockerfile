@@ -72,7 +72,7 @@ RUN chmod +x /entrypoint.sh \
        find "$@" -type f \( -name "*.js" -o -name "*.ts" -o -name "*.json" -o -name "*.sh" -o -name "*.yml" -o -name "*.yaml" -o -name "*.env" -o -name "*.conf" -o -name "*.cfg" \) -exec grep -l "/opt/data" {} + 2>/dev/null | xargs -r sed -i 's|/opt/data|/config/data|g'
 
 # Install bashio standalone
-RUN BASHIO_VERSION="0.14.3" && \
+RUN BASHIO_VERSION="0.19.0" && \
     mkdir -p /tmp/bashio && \
     curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio && \
     mv /tmp/bashio/lib /usr/lib/bashio && \

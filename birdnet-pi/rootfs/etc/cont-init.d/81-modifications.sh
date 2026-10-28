@@ -34,7 +34,7 @@ if bashio::supervisor.ping 2> /dev/null; then
     done
 
     # Check if port 80 is correctly configured
-    if [ -n "$(bashio::addon.port "80")" ] && [ "$(bashio::addon.port "80")" != 80 ]; then
+    if [ -n "$(bashio::app.port "80")" ] && [ "$(bashio::app.port "80")" != 80 ]; then
         bashio::log.fatal "The port 80 is enabled, but should still be 80 if you want automatic SSL certificates generation to work."
     fi
 fi

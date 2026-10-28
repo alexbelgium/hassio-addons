@@ -1,3 +1,7 @@
+## 4.10.2.0.1 (2026-10-28)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
  
 ## 4.10.2.0 (2026-10-24)
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)

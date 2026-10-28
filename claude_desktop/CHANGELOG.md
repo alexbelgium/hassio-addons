@@ -1,3 +1,7 @@
+## 07308545.20 (2026-10-28)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
  
 ## 07308545.19 (2026-10-28)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)

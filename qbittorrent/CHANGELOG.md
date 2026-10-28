@@ -1,3 +1,7 @@
+## 5.3.0.2 (28-10-2026)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
  
 ## 5.3.0.1 (26-10-2026)
 - Fix : WebUI and Ingress returned "Unauthorized" after a restart on qBittorrent 5.3.0. qBittorrent 5.3 moved its WebUI settings from `[Preferences]` to a new `[WebUI]` section, so the add-on's settings (host header validation, CSRF/clickjacking protection, username, whitelist, SSL, alternative UI) were written where they are no longer read. They are now written to `[WebUI]`

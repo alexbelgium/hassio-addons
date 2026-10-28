@@ -1,3 +1,7 @@
+## 2026.10.26.2 (28-10-2026)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
 ## 2026.10.26.1 (26-10-2026)
 - Fix: WebUI service actions (System Controls buttons, "Restart services", the chart restart after saving settings) work again. Since 2026.07.10-1 the build stripped `sudo` from every BirdNET-Pi script, so these ran `systemctl` as php-fpm's `caddy` user: the service-control buttons no longer matched the WebUI's allow-list (which still expects `sudo systemctl ...`) and were ignored, and the `systemctl` replacement looked for the running services in `/tmp/run` instead of root's `/run`, so it could neither see nor stop them. It also turned `sudo -u <user> ...` into a bare `-u <user> ...` in `config.php` (species list, test notification). `sudo` is kept again; `caddy` and `pi` already have passwordless sudo in the image
 

@@ -1,3 +1,7 @@
+## 20261028.1 (28-10-2026)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
 ## 20261028 (28-10-2026)
 
 - Synced with upstream and rebuilt against the current open PRs of the fork. The 20261027 build failed and was auto-reverted: the first-daily-consensus PR imported `hasSettingsChanged` twice after its merge with main. The species-workspace PR also no longer compiled on main (`publishAndSaveSettings` and `noteToDetectionResponse` were removed upstream). Both PR branches have been fixed.

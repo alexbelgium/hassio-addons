@@ -1,3 +1,7 @@
+## 1.3.1.1 (28-10-2026)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
 ## 1.3.1 (19-08-2026)
 
 - Initial release, based on upstream Kapowarr 1.3.1

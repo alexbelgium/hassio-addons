@@ -6,8 +6,8 @@ slug=fireflyiii_data_importer
 
 if [[ "$(bashio::config "CONFIG_LOCATION")" == *"/addons_config/fireflyiii_data_importer"* ]]; then
     bashio::log.warning "Reset CONFIG_LOCATION to /config"
-    bashio::addon.option "CONFIG_LOCATION" "/config"
-    bashio::addon.restart
+    bashio::app.option "CONFIG_LOCATION" "/config"
+    bashio::app.restart
 fi
 
 CONFIGSOURCE="$(bashio::config "CONFIG_LOCATION")"

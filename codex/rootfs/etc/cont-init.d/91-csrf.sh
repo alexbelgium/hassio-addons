@@ -8,7 +8,7 @@ CSRF=""
 # Get HA Port
 result=$(bashio::api.supervisor GET /core/info true || true)
 port=$(bashio::jq "$result" ".data.port")
-addon_port=$(bashio::addon.port 9810)
+addon_port=$(bashio::app.port 9810)
 
 # Get all possible URLs
 result=$(bashio::api.supervisor GET /core/api/config true || true)
@@ -44,7 +44,7 @@ for url in "${urls[@]}"; do
     if bashio::var.has_value "${url}"; then
         if [[ "${url}" != "null" ]] && [[ "${url}" != "null.local" ]]; then
             CSRF="https://${url}:${port},http://${url}:${port},https://${url},http://${url}",${CSRF}
-            if bashio::var.has_value "$(bashio::addon.port 9810)"; then
+            if bashio::var.has_value "$(bashio::app.port 9810)"; then
                 CSRF="https://${url}:${addon_port},http://${url}:${addon_port}",${CSRF}
             fi
         fi

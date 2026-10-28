@@ -11,7 +11,7 @@ set -e
 #sed -i 's|manifest.json">|manifest.json" crossorigin="use-credentials">|g' /whoogle/app/templates/index.html
 
 #Allow ingress
-sed -i "1a export WHOOGLE_URL_PREFIX=\'$(bashio::addon.ingress_entry)\'" /etc/cont-init.d/99-run.sh
+sed -i "1a export WHOOGLE_URL_PREFIX=\'$(bashio::app.ingress_entry)\'" /etc/cont-init.d/99-run.sh
 
 #################
 # NGINX SETTING #
@@ -22,7 +22,7 @@ declare ingress_interface
 declare ingress_port
 declare keyfile
 
-port=$(bashio::addon.port 80)
+port=$(bashio::app.port 80)
 if bashio::var.has_value "${port}"; then
     bashio::config.require.ssl
 
@@ -39,9 +39,9 @@ if bashio::var.has_value "${port}"; then
     fi
 fi
 
-ingress_port="$(bashio::addon.ingress_port)"
-ingress_interface="$(bashio::addon.ip_address)"
-ingress_entry="$(bashio::addon.ingress_entry)"
+ingress_port="$(bashio::app.ingress_port)"
+ingress_interface="$(bashio::app.ip_address)"
+ingress_entry="$(bashio::app.ingress_entry)"
 ingress_entry_modified="$(echo "$ingress_entry" | sed 's/[@_!#$%^&*()<>?/\|}{~:]//g')"
 
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf

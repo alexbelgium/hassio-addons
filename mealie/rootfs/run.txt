@@ -84,13 +84,13 @@ if [ -d /homeassistant/addons_config/mealie_data ] && [ ! -f /homeassistant/addo
     bashio::log.warning "Migrating data, current data will not be touched"
     cp -rnf /homeassistant/addons_config/mealie_data/* /config/ || true
     touch /homeassistant/addons_config/mealie_data/migrated
-    bashio::addon.option "DATA_DIR" "/config"
+    bashio::app.option "DATA_DIR" "/config"
 fi
 if [ -f /homeassistant/addons_config/mealie/config.yaml ] && [ ! -f /homeassistant/addons_config/mealie/migrated ]; then
     bashio::log.warning "Migrating config.yaml, current data will not be touched"
     cp -nf /homeassistant/addons_config/mealie/config.yaml /config/ || true
     touch /homeassistant/addons_config/mealie/migrated
-    bashio::addon.option "DATA_DIR" "/config"
+    bashio::app.option "DATA_DIR" "/config"
 fi
 
 # Solve issues in migration
@@ -99,8 +99,8 @@ if [ -d /config/recipes ] && [ -d /config/backups ]; then
     [ -d /config/addons_autoscripts ] && rm -r /config/addons_autoscripts && bashio::log.warning "Deleted /config/addons_autoscripts, it shouldn't be there"
 fi
 if [[ "$(bashio::config "DATA_DIR")" == "/config/addons_config/mealie_data" ]]; then
-    bashio::addon.option "DATA_DIR" "/config"
-    bashio::addon.restart
+    bashio::app.option "DATA_DIR" "/config"
+    bashio::app.restart
 fi
 
 ###############

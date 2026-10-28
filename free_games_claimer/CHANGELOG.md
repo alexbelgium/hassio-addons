@@ -1,3 +1,7 @@
+## 2.2.4.1 (2026-10-28)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
  
 ## 2.2.4 (2026-10-24)
 - Update to latest version from P-Adamiec/Free-Games-Claimer-Remaster (changelog : https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases)

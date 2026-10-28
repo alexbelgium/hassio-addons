@@ -1,3 +1,7 @@
+## 0.13.4.1 (2026-10-28)
+
+- Use the `bashio::app.*` functions instead of the deprecated `bashio::addon.*` ones, removing the deprecation warnings in the log; bashio older than v0.18.0 is upgraded to v0.19.0 at build time
+
 
 ## 0.13.4 (2026-01-14)
 - Update to latest version from m4dm4rtig4n/myelectricaldata (changelog : https://github.com/m4dm4rtig4n/myelectricaldata/releases)

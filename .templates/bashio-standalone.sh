@@ -170,12 +170,12 @@ bashio::supervisor.ping() {
 # -----------------------------------------------------------------------------
 # Add-on metadata
 # -----------------------------------------------------------------------------
-bashio::addon.name()         { printf '%s' "${ADDON_NAME:-Standalone container}"; }
-bashio::addon.description()  { printf '%s' "${ADDON_DESCRIPTION:-Running without Home Assistant Supervisor}"; }
-bashio::addon.version()      { printf '%s' "${BUILD_VERSION:-1.0}"; }
-bashio::addon.version_latest(){ printf '%s' "${ADDON_VERSION_LATEST:-${BUILD_VERSION:-1.0}}"; }
+bashio::app.name()         { printf '%s' "${ADDON_NAME:-Standalone container}"; }
+bashio::app.description()  { printf '%s' "${ADDON_DESCRIPTION:-Running without Home Assistant Supervisor}"; }
+bashio::app.version()      { printf '%s' "${BUILD_VERSION:-1.0}"; }
+bashio::app.version_latest(){ printf '%s' "${ADDON_VERSION_LATEST:-${BUILD_VERSION:-1.0}}"; }
 
-bashio::addon.update_available() {
+bashio::app.update_available() {
   if [ -n "${ADDON_VERSION_LATEST:-}" ] && [ "${ADDON_VERSION_LATEST:-}" != "${BUILD_VERSION:-}" ]; then
     printf '%s' "true"
   else
@@ -183,14 +183,14 @@ bashio::addon.update_available() {
   fi
 }
 
-bashio::addon.ingress_port()  { printf '%s' "${ADDON_INGRESS_PORT:-}"; }
-bashio::addon.ingress_entry() { printf '%s' "${ADDON_INGRESS_ENTRY:-}"; }
-bashio::addon.ip_address()    { printf '%s' "${ADDON_IP_ADDRESS:-}"; }
+bashio::app.ingress_port()  { printf '%s' "${ADDON_INGRESS_PORT:-}"; }
+bashio::app.ingress_entry() { printf '%s' "${ADDON_INGRESS_ENTRY:-}"; }
+bashio::app.ip_address()    { printf '%s' "${ADDON_IP_ADDRESS:-}"; }
 
 # Ports:
 # - numeric arg "8080" -> env PORT_8080 or ADDON_PORT_8080, fallback to the number
 # - non-numeric "WEB_PORT" -> resolve as config/env key
-bashio::addon.port() {
+bashio::app.port() {
   local arg="${1:-}"
   if [[ "$arg" =~ ^[0-9]+$ ]]; then
     local v=""
@@ -202,8 +202,8 @@ bashio::addon.port() {
   fi
 }
 
-# addon.option : write/delete option in JSON when possible; fallback export env
-bashio::addon.option() {
+# app.option : write/delete option in JSON when possible; fallback export env
+bashio::app.option() {
   local key="${1:-}" value="${2-__BASHIO_UNSET__}" file="${STANDALONE_OPTIONS_JSON:-}"
   [ -n "$key" ] || return 0
 
@@ -223,6 +223,12 @@ bashio::addon.option() {
     export "$(printf '%s' "$key" | tr '.-' '__')"="$value"
   fi
 }
+
+# Pre-v0.18.0 bashio names, still used by user custom scripts
+for _f in name description version version_latest update_available ingress_port ingress_entry ip_address port option; do
+  eval "bashio::addon.${_f}() { bashio::app.${_f} \"\$@\"; }"
+done
+unset _f
 
 # -----------------------------------------------------------------------------
 # System info
