@@ -1,4 +1,7 @@
  
+## 3.3.5.3 (2026-10-28)
+- Rebuild: the 3.3.5.2 amd64 image shipped a pre-0.18 bashio, which made every startup script fall back to the standalone shim (`bashio::config.false: command not found`, `MACHINE_LEARNING_CACHE_FOLDER: unbound variable`) (#3165)
+
 ## 3.3.5.2 (2026-10-28)
 - Mask JWT_SECRET, cifspassword, env_vars and other secret options in the startup log (#3165)
 
