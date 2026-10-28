@@ -13,7 +13,7 @@ export_options() {
     for key in "${keys[@]}"; do
         local value
         value=$(jq -r ".${key}" "${json_source}")
-        if bashio::config.false "verbose" || [[ "$key" == *"PASS"* ]]; then
+        if bashio::config.false "verbose" || [[ "${key}" == "env_vars" || "${key,,}" =~ pass|token|secret|apikey|api_key|private|pwd|key ]]; then
             bashio::log.blue "${key}=******"
         else
             bashio::log.blue "${key}='${value}'"
