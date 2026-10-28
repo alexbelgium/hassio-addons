@@ -6,7 +6,7 @@ declare config
 config=$(
     bashio::var.json \
         host "http://127.0.0.1" \
-        port "^$(bashio::addon.port 9001)"
+        port "^$(bashio::app.port 9001)"
 )
 
 if bashio::discovery "mealie" "${config}" > /dev/null; then

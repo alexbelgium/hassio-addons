@@ -22,7 +22,7 @@ if [ -f "$CONFIG_LOCATION" ]; then
                 # under each configured *arr integration (radarr.base_url,
                 # sonarr.base_url, ...) and those must not be touched.
                 sed -i "/^general:/,/^[^ ]/{ s|  base_url:.*|  base_url: /$slug|; }" "$CONFIG_LOCATION"
-                bashio::addon.restart
+                bashio::app.restart
             fi
         fi
     fi

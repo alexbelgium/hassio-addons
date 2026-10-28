@@ -73,7 +73,7 @@ RUN set -eux; \
 # Bring in jq + gosu (and their libs). NO apk in final stage.
 COPY --from=ha_tools /out/ /
 
-RUN BASHIO_VERSION="0.14.3" && \
+RUN BASHIO_VERSION="0.19.0" && \
     mkdir -p /tmp/bashio && \
     curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio && \
     mv /tmp/bashio/lib /usr/lib/bashio && \

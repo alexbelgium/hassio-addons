@@ -134,7 +134,7 @@ RUN test -x /init && \
     test ! -e "$empty_root/share/influxdb-pre-2.9.tar.gz" && \
     rm -rf "$test_root" "$empty_root"
 
-RUN sed -i "1a if ! bashio::require.unprotected; then bashio::addon.stop; fi" /etc/cont-init.d/90-run.sh
+RUN sed -i "1a if ! bashio::require.unprotected; then bashio::app.stop; fi" /etc/cont-init.d/90-run.sh
 
 # Scrutiny's image already includes s6-overlay and defines all services under
 # /etc/services.d. Keep /init as PID 1 so service readiness and s6-svc calls work.

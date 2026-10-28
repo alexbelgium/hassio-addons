@@ -154,7 +154,7 @@ if [ "${RUN_ONCE}" = "true" ]; then
 
     bashio::log.info "Stopping the add-on"
     sleep 2
-    bashio::addon.stop
+    bashio::app.stop
     exit "${exit_code}"
 fi
 

@@ -23,7 +23,7 @@ fi
 
 if [ "$old_config_location" != "$new_config_location" ]; then
     bashio::log.info "Updating CONFIG_LOCATION to $new_config_location"
-    bashio::addon.option "CONFIG_LOCATION" "$new_config_location"
+    bashio::app.option "CONFIG_LOCATION" "$new_config_location"
 fi
 
 if [ -d /config/addons_config ]; then

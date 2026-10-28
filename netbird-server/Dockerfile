@@ -25,7 +25,7 @@ FROM netbirdio/signal:latest AS netbird-signal
 FROM netbirdio/relay:latest AS netbird-relay
 FROM netbirdio/dashboard:latest AS netbird-dashboard
 
-ENV BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.19.0
 
 ##################
 # 3 Modify Image #

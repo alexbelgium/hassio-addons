@@ -349,7 +349,7 @@ main() {
     if [ "$RESTART_NEEDED" = true ]; then
         bashio::log.warning "A critical update occurred. Restarting Immich add‑on(s) after DB restart."
         touch "$RESTART_FLAG_FILE"
-        bashio::addon.restart
+        bashio::app.restart
         exit 0
     fi
 

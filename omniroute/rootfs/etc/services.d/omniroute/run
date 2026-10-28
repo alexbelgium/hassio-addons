@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -e
 
-OMNIROUTE_BASE_PATH="$(bashio::addon.ingress_entry)"
+OMNIROUTE_BASE_PATH="$(bashio::app.ingress_entry)"
 export OMNIROUTE_BASE_PATH
 export DATA_DIR=/config
 export PORT=20129

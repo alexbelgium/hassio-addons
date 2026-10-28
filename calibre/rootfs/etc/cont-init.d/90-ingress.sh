@@ -3,7 +3,7 @@
 set -e
 
 NGINX_CONFIG=/etc/nginx/sites-available/ingress.conf
-SUBFOLDER="$(bashio::addon.ingress_entry)"
+SUBFOLDER="$(bashio::app.ingress_entry)"
 
 # Ensure subfolder ends with a trailing slash (except for root)
 if [[ -n "${SUBFOLDER}" && "${SUBFOLDER}" != "/" ]]; then
@@ -22,7 +22,7 @@ mv tmpfile "${NGINX_CONFIG}"
 sed -i '/listen \[::\]/d' "${NGINX_CONFIG}"
 
 # Adapt ports and upstream paths for Home Assistant ingress
-sed -i "s|3000|$(bashio::addon.ingress_port)|g" "${NGINX_CONFIG}"
+sed -i "s|3000|$(bashio::app.ingress_port)|g" "${NGINX_CONFIG}"
 sed -i "s|SUBFOLDER|/|g" "${NGINX_CONFIG}"
 sed -i "s|CWS|8082|g" "${NGINX_CONFIG}"
 sed -i "s|REPLACE_HOME|${HOME:-/root}|g" "${NGINX_CONFIG}"

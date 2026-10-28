@@ -8,9 +8,9 @@ set -e
 
 bashio::log.info "Configuring Nginx for ingress..."
 
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
-ingress_entry=$(bashio::addon.ingress_entry)
+ingress_port=$(bashio::app.ingress_port)
+ingress_interface=$(bashio::app.ip_address)
+ingress_entry=$(bashio::app.ingress_entry)
 
 # Cache-busting marker for the rewritten JavaScript bundle.
 #
@@ -24,7 +24,7 @@ ingress_entry=$(bashio::addon.ingress_entry)
 # URLs. njs/ingress.js strips the marker again before proxying.
 #
 # BUILD_VERSION is the add-on version baked in at build time (it is also what
-# bashio::addon.version returns). Only [A-Za-z0-9-] survives: the marker ends up
+# bashio::app.version returns). Only [A-Za-z0-9-] survives: the marker ends up
 # inside a regex literal in Seerr's own bundle, where a dot would be a wildcard.
 asset_tag="ha-$(printf '%s' "${BUILD_VERSION:-0}" | tr -c 'A-Za-z0-9' '-')"
 

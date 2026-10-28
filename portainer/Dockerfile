@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:11.0.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:21.0.10
 FROM ${BUILD_FROM}
 
 ##################

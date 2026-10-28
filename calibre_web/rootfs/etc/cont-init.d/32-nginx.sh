@@ -12,7 +12,7 @@ declare ingress_interface
 declare ingress_port
 #declare keyfile
 
-#port=$(bashio::addon.port 80)
+#port=$(bashio::app.port 80)
 #if bashio::var.has_value "${port}"; then
 #    bashio::config.require.ssl
 #
@@ -54,12 +54,12 @@ if bashio::config.true 'login_with_ha_user'; then
     bashio::log.info "Ingress logs in as the Home Assistant username"
 fi
 
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
+ingress_port=$(bashio::app.ingress_port)
+ingress_interface=$(bashio::app.ip_address)
 #ha_port=$(bashio::core.port)
 
 sed -i "s/%%ingress_user%%/${ingress_user}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 #sed -i "s/%%haport%%/${ha_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
-sed -i "s|%%UIPATH%%|$(bashio::addon.ingress_entry)|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%UIPATH%%|$(bashio::app.ingress_entry)|g" /etc/nginx/servers/ingress.conf

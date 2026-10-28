@@ -46,7 +46,7 @@ declare ingress_port
 # The app's own baseURL is the Supervisor ingress-entry path, unchanged from
 # before: FileBrowser emits that prefix as absolute links in its HTML and JS,
 # so it is also the path direct ip:port access has to use (see direct.conf).
-FB_BASEURL=$(bashio::addon.ingress_entry)
+FB_BASEURL=$(bashio::app.ingress_entry)
 export FB_BASEURL
 
 declare ADDON_PROTOCOL=http
@@ -55,9 +55,9 @@ if bashio::config.true 'ssl'; then
     ADDON_PROTOCOL=https
 fi
 
-#port=$(bashio::addon.port 80)
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
+#port=$(bashio::app.port 80)
+ingress_port=$(bashio::app.ingress_port)
+ingress_interface=$(bashio::app.ip_address)
 sed -i "s|%%protocol%%|${ADDON_PROTOCOL}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%port%%|${ingress_port}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf

@@ -46,7 +46,7 @@ FROM ${BUILD_FROM} AS collabora
 ###############################################################################
 # Build the actual add-on on a base that has a shell
 ###############################################################################
-FROM ghcr.io/hassio-addons/debian-base:9.3.0
+FROM ghcr.io/hassio-addons/debian-base:9.5.1
 
 # Inherited from the base, declared here so it is visible to hadolint and to
 # anyone adding a pipe below. Note that the linkage check does NOT pipe into

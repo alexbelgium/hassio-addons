@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 set -e
-ingress_entry="$(bashio::addon.ingress_entry)"
+ingress_entry="$(bashio::app.ingress_entry)"
 health_probe="http://127.0.0.1:20129${ingress_entry}/api/monitoring/health"
 
 omniroute_ready=false

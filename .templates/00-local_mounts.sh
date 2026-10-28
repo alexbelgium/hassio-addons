@@ -53,7 +53,7 @@ if bashio::config.has_value 'localdisks'; then
             subfolder="${entry#*/}"
             if [[ "/$subfolder/" == */../* ]]; then
                 bashio::log.fatal "$entry : the folder can't contain '..'"
-                bashio::addon.stop
+                bashio::app.stop
                 continue
             fi
         fi
@@ -143,7 +143,7 @@ if bashio::config.has_value 'localdisks'; then
             rmdir "$staging" /mnt/.localdisks 2> /dev/null || true
             if [ -n "$error" ]; then
                 bashio::log.fatal "Unable to mount $entry : $error"
-                bashio::addon.stop
+                bashio::app.stop
             else
                 bashio::log.info "Success! $subfolder of $disk mounted to /mnt/$target"
             fi
@@ -159,7 +159,7 @@ if bashio::config.has_value 'localdisks'; then
             || (
                 bashio::log.fatal "Unable to mount local drives! Please check the name."
                 rmdir /mnt/"$disk"
-                bashio::addon.stop
+                bashio::app.stop
             )
     done
 

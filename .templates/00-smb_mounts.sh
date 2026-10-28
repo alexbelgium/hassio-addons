@@ -327,7 +327,7 @@ if bashio::config.has_value 'networkdisks'; then
             bashio::log.fatal "...... incorrect Username, Password, or Domain! Script will stop."
             cleanup_cred
             rm -f "$ERRORCODE_FILE" 2>/dev/null || true
-            bashio::addon.stop
+            bashio::app.stop
           elif echo "$OUTPUT" | grep -q "tree connect failed" || echo "$OUTPUT" | grep -q "NT_STATUS_CONNECTION_DISCONNECTED"; then
             echo "... using SMBv1"
             bashio::log.warning "...... share reachable only with legacy SMBv1 (NT1) negotiation. Forcing SMBv1 options."
@@ -467,7 +467,7 @@ if bashio::config.has_value 'networkdisks'; then
       cleanup_cred
       rm -f "$ERRORCODE_FILE" 2>/dev/null || true
 
-      bashio::addon.stop
+      bashio::app.stop
     fi
   done
 fi

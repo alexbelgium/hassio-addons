@@ -53,7 +53,7 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.19.0
 ENV PACKAGES="jq \
     curl \
     cifs-utils \

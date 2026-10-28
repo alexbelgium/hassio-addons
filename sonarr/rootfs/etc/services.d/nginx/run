@@ -23,7 +23,7 @@ if ! grep -q "<UrlBase>$slug</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.t
     bashio::log.warning "BaseUrl not set properly, restarting"
     sed -i "/UrlBase/d" "$CONFIG_LOCATION"
     sed -i "/<Config>/a <UrlBase>$slug<\/UrlBase>" "$CONFIG_LOCATION"
-    bashio::addon.restart
+    bashio::app.restart
 fi
 
 bashio::log.info "Starting NGinx..."

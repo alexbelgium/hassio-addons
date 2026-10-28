@@ -30,7 +30,7 @@ for file in ssl-key.pem ssl-cert.pem security.json; do
 done
 
 # Rebuild npm dependency bindings on version change
-current_version="$(bashio::addon.version)"
+current_version="$(bashio::app.version)"
 if [[ ! -f /data/version || "$current_version" != "$(cat /data/version)" ]]; then
     if [[ -f /config/package.json ]]; then
         bashio::log.info "Update detected, rebuilding native node deps"
