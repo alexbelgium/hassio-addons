@@ -202,7 +202,7 @@ The dashboard is disabled externally by default. To expose it:
    `X-Headroom-Proxy-Token: <token>` (or `Authorization: Bearer <token>`).
 
 The token is generated on first start in
-`/addon_configs/<hostname>/headroom-proxy-token`; delete the file and restart
+`/addon_configs/<repository_id>_claude_desktop/headroom-proxy-token`; delete the file and restart
 to rotate it. Headroom requires it from every non-loopback caller, including the
 `/dashboard` page, so a plain browser receives `401` unless it adds the header
 (e.g. with a header-injecting extension). Only `/health`, `/livez`, and

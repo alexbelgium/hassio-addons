@@ -1,6 +1,6 @@
  
 ## 07308545.20 (2026-10-28)
-- Fix svc-headroom refusing to start with `expose_headroom_dashboard` enabled: Headroom >= 0.42 rejects an unauthenticated 0.0.0.0 bind, so a persisted `HEADROOM_PROXY_TOKEN` is now generated in `/addon_configs/<hostname>/headroom-proxy-token` and required from non-loopback callers (the dashboard page included)
+- Fix svc-headroom refusing to start with `expose_headroom_dashboard` enabled: Headroom >= 0.42 rejects an unauthenticated 0.0.0.0 bind, so a persisted `HEADROOM_PROXY_TOKEN` is now generated in `/addon_configs/<repository_id>_claude_desktop/headroom-proxy-token` and required from non-loopback callers (the dashboard page included)
 
 ## 07308545.19 (2026-10-28)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)

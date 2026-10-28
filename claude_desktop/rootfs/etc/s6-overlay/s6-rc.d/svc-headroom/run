@@ -10,8 +10,7 @@ declare host=127.0.0.1
 if bashio::config.true 'expose_headroom_dashboard'; then
     host=0.0.0.0
     if [ ! -s /config/headroom-proxy-token ]; then
-        openssl rand -hex 32 > /config/headroom-proxy-token
-        chmod 600 /config/headroom-proxy-token
+        (umask 077 && openssl rand -hex 32 > /config/headroom-proxy-token)
         bashio::log.notice "svc-headroom: generated proxy token in /config/headroom-proxy-token"
     fi
     HEADROOM_PROXY_TOKEN="$(< /config/headroom-proxy-token)"
