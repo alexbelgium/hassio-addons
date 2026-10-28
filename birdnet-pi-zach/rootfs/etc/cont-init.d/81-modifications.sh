@@ -89,6 +89,43 @@ fi
 echo "... allow pulseaudio as root as backup"
 sed -i 's#pulseaudio --start#pulseaudio --start || pulseaudio --system#g' "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
 
+# Back off the recording retry loop
+# loop_ffmpeg() retries a failed ffmpeg after a fixed "sleep 1". When the audio
+# source is unreachable ffmpeg exits immediately ("No route to host"), so that is
+# one ffmpeg start per second for as long as the source is down - enough to keep
+# a 2-core host at 100% CPU. Grow the delay 1s -> 64s instead, and reset it once
+# ffmpeg has managed to run for more than 2 minutes, so a healthy stream that
+# hiccups is still picked up straight away. The sleep only runs when ffmpeg
+# fails, so a working source is unaffected.
+RECORDING_SCRIPT="$HOME/BirdNET-Pi/scripts/birdnet_recording.sh"
+if grep -q '^[[:space:]]*sleep 1$' "$RECORDING_SCRIPT"; then
+    echo "... backing off the recording retry loop"
+    sed 's|^\([[:space:]]*\)sleep 1$|\1RETRY_DELAY=$(( SECONDS - ${RETRY_LAST:-0} > 120 ? 1 : ${RETRY_DELAY:-1} ))\n\1sleep "$RETRY_DELAY"\n\1RETRY_LAST=$SECONDS\n\1RETRY_DELAY=$(( RETRY_DELAY < 64 ? RETRY_DELAY * 2 : 64 ))|' \
+        "$RECORDING_SCRIPT" > "$RECORDING_SCRIPT.backoff"
+    # Only keep the patched script if it still parses, a broken recording script
+    # would take down recording altogether
+    if bash -n "$RECORDING_SCRIPT.backoff"; then
+        chown --reference="$RECORDING_SCRIPT" "$RECORDING_SCRIPT.backoff"
+        chmod --reference="$RECORDING_SCRIPT" "$RECORDING_SCRIPT.backoff"
+        mv "$RECORDING_SCRIPT.backoff" "$RECORDING_SCRIPT"
+    else
+        rm -f "$RECORDING_SCRIPT.backoff"
+        bashio::log.warning "Could not add a backoff to the recording retry loop, leaving it unchanged"
+    fi
+fi
+
+# Clear leftovers of the previous run when restarting the services
+# The systemctl replacement has no cgroups: it only stops the processes it can
+# still trace back to a living main process. If that one died first, its
+# children (loop_ffmpeg shells, ffmpeg, arecord) survive, and every restart adds
+# a second daily_plot.py or recording loop next to them. The [x] brackets keep
+# the pattern from matching the sudo/pkill command line itself.
+RESTART_SCRIPT="$HOME/BirdNET-Pi/scripts/restart_services.sh"
+if ! grep -qF '[d]aily_plot' "$RESTART_SCRIPT"; then
+    echo "... clearing leftover processes on service restarts"
+    sed -i '/systemctl stop birdnet_recording.service/a sudo pkill -f "[d]aily_plot.py --daemon|/usr/local/bin/[b]irdnet_recording.sh|[f]fmpeg .*StreamData/.*wav|[a]record .*StreamData/.*wav" || true' "$RESTART_SCRIPT"
+fi
+
 # Send services log to container logs
 echo "... redirecting services logs to container logs"
 while IFS= read -r file; do
