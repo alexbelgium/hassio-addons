@@ -103,7 +103,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `install_headroom` | `true` | Register Headroom MCP and run the supervised local proxy. |
 | `headroom_wrap_claude_code` | `true` | Route PATH-based Claude Code launches through the already-running Headroom proxy. |
 | `headroom_auto_compress` | `true` | Auto-compress large tool outputs in every Claude Code session via a managed `PostToolUse` hook. |
-| `expose_headroom_dashboard` | `false` | Bind Headroom to all interfaces. Port `8787/tcp` must also be mapped manually. |
+| `expose_headroom_dashboard` | `false` | Bind Headroom to all interfaces behind a generated bearer token. Port `8787/tcp` must also be mapped manually. |
 | `install_rtk` | `true` | Configure RTK's Claude Code `PreToolUse` Bash hook. |
 | `install_tokensave` | `true` | Install TokenSave's complete global Claude integration. |
 | `tokensave_project_paths` | `[]` | Explicit absolute Git repository paths to initialize or sync at startup. |
@@ -198,9 +198,18 @@ The dashboard is disabled externally by default. To expose it:
 
 1. Set `expose_headroom_dashboard: true`.
 2. Map `8787/tcp` in the add-on **Network** section.
-3. Open `http://<home-assistant-host>:8787/dashboard`.
+3. Send requests to `http://<home-assistant-host>:8787` with the header
+   `X-Headroom-Proxy-Token: <token>` (or `Authorization: Bearer <token>`).
 
-The dashboard is unauthenticated. Do not publish this port to the public
+The token is generated on first start in
+`/addon_configs/<repository_id>_claude_desktop/headroom-proxy-token`; delete the file and restart
+to rotate it. Headroom requires it from every non-loopback caller, including the
+`/dashboard` page, so a plain browser receives `401` unless it adds the header
+(e.g. with a header-injecting extension). Only `/health`, `/livez`, and
+`/readyz` stay open. Even with the token, the dashboard's Settings page and live
+transformations feed remain unavailable to LAN clients by default. The token is
+sent over plain HTTP, so expose this port only on a trusted LAN or protect the
+connection with HTTPS or an SSH tunnel. Do not publish this port to the public
 internet.
 
 ## Codex CLI
