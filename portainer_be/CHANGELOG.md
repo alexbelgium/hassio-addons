@@ -2,7 +2,7 @@
 
 - Update to Portainer EE 2.45.3, and return to the real Portainer version number for the app version
 - Version 2026.10.27 wrongly shipped the `alpine` tag instead of a release; the updater now only follows numeric Portainer releases
-- If you have version 2026.10.27 or 2026.10.28 installed, Home Assistant sees 2.45.3 as older and will not offer this update. Take a backup, uninstall the app while keeping its data (leave the option to delete its data unticked), then reinstall it to get the latest version; your Portainer configuration is kept
+- If you have version 2026.10.27 or 2026.10.28 installed, Home Assistant sees 2.45.3 as older and will not offer this update. Uninstalling deletes the Portainer database, so first export it from Portainer itself (Settings > Back up Portainer > Download backup file), then uninstall and reinstall the app, and choose "Restore Portainer from backup" on its first-start screen. Restoring a Home Assistant backup instead would bring back version 2026.10.28
 ## 2026.10.27 (2026-10-27)
 - Update to latest version from portainer/portainer-ee
 - Upstream tag : alpine
