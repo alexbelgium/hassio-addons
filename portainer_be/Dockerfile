@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:11.0.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:21.0.10
 # Portainer Business Edition (Enterprise) upstream version.
 # Business Edition has no public release tarball like CE does; its binary and
 # web assets ship only inside the official portainer/portainer-ee image, so we
