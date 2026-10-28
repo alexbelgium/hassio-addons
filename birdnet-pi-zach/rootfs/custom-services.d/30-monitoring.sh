@@ -60,6 +60,11 @@ DISK_USAGE_THRESHOLD=95
 # "Analyzing" file check variables
 same_file_counter=0
 SAME_FILE_THRESHOLD=2
+# Minimum delay between two automatic service restarts (seconds). Restarting
+# every couple of minutes has never recovered a stuck analyzer, and each restart
+# leaves processes of the previous run behind.
+RESTART_MIN_INTERVAL=1800
+last_restart_time=0
 if [[ -f "$ANALYZING_NOW_FILE" ]]; then
     analyzing_now=$(< "$ANALYZING_NOW_FILE")
 else
@@ -157,9 +162,32 @@ check_analyzing_now() {
     fi
 
     if ((same_file_counter >= SAME_FILE_THRESHOLD)); then
+        # birdnet_analysis only rewrites 'analyzing_now' when it picks up a new
+        # recording, so the file also stops changing when there is nothing to
+        # analyze at all - an unreachable RTSP source, a silent or missing
+        # soundcard. With an empty queue the analyzer is idle, not stuck, and
+        # restarting the services cannot bring the audio source back: it only
+        # leaves a second daily_plot.py and a second recording loop behind every
+        # couple of minutes. Report it, but do not restart.
+        local wav_waiting
+        wav_waiting=$(find -L "$INGEST_DIR" -maxdepth 1 -name '*.wav' | wc -l)
+        if ((wav_waiting == 0)); then
+            log_red "$(date) INFO: no recordings to analyze - the audio source looks silent or unreachable. Not restarting."
+            apprisealert "No new recordings: the audio source looks silent or unreachable"
+            return 1
+        fi
+
+        local now
+        now=$(date +%s)
+        if ((now - last_restart_time < RESTART_MIN_INTERVAL)); then
+            log_yellow "$(date) INFO: 'analyzing_now' still unchanged, but services were already restarted $(((now - last_restart_time) / 60)) minutes ago. Waiting."
+            return 1
+        fi
+
         log_red "$(date) INFO: 'analyzing_now' file unchanged for $SAME_FILE_THRESHOLD iterations."
         apprisealert "No change in analyzing_now for ${SAME_FILE_THRESHOLD} iterations"
         "$HOME/BirdNET-Pi/scripts/restart_services.sh"
+        last_restart_time=$now
         same_file_counter=0
         return 1
     else

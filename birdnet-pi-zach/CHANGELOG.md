@@ -1,4 +1,8 @@
- 
+## 2026.10.28.1 (28-10-2026)
+- Fix: restarting the services no longer leaves a previous `daily_plot.py` or recording loop running next to the new one. `restart_services.sh` now clears leftover `daily_plot.py`, `birdnet_recording.sh`, and `ffmpeg`/`arecord` recorders writing to `StreamData` once the recorder is stopped (port of the birdnet-pi fix for #3152)
+- Fix: an unreachable audio source (RTSP host switched off, missing soundcard) no longer causes a restart loop with growing RAM. The monitoring service now reports the silent source instead of restarting when there is nothing queued to analyze, and limits the static `analyzing_now.txt` restart path to once every 30 minutes
+- Fix: the recording retry loop no longer restarts `ffmpeg` once per second while the audio source is unreachable (100%+ CPU). The retry delay now grows from 1s to 64s, and resets once `ffmpeg` has run for more than two minutes
+
 ## 2026.10.28 (2026-10-28)
 - Update to latest version from zach7036/BirdNET-Pi-Enhanced-Version (changelog : https://github.com/zach7036/BirdNET-Pi-Enhanced-Version/releases)
 - Upstream tag : 2.8.4
