@@ -1,3 +1,5 @@
+## 2.5.8 (28-10-2026)
+- Minor bugs fixed
  
 ## 2026.10.28 (2026-10-28)
 - Update to latest version from portainer/portainer-ee
