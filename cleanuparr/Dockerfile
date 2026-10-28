@@ -11,15 +11,13 @@
 #=== Home Assistant Addon ===#
 
 # ARGs used in FROM must be declared before any FROM instruction
-ARG BUILD_UPSTREAM="2.10.12"
-
 #################
 # 1 Build Image #
 #################
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ghcr.io/cleanuparr/cleanuparr:${BUILD_UPSTREAM}
+FROM $BUILD_FROM
 
 ##################
 # 2 Modify Image #
