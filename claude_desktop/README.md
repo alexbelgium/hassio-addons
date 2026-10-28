@@ -206,7 +206,11 @@ The token is generated on first start in
 to rotate it. Headroom requires it from every non-loopback caller, including the
 `/dashboard` page, so a plain browser receives `401` unless it adds the header
 (e.g. with a header-injecting extension). Only `/health`, `/livez`, and
-`/readyz` stay open. Do not publish this port to the public internet.
+`/readyz` stay open. Even with the token, the dashboard's Settings page and live
+transformations feed remain unavailable to LAN clients by default. The token is
+sent over plain HTTP, so expose this port only on a trusted LAN or protect the
+connection with HTTPS or an SSH tunnel. Do not publish this port to the public
+internet.
 
 ## Codex CLI
 
