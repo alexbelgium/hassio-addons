@@ -20,6 +20,13 @@
 # stale, sometimes belonging to a closed PR), so GitHub can report CLEAN for a PR
 # that does not merge onto main at all.
 #
+# A clean textual merge is not a working build: two PRs can each add the same
+# import, or a PR can call a function that upstream renamed, and git merges both
+# without a conflict. So when nothing conflicts, --check then compiles the merged
+# tree the way the build does - `task frontend-build` and a Go compile (no link) -
+# and exits 3 if that fails. It needs task, go, gcc and npm on PATH and exits 4,
+# without judging the tree, when one of them is missing.
+#
 # Environment:
 #   BIRDNET_FORK       owner/repo of the fork           (default alexbelgium/birdnet-go)
 #   BIRDNET_UPSTREAM   owner/repo of the upstream        (default tphakala/birdnet-go)
@@ -107,6 +114,20 @@ merges_onto_main() {
     return "${rc}"
 }
 
+# Does the merged tree in the current directory compile? Runs the same
+# `task frontend-build` as the add-on build, then compiles the Go code. `go list -export`
+# type-checks and compiles every package without linking, so it needs the TensorFlow Lite
+# headers (fetched by the tree's own Taskfile) but not the C library. noembed matches the
+# build and leaves out the model files; the amd64 openvino tag is not covered.
+verify_compiles() {
+    log "Building the frontend of the merged tree"
+    task frontend-build || return 1
+    log "Compiling the Go code of the merged tree"
+    task --silent check-tensorflow > /dev/null || return 1
+    CGO_ENABLED=1 CGO_CFLAGS="-I${PWD}/.cache/tensorflow" \
+        go list -export -tags noembed -f '' ./... > /dev/null || return 1
+}
+
 git config --global user.email "addon-builder@users.noreply.github.com"
 git config --global user.name "BirdNET-Go Addon Builder"
 git config --global advice.detachedHead false
@@ -179,7 +200,19 @@ done
 
 if [ "${CHECK_ONLY}" = "1" ]; then
     if [ "${#conflicting[@]}" -eq 0 ]; then
-        log "CHECK OK: every open non-draft PR merges into the combined build tree"
+        log "Every open non-draft PR merges into the combined build tree"
+        for tool in task go gcc npm; do
+            if ! command -v "${tool}" > /dev/null 2>&1; then
+                echo "!!! BUILD CHECK cannot run: ${tool} is not on PATH, so the merged tree was not compiled." >&2
+                exit 4
+            fi
+        done
+        if ! verify_compiles; then
+            echo "!!! BUILD CHECK FAILED: the merged tree does not compile, so the add-on build would fail." >&2
+            echo "!!! The errors above name the files; fix the PR that owns them, then re-run --check." >&2
+            exit 3
+        fi
+        log "CHECK OK: every open non-draft PR merges and the combined tree compiles"
         exit 0
     fi
     echo "!!! CHECK FAILED: ${#conflicting[@]} PR(s) would break the add-on build" >&2
