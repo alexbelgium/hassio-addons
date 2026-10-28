@@ -112,8 +112,9 @@ _bashio_json_get() {
   [ -f "$file" ] || return 0
   command -v jq >/dev/null 2>&1 || return 0
 
-  # getpath(split(".")) supports nested access; missing => empty
-  jq -er --arg k "$key" 'getpath(($k|split("."))) // empty' "$file" 2>/dev/null || true
+  # getpath(split(".")) supports nested access; missing => empty. Not "// empty",
+  # which would also drop a boolean false
+  jq -r --arg k "$key" 'getpath(($k|split("."))) | select(. != null)' "$file" 2>/dev/null || true
 }
 
 # Net wait using /dev/tcp with a timeout
@@ -158,6 +159,8 @@ bashio::log.info()    { bashio::log.blue   "$@"; }
 bashio::log.warning() { bashio::log.yellow "$@"; }
 bashio::log.error()   { bashio::log.red    "$@"; }
 bashio::log.debug()   { printf '%s\n' "$*"; }
+bashio::log.notice()  { bashio::log.blue   "$@"; }
+bashio::log.fatal()   { bashio::log.red    "$@"; }
 
 # -----------------------------------------------------------------------------
 # Supervisor shim
@@ -166,6 +169,9 @@ bashio::supervisor.ping() {
   _bashio_is_true "${STANDALONE_FORCE_SUPERVISOR_PING:-}" && return 0
   return 1
 }
+
+# No Supervisor to answer: callers see the same failure as an unreachable API
+bashio::api.supervisor() { return 1; }
 
 # -----------------------------------------------------------------------------
 # Add-on metadata
@@ -186,6 +192,11 @@ bashio::app.update_available() {
 bashio::app.ingress_port()  { printf '%s' "${ADDON_INGRESS_PORT:-}"; }
 bashio::app.ingress_entry() { printf '%s' "${ADDON_INGRESS_ENTRY:-}"; }
 bashio::app.ip_address()    { printf '%s' "${ADDON_IP_ADDRESS:-}"; }
+bashio::app.ingress_url()   { printf '%s' "${ADDON_INGRESS_URL:-}"; }
+
+# No Supervisor to stop or restart the add-on: fail like bashio's API call would
+bashio::app.stop()    { bashio::log.warning "No Supervisor: cannot stop the add-on"; return 1; }
+bashio::app.restart() { bashio::log.warning "No Supervisor: cannot restart the add-on"; return 1; }
 
 # Ports:
 # - numeric arg "8080" -> env PORT_8080 or ADDON_PORT_8080, fallback to the number
@@ -246,6 +257,8 @@ bashio::info.arch()         { uname -m; }
 bashio::info.machine()      { uname -m; }
 bashio::info.homeassistant(){ printf '%s' "standalone"; }
 bashio::info.supervisor()  { printf '%s' "standalone"; }
+bashio::info.hostname()    { bashio::host.hostname; }
+bashio::core.port()        { printf '%s' "${HA_PORT:-8123}"; }
 
 # -----------------------------------------------------------------------------
 # Config API
@@ -263,9 +276,18 @@ bashio::config() {
 }
 
 bashio::config.has_value() { [ -n "$(bashio::config "$1")" ]; }
+bashio::config.is_empty()  { [ -z "$(bashio::config "$1")" ]; }
 
 bashio::config.true() {
   _bashio_is_true "$(bashio::config "$1")"
+}
+
+# config.false : only the value "false", like bashio (unset is not false)
+bashio::config.false() { [ "$(bashio::config "$1")" = "false" ]; }
+
+# config.require <key> [reason] : exit when the option has no value
+bashio::config.require() {
+  bashio::config.has_value "${1:-}" || bashio::exit.nok "Option '${1:-}' is required${2:+: $2}"
 }
 
 # config.exists : key is present (env or JSON), even if value is empty
@@ -317,6 +339,10 @@ bashio::config.array() {
 bashio::var.true()      { _bashio_is_true "${1:-}"; }
 bashio::var.false()     { ! _bashio_is_true "${1:-}"; }
 bashio::var.has_value() { [ -n "${1:-}" ]; }
+bashio::var.is_empty()  { [ -z "${1:-}" ]; }
+
+bashio::string.lower()    { printf '%s' "${1:-}" | tr '[:upper:]' '[:lower:]'; }
+bashio::command.exists()  { command -v "${1:-}" >/dev/null 2>&1; }
 
 # -----------------------------------------------------------------------------
 # Filesystem helpers
@@ -348,6 +374,10 @@ bashio::dns.host() {
     nslookup "$h" 2>/dev/null | awk '/^Address: /{print $2; exit}'
   fi
 }
+
+# Addresses in CIDR form, one per line, optionally for one interface, like bashio
+bashio::network.ipv4_address() { ip -4 -o addr show ${1:+dev "$1"} scope global 2>/dev/null | awk '{print $4}'; }
+bashio::network.ipv6_address() { ip -6 -o addr show ${1:+dev "$1"} scope global 2>/dev/null | awk '{print $4}'; }
 
 # Hostname
 bashio::host.hostname() {
