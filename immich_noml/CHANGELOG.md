@@ -1,4 +1,7 @@
  
+## 3.3.5.2 (2026-10-28)
+- Mask JWT_SECRET, cifspassword, env_vars and other secret options in the startup log (#3165)
+
 ## 3.3.5.1 (2026-10-27)
 - Update to latest version from ghcr.io/imagegenius/immich:3-noml
 - Upstream tag : 3.3.5
