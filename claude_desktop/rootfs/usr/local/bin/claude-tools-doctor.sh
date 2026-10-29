@@ -15,7 +15,7 @@ fi
 # Options come straight from /data/options.json: bashio keeps a root-owned cache in /tmp/.bashio
 # and aborts for the abc user, which is who runs this from a terminal inside Claude Desktop.
 opt() {
-    jq -r --arg key "$1" '.[$key] // empty' /data/options.json 2> /dev/null
+    jq -r --arg key "$1" '.[$key] | select(. != null)' /data/options.json
 }
 opt_true() {
     [ "$(opt "$1")" = "true" ]
