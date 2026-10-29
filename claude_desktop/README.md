@@ -53,7 +53,8 @@ The three bundled optimization tools are complementary:
 - **Headroom** transparently compresses proxied Claude Code traffic and also
   exposes on-demand compress/retrieve/statistics MCP tools to Claude Desktop.
 
-TokenSave's complete Claude integration is installed at startup: MCP server,
+TokenSave is off by default. With `install_tokensave: true`, its complete Claude
+integration is installed at startup: MCP server,
 permissions, PreToolUse/UserPromptSubmit/Stop hooks, global prompt rules, and
 Git synchronization hooks. A repository is indexed only when it is listed in
 `tokensave_project_paths`; no automatic filesystem scan is performed.
@@ -76,8 +77,8 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 - Baked-in `git`, GitHub CLI (`gh`), `ripgrep`, `jq`, `shellcheck`, `yamllint`,
   `hadolint`, and `actionlint`.
 - Custom script support through the repository standard `claude_desktop.sh`.
-- Bundled optimization tools: Headroom, RTK, and TokenSave; Caveman remains
-  available as an opt-in plugin.
+- Bundled optimization tools: Headroom and RTK; TokenSave and Caveman are
+  opt-in.
 - Optional OpenAI Codex CLI, authenticated exclusively with a ChatGPT
   subscription and reachable from Claude through the native Codex MCP server.
 - Optional Home Assistant MCP bridge so Claude can query and control Home
