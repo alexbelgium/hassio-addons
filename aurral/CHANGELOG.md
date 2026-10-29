@@ -1,4 +1,7 @@
  
+## 2.12.0.1 (2026-10-29)
+- Fix startup failure (`Cannot find module '/app/backend/server.js'`): start `backend/server.ts`, the entry point upstream now uses (#3176)
+
 ## 2.12.0 (2026-10-27)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
  
