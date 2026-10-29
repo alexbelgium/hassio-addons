@@ -105,7 +105,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `headroom_auto_compress` | `true` | Auto-compress large tool outputs in every Claude Code session via a managed `PostToolUse` hook. |
 | `expose_headroom_dashboard` | `false` | Bind Headroom to all interfaces behind a generated bearer token. Port `8787/tcp` must also be mapped manually. |
 | `install_rtk` | `true` | Configure RTK's Claude Code `PreToolUse` Bash hook. |
-| `install_tokensave` | `true` | Install TokenSave's complete global Claude integration. |
+| `install_tokensave` | `false` | Install TokenSave's complete global Claude integration. |
 | `tokensave_project_paths` | `[]` | Explicit absolute Git repository paths to initialize or sync at startup. |
 | `mcp_servers_desktop` | all | Which managed MCP servers Claude Desktop registers (`headroom`, `tokensave`, `homeassistant`, `codex`). |
 | `mcp_servers_code` | all | Which managed MCP servers Claude Code registers. Each stdio server is a separate process per client, and Desktop starts another set per Claude Code session it hosts, so trimming this is the cheapest way to cut memory. |

@@ -103,7 +103,7 @@ options:
   install_github_cli: true
   install_headroom: true
   install_rtk: true
-  install_tokensave: true
+  install_tokensave: false
   mcp_servers_desktop:
     - headroom
     - tokensave
