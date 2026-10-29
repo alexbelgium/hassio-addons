@@ -15,10 +15,19 @@ fi
 # Options come straight from /data/options.json: bashio keeps a root-owned cache in /tmp/.bashio
 # and aborts for the abc user, which is who runs this from a terminal inside Claude Desktop.
 opt() {
-    jq -r --arg key "$1" '.[$key] | select(. != null)' /data/options.json
+    jq -r --arg key "$1" '.[$key] | if type == "array" then .[] else . end | select(. != null)' /data/options.json
 }
 opt_true() {
     [ "$(opt "$1")" = "true" ]
+}
+
+# Run a command as abc: s6-setuidgid needs root, and a terminal inside Claude Desktop already is abc.
+as_abc() {
+    if [ "$(id -u)" -eq 0 ]; then
+        s6-setuidgid abc "$@"
+    else
+        "$@"
+    fi
 }
 
 section() {
@@ -173,11 +182,11 @@ if opt_true 'install_tokensave'; then
         if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
             continue
         fi
-        repo_root="$(s6-setuidgid abc env HOME="$RUNTIME_HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
+        repo_root="$(as_abc env HOME="$RUNTIME_HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
         if [ -z "$repo_root" ]; then
             echo "${configured_path}: not a Git repository"
         elif [ -f "$repo_root/.tokensave/tokensave.db" ]; then
-            s6-setuidgid abc env HOME="$RUNTIME_HOME" tokensave status "$repo_root" --short || true
+            as_abc env HOME="$RUNTIME_HOME" tokensave status "$repo_root" --short || true
         else
             echo "${repo_root}: NOT INITIALIZED"
         fi
@@ -208,7 +217,7 @@ if opt_true 'install_codex_cli'; then
         # Never forward raw `login status` output: non-ChatGPT modes can include masked secret
         # fragments. Only print explicitly allow-listed states.
         codex_status="$(
-            s6-setuidgid abc env -u OPENAI_API_KEY \
+            as_abc env -u OPENAI_API_KEY \
                 HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" \
                 "$codex_bin" login status 2>&1
         )"

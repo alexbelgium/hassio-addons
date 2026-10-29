@@ -91,13 +91,14 @@ def run_codex(request_id, token, params, resume_id):
     if not os.path.isdir(cwd):
         return {"isError": True, "content": [{"type": "text", "text": f"cwd is not a directory: {cwd}"}]}
 
-    cmd = [args.codex_bin, "exec"] + (["resume", resume_id] if resume_id else [])
-    cmd += ["--json", "--skip-git-repo-check"]
+    cmd = [args.codex_bin, "exec", "--json", "--skip-git-repo-check"]
     cmd += ["-c", f'sandbox_mode="{args.sandbox}"', "-c", 'approval_policy="never"']
     if params.get("model"):
         cmd += ["-m", params["model"]]
     if params.get("reasoning_effort") in EFFORTS:
         cmd += ["-c", f'model_reasoning_effort="{params["reasoning_effort"]}"']
+    if resume_id:
+        cmd += ["resume", "--", resume_id]  # `--`: a threadId starting with "-" is not an option
     cmd.append("-")  # prompt on stdin: no argv length limit
 
     proc = subprocess.Popen(
