@@ -12,6 +12,24 @@ if [ -z "$RUNTIME_HOME" ]; then
     RUNTIME_HOME="/data/data"
 fi
 
+# Options come straight from /data/options.json: bashio keeps a root-owned cache in /tmp/.bashio
+# and aborts for the abc user, which is who runs this from a terminal inside Claude Desktop.
+opt() {
+    jq -r --arg key "$1" '.[$key] | if type == "array" then .[] else . end | select(. != null)' /data/options.json
+}
+opt_true() {
+    [ "$(opt "$1")" = "true" ]
+}
+
+# Run a command as abc: s6-setuidgid needs root, and a terminal inside Claude Desktop already is abc.
+as_abc() {
+    if [ "$(id -u)" -eq 0 ]; then
+        s6-setuidgid abc "$@"
+    else
+        "$@"
+    fi
+}
+
 section() {
     printf '\n=== %s ===\n' "$1"
 }
@@ -28,15 +46,15 @@ done
 
 section "Configured switches"
 for option in permission_mode install_headroom headroom_wrap_claude_code expose_headroom_dashboard install_rtk install_tokensave install_codex_cli codex_sandbox_mode install_caveman enable_tools_health_report; do
-    printf '%-30s %s\n' "$option" "$(bashio::config "$option")"
+    printf '%-30s %s\n' "$option" "$(opt "$option")"
 done
 
 section "Runtime identity"
-printf '%-30s %s\n' "configured PUID:PGID" "$(bashio::config 'PUID'):$(bashio::config 'PGID')"
+printf '%-30s %s\n' "configured PUID:PGID" "$(opt 'PUID'):$(opt 'PGID')"
 printf '%-30s %s\n' "effective abc UID:GID" "$(id -u abc):$(id -g abc)"
 printf '%-30s %s\n' "abc runtime home" "$RUNTIME_HOME"
 printf '%-30s %s\n' "current process UID:GID" "$(id -u):$(id -g)"
-if [ "$(bashio::config 'permission_mode')" = "bypass" ]; then
+if [ "$(opt 'permission_mode')" = "bypass" ]; then
     if [ "$(id -u abc)" -eq 0 ]; then
         echo "bypass runtime: ERROR - Claude Code will reject bypass permissions while abc is root"
     else
@@ -139,7 +157,7 @@ for event, entries in hooks.items():
 PY
 
 section "Headroom"
-if bashio::config.true 'install_headroom'; then
+if opt_true 'install_headroom'; then
     curl -fsS --max-time 2 http://127.0.0.1:8787/health && echo || echo "proxy health: FAILED"
     headroom mcp status || true
     headroom savings || true
@@ -148,27 +166,27 @@ else
 fi
 
 section "RTK"
-if bashio::config.true 'install_rtk'; then
+if opt_true 'install_rtk'; then
     rtk gain || true
 else
     echo "disabled"
 fi
 
 section "TokenSave"
-if bashio::config.true 'install_tokensave'; then
+if opt_true 'install_tokensave'; then
     tokensave doctor --agent claude || true
     tokensave gain --all --range 30d || true
     # Capture before looping — see the matching comment in 82-claude_tools.sh.
-    TOKENSAVE_PROJECT_PATHS="$(bashio::config 'tokensave_project_paths')"
+    TOKENSAVE_PROJECT_PATHS="$(opt 'tokensave_project_paths')"
     while IFS= read -r configured_path || [ -n "$configured_path" ]; do
         if [ -z "$configured_path" ] || [ "$configured_path" = "null" ]; then
             continue
         fi
-        repo_root="$(s6-setuidgid abc env HOME="$RUNTIME_HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
+        repo_root="$(as_abc env HOME="$RUNTIME_HOME" git -c safe.directory='*' -C "$configured_path" rev-parse --show-toplevel 2> /dev/null || true)"
         if [ -z "$repo_root" ]; then
             echo "${configured_path}: not a Git repository"
         elif [ -f "$repo_root/.tokensave/tokensave.db" ]; then
-            s6-setuidgid abc env HOME="$RUNTIME_HOME" tokensave status "$repo_root" --short || true
+            as_abc env HOME="$RUNTIME_HOME" tokensave status "$repo_root" --short || true
         else
             echo "${repo_root}: NOT INITIALIZED"
         fi
@@ -178,7 +196,7 @@ else
 fi
 
 section "Codex"
-if bashio::config.true 'install_codex_cli'; then
+if opt_true 'install_codex_cli'; then
     codex_bin="/data/codex/bin/codex"
     if [ -x "$codex_bin" ]; then
         printf '%-30s %s\n' "installed" "$("$codex_bin" --version 2> /dev/null || echo 'FAILED TO RUN')"
@@ -199,7 +217,7 @@ if bashio::config.true 'install_codex_cli'; then
         # Never forward raw `login status` output: non-ChatGPT modes can include masked secret
         # fragments. Only print explicitly allow-listed states.
         codex_status="$(
-            s6-setuidgid abc env -u OPENAI_API_KEY \
+            as_abc env -u OPENAI_API_KEY \
                 HOME="$RUNTIME_HOME" CODEX_HOME="$RUNTIME_HOME/.codex" \
                 "$codex_bin" login status 2>&1
         )"
@@ -229,7 +247,7 @@ fi
 section "Claude routing"
 printf 'PATH claude: %s\n' "$(command -v claude 2> /dev/null || true)"
 printf 'real claude: %s\n' "$([ -x /usr/bin/claude ] && echo /usr/bin/claude || echo MISSING)"
-if bashio::config.true 'headroom_wrap_claude_code'; then
+if opt_true 'headroom_wrap_claude_code'; then
     echo "PATH-based Claude Code launches are configured for Headroom wrapping."
 else
     echo "Claude Code Headroom wrapping is disabled; Headroom remains available through MCP."

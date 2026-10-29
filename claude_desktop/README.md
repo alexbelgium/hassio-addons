@@ -53,7 +53,8 @@ The three bundled optimization tools are complementary:
 - **Headroom** transparently compresses proxied Claude Code traffic and also
   exposes on-demand compress/retrieve/statistics MCP tools to Claude Desktop.
 
-TokenSave's complete Claude integration is installed at startup: MCP server,
+TokenSave is off by default. With `install_tokensave: true`, its complete Claude
+integration is installed at startup: MCP server,
 permissions, PreToolUse/UserPromptSubmit/Stop hooks, global prompt rules, and
 Git synchronization hooks. A repository is indexed only when it is listed in
 `tokensave_project_paths`; no automatic filesystem scan is performed.
@@ -76,8 +77,8 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 - Baked-in `git`, GitHub CLI (`gh`), `ripgrep`, `jq`, `shellcheck`, `yamllint`,
   `hadolint`, and `actionlint`.
 - Custom script support through the repository standard `claude_desktop.sh`.
-- Bundled optimization tools: Headroom, RTK, and TokenSave; Caveman remains
-  available as an opt-in plugin.
+- Bundled optimization tools: Headroom and RTK; TokenSave and Caveman are
+  opt-in.
 - Optional OpenAI Codex CLI, authenticated exclusively with a ChatGPT
   subscription and reachable from Claude through the native Codex MCP server.
 - Optional Home Assistant MCP bridge so Claude can query and control Home
@@ -105,7 +106,7 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `headroom_auto_compress` | `true` | Auto-compress large tool outputs in every Claude Code session via a managed `PostToolUse` hook. |
 | `expose_headroom_dashboard` | `false` | Bind Headroom to all interfaces behind a generated bearer token. Port `8787/tcp` must also be mapped manually. |
 | `install_rtk` | `true` | Configure RTK's Claude Code `PreToolUse` Bash hook. |
-| `install_tokensave` | `true` | Install TokenSave's complete global Claude integration. |
+| `install_tokensave` | `false` | Install TokenSave's complete global Claude integration. |
 | `tokensave_project_paths` | `[]` | Explicit absolute Git repository paths to initialize or sync at startup. |
 | `mcp_servers_desktop` | all | Which managed MCP servers Claude Desktop registers (`headroom`, `tokensave`, `homeassistant`, `codex`). |
 | `mcp_servers_code` | all | Which managed MCP servers Claude Code registers. Each stdio server is a separate process per client, and Desktop starts another set per Claude Code session it hosts, so trimming this is the cheapest way to cut memory. |
@@ -215,9 +216,11 @@ internet.
 ## Codex CLI
 
 Setting `install_codex_cli: true` adds OpenAI's Codex CLI alongside Claude and
-registers `codex mcp-server` in both Claude Code and Claude Desktop. A Claude
+registers a `codex` MCP server in both Claude Code and Claude Desktop. A Claude
 session can therefore delegate a task to ChatGPT Codex and read its result back
-through MCP.
+through MCP. The server is the add-on's own `codex-mcp` script, which runs each
+task through `codex exec` because Codex removed its built-in `mcp-server`
+command in 0.154.0.
 
 Codex is not baked into the image because its Linux distribution is large and
 the feature is off by default. At each startup, the add-on resolves the latest
@@ -254,7 +257,7 @@ another device. Credentials are stored in the runtime user's persistent
 
 This integration is deliberately **subscription-only**. The managed launcher
 removes any inherited `OPENAI_API_KEY` and starts every Codex command—including
-`codex mcp-server`—with:
+the `codex exec` runs behind `codex-mcp`—with:
 
 ```toml
 forced_login_method = "chatgpt"

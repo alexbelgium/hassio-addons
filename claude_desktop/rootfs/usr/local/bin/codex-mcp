@@ -1,0 +1,235 @@
+#!/lsiopy/bin/python3
+"""Minimal stdio MCP server that hands a task to ChatGPT Codex through `codex exec`.
+
+Registered as the `codex` MCP server by 82-claude_tools.sh. Codex removed its own
+`codex mcp-server` in 0.154.0 and shipped no replacement, so this wraps the supported
+non-interactive CLI and keeps the two tools Claude already knows:
+
+  codex        start a task; the result carries a `threadId`
+  codex-reply  continue that thread (`codex exec resume <threadId>`)
+
+The sandbox is fixed by --sandbox (the add-on's codex_sandbox_mode), never by the caller.
+Standard library only: MCP over stdio is newline-delimited JSON-RPC.
+"""
+
+import argparse
+import collections
+import json
+import os
+import signal
+import subprocess
+import sys
+import threading
+
+HEARTBEAT_SECONDS = 15
+KILL_GRACE_SECONDS = 5
+EFFORTS = ["none", "minimal", "low", "medium", "high", "xhigh"]
+
+TOOLS = [
+    {
+        "name": "codex",
+        "description": (
+            "Start a ChatGPT Codex task and return its answer plus a threadId. Codex reads the "
+            "files itself, so pass a self-contained prompt and set cwd to the repository."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "prompt": {"type": "string", "description": "The task for Codex."},
+                "cwd": {"type": "string", "description": "Working directory Codex runs in."},
+                "model": {"type": "string", "description": "Model override."},
+                "reasoning_effort": {"type": "string", "enum": EFFORTS},
+            },
+            "required": ["prompt"],
+        },
+    },
+    {
+        "name": "codex-reply",
+        "description": "Continue an earlier Codex thread using the threadId it returned.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "threadId": {"type": "string"},
+                "prompt": {"type": "string"},
+                "cwd": {"type": "string", "description": "Working directory Codex runs in."},
+                "reasoning_effort": {"type": "string", "enum": EFFORTS},
+            },
+            "required": ["threadId", "prompt"],
+        },
+    },
+]
+
+args = argparse.Namespace()
+write_lock = threading.Lock()
+running = {}  # JSON-RPC request id -> Popen, so a cancellation can stop Codex
+cancelled = set()  # request ids cancelled before their process existed
+shutting_down = threading.Event()
+
+
+def send(message):
+    with write_lock:
+        sys.stdout.write(json.dumps(message) + "\n")
+        sys.stdout.flush()
+
+
+def kill(proc):
+    """Stop Codex and everything it spawned; SIGKILL whatever ignores SIGTERM."""
+    _signal_group(proc, signal.SIGTERM)
+    # Not a daemon timer: at client shutdown it must outlive main() so the SIGKILL still lands.
+    threading.Timer(KILL_GRACE_SECONDS, _signal_group, (proc, signal.SIGKILL)).start()
+
+
+def _signal_group(proc, sig):
+    try:
+        os.killpg(proc.pid, sig)
+    except ProcessLookupError:
+        pass
+
+
+def run_codex(request_id, token, params, resume_id):
+    cwd = params.get("cwd") or os.getcwd()
+    if not os.path.isdir(cwd):
+        return {"isError": True, "content": [{"type": "text", "text": f"cwd is not a directory: {cwd}"}]}
+
+    cmd = [args.codex_bin, "exec", "--json", "--skip-git-repo-check"]
+    cmd += ["-c", f'sandbox_mode="{args.sandbox}"', "-c", 'approval_policy="never"']
+    if params.get("model"):
+        cmd += ["-m", params["model"]]
+    if params.get("reasoning_effort") in EFFORTS:
+        cmd += ["-c", f'model_reasoning_effort="{params["reasoning_effort"]}"']
+    if resume_id:
+        cmd += ["resume", "--", resume_id]  # `--`: a threadId starting with "-" is not an option
+    cmd.append("-")  # prompt on stdin: no argv length limit
+
+    proc = subprocess.Popen(
+        cmd,
+        cwd=cwd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        start_new_session=True,
+    )
+    running[request_id] = proc
+    if request_id in cancelled or shutting_down.is_set():  # cancelled while spawning
+        kill(proc)
+    done = threading.Event()
+
+    def heartbeat():
+        # Progress notifications keep a client with a per-request timeout from giving up
+        # on a long Codex run.
+        count = 0
+        while not done.wait(HEARTBEAT_SECONDS):
+            count += 1
+            send({"jsonrpc": "2.0", "method": "notifications/progress",
+                  "params": {"progressToken": token, "progress": count, "message": "Codex is working"}})
+
+    if token is not None:
+        threading.Thread(target=heartbeat, daemon=True).start()
+
+    thread_id, last_agent_text = resume_id, ""
+    problems, noise = [], collections.deque(maxlen=10)
+    try:
+        try:
+            proc.stdin.write(params["prompt"])
+            proc.stdin.close()
+        except BrokenPipeError:  # cancelled before Codex read its prompt
+            pass
+        for line in proc.stdout:
+            try:
+                event = json.loads(line)
+            except ValueError:
+                noise.append(line.strip())
+                continue
+            kind = event.get("type")
+            if kind == "thread.started":
+                thread_id = event.get("thread_id", thread_id)
+            elif kind == "item.completed" and event.get("item", {}).get("type") == "agent_message":
+                last_agent_text = event["item"].get("text", "")
+            elif kind == "error":
+                problems.append(event.get("message", ""))
+            elif kind == "turn.failed":
+                problems.append(event.get("error", {}).get("message", ""))
+        returncode = proc.wait()
+    finally:
+        done.set()
+        running.pop(request_id, None)
+        cancelled.discard(request_id)
+        if proc.poll() is None:
+            kill(proc)
+
+    text = last_agent_text.strip()
+    if returncode != 0 or not text:
+        detail = "\n".join(problems or noise) or f"codex exec exited with status {returncode}"
+        return {"isError": True, "content": [{"type": "text", "text": detail}]}
+    return {
+        "content": [{"type": "text", "text": text}],
+        "structuredContent": {"threadId": thread_id, "content": text},
+    }
+
+
+def call_tool(request_id, params, meta):
+    name, arguments = params.get("name"), params.get("arguments")
+    if name not in ("codex", "codex-reply") or not isinstance(arguments, dict) or not isinstance(arguments.get("prompt"), str):
+        send({"jsonrpc": "2.0", "id": request_id, "error": {"code": -32602, "message": "unknown tool or missing prompt"}})
+        return
+    resume_id = None
+    if name == "codex-reply":
+        resume_id = arguments.get("threadId")
+        if not isinstance(resume_id, str) or not resume_id:
+            send({"jsonrpc": "2.0", "id": request_id, "error": {"code": -32602, "message": "threadId is required"}})
+            return
+    try:
+        result = run_codex(request_id, meta.get("progressToken"), arguments, resume_id)
+    except Exception as error:  # a crash here must still answer the request
+        result = {"isError": True, "content": [{"type": "text", "text": f"codex-mcp: {error}"}]}
+    send({"jsonrpc": "2.0", "id": request_id, "result": result})
+
+
+def handle(message):
+    if not isinstance(message, dict) or not isinstance(message.get("params") or {}, dict):
+        send({"jsonrpc": "2.0", "id": None, "error": {"code": -32600, "message": "invalid request"}})
+        return
+    method, request_id, params = message.get("method"), message.get("id"), message.get("params") or {}
+    if method == "notifications/cancelled":
+        cancelled.add(params.get("requestId"))
+        proc = running.get(params.get("requestId"))
+        if proc:
+            kill(proc)
+    elif request_id is None:
+        return  # other notifications need no answer
+    elif method == "initialize":
+        send({"jsonrpc": "2.0", "id": request_id, "result": {
+            "protocolVersion": params.get("protocolVersion", "2024-11-05"),
+            "capabilities": {"tools": {}},
+            "serverInfo": {"name": "codex-mcp", "version": "1.0.0"},
+        }})
+    elif method == "ping":
+        send({"jsonrpc": "2.0", "id": request_id, "result": {}})
+    elif method == "tools/list":
+        send({"jsonrpc": "2.0", "id": request_id, "result": {"tools": TOOLS}})
+    elif method == "tools/call":
+        threading.Thread(target=call_tool, args=(request_id, params, params.get("_meta") or {}), daemon=True).start()
+    else:
+        send({"jsonrpc": "2.0", "id": request_id, "error": {"code": -32601, "message": f"method not found: {method}"}})
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--sandbox", default="workspace-write", choices=["read-only", "workspace-write", "danger-full-access"])
+    parser.add_argument("--codex-bin", default="/data/codex/bin/codex")
+    parser.parse_args(namespace=args)
+
+    for line in sys.stdin:
+        if line.strip():
+            try:
+                handle(json.loads(line))
+            except ValueError:
+                send({"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "parse error"}})
+    shutting_down.set()
+    for proc in list(running.values()):  # the client went away: do not leave Codex running
+        kill(proc)
+
+
+if __name__ == "__main__":
+    main()

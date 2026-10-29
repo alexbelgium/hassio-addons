@@ -103,7 +103,7 @@ options:
   install_github_cli: true
   install_headroom: true
   install_rtk: true
-  install_tokensave: true
+  install_tokensave: false
   mcp_servers_desktop:
     - headroom
     - tokensave
@@ -175,5 +175,5 @@ schema:
 slug: claude_desktop
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "07308545.20"
+version: "07308545.21"
 video: true
