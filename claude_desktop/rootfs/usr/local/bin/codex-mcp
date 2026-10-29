@@ -19,10 +19,10 @@ import os
 import signal
 import subprocess
 import sys
-import tempfile
 import threading
 
 HEARTBEAT_SECONDS = 15
+KILL_GRACE_SECONDS = 5
 EFFORTS = ["none", "minimal", "low", "medium", "high", "xhigh"]
 
 TOOLS = [
@@ -62,6 +62,8 @@ TOOLS = [
 args = argparse.Namespace()
 write_lock = threading.Lock()
 running = {}  # JSON-RPC request id -> Popen, so a cancellation can stop Codex
+cancelled = set()  # request ids cancelled before their process existed
+shutting_down = threading.Event()
 
 
 def send(message):
@@ -71,8 +73,15 @@ def send(message):
 
 
 def kill(proc):
+    """Stop Codex and everything it spawned; SIGKILL whatever ignores SIGTERM."""
+    _signal_group(proc, signal.SIGTERM)
+    # Not a daemon timer: at client shutdown it must outlive main() so the SIGKILL still lands.
+    threading.Timer(KILL_GRACE_SECONDS, _signal_group, (proc, signal.SIGKILL)).start()
+
+
+def _signal_group(proc, sig):
     try:
-        os.killpg(proc.pid, signal.SIGTERM)
+        os.killpg(proc.pid, sig)
     except ProcessLookupError:
         pass
 
@@ -82,75 +91,73 @@ def run_codex(request_id, token, params, resume_id):
     if not os.path.isdir(cwd):
         return {"isError": True, "content": [{"type": "text", "text": f"cwd is not a directory: {cwd}"}]}
 
-    with tempfile.TemporaryDirectory() as tmp:
-        last_message = os.path.join(tmp, "last-message.txt")
-        cmd = [args.codex_bin, "exec"] + (["resume", resume_id] if resume_id else [])
-        cmd += ["--json", "--skip-git-repo-check", "-o", last_message]
-        cmd += ["-c", f'sandbox_mode="{args.sandbox}"', "-c", 'approval_policy="never"']
-        if params.get("model"):
-            cmd += ["-m", params["model"]]
-        if params.get("reasoning_effort") in EFFORTS:
-            cmd += ["-c", f'model_reasoning_effort="{params["reasoning_effort"]}"']
-        cmd.append("-")  # prompt on stdin: no argv length limit
+    cmd = [args.codex_bin, "exec"] + (["resume", resume_id] if resume_id else [])
+    cmd += ["--json", "--skip-git-repo-check"]
+    cmd += ["-c", f'sandbox_mode="{args.sandbox}"', "-c", 'approval_policy="never"']
+    if params.get("model"):
+        cmd += ["-m", params["model"]]
+    if params.get("reasoning_effort") in EFFORTS:
+        cmd += ["-c", f'model_reasoning_effort="{params["reasoning_effort"]}"']
+    cmd.append("-")  # prompt on stdin: no argv length limit
 
-        proc = subprocess.Popen(
-            cmd,
-            cwd=cwd,
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            start_new_session=True,
-        )
-        running[request_id] = proc
-        done = threading.Event()
+    proc = subprocess.Popen(
+        cmd,
+        cwd=cwd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        start_new_session=True,
+    )
+    running[request_id] = proc
+    if request_id in cancelled or shutting_down.is_set():  # cancelled while spawning
+        kill(proc)
+    done = threading.Event()
 
-        def heartbeat():
-            # Progress notifications keep a client with a per-request timeout from giving up
-            # on a long Codex run.
-            count = 0
-            while not done.wait(HEARTBEAT_SECONDS):
-                count += 1
-                send({"jsonrpc": "2.0", "method": "notifications/progress",
-                      "params": {"progressToken": token, "progress": count, "message": "Codex is working"}})
+    def heartbeat():
+        # Progress notifications keep a client with a per-request timeout from giving up
+        # on a long Codex run.
+        count = 0
+        while not done.wait(HEARTBEAT_SECONDS):
+            count += 1
+            send({"jsonrpc": "2.0", "method": "notifications/progress",
+                  "params": {"progressToken": token, "progress": count, "message": "Codex is working"}})
 
-        if token is not None:
-            threading.Thread(target=heartbeat, daemon=True).start()
+    if token is not None:
+        threading.Thread(target=heartbeat, daemon=True).start()
 
-        thread_id, last_agent_text = resume_id, ""
-        problems, noise = [], collections.deque(maxlen=10)
+    thread_id, last_agent_text = resume_id, ""
+    problems, noise = [], collections.deque(maxlen=10)
+    try:
         try:
             proc.stdin.write(params["prompt"])
             proc.stdin.close()
-            for line in proc.stdout:
-                try:
-                    event = json.loads(line)
-                except ValueError:
-                    noise.append(line.strip())
-                    continue
-                kind = event.get("type")
-                if kind == "thread.started":
-                    thread_id = event.get("thread_id", thread_id)
-                elif kind == "item.completed" and event.get("item", {}).get("type") == "agent_message":
-                    last_agent_text = event["item"].get("text", "")
-                elif kind == "error":
-                    problems.append(event.get("message", ""))
-                elif kind == "turn.failed":
-                    problems.append(event.get("error", {}).get("message", ""))
-            returncode = proc.wait()
-        finally:
-            done.set()
-            running.pop(request_id, None)
-            if proc.poll() is None:
-                kill(proc)
+        except BrokenPipeError:  # cancelled before Codex read its prompt
+            pass
+        for line in proc.stdout:
+            try:
+                event = json.loads(line)
+            except ValueError:
+                noise.append(line.strip())
+                continue
+            kind = event.get("type")
+            if kind == "thread.started":
+                thread_id = event.get("thread_id", thread_id)
+            elif kind == "item.completed" and event.get("item", {}).get("type") == "agent_message":
+                last_agent_text = event["item"].get("text", "")
+            elif kind == "error":
+                problems.append(event.get("message", ""))
+            elif kind == "turn.failed":
+                problems.append(event.get("error", {}).get("message", ""))
+        returncode = proc.wait()
+    finally:
+        done.set()
+        running.pop(request_id, None)
+        cancelled.discard(request_id)
+        if proc.poll() is None:
+            kill(proc)
 
-        try:
-            with open(last_message) as handle:
-                text = handle.read().strip()
-        except OSError:
-            text = ""
-        text = text or last_agent_text.strip()
-
+    text = last_agent_text.strip()
     if returncode != 0 or not text:
         detail = "\n".join(problems or noise) or f"codex exec exited with status {returncode}"
         return {"isError": True, "content": [{"type": "text", "text": detail}]}
@@ -161,8 +168,8 @@ def run_codex(request_id, token, params, resume_id):
 
 
 def call_tool(request_id, params, meta):
-    name, arguments = params.get("name"), params.get("arguments") or {}
-    if name not in ("codex", "codex-reply") or not isinstance(arguments.get("prompt"), str):
+    name, arguments = params.get("name"), params.get("arguments")
+    if name not in ("codex", "codex-reply") or not isinstance(arguments, dict) or not isinstance(arguments.get("prompt"), str):
         send({"jsonrpc": "2.0", "id": request_id, "error": {"code": -32602, "message": "unknown tool or missing prompt"}})
         return
     resume_id = None
@@ -179,8 +186,12 @@ def call_tool(request_id, params, meta):
 
 
 def handle(message):
+    if not isinstance(message, dict) or not isinstance(message.get("params") or {}, dict):
+        send({"jsonrpc": "2.0", "id": None, "error": {"code": -32600, "message": "invalid request"}})
+        return
     method, request_id, params = message.get("method"), message.get("id"), message.get("params") or {}
     if method == "notifications/cancelled":
+        cancelled.add(params.get("requestId"))
         proc = running.get(params.get("requestId"))
         if proc:
             kill(proc)
@@ -214,6 +225,7 @@ def main():
                 handle(json.loads(line))
             except ValueError:
                 send({"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "parse error"}})
+    shutting_down.set()
     for proc in list(running.values()):  # the client went away: do not leave Codex running
         kill(proc)
 
