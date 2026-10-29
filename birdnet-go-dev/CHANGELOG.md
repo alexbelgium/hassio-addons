@@ -1,3 +1,7 @@
+## 20261029.1 (29-10-2026)
+
+- Rebuilt with the new BatDetect2 / BSG-BAT bat classifier PR of the fork. It conflicted with the first-daily-consensus PR in the generated `config.schema.json`; its config type has been renamed on the PR branch so both merge cleanly. The `forkmodels` option key is unchanged.
+
 ## 20261029 (29-10-2026)
 
 - Synced with upstream and rebuilt against the current open PRs of the fork. The species-workspace PR no longer compiled once the reanalyze PR moved the reanalysis modal into a shared host, so `actions.reanalyzeTarget` and `actions.closeReanalyze` were gone; its branch has been fixed to open the modal through that host.
