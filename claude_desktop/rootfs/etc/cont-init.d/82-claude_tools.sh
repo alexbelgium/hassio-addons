@@ -401,11 +401,13 @@ import json
 import os
 from pathlib import Path
 
+# Command basenames that mark an entry as ours. Codex lists both its old registration
+# (`codex mcp-server`) and the current one (`codex-mcp`) so existing installs are migrated.
 MANAGED_BASENAMES = {
-    "headroom": "headroom",
-    "tokensave": "tokensave",
-    "homeassistant": "mcp-proxy",
-    "codex": "codex",
+    "headroom": ("headroom",),
+    "tokensave": ("tokensave",),
+    "homeassistant": ("mcp-proxy",),
+    "codex": ("codex", "codex-mcp"),
 }
 
 desired = {}
@@ -422,23 +424,17 @@ if os.environ["HEADROOM_ENABLED"] == "true":
 if os.environ["TOKENSAVE_ENABLED"] == "true":
     desired["tokensave"] = {"command": os.environ["TOKENSAVE_BIN"], "args": ["serve"]}
 if os.environ["CODEX_ENABLED"] == "true":
-    # `codex mcp-server` exposes Codex itself as an stdio MCP server (tools: codex, codex-reply),
-    # which is what lets a Claude session hand a task to ChatGPT Codex. The sandbox/approval
-    # policy is pinned with root-level `-c` overrides, which Codex forwards to the MCP server;
-    # they must precede the subcommand. approval_policy is always "never" because an MCP-driven
-    # run has nobody to answer a prompt. The sandbox defaults to workspace-write; users can opt
-    # into danger-full-access explicitly if the nested sandbox is unavailable in their container.
-    # 81-codex_cli.sh writes the same values into ~/.codex/config.toml so plain terminal `codex`
-    # runs behave identically.
+    # codex-mcp exposes Codex as an stdio MCP server (tools: codex, codex-reply), which is what
+    # lets a Claude session hand a task to ChatGPT Codex. Codex removed its own `mcp-server`
+    # subcommand in 0.154.0, so codex-mcp runs each task through `codex exec` instead. It always
+    # runs with approval_policy "never" (an MCP-driven run has nobody to answer a prompt) and the
+    # sandbox chosen here; the caller cannot widen it. The sandbox defaults to workspace-write;
+    # users can opt into danger-full-access explicitly if the nested sandbox is unavailable in
+    # their container. 81-codex_cli.sh writes the same values into ~/.codex/config.toml so plain
+    # terminal `codex` runs behave identically.
     desired["codex"] = {
-        "command": os.environ["CODEX_BIN"],
-        "args": [
-            "-c",
-            f'sandbox_mode="{os.environ["CODEX_SANDBOX_MODE"]}"',
-            "-c",
-            'approval_policy="never"',
-            "mcp-server",
-        ],
+        "command": "/usr/local/bin/codex-mcp",
+        "args": ["--sandbox", os.environ["CODEX_SANDBOX_MODE"]],
     }
 if os.environ["HA_MCP_ENABLED"] == "true":
     # Home Assistant's MCP Server integration speaks stateless Streamable HTTP on /api/mcp;
@@ -529,7 +525,7 @@ def is_managed(name, entry, owned_url):
         if command is None and name == "homeassistant":
             return is_managed_http_ha(entry, owned_url)
         return False
-    return os.path.basename(command) == MANAGED_BASENAMES[name]
+    return os.path.basename(command) in MANAGED_BASENAMES[name]
 
 
 SELECTED = {

@@ -215,9 +215,11 @@ internet.
 ## Codex CLI
 
 Setting `install_codex_cli: true` adds OpenAI's Codex CLI alongside Claude and
-registers `codex mcp-server` in both Claude Code and Claude Desktop. A Claude
+registers a `codex` MCP server in both Claude Code and Claude Desktop. A Claude
 session can therefore delegate a task to ChatGPT Codex and read its result back
-through MCP.
+through MCP. The server is the add-on's own `codex-mcp` script, which runs each
+task through `codex exec` because Codex removed its built-in `mcp-server`
+command in 0.154.0.
 
 Codex is not baked into the image because its Linux distribution is large and
 the feature is off by default. At each startup, the add-on resolves the latest
@@ -254,7 +256,7 @@ another device. Credentials are stored in the runtime user's persistent
 
 This integration is deliberately **subscription-only**. The managed launcher
 removes any inherited `OPENAI_API_KEY` and starts every Codex command—including
-`codex mcp-server`—with:
+the `codex exec` runs behind `codex-mcp`—with:
 
 ```toml
 forced_login_method = "chatgpt"

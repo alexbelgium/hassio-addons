@@ -1,4 +1,7 @@
  
+## 07308545.21 (2026-10-29)
+- Fix the `codex` MCP server failing to start (`Error: stdin is not a terminal`): Codex 0.154.0 removed `codex mcp-server`, so it is now served by the add-on's `codex-mcp` script, which keeps the `codex` and `codex-reply` tools and runs each task through `codex exec`. Existing registrations are migrated on restart
+
 ## 07308545.20 (2026-10-28)
 - Fix svc-headroom refusing to start with `expose_headroom_dashboard` enabled: Headroom >= 0.42 rejects an unauthenticated 0.0.0.0 bind, so a persisted `HEADROOM_PROXY_TOKEN` is now generated in `/addon_configs/<repository_id>_claude_desktop/headroom-proxy-token` and required from non-loopback callers (the dashboard page included)
 

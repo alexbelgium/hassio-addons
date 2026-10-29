@@ -241,11 +241,11 @@ if ! codex_install_is_complete; then
     exit 0
 fi
 
-# Every Codex entry point, including the MCP server launched by Claude, goes through this wrapper.
+# Every Codex entry point, including the `codex exec` runs behind the codex-mcp server, goes through this wrapper.
 # This is an execution-time guarantee in addition to the managed config below: API-key billing
 # cannot be selected even if an API key is present in the surrounding environment. Caller-provided
 # overrides for the two authentication guards are stripped before the forced root-level overrides
-# are inserted; root-level -c flags must precede Codex subcommands such as `mcp-server`.
+# are inserted; root-level -c flags must precede Codex subcommands such as `exec`.
 {
     printf '#!/usr/bin/env bash\n'
     printf 'CODEX_REAL=%q\n' "$CODEX_REAL"
@@ -326,7 +326,7 @@ chown -R -- "$(id -u abc):$(id -g abc)" "$CODEX_ROOT" \
     || bashio::log.warning "Unable to set ownership on ${CODEX_ROOT}"
 ln -sfn "$CODEX_BIN" "$CODEX_LINK"
 
-# Manage the root-level defaults used by terminal Codex and by `codex mcp-server`.
+# Manage the root-level defaults used by terminal Codex and by codex-mcp.
 #
 # `forced_login_method = "chatgpt"` makes subscription authentication the only permitted login
 # method, so an inherited OPENAI_API_KEY cannot silently switch this integration to API billing.
