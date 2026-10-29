@@ -1,3 +1,7 @@
+## 20261029 (29-10-2026)
+
+- Synced with upstream and rebuilt against the current open PRs of the fork. The species-workspace PR no longer compiled once the reanalyze PR moved the reanalysis modal into a shared host, so `actions.reanalyzeTarget` and `actions.closeReanalyze` were gone; its branch has been fixed to open the modal through that host.
+
 ## 20261028 (28-10-2026)
 
 - Synced with upstream and rebuilt against the current open PRs of the fork. The 20261027 build failed and was auto-reverted: the first-daily-consensus PR imported `hasSettingsChanged` twice after its merge with main. The species-workspace PR also no longer compiled on main (`publishAndSaveSettings` and `noteToDetectionResponse` were removed upstream). Both PR branches have been fixed.
