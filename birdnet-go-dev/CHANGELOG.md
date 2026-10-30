@@ -1,3 +1,5 @@
+## 20261029.2 (30-10-2026)
+- Minor bugs fixed
 ## 20261029.1 (29-10-2026)
 
 - Rebuilt with the new BatDetect2 / BSG-BAT bat classifier PR of the fork. It conflicted with the first-daily-consensus PR in the generated `config.schema.json`; its config type has been renamed on the PR branch so both merge cleanly. The `forkmodels` option key is unchanged.
