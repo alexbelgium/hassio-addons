@@ -1,3 +1,6 @@
+## 2026.10.31 (31-10-2026)
+- Security: upgrade the PHP packages to the Debian-patched release at build time, fixing CVE-2026-109618 (out-of-memory leading to remote code execution) and CVE-2026-109619 (use-after-free leading to remote code execution), which affect PHP 8.2 below 8.2.35. Reported and documented by rdz-oss in [BattyBirdNET-Pi discussion #150](https://github.com/rdz-oss/BattyBirdNET-Pi/discussions/150). Update and restart the add-on to get the fixed image
+
 ## 2026.10.28.1 (28-10-2026)
 - Fix: restarting the services no longer leaves a previous `daily_plot.py` or recording loop running next to the new one. `restart_services.sh` now clears leftover `daily_plot.py`, `birdnet_recording.sh`, and `ffmpeg`/`arecord` recorders writing to `StreamData` once the recorder is stopped (port of the birdnet-pi fix for #3152)
 - Fix: an unreachable audio source (RTSP host switched off, missing soundcard) no longer causes a restart loop with growing RAM. The monitoring service now reports the silent source instead of restarting when there is nothing queued to analyze, and limits the static `analyzing_now.txt` restart path to once every 30 minutes
