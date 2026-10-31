@@ -1,3 +1,6 @@
+ 
+## 3.0.0 (2026-10-31)
+- Update to latest version from portainer/portainer-ee
 ## 2.45.3 (2026-10-28)
 
 - Update to Portainer EE 2.45.3, and return to the real Portainer version number for the app version

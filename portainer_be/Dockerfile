@@ -20,7 +20,7 @@ ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:21.0.10
 # web assets ship only inside the official portainer/portainer-ee image, so we
 # pull them from there. The image is multi-arch (amd64/arm64), so buildx picks
 # the variant matching the target architecture automatically.
-ARG BUILD_UPSTREAM="2.45.3"
+ARG BUILD_UPSTREAM="3.0.0"
 FROM portainer/portainer-ee:${BUILD_UPSTREAM} AS portainer_be
 
 ARG BUILD_FROM
