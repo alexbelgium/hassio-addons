@@ -1,4 +1,7 @@
  
+## 5.0.0.2870 (2026-10-31)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
+ 
 ## 5.0.0.2838 (2026-10-28)
 - Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
  
