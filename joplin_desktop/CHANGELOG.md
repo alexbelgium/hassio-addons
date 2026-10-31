@@ -1,3 +1,6 @@
+ 
+## 3.7.22 (2026-10-31)
+- Update to latest version from linuxserver/docker-joplin (changelog : https://github.com/linuxserver/docker-joplin/releases)
 
 ## 3.7.21.1 (2026-10-11)
 - Fix Joplin not opening ("An error occurred: Unknown flag: --disable-dev-shm-usage"): Joplin only accepts its own list of command-line flags, so the extra Chromium flag added in 3.7.21 is removed
