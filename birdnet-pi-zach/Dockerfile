@@ -121,7 +121,7 @@ RUN \
     grep -srl "/etc/passwd" "$HOME/BirdNET-Pi/" | while IFS= read -r file; do sed -i "s=/etc/passwd=/etc/passwd | head -1=g" "$file"; done && \
     \
     # Patch PHP (CVE-2026-109618/109619): pull the Debian-patched php packages
-    apt-get update && apt-get install -y --only-upgrade '^php.*' && \
+    apt-get install -y --only-upgrade '^php.*' && \
     \
     # Cleanup
     apt-get clean all && \
