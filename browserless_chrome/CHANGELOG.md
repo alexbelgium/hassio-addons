@@ -1,4 +1,7 @@
  
+## 2.58.1 (2026-10-31)
+- Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
+ 
 ## 2.57.3 (2026-10-24)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
  
