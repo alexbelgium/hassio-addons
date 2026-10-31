@@ -1,4 +1,8 @@
  
+## 07308545.22 (2026-10-31)
+- Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
+- Upstream tag : v3.3.14+claude4.29.0
+ 
 ## 07308545.21 (2026-10-29)
 - Fix the `codex` MCP server failing to start (`Error: stdin is not a terminal`): Codex 0.154.0 removed `codex mcp-server`, so it is now served by the add-on's `codex-mcp` script, which keeps the `codex` and `codex-reply` tools and runs each task through `codex exec`. Existing registrations are migrated on restart
 - Fix `claude-tools-doctor.sh` reporting every option as blank and every tool as `disabled` when run from a terminal inside Claude Desktop: it now reads `/data/options.json` instead of bashio, whose root-owned `/tmp/.bashio` cache aborts for the `abc` user
