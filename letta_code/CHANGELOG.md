@@ -1,3 +1,6 @@
+ 
+## 0.34.35 (2026-10-31)
+- Update to latest version from ghcr.io/letta-ai/letta-code:latest
 ## 0.34.26.1 (28-10-2026)
 
 - Fix builds failing with `ghcr.io/letta-ai/letta-code:0.34.24: not found`: upstream regularly tags releases (0.34.22 to 0.34.24) whose image push fails, and the updater followed those releases. The image is now built from `ghcr.io/letta-ai/letta-code:latest` (as set in `build.json`), and the updater follows the version label of that published image instead of GitHub releases, so only versions that exist on the registry are picked up
