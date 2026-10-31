@@ -1,5 +1,5 @@
 ## 2026.10.31 (31-10-2026)
-- Security: upgrade the PHP packages to the Debian-patched release at build time, fixing CVE-2026-109618 (out-of-memory leading to remote code execution) and CVE-2026-109619 (use-after-free leading to remote code execution), which affect PHP 8.2 below 8.2.35. Reported and documented by rdz-oss in [BattyBirdNET-Pi discussion #150](https://github.com/rdz-oss/BattyBirdNET-Pi/discussions/150). Update and restart the add-on to get the fixed image
+- Security: upgrade the PHP packages to the Debian-patched release at build time (the build fails if php8.2-fpm is still below 8.2.35), fixing CVE-2026-109618 (out-of-memory leading to remote code execution) and CVE-2026-109619 (use-after-free leading to remote code execution), which affect PHP 8.2 below 8.2.35. Reported and documented by rdz-oss in [BattyBirdNET-Pi discussion #150](https://github.com/rdz-oss/BattyBirdNET-Pi/discussions/150). Update and restart the add-on to get the fixed image
 
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
