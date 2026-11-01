@@ -1,4 +1,7 @@
  
+## 07308545.23 (2026-11-01)
+- Add the optional `cpu_limit` (cores) and `memory_limit` (for example `6G`) options, which cap the whole add-on and persist across restarts. Unset keeps the current unlimited behaviour
+
 ## 07308545.22 (2026-10-31)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
 - Upstream tag : v3.3.14+claude4.29.0
