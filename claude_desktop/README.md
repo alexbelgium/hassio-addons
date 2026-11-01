@@ -125,8 +125,18 @@ Git synchronization hooks. A repository is indexed only when it is listed in
 | `enable_ha_api_helper` | `true` | Ship the `ha-cli` Core-API helper and add guidance so Claude can configure Home Assistant without a `/config` mount. |
 | `additional_apps` | | Comma-separated Debian apt packages to install at startup. |
 | `additional_pip` | | Comma-separated pip packages installed at startup (via `uv`). |
+| `cpu_limit` | | Optional cap on the whole add-on, in CPU cores (for example `2` or `1.5`). Unset means unlimited. See [Limiting CPU and memory](#limiting-cpu-and-memory). |
+| `memory_limit` | | Optional memory cap on the whole add-on, for example `6G` or `4096M`. Unset means unlimited. |
 | `data_location` | `/data/data` | Persistent home directory for Claude and tooling. |
 | `env_vars` | `[]` | Additional environment variables exported inside the container. |
+
+### Limiting CPU and memory
+
+Home Assistant has no CPU or memory setting for add-ons, and a manual `docker update` is lost when the add-on restarts. `cpu_limit` and `memory_limit` are applied at every start instead, to everything in the add-on: the desktop, the web interface and all Claude Code sessions with their builds and tests. Changing them requires an add-on restart.
+
+- `cpu_limit` throttles without killing anything, so a low value also slows the web interface.
+- `memory_limit` caps RAM, and allows the same amount again in swap (as `docker --memory` does). Beyond that, the kernel kills a process in the add-on, usually the largest, which can be a running session.
+- Both need cgroup v2, which Home Assistant OS uses. If it is not available, the add-on logs a warning and starts without limits.
 
 ### Permission modes
 

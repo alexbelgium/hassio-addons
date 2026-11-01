@@ -145,7 +145,9 @@ schema:
   cifsdomain: str?
   cifspassword: str?
   cifsusername: str?
+  cpu_limit: float(0.1,)?
   localdisks: str?
+  memory_limit: match(^[1-9][0-9]*[MmGg]$)?
   networkdisks: str?
   github_email: str?
   enable_ha_mcp: bool?
@@ -175,5 +177,5 @@ schema:
 slug: claude_desktop
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "07308545.22"
+version: "07308545.23"
 video: true
