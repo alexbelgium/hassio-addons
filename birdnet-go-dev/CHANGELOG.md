@@ -1,6 +1,6 @@
 ## 20261102.2 (02-11-2026)
 
-- Bundled ONNX Runtime bumped from 1.25.1 to 1.31.1, the version upstream's Taskfile pins. BirdNET-Go's ONNX Runtime binding requests C API version 29, which 1.25.1 (API 25) did not provide, so the BirdNET 3.0 model was skipped at startup with only BirdNET V2.4 and Perch V2 loading
+- Bundled ONNX Runtime bumped from 1.25.1 to 1.31.1, the version upstream pins. Since build 20261102.1 the upstream code (tphakala/birdnet-go#4631) uses an ONNX Runtime binding that requests C API version 29, which 1.25.1 (API 25) does not provide, so every model that initializes ONNX Runtime failed to load: BirdNET 3.0 was missing from the active models, the geomodel range filter fell back to the older metadata filter, and the ONNX bat models and privacy VAD could not load when enabled. BirdNET V2.4 (TFLite) and Perch V2 (OpenVINO) were unaffected
 
 ## 20261102.1 (02-11-2026)
 
