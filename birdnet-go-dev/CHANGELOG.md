@@ -1,3 +1,7 @@
+## 20261102.2 (02-11-2026)
+
+- Bundled ONNX Runtime bumped from 1.25.1 to 1.31.1, the version upstream's Taskfile pins. BirdNET-Go's ONNX Runtime binding requests C API version 29, which 1.25.1 (API 25) did not provide, so the BirdNET 3.0 model was skipped at startup with only BirdNET V2.4 and Perch V2 loading
+
 ## 20261102.1 (02-11-2026)
 
 - Rebuilt against the current open PRs of the fork. Upstream landed its own model-consensus false-positive filter, which conflicted with the first-daily-consensus PR (alexbelgium/birdnet-go#63) in `config.schema.json`, the realtime settings struct, the clone helper and their tests; its branch has been merged with main so both filters live side by side. Version `20261102` was taken by the reverted build earlier today, hence `.1`.
