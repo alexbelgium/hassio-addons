@@ -1,3 +1,7 @@
+## 20261102.1 (02-11-2026)
+
+- Rebuilt against the current open PRs of the fork. Upstream landed its own model-consensus false-positive filter, which conflicted with the first-daily-consensus PR (alexbelgium/birdnet-go#63) in `config.schema.json`, the realtime settings struct, the clone helper and their tests; its branch has been merged with main so both filters live side by side. Version `20261102` was taken by the reverted build earlier today, hence `.1`.
+
 ## 20261030.2 (30-10-2026)
 - Minor bugs fixed
 ## 20261030.1 (30-10-2026)
