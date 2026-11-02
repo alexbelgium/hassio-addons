@@ -140,7 +140,7 @@ RUN task frontend-build
 FROM --platform=$BUILDPLATFORM buildenv AS build
 ARG BUILD_VERSION
 ENV BUILD_VERSION=${BUILD_VERSION:-unknown}
-ARG ONNXRUNTIME_VERSION=1.25.1
+ARG ONNXRUNTIME_VERSION=1.31.1
 
 # Download ONNX Runtime for amd64 (x64)
 RUN echo "Downloading ONNX Runtime ${ONNXRUNTIME_VERSION} for x64" && \
