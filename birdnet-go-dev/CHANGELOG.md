@@ -1,3 +1,7 @@
+## 20261103 (03-11-2026)
+
+- Synced with upstream and rebuilt against the current open PRs of the fork. All 13 open PRs merge onto main cleanly and the combined tree builds, so no PR branch needed fixing this time
+
 ## 20261102.2 (02-11-2026)
 
 - The bundled ONNX Runtime version is now read at build time from upstream's own Dockerfile in the merged source, instead of a separate pin here, so it always matches the ONNX Runtime binding upstream compiles against. It resolves to 1.31.1 today, the version already shipped
