@@ -1,5 +1,6 @@
 ## 20261102.2 (02-11-2026)
 
+- The bundled ONNX Runtime version is now read at build time from upstream's own Dockerfile in the merged source, instead of a separate pin here, so it always matches the ONNX Runtime binding upstream compiles against. It resolves to 1.31.1 today, the version already shipped
 - Bundled ONNX Runtime bumped from 1.25.1 to 1.31.1, the version upstream pins. Since build 20261102.1 the upstream code (tphakala/birdnet-go#4631) uses an ONNX Runtime binding that requests C API version 29, which 1.25.1 (API 25) does not provide, so every model that initializes ONNX Runtime failed to load: BirdNET 3.0 was missing from the active models, the geomodel range filter fell back to the older metadata filter, and the ONNX bat models and privacy VAD could not load when enabled. BirdNET V2.4 (TFLite) and Perch V2 (OpenVINO) were unaffected
 
 ## 20261102.1 (02-11-2026)
