@@ -25,8 +25,8 @@
 # applied on top and are byte-for-byte identical to the upstream variant.
 #
 # Build stages 0-1 mirror tphakala/birdnet-go's Docker/Dockerfile; if
-# upstream changes its build (Go/Node/onnxruntime versions, task names)
-# sync them here.
+# upstream changes its build (Go/Node versions, task names) sync them
+# here. The ONNX Runtime version is read from upstream's Dockerfile.
 
 ##########################################################
 # 0  Prepare merged BirdNET-Go source tree (fork + PRs)  #
@@ -140,10 +140,16 @@ RUN task frontend-build
 FROM --platform=$BUILDPLATFORM buildenv AS build
 ARG BUILD_VERSION
 ENV BUILD_VERSION=${BUILD_VERSION:-unknown}
-ARG ONNXRUNTIME_VERSION=1.31.1
 
-# Download ONNX Runtime for amd64 (x64)
-RUN echo "Downloading ONNX Runtime ${ONNXRUNTIME_VERSION} for x64" && \
+# Download ONNX Runtime for amd64 (x64). The version is read from upstream's own
+# Dockerfile in the merged source tree, so it always matches the onnxruntime_go
+# binding this source is compiled against (upstream moves both together).
+RUN ONNXRUNTIME_VERSION="$(sed -n 's/^ARG ONNXRUNTIME_VERSION=//p' Dockerfile)" && \
+    if [ -z "${ONNXRUNTIME_VERSION}" ]; then \
+        echo "ERROR: ARG ONNXRUNTIME_VERSION not found in upstream Dockerfile" >&2; \
+        exit 1; \
+    fi && \
+    echo "Downloading ONNX Runtime ${ONNXRUNTIME_VERSION} for x64" && \
     curl -fsSL "https://github.com/microsoft/onnxruntime/releases/download/v${ONNXRUNTIME_VERSION}/onnxruntime-linux-x64-${ONNXRUNTIME_VERSION}.tgz" \
         -o /tmp/onnxruntime.tgz && \
     mkdir -p /tmp/onnxruntime && \
