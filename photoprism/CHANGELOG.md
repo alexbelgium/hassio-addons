@@ -1,4 +1,7 @@
  
+## 2026.10.29.1 (03-11-2026)
+- Fix permanent unhealthy status by probing PhotoPrism's local HTTP port with curl instead of relying on `photoprism status`, which picks an unsuitable URL inside the healthcheck process (#3183)
+
 ## 2026.10.29 (2026-10-29)
 - Update to latest version from photoprism/photoprism
 - Upstream tag : ubuntu-2026-10-29
