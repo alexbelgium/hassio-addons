@@ -137,8 +137,8 @@ RUN \
 ENV HEALTH_PORT="2341" \
     HEALTH_URL=""
 HEALTHCHECK \
-    --interval=5m \
+    --interval=5s \
     --retries=5 \
     --start-period=30s \
-    --timeout=60s \
+    --timeout=25s \
     CMD curl -A "HealthCheck: Docker/1.0" -s -o /dev/null "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" || exit 1
