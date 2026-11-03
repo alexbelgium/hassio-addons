@@ -1,3 +1,6 @@
+## 2026.10.29.2 (03-11-2026)
+- Fix ~5 minute delay before Home Assistant reports the add-on as started: the healthcheck interval was 5 minutes, so when PhotoPrism took longer than the 30 s start period to open its port, the first successful probe came 5 minutes later. Use the standard 5 s interval now that the check is a cheap curl (#3183)
+
  
 ## 2026.10.29.1 (03-11-2026)
 - Fix permanent unhealthy status by probing PhotoPrism's local HTTP port with curl instead of relying on `photoprism status`, which picks an unsuitable URL inside the healthcheck process (#3183)
