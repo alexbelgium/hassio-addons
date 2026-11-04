@@ -1,3 +1,6 @@
+## 2026.10.29.3 (04-11-2026)
+- Stop PhotoPrism cleanly: run the add-on's entrypoint as PID 1 (`init: false`) and start PhotoPrism and nginx as services, so a stop now reaches PhotoPrism as SIGTERM and it closes its database before exiting. Previously the stop killed the entrypoint shell (exit code 143) and PhotoPrism was killed without shutting down (#3183)
+
 ## 2026.10.29.2 (03-11-2026)
 - Fix ~5 minute delay before Home Assistant reports the add-on as started: the healthcheck interval was 5 minutes, so when PhotoPrism took longer than the 30 s start period to open its port, the first successful probe came 5 minutes later. Use the standard 5 s interval now that the check is a cheap curl (#3183)
 
