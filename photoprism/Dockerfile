@@ -30,8 +30,11 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 ENV workdir="/data/photoprism" \
     HOME="/data/photoprism"
 
+# The upstream image ships its own s6 photoprism service (execline run file). ha_entrypoint.sh would
+# rewrite its shebang and run it as a second, broken PhotoPrism: the add-on starts it from services.d
 RUN \
-    sed -i "s|HOME=\"/photoprism|HOME=\"/data/photoprism|g" /scripts/entrypoint.sh
+    sed -i "s|HOME=\"/photoprism|HOME=\"/data/photoprism|g" /scripts/entrypoint.sh && \
+    rm -rf /etc/s6-overlay/s6-rc.d/photoprism /etc/s6-overlay/s6-rc.d/user/contents.d/photoprism
 
 ##################
 # 3 Install apps #
