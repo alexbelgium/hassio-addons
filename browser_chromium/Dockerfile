@@ -45,7 +45,7 @@ RUN \
     if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
 # Modify commands
-RUN sed -i '/--password-store=basic/a\  --remote-debugging-port=9222 \\' /usr/bin/wrapped-*
+RUN sed -i '/no-first-run/a\  --remote-debugging-address=0.0.0.0 --remote-debugging-port=9221 \\' /usr/bin/wrapped-*
 
 ENV GLOBAL_VAR_FILES="/etc/usr/bin/wrapped-chromium"
 

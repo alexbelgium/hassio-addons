@@ -1,6 +1,3 @@
-
-## 1.98.63-ls143.1 (04-11-2026)
-- Fix Chrome devtools port 9221 not reachable from outside the container: the browser only binds 127.0.0.1, so it now listens on 9222 and nginx exposes it on 9221 only when that port is mapped (#3189)
  
 ## 1.98.63-ls143 (2026-10-31)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)
