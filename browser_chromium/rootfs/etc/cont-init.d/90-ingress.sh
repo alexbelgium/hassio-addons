@@ -27,3 +27,9 @@ sed -i "s|SUBFOLDER|${SUBFOLDER}|g" "${NGINX_CONFIG}"
 
 # Enable ingress
 cp "${NGINX_CONFIG}" /etc/nginx/sites-enabled
+
+# Expose Chrome devtools only when its port is mapped (Supervisor only: the
+# standalone shim reports every port as mapped)
+if bashio::supervisor.ping 2>/dev/null && [[ -n "$(bashio::app.port "9221")" ]]; then
+    cp /etc/nginx/sites-available/devtools.conf /etc/nginx/sites-enabled
+fi

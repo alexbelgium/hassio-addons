@@ -27,8 +27,7 @@ seccomp_mode="$(awk -F':' '/^Seccomp:/{gsub(/[[:space:]]/,"",$2); print $2}' /pr
 
 # Base arguments (exactly what you requested + required safety flags)
 args=(
-  --remote-debugging-address=0.0.0.0
-  --remote-debugging-port=9221
+  --remote-debugging-port=9222
   --user-data-dir="${USER_DATA_DIR}"
   --disable-dev-shm-usage
   --no-first-run
