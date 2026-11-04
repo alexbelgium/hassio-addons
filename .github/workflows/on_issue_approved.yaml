@@ -127,7 +127,7 @@ jobs:
             # it would not fire a fresh labeled event).
             gh issue edit "$ISSUE" --repo "$REPO" --remove-label ai:approved >/dev/null 2>&1 || true
             gh issue comment "$ISSUE" --repo "$REPO" --body \
-              "No AI plan (\`<!-- ai-plan -->\`) from the triage bot was found on this issue, so \`ai:approved\` has nothing to execute (removed). Run the tier-2 sweep on it first (\`AI fix sweep\` → issue $ISSUE), then approve the plan it posts."
+              "No AI plan (\`<!-- ai-plan -->\`) from the triage bot was found on this issue, so \`ai:approved\` has nothing to execute (removed). The scheduled maintenance routine posts plans for add-on bugs it cannot fix outright; approve one once it appears."
           else
             echo "has_plan=true" >> "$GITHUB_OUTPUT"
             echo "plan: $(wc -c < /tmp/ai-exec/plan.md) bytes"
