@@ -1,3 +1,7 @@
+## 2026.10.29.4 (04-11-2026)
+
+- Fix crash loop after 2026.10.29.3 ("exec: usage", exit code 100): the upstream image's own `photoprism` s6 service, whose shebang the add-on rewrote, is now removed (#3198)
+
 ## 2026.10.29.3 (04-11-2026)
 - Stop PhotoPrism cleanly: run the add-on's entrypoint as PID 1 (`init: false`) and start PhotoPrism and nginx as services, so a stop now reaches PhotoPrism as SIGTERM and it closes its database before exiting. Previously the stop killed the entrypoint shell (exit code 143) and PhotoPrism was killed without shutting down (#3183)
 
