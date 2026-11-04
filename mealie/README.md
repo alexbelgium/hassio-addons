@@ -56,7 +56,7 @@ Configurations can be done through the app webUI, except for the following optio
 | `keyfile` | str | `privkey.pem` | SSL key file (must be in /ssl) |
 | `BASE_URL` | str | | Optional external base URL |
 | `DATA_DIR` | str | `/config` | Data directory path |
-| `ALLOW_SIGNUP` | bool | `true` | Allow new user signup |
+| `ALLOW_SIGNUP` | bool | `false` | Allow new user signup |
 | `login_with_ha_user` | bool | `true` | Log in through Ingress as your Home Assistant username |
 
 To configure Gunicorn's `--forwarded-allow-ips` setting for trusted reverse proxies, manually add a `FORWARDED_ALLOW_IPS` entry to your add-on configuration (comma-separated IPs). It is optional and hidden from the default options tab. For example: `FORWARDED_ALLOW_IPS: "192.168.1.1,10.0.0.1"`

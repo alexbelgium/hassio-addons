@@ -1,4 +1,7 @@
  
+## v3.29.0.2 (2026-11-04)
+- `ALLOW_SIGNUP` now defaults to `false` on new installs, matching upstream Mealie, so LAN devices cannot self-register on a fresh install. Existing installs keep their current setting (#3191)
+
 ## v3.29.0.1 (2026-10-25)
 - New option `login_with_ha_user` (on by default): the Ingress panel logs in as the Mealie user matching your Home Assistant username, through Mealie's reverse proxy auth. Unmatched users get the normal login page
 - Only the ingress server can use it: it sends Mealie a per-boot shared secret (`REVERSE_PROXY_AUTH_SECRET`), and the ingress listener now accepts only the Supervisor
