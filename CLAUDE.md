@@ -141,25 +141,32 @@ Adding `[nobuild]` anywhere in a commit message skips the builder workflow.
 
 ### AI issue triage
 
-A tiered, Claude-powered pipeline triages and fixes add-on issues. It escalates
-from cheap classification to a maintainer-approved automated fix, always leaving
-manual actions with precedence. Prompts live in `.github/prompts/`, shared shell
-in `.github/scripts/`.
+Issues, PRs and discussions are handled by a scheduled Claude routine (a
+Claude cloud task, not a GitHub workflow) that runs twice a day, about 05:35 and
+09:35 Europe/Brussels. It only opens items with new activity since its last
+action, posts under the maintainer's account with an `<!-- ai-routine -->` marker
+and a visible "Written by Claude (AI)" footer, and never closes, merges or
+approves anything. Manual actions keep precedence. Prompts live in
+`.github/prompts/`, shared shell in `.github/scripts/`.
 
-| Workflow | Model | Trigger | Role |
-|---|---|---|---|
-| `on_issues_ai_triage.yaml` | Sonnet-low | issue opened (+ author reply, daily catch-up) | Tier 1: classify, dedupe, answer, ask for info; label `ai-triage` for real add-on bugs |
-| `daily_ai_fix.yaml` | Opus 5-xhigh | daily 03:00 | Tier 2: diagnose the `ai-triage` batch; small+confident → ready PR (`ai:fixed`); else write a plan (`ai:plan-pending`) |
-| `on_issue_approved.yaml` | Opus 5-high | maintainer adds `ai:approved` | Tier 3: execute the approved plan → ready PR |
-| `on_claude_mention.yml` | Sonnet-low | `@claude` by @alexbelgium | Manual interactive override on any issue/PR |
-| `on_pr_coderabbit.yml` | Sonnet-low | CodeRabbit reviews an `ai-fix/*` PR | Once: fix or reply to review comments |
+| Component | Trigger | Role |
+|---|---|---|
+| Scheduled routine | twice daily | Classify and answer issues (`issue-classify.md`); small confident fix → ready PR (`ai:fixed`), else a plan (`ai:plan-pending`, per `issue-fix.md`); follow up review comments on `ai-fix/*` PRs; review external PRs; answer discussions |
+| `on_issue_approved.yaml` | maintainer adds `ai:approved` | Tier 3: execute the approved plan → ready PR |
+| `on_claude_mention.yml` | `@claude` by @alexbelgium | Manual interactive override on any issue/PR |
+| `on_pr_coderabbit.yml` | CodeRabbit reviews an `ai-fix/*` PR | Once: fix or reply to review comments |
 
-Control labels (`ai:*`) are workflow-owned. Key ones: `ai-triage` (queued for
-the sweep), `ai:plan-pending` (plan posted, awaiting `ai:approved`), `ai:fixed`,
-`ai:upstream`, `ai:needs-info` (a reporter reply re-runs tier 1 once),
-`ai:needs-human`, `ai:blocked` (touched protected paths). `no-ai` opts an issue
-out of the automated tiers but not the manual ones. **Kill switch:** set the
-repo variable `AI_DISABLED=true` to pause every AI workflow with no file edits.
+`on_issues_ai_triage.yaml` (old tier 1) and `daily_ai_fix.yaml` (old tier 2) are
+disabled in GitHub and kept only for reference.
+
+Control labels (`ai:*`) are automation-owned. Key ones: `ai:classified` (seen
+once), `ai:reviewed` (routine checked it and stayed silent), `ai:plan-pending`
+(plan posted, awaiting `ai:approved`), `ai:fixed`, `ai:upstream`,
+`ai:needs-info` (waiting on the reporter), `ai:needs-human` (the maintainer's
+queue), `ai:blocked` (touched protected paths). `no-ai` opts an item out of the
+automation but not the manual tools. **Kill switches:** create a repo label
+named `ai:paused` to pause the routine; set the repo variable
+`AI_DISABLED=true` to pause the AI workflows.
 AI fixes must never touch `.github/` or `.templates/` (enforced by
 `ai_guard_paths.sh`). They may edit `config.yaml` freely except the upstream
 part of `version`, and must never edit `updater.json` — `addons_updater` owns
