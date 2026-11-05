@@ -149,7 +149,7 @@ and a visible "Written by Claude (AI)" footer, and never closes, merges or
 approves anything. Manual actions keep precedence. Prompts live in
 `.github/prompts/`, shared shell in `.github/scripts/`.
 
-The routine is the only AI automation. Each run it:
+The routine is the only scheduled AI automation. CodeRabbit also reviews PRs, but `ai:paused` does not affect it. Each run the routine:
 
 - classifies issues (`issue-classify.md`) and answers questions, asks for
   missing information, or points to upstream;
