@@ -149,26 +149,31 @@ and a visible "Written by Claude (AI)" footer, and never closes, merges or
 approves anything. Manual actions keep precedence. Prompts live in
 `.github/prompts/`, shared shell in `.github/scripts/`.
 
-| Component | Trigger | Role |
-|---|---|---|
-| Scheduled routine | twice daily | Classify and answer issues (`issue-classify.md`); small confident fix → ready PR (`ai:fixed`), else a plan (`ai:plan-pending`, per `issue-fix.md`); follow up review comments on `ai-fix/*` PRs; review external PRs; answer discussions |
-| `on_issue_approved.yaml` | maintainer adds `ai:approved` | Tier 3: execute the approved plan → ready PR |
-| `on_claude_mention.yml` | `@claude` by @alexbelgium | Manual interactive override on any issue/PR |
-| `on_pr_coderabbit.yml` | CodeRabbit reviews an `ai-fix/*` PR | Once: fix or reply to review comments |
+The routine is the only scheduled AI automation. CodeRabbit also reviews PRs, but `ai:paused` does not affect it. Each run the routine:
 
-`on_issues_ai_triage.yaml` (old tier 1) and `daily_ai_fix.yaml` (old tier 2) are
-disabled in GitHub and kept only for reference.
+- classifies issues (`issue-classify.md`) and answers questions, asks for
+  missing information, or points to upstream;
+- diagnoses add-on bugs and small feature requests (`issue-fix.md`, the
+  `hassio-addon-workflow` skill) and, when the root cause is confident, opens a
+  ready `ai-fix/<addon>-<issue>` PR (`ai:fixed`); there is no plan/approval step;
+- keeps its own `ai-fix/*` PRs mergeable: review threads, failed CI, conflicts;
+- posts one review per head commit on external PRs (never approves);
+- answers discussions it can cite a source for.
+
+The maintainer only merges or closes its PRs. The AI workflows
+`on_issues_ai_triage.yaml`, `daily_ai_fix.yaml`, `on_issue_approved.yaml`,
+`on_pr_coderabbit.yml` and `on_claude_mention.yml` are disabled in GitHub and
+kept only for reference.
 
 Control labels (`ai:*`) are automation-owned. Key ones: `ai:classified` (seen
-once), `ai:reviewed` (routine checked it and stayed silent), `ai:plan-pending`
-(plan posted, awaiting `ai:approved`), `ai:fixed`, `ai:upstream`,
+once), `ai:reviewed` (routine checked it and stayed silent), `ai:fixed`
+(PR opened), `ai:upstream`,
 `ai:needs-info` (waiting on the reporter), `ai:needs-human` (the maintainer's
-queue), `ai:blocked` (touched protected paths). `no-ai` opts an item out of the
+queue). `ai:plan-pending`, `ai:approved` and `ai:blocked` are legacy. `no-ai` opts an item out of the
 automation but not the manual tools. **Kill switches:** create a repo label
-named `ai:paused` to pause the routine; set the repo variable
-`AI_DISABLED=true` to pause the AI workflows.
-AI fixes must never touch `.github/` or `.templates/` (enforced by
-`ai_guard_paths.sh`). They may edit `config.yaml` freely except the upstream
+named `ai:paused` to pause the routine.
+AI fixes must never touch `.github/` or `.templates/` (the routine
+checks its diff before every push). They may edit `config.yaml` freely except the upstream
 part of `version`, and must never edit `updater.json` — `addons_updater` owns
 both. (There is no `upstream:` key in `config.yaml`; upstream tracking lives in
 `updater.json`.) They must still bump the local patch counter so Supervisor
