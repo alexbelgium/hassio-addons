@@ -1,4 +1,7 @@
  
+## 0.34.42 (2026-11-06)
+- Update to latest version from ghcr.io/letta-ai/letta-code:latest
+ 
 ## 0.34.35 (2026-10-31)
 - Update to latest version from ghcr.io/letta-ai/letta-code:latest
 ## 0.34.26.1 (28-10-2026)
