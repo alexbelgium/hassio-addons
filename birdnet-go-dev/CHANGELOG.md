@@ -1,3 +1,7 @@
+ 
+## 20261103.2 (2026-11-06)
+- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
+- Upstream tag : 20261031
 ## 20261103.1 (03-11-2026)
 - Minor bugs fixed
 ## 20261103 (03-11-2026)
