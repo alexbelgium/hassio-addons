@@ -1,3 +1,6 @@
+ 
+## 3.8.53 (2026-11-06)
+- Update to latest version from cheaper-inference/OmniRoute (changelog : https://github.com/cheaper-inference/OmniRoute/releases)
 # Changelog
 
 ## 3.8.52.1 (06-11-2026)

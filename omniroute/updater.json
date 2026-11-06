@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-10-22",
+  "last_update": "2026-11-06",
   "repository": "alexbelgium/hassio-addons",
   "slug": "omniroute",
   "source": "github",
   "upstream_repo": "cheaper-inference/OmniRoute",
-  "upstream_version": "3.8.52"
+  "upstream_version": "3.8.53"
 }
