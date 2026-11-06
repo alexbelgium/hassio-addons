@@ -1,4 +1,7 @@
  
+## v0.10.0 (2026-11-06)
+- Update to latest version from analogj/scrutiny (changelog : https://github.com/analogj/scrutiny/releases)
+ 
 ## v0.9.5.1 (2026-10-28)
 - Make the web UI admin-only (`panel_admin: true`): this Full Access add-on requires Protection mode to be disabled
  
