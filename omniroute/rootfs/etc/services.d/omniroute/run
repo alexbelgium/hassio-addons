@@ -8,6 +8,22 @@ export DATA_DIR=/config
 export PORT=20129
 export HOSTNAME=127.0.0.1
 
-bashio::log.info "Starting OmniRoute..."
 cd /app
+
+# Upstream's runtime base-path patch leaves the middleware matchers root-relative.
+# The ingress base path starts with /api/, so every page (login included) matched
+# "/api/:path*" and got a JSON 401. Prefix the base path the way a Next build does.
+# shellcheck disable=SC2016
+node -e '
+const fs = require("fs");
+const file = ".build/next/server/functions-config-manifest.json";
+const manifest = JSON.parse(fs.readFileSync(file, "utf8"));
+const prefix = "^" + process.env.OMNIROUTE_BASE_PATH.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
+for (const matcher of manifest.functions["/_middleware"].matchers) {
+    if (!matcher.regexp.startsWith(prefix)) matcher.regexp = prefix + matcher.regexp.slice(1);
+}
+fs.writeFileSync(file, JSON.stringify(manifest));
+'
+
+bashio::log.info "Starting OmniRoute..."
 exec /app/check-permissions.sh node dev/run-standalone.mjs
