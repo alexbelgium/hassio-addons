@@ -1,4 +1,8 @@
  
+## 2.0.2.1 (06-11-2026)
+- Re-enable the sidebar panel for non-admin Home Assistant users (panel_admin set back to false, see issue #3200)
+- Note: with the default `auth_method: noauth`, visitors have full access to the files the add-on can see. To restrict non-admin users, set the add-on's `auth_method` option to `password`, restart it, secure the admin password, and create a separate restricted user inside the add-on (Settings > User management). Have non-admin users sign in with the restricted account, and do not share the admin credentials.
+ 
 ## 2.0.2 (2026-10-24)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
  
