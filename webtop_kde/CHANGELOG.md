@@ -1,4 +1,8 @@
  
+## 4.16.0.103 (2026-11-06)
+- Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
+- Upstream tag : 4.16-r0-ls92
+ 
 ## 4.16.0.102 (2026-10-27)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 - Upstream tag : 4.16-r0-ls95
