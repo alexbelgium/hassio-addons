@@ -499,3 +499,80 @@ jobs:
 
           echo "Failed to push reverts after retries" >&2
           exit 1
+
+  # One issue per add-on whose build job failed on master (after the retry),
+  # labelled `ai-triage` so the daily AI fix sweep (daily_ai_fix.yaml) picks it
+  # up directly. Issues opened with GITHUB_TOKEN do not fire `issues: opened`,
+  # so tier 1 never sees these - the label has to be set here. A repeat failure
+  # while the issue is still open becomes a comment on it, not a new issue.
+  report-build-failure:
+    if: >-
+      ${{
+        failure() &&
+        github.event_name == 'push' &&
+        github.ref == 'refs/heads/master' &&
+        github.repository_owner == 'alexbelgium'
+      }}
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      issues: write
+    steps:
+      - name: Open or update a build-failure issue per add-on
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          SHA: ${{ github.sha }}
+          COMMIT_TITLE: ${{ github.event.head_commit.message }}
+        run: |
+          set -euo pipefail
+          RUN_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}/attempts/${RUN_ATTEMPT}"
+          COMMIT_TITLE=${COMMIT_TITLE%%$'\n'*}
+
+          # Build job names are "Build <arch> <addon> add-on".
+          # shellcheck disable=SC2016 # $n is a jq variable, not a shell one
+          gh api --paginate "repos/${REPO}/actions/runs/${RUN_ID}/attempts/${RUN_ATTEMPT}/jobs?per_page=100" \
+            --jq '.jobs[] | select(.conclusion == "failure" and (.name | test("^Build \\S+ \\S+ add-on$")))
+                  | (.name | split(" ")) as $n | [$n[2], $n[1], .id, .html_url] | @tsv' > failed.tsv
+
+          mapfile -t addons < <(cut -f1 failed.tsv | sort -u)
+          for addon in "${addons[@]}"; do
+            title="🐛 [${addon}] Image build failed"
+            {
+              echo "The **${addon}** build job failed on \`master\` for the architectures below. The image build itself is retried once, so a failure there means both attempts failed."
+              echo
+              echo "- **Commit:** ${SHA} - ${COMMIT_TITLE}"
+              echo "- **Workflow run:** ${RUN_URL}"
+              echo "- **Automatic revert:** the same run's \`revert-on-failure\` job tries to revert this push; check its result in the run. If it was reverted, the fix has to bring the intended change back as well as address the failure."
+              echo
+              echo "Two failed attempts do not prove the add-on is broken: check for registry rate limits (\`429\`, \`toomanyrequests\`), failed downloads or other infrastructure errors before changing code."
+              while IFS=$'\t' read -r _ arch job_id job_url; do
+                echo
+                echo "### ${arch}"
+                echo
+                echo "Job log up to the last error annotation: at most 80 lines, each cut to 300 characters, timestamps and colours removed. Full log: ${job_url}"
+                echo
+                echo '~~~text'
+                # Everything up to the last error annotation (the retry's
+                # failure), minus runner group markers and apt progress noise.
+                gh api "repos/${REPO}/actions/jobs/${job_id}/logs" \
+                  | sed -E 's/^[0-9-]+T[0-9:.]+Z ?//; s/\x1b\[[0-9;]*m//g' \
+                  | awk '/^##\[(group|endgroup|start-action|end-action)|^\(Reading database/ { next }
+                         { l[++n] = $0 } /^##\[error\]/ { last = n }
+                         END { if (!last) last = n; for (i = 1; i <= last; i++) print l[i] }' \
+                  | tail -n 80 | cut -c1-300 || echo "(log not available - open the full log link above)"
+                echo '~~~'
+              done < <(awk -F'\t' -v a="$addon" '$1 == a' failed.tsv)
+            } > body.md
+
+            existing=$(gh issue list --repo "$REPO" --state open --search "\"${addon}\" \"Image build failed\" in:title" \
+              --json number,title --jq "map(select(.title == \"${title}\")) | .[0].number // empty")
+            if [ -n "$existing" ]; then
+              gh issue comment "$existing" --repo "$REPO" --body-file body.md
+            else
+              gh issue create --repo "$REPO" --title "$title" --label bug --label ai-triage --body-file body.md
+            fi
+          done
