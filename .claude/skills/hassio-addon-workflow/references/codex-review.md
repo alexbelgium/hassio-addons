@@ -29,7 +29,8 @@ files in the scratchpad (`$OUT` below), never in the worktree, and run from the 
 
 ```bash
 OUT=/path/to/scratchpad                # outside the worktree
-snap() { git status --porcelain; git diff HEAD; }
+snap() { git status --porcelain; git diff HEAD
+         git ls-files -z --others --exclude-standard | xargs -0 -r sha256sum; }
 before=$(snap | sha256sum)
 rm -f "$OUT/codex_answer.md"
 timeout 590 codex exec --model gpt-5.6-sol --sandbox danger-full-access --skip-git-repo-check \
@@ -39,8 +40,9 @@ echo "codex exit: $?"                  # 124 = timed out; any non-zero = no revi
 [ "$(snap | sha256sum)" = "$before" ] || echo "Codex changed the worktree — inspect before trusting anything"
 ```
 
-The snapshot covers file contents as well as status, so an extra edit to an already-modified file
-is caught. It detects writes after the fact; it does not prevent them.
+The snapshot covers file contents as well as status — tracked edits through `git diff HEAD`,
+untracked files through their hashes — so an extra edit to an already-modified or untracked file,
+or a new file inside an untracked directory, is caught. It detects writes after the fact; it does not prevent them.
 
 **Check the review is real before using it.** Treat it as not done — and re-run, not summarise —
 if the exit code is non-zero, `codex_answer.md` is missing or empty, the answer says it couldn't
