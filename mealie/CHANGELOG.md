@@ -1,4 +1,7 @@
  
+## v3.30.0 (2026-11-06)
+- Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
+ 
 ## v3.29.0.2 (2026-11-04)
 - `ALLOW_SIGNUP` now defaults to `false` on new installs, matching upstream Mealie, so LAN devices cannot self-register on a fresh install. Existing installs keep their current setting (#3191)
 
