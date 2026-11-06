@@ -33,10 +33,13 @@ accept="application/vnd.oci.image.index.v1+json,application/vnd.docker.distribut
 
 man="$(get -H "Accept: $accept" "$api/v2/$repo/manifests/$tag")"
 digest="$(python3 -Ic 'import sys,json;m=json.load(sys.stdin);a=sys.argv[1]
-print(next(x["digest"] for x in m["manifests"] if x.get("platform",{}).get("architecture")==a) if "manifests" in m else "")' "$arch" <<<"$man")"
+print(next(x["digest"] for x in m["manifests"] if x.get("platform",{}).get("os")=="linux" and x["platform"].get("architecture")==a) if "manifests" in m else "")' "$arch" <<<"$man")"
 [ -n "$digest" ] && man="$(get -H "Accept: $accept" "$api/v2/$repo/manifests/$digest")"
 
+# A whiteout in a layer deletes paths under dest: never unpack over something that is already there.
 mkdir -p "$dest"
+[ -z "$(ls -A "$dest")" ] || { echo "dest is not empty: $dest" >&2; exit 1; }
+blob="$dest.blob"; errs="$dest.tar-errors"; trap 'rm -f "$blob" "$errs"' EXIT
 python3 -Ic 'import sys,json;m=json.load(sys.stdin);print(m["config"]["digest"])
 [print(l["digest"], l["mediaType"]) for l in m["layers"]]' <<<"$man" | {
   read -r config
@@ -48,11 +51,23 @@ python3 -Ic 'import sys,json;m=json.load(sys.stdin);print(m["config"]["digest"])
       *gzip) z=-z ;;
       *) z= ;;
     esac
-    # Non-root extraction cannot mknod or chown; any other tar error is shown.
-    get "$api/v2/$repo/blobs/$layer" | tar -x $z -C "$dest" --no-same-owner 2>&1 \
-      | grep -vE 'Cannot (mknod|change ownership)|Exiting with failure' >&2 || true
-    # OCI whiteouts: .wh.<name> deletes <name> from the layers below. Opaque markers
-    # (.wh..wh..opq) are only removed, not applied: rare in app images, and harmless for curl tests.
+    # Download to a file first, so a failed or truncated download stops the script.
+    get -o "$blob" "$api/v2/$repo/blobs/$layer" || { echo "layer download failed: $layer" >&2; exit 1; }
+    # Opaque whiteout (<dir>/.wh..wh..opq): <dir> keeps only this layer's files, so empty it first.
+    tar -t $z -f "$blob" | sed -nE 's#^(\./)?(.*/)?\.wh\.\.wh\.\.opq$#\2#p' | while read -r d; do
+      case "/$d" in */../*) echo "bad opaque whiteout path: $d" >&2; exit 1 ;; esac
+      if [ -d "$dest/$d" ] && [ ! -L "$dest/${d%/}" ]; then
+        find "$dest/$d" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+      fi
+    done
+    # Non-root extraction cannot mknod or chown; tolerate only those, stop on any other tar error.
+    if ! tar -x $z -f "$blob" -C "$dest" --no-same-owner 2>"$errs"; then
+      if grep -vqE 'Cannot (mknod|change ownership)|Exiting with failure' "$errs"; then
+        cat "$errs" >&2; echo "layer extraction failed: $layer" >&2; exit 1
+      fi
+    fi
+    # Plain whiteouts: .wh.<name> deletes <name> from the layers below.
+    find "$dest" -name '.wh..wh..opq' -delete
     find "$dest" -name '.wh.*' | while read -r wh; do
       rm -rf "$(dirname "$wh")/$(basename "$wh" | sed 's/^\.wh\.//')" "$wh"
     done

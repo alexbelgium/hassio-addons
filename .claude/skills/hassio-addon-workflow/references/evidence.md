@@ -32,7 +32,12 @@ code that runs.
 1. **Installed here?** `curl -s -H "Authorization: Bearer $SUPERVISOR_TOKEN" http://supervisor/addons`
    lists slug, version and state. A running add-on answers on `<repo-hash>-<slug>:<port>` (e.g.
    `db21ed7f-omniroute:20128`). Check that its version matches the reporter's.
-2. **Not installed:** `scripts/image_rootfs.sh <the Dockerfile's FROM image:tag> /data/claude/.work/repro-<n>/root`.
+2. **Not installed:** unpack the image the add-on actually ships if you can, so its cont-init and
+   run scripts are in the tree: `scripts/image_rootfs.sh ghcr.io/alexbelgium/<slug>-<arch>:<version>
+   /data/claude/.work/repro-<n>/root` (`image:` in the add-on's `config.yaml`). It stops on zstd
+   layers, and the CI-built add-on images are zstd (omniroute-amd64:3.8.52.1 was). Then unpack the
+   Dockerfile's `FROM` image instead, and say in the PR that it was an upstream-only test: the
+   add-on's own startup changes were applied by hand, or not at all.
    It prints the image's Env, Entrypoint, Cmd and WorkingDir. Copy the app dir aside (`cp -a app
    app.pristine`) before the first run, because upstream entrypoints often patch files at start.
 3. **Run it like the add-on does.** Export the env the add-on's `services.d/*/run` and
@@ -42,7 +47,12 @@ code that runs.
    on its internal port, in the background, then poll a health URL. Replay the reporter's
    request, then a control (another base path, or the route without it).
 4. **Host libc older than the image's** (`GLIBC_2.38 not found`): run the binary through the
-   image's own loader, `<root>/lib/ld-linux-x86-64.so.2 --library-path <root>/lib <root>/bin/x`.
+   image's own loader. Find it first, because the layout differs: Debian/Ubuntu keep the real file in
+   `usr/lib/x86_64-linux-gnu/` (`aarch64-linux-gnu/` on arm64) behind `lib64` symlinks that may be
+   absolute and so point at the host. `find <root> -name 'ld-linux-*.so.*' -type f`, then
+   `<loader> --library-path <root>/usr/lib/x86_64-linux-gnu:<root>/lib/x86_64-linux-gnu <root>/bin/x`
+   (Debian) or `--library-path <root>/lib:<root>/usr/lib` (flat layouts). Alpine images are musl:
+   run `<root>/lib/ld-musl-*.so.1 --library-path <root>/lib:<root>/usr/lib <root>/bin/x`.
 5. **Clean up:** kill the processes you started and remove the scratch dir.
 
 Limits: no root, so no mknod, chown, s6 `/init` or nginx on privileged ports. Test the app process,
