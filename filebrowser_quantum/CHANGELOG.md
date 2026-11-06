@@ -1,4 +1,8 @@
  
+## 2.0.2.1 (06-11-2026)
+- Re-enable the sidebar panel for non-admin Home Assistant users (panel_admin set back to false, see issue #3200)
+- Note: the add-on gives full access to the files it can see. Admins who do not want non-admin users to have that access should create a specific restricted user inside the add-on (Settings > User management) and not keep the default admin user
+ 
 ## 2.0.2 (2026-10-24)
 - Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
  
