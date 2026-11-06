@@ -1,4 +1,7 @@
  
+## 3.3.6 (2026-11-06)
+- Update to latest version from ghcr.io/imagegenius/immich:3-openvino
+ 
 ## 3.3.5.2 (2026-10-28)
 - Mask JWT_SECRET, cifspassword, env_vars and other secret options in the startup log (#3165)
 
