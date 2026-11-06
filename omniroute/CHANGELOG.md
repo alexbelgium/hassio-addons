@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.8.52.1 (06-11-2026)
+
+- Fix login page returning a JSON 401 (AUTH_001) through ingress and port 20128: the middleware matchers are now prefixed with the ingress base path (#3204)
+
 ## 3.8.52 (2026-10-22)
 
 - Initial release of OmniRoute add-on
