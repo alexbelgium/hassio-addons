@@ -142,8 +142,10 @@ Adding `[nobuild]` anywhere in a commit message skips the builder workflow.
 ### AI issue triage
 
 Issues, PRs and discussions are handled by a scheduled Claude routine (a
-Claude cloud task, not a GitHub workflow) that runs twice a day, about 05:35 and
-09:35 Europe/Brussels. It only opens items with new activity since its last
+Claude Code desktop scheduled task on the maintainer's HA host, not a GitHub
+workflow) that runs twice a day, about 05:35 and 13:35 Europe/Brussels. Its full
+prompt is `.github/prompts/maintainer-routine.md`, read from `origin/master` at
+the start of every run. It only opens items with new activity since its last
 action, posts under the maintainer's account with an `<!-- ai-routine -->` marker
 and a visible "Written by Claude (AI)" footer, and never closes, merges or
 approves anything. Manual actions keep precedence. Prompts live in
