@@ -104,6 +104,13 @@ Measure the running add-on rather than reasoning from source (`$BUILD_VERSION` s
 - "I set an option and nothing happened" → `scripts/env_trace.sh <VAR> <process>`
 - Is this flag/driver/package actually present? → inspect the artifact: `/proc/<pid>/cmdline`,
   `command -v`, `/var/log/apt/history.log`
+- "It's broken for me" (a bug report) → reproduce it on the real artifact before naming a cause.
+  Reading source gives you a hypothesis, not a root cause. If the add-on is installed here, hit it
+  directly. If it isn't, no dockerd is no excuse: `scripts/image_rootfs.sh <image:tag> <dir>`
+  unpacks the image the Dockerfile builds `FROM`. Run the app with the image's own runtime and the
+  env the add-on's `run`/cont-init scripts set, then curl it before and after the fix. Recipe and
+  pitfalls: `references/evidence.md#reproducing-without-dockerd`. Ask the reporter only for what
+  you could not reproduce, never for something you can measure yourself.
 
 Verify you're reading the right revision first — `scripts/preflight.sh` compares the checkout
 against the running `$BUILD_VERSION`, which catches the usual stale branch before it costs a full
