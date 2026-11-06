@@ -1,9 +1,9 @@
 {
-  "last_update": "2026-10-24",
+  "last_update": "2026-11-06",
   "repository": "alexbelgium/hassio-addons",
   "slug": "bentopdf",
   "source": "github",
   "upstream_repo": "alam00000/bentopdf",
-  "upstream_version": "2.8.10",
+  "upstream_version": "2.8.11",
   "github_beta": false
 }
