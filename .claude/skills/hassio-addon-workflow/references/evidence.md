@@ -34,10 +34,11 @@ code that runs.
    `db21ed7f-omniroute:20128`). Check that its version matches the reporter's.
 2. **Not installed:** unpack the image the add-on actually ships if you can, so its cont-init and
    run scripts are in the tree: `scripts/image_rootfs.sh ghcr.io/alexbelgium/<slug>-<arch>:<version>
-   /data/claude/.work/repro-<n>/root` (`image:` in the add-on's `config.yaml`). It stops on zstd
-   layers, and the CI-built add-on images are zstd (omniroute-amd64:3.8.52.1 was). Then unpack the
-   Dockerfile's `FROM` image instead, and say in the PR that it was an upstream-only test: the
-   add-on's own startup changes were applied by hand, or not at all.
+   /data/claude/.work/repro-<n>/root` (`image:` in the add-on's `config.yaml`). The CI-built add-on
+   images have zstd layers (omniroute-amd64:3.8.52.1 does). The script unpacks them when a `zstd`
+   binary is installed and stops otherwise, which is the case on this host today. Only if it stops,
+   unpack the Dockerfile's `FROM` image instead, and say in the PR that it was an upstream-only
+   test: the add-on's own startup changes were applied by hand, or not at all.
    It prints the image's Env, Entrypoint, Cmd and WorkingDir. Copy the app dir aside (`cp -a app
    app.pristine`) before the first run, because upstream entrypoints often patch files at start.
 3. **Run it like the add-on does.** Export the env the add-on's `services.d/*/run` and

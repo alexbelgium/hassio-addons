@@ -39,6 +39,10 @@ print(next(x["digest"] for x in m["manifests"] if x.get("platform",{}).get("os")
 # A whiteout in a layer deletes paths under dest: never unpack over something that is already there.
 mkdir -p "$dest"
 [ -z "$(ls -A "$dest")" ] || { echo "dest is not empty: $dest" >&2; exit 1; }
+root="$(realpath "$dest")"
+# Layers can hold symlinks (even absolute ones, which point at this host): resolve every path
+# before deleting under it, and refuse anything that lands outside dest.
+inside() { case "$(realpath -m -- "$1")" in "$root" | "$root"/*) ;; *) echo "path escapes dest: $1" >&2; exit 1 ;; esac; }
 blob="$dest.blob"; errs="$dest.tar-errors"; trap 'rm -f "$blob" "$errs"' EXIT
 python3 -Ic 'import sys,json;m=json.load(sys.stdin);print(m["config"]["digest"])
 [print(l["digest"], l["mediaType"]) for l in m["layers"]]' <<<"$man" | {
@@ -54,22 +58,24 @@ python3 -Ic 'import sys,json;m=json.load(sys.stdin);print(m["config"]["digest"])
     # Download to a file first, so a failed or truncated download stops the script.
     get -o "$blob" "$api/v2/$repo/blobs/$layer" || { echo "layer download failed: $layer" >&2; exit 1; }
     # Opaque whiteout (<dir>/.wh..wh..opq): <dir> keeps only this layer's files, so empty it first.
-    tar -t $z -f "$blob" | sed -nE 's#^(\./)?(.*/)?\.wh\.\.wh\.\.opq$#\2#p' | while read -r d; do
-      case "/$d" in */../*) echo "bad opaque whiteout path: $d" >&2; exit 1 ;; esac
-      if [ -d "$dest/$d" ] && [ ! -L "$dest/${d%/}" ]; then
-        find "$dest/$d" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+    tar -t $z -f "$blob" | sed -nE 's#^(\./)?(.*/)?\.wh\.\.wh\.\.opq$#\2#p' | while IFS= read -r d; do
+      inside "$root/$d"
+      if [ -d "$root/$d" ]; then
+        find "$root/$d" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
       fi
     done
     # Non-root extraction cannot mknod or chown; tolerate only those, stop on any other tar error.
-    if ! tar -x $z -f "$blob" -C "$dest" --no-same-owner 2>"$errs"; then
+    if ! tar -x $z -f "$blob" -C "$root" --no-same-owner 2>"$errs"; then
       if grep -vqE 'Cannot (mknod|change ownership)|Exiting with failure' "$errs"; then
         cat "$errs" >&2; echo "layer extraction failed: $layer" >&2; exit 1
       fi
     fi
     # Plain whiteouts: .wh.<name> deletes <name> from the layers below.
-    find "$dest" -name '.wh..wh..opq' -delete
-    find "$dest" -name '.wh.*' | while read -r wh; do
-      rm -rf "$(dirname "$wh")/$(basename "$wh" | sed 's/^\.wh\.//')" "$wh"
+    find "$root" -name '.wh..wh..opq' -delete
+    # NUL-delimited, so a newline in a file name cannot turn into a second path.
+    find "$root" -name '.wh.*' -print0 | while IFS= read -r -d '' wh; do
+      dir="${wh%/*}"; b="${wh##*/}"; inside "$dir"
+      rm -rf -- "${dir:?}/${b#.wh.}" "$wh"
     done
   done
   get "$api/v2/$repo/blobs/$config" | python3 -Ic 'import sys,json;c=json.load(sys.stdin)["config"]
