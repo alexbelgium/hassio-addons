@@ -1,5 +1,6 @@
  
 ## 20261103.5 (2026-11-07)
+- NEO_CACHE_DIR set through env_vars is kept; /config/cache/neo_compiler_cache is only the default
 - 01-structure.sh, 33-mariadb.sh and 99-run.sh are now shared with birdnet-go by symlink; the app now starts through upstream's startup-wrapper.sh, and the user /config/asound.conf override is disabled as in birdnet-go
 - Exclude cache/** from backups and log a message that the first start, or the first start after installing a new model, can seem to hang while the GPU cache is built
 ## 20261103.4 (2026-11-07)
