@@ -1,0 +1,27 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+# Sourcing /.env (which has add-on options from 00-global_var.sh)
+if [ -f /.env ]; then
+    set -a
+    # shellcheck disable=SC1091
+    . /.env
+    set +a
+fi
+
+if [ -z "${HINDSIGHT_API_LLM_API_KEY:-}" ]; then
+    unset HINDSIGHT_API_LLM_API_KEY
+fi
+if [ -z "${HINDSIGHT_API_LLM_BASE_URL:-}" ]; then
+    unset HINDSIGHT_API_LLM_BASE_URL
+fi
+
+export HINDSIGHT_CP_PORT="9998"
+export HINDSIGHT_CP_HOSTNAME="127.0.0.1"
+export HINDSIGHT_API_PORT="8888"
+export HINDSIGHT_API_HOST="0.0.0.0"
+export HINDSIGHT_CP_DATAPLANE_API_URL="http://127.0.0.1:8888"
+
+bashio::log.info "Starting Hindsight (API on port 8888, Control Plane on internal port 9998)..."
+exec gosu hindsight:hindsight /app/start-all.sh

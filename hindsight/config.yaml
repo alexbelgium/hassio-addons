@@ -1,0 +1,44 @@
+arch:
+  - aarch64
+  - amd64
+description: Agent memory system that learns over time (replaces RAG and Knowledge Graphs with state-of-the-art accuracy)
+environment:
+  PGID: "0"
+  PUID: "0"
+image: ghcr.io/alexbelgium/hindsight-{arch}
+ingress: true
+ingress_stream: true
+init: false
+map:
+  - app_config:rw
+name: Hindsight
+options:
+  env_vars: []
+  HINDSIGHT_API_LLM_PROVIDER: openai
+  HINDSIGHT_API_LLM_API_KEY: ""
+  HINDSIGHT_API_LLM_MODEL: gpt-4o-mini
+  HINDSIGHT_API_LLM_BASE_URL: ""
+  PGID: 0
+  PUID: 0
+  TZ: Europe/Paris
+panel_icon: mdi:memory
+ports:
+  8888/tcp: 8888
+  9999/tcp: null
+ports_description:
+  8888/tcp: Hindsight Dataplane API
+  9999/tcp: Hindsight Control Plane Web UI (optional, Ingress available)
+schema:
+  env_vars:
+    - name: match(^[A-Za-z_][A-Za-z0-9_]*$)
+      value: str?
+  HINDSIGHT_API_LLM_PROVIDER: str?
+  HINDSIGHT_API_LLM_API_KEY: password?
+  HINDSIGHT_API_LLM_MODEL: str?
+  HINDSIGHT_API_LLM_BASE_URL: str?
+  PGID: int
+  PUID: int
+  TZ: str?
+slug: hindsight
+url: https://github.com/alexbelgium/hassio-addons/tree/master/hindsight
+version: "1.1.0"

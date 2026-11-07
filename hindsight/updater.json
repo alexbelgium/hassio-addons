@@ -1,0 +1,10 @@
+{
+  "github_beta": false,
+  "github_fulltag": false,
+  "last_update": "2026-10-22",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "hindsight",
+  "source": "github",
+  "upstream_repo": "vectorize-io/hindsight",
+  "upstream_version": "1.1.0"
+}
