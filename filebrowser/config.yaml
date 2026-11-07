@@ -98,7 +98,6 @@ options:
   follow_external_symlinks: true
   keyfile: privkey.pem
   ssl: false
-panel_admin: true
 panel_icon: mdi:file-search
 ports:
   8080/tcp: 8071
