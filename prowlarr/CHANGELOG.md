@@ -1,4 +1,8 @@
  
+## 3.0.1.5748.25 (2026-11-07)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+- Upstream tag : nightly-3.0.1.5748-ls25
+ 
 ## 3.0.1.5747.24 (2026-11-06)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 - Upstream tag : nightly-3.0.1.5747-ls24
