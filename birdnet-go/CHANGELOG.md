@@ -1,5 +1,6 @@
  
 ## 20261031.2 (2026-11-07)
+- Re-enable the user-provided /config/asound.conf override (copied to /root/.asoundrc at start)
 - With mariadb_auto_config off, a manually configured MariaDB connection in config.yaml is left untouched
 - NEO_CACHE_DIR set through env_vars is kept; /config/cache/neo_compiler_cache is only the default
 - Share the startup scripts with birdnet-go-dev: 01-structure.sh now creates the clips folder before copying into it; 33-mariadb.sh now creates the database, forces IPv4, hides the password in the log and switches back to SQLite when MariaDB is turned off (adds mariadb-client)
