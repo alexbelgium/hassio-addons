@@ -1,4 +1,6 @@
  
+## 20261103.3 (2026-11-07)
+- Persist the Intel GPU driver kernel cache in /config/cache/neo_compiler_cache, so the ~2 minute OpenVINO GPU model compilation only happens on the first start instead of every start
 ## 20261103.2 (2026-11-06)
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 - Upstream tag : 20261031
