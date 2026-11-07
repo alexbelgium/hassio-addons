@@ -1,13 +1,4 @@
  
-## 20261103.5 (2026-11-07)
-- With mariadb_auto_config off, a manually configured MariaDB connection in config.yaml is left untouched
-- NEO_CACHE_DIR set through env_vars is kept; /config/cache/neo_compiler_cache is only the default
-- 01-structure.sh, 33-mariadb.sh and 99-run.sh are now shared with birdnet-go by symlink; the app now starts through upstream's startup-wrapper.sh; the user /config/asound.conf override stays enabled
-- Exclude cache/neo_compiler_cache/** from backups and log a message that the first start, or the first start after installing a new model, can seem to hang while the GPU cache is built
-## 20261103.4 (2026-11-07)
-- Share the scripts and nginx files that are identical with the birdnet-go add-on through symlinks (no behaviour change)
-## 20261103.3 (2026-11-07)
-- Persist the Intel GPU driver kernel cache in /config/cache/neo_compiler_cache, so the ~2 minute OpenVINO GPU model compilation only happens on the first start instead of every start
 ## 20261103.2 (2026-11-06)
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 - Upstream tag : 20261031

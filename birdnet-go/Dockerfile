@@ -68,7 +68,7 @@ RUN echo "Build date marker: ${BUILD_DATE}" && \
     chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="alsa-utils libasound2-plugins mariadb-client nginx yq"
+ENV PACKAGES="alsa-utils libasound2-plugins nginx yq"
 
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh

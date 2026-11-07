@@ -103,10 +103,6 @@ if [[ "$CURRENT_BIRDSONGS_FOLDER" != "$BIRDSONGS_FOLDER" ]]; then
     # Move files only if sqlite paths changed
     if [[ -d "$CURRENT_BIRDSONGS_FOLDER" && "$(ls -A "$CURRENT_BIRDSONGS_FOLDER")" ]]; then
         bashio::log.warning "Migrating files from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER"
-        # The absolute-path target (e.g. the default /config/clips) is never
-        # created by the relative-path block above, so ensure it exists before
-        # copying into it; otherwise cp aborts the init script under set -e.
-        mkdir -p "$BIRDSONGS_FOLDER"
         cp -rnf "$CURRENT_BIRDSONGS_FOLDER"/* "$BIRDSONGS_FOLDER"/
         mv "$CURRENT_BIRDSONGS_FOLDER" "${CURRENT_BIRDSONGS_FOLDER}_migrated"
     fi
