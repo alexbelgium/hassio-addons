@@ -6,8 +6,15 @@ set -e
 # credentials directly into BirdNET-Go's config.yaml. Upstream reads MySQL
 # settings only from YAML (no env-var overrides exist), so this is the only
 # way to auto-configure them. The behaviour is opt-in via the
-# mariadb_auto_config addon option. When the option is off but MariaDB is
-# detected, we log a one-shot hint pointing users at the option.
+# mariadb_auto_config addon option.
+#
+# When the option is off but MariaDB is detected, we only log a hint: a mysql
+# block in config.yaml is left alone, as it may have been configured manually.
+#
+# When the option is on we:
+#   1. Create the "birdnet" database if it does not already exist — birdnet-go
+#      connects to an existing schema and does not create it automatically.
+#   2. Write the MySQL credentials into config.yaml and disable SQLite.
 
 CONFIG_LOCATION="/config/config.yaml"
 MYSQL_DATABASE="birdnet"
@@ -23,9 +30,10 @@ MYSQL_PASS="$(bashio::services 'mysql' 'password')"
 
 if ! bashio::config.true 'mariadb_auto_config'; then
     bashio::log.green "---"
-    bashio::log.yellow "Home Assistant MariaDB addon detected. Set 'mariadb_auto_config: true' in the addon options to wire it into BirdNET-Go automatically (and disable SQLite). Connection details:"
+    bashio::log.yellow "Home Assistant MariaDB addon detected but mariadb_auto_config is disabled; nothing is written to config.yaml."
+    bashio::log.yellow "Set 'mariadb_auto_config: true' in the addon options to wire MariaDB into BirdNET-Go automatically. Connection details:"
     bashio::log.blue "Database user    : ${MYSQL_USER}"
-    bashio::log.blue "Database password: ${MYSQL_PASS}"
+    bashio::log.blue "Database password: [redacted]"
     bashio::log.blue "Database name    : ${MYSQL_DATABASE}"
     bashio::log.blue "Host-name        : ${MYSQL_HOST}"
     bashio::log.blue "Port             : ${MYSQL_PORT}"
@@ -39,11 +47,35 @@ if [ ! -f "$CONFIG_LOCATION" ]; then
 fi
 
 bashio::log.green "---"
-bashio::log.blue "mariadb_auto_config enabled; writing Home Assistant MariaDB credentials into BirdNET-Go config and disabling SQLite"
+bashio::log.blue "mariadb_auto_config enabled; creating MariaDB database and wiring credentials into BirdNET-Go config"
 bashio::log.blue "Host:     ${MYSQL_HOST}:${MYSQL_PORT}"
 bashio::log.blue "User:     ${MYSQL_USER}"
-bashio::log.blue "Database: ${MYSQL_DATABASE} (will be created by BirdNET-Go on first connect)"
+bashio::log.blue "Database: ${MYSQL_DATABASE}"
 bashio::log.green "---"
+
+# Resolve MariaDB hostname to IPv4: on HAOS >=17.3 the Supervisor network
+# gained IPv6, but the MariaDB addon only grants its user from the IPv4
+# subnet. Fall back to the raw hostname if resolution fails.
+MYSQL_HOST_RESOLVED="$(getent ahostsv4 "${MYSQL_HOST}" 2>/dev/null | awk '{print $1; exit}')"
+MYSQL_HOST_RESOLVED="${MYSQL_HOST_RESOLVED:-${MYSQL_HOST}}"
+if [ "${MYSQL_HOST_RESOLVED}" != "${MYSQL_HOST}" ]; then
+    bashio::log.blue "Resolved ${MYSQL_HOST} -> ${MYSQL_HOST_RESOLVED} (forcing IPv4)"
+fi
+
+# Create the database — birdnet-go connects to an existing schema and does NOT
+# create it automatically. MYSQL_PWD avoids exposing the password via the
+# process command line.
+if ! MYSQL_PWD="${MYSQL_PASS}" mysql \
+    --skip-ssl \
+    --host="${MYSQL_HOST_RESOLVED}" \
+    --port="${MYSQL_PORT}" \
+    --user="${MYSQL_USER}" \
+    --connect-timeout=10 \
+    -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"; then
+    bashio::log.error "Failed to create MariaDB database '${MYSQL_DATABASE}' — verify the MariaDB addon is running and the user has CREATE DATABASE privileges"
+    exit 1
+fi
+bashio::log.blue "Database '${MYSQL_DATABASE}' is ready"
 
 # Upstream config.go stores port as a string; pass it as such to match.
 # $host / $port / etc. are jq/yq variables, not shell expansions — the
