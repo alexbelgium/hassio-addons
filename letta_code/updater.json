@@ -3,7 +3,7 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "letta_code",
   "source": "container",
-  "upstream_digest": "sha256:f8d3e7901a6b7380b305fe6e6f2925e719f6e1bc672d933eb8bca3888110ab42",
+  "upstream_digest": "sha256:e71f4413729c52112fba1eb6d77266bd78bc24b344825931885f3eb963f9dca3",
   "upstream_repo": "ghcr.io/letta-ai/letta-code:latest",
-  "upstream_version": "0.34.43"
+  "upstream_version": "0.34.44"
 }
