@@ -1,4 +1,6 @@
  
+## 20261103.6 (2026-11-07)
+- Re-apply the changes below: they were reverted because the birdnet-go-dev image build hit a merge conflict in the fork (BSG-BAT is now provided by upstream; fork PR #82 is BatDetect2-only)
 ## 20261103.5 (2026-11-07)
 - With mariadb_auto_config off, a manually configured MariaDB connection in config.yaml is left untouched
 - NEO_CACHE_DIR set through env_vars is kept; /config/cache/neo_compiler_cache is only the default

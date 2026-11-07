@@ -1,4 +1,6 @@
  
+## 20261031.3 (2026-11-07)
+- Re-apply the changes below: they were reverted because the birdnet-go-dev image build hit a merge conflict in the fork (BSG-BAT is now provided by upstream; fork PR #82 is BatDetect2-only)
 ## 20261031.2 (2026-11-07)
 - Re-enable the user-provided /config/asound.conf override (copied to /root/.asoundrc at start)
 - With mariadb_auto_config off, a manually configured MariaDB connection in config.yaml is left untouched
