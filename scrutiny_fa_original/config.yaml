@@ -17,7 +17,6 @@ name: scrutiny_fa_original
 options:
   env_vars: []
   Updates: Hourly
-panel_admin: true
 panel_icon: mdi:glasses
 ports:
   8080/tcp: null
