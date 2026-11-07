@@ -1,4 +1,7 @@
  
+## 20261103.7 (2026-11-07)
+- Rebuild against the latest upstream BirdNET-Go main (BSG-BAT detection threshold and analysis step settings) and the fork PR fixing reanalysis with the BSG-BAT model
+
 ## 20261103.6 (2026-11-07)
 - Re-apply the changes below: they were reverted because the birdnet-go-dev image build hit a merge conflict in the fork (BSG-BAT is now provided by upstream; fork PR #82 is BatDetect2-only)
 ## 20261103.5 (2026-11-07)
