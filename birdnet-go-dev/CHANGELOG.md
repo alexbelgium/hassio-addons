@@ -1,4 +1,7 @@
  
+## 20261103.5 (2026-11-07)
+- 01-structure.sh, 33-mariadb.sh and 99-run.sh are now shared with birdnet-go by symlink; the app now starts through upstream's startup-wrapper.sh, and the user /config/asound.conf override is disabled as in birdnet-go
+- Exclude cache/** from backups and log a message that the first start, or the first start after installing a new model, can seem to hang while the GPU cache is built
 ## 20261103.4 (2026-11-07)
 - Share the scripts and nginx files that are identical with the birdnet-go add-on through symlinks (no behaviour change)
 ## 20261103.3 (2026-11-07)

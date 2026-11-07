@@ -41,6 +41,7 @@ bashio::log.info "Starting app..."
 # otherwise takes ~2 minutes on every start (the container is recreated each time)
 export NEO_CACHE_DIR=/config/cache/neo_compiler_cache
 mkdir -p "$NEO_CACHE_DIR"
+bashio::log.info "OpenVINO GPU models are compiled and cached in $NEO_CACHE_DIR: the first start, or the first start after installing a new model, can seem to hang for a few minutes while this happens"
 # shellcheck disable=SC2086
 /usr/bin/entrypoint.sh /usr/bin/startup-wrapper.sh birdnet-go realtime &
 true
