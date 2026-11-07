@@ -37,6 +37,10 @@ fi
 ########################
 
 bashio::log.info "Starting app..."
+# Persist the Intel GPU driver's kernel cache: compiling the models for the iGPU
+# otherwise takes ~2 minutes on every start (the container is recreated each time)
+export NEO_CACHE_DIR=/config/cache/neo_compiler_cache
+mkdir -p "$NEO_CACHE_DIR"
 # shellcheck disable=SC2086
 /usr/bin/entrypoint.sh /usr/bin/startup-wrapper.sh birdnet-go realtime &
 true

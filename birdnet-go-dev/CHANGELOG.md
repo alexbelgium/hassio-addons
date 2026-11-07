@@ -1,4 +1,6 @@
  
+## 20261103.4 (2026-11-07)
+- Share the scripts and nginx files that are identical with the birdnet-go add-on through symlinks (no behaviour change)
 ## 20261103.3 (2026-11-07)
 - Persist the Intel GPU driver kernel cache in /config/cache/neo_compiler_cache, so the ~2 minute OpenVINO GPU model compilation only happens on the first start instead of every start
 ## 20261103.2 (2026-11-06)
