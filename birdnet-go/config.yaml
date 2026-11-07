@@ -4,7 +4,7 @@ arch:
 audio: true
 backup_exclude:
   - logs/**
-  - cache/**
+  - cache/neo_compiler_cache/**
 description: Realtime BirdNET and Battybirdnet soundscape analyzer
 devices:
   - /dev/dri

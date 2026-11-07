@@ -8,10 +8,8 @@ set -e
 # way to auto-configure them. The behaviour is opt-in via the
 # mariadb_auto_config addon option.
 #
-# When the option is off but MariaDB is detected, we log a one-shot hint and
-# ensure config.yaml falls back to SQLite (reverting any previously written
-# mysql block). This is safe because BirdNET-Go's config.yaml defaults to
-# SQLite and the mysql block is only ever written by this script.
+# When the option is off but MariaDB is detected, we only log a hint: a mysql
+# block in config.yaml is left alone, as it may have been configured manually.
 #
 # When the option is on we:
 #   1. Create the "birdnet" database if it does not already exist — birdnet-go
@@ -32,7 +30,7 @@ MYSQL_PASS="$(bashio::services 'mysql' 'password')"
 
 if ! bashio::config.true 'mariadb_auto_config'; then
     bashio::log.green "---"
-    bashio::log.yellow "Home Assistant MariaDB addon detected but mariadb_auto_config is disabled; ensuring BirdNET-Go uses SQLite."
+    bashio::log.yellow "Home Assistant MariaDB addon detected but mariadb_auto_config is disabled; nothing is written to config.yaml."
     bashio::log.yellow "Set 'mariadb_auto_config: true' in the addon options to wire MariaDB into BirdNET-Go automatically. Connection details:"
     bashio::log.blue "Database user    : ${MYSQL_USER}"
     bashio::log.blue "Database password: [redacted]"
@@ -40,19 +38,6 @@ if ! bashio::config.true 'mariadb_auto_config'; then
     bashio::log.blue "Host-name        : ${MYSQL_HOST}"
     bashio::log.blue "Port             : ${MYSQL_PORT}"
     bashio::log.green "---"
-    if [ -f "$CONFIG_LOCATION" ]; then
-        # Only revert if config.yaml points at the HA MariaDB host we would have
-        # written — a mysql block pointing at a different host was set manually.
-        # shellcheck disable=SC2016
-        CURRENT_MYSQL_HOST="$(yq -r '.output.mysql.host // empty' "$CONFIG_LOCATION" 2>/dev/null || true)"
-        if yq -e '.output.mysql.enabled == true' "$CONFIG_LOCATION" >/dev/null 2>&1 \
-            && [ "${CURRENT_MYSQL_HOST}" = "${MYSQL_HOST}" ]; then
-            yq -i -y \
-                '.output.mysql.enabled = false
-                 | .output.sqlite.enabled = true' \
-                "$CONFIG_LOCATION"
-        fi
-    fi
     exit 0
 fi
 
