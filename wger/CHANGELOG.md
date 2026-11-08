@@ -1,4 +1,8 @@
  
+## 2.8.0.2 (2026-11-08)
+- Update to latest version from wger/server
+- Upstream tag : 2.8.0-dev.5
+ 
 ## 2.8.0.1 (2026-10-31)
 - Update to latest version from wger/server
 - Upstream tag : 2.8.0-dev.4
