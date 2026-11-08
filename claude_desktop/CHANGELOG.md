@@ -1,4 +1,9 @@
  
+## 07308545.25 (2026-11-08)
+- Fix Codex MCP calls being cut off after 60 seconds in Claude Code: the managed `codex` entry now sets a 10-minute per-server `timeout` (Claude Code's default MCP request timeout is 60 s, and progress notifications do not extend it)
+- Managed CLAUDE.md guidance blocks are now rewritten in place when the add-on's text changes, so updated guidance reaches existing installs; text outside the markers is untouched
+- Codex guidance: set `reasoning_effort` per task, mention the 10-minute limit, and do not use Codex to run shell, git or `gh` commands
+
 ## 07308545.24 (2026-11-06)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
 - Upstream tag : v3.3.15+claude4.23118.0
