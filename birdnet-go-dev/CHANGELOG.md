@@ -1,3 +1,5 @@
+## 20261108.1 (08-11-2026)
+- Minor bugs fixed
  
 ## 20261108 (2026-11-08)
 - Rebuild against the latest upstream BirdNET-Go main, and pick up fork PR #89 (detection model name in Telegram captions). All 15 open fork PRs still merge onto main and the combined tree compiles
