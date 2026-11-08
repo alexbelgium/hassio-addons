@@ -25,6 +25,7 @@ manage_claude_md_block() {
     result="$(CLAUDE_MD="$CLAUDE_MD" BLOCK_NAME="$name" BLOCK_ACTION="$action" BLOCK_BODY="$body" python3 - <<'PY'
 import os
 import re
+import shutil
 from pathlib import Path
 
 path = Path(os.environ["CLAUDE_MD"])
@@ -33,18 +34,32 @@ add = os.environ["BLOCK_ACTION"] == "add"
 begin = f"<!-- BEGIN {name} (managed by claude_desktop addon) -->"
 end = f"<!-- END {name} (managed by claude_desktop addon) -->"
 text = path.read_text(encoding="utf-8") if path.exists() else ""
-pad = "" if add else r"\n*"
-pattern = re.compile(pad + re.escape(begin) + r".*?" + re.escape(end) + r"\n?", re.DOTALL)
-block = f"{begin}\n{body}\n{end}\n" if add else ""
-if pattern.search(text):
-    new, action = pattern.sub(lambda _: block, text, count=1 if add else 0), "Updating" if add else "Removing"
-elif add:
-    new, action = text + ("\n" if text else "") + block, "Adding"
+core = re.escape(begin) + r".*?" + re.escape(end)
+
+
+def strip(t):
+    # Drop every copy with its blank padding, keeping one newline between neighbours.
+    return re.sub(r"\n*" + core + r"\n?", lambda m: "\n" if m.start() else "", t, flags=re.DOTALL)
+
+
+block = f"{begin}\n{body}\n{end}\n"
+first = re.search(core + r"\n?", text, re.DOTALL)
+if not add:
+    new, action = strip(text), "Removing"
+elif first:
+    new, action = text[: first.start()] + block + strip(text[first.end():]), "Updating"
 else:
-    new, action = text, ""
+    new, action = text + ("\n" if text else "") + block, "Adding"
 if new != text:
+    # Write a sibling temp file and rename it over the original, so a full disk or an
+    # interrupted boot never leaves CLAUDE.md truncated. 84-claude_runtime_ownership.sh
+    # re-owns ~/.claude afterwards; keep the original mode here.
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(new, encoding="utf-8")
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(new, encoding="utf-8")
+    if path.exists():
+        shutil.copymode(path, tmp)
+    os.replace(tmp, path)
     print(action)
 PY
 )" || bashio::log.warning "Unable to manage the ${name} guidance in CLAUDE.md"
