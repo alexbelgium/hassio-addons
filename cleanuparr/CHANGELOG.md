@@ -1,3 +1,6 @@
+ 
+## 2.11.0 (2026-11-08)
+- Update to latest version from Cleanuparr/Cleanuparr (changelog : https://github.com/Cleanuparr/Cleanuparr/releases)
 ## 2.10.12.1 (28-10-2026)
 
 - Build from the published `ghcr.io/cleanuparr/cleanuparr:latest` image (as set in `build.json`), and have the updater follow the version label of that image instead of GitHub releases, so a release whose image was not pushed can no longer break the build (same change as letta_code)
