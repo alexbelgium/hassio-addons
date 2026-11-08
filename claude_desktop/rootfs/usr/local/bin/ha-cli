@@ -11,7 +11,8 @@ Authentication and the base URL are resolved automatically, in this order:
   1. $HA_BASE_URL + $HA_TOKEN               explicit override (advanced/scoped)
   2. `ha_mcp_token` in /data/options.json   scoped user long-lived token, sent
                                              to the Core host of `ha_mcp_url`
-                                             (default homeassistant:8123). If
+                                             (default homeassistant:8123; a proxy
+                                             path prefix is kept). If
                                              that host does not resolve (e.g. the
                                              DNS_server option replaced Docker's
                                              resolver), the Core IP reported by
@@ -45,6 +46,7 @@ Use the WebSocket subcommand for things the REST API does not expose:
 """
 
 import base64
+import hashlib
 import json
 import os
 import socket
@@ -58,6 +60,8 @@ import urllib.request
 DEFAULT_CORE_URL = "http://homeassistant:8123"
 # Fixed address of Home Assistant Core on the Supervisor's hassio network.
 FALLBACK_CORE_IP = "172.30.32.1"
+# RFC 6455 section 1.3 handshake GUID.
+_WS_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
 
 def _load_option(name):
@@ -83,8 +87,12 @@ def _resolves(host):
         return False
 
 
-def _supervisor_core_address():
-    """Ask the Supervisor for Core's IP/port (`supervisor` is in /etc/hosts)."""
+def _supervisor_core_info():
+    """Ask the Supervisor how Core listens (`supervisor` is in /etc/hosts).
+
+    Returns (ip, port, ssl); port/ssl are None when the Supervisor is not
+    reachable and the fixed hassio-network address is used instead.
+    """
     token = os.environ.get("SUPERVISOR_TOKEN")
     if token:
         req = urllib.request.Request(
@@ -95,32 +103,74 @@ def _supervisor_core_address():
             with urllib.request.urlopen(req, timeout=10) as resp:
                 data = json.loads(resp.read().decode("utf-8")).get("data") or {}
             if data.get("ip_address"):
-                return str(data["ip_address"]), data.get("port")
-        except (OSError, ValueError, AttributeError):
+                port = data.get("port")
+                return (
+                    str(data["ip_address"]),
+                    int(port) if port else None,
+                    bool(data.get("ssl")),
+                )
+        except (OSError, ValueError, TypeError, AttributeError):
             pass
-    return FALLBACK_CORE_IP, None
+    return FALLBACK_CORE_IP, None, None
+
+
+def _netloc(host, port):
+    if ":" in host:
+        host = f"[{host}]"
+    return f"{host}:{port}"
 
 
 def _scoped_core_base():
-    """Core base URL (no /api) for the scoped ha_mcp_token path.
+    """Base URL (no /api) for the scoped ha_mcp_token path.
 
-    Uses the scheme/host/port of the `ha_mcp_url` option. The Docker-internal
-    name `homeassistant` stops resolving when the DNS_server option rewrites
-    /etc/resolv.conf, so an unresolvable host is swapped for the Core IP the
-    Supervisor reports. The scoped token is kept either way: falling back to
-    the Supervisor proxy would silently switch to admin-equivalent access.
+    Uses the scheme, host, port and any path prefix of the `ha_mcp_url` option
+    (e.g. a reverse proxy at https://proxy/ha/api/mcp gives https://proxy:443/ha).
+    A missing port means the scheme default (80/443), as in any URL.
+
+    The Docker-internal name `homeassistant` stops resolving when the DNS_server
+    option rewrites /etc/resolv.conf. An unresolvable host is therefore replaced
+    by Core itself, using the IP, port and TLS setting the Supervisor reports
+    (not the proxy's scheme/port/prefix, which describe a different server).
+    The scoped token is kept either way: falling back to the Supervisor proxy
+    would silently switch to admin-equivalent access.
     """
-    parsed = urllib.parse.urlsplit(_load_option("ha_mcp_url") or DEFAULT_CORE_URL)
-    if parsed.scheme not in ("http", "https") or not parsed.hostname:
-        parsed = urllib.parse.urlsplit(DEFAULT_CORE_URL)
-    host, port = parsed.hostname, parsed.port
+    raw = _load_option("ha_mcp_url") or DEFAULT_CORE_URL
+    try:
+        parsed = urllib.parse.urlsplit(raw)
+        host, port = parsed.hostname, parsed.port
+    except ValueError as exc:
+        sys.exit(
+            f"ha-cli: invalid ha_mcp_url add-on option {raw!r} ({exc}). "
+            "Fix it in the add-on configuration, e.g. "
+            "http://homeassistant:8123/api/mcp."
+        )
+    if parsed.scheme not in ("http", "https") or not host:
+        sys.exit(
+            f"ha-cli: invalid ha_mcp_url add-on option {raw!r} (expected an "
+            "http:// or https:// URL with a host, e.g. "
+            "http://homeassistant:8123/api/mcp)."
+        )
+
     if not _resolves(host):
-        host, core_port = _supervisor_core_address()
-        port = port or core_port
-    if ":" in host:
-        host = f"[{host}]"
-    port = port or (443 if parsed.scheme == "https" else 8123)
-    return f"{parsed.scheme}://{host}:{port}"
+        core_ip, core_port, core_ssl = _supervisor_core_info()
+        if core_ssl is None:
+            # Supervisor unreachable: Core's transport is unknown, so keep the
+            # configured one (only the unresolvable host is replaced).
+            scheme = parsed.scheme
+            core_port = port or 8123
+        else:
+            scheme = "https" if core_ssl else "http"
+            core_port = core_port or 8123
+        return f"{scheme}://{_netloc(core_ip, core_port)}"
+
+    # Keep a reverse-proxy path prefix: everything before the last "/api/"
+    # segment (ha_mcp_url points at <prefix>/api/mcp).
+    path = parsed.path.rstrip("/") + "/"
+    prefix = path.rsplit("/api/", 1)[0] if "/api/" in path else path.rstrip("/")
+    # Percent-encode anything unsafe (spaces, non-ASCII), keeping existing escapes.
+    prefix = urllib.parse.quote(prefix, safe="/%!$&'()*+,;=:@-._~")
+    port = port or (443 if parsed.scheme == "https" else 80)
+    return f"{parsed.scheme}://{_netloc(host, port)}{prefix}"
 
 
 def resolve_endpoint():
@@ -234,11 +284,37 @@ class _WebSocket:
         )
         sock.sendall(request.encode("ascii"))
         while b"\r\n\r\n" not in self._buf:
+            if len(self._buf) > 65536:
+                raise OSError("WebSocket handshake response too large")
             self._fill()
         head, self._buf = self._buf.split(b"\r\n\r\n", 1)
-        status = head.split(b"\r\n", 1)[0].decode("latin-1")
-        if " 101 " not in status + " ":
+        self._check_handshake(head.decode("latin-1"), key)
+
+    @staticmethod
+    def _check_handshake(head, key):
+        """Reject anything but a valid RFC 6455 101 Switching Protocols reply."""
+        lines = head.split("\r\n")
+        status = lines[0]
+        parts = status.split(None, 2)
+        if len(parts) < 2 or not parts[0].startswith("HTTP/") or parts[1] != "101":
             raise OSError(f"WebSocket upgrade refused: {status}")
+        headers = {}
+        for line in lines[1:]:
+            name, sep, value = line.partition(":")
+            if sep:
+                name = name.strip().lower()
+                value = value.strip()
+                headers[name] = f"{headers[name]}, {value}" if name in headers else value
+        if headers.get("upgrade", "").lower() != "websocket":
+            raise OSError("WebSocket upgrade refused: missing 'Upgrade: websocket'")
+        tokens = [t.strip().lower() for t in headers.get("connection", "").split(",")]
+        if "upgrade" not in tokens:
+            raise OSError("WebSocket upgrade refused: missing 'Connection: Upgrade'")
+        expected = base64.b64encode(
+            hashlib.sha1((key + _WS_GUID).encode("ascii")).digest()
+        ).decode("ascii")
+        if headers.get("sec-websocket-accept") != expected:
+            raise OSError("WebSocket upgrade refused: bad Sec-WebSocket-Accept")
 
     def _fill(self):
         chunk = self._sock.recv(65536)
