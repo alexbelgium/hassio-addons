@@ -148,7 +148,7 @@ prompt is `.github/prompts/maintainer-routine.md`, read from `origin/master` at
 the start of every run. It only opens items with new activity since its last
 action, posts under the maintainer's account with an `<!-- ai-routine -->` marker
 and a visible "Written by Claude (AI)" footer, and never closes, merges or
-approves anything. Manual actions keep precedence. Prompts live in
+approves anything, except that it relands transient build failures (below). Manual actions keep precedence. Prompts live in
 `.github/prompts/`, shared shell in `.github/scripts/`.
 
 The routine is the only scheduled AI automation. CodeRabbit also reviews PRs, but `ai:paused` does not affect it. Each run the routine:
@@ -162,7 +162,13 @@ The routine is the only scheduled AI automation. CodeRabbit also reviews PRs, bu
 - posts one review per head commit on external PRs (never approves);
 - answers discussions it can cite a source for.
 
-The maintainer only merges or closes its PRs. The AI workflows
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:cadafdcbff2eb5279c47e61e647cfbcaf592bf334169d32ca0aea77a27305288 -->
+
+The maintainer only merges or closes its PRs. One exception: a transient infra failure (curl 5xx, 429) on a push proven to come from the updater may be relanded directly on master, one add-on per push and at most once per commit (`maintainer-routine.md` section 4.0). The `Updater bot :` subject alone is not proof. The routine waits for the Actions rollback to finish, refreshes master, and checks the revert before deciding; a missing revert may require `ai:needs-human`. Resolution requires a verified build and the intended updater changes, including Dockerfile changes, present or superseded. Failed relands go to `[build] Builds still failing after reland`, with rollback tracked until confirmed or handed to a human; a new failed attempt of an already resolved SHA is tracked separately for rollback review and is never automatically relanded again. The bot `Image build failed` issue closes only when all failures are resolved, no human handoff remains, and all pending rollbacks are cleared; it stays open otherwise. Transient failures on any other push go to `ai:needs-human`. The AI workflows
+
+<!-- /coderabbit-ai-generated:v1 -->
 `on_issues_ai_triage.yaml`, `daily_ai_fix.yaml`, `on_issue_approved.yaml`,
 `on_pr_coderabbit.yml` and `on_claude_mention.yml` are disabled in GitHub and
 kept only for reference.
