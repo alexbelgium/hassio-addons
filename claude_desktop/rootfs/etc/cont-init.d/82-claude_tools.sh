@@ -22,23 +22,26 @@ manage_claude_md_block() {
     elif ! { [ -f "$CLAUDE_MD" ] && grep -qF "<!-- BEGIN ${name} (managed by claude_desktop addon) -->" "$CLAUDE_MD"; }; then
         return 0
     fi
-    result="$(CLAUDE_MD="$CLAUDE_MD" BLOCK_NAME="$name" BLOCK_BODY="$body" python3 - <<'PY'
+    result="$(CLAUDE_MD="$CLAUDE_MD" BLOCK_NAME="$name" BLOCK_ACTION="$action" BLOCK_BODY="$body" python3 - <<'PY'
 import os
 import re
 from pathlib import Path
 
 path = Path(os.environ["CLAUDE_MD"])
 name, body = os.environ["BLOCK_NAME"], os.environ["BLOCK_BODY"]
+add = os.environ["BLOCK_ACTION"] == "add"
 begin = f"<!-- BEGIN {name} (managed by claude_desktop addon) -->"
 end = f"<!-- END {name} (managed by claude_desktop addon) -->"
 text = path.read_text(encoding="utf-8") if path.exists() else ""
-pad = r"\n*" if not body else ""
+pad = "" if add else r"\n*"
 pattern = re.compile(pad + re.escape(begin) + r".*?" + re.escape(end) + r"\n?", re.DOTALL)
-block = f"{begin}\n{body}\n{end}\n" if body else ""
+block = f"{begin}\n{body}\n{end}\n" if add else ""
 if pattern.search(text):
-    new, action = pattern.sub(lambda _: block, text, count=1), "Updating" if body else "Removing"
-else:
+    new, action = pattern.sub(lambda _: block, text, count=1 if add else 0), "Updating" if add else "Removing"
+elif add:
     new, action = text + ("\n" if text else "") + block, "Adding"
+else:
+    new, action = text, ""
 if new != text:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(new, encoding="utf-8")
@@ -747,8 +750,8 @@ self-contained piece you can then compare against your own.
 Call `mcp__codex__codex` with `prompt` and always set `cwd` to the repository being discussed —
 Codex reads the files itself, so it needs the right working directory and enough context in the
 prompt to act without seeing this conversation. Set `reasoning_effort` to match the task (`low`
-for a quick check, `high` for a review). A call is cut off after 10 minutes, so split larger
-tasks. Continue an exchange with `mcp__codex__codex-reply` (note the hyphen) using the `threadId`
+for a quick check, `high` for a review). Claude Code cuts a call off after 10 minutes, so split
+larger tasks. Continue an exchange with `mcp__codex__codex-reply` (note the hyphen) using the `threadId`
 it returned, rather than starting a fresh `codex` call. Treat its answers as a peer's opinion:
 verify claims about this codebase before acting on them.
 MD
