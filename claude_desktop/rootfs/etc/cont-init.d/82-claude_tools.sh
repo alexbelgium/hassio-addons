@@ -10,44 +10,43 @@ run_as_runtime_user() {
     s6-setuidgid abc env HOME="$HOME" "$@"
 }
 
-# Managed, idempotent guidance block in the user's global CLAUDE.md, delimited by
-# "<!-- BEGIN/END <name> (managed by claude_desktop addon) -->" markers. `add` appends the
-# block (body on stdin) unless the marker is already present; `remove` strips the whole
-# block, surrounding blank padding included, and leaves everything else untouched.
+# Managed guidance block in the user's global CLAUDE.md, delimited by
+# "<!-- BEGIN/END <name> (managed by claude_desktop addon) -->" markers. `add` writes the block
+# (body on stdin): appended when absent, rewritten in place when its text differs, so guidance
+# changes reach existing installs. `remove` strips the whole block, surrounding blank padding
+# included. Text outside the markers is never touched.
 manage_claude_md_block() {
-    local name="$1" action="$2"
-    local begin="<!-- BEGIN ${name} (managed by claude_desktop addon) -->"
+    local name="$1" action="$2" body="" result
     if [ "$action" = "add" ]; then
-        if ! { [ -f "$CLAUDE_MD" ] && grep -qF "$begin" "$CLAUDE_MD"; }; then
-            bashio::log.info "Adding ${name} guidance to CLAUDE.md"
-            mkdir -p "$(dirname "$CLAUDE_MD")"
-            {
-                [ -s "$CLAUDE_MD" ] && printf '\n'
-                printf '%s\n' "$begin"
-                cat
-                printf '%s\n' "<!-- END ${name} (managed by claude_desktop addon) -->"
-            } >> "$CLAUDE_MD"
-        fi
-    elif [ -f "$CLAUDE_MD" ] && grep -qF "$begin" "$CLAUDE_MD"; then
-        bashio::log.info "Removing ${name} guidance from CLAUDE.md"
-        CLAUDE_MD="$CLAUDE_MD" BLOCK_NAME="$name" python3 - <<'PY' || bashio::log.warning "Unable to remove the ${name} guidance automatically"
+        body="$(cat)"
+    elif ! { [ -f "$CLAUDE_MD" ] && grep -qF "<!-- BEGIN ${name} (managed by claude_desktop addon) -->" "$CLAUDE_MD"; }; then
+        return 0
+    fi
+    result="$(CLAUDE_MD="$CLAUDE_MD" BLOCK_NAME="$name" BLOCK_BODY="$body" python3 - <<'PY'
 import os
 import re
 from pathlib import Path
 
 path = Path(os.environ["CLAUDE_MD"])
-name = re.escape(os.environ["BLOCK_NAME"])
-text = path.read_text(encoding="utf-8")
-pattern = re.compile(
-    rf"\n*<!-- BEGIN {name} \(managed by claude_desktop addon\) -->.*?"
-    rf"<!-- END {name} \(managed by claude_desktop addon\) -->\n?",
-    re.DOTALL,
-)
-new = pattern.sub("", text)
+name, body = os.environ["BLOCK_NAME"], os.environ["BLOCK_BODY"]
+begin = f"<!-- BEGIN {name} (managed by claude_desktop addon) -->"
+end = f"<!-- END {name} (managed by claude_desktop addon) -->"
+text = path.read_text(encoding="utf-8") if path.exists() else ""
+pad = r"\n*" if not body else ""
+pattern = re.compile(pad + re.escape(begin) + r".*?" + re.escape(end) + r"\n?", re.DOTALL)
+block = f"{begin}\n{body}\n{end}\n" if body else ""
+if pattern.search(text):
+    new, action = pattern.sub(lambda _: block, text, count=1), "Updating" if body else "Removing"
+else:
+    new, action = text + ("\n" if text else "") + block, "Adding"
 if new != text:
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(new, encoding="utf-8")
+    print(action)
 PY
-    fi
+)" || bashio::log.warning "Unable to manage the ${name} guidance in CLAUDE.md"
+    [ -n "$result" ] && bashio::log.info "${result} ${name} guidance in CLAUDE.md"
+    return 0
 }
 
 # Managed hook entry in ~/.claude/settings.json (settings hooks apply to terminal, cowork,
@@ -562,6 +561,11 @@ for config_var, stdio_type in (("CLAUDE_DESKTOP_CONFIG", False), ("CLAUDE_CODE_C
                 entry = dict(desired[name])
                 if stdio_type:
                     entry["type"] = "stdio"
+                    if name == "codex":
+                        # Without a per-server timeout (or MCP_TOOL_TIMEOUT) Claude Code aborts
+                        # every MCP call after 60 s, and progress notifications do not extend
+                        # it — most Codex runs take longer. 10 min matches a long review.
+                        entry["timeout"] = 600000
             # An entry we did not write is never overwritten, so a user's own HTTP
             # `homeassistant` survives even when it sits on the configured URL.
             claimable = existing is None or is_managed(name, existing, owned_url)
@@ -733,7 +737,8 @@ if $CODEX_ENABLED; then
 The `codex` MCP server runs OpenAI's Codex agent locally, signed in with the user's ChatGPT
 subscription. It is a genuinely independent second agent — a different model family, reading the
 files itself — not a search tool. It is slow and costs the user's ChatGPT quota, so use it when a
-second opinion is worth minutes, not for routine lookups.
+second opinion is worth minutes, never for lookups or to run shell, git or `gh` commands you can
+run yourself.
 
 Good uses: an independent review of a design or a risky change before it lands; a second
 diagnosis of a bug you have a theory about but cannot confirm; a competing implementation of a
@@ -741,10 +746,11 @@ self-contained piece you can then compare against your own.
 
 Call `mcp__codex__codex` with `prompt` and always set `cwd` to the repository being discussed —
 Codex reads the files itself, so it needs the right working directory and enough context in the
-prompt to act without seeing this conversation. Continue an exchange with
-`mcp__codex__codex-reply` (note the hyphen) using the `threadId` it returned, rather than
-starting a fresh `codex` call. Treat its answers as a peer's opinion: verify claims about this
-codebase before acting on them.
+prompt to act without seeing this conversation. Set `reasoning_effort` to match the task (`low`
+for a quick check, `high` for a review). A call is cut off after 10 minutes, so split larger
+tasks. Continue an exchange with `mcp__codex__codex-reply` (note the hyphen) using the `threadId`
+it returned, rather than starting a fresh `codex` call. Treat its answers as a peer's opinion:
+verify claims about this codebase before acting on them.
 MD
 else
     manage_claude_md_block codex remove
