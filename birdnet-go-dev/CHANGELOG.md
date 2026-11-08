@@ -1,4 +1,7 @@
  
+## 20261108 (2026-11-08)
+- Rebuild against the latest upstream BirdNET-Go main, and pick up fork PR #89 (detection model name in Telegram captions). All 15 open fork PRs still merge onto main and the combined tree compiles
+
 ## 20261107 (2026-11-07)
 - Rebuild against the latest upstream BirdNET-Go main. The previous rebuilds (20261103.7, 20261107) were reverted because two fork PRs no longer merged: #71 clashed with #8 in the FFmpeg output arguments, and #82 (BatDetect2) was stale against upstream main. Both PRs are updated in the fork (#3214)
 
