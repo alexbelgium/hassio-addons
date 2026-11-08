@@ -1,9 +1,9 @@
 {
-  "last_update": "2026-11-07",
+  "last_update": "2026-11-08",
   "repository": "alexbelgium/hassio-addons",
   "slug": "letta_code",
   "source": "container",
-  "upstream_digest": "sha256:e71f4413729c52112fba1eb6d77266bd78bc24b344825931885f3eb963f9dca3",
+  "upstream_digest": "sha256:f3306ca5b065c4a8dc9f0548d9a03562bcfc18f4a4abcc914da07367f08d3b0e",
   "upstream_repo": "ghcr.io/letta-ai/letta-code:latest",
-  "upstream_version": "0.34.44"
+  "upstream_version": "0.34.45"
 }
