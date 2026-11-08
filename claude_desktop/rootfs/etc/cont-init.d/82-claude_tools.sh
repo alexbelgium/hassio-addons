@@ -28,7 +28,8 @@ import re
 import shutil
 from pathlib import Path
 
-path = Path(os.environ["CLAUDE_MD"])
+# resolve(): a symlinked CLAUDE.md (dotfiles) is updated at its target, not replaced.
+path = Path(os.environ["CLAUDE_MD"]).resolve()
 name, body = os.environ["BLOCK_NAME"], os.environ["BLOCK_BODY"]
 add = os.environ["BLOCK_ACTION"] == "add"
 begin = f"<!-- BEGIN {name} (managed by claude_desktop addon) -->"
