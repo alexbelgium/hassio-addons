@@ -148,7 +148,7 @@ prompt is `.github/prompts/maintainer-routine.md`, read from `origin/master` at
 the start of every run. It only opens items with new activity since its last
 action, posts under the maintainer's account with an `<!-- ai-routine -->` marker
 and a visible "Written by Claude (AI)" footer, and never closes, merges or
-approves anything. Manual actions keep precedence. Prompts live in
+approves anything, except that it relands transient build failures (below). Manual actions keep precedence. Prompts live in
 `.github/prompts/`, shared shell in `.github/scripts/`.
 
 The routine is the only scheduled AI automation. CodeRabbit also reviews PRs, but `ai:paused` does not affect it. Each run the routine:
@@ -162,7 +162,7 @@ The routine is the only scheduled AI automation. CodeRabbit also reviews PRs, bu
 - posts one review per head commit on external PRs (never approves);
 - answers discussions it can cite a source for.
 
-The maintainer only merges or closes its PRs. The AI workflows
+The maintainer only merges or closes its PRs. One exception: when a push build fails for transient infra errors (curl 5xx, 429), the routine re-applies the bot-reverted updater commit directly on master, one add-on per push, and closes the bot `Image build failed` issue (`maintainer-routine.md` section 4.0). The AI workflows
 `on_issues_ai_triage.yaml`, `daily_ai_fix.yaml`, `on_issue_approved.yaml`,
 `on_pr_coderabbit.yml` and `on_claude_mention.yml` are disabled in GitHub and
 kept only for reference.
