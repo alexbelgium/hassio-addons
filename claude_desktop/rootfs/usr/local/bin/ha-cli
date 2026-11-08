@@ -9,7 +9,14 @@ therefore never reachable.
 Authentication and the base URL are resolved automatically, in this order:
 
   1. $HA_BASE_URL + $HA_TOKEN               explicit override (advanced/scoped)
-  2. `ha_mcp_token` in /data/options.json   scoped user long-lived token -> :8123
+  2. `ha_mcp_token` in /data/options.json   scoped user long-lived token, sent
+                                             to the Core host of `ha_mcp_url`
+                                             (default homeassistant:8123; a proxy
+                                             path prefix is kept). If
+                                             that host does not resolve (e.g. the
+                                             DNS_server option replaced Docker's
+                                             resolver), the Core IP reported by
+                                             the Supervisor is used instead.
   3. $SUPERVISOR_TOKEN                       Supervisor Core-API proxy fallback
                                              (admin-equivalent; needs
                                              homeassistant_api: true, which this
@@ -38,11 +45,23 @@ Use the WebSocket subcommand for things the REST API does not expose:
   ha-cli ws '{"type":"lovelace/config","url_path":null}'
 """
 
+import base64
+import hashlib
 import json
 import os
+import socket
+import ssl
+import struct
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
+
+DEFAULT_CORE_URL = "http://homeassistant:8123"
+# Fixed address of Home Assistant Core on the Supervisor's hassio network.
+FALLBACK_CORE_IP = "172.30.32.1"
+# RFC 6455 section 1.3 handshake GUID.
+_WS_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
 
 def _load_option(name):
@@ -58,6 +77,100 @@ def _helper_enabled():
     """Mirror config.yaml's enable_ha_api_helper default (true) when unset."""
     value = _load_option("enable_ha_api_helper")
     return value is not False
+
+
+def _resolves(host):
+    try:
+        socket.getaddrinfo(host, None)
+        return True
+    except (socket.gaierror, UnicodeError):
+        return False
+
+
+def _supervisor_core_info():
+    """Ask the Supervisor how Core listens (`supervisor` is in /etc/hosts).
+
+    Returns (ip, port, ssl); port/ssl are None when the Supervisor is not
+    reachable and the fixed hassio-network address is used instead.
+    """
+    token = os.environ.get("SUPERVISOR_TOKEN")
+    if token:
+        req = urllib.request.Request(
+            "http://supervisor/core/info",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                data = json.loads(resp.read().decode("utf-8")).get("data") or {}
+            if data.get("ip_address"):
+                port = data.get("port")
+                return (
+                    str(data["ip_address"]),
+                    int(port) if port else None,
+                    bool(data.get("ssl")),
+                )
+        except (OSError, ValueError, TypeError, AttributeError):
+            pass
+    return FALLBACK_CORE_IP, None, None
+
+
+def _netloc(host, port):
+    if ":" in host:
+        host = f"[{host}]"
+    return f"{host}:{port}"
+
+
+def _scoped_core_base():
+    """Base URL (no /api) for the scoped ha_mcp_token path.
+
+    Uses the scheme, host, port and any path prefix of the `ha_mcp_url` option
+    (e.g. a reverse proxy at https://proxy/ha/api/mcp gives https://proxy:443/ha).
+    A missing port means the scheme default (80/443), as in any URL.
+
+    The Docker-internal name `homeassistant` stops resolving when the DNS_server
+    option rewrites /etc/resolv.conf. An unresolvable host is therefore replaced
+    by Core itself, using the IP, port and TLS setting the Supervisor reports
+    (not the proxy's scheme/port/prefix, which describe a different server).
+    The scoped token is kept either way: falling back to the Supervisor proxy
+    would silently switch to admin-equivalent access.
+    """
+    raw = _load_option("ha_mcp_url") or DEFAULT_CORE_URL
+    try:
+        parsed = urllib.parse.urlsplit(raw)
+        host, port = parsed.hostname, parsed.port
+    except ValueError as exc:
+        sys.exit(
+            f"ha-cli: invalid ha_mcp_url add-on option {raw!r} ({exc}). "
+            "Fix it in the add-on configuration, e.g. "
+            "http://homeassistant:8123/api/mcp."
+        )
+    if parsed.scheme not in ("http", "https") or not host:
+        sys.exit(
+            f"ha-cli: invalid ha_mcp_url add-on option {raw!r} (expected an "
+            "http:// or https:// URL with a host, e.g. "
+            "http://homeassistant:8123/api/mcp)."
+        )
+
+    if not _resolves(host):
+        core_ip, core_port, core_ssl = _supervisor_core_info()
+        if core_ssl is None:
+            # Supervisor unreachable: Core's transport is unknown, so keep the
+            # configured one (only the unresolvable host is replaced).
+            scheme = parsed.scheme
+            core_port = port or 8123
+        else:
+            scheme = "https" if core_ssl else "http"
+            core_port = core_port or 8123
+        return f"{scheme}://{_netloc(core_ip, core_port)}"
+
+    # Keep a reverse-proxy path prefix: everything before the last "/api/"
+    # segment (ha_mcp_url points at <prefix>/api/mcp).
+    path = parsed.path.rstrip("/") + "/"
+    prefix = path.rsplit("/api/", 1)[0] if "/api/" in path else path.rstrip("/")
+    # Percent-encode anything unsafe (spaces, non-ASCII), keeping existing escapes.
+    prefix = urllib.parse.quote(prefix, safe="/%!$&'()*+,;=:@-._~")
+    port = port or (443 if parsed.scheme == "https" else 80)
+    return f"{parsed.scheme}://{_netloc(host, port)}{prefix}"
 
 
 def resolve_endpoint():
@@ -76,11 +189,9 @@ def resolve_endpoint():
     # would shadow a user's deliberately scoped-down ha_mcp_token.
     token = _load_option("ha_mcp_token")
     if token:
-        return (
-            "http://homeassistant:8123/api",
-            "ws://homeassistant:8123/api/websocket",
-            token,
-        )
+        core = _scoped_core_base()
+        ws = core.replace("http", "ws", 1) + "/api/websocket"
+        return core + "/api", ws, token
 
     token = os.environ.get("SUPERVISOR_TOKEN")
     if token:
@@ -148,34 +259,149 @@ def rest(method, base, token, path, body=None):
         return text
 
 
+class _WebSocket:
+    """Minimal RFC 6455 text-frame client (stdlib only; no `websockets`)."""
+
+    def __init__(self, url, timeout=60):
+        parsed = urllib.parse.urlsplit(url)
+        secure = parsed.scheme == "wss"
+        host = parsed.hostname
+        port = parsed.port or (443 if secure else 80)
+        sock = socket.create_connection((host, port), timeout=timeout)
+        if secure:
+            sock = ssl.create_default_context().wrap_socket(sock, server_hostname=host)
+        self._sock = sock
+        self._buf = b""
+        key = base64.b64encode(os.urandom(16)).decode("ascii")
+        netloc = parsed.netloc.rsplit("@", 1)[-1]
+        path = parsed.path or "/"
+        if parsed.query:
+            path += "?" + parsed.query
+        request = (
+            f"GET {path} HTTP/1.1\r\nHost: {netloc}\r\nUpgrade: websocket\r\n"
+            f"Connection: Upgrade\r\nSec-WebSocket-Key: {key}\r\n"
+            "Sec-WebSocket-Version: 13\r\n\r\n"
+        )
+        sock.sendall(request.encode("ascii"))
+        while b"\r\n\r\n" not in self._buf:
+            if len(self._buf) > 65536:
+                raise OSError("WebSocket handshake response too large")
+            self._fill()
+        head, self._buf = self._buf.split(b"\r\n\r\n", 1)
+        self._check_handshake(head.decode("latin-1"), key)
+
+    @staticmethod
+    def _check_handshake(head, key):
+        """Reject anything but a valid RFC 6455 101 Switching Protocols reply."""
+        lines = head.split("\r\n")
+        status = lines[0]
+        parts = status.split(None, 2)
+        if len(parts) < 2 or not parts[0].startswith("HTTP/") or parts[1] != "101":
+            raise OSError(f"WebSocket upgrade refused: {status}")
+        headers = {}
+        for line in lines[1:]:
+            name, sep, value = line.partition(":")
+            if sep:
+                name = name.strip().lower()
+                value = value.strip()
+                headers[name] = f"{headers[name]}, {value}" if name in headers else value
+        if headers.get("upgrade", "").lower() != "websocket":
+            raise OSError("WebSocket upgrade refused: missing 'Upgrade: websocket'")
+        tokens = [t.strip().lower() for t in headers.get("connection", "").split(",")]
+        if "upgrade" not in tokens:
+            raise OSError("WebSocket upgrade refused: missing 'Connection: Upgrade'")
+        expected = base64.b64encode(
+            hashlib.sha1((key + _WS_GUID).encode("ascii")).digest()
+        ).decode("ascii")
+        if headers.get("sec-websocket-accept") != expected:
+            raise OSError("WebSocket upgrade refused: bad Sec-WebSocket-Accept")
+
+    def _fill(self):
+        chunk = self._sock.recv(65536)
+        if not chunk:
+            raise OSError("WebSocket connection closed")
+        self._buf += chunk
+
+    def _read(self, size):
+        while len(self._buf) < size:
+            self._fill()
+        data, self._buf = self._buf[:size], self._buf[size:]
+        return data
+
+    def _send_frame(self, opcode, payload):
+        header = bytes([0x80 | opcode])
+        length = len(payload)
+        if length < 126:
+            header += bytes([0x80 | length])
+        elif length < 1 << 16:
+            header += bytes([0x80 | 126]) + struct.pack("!H", length)
+        else:
+            header += bytes([0x80 | 127]) + struct.pack("!Q", length)
+        mask = os.urandom(4)
+        masked = bytes(b ^ mask[i % 4] for i, b in enumerate(payload))
+        self._sock.sendall(header + mask + masked)
+
+    def send(self, text):
+        self._send_frame(0x1, text.encode("utf-8"))
+
+    def recv(self):
+        """Return the next complete text message, answering pings."""
+        message = b""
+        while True:
+            first, second = self._read(2)
+            opcode = first & 0x0F
+            length = second & 0x7F
+            if length == 126:
+                length = struct.unpack("!H", self._read(2))[0]
+            elif length == 127:
+                length = struct.unpack("!Q", self._read(8))[0]
+            mask = self._read(4) if second & 0x80 else None
+            payload = self._read(length)
+            if mask:
+                payload = bytes(b ^ mask[i % 4] for i, b in enumerate(payload))
+            if opcode == 0x8:
+                raise OSError("WebSocket closed by Home Assistant")
+            if opcode == 0x9:
+                self._send_frame(0xA, payload)
+                continue
+            if opcode == 0xA:
+                continue
+            message += payload
+            if first & 0x80:
+                return message.decode("utf-8")
+
+    def close(self):
+        try:
+            self._send_frame(0x8, b"")
+        except OSError:
+            pass
+        self._sock.close()
+
+
 def ws_command(ws_url, token, command):
     try:
-        import asyncio
+        sock = _WebSocket(ws_url)
+    except OSError as exc:
+        sys.exit(f"ha-cli: cannot reach Home Assistant WebSocket ({exc})")
+    try:
+        hello = json.loads(sock.recv())
+        if hello.get("type") != "auth_required":
+            sys.exit(f"ha-cli: unexpected WS greeting: {hello}")
+        sock.send(json.dumps({"type": "auth", "access_token": token}))
+        if json.loads(sock.recv()).get("type") != "auth_ok":
+            sys.exit("ha-cli: WebSocket authentication failed")
+        payload = dict(command)
+        payload["id"] = 1
+        sock.send(json.dumps(payload))
+        while True:
+            result = json.loads(sock.recv())
+            if result.get("id") == 1 and result.get("type") == "result":
+                break
+    except OSError as exc:
+        sys.exit(f"ha-cli: WebSocket error ({exc})")
+    finally:
+        sock.close()
 
-        import websockets
-    except ImportError:
-        sys.exit(
-            "ha-cli: the 'websockets' Python package is required for the ws "
-            "subcommand. REST subcommands work without it."
-        )
-
-    async def run():
-        async with websockets.connect(ws_url, max_size=None) as sock:
-            hello = json.loads(await sock.recv())
-            if hello.get("type") != "auth_required":
-                raise SystemExit(f"ha-cli: unexpected WS greeting: {hello}")
-            await sock.send(json.dumps({"type": "auth", "access_token": token}))
-            if json.loads(await sock.recv()).get("type") != "auth_ok":
-                raise SystemExit("ha-cli: WebSocket authentication failed")
-            payload = dict(command)
-            payload["id"] = 1
-            await sock.send(json.dumps(payload))
-            while True:
-                msg = json.loads(await sock.recv())
-                if msg.get("id") == 1 and msg.get("type") == "result":
-                    return msg
-
-    result = asyncio.run(run())
     if not result.get("success", True):
         _print(result.get("error", result))
         sys.exit(1)
