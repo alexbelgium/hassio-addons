@@ -1,3 +1,6 @@
+## 35.0.2.2 (09-11-2026)
+- Startup: no longer runs the "Unknown error detected, auto-repair" sequence on every start when the Nextcloud name was customized in theming; any `<name> <version>` output of `occ -V` is now treated as installed (#3228).
+
 ## 35.0.2.1 (22-10-2026)
 - Local disks: when `localdisks` is set in the environment (for example added to `env_vars`) but not as the addon's own option, the startup log now says so instead of skipping the mount silently (#3129).
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
