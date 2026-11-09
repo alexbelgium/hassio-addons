@@ -131,6 +131,6 @@ The final message is the run report (Alex reads it on his phone). Lead with Prob
 If nothing had new activity and nothing failed, the whole report is "Nothing new on hassio-addons."
 If "Needs you" is non-empty, also send a Telegram message (plain text, ≤600 chars; if the items don't fit, split them over several messages; every item as its full URL so it is tappable: `hassio-addons: N need you: https://github.com/alexbelgium/hassio-addons/issues/<a> reason; https://github.com/alexbelgium/hassio-addons/pull/<b> reason…`):
   curl -sf -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" -H "Content-Type: application/json" http://supervisor/core/api/services/telegram_bot/send_message -d @msg.json
-with msg.json = {"message": "..."} built with jq (never by string-pasting user text). If the call fails, add it to Problems; don't retry other channels.
+with msg.json = {"entity_id": "notify.alexandre", "message": "..."} built with jq (never by string-pasting user text). `notify.alexandre` is Alexandre's chat on the "Claude code" bot; keep `entity_id`: with two bots configured, routing without it is ambiguous. If the call fails, add it to Problems; don't retry other channels.
 Time budget: about 90 min a run. Wrap every long command in `timeout`. On a GitHub rate limit (403/429 with rate headers), stop starting new items, move the rest to `pending`, and report.
 Finally write state.json, clean up the worktrees you created whose branches are pushed, and remove the lock dir.
