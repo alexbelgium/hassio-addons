@@ -48,7 +48,8 @@ if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/ne
     touch /notinstalled
     exit 0
     # Is there missing files
-elif [[ $($LAUNCHER -V 2>&1) =~ ^"Nextcloud "[0-9].* ]]; then
+    # occ -V prints "<theming name> <version>", so accept any name (custom themes, #3228); a pending upgrade still goes to auto-repair
+elif OCC_VERSION="$($LAUNCHER -V 2>&1)"; [[ "$OCC_VERSION" != *"require upgrade"* ]] && [[ "$OCC_VERSION" =~ [[:space:]][0-9]+(\.[0-9]+)+$ ]]; then
     # Log
     bashio::log.green "----------------------------------------"
     bashio::log.green " Nextcloud $CURRENTVERSION is installed "
