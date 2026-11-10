@@ -500,79 +500,1063 @@ jobs:
           echo "Failed to push reverts after retries" >&2
           exit 1
 
-  # One issue per add-on whose build job failed on master (after the retry),
-  # labelled `ai-triage` so the daily AI fix sweep (daily_ai_fix.yaml) picks it
-  # up directly. Issues opened with GITHUB_TOKEN do not fire `issues: opened`,
-  # so tier 1 never sees these - the label has to be set here. A repeat failure
-  # while the issue is still open becomes a comment on it, not a new issue.
+  # Creates or updates one diagnostic issue per add-on whose image build failed.
+  #
+  # The issue is designed as a self-contained debugging packet for an AI agent:
+  # - fixed machine-readable incident manifest
+  # - architecture result comparison
+  # - deterministic failure classification
+  # - stable error fingerprint
+  # - high-signal error extraction
+  # - contextual log window
+  # - changed files and add-on-specific diff
+  # - relevant build files
+  # - explicit AI-agent constraints and acceptance criteria
+  #
+  # Existing issues are updated with the latest complete diagnostic packet.
+  # A compact recurrence comment is added to preserve failure history.
   report-build-failure:
     if: >-
       ${{
-        failure() &&
+        always() &&
+        needs.build.result == 'failure' &&
         github.event_name == 'push' &&
         github.ref == 'refs/heads/master' &&
         github.repository_owner == 'alexbelgium'
       }}
-    needs: build
+    needs:
+      - detect-changed-addons
+      - build
+      - revert-on-failure
     runs-on: ubuntu-latest
     permissions:
       actions: read
+      contents: read
       issues: write
+
     steps:
-      - name: Open or update a build-failure issue per add-on
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Open or update build-failure issue per add-on
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id }}
           RUN_ATTEMPT: ${{ github.run_attempt }}
           SHA: ${{ github.sha }}
-          COMMIT_TITLE: ${{ github.event.head_commit.message }}
+          BEFORE: ${{ github.event.before }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          COMMIT_AUTHOR: ${{ github.event.head_commit.author.name }}
+          COMMIT_AUTHOR_EMAIL: ${{ github.event.head_commit.author.email }}
+          PUSHER: ${{ github.actor }}
+          REF_NAME: ${{ github.ref_name }}
+          REVERT_RESULT: ${{ needs.revert-on-failure.result }}
+
+        shell: bash
+
         run: |
           set -euo pipefail
+
           RUN_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}/attempts/${RUN_ATTEMPT}"
-          COMMIT_TITLE=${COMMIT_TITLE%%$'\n'*}
+          COMMIT_URL="https://github.com/${REPO}/commit/${SHA}"
+          COMMIT_TITLE=${COMMIT_MESSAGE%%$'\n'*}
 
-          # Build job names are "Build <arch> <addon> add-on".
-          # shellcheck disable=SC2016 # $n is a jq variable, not a shell one
-          gh api --paginate "repos/${REPO}/actions/runs/${RUN_ID}/attempts/${RUN_ATTEMPT}/jobs?per_page=100" \
-            --jq '.jobs[] | select(.conclusion == "failure" and (.name | test("^Build \\S+ \\S+ add-on$")))
-                  | (.name | split(" ")) as $n | [$n[2], $n[1], .id, .html_url] | @tsv' > failed.tsv
+          if [ -z "$COMMIT_TITLE" ]; then
+            COMMIT_TITLE="No commit title available"
+          fi
 
-          mapfile -t addons < <(cut -f1 failed.tsv | sort -u)
-          for addon in "${addons[@]}"; do
-            title="🐛 [${addon}] Image build failed"
+          work_dir=$(mktemp -d)
+          trap 'rm -rf "$work_dir"' EXIT
+
+          cd "$GITHUB_WORKSPACE"
+
+          ####################################################################
+          # Helpers
+          ####################################################################
+
+          normalize_log() {
+            local input_file=$1
+            local output_file=$2
+
+            sed -E \
+              -e 's/^[0-9-]+T[0-9:.]+Z ?//' \
+              -e 's/\x1b\[[0-9;?]*[A-Za-z]//g' \
+              -e 's/\r$//' \
+              "$input_file" \
+              | awk '
+                  /^##\[(group|endgroup|start-action|end-action)/ {
+                    next
+                  }
+
+                  /^\(Reading database/ {
+                    next
+                  }
+
+                  /Waiting for cache lock/ {
+                    next
+                  }
+
+                  {
+                    print
+                  }
+                ' \
+              > "$output_file"
+          }
+
+          extract_error_signals() {
+            local log_file=$1
+
+            grep -Ei \
+              '##\[error\]|ERROR:|error:|fatal:|panic:|traceback|exception:|curl: \([0-9]+\)|wget:|HTTP/[0-9.]+ [45][0-9]{2}|failed to solve|executor failed|did not complete successfully|returned a non-zero code|no matching manifest|manifest unknown|not found|unauthorized|authentication required|denied|timed out|timeout|connection reset|REFUSED_STREAM|temporary failure|no space left|disk quota|exec format error|segmentation fault|killed|out of memory|OOM|checksum|hash mismatch|could not resolve|name resolution' \
+              "$log_file" \
+              | tail -n 40 \
+              | cut -c1-1000 \
+              || true
+          }
+
+          extract_error_window() {
+            local log_file=$1
+            local error_line
+            local start
+            local end
+
+            error_line=$(
+              grep -nEi \
+                '##\[error\]|ERROR:|error:|fatal:|panic:|traceback|exception:|curl: \([0-9]+\)|wget:|HTTP/[0-9.]+ [45][0-9]{2}|failed to solve|executor failed|did not complete successfully|returned a non-zero code|no matching manifest|manifest unknown|unauthorized|authentication required|denied|timed out|timeout|connection reset|REFUSED_STREAM|no space left|disk quota|exec format error|segmentation fault|checksum|hash mismatch' \
+                "$log_file" \
+                | tail -n 1 \
+                | cut -d: -f1 \
+                || true
+            )
+
+            if [ -n "$error_line" ]; then
+              start=$((error_line > 45 ? error_line - 45 : 1))
+              end=$((error_line + 20))
+              sed -n "${start},${end}p" "$log_file" | cut -c1-1000
+            else
+              tail -n 120 "$log_file" | cut -c1-1000
+            fi
+          }
+
+          classify_failure() {
+            local log_file=$1
+
+            if grep -Eqi \
+              '429|too many requests|toomanyrequests|rate.?limit|pull rate limit' \
+              "$log_file"; then
+              printf '%s\n' "registry-rate-limit|high|true"
+
+            elif grep -Eqi \
+              '502 Bad Gateway|503 Service Unavailable|504 Gateway Timeout|service unavailable|bad gateway' \
+              "$log_file"; then
+              printf '%s\n' "upstream-service|high|true"
+
+            elif grep -Eqi \
+              'REFUSED_STREAM|connection reset|TLS handshake timeout|temporary failure|operation timed out|connection timed out|network is unreachable|unexpected EOF' \
+              "$log_file"; then
+              printf '%s\n' "network-transient|medium|true"
+
+            elif grep -Eqi \
+              'Could not resolve host|Name or service not known|Temporary failure in name resolution|server misbehaving' \
+              "$log_file"; then
+              printf '%s\n' "dns-failure|high|true"
+
+            elif grep -Eqi \
+              'unauthorized|authentication required|requested access.*denied|insufficient_scope|permission denied.*registry' \
+              "$log_file"; then
+              printf '%s\n' "registry-authentication|high|false"
+
+            elif grep -Eqi \
+              'manifest unknown|no matching manifest|failed to resolve source metadata|platform.*not found' \
+              "$log_file"; then
+              printf '%s\n' "missing-base-image|medium|false"
+
+            elif grep -Eqi \
+              'exec format error|invalid ELF|wrong ELF class|cannot execute binary file' \
+              "$log_file"; then
+              printf '%s\n' "architecture-mismatch|high|false"
+
+            elif grep -Eqi \
+              'no space left on device|disk quota exceeded|not enough space' \
+              "$log_file"; then
+              printf '%s\n' "runner-storage|high|true"
+
+            elif grep -Eqi \
+              'out of memory|oomkilled|cannot allocate memory|signal: killed|exit code: 137|exited with code 137' \
+              "$log_file"; then
+              printf '%s\n' "out-of-memory|medium|true"
+
+            elif grep -Eqi \
+              '404 Not Found|HTTP/[0-9.]+ 404|The requested URL returned error: 404' \
+              "$log_file"; then
+              printf '%s\n' "missing-download|high|false"
+
+            elif grep -Eqi \
+              'checksum.*mismatch|hash.*mismatch|digest.*invalid|does not match.*checksum' \
+              "$log_file"; then
+              printf '%s\n' "checksum-mismatch|high|false"
+
+            elif grep -Eqi \
+              'Unable to locate package|no installation candidate|Could not find a version that satisfies|No matching distribution found|package.*not found' \
+              "$log_file"; then
+              printf '%s\n' "package-resolution|medium|false"
+
+            elif grep -Eqi \
+              'syntax error|parse error|invalid syntax|yaml.*error|json.*error|validation failed' \
+              "$log_file"; then
+              printf '%s\n' "configuration-or-syntax|medium|false"
+
+            elif grep -Eqi \
+              'segmentation fault|internal compiler error|linker command failed|compilation terminated|make.*Error|ninja.*failed' \
+              "$log_file"; then
+              printf '%s\n' "compilation|medium|false"
+
+            elif grep -Eqi \
+              'permission denied|operation not permitted|read-only file system' \
+              "$log_file"; then
+              printf '%s\n' "filesystem-permission|medium|false"
+
+            elif grep -Eqi \
+              'failed to solve|process ".+" did not complete successfully|returned a non-zero code|exit code: [1-9]' \
+              "$log_file"; then
+              printf '%s\n' "docker-command-failure|low|false"
+
+            else
+              printf '%s\n' "unknown|low|false"
+            fi
+          }
+
+          classification_guidance() {
+            local classification=$1
+
+            case "$classification" in
+              registry-rate-limit)
+                cat <<'EOF'
+          The log matches a registry rate-limit pattern. Verify the registry response and credentials before changing repository code. A source change is justified only if authentication, caching, mirror selection, or bounded retry behavior is incorrectly configured.
+          EOF
+                ;;
+
+              upstream-service)
+                cat <<'EOF'
+          The log matches an upstream HTTP 502, 503, or 504 failure. Confirm whether the upstream service recovered. Prefer a rerun when the repository configuration is already correct. Add bounded retries only when the affected operation is safe to repeat.
+          EOF
+                ;;
+
+              network-transient|dns-failure)
+                cat <<'EOF'
+          The log matches a network or DNS failure. Verify whether the same command and URL succeed on rerun. If the download operation lacks resilience, consider bounded retries with failure-preserving behavior. Do not hide a persistent failure with unlimited retries or `|| true`.
+          EOF
+                ;;
+
+              registry-authentication)
+                cat <<'EOF'
+          Check the registry hostname, token permissions, package visibility, and login scope. Do not replace authentication with anonymous access unless the image is intentionally public.
+          EOF
+                ;;
+
+              missing-base-image)
+                cat <<'EOF'
+          Verify that the configured base image and tag exist for the failed architecture. Compare the successful and failed architecture entries in `build.yaml`, `build.json`, and the Dockerfile.
+          EOF
+                ;;
+
+              architecture-mismatch)
+                cat <<'EOF'
+          Inspect downloaded binaries, base images, and architecture-selection logic. Do not disable the failing architecture. Correct the artifact or build selection so that it matches the requested architecture.
+          EOF
+                ;;
+
+              runner-storage)
+                cat <<'EOF'
+          This appears related to runner disk capacity. Determine whether unusually large build layers or temporary files are created. Prefer reducing unnecessary build context or intermediate files rather than suppressing the failure.
+          EOF
+                ;;
+
+              out-of-memory)
+                cat <<'EOF'
+          This appears related to memory exhaustion. Identify the command that was killed and determine whether memory use can be reduced. Do not silently reduce test coverage or disable compilation steps.
+          EOF
+                ;;
+
+              missing-download)
+                cat <<'EOF'
+          Verify whether the requested artifact URL or version still exists. Check whether the version in the add-on configuration matches the upstream release naming scheme. Avoid replacing a pinned artifact with an unbounded `latest` URL.
+          EOF
+                ;;
+
+              checksum-mismatch)
+                cat <<'EOF'
+          Check whether the upstream artifact changed, whether the wrong architecture was downloaded, or whether the configured checksum is stale. Do not remove checksum validation.
+          EOF
+                ;;
+
+              package-resolution)
+                cat <<'EOF'
+          Check package repository availability, distribution version, package name, and architecture support. Avoid broad dependency upgrades unless the failing package resolution requires them.
+          EOF
+                ;;
+
+              configuration-or-syntax)
+                cat <<'EOF'
+          Inspect the changed configuration and the exact parser error. Prefer a minimal syntax or schema correction. Do not remove linting or validation.
+          EOF
+                ;;
+
+              compilation)
+                cat <<'EOF'
+          Locate the first compiler or linker error rather than relying only on the final build summary. Compare architecture-specific flags and dependency versions before modifying source code.
+          EOF
+                ;;
+
+              filesystem-permission)
+                cat <<'EOF'
+          Inspect file ownership, executable bits, copy operations, and the active Docker user. Do not replace restrictive permissions with globally writable permissions unless explicitly required.
+          EOF
+                ;;
+
+              *)
+                cat <<'EOF'
+          The failure was not classified with high confidence. Start from the extracted error signals and contextual log window. Identify the first causal error before proposing a repository change.
+          EOF
+                ;;
+            esac
+          }
+
+          create_fingerprint() {
+            local log_file=$1
+            local normalized_signals
+
+            normalized_signals=$(
+              extract_error_signals "$log_file" \
+                | sed -E \
+                    -e 's/[0-9a-fA-F]{40,64}/<sha>/g' \
+                    -e 's/[0-9]{5,}/<number>/g' \
+                    -e 's#https?://[^[:space:]]+#<url>#g' \
+                    -e 's#/home/runner/work/[^[:space:]]+#<workspace-path>#g' \
+                    -e 's#/tmp/[^[:space:]]+#<tmp-path>#g' \
+                | tail -n 8
+            )
+
+            if [ -z "$normalized_signals" ]; then
+              normalized_signals=$(
+                tail -n 20 "$log_file" \
+                  | sed -E \
+                      -e 's/[0-9a-fA-F]{40,64}/<sha>/g' \
+                      -e 's/[0-9]{5,}/<number>/g' \
+                      -e 's#https?://[^[:space:]]+#<url>#g'
+              )
+            fi
+
+            printf '%s' "$normalized_signals" \
+              | sha256sum \
+              | cut -c1-16
+          }
+
+          yaml_quote() {
+            local value=${1:-}
+            value=${value//\\/\\\\}
+            value=${value//\"/\\\"}
+            value=${value//$'\n'/ }
+            printf '"%s"' "$value"
+          }
+
+          append_file_excerpt() {
+            local source_file=$1
+            local max_lines=${2:-300}
+
+            if [ ! -f "$source_file" ]; then
+              return
+            fi
+
             {
-              echo "The **${addon}** build job failed on \`master\` for the architectures below. The image build itself is retried once, so a failure there means both attempts failed."
               echo
-              echo "- **Commit:** ${SHA} - ${COMMIT_TITLE}"
+              echo "### \`${source_file}\`"
+              echo
+              echo '```text'
+              nl -ba "$source_file" | sed -n "1,${max_lines}p" | cut -c1-1000
+
+              if [ "$(wc -l < "$source_file")" -gt "$max_lines" ]; then
+                echo
+                echo "... file truncated after ${max_lines} lines ..."
+              fi
+
+              echo '```'
+            } >> "$body_file"
+          }
+
+          ensure_label() {
+            local name=$1
+            local color=$2
+            local description=$3
+
+            gh label create "$name" \
+              --repo "$REPO" \
+              --color "$color" \
+              --description "$description" \
+              --force \
+              >/dev/null
+          }
+
+          ####################################################################
+          # Labels
+          ####################################################################
+
+          ensure_label \
+            "build-failure" \
+            "B60205" \
+            "Automated image build failure"
+
+          ensure_label \
+            "ai-triage" \
+            "7057FF" \
+            "Ready for automated or AI-assisted triage"
+
+          ensure_label \
+            "agent:ready" \
+            "0E8A16" \
+            "Diagnostic packet is available for an AI agent"
+
+          ####################################################################
+          # Retrieve all workflow jobs once.
+          ####################################################################
+
+          jobs_json="$work_dir/jobs.json"
+
+          gh api --paginate \
+            "repos/${REPO}/actions/runs/${RUN_ID}/attempts/${RUN_ATTEMPT}/jobs?per_page=100" \
+            --jq '.jobs[]' \
+            | jq -s '.' \
+            > "$jobs_json"
+
+          jq -r '
+            .[]
+            | select(
+                (.name | test("^Build [^ ]+ [^ ]+ add-on$"))
+                and
+                (.conclusion == "failure")
+              )
+            | (.name | split(" ")) as $parts
+            | [
+                $parts[2],
+                $parts[1],
+                (.id | tostring),
+                .html_url,
+                (.conclusion // "unknown")
+              ]
+            | @tsv
+          ' "$jobs_json" > "$work_dir/failed.tsv"
+
+          if [ ! -s "$work_dir/failed.tsv" ]; then
+            echo "No failed image-build matrix jobs were found."
+            exit 0
+          fi
+
+          mapfile -t failed_addons < <(
+            cut -f1 "$work_dir/failed.tsv" | sort -u
+          )
+
+          ####################################################################
+          # Process each failed add-on independently.
+          ####################################################################
+
+          for addon in "${failed_addons[@]}"; do
+            echo "Preparing diagnostic issue for ${addon}"
+
+            addon_dir="$work_dir/addons/${addon}"
+            mkdir -p "$addon_dir"
+
+            addon_label="addon:${addon}"
+
+            ensure_label \
+              "$addon_label" \
+              "1D76DB" \
+              "Issue affecting the ${addon} add-on"
+
+            ##################################################################
+            # Build architecture table.
+            ##################################################################
+
+            jq -r --arg addon "$addon" '
+              .[]
+              | select(.name | test("^Build [^ ]+ [^ ]+ add-on$"))
+              | (.name | split(" ")) as $parts
+              | select($parts[2] == $addon)
+              | [
+                  $parts[1],
+                  (.conclusion // "unknown"),
+                  (.id | tostring),
+                  .html_url
+                ]
+              | @tsv
+            ' "$jobs_json" \
+              | sort -k1,1 \
+              > "$addon_dir/architectures.tsv"
+
+            mapfile -t failed_architectures < <(
+              awk -F'\t' '$2 == "failure" { print $1 }' \
+                "$addon_dir/architectures.tsv"
+            )
+
+            mapfile -t successful_architectures < <(
+              awk -F'\t' '$2 == "success" { print $1 }' \
+                "$addon_dir/architectures.tsv"
+            )
+
+            failed_arch_csv=$(
+              printf '%s\n' "${failed_architectures[@]}" \
+                | paste -sd, - \
+                || true
+            )
+
+            successful_arch_csv=$(
+              printf '%s\n' "${successful_architectures[@]}" \
+                | paste -sd, - \
+                || true
+            )
+
+            failed_arch_csv=${failed_arch_csv:-none}
+            successful_arch_csv=${successful_arch_csv:-none}
+
+            ##################################################################
+            # Download and analyze each failed job log.
+            ##################################################################
+
+            combined_log="$addon_dir/combined.log"
+            : > "$combined_log"
+
+            classifications_file="$addon_dir/classifications.tsv"
+            : > "$classifications_file"
+
+            while IFS=$'\t' read -r arch conclusion job_id job_url; do
+              if [ "$conclusion" != "failure" ]; then
+                continue
+              fi
+
+              raw_log="$addon_dir/${arch}-${job_id}.raw.log"
+              normalized_log="$addon_dir/${arch}-${job_id}.log"
+              signals_file="$addon_dir/${arch}-${job_id}.signals.txt"
+              window_file="$addon_dir/${arch}-${job_id}.window.txt"
+
+              if ! gh api \
+                "repos/${REPO}/actions/jobs/${job_id}/logs" \
+                > "$raw_log" 2>/dev/null; then
+                printf '%s\n' \
+                  "Log download failed. Open the full job log: ${job_url}" \
+                  > "$raw_log"
+              fi
+
+              normalize_log "$raw_log" "$normalized_log"
+              extract_error_signals "$normalized_log" > "$signals_file"
+              extract_error_window "$normalized_log" > "$window_file"
+
+              IFS='|' read -r classification confidence likely_transient \
+                <<< "$(classify_failure "$normalized_log")"
+
+              fingerprint=$(create_fingerprint "$normalized_log")
+
+              printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
+                "$arch" \
+                "$classification" \
+                "$confidence" \
+                "$likely_transient" \
+                "$fingerprint" \
+                "$job_id" \
+                "$job_url" \
+                >> "$classifications_file"
+
+              {
+                echo
+                echo "===== ${addon} / ${arch} / job ${job_id} ====="
+                cat "$normalized_log"
+              } >> "$combined_log"
+            done < "$addon_dir/architectures.tsv"
+
+            ##################################################################
+            # Select the overall classification.
+            #
+            # Preference:
+            # 1. Any non-transient, high-confidence classification
+            # 2. Any high-confidence classification
+            # 3. The first available classification
+            ##################################################################
+
+            overall_classification=$(
+              awk -F'\t' '
+                $3 == "high" && $4 == "false" {
+                  print $2
+                  exit
+                }
+              ' "$classifications_file"
+            )
+
+            if [ -z "$overall_classification" ]; then
+              overall_classification=$(
+                awk -F'\t' '
+                  $3 == "high" {
+                    print $2
+                    exit
+                  }
+                ' "$classifications_file"
+              )
+            fi
+
+            if [ -z "$overall_classification" ]; then
+              overall_classification=$(
+                awk -F'\t' 'NR == 1 { print $2 }' \
+                  "$classifications_file"
+              )
+            fi
+
+            overall_classification=${overall_classification:-unknown}
+
+            overall_confidence=$(
+              awk -F'\t' \
+                -v selected="$overall_classification" \
+                '$2 == selected { print $3; exit }' \
+                "$classifications_file"
+            )
+            overall_confidence=${overall_confidence:-low}
+
+            likely_transient=$(
+              awk -F'\t' \
+                -v selected="$overall_classification" \
+                '$2 == selected { print $4; exit }' \
+                "$classifications_file"
+            )
+            likely_transient=${likely_transient:-false}
+
+            combined_fingerprint=$(
+              cut -f5 "$classifications_file" \
+                | sort -u \
+                | sha256sum \
+                | cut -c1-16
+            )
+
+            classification_label="failure:${overall_classification}"
+
+            ensure_label \
+              "$classification_label" \
+              "FBCA04" \
+              "Build failure classified as ${overall_classification}"
+
+            ##################################################################
+            # Collect changed files and add-on-specific diff.
+            ##################################################################
+
+            changed_files="$addon_dir/changed-files.txt"
+            addon_diff="$addon_dir/addon.diff"
+
+            : > "$changed_files"
+            : > "$addon_diff"
+
+            if [ -n "$BEFORE" ] && \
+               [ "$BEFORE" != "0000000000000000000000000000000000000000" ] && \
+               git cat-file -e "${BEFORE}^{commit}" 2>/dev/null; then
+
+              git diff \
+                --name-only \
+                "$BEFORE" \
+                "$SHA" \
+                -- "$addon" \
+                > "$changed_files" \
+                || true
+
+              git diff \
+                --no-ext-diff \
+                --unified=40 \
+                "$BEFORE" \
+                "$SHA" \
+                -- "$addon" \
+                > "$addon_diff" \
+                || true
+            else
+              git show \
+                --pretty='' \
+                --name-only \
+                "$SHA" \
+                -- "$addon" \
+                > "$changed_files" \
+                || true
+
+              git show \
+                --pretty='' \
+                --no-ext-diff \
+                --unified=40 \
+                "$SHA" \
+                -- "$addon" \
+                > "$addon_diff" \
+                || true
+            fi
+
+            if [ ! -s "$changed_files" ]; then
+              printf '%s\n' \
+                "No changed file under ${addon}/ was detected in the triggering push." \
+                > "$changed_files"
+            fi
+
+            if [ ! -s "$addon_diff" ]; then
+              printf '%s\n' \
+                "No add-on-specific diff was available for ${addon}." \
+                > "$addon_diff"
+            fi
+
+            ##################################################################
+            # Create complete issue body.
+            ##################################################################
+
+            body_file="$addon_dir/body.md"
+
+            {
+              echo "# Build failure: ${addon}"
+              echo
+              echo "## Incident manifest"
+              echo
+              echo '```yaml'
+              echo "schema_version: 1"
+              printf 'repository: %s\n' "$(yaml_quote "$REPO")"
+              printf 'addon: %s\n' "$(yaml_quote "$addon")"
+              printf 'event: %s\n' "$(yaml_quote "$GITHUB_EVENT_NAME")"
+              printf 'branch: %s\n' "$(yaml_quote "$REF_NAME")"
+              printf 'commit: %s\n' "$(yaml_quote "$SHA")"
+              printf 'before_commit: %s\n' "$(yaml_quote "$BEFORE")"
+              printf 'commit_title: %s\n' "$(yaml_quote "$COMMIT_TITLE")"
+              printf 'commit_author: %s\n' "$(yaml_quote "$COMMIT_AUTHOR")"
+              printf 'pusher: %s\n' "$(yaml_quote "$PUSHER")"
+              printf 'run_id: %s\n' "$(yaml_quote "$RUN_ID")"
+              printf 'run_attempt: %s\n' "$(yaml_quote "$RUN_ATTEMPT")"
+              printf 'workflow: %s\n' "$(yaml_quote "Builder")"
+              printf 'failure_scope: %s\n' "$(yaml_quote "image-build")"
+              printf 'failed_architectures: %s\n' \
+                "$(yaml_quote "$failed_arch_csv")"
+              printf 'successful_architectures: %s\n' \
+                "$(yaml_quote "$successful_arch_csv")"
+              printf 'classification: %s\n' \
+                "$(yaml_quote "$overall_classification")"
+              printf 'classification_confidence: %s\n' \
+                "$(yaml_quote "$overall_confidence")"
+              printf 'likely_transient: %s\n' \
+                "$(yaml_quote "$likely_transient")"
+              printf 'error_fingerprint: %s\n' \
+                "$(yaml_quote "$combined_fingerprint")"
+              printf 'automatic_retry: %s\n' "$(yaml_quote "true")"
+              printf 'retry_result: %s\n' "$(yaml_quote "failure")"
+              printf 'revert_job_result: %s\n' \
+                "$(yaml_quote "$REVERT_RESULT")"
+              echo '```'
+              echo
+
+              echo "## Summary"
+              echo
+              echo "The **${addon}** image build failed after its automatic retry."
+              echo
+              echo "- **Commit:** ${COMMIT_URL}"
+              echo "- **Commit title:** ${COMMIT_TITLE}"
+              echo "- **Commit author:** ${COMMIT_AUTHOR:-unknown}"
+              echo "- **Pushed by:** \`${PUSHER}\`"
               echo "- **Workflow run:** ${RUN_URL}"
-              echo "- **Automatic revert:** the same run's \`revert-on-failure\` job tries to revert this push; check its result in the run. If it was reverted, the fix has to bring the intended change back as well as address the failure."
+              echo "- **Failed architectures:** \`${failed_arch_csv}\`"
+              echo "- **Successful architectures:** \`${successful_arch_csv}\`"
+              echo "- **Automatic revert job:** \`${REVERT_RESULT}\`"
               echo
-              echo "Two failed attempts do not prove the add-on is broken: check for registry rate limits (\`429\`, \`toomanyrequests\`), failed downloads or other infrastructure errors before changing code."
-              while IFS=$'\t' read -r _ arch job_id job_url; do
+              echo "> A failed retry does not prove that the source is defective. Registry limits, unavailable upstream services, failed downloads, DNS problems, and runner failures must be ruled out before changing repository code."
+              echo
+
+              echo "## Architecture results"
+              echo
+              echo "| Architecture | Result | Job |"
+              echo "|---|---|---|"
+
+              while IFS=$'\t' read -r arch conclusion job_id job_url; do
+                echo "| \`${arch}\` | \`${conclusion}\` | ${job_url} |"
+              done < "$addon_dir/architectures.tsv"
+
+              echo
+              echo "## Automated assessment"
+              echo
+              echo "| Field | Value |"
+              echo "|---|---|"
+              echo "| Classification | \`${overall_classification}\` |"
+              echo "| Confidence | \`${overall_confidence}\` |"
+              echo "| Likely transient | \`${likely_transient}\` |"
+              echo "| Initial image build | \`failure\` |"
+              echo "| Automatic retry | \`failure\` |"
+              echo "| Error fingerprint | \`${combined_fingerprint}\` |"
+              echo "| Revert job | \`${REVERT_RESULT}\` |"
+              echo
+              echo "### Classification guidance"
+              echo
+              classification_guidance "$overall_classification"
+              echo
+
+              echo "## Changed files in the affected add-on"
+              echo
+              echo '```text'
+              sed -n '1,200p' "$changed_files" | cut -c1-1000
+              echo '```'
+              echo
+
+              echo "## Add-on-specific diff"
+              echo
+              echo '```diff'
+              sed -n '1,400p' "$addon_diff" | cut -c1-1000
+
+              if [ "$(wc -l < "$addon_diff")" -gt 400 ]; then
+                echo
+                echo "... diff truncated after 400 lines ..."
+              fi
+
+              echo '```'
+              echo
+
+              echo "## Failed architecture diagnostics"
+              echo
+            } > "$body_file"
+
+            while IFS=$'\t' read -r \
+              arch \
+              classification \
+              confidence \
+              job_transient \
+              fingerprint \
+              job_id \
+              job_url
+            do
+              signals_file="$addon_dir/${arch}-${job_id}.signals.txt"
+              window_file="$addon_dir/${arch}-${job_id}.window.txt"
+
+              {
                 echo
                 echo "### ${arch}"
                 echo
-                echo "Job log up to the last error annotation: at most 80 lines, each cut to 300 characters, timestamps and colours removed. Full log: ${job_url}"
+                echo "- **Job:** ${job_url}"
+                echo "- **Classification:** \`${classification}\`"
+                echo "- **Confidence:** \`${confidence}\`"
+                echo "- **Likely transient:** \`${job_transient}\`"
+                echo "- **Fingerprint:** \`${fingerprint}\`"
                 echo
-                echo '~~~text'
-                # Everything up to the last error annotation (the retry's
-                # failure), minus runner group markers and apt progress noise.
-                gh api "repos/${REPO}/actions/jobs/${job_id}/logs" \
-                  | sed -E 's/^[0-9-]+T[0-9:.]+Z ?//; s/\x1b\[[0-9;]*m//g' \
-                  | awk '/^##\[(group|endgroup|start-action|end-action)|^\(Reading database/ { next }
-                         { l[++n] = $0 } /^##\[error\]/ { last = n }
-                         END { if (!last) last = n; for (i = 1; i <= last; i++) print l[i] }' \
-                  | tail -n 80 | cut -c1-300 || echo "(log not available - open the full log link above)"
-                echo '~~~'
-              done < <(awk -F'\t' -v a="$addon" '$1 == a' failed.tsv)
-            } > body.md
 
-            existing=$(gh issue list --repo "$REPO" --state open --search "\"${addon}\" \"Image build failed\" in:title" \
-              --json number,title --jq "map(select(.title == \"${title}\")) | .[0].number // empty")
+                echo "#### Extracted error signals"
+                echo
+                echo '```text'
+
+                if [ -s "$signals_file" ]; then
+                  cat "$signals_file"
+                else
+                  echo "No high-signal error line was extracted."
+                fi
+
+                echo '```'
+                echo
+
+                echo "#### Context around the final actionable error"
+                echo
+                echo '```text'
+                cat "$window_file"
+                echo '```'
+              } >> "$body_file"
+            done < "$classifications_file"
+
+            {
+              echo
+              echo "## Relevant build inputs"
+              echo
+              echo "These files are included even when they were not changed by the triggering commit because they may determine architecture selection, base images, build arguments, or download behavior."
+            } >> "$body_file"
+
+            append_file_excerpt "${addon}/config.json" 250
+            append_file_excerpt "${addon}/config.yaml" 250
+            append_file_excerpt "${addon}/config.yml" 250
+            append_file_excerpt "${addon}/build.json" 250
+            append_file_excerpt "${addon}/build.yaml" 250
+            append_file_excerpt "${addon}/build.yml" 250
+            append_file_excerpt "${addon}/Dockerfile" 350
+
+            for failed_arch in "${failed_architectures[@]}"; do
+              append_file_excerpt \
+                "${addon}/Dockerfile.${failed_arch}" \
+                350
+            done
+
+            cat >> "$body_file" <<'EOF'
+
+          ## AI-agent task
+
+          Investigate this failure and determine which of the following applies:
+
+          1. A repository defect requiring a minimal code change
+          2. A transient external failure requiring only a rerun
+          3. A base-image, registry, or dependency availability problem
+          4. An architecture-specific incompatibility
+          5. A GitHub Actions workflow defect
+
+          Create a pull request only when the collected evidence justifies a repository change.
+
+          ### Investigation procedure
+
+          1. Identify the first causal error, not only the final BuildKit summary.
+          2. Compare the initial failure with the retry failure.
+          3. Compare successful and failed architectures.
+          4. Check whether the failing command or file was changed by the triggering push.
+          5. Verify external URLs, image tags, package versions, and architecture availability.
+          6. Determine whether the automatic classification is supported by the logs.
+          7. Propose the smallest change that addresses the demonstrated root cause.
+          8. If the failure is transient, comment with supporting evidence and recommend a rerun instead of creating a speculative code change.
+
+          ## Allowed scope
+
+          - Files inside the affected add-on directory
+          - Shared template files directly used by the affected add-on
+          - GitHub Actions workflow files only when the evidence identifies a workflow defect
+          - Restoration of the reverted triggering change when it is still required
+
+          ## Do not
+
+          - Disable the failing architecture
+          - Add `|| true` or otherwise suppress a real error
+          - Remove linting, validation, checksum verification, or tests
+          - Change unrelated add-ons
+          - Replace pinned versions with unbounded `latest` references
+          - Add unlimited retry loops
+          - Create a source change for a purely transient infrastructure failure
+          - Modify generated changelogs unless repository policy requires it
+          - Assume that two failed attempts automatically prove a source defect
+          - Broadly upgrade dependencies without evidence that the upgrade is required
+
+          ## Acceptance criteria
+
+          - [ ] The root cause is identified and supported by quoted log evidence.
+          - [ ] The initial failure and retry failure are both considered.
+          - [ ] Successful and failed architectures are compared.
+          - [ ] The automatic classification is confirmed or corrected.
+          - [ ] The proposed fix is minimal and limited to the demonstrated cause.
+          - [ ] No error is hidden with `|| true` or equivalent behavior.
+          - [ ] No supported architecture is disabled.
+          - [ ] The affected image builds for every configured architecture.
+          - [ ] External download retries, when added, are bounded and preserve failure behavior.
+          - [ ] Existing checksum validation is preserved.
+          - [ ] The reverted change is restored when it remains appropriate.
+          - [ ] The pull request references this issue.
+          - [ ] The pull request explains the root cause, fix, and validation performed.
+
+          ## Expected AI-agent response when no code change is justified
+
+          If the evidence indicates a transient registry, network, DNS, runner, or upstream-service failure, do not create a speculative pull request. Instead, comment with:
+
+          1. The classified failure type
+          2. The relevant quoted log evidence
+          3. Why a repository change is not justified
+          4. Whether a workflow rerun is recommended
+          5. Whether the issue should remain open for recurrence monitoring
+          EOF
+
+            cat >> "$body_file" <<EOF
+
+          <!-- build-failure-manifest
+          schema_version=1
+          addon=${addon}
+          run_id=${RUN_ID}
+          run_attempt=${RUN_ATTEMPT}
+          sha=${SHA}
+          classification=${overall_classification}
+          confidence=${overall_confidence}
+          likely_transient=${likely_transient}
+          fingerprint=${combined_fingerprint}
+          failed_architectures=${failed_arch_csv}
+          successful_architectures=${successful_arch_csv}
+          revert_result=${REVERT_RESULT}
+          -->
+          EOF
+
+            ##################################################################
+            # Find or create the issue.
+            ##################################################################
+
+            title="🐛 [${addon}] Image build failed"
+
+            existing=$(
+              gh issue list \
+                --repo "$REPO" \
+                --state open \
+                --label "build-failure" \
+                --label "$addon_label" \
+                --limit 100 \
+                --json number,title \
+                --jq \
+                  "map(select(.title == \"${title}\")) | .[0].number // empty"
+            )
+
             if [ -n "$existing" ]; then
-              gh issue comment "$existing" --repo "$REPO" --body-file body.md
+              echo "Updating existing issue #${existing}"
+
+              old_body="$addon_dir/old-body.md"
+
+              gh issue view "$existing" \
+                --repo "$REPO" \
+                --json body \
+                --jq '.body' \
+                > "$old_body"
+
+              previous_fingerprint=$(
+                sed -n \
+                  's/^fingerprint=\([^[:space:]]*\)$/\1/p' \
+                  "$old_body" \
+                  | tail -n 1
+              )
+
+              if [ "$previous_fingerprint" = "$combined_fingerprint" ]; then
+                same_fingerprint="yes"
+              else
+                same_fingerprint="no"
+              fi
+
+              gh issue edit "$existing" \
+                --repo "$REPO" \
+                --body-file "$body_file" \
+                --add-label "bug" \
+                --add-label "build-failure" \
+                --add-label "ai-triage" \
+                --add-label "agent:ready" \
+                --add-label "$addon_label" \
+                --add-label "$classification_label"
+
+              recurrence_file="$addon_dir/recurrence.md"
+
+              {
+                echo "## Build failure recurrence"
+                echo
+                echo "- **Run:** ${RUN_URL}"
+                echo "- **Commit:** ${COMMIT_URL}"
+                echo "- **Classification:** \`${overall_classification}\`"
+                echo "- **Confidence:** \`${overall_confidence}\`"
+                echo "- **Likely transient:** \`${likely_transient}\`"
+                echo "- **Failed architectures:** \`${failed_arch_csv}\`"
+                echo "- **Successful architectures:** \`${successful_arch_csv}\`"
+                echo "- **Error fingerprint:** \`${combined_fingerprint}\`"
+                echo "- **Same fingerprint as previous report:** \`${same_fingerprint}\`"
+                echo "- **Automatic revert job:** \`${REVERT_RESULT}\`"
+                echo
+                echo "The issue body has been replaced with the latest complete diagnostic packet."
+              } > "$recurrence_file"
+
+              gh issue comment "$existing" \
+                --repo "$REPO" \
+                --body-file "$recurrence_file"
             else
-              gh issue create --repo "$REPO" --title "$title" --label bug --label ai-triage --body-file body.md
+              echo "Creating a new issue for ${addon}"
+
+              gh issue create \
+                --repo "$REPO" \
+                --title "$title" \
+                --label "bug" \
+                --label "build-failure" \
+                --label "ai-triage" \
+                --label "agent:ready" \
+                --label "$addon_label" \
+                --label "$classification_label" \
+                --body-file "$body_file"
             fi
           done
