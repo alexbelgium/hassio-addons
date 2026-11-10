@@ -16,6 +16,7 @@ class LogDiagnosisTest(unittest.TestCase):
     """Reject numeric false positives while retaining real HTTP errors."""
 
     def test_unrelated_numbers_are_not_http_statuses(self):
+        """Do not classify incidental 500-range numbers as HTTP errors."""
         for line in ("ERROR: failed at line 503",
                      "ERROR: 502 bytes received",
                      "ERROR: process took 504 ms",
@@ -24,6 +25,7 @@ class LogDiagnosisTest(unittest.TestCase):
                 self.assertEqual(parser.category([line]), "Build or setup failure (unclassified)")
 
     def test_http_status_context(self):
+        """Recognize actual registry and upstream HTTP failures."""
         for line, expected in (
             ("curl: (22) The requested URL returned error: 504", "HTTP 5xx"),
             ("HTTP/2 502 Bad Gateway", "HTTP 5xx"),
@@ -35,6 +37,7 @@ class LogDiagnosisTest(unittest.TestCase):
                 self.assertTrue(parser.category([line]).startswith(expected))
 
     def test_real_error_outweighs_irrelevant_number(self):
+        """Prefer the causal HTTP failure to an unrelated numeric error."""
         lines = [
             "ERROR: error at line 503 of a file",
             "curl: (22) The requested URL returned error: 504",
