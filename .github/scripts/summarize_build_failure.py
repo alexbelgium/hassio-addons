@@ -21,13 +21,29 @@ SIGNAL = re.compile(
 STAGE = re.compile(r"^#\d+ (?:\d+(?:\.\d+)? )?\[[^]]+\] (?:RUN|COPY|FROM|load metadata).*")
 URL = re.compile(r"https?://[^\s'\"<>]+")
 DIGEST = re.compile(r"sha256:[a-fA-F0-9]{32,}")
+# Require protocol/response context before interpreting a number as HTTP status.
+# A plain "error at line 503" must not be reported as a remote 503 outage.
+HTTP_CONTEXT = r"(?:\\bHTTP(?:/\\d+(?:\\.\\d+)?)?\\b|\\bstatus\\b)"
+HTTP_429 = re.compile(
+    HTTP_CONTEXT + r"[^\\n]*?\\b429\\b|\\b429\\s+Too Many Requests\\b|"
+    r"\\bcurl:\\s*\\(\\d+\\).*?\\berror:\\s*429\\b",
+    re.I,
+)
+HTTP_5XX = re.compile(
+    HTTP_CONTEXT + r"[^\\n]*?\\b5\\d\\d\\b|"
+    r"\\bcurl:\\s*\\(\\d+\\).*?\\berror:\\s*5\\d\\d\\b|"
+    r"\\b5\\d\\d\\s+(?:Internal Server Error|Bad Gateway|Service Unavailable|Gateway Timeout)\\b",
+    re.I,
+)
 
 
 def clean(raw):
+    """Remove GitHub runner timestamps and ANSI escape sequences from a log line."""
     return STAMP.sub("", ANSI.sub("", raw.rstrip("\r\n"))).strip("\ufeff")
 
 
 def short(raw, limit=230):
+    """Shorten diagnostic text while removing query strings and long digests."""
     raw = DIGEST.sub(lambda m: m.group(0)[:19] + "…", raw)
     raw = URL.sub(lambda m: m.group(0).split("?")[0], raw)
     raw = raw.replace("`", "'").strip()
@@ -35,10 +51,13 @@ def short(raw, limit=230):
 
 
 def category(errors):
+    """Classify selected causal lines conservatively; never control rollback."""
     joined = "\n".join(errors).lower()
-    if re.search(r"\b429\b|toomanyrequests|too many requests|rate.limit", joined):
+    if any(HTTP_429.search(line) for line in errors) or re.search(
+        r"toomanyrequests|too many requests|rate.limit", joined
+    ):
         return "HTTP 429 / rate limit (suspected external)"
-    if re.search(r"\b(?:500|502|503|504|520|522|524)\b|bad gateway|gateway time.out", joined):
+    if any(HTTP_5XX.search(line) for line in errors) or re.search(r"bad gateway|gateway time.out", joined):
         return "HTTP 5xx / upstream availability (suspected external)"
     if re.search(r"connection reset|timed? out|temporary failure|tls handshake|refused_stream", joined):
         return "Network / timeout (suspected external)"
@@ -50,6 +69,7 @@ def category(errors):
 
 
 def summarize(lines, label):
+    """Print one likely causal error, build stage and remote host per attempt."""
     findings = []
     for i, value in enumerate(lines):
         if not SIGNAL.search(value) or value.startswith("##[start-action"):
@@ -58,7 +78,9 @@ def summarize(lines, label):
         # *mention* errors rather than the actual error emitted at runtime.
         if "echo \"::error" in value or "echo '::error" in value:
             continue
-        rank = (0 if re.search(r"\b429\b|\b5\d\d\b|toomanyrequests|curl: \(\d+\)|timed? out", value, re.I)
+        rank = (0 if HTTP_429.search(value) or HTTP_5XX.search(value) or re.search(
+                    r"toomanyrequests|curl: \\(\\d+\\)|timed? out", value, re.I
+                )
                 else 1 if re.search(r"^#\d+ .*ERROR:|^ERROR:|\bModuleNotFoundError\b", value, re.I)
                 else 3 if value.startswith("##[error]") else 2)
         findings.append((rank, i, value))
@@ -90,6 +112,7 @@ def summarize(lines, label):
 
 
 def main():
+    """Group failed image-build attempts from a downloaded GitHub Actions job log."""
     if len(sys.argv) != 2:
         raise SystemExit("Usage: summarize_build_failure.py JOB_LOG_FILE")
     with open(sys.argv[1], encoding="utf-8-sig", errors="replace") as file:
