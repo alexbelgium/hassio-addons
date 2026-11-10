@@ -29,6 +29,8 @@ HTTP_STATUS = re.compile(
     r"\b(?P<named>429 Too Many Requests|502 Bad Gateway|503 Service Unavailable|504 Gateway Time-?out)\b",
     re.I,
 )
+
+
 def clean(raw):
     """Remove GitHub runner timestamps and ANSI formatting from a log line."""
     return STAMP.sub("", ANSI.sub("", raw.rstrip("\r\n"))).strip("\ufeff")
