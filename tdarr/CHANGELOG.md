@@ -1,4 +1,7 @@
  
+## 3.07.00 (2026-11-10)
+- Update to latest version from haveagitgat/tdarr
+ 
 ## 3.06.00 (2026-11-06)
 - Update to latest version from haveagitgat/tdarr
  
