@@ -23,16 +23,16 @@ URL = re.compile(r"https?://[^\s'\"<>]+")
 DIGEST = re.compile(r"sha256:[a-fA-F0-9]{32,}")
 # Require protocol/response context before interpreting a number as HTTP status.
 # A plain "error at line 503" must not be reported as a remote 503 outage.
-HTTP_CONTEXT = r"(?:\\bHTTP(?:/\\d+(?:\\.\\d+)?)?\\b|\\bstatus\\b)"
+HTTP_CONTEXT = r"(?:\bHTTP(?:/\d+(?:\.\d+)?)?\b|\bstatus\b)"
 HTTP_429 = re.compile(
-    HTTP_CONTEXT + r"[^\\n]*?\\b429\\b|\\b429\\s+Too Many Requests\\b|"
-    r"\\bcurl:\\s*\\(\\d+\\).*?\\berror:\\s*429\\b",
+    HTTP_CONTEXT + r"[^\n]*?\b429\b|\b429\s+Too Many Requests\b|"
+    r"\bcurl:\s*\(\d+\).*?\berror:\s*429\b",
     re.I,
 )
 HTTP_5XX = re.compile(
-    HTTP_CONTEXT + r"[^\\n]*?\\b5\\d\\d\\b|"
-    r"\\bcurl:\\s*\\(\\d+\\).*?\\berror:\\s*5\\d\\d\\b|"
-    r"\\b5\\d\\d\\s+(?:Internal Server Error|Bad Gateway|Service Unavailable|Gateway Timeout)\\b",
+    HTTP_CONTEXT + r"[^\n]*?\b5\d\d\b|"
+    r"\bcurl:\s*\(\d+\).*?\berror:\s*5\d\d\b|"
+    r"\b5\d\d\s+(?:Internal Server Error|Bad Gateway|Service Unavailable|Gateway Timeout)\b",
     re.I,
 )
 
@@ -79,7 +79,7 @@ def summarize(lines, label):
         if "echo \"::error" in value or "echo '::error" in value:
             continue
         rank = (0 if HTTP_429.search(value) or HTTP_5XX.search(value) or re.search(
-                    r"toomanyrequests|curl: \\(\\d+\\)|timed? out", value, re.I
+                    r"toomanyrequests|curl: \(\d+\)|timed? out", value, re.I
                 )
                 else 1 if re.search(r"^#\d+ .*ERROR:|^ERROR:|\bModuleNotFoundError\b", value, re.I)
                 else 3 if value.startswith("##[error]") else 2)
