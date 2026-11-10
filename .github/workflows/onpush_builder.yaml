@@ -10,6 +10,10 @@ on:
     paths:
       - "**/config.*"
 
+# Default to read-only; jobs that publish or revert explicitly request writes.
+permissions:
+  contents: read
+
 jobs:
   detect-changed-addons:
     if: >-
@@ -581,6 +585,7 @@ jobs:
                 # an empty but valid-looking error excerpt in the issue.
                 log_file=$(mktemp)
                 if curl --fail --location --silent --show-error --retry 3 --retry-delay 2 \
+                     --connect-timeout 10 --max-time 30 --retry-max-time 120 \
                      -H "Authorization: Bearer ${GH_TOKEN}" \
                      -H 'Accept: application/vnd.github+json' \
                      --output "$log_file" \
