@@ -10,6 +10,10 @@ on:
     paths:
       - "**/config.*"
 
+# Default to read-only; jobs that publish or revert explicitly request writes.
+permissions:
+  contents: read
+
 jobs:
   detect-changed-addons:
     if: >-
@@ -128,6 +132,8 @@ jobs:
       packages: write
     strategy:
       fail-fast: false
+      # Reduce bursts against upstream registries within each run.
+      max-parallel: 4
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
         arch: [amd64, aarch64]
@@ -324,11 +330,13 @@ jobs:
           labels: ${{ steps.info.outputs.labels }}
           build-args: ${{ steps.info.outputs.build_args }}
 
-      # Keep these inputs identical to the first attempt above - this step is
-      # that attempt, run a second time, and nothing else. There is deliberately
-      # no pause in between: re-running the earlier layers already spaces the
-      # two network windows apart, and a sleep step would only add somewhere
-      # else for the retry to be skipped from.
+      # Give temporary registry/network failures time to recover.
+      # A second failure remains fatal and ALWAYS triggers revert-on-failure.
+      - name: Backoff before second build attempt
+        if: steps.build.outcome == 'failure'
+        run: sleep 60
+
+      # Retry the same build once. Do not use continue-on-error here.
       - name: Build ${{ matrix.addon }} add-on (retry after failed attempt)
         if: steps.build.outcome == 'failure'
         uses: home-assistant/builder/actions/build-image@2026.09.0
@@ -417,7 +425,6 @@ jobs:
           default_author: github_actions
           pull: --rebase --autostash
           fetch: --force
-          push: --force
 
   revert-on-failure:
     if: >-
@@ -513,12 +520,18 @@ jobs:
         github.ref == 'refs/heads/master' &&
         github.repository_owner == 'alexbelgium'
       }}
-    needs: build
+    # Wait for rollback to complete so the issue reports its outcome.
+    needs: [build, revert-on-failure]
     runs-on: ubuntu-latest
     permissions:
       actions: read
+      contents: read
       issues: write
     steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
       - name: Open or update a build-failure issue per add-on
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -527,6 +540,8 @@ jobs:
           RUN_ATTEMPT: ${{ github.run_attempt }}
           SHA: ${{ github.sha }}
           COMMIT_TITLE: ${{ github.event.head_commit.message }}
+          BEFORE: ${{ github.event.before }}
+          REVERT_RESULT: ${{ needs['revert-on-failure'].result }}
         run: |
           set -euo pipefail
           RUN_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}/attempts/${RUN_ATTEMPT}"
@@ -542,29 +557,46 @@ jobs:
           for addon in "${addons[@]}"; do
             title="🐛 [${addon}] Image build failed"
             {
-              echo "The **${addon}** build job failed on \`master\` for the architectures below. The image build itself is retried once, so a failure there means both attempts failed."
+              echo "The **${addon}** build job failed on \`master\`. The build action is retried once when its first attempt fails; errors in setup or metadata may never reach the build action."
               echo
-              echo "- **Commit:** ${SHA} - ${COMMIT_TITLE}"
+              echo "- **Commit:** [\`${SHA}\`](https://github.com/${REPO}/commit/${SHA}) - ${COMMIT_TITLE}"
+              echo "- **Source at failing SHA:** https://github.com/${REPO}/tree/${SHA}/${addon}"
+              if [[ "$BEFORE" =~ ^[0-9a-f]{40}$ ]] && [[ "$BEFORE" != "0000000000000000000000000000000000000000" ]]; then
+                echo "- **Original diff:** https://github.com/${REPO}/compare/${BEFORE}...${SHA}"
+              fi
               echo "- **Workflow run:** ${RUN_URL}"
-              echo "- **Automatic revert:** the same run's \`revert-on-failure\` job tries to revert this push; check its result in the run. If it was reverted, the fix has to bring the intended change back as well as address the failure."
+              echo "- **Automatic revert result:** \`${REVERT_RESULT}\`. The mandatory rollback applies after every final build failure, including registry and network errors, to avoid a release with missing images. If successful, a fix must restore the intended change."
               echo
-              echo "Two failed attempts do not prove the add-on is broken: check for registry rate limits (\`429\`, \`toomanyrequests\`), failed downloads or other infrastructure errors before changing code."
+              echo "**AI triage:** This is a heuristic summary, not a proven root cause. Inspect the original SHA and the linked full log if the evidence is inconclusive. Do not change add-on code for 429/5xx/timeouts unless there is evidence of a wrapper defect; for deterministic failures, make the smallest targeted fix and validate both architectures. Follow .github/prompts/issue-fix.md. Mandatory revert applies regardless of classification."
+              echo
+              echo "### Per-architecture diagnostic evidence"
               while IFS=$'\t' read -r _ arch job_id job_url; do
                 echo
                 echo "### ${arch}"
                 echo
-                echo "Job log up to the last error annotation: at most 80 lines, each cut to 300 characters, timestamps and colours removed. Full log: ${job_url}"
+                echo "**Failed steps:**"
+                gh api "repos/${REPO}/actions/jobs/${job_id}" \
+                  --jq '.steps[]? | select(.conclusion == "failure") | "- " + .name + " (step " + (.number|tostring) + ")"' \
+                  || echo "(step metadata unavailable)"
                 echo
-                echo '~~~text'
-                # Everything up to the last error annotation (the retry's
-                # failure), minus runner group markers and apt progress noise.
-                gh api "repos/${REPO}/actions/jobs/${job_id}/logs" \
-                  | sed -E 's/^[0-9-]+T[0-9:.]+Z ?//; s/\x1b\[[0-9;]*m//g' \
-                  | awk '/^##\[(group|endgroup|start-action|end-action)|^\(Reading database/ { next }
-                         { l[++n] = $0 } /^##\[error\]/ { last = n }
-                         END { if (!last) last = n; for (i = 1; i <= last; i++) print l[i] }' \
-                  | tail -n 80 | cut -c1-300 || echo "(log not available - open the full log link above)"
-                echo '~~~'
+                echo "**Full job log:** ${job_url}"
+                echo
+                # The GitHub logs endpoint redirects to a signed download URL.
+                # Save it before extraction so curl failures cannot appear as
+                # an empty but valid-looking error excerpt in the issue.
+                log_file=$(mktemp)
+                if curl --fail --location --silent --show-error --retry 3 --retry-delay 2 \
+                     --connect-timeout 10 --max-time 30 --retry-max-time 120 \
+                     -H "Authorization: Bearer ${GH_TOKEN}" \
+                     -H 'Accept: application/vnd.github+json' \
+                     --output "$log_file" \
+                     "https://api.github.com/repos/${REPO}/actions/jobs/${job_id}/logs"; then
+                  python3 .github/scripts/summarize_build_failure.py "$log_file" \
+                    || echo "- Automatic log analysis failed; use the full job log"
+                else
+                  echo "- Failed to download logs; use the full job log"
+                fi
+                rm -f "$log_file"
               done < <(awk -F'\t' -v a="$addon" '$1 == a' failed.tsv)
             } > body.md
 
