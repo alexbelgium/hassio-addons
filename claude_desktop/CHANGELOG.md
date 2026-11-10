@@ -1,4 +1,8 @@
  
+## 07308545.27 (2026-11-10)
+- Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
+- Upstream tag : v3.3.15+claude4.23118.1
+ 
 ## 07308545.26 (2026-11-08)
 - Fix `ha-cli` when the `DNS_server` option is set: the custom resolver cannot resolve the Docker-internal `homeassistant` host, so the scoped `ha_mcp_token` path now falls back to the Core IP reported by the Supervisor (still using the scoped token, never the admin-equivalent Supervisor token)
 - Fix `ha-cli ws` failing with a missing `websockets` module: the WebSocket client now uses only the Python standard library
