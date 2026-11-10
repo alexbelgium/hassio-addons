@@ -1,3 +1,6 @@
+## 20261110 (10-11-2026)
+- Rebuild against the latest upstream BirdNET-Go main. All 16 open fork PRs still merge onto main and the combined tree compiles
+
 ## 20261109 (09-11-2026)
 - Minor bugs fixed
 ## 20261108.1 (08-11-2026)
