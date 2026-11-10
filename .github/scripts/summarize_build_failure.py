@@ -29,31 +29,13 @@ HTTP_STATUS = re.compile(
     r"\b(?P<named>429 Too Many Requests|502 Bad Gateway|503 Service Unavailable|504 Gateway Time-?out)\b",
     re.I,
 )
-# Require protocol/response context before interpreting a number as HTTP status.
-# A plain "error at line 503" must not be reported as a remote 503 outage.
-HTTP_CONTEXT = r"(?:\bHTTP(?:/\d+(?:\.\d+)?)?\b|\bstatus\b)"
-HTTP_429 = re.compile(
-    HTTP_CONTEXT + r"[^\n]*?\b429\b|\b429\s+Too Many Requests\b|"
-    r"\bcurl:\s*\(\d+\).*?\berror:\s*429\b",
-    re.I,
-)
-HTTP_5XX = re.compile(
-    HTTP_CONTEXT + r"[^\n]*?\b5\d\d\b|"
-    r"\bcurl:\s*\(\d+\).*?\berror:\s*5\d\d\b|"
-    r"\b5\d\d\s+(?:Internal Server Error|Bad Gateway|Service Unavailable|Gateway Timeout)\b",
-    re.I,
-)
-
-
 def clean(raw):
-    """Remove runner timestamps and ANSI formatting while preserving log text."""
-    """Remove GitHub runner timestamps and ANSI escape sequences from a log line."""
+    """Remove GitHub runner timestamps and ANSI formatting from a log line."""
     return STAMP.sub("", ANSI.sub("", raw.rstrip("\r\n"))).strip("\ufeff")
 
 
 def short(raw, limit=230):
-    """Trim large digests and diagnostic lines for concise issue bodies."""
-    """Shorten diagnostic text while removing query strings and long digests."""
+    """Shorten diagnostic lines by removing query strings and long digests."""
     raw = DIGEST.sub(lambda m: m.group(0)[:19] + "…", raw)
     raw = URL.sub(lambda m: m.group(0).split("?")[0], raw)
     raw = raw.replace("`", "'").strip()
@@ -82,8 +64,7 @@ def category(errors):
 
 
 def summarize(lines, label):
-    """Choose the strongest causal clue and its surrounding Docker build step."""
-    """Print one likely causal error, build stage and remote host per attempt."""
+    """Print the best causal error, build stage, and remote host per attempt."""
     findings = []
     for i, value in enumerate(lines):
         if not (SIGNAL.search(value) or HTTP_STATUS.search(value)) or value.startswith("##[start-action"):
@@ -92,11 +73,16 @@ def summarize(lines, label):
         # *mention* errors rather than the actual error emitted at runtime.
         if "echo \"::error" in value or "echo '::error" in value:
             continue
-        rank = (0 if HTTP_STATUS.search(value) or re.search(r"toomanyrequests|curl: \(\d+\)|timed? out", value, re.I)
-                    r"toomanyrequests|curl: \(\d+\)|timed? out", value, re.I
-                )
-                else 1 if re.search(r"^#\d+ .*ERROR:|^ERROR:|\bModuleNotFoundError\b", value, re.I)
-                else 3 if value.startswith("##[error]") else 2)
+        rank = (
+            0 if HTTP_STATUS.search(value) or re.search(
+                r"toomanyrequests|curl: \(\d+\)|timed? out", value, re.I
+            )
+            else 1 if re.search(
+                r"^#\d+ .*ERROR:|^ERROR:|\bModuleNotFoundError\b", value, re.I
+            )
+            else 3 if value.startswith("##[error]")
+            else 2
+        )
         findings.append((rank, i, value))
     if not findings:
         print(f"- **{label}:** No matching diagnostic line; inspect linked job log")
@@ -126,8 +112,7 @@ def summarize(lines, label):
 
 
 def main():
-    """Parse failed image-build attempts, falling back to the whole job."""
-    """Group failed image-build attempts from a downloaded GitHub Actions job log."""
+    """Parse failed build attempts and fall back to the full job if necessary."""
     if len(sys.argv) != 2:
         raise SystemExit("Usage: summarize_build_failure.py JOB_LOG_FILE")
     with open(sys.argv[1], encoding="utf-8-sig", errors="replace") as file:
