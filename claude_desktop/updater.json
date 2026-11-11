@@ -4,6 +4,6 @@
   "github_fulltag": true,
   "slug": "claude_desktop",
   "paused": false,
-  "upstream_version": "v3.3.15+claude4.23118.1",
-  "last_update": "2026-11-10"
+  "upstream_version": "v3.3.15+claude5.1231.0",
+  "last_update": "2026-11-11"
 }
