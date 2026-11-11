@@ -201,7 +201,7 @@ fi
 ln -sfn /tmp/cache "$LOCATION/.cache"
 
 bashio::log.info "Setting ownership to $PUID:$PGID"
-chown -R "${PUID}:${PGID}" "$LOCATION" /tmp/cache "$XDG_RUNTIME_DIR" /data
+chown -R "${PUID}:${PGID}" "$LOCATION" /tmp/cache "$XDG_RUNTIME_DIR" /data /config
 chmod -R 700 "$LOCATION"
 
 # The base init-selkies-config script overrides XDG_RUNTIME_DIR to $HOME/.XDG, which lands on
