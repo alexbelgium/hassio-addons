@@ -4,7 +4,7 @@ Free and open source comics/mangas media server.
 
 [Komga](https://komga.org) organizes your comics, mangas, BDs, magazines and ebooks, serves them
 through a web reader, and exposes OPDS, Kobo sync and a REST API for third-party readers
-(Tachiyomi/Mihon, Panels, Chunky, ...).
+(Tachiyomi/Mihon, Panels, Chunky, ComicVerse, ...).
 
 ## About
 
