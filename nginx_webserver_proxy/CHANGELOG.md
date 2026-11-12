@@ -1,6 +1,9 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 # Changelog
 
+## 2.17.0 (12-11-2026)
+- Update Nginx Proxy Manager to 2.17.0
+
 ## 2.14.1-1 (11-07-2026)
 - Persist Let's Encrypt certificates across restarts by symlinking /etc/letsencrypt to /data/letsencrypt (#2828) — thanks to @crazyrokr for reporting and suggesting the fix
 
