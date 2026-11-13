@@ -101,18 +101,15 @@ if bashio::config.has_value "encoded_video_location"; then
     ENCODED_VIDEO_LOCATION="$(bashio::config 'encoded_video_location')"
     bashio::log.info "Setting encoded video location to $ENCODED_VIDEO_LOCATION. This will not move any of your files, you'll need to do this manually"
     mkdir -p "$ENCODED_VIDEO_LOCATION"
-    chown -R "$PUID":"$PGID" "$ENCODED_VIDEO_LOCATION"
 
     # Move the existing real folder aside (Immich always keeps a .immich file in it)
     if [ -d "$DATA_LOCATION/encoded-video" ] && [ ! -L "$DATA_LOCATION/encoded-video" ]; then
         bashio::log.warning "Encoded video folder in $DATA_LOCATION/encoded-video is a real folder. Moving to $DATA_LOCATION/encoded-video_old"
+        # Immich refuses to start if a folder it already checked has no .immich mount file
+        if [ -f "$DATA_LOCATION/encoded-video/.immich" ] && [ ! -f "$ENCODED_VIDEO_LOCATION/.immich" ]; then
+            cp -p "$DATA_LOCATION/encoded-video/.immich" "$ENCODED_VIDEO_LOCATION/.immich"
+        fi
         mv "$DATA_LOCATION/encoded-video" "$DATA_LOCATION/encoded-video_old"
-    fi
-
-    # Immich refuses to start if a folder it already checked has no .immich mount file
-    if [ ! -f "$ENCODED_VIDEO_LOCATION/.immich" ]; then
-        date +%s000 > "$ENCODED_VIDEO_LOCATION/.immich"
-        chown "$PUID":"$PGID" "$ENCODED_VIDEO_LOCATION/.immich"
     fi
 
     # Create symbolic link only if it doesn't already exist or is incorrect
