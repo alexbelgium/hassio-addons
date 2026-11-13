@@ -1,3 +1,11 @@
+## 07308545.29 (2026-11-13)
+- Install `gh` from GitHub's apt repository instead of Debian Bookworm's (frozen at 2.23, without multi-account `gh auth switch`)
+- Upgrade Claude Code and the GitHub CLI at every start, alongside Claude Desktop
+- rtk and tokensave now install from their verified (sha256) prebuilt latest releases instead of source builds
+- hadolint, actionlint, virtiofsd and the Python tools (headroom, mcp-proxy, uv) now resolve their latest release on every image build
+- Fix the Home Assistant MCP bridge: mcp-proxy failed to start (`cannot import name 'request_ctx'`) because headroom-ai pulled mcp 2.x; mcp-proxy now lives in its own uv tool environment
+- Base image moved from Debian Bookworm (no longer published by LinuxServer) to the floating `debiantrixie` selkies tag: Python 3.13, glibc 2.41, newer git, nginx and Mesa
+
  
 ## 07308545.28 (2026-11-11)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
