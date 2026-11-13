@@ -10,12 +10,11 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 
-# virtiofsd is only packaged for Debian trixie/sid, not Bookworm or bookworm-backports;
-# installing the trixie .deb on the Bookworm runtime would pull a binary linked against a
-# newer GLIBC. Build the current crates.io release from source on Bookworm so the daemon's
-# ABI matches the add-on runtime. It has no prebuilt binaries, hence the source build.
+# virtiofsd publishes no prebuilt binaries and Debian's package lags upstream, so build the
+# current crates.io release from source on Trixie, the same Debian release as the add-on
+# runtime, so the daemon's GLIBC matches.
 # Cowork shares the workspace into its qemu microVM through virtiofsd.
-FROM rust:1.91-bookworm AS virtiofsd-builder
+FROM rust:1-trixie AS virtiofsd-builder
 # BUILD_DATE busts the cache so each image build compiles the current crates.io release
 ARG BUILD_DATE=unknown
 RUN echo "Build date marker: ${BUILD_DATE}" && \
@@ -94,8 +93,8 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
 # started via the pre-existing START_DOCKER env var) — installing Debian's docker.io package
 # on top pulls in Debian's own containerd/runc, which apt refuses because they Conflict with
 # the base image's already-installed containerd.io.
-# gh comes from GitHub's own apt repo: Debian Bookworm's gh is frozen at 2.23, which predates
-# multi-account `gh auth switch`. 81-claude_update.sh upgrades these vendor-repo packages at boot.
+# gh comes from GitHub's own apt repo: Debian's gh lags upstream (Bookworm froze at 2.23, which predates
+# multi-account `gh auth switch`). 81-claude_update.sh upgrades these vendor-repo packages at boot.
 RUN install -d -m 0755 /etc/apt/keyrings && \
     curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
     curl -fsSLo /etc/apt/keyrings/claude-code.asc https://downloads.claude.ai/keys/claude-code.asc && \
@@ -127,7 +126,7 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
 
 # No bespoke GPU driver install. The LSIO base image already provides the userspace stack that
 # hardware rendering actually uses, and it does so at a newer version than adding it here would:
-# libgl1-mesa-dri and mesa-vulkan-drivers come from bookworm-backports Mesa 25.0.7, where a
+# libgl1-mesa-dri and mesa-vulkan-drivers come from the base image's own Mesa, where a
 # plain `apt-get install` of the same names is at best a no-op.
 #
 # There used to be an amd64 block here installing intel-media-va-driver-non-free, libgl1-mesa-dri,

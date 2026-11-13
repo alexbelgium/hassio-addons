@@ -3,6 +3,7 @@
 - Upgrade Claude Code and the GitHub CLI at every start, alongside Claude Desktop
 - rtk and tokensave now install from their verified (sha256) prebuilt latest releases instead of source builds
 - hadolint, actionlint, virtiofsd and the Python tools (headroom, mcp-proxy, uv, websockets) now resolve their latest release on every image build
+- Base image moved from Debian Bookworm (no longer published by LinuxServer) to the floating `debiantrixie` selkies tag: Python 3.13, glibc 2.41, newer git, nginx and Mesa
 
  
 ## 07308545.28 (2026-11-11)
