@@ -222,10 +222,13 @@ RUN set -eux; \
 # runtime + transformers needed by the Kompress compressor — the `ml` extra (full PyTorch,
 # ~5 GB with CUDA wheels) is deliberately NOT installed; svc-headroom pre-warms the ONNX
 # model into the persistent HF cache instead. Upgraded to the latest releases on every image build.
+# mcp-proxy gets its own uv tool environment: its releases require mcp<2 while headroom-ai
+# requires mcp>=2.2, and sharing one environment left mcp-proxy unable to import.
 # hadolint ignore=DL3013,DL3042,DL3059
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
-    pip3 install --break-system-packages --upgrade "headroom-ai[proxy,code,mcp]" mcp-proxy uv && \
+    pip3 install --break-system-packages --upgrade "headroom-ai[proxy,code,mcp]" uv && \
+    UV_TOOL_DIR=/opt/uv-tools UV_TOOL_BIN_DIR=/usr/local/bin uv tool install --no-cache mcp-proxy && \
     headroom --version && \
     mcp-proxy --help >/dev/null && \
     uv --version && \
