@@ -45,8 +45,8 @@ the check is a guard, not a common case.)
 | `needs-info` | You cannot tell what is wrong without the add-on version, HA version, architecture, config, or the actual log output. |
 | `question` | A usage question answerable from `DOCS.md`, the wiki, or the add-on config. Not a defect. |
 | `upstream-bug` | The fault is in the upstream application or its image, not in this repo's wrapper. |
-| `addon-bug` | The fault is in something this repo owns: the Dockerfile, `run.sh`, s6 service files, nginx config, `config.yaml` schema, or an option that is not being passed through. |
-| `feature-request` | New capability, new add-on, new option. |
+| `addon-bug` | The fault is in something this repo owns: the Dockerfile, `run.sh`, s6 service files, nginx config, `config.yaml` schema, or an option that is not being passed through. Includes a setting from upstream's documented deployment (a docker-compose `.env` or volume variable, a documented env var) that has no effect when set through `env_vars` or an option: the add-on is the user's deployment, so failing to reproduce it is the add-on's bug, even if the app's own code never reads that variable. |
+| `feature-request` | New capability, new add-on, new option, that upstream's documented deployment does not already offer. A reporter who sets a documented upstream variable and sees no effect is not asking for a new option. |
 
 **The `upstream-bug` / `addon-bug` split is the one that matters.** Only
 `addon-bug` triggers the expensive fix pass. Getting it wrong means the bot
@@ -54,6 +54,11 @@ opens a pull request against code that does not exist in this repository.
 
 Test it explicitly: name the file in this repo you would have to change. If you
 cannot name one, it is not `addon-bug`.
+
+Before concluding that a setting "is not supported", check where upstream
+documents it: the app's source, its docs and docker-compose files, and the base
+image's init scripts. "The server never reads it" is not enough; a compose
+variable works by mounting a folder, and the add-on has to reproduce that.
 
 ## Rule 2 — confidence is a real signal
 
