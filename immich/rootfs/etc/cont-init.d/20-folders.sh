@@ -93,6 +93,34 @@ if bashio::config.has_value "library_location"; then
     fi
 fi
 
+##########################
+# ENCODED VIDEO LOCATION #
+##########################
+
+if bashio::config.has_value "encoded_video_location"; then
+    ENCODED_VIDEO_LOCATION="$(bashio::config 'encoded_video_location')"
+    bashio::log.info "Setting encoded video location to $ENCODED_VIDEO_LOCATION. This will not move any of your files, you'll need to do this manually"
+    mkdir -p "$ENCODED_VIDEO_LOCATION"
+
+    # Move the existing real folder aside (Immich always keeps a .immich file in it)
+    if [ -d "$DATA_LOCATION/encoded-video" ] && [ ! -L "$DATA_LOCATION/encoded-video" ]; then
+        case "$(realpath -m "$ENCODED_VIDEO_LOCATION")/" in
+            "$(realpath "$DATA_LOCATION/encoded-video")"/*) bashio::exit.nok "encoded_video_location must be outside $DATA_LOCATION/encoded-video" ;;
+        esac
+        bashio::log.warning "Encoded video folder in $DATA_LOCATION/encoded-video is a real folder. Moving to $DATA_LOCATION/encoded-video_old"
+        # Immich refuses to start if a folder it already checked has no .immich mount file
+        if [ -f "$DATA_LOCATION/encoded-video/.immich" ] && [ ! -f "$ENCODED_VIDEO_LOCATION/.immich" ]; then
+            cp -p "$DATA_LOCATION/encoded-video/.immich" "$ENCODED_VIDEO_LOCATION/.immich"
+        fi
+        mv "$DATA_LOCATION/encoded-video" "$DATA_LOCATION/encoded-video_old"
+    fi
+
+    # Create symbolic link only if it doesn't already exist or is incorrect
+    if [ ! -L "$DATA_LOCATION/encoded-video" ] || [ "$(readlink -f "$DATA_LOCATION/encoded-video")" != "$ENCODED_VIDEO_LOCATION" ]; then
+        ln -sfn "$ENCODED_VIDEO_LOCATION" "$DATA_LOCATION/encoded-video"
+    fi
+fi
+
 ##################
 # REDIS LOCATION #
 ##################

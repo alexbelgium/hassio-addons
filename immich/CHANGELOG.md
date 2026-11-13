@@ -1,4 +1,7 @@
  
+## 3.4.0.1 (2026-11-13)
+- Add optional `encoded_video_location` option to store transcoded videos outside `data_location`, like `library_location` (#3238)
+
 ## 3.4.0 (2026-11-10)
 - Update to latest version from ghcr.io/imagegenius/immich:3
  
