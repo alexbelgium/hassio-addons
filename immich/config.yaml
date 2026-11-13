@@ -134,6 +134,7 @@ schema:
   cifsusername: str?
   data_location: str
   library_location: str?
+  encoded_video_location: str?
   localdisks: str?
   networkdisks: str?
   skip_permissions_check: bool?

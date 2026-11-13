@@ -54,6 +54,7 @@ Webui can be found at `<your-ip>:8080`. PostgreSQL can be either internal or ext
 |--------|------|---------|-------------|
 | `data_location` | str | `/share/immich` | Path where Immich data is stored |
 | `library_location` | str | | Path to photo/video library |
+| `encoded_video_location` | str | | Path for transcoded videos (`encoded-video` folder), e.g. on a network disk |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19. |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
@@ -117,7 +118,6 @@ This addon supports custom scripts and environment variables through the `app_co
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
-- **Custom folder locations**: as in Immich's [custom locations guide](https://docs.immich.app/guides/custom-locations), set `THUMB_LOCATION`, `ENCODED_VIDEO_LOCATION`, `PROFILE_LOCATION` or `BACKUP_LOCATION` in `env_vars` to store that folder outside `data_location`. The existing folder is renamed to `<folder>_old`; move its files to the new location yourself.
 
 ## Installation
 
