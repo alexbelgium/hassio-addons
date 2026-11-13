@@ -103,9 +103,9 @@ if bashio::config.has_value "encoded_video_location"; then
     mkdir -p "$ENCODED_VIDEO_LOCATION"
     chown -R "$PUID":"$PGID" "$ENCODED_VIDEO_LOCATION"
 
-    # Check if the existing folder is a directory and not a symlink and has contents
-    if [ -d "$DATA_LOCATION/encoded-video" ] && [ ! -L "$DATA_LOCATION/encoded-video" ] && [ "$(ls -A "$DATA_LOCATION/encoded-video")" ]; then
-        bashio::log.warning "Encoded video folder in $DATA_LOCATION/encoded-video already exists, is a real folder, and is not empty. Moving to $DATA_LOCATION/encoded-video_old"
+    # Move the existing real folder aside (Immich always keeps a .immich file in it)
+    if [ -d "$DATA_LOCATION/encoded-video" ] && [ ! -L "$DATA_LOCATION/encoded-video" ]; then
+        bashio::log.warning "Encoded video folder in $DATA_LOCATION/encoded-video is a real folder. Moving to $DATA_LOCATION/encoded-video_old"
         mv "$DATA_LOCATION/encoded-video" "$DATA_LOCATION/encoded-video_old"
     fi
 
