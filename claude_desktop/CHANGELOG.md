@@ -1,3 +1,8 @@
+## 20261113 (2026-11-13)
+- **New version format.** The add-on version is now the build date as `YYYYMMDD` (e.g. `20261113`), with `.1`, `.2`… when it is bumped more than once the same day. It replaces the opaque `07308545.N` counter, which only came from an old upstream image tag.
+- Why not `2026.11.13`: Home Assistant compares versions section by section, so `2026` < `07308545` and every existing install would treat a dotted date as a downgrade and never be offered it (the reason `2026.10.01` and `2026.10.13` were reverted). `20261113` sorts above `07308545.30`, so this is a normal update.
+- The updater bot now keeps this format on today's date instead of counting the number up.
+
 ## 07308545.30 (13-11-2026)
 - Minor bugs fixed
 ## 2026.10.13 (13-11-2026)

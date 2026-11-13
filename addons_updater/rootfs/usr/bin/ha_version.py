@@ -123,6 +123,18 @@ def is_date_like(number: str) -> bool:
     return True
 
 
+def is_compact_date(number: str) -> bool:
+    """Return True for a real "YYYYMMDD", with or without a ".N" counter."""
+    parts = number.split(".")
+    if len(parts) > 2 or len(parts[0]) != 8 or not is_year(parts[0][:4]):
+        return False
+    try:
+        date(int(parts[0][:4]), int(parts[0][4:6]), int(parts[0][6:]))
+    except ValueError:
+        return False
+    return True
+
+
 def increment(number: str) -> str:
     """Increment the last section, keeping any zero padding."""
     parts = number.split(".")
@@ -179,6 +191,15 @@ def local_candidates(current: str, today: date, release: str) -> Iterator[str]:
         # several upstream releases land on the same day.
         yield calver
         if dotted.group("number").count(".") > 2:
+            yield dotted.group("prefix") + increment(dotted.group("number"))
+        yield from counters(normalised)
+    elif dotted and is_compact_date(dotted.group("number")):
+        # "YYYYMMDD" addon, used where a dotted calendar version would sort
+        # below the scheme it replaced (e.g. "2026.11.13" < "07308545.29"):
+        # move to today rather than counting the date forward, then count up
+        # with ".1", ".2" when several upstream releases land the same day.
+        yield dotted.group("prefix") + today.strftime("%Y%m%d")
+        if "." in dotted.group("number"):
             yield dotted.group("prefix") + increment(dotted.group("number"))
         yield from counters(normalised)
     elif dotted:
@@ -268,6 +289,16 @@ SELFTESTS = (
     ("2026.07.30.2", "version-3c4d5e6f", "2026.08.01"),
     # A version dated in the future is never downgraded.
     ("2026.09.15", "version-4d5e6f70", "2026.09.15.1"),
+    # Compact "YYYYMMDD" versions track the date the same way...
+    ("20260720", "v3.3.16+claude5.1300.0", "20260801"),
+    ("20260801", "v3.3.16+claude5.1300.0", "20260801.1"),
+    ("20260801.1", "v3.3.16+claude5.1301.0", "20260801.2"),
+    ("20260730.2", "version-3c4d5e6f", "20260801"),
+    ("20260915", "version-4d5e6f70", "20260915.1"),
+    # ... while upstream date tags are still used as they are, and an
+    # 8-digit number that is no date keeps counting.
+    ("20260720.3", "20260725", "20260725"),
+    ("07308545.29", "v3.3.16+claude5.1300.0", "07308545.30"),
     # Switching between schemes, in both directions.
     ("version-bf9e0b4f", "3.0.4", "3.0.4"),
     ("3.0.4", "version-bf9e0b4f", "3.0.5"),
