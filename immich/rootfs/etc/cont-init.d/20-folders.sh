@@ -104,6 +104,9 @@ if bashio::config.has_value "encoded_video_location"; then
 
     # Move the existing real folder aside (Immich always keeps a .immich file in it)
     if [ -d "$DATA_LOCATION/encoded-video" ] && [ ! -L "$DATA_LOCATION/encoded-video" ]; then
+        case "$(realpath -m "$ENCODED_VIDEO_LOCATION")/" in
+            "$(realpath "$DATA_LOCATION/encoded-video")"/*) bashio::exit.nok "encoded_video_location must be outside $DATA_LOCATION/encoded-video" ;;
+        esac
         bashio::log.warning "Encoded video folder in $DATA_LOCATION/encoded-video is a real folder. Moving to $DATA_LOCATION/encoded-video_old"
         # Immich refuses to start if a folder it already checked has no .immich mount file
         if [ -f "$DATA_LOCATION/encoded-video/.immich" ] && [ ! -f "$ENCODED_VIDEO_LOCATION/.immich" ]; then
