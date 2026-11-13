@@ -93,33 +93,33 @@ if bashio::config.has_value "library_location"; then
     fi
 fi
 
-##########################
-# ENCODED VIDEO LOCATION #
-##########################
+###########################
+# CUSTOM FOLDER LOCATIONS #
+###########################
 
-if bashio::config.has_value "encoded_video_location"; then
-    ENCODED_VIDEO_LOCATION="$(bashio::config 'encoded_video_location')"
-    bashio::log.info "Setting encoded video location to $ENCODED_VIDEO_LOCATION. This will not move any of your files, you'll need to do this manually"
-    mkdir -p "$ENCODED_VIDEO_LOCATION"
-    chown -R "$PUID":"$PGID" "$ENCODED_VIDEO_LOCATION"
+# Immich's custom-locations guide sets these through env_vars-style variables mounted over
+# <media>/<folder>; the server itself never reads them, so recreate the mounts as symlinks
+for entry in THUMB_LOCATION:thumbs ENCODED_VIDEO_LOCATION:encoded-video PROFILE_LOCATION:profile BACKUP_LOCATION:backups; do
+    var="${entry%%:*}"
+    folder="$DATA_LOCATION/${entry#*:}"
+    target="${!var:-}"
+    [ -n "$target" ] || continue
+    bashio::log.info "Setting $var: $folder now points to $target. Existing files are not moved, you'll need to do this manually"
+    mkdir -p "$target"
 
-    # Move the existing real folder aside (Immich always keeps a .immich file in it)
-    if [ -d "$DATA_LOCATION/encoded-video" ] && [ ! -L "$DATA_LOCATION/encoded-video" ]; then
-        bashio::log.warning "Encoded video folder in $DATA_LOCATION/encoded-video is a real folder. Moving to $DATA_LOCATION/encoded-video_old"
-        mv "$DATA_LOCATION/encoded-video" "$DATA_LOCATION/encoded-video_old"
+    if [ -d "$folder" ] && [ ! -L "$folder" ]; then
+        bashio::log.warning "$folder is a real folder. Moving it to ${folder}_old"
+        # Immich refuses to start if a folder it already checked has no .immich file
+        if [ -f "$folder/.immich" ] && [ ! -f "$target/.immich" ]; then
+            cp -p "$folder/.immich" "$target/.immich"
+        fi
+        mv "$folder" "${folder}_old"
     fi
 
-    # Immich refuses to start if a folder it already checked has no .immich mount file
-    if [ ! -f "$ENCODED_VIDEO_LOCATION/.immich" ]; then
-        date +%s000 > "$ENCODED_VIDEO_LOCATION/.immich"
-        chown "$PUID":"$PGID" "$ENCODED_VIDEO_LOCATION/.immich"
+    if [ "$(readlink -f "$folder")" != "$(readlink -f "$target")" ]; then
+        ln -sfn "$target" "$folder"
     fi
-
-    # Create symbolic link only if it doesn't already exist or is incorrect
-    if [ ! -L "$DATA_LOCATION/encoded-video" ] || [ "$(readlink -f "$DATA_LOCATION/encoded-video")" != "$ENCODED_VIDEO_LOCATION" ]; then
-        ln -sfn "$ENCODED_VIDEO_LOCATION" "$DATA_LOCATION/encoded-video"
-    fi
-fi
+done
 
 ##################
 # REDIS LOCATION #

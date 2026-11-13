@@ -1,6 +1,6 @@
  
 ## 3.4.0.1 (2026-11-13)
-- Add optional `encoded_video_location` option to store transcoded videos outside `data_location`, like `library_location` (#3238)
+- Fix `THUMB_LOCATION`, `ENCODED_VIDEO_LOCATION`, `PROFILE_LOCATION` and `BACKUP_LOCATION` set through `env_vars` having no effect: they now relocate the matching folder inside `data_location`, as in the upstream docker-compose custom-locations guide (#3238)
 
 ## 3.4.0 (2026-11-10)
 - Update to latest version from ghcr.io/imagegenius/immich:3
