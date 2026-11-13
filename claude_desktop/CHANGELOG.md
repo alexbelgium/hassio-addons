@@ -1,3 +1,7 @@
+## 07308545.29 (2026-11-13)
+- Install `gh` from GitHub's apt repository instead of Debian Bookworm's (frozen at 2.23, without multi-account `gh auth switch`)
+- Upgrade Claude Code and the GitHub CLI at every start, alongside Claude Desktop
+
  
 ## 07308545.28 (2026-11-11)
 - Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)

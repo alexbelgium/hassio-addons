@@ -116,11 +116,15 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
 # started via the pre-existing START_DOCKER env var) — installing Debian's docker.io package
 # on top pulls in Debian's own containerd/runc, which apt refuses because they Conflict with
 # the base image's already-installed containerd.io.
+# gh comes from GitHub's own apt repo: Debian Bookworm's gh is frozen at 2.23, which predates
+# multi-account `gh auth switch`. 81-claude_update.sh upgrades these vendor-repo packages at boot.
 RUN install -d -m 0755 /etc/apt/keyrings && \
     curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
     curl -fsSLo /etc/apt/keyrings/claude-code.asc https://downloads.claude.ai/keys/claude-code.asc && \
+    curl -fsSLo /etc/apt/keyrings/githubcli-archive-keyring.gpg https://cli.github.com/packages/githubcli-archive-keyring.gpg && \
     echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" > /etc/apt/sources.list.d/claude-desktop.list && \
     echo "deb [signed-by=/etc/apt/keyrings/claude-code.asc] https://downloads.claude.ai/claude-code/apt/stable stable main" > /etc/apt/sources.list.d/claude-code.list && \
+    echo "deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" > /etc/apt/sources.list.d/github-cli.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         claude-desktop \
@@ -139,6 +143,7 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
         libseccomp2 \
         libcap-ng0 && \
     test -x /usr/bin/claude && \
+    gh --version && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
