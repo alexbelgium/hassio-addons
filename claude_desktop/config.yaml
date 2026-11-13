@@ -2,6 +2,9 @@ arch:
   - aarch64
   - amd64
 audio: true
+backup_exclude:
+  - "*/cache/"
+  - "*/logs/*"
 description: "Claude Desktop with Headroom, RTK, and TokenSave optimization"
 devices:
   - /dev/sda
