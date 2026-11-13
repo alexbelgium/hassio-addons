@@ -9,46 +9,23 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG RTK_VERSION="v0.43.0"
-ARG RTK_COMMIT="5a7880d404db8364d602f2ecdc41dd790f64013f"
-ARG TOKENSAVE_VERSION="7.4.0"
-ARG VIRTIOFSD_VERSION="1.14.0"
 
-# The upstream aarch64 release is cross-built on ubuntu-latest and requires
-# GLIBC 2.39. Build the pinned source on Bookworm instead so it is compatible
-# with the add-on runtime on both supported architectures.
-FROM rust:1.91-bookworm AS rtk-builder
-ARG RTK_VERSION
-ARG RTK_COMMIT
-RUN git clone --depth 1 --branch "${RTK_VERSION}" https://github.com/rtk-ai/rtk.git /src/rtk && \
-    test "$(git -C /src/rtk rev-parse HEAD)" = "${RTK_COMMIT}" && \
-    cd /src/rtk && \
-    cargo build --release --locked && \
-    install -D -m 0755 target/release/rtk /out/rtk && \
-    /out/rtk --version
-
-# tokensave ships no Bookworm-compatible prebuilt binary either; build the pinned
-# crates.io release from source so GLIBC matches the add-on runtime.
-FROM rust:1.91-bookworm AS tokensave-builder
-ARG TOKENSAVE_VERSION
-RUN cargo install tokensave --version "${TOKENSAVE_VERSION}" --locked --root /out && \
-    /out/bin/tokensave --version
-
-# virtiofsd is only packaged for Debian trixie/sid, not Bookworm or bookworm-backports;
-# installing the trixie .deb on the Bookworm runtime would pull a binary linked against a
-# newer GLIBC. Build the pinned crates.io release from source on Bookworm so the daemon's
-# ABI matches the add-on runtime (same rationale as the rtk and tokensave builders above).
+# virtiofsd publishes no prebuilt binaries and Debian's package lags upstream, so build the
+# current crates.io release from source on Trixie, the same Debian release as the add-on
+# runtime, so the daemon's GLIBC matches.
 # Cowork shares the workspace into its qemu microVM through virtiofsd.
-FROM rust:1.91-bookworm AS virtiofsd-builder
-ARG VIRTIOFSD_VERSION
-RUN apt-get update && \
+FROM rust:1-trixie AS virtiofsd-builder
+# BUILD_DATE busts the cache so each image build compiles the current crates.io release
+ARG BUILD_DATE=unknown
+RUN echo "Build date marker: ${BUILD_DATE}" && \
+    apt-get update && \
     apt-get install -y --no-install-recommends \
         libseccomp-dev \
         libcap-ng-dev \
         pkg-config \
         clang \
         libclang-dev && \
-    cargo install virtiofsd --version "${VIRTIOFSD_VERSION}" --locked --root /out && \
+    cargo install virtiofsd --locked --root /out && \
     /out/bin/virtiofsd --version && \
     rm -rf /var/lib/apt/lists/*
 
@@ -116,11 +93,15 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
 # started via the pre-existing START_DOCKER env var) — installing Debian's docker.io package
 # on top pulls in Debian's own containerd/runc, which apt refuses because they Conflict with
 # the base image's already-installed containerd.io.
+# gh comes from GitHub's own apt repo: Debian's gh lags upstream (Bookworm froze at 2.23, which predates
+# multi-account `gh auth switch`). 81-claude_update.sh upgrades these vendor-repo packages at boot.
 RUN install -d -m 0755 /etc/apt/keyrings && \
     curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://downloads.claude.ai/claude-desktop/key.asc && \
     curl -fsSLo /etc/apt/keyrings/claude-code.asc https://downloads.claude.ai/keys/claude-code.asc && \
+    curl -fsSLo /etc/apt/keyrings/githubcli-archive-keyring.gpg https://cli.github.com/packages/githubcli-archive-keyring.gpg && \
     echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" > /etc/apt/sources.list.d/claude-desktop.list && \
     echo "deb [signed-by=/etc/apt/keyrings/claude-code.asc] https://downloads.claude.ai/claude-code/apt/stable stable main" > /etc/apt/sources.list.d/claude-code.list && \
+    echo "deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" > /etc/apt/sources.list.d/github-cli.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         claude-desktop \
@@ -139,12 +120,13 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
         libseccomp2 \
         libcap-ng0 && \
     test -x /usr/bin/claude && \
+    gh --version && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # No bespoke GPU driver install. The LSIO base image already provides the userspace stack that
 # hardware rendering actually uses, and it does so at a newer version than adding it here would:
-# libgl1-mesa-dri and mesa-vulkan-drivers come from bookworm-backports Mesa 25.0.7, where a
+# libgl1-mesa-dri and mesa-vulkan-drivers come from the base image's own Mesa, where a
 # plain `apt-get install` of the same names is at best a no-op.
 #
 # There used to be an amd64 block here installing intel-media-va-driver-non-free, libgl1-mesa-dri,
@@ -166,51 +148,13 @@ RUN install -d -m 0755 /etc/apt/keyrings && \
 # Repairing the guard would therefore have turned dead code into an untested apt transaction
 # that swaps a base-image package for no measured benefit.
 
-# Install the current upstream hadolint and actionlint releases for both supported
-ARG HADOLINT_VERSION=v2.14.0
-ARG ACTIONLINT_VERSION=v1.7.12
-
-RUN set -eux; \
-    case "${TARGETARCH}" in \
-        amd64) hadolint_arch="x86_64"; actionlint_arch="amd64" ;; \
-        arm64) hadolint_arch="arm64"; actionlint_arch="arm64" ;; \
-        *) echo "Unsupported validation-tools architecture: ${TARGETARCH}" >&2; exit 1 ;; \
-    esac; \
-    curl -fsSL --retry 3 --retry-delay 2 \
-        -o /usr/local/bin/hadolint \
-        "https://github.com/hadolint/hadolint/releases/download/${HADOLINT_VERSION}/hadolint-linux-${hadolint_arch}"; \
-    chmod 0755 /usr/local/bin/hadolint; \
-    curl -fsSL --retry 3 --retry-delay 2 \
-        -o /tmp/actionlint.tar.gz \
-        "https://github.com/rhysd/actionlint/releases/download/${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION#v}_linux_${actionlint_arch}.tar.gz"; \
-    tar -xzf /tmp/actionlint.tar.gz -C /tmp actionlint; \
-    install -m 0755 /tmp/actionlint /usr/local/bin/actionlint; \
-    rm -f /tmp/actionlint /tmp/actionlint.tar.gz; \
-    hadolint --version; \
-    actionlint -version
-
-# Copy the pinned Bookworm-built RTK and tokensave binaries and execute them in the final
-# image. This makes an ABI mismatch fail the image build instead of surfacing at runtime.
-COPY --from=rtk-builder /out/rtk /usr/local/bin/rtk
-COPY --from=tokensave-builder /out/bin/tokensave /usr/local/bin/tokensave
+# virtiofsd is built from source in its own stage; executing it here makes an ABI mismatch
+# fail the image build instead of surfacing at runtime.
 COPY --from=virtiofsd-builder /out/bin/virtiofsd /usr/bin/virtiofsd
-RUN /usr/local/bin/rtk --version && \
-    /usr/local/bin/tokensave --version && \
-    /usr/bin/virtiofsd --version
-
-# Install only the Headroom proxy, code-compression, and MCP features used by this add-on,
-# plus mcp-proxy (stdio->HTTP bridge for the Home Assistant MCP server) and uv (fast
-# installer used for the additional_pip option). The `proxy` extra already ships the ONNX
-# runtime + transformers needed by the Kompress compressor — the `ml` extra (full PyTorch,
-# ~5 GB with CUDA wheels) is deliberately NOT installed; svc-headroom pre-warms the ONNX
-# model into the persistent HF cache instead.
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends nodejs && \
-    pip3 install --break-system-packages "headroom-ai[proxy,code,mcp]" mcp-proxy uv websockets && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /root/.cache
+RUN /usr/bin/virtiofsd --version
 
 # Fix Selkies startup when PulseAudio module initialization fails
+# hadolint ignore=DL3059
 RUN if [ -f /etc/s6-overlay/s6-rc.d/svc-selkies/run ]; then \
         sed -i "1a\set +e" /etc/s6-overlay/s6-rc.d/svc-selkies/run; \
     fi
@@ -220,8 +164,73 @@ ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh 00-local_mounts.s
 
 # BUILD_DATE changes on every CI run, busting this layer's cache. The builder reuses
 # the layers of the previous image, so without it a rebuild keeps the .templates/
-# scripts downloaded by the first build and never picks up later template changes
+# scripts and the "latest" tool downloads below from the first build and never picks up
+# later changes. Layers that must track latest releases are placed after it.
 ARG BUILD_DATE=unknown
+
+# Install the latest upstream hadolint, actionlint, rtk and tokensave releases for both
+# supported architectures. The release tag is the redirect target of /releases/latest (no
+# GitHub API, so no token is needed in CI), resolved once per tool and reused for the binary
+# and its checksum file; every download is verified with sha256sum and the build fails on a
+# mismatch or a missing checksum line. rtk ships static musl builds; the tokensave prebuilt
+# needs GLIBC 2.34, which this base image exceeds. Placed after BUILD_DATE so each CI build
+# re-resolves "latest" instead of reusing a cached layer.
+# hadolint ignore=DL3003,DL3059,DL4006
+RUN set -eux; \
+    case "${TARGETARCH}" in \
+        amd64) hadolint_arch="x86_64"; actionlint_arch="amd64"; rtk_arch="x86_64"; tokensave_arch="x86_64" ;; \
+        arm64) hadolint_arch="arm64"; actionlint_arch="arm64"; rtk_arch="aarch64"; tokensave_arch="aarch64" ;; \
+        *) echo "Unsupported validation-tools architecture: ${TARGETARCH}" >&2; exit 1 ;; \
+    esac; \
+    tmp="$(mktemp -d)"; \
+    latest_tag() { url="$(curl -fsSLI --retry 3 --retry-delay 2 -o /dev/null -w '%{url_effective}' "https://github.com/$1/releases/latest")" || exit 1; case "${url}" in */releases/tag/?*) echo "${url##*/}" ;; *) echo "Cannot resolve latest release of $1: ${url}" >&2; exit 1 ;; esac; }; \
+    fetch() { curl -fsSL --retry 3 --retry-delay 2 -o "${tmp}/$(basename "$1")" "$1"; }; \
+    verify() { line="$(awk -v a="$2" '{n=$2; sub(/^\*/, "", n); if (n == a) print}' "${tmp}/$1")"; test -n "${line}"; (cd "${tmp}" && echo "${line}" | sha256sum -c -); }; \
+    hadolint_tag="$(latest_tag hadolint/hadolint)"; \
+    base="https://github.com/hadolint/hadolint/releases/download/${hadolint_tag}"; \
+    asset="hadolint-linux-${hadolint_arch}"; \
+    fetch "${base}/${asset}"; fetch "${base}/checksums.sha256"; \
+    verify checksums.sha256 "${asset}"; \
+    install -m 0755 "${tmp}/${asset}" "/usr/local/bin/hadolint"; \
+    actionlint_tag="$(latest_tag rhysd/actionlint)"; \
+    base="https://github.com/rhysd/actionlint/releases/download/${actionlint_tag}"; \
+    asset="actionlint_${actionlint_tag#v}_linux_${actionlint_arch}.tar.gz"; \
+    fetch "${base}/${asset}"; fetch "${base}/actionlint_${actionlint_tag#v}_checksums.txt"; \
+    verify "actionlint_${actionlint_tag#v}_checksums.txt" "${asset}"; \
+    mkdir "${tmp}/actionlint"; tar -xzf "${tmp}/${asset}" -C "${tmp}/actionlint" actionlint; \
+    install -m 0755 "${tmp}/actionlint/actionlint" "/usr/local/bin/actionlint"; \
+    rtk_tag="$(latest_tag rtk-ai/rtk)"; \
+    base="https://github.com/rtk-ai/rtk/releases/download/${rtk_tag}"; \
+    asset="rtk-${rtk_arch}-unknown-linux-musl.tar.gz"; \
+    fetch "${base}/${asset}"; fetch "${base}/checksums.txt"; \
+    verify checksums.txt "${asset}"; \
+    mkdir "${tmp}/rtk"; tar -xzf "${tmp}/${asset}" -C "${tmp}/rtk"; \
+    install -m 0755 "$(find "${tmp}/rtk" -type f -name rtk | head -n 1)" "/usr/local/bin/rtk"; \
+    tokensave_tag="$(latest_tag aovestdipaperino/tokensave)"; \
+    base="https://github.com/aovestdipaperino/tokensave/releases/download/${tokensave_tag}"; \
+    asset="tokensave-${tokensave_tag}-${tokensave_arch}-linux.tar.gz"; \
+    fetch "${base}/${asset}"; fetch "${base}/SHA256SUMS"; \
+    verify SHA256SUMS "${asset}"; \
+    mkdir "${tmp}/tokensave"; tar -xzf "${tmp}/${asset}" -C "${tmp}/tokensave"; \
+    install -m 0755 "$(find "${tmp}/tokensave" -type f -name tokensave | head -n 1)" "/usr/local/bin/tokensave"; \
+    rm -rf "${tmp}"; \
+    hadolint --version; actionlint -version; rtk --version; tokensave --version
+
+# Install only the Headroom proxy, code-compression, and MCP features used by this add-on,
+# plus mcp-proxy (stdio->HTTP bridge for the Home Assistant MCP server) and uv (fast
+# installer used for the additional_pip option). The `proxy` extra already ships the ONNX
+# runtime + transformers needed by the Kompress compressor — the `ml` extra (full PyTorch,
+# ~5 GB with CUDA wheels) is deliberately NOT installed; svc-headroom pre-warms the ONNX
+# model into the persistent HF cache instead. Upgraded to the latest releases on every image build.
+# hadolint ignore=DL3013,DL3042,DL3059
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends nodejs && \
+    pip3 install --break-system-packages --upgrade "headroom-ai[proxy,code,mcp]" mcp-proxy uv && \
+    headroom --version && \
+    mcp-proxy --help >/dev/null && \
+    uv --version && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /root/.cache
 
 # Automatic modules download
 RUN echo "Build date marker: ${BUILD_DATE}" && \
