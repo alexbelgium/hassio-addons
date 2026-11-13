@@ -183,30 +183,30 @@ RUN set -eux; \
         *) echo "Unsupported validation-tools architecture: ${TARGETARCH}" >&2; exit 1 ;; \
     esac; \
     tmp="$(mktemp -d)"; \
-    latest_tag() { curl -fsSLI --retry 3 --retry-delay 2 -o /dev/null -w '%{url_effective}' "https://github.com/$1/releases/latest" | sed 's#.*/##'; }; \
+    latest_tag() { url="$(curl -fsSLI --retry 3 --retry-delay 2 -o /dev/null -w '%{url_effective}' "https://github.com/$1/releases/latest")" || exit 1; case "${url}" in */releases/tag/?*) echo "${url##*/}" ;; *) echo "Cannot resolve latest release of $1: ${url}" >&2; exit 1 ;; esac; }; \
     fetch() { curl -fsSL --retry 3 --retry-delay 2 -o "${tmp}/$(basename "$1")" "$1"; }; \
     verify() { line="$(awk -v a="$2" '{n=$2; sub(/^\*/, "", n); if (n == a) print}' "${tmp}/$1")"; test -n "${line}"; (cd "${tmp}" && echo "${line}" | sha256sum -c -); }; \
-    hadolint_tag="$(latest_tag hadolint/hadolint)"; test -n "${hadolint_tag}" && test "${hadolint_tag}" != "latest"; \
+    hadolint_tag="$(latest_tag hadolint/hadolint)"; \
     base="https://github.com/hadolint/hadolint/releases/download/${hadolint_tag}"; \
     asset="hadolint-linux-${hadolint_arch}"; \
     fetch "${base}/${asset}"; fetch "${base}/checksums.sha256"; \
     verify checksums.sha256 "${asset}"; \
     install -m 0755 "${tmp}/${asset}" "/usr/local/bin/hadolint"; \
-    actionlint_tag="$(latest_tag rhysd/actionlint)"; test -n "${actionlint_tag}" && test "${actionlint_tag}" != "latest"; \
+    actionlint_tag="$(latest_tag rhysd/actionlint)"; \
     base="https://github.com/rhysd/actionlint/releases/download/${actionlint_tag}"; \
     asset="actionlint_${actionlint_tag#v}_linux_${actionlint_arch}.tar.gz"; \
     fetch "${base}/${asset}"; fetch "${base}/actionlint_${actionlint_tag#v}_checksums.txt"; \
     verify "actionlint_${actionlint_tag#v}_checksums.txt" "${asset}"; \
     mkdir "${tmp}/actionlint"; tar -xzf "${tmp}/${asset}" -C "${tmp}/actionlint" actionlint; \
     install -m 0755 "${tmp}/actionlint/actionlint" "/usr/local/bin/actionlint"; \
-    rtk_tag="$(latest_tag rtk-ai/rtk)"; test -n "${rtk_tag}" && test "${rtk_tag}" != "latest"; \
+    rtk_tag="$(latest_tag rtk-ai/rtk)"; \
     base="https://github.com/rtk-ai/rtk/releases/download/${rtk_tag}"; \
     asset="rtk-${rtk_arch}-unknown-linux-musl.tar.gz"; \
     fetch "${base}/${asset}"; fetch "${base}/checksums.txt"; \
     verify checksums.txt "${asset}"; \
     mkdir "${tmp}/rtk"; tar -xzf "${tmp}/${asset}" -C "${tmp}/rtk"; \
     install -m 0755 "$(find "${tmp}/rtk" -type f -name rtk | head -n 1)" "/usr/local/bin/rtk"; \
-    tokensave_tag="$(latest_tag aovestdipaperino/tokensave)"; test -n "${tokensave_tag}" && test "${tokensave_tag}" != "latest"; \
+    tokensave_tag="$(latest_tag aovestdipaperino/tokensave)"; \
     base="https://github.com/aovestdipaperino/tokensave/releases/download/${tokensave_tag}"; \
     asset="tokensave-${tokensave_tag}-${tokensave_arch}-linux.tar.gz"; \
     fetch "${base}/${asset}"; fetch "${base}/SHA256SUMS"; \
@@ -225,11 +225,10 @@ RUN set -eux; \
 # hadolint ignore=DL3013,DL3042,DL3059
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs && \
-    pip3 install --break-system-packages --upgrade "headroom-ai[proxy,code,mcp]" mcp-proxy uv websockets && \
+    pip3 install --break-system-packages --upgrade "headroom-ai[proxy,code,mcp]" mcp-proxy uv && \
     headroom --version && \
     mcp-proxy --help >/dev/null && \
     uv --version && \
-    python3 -c 'import websockets' && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /root/.cache
 
