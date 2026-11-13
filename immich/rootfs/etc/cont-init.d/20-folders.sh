@@ -93,6 +93,34 @@ if bashio::config.has_value "library_location"; then
     fi
 fi
 
+##########################
+# ENCODED VIDEO LOCATION #
+##########################
+
+if bashio::config.has_value "encoded_video_location"; then
+    ENCODED_VIDEO_LOCATION="$(bashio::config 'encoded_video_location')"
+    bashio::log.info "Setting encoded video location to $ENCODED_VIDEO_LOCATION. This will not move any of your files, you'll need to do this manually"
+    mkdir -p "$ENCODED_VIDEO_LOCATION"
+    chown -R "$PUID":"$PGID" "$ENCODED_VIDEO_LOCATION"
+
+    # Check if the existing folder is a directory and not a symlink and has contents
+    if [ -d "$DATA_LOCATION/encoded-video" ] && [ ! -L "$DATA_LOCATION/encoded-video" ] && [ "$(ls -A "$DATA_LOCATION/encoded-video")" ]; then
+        bashio::log.warning "Encoded video folder in $DATA_LOCATION/encoded-video already exists, is a real folder, and is not empty. Moving to $DATA_LOCATION/encoded-video_old"
+        mv "$DATA_LOCATION/encoded-video" "$DATA_LOCATION/encoded-video_old"
+    fi
+
+    # Immich refuses to start if a folder it already checked has no .immich mount file
+    if [ ! -f "$ENCODED_VIDEO_LOCATION/.immich" ]; then
+        date +%s000 > "$ENCODED_VIDEO_LOCATION/.immich"
+        chown "$PUID":"$PGID" "$ENCODED_VIDEO_LOCATION/.immich"
+    fi
+
+    # Create symbolic link only if it doesn't already exist or is incorrect
+    if [ ! -L "$DATA_LOCATION/encoded-video" ] || [ "$(readlink -f "$DATA_LOCATION/encoded-video")" != "$ENCODED_VIDEO_LOCATION" ]; then
+        ln -sfn "$ENCODED_VIDEO_LOCATION" "$DATA_LOCATION/encoded-video"
+    fi
+fi
+
 ##################
 # REDIS LOCATION #
 ##################
