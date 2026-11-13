@@ -1,3 +1,7 @@
+## 2026.11 (2026-11-13)
+
+- Compact calendar versions (`YYYYMMDD`, optionally `YYYYMMDD.N`) now move to today's date when the addon is bumped for an upstream release that carries no usable version, then count up (`.1`, `.2`) on the same day, as dotted `YYYY.MM.DD` versions already did. Previously the number was simply incremented (`20261113` -> `20261114` on the 13th). Upstream tags that are themselves dates (birdnet-go) are unaffected
+
 ## 2026.10.1 (2026-10-28)
 
 - With `dockerhub_by_date: true`, skip the addon when no tag survives the filters, instead of publishing a version made of the date alone such as `-28-10-2026`
