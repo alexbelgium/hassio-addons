@@ -1,3 +1,5 @@
+## 2026.10.13 (13-11-2026)
+- Minor bugs fixed
 ## 07308545.29 (2026-11-13)
 - Install `gh` from GitHub's apt repository instead of Debian Bookworm's (frozen at 2.23, without multi-account `gh auth switch`)
 - Upgrade Claude Code and the GitHub CLI at every start, alongside Claude Desktop
