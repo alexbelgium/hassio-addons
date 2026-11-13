@@ -1,6 +1,8 @@
 ## 07308545.29 (2026-11-13)
 - Install `gh` from GitHub's apt repository instead of Debian Bookworm's (frozen at 2.23, without multi-account `gh auth switch`)
 - Upgrade Claude Code and the GitHub CLI at every start, alongside Claude Desktop
+- rtk and tokensave now install from their verified (sha256) prebuilt latest releases instead of source builds
+- hadolint, actionlint, virtiofsd and the Python tools (headroom, mcp-proxy, uv, websockets) now resolve their latest release on every image build
 
  
 ## 07308545.28 (2026-11-11)
