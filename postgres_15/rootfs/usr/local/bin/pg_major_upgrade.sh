@@ -116,6 +116,8 @@ finish_swap() {
     if [ ! -d "$PGDATA" ]; then
         mv -T "$WORK/new" "$PGDATA" || return 1
     fi
+    # The work directory only goes once the upgraded cluster really is the one in place
+    [ "$(cat "$PGDATA/PG_VERSION")" = "$NEW" ] || return 1
     echo "${BUILD_VERSION:-}" > "$STAMP"
     sync
     rm -rf "$WORK" "$FAILED"
