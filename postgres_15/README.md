@@ -67,7 +67,30 @@ This addon supports custom scripts and environment variables through the `app_co
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-**Configuration File**: By default `postgresql.conf` is stored in `/config/postgresql.conf` accessible by other addons and Home Assistant. You can modify it using the File Editor addon. For better security, change `CONFIG_LOCATION` to `/data/orig/postgresql.conf` to make it accessible only to this addon.
+**Configuration File**: To change PostgreSQL settings, create a file named `postgresql.override.conf` in the add-on config folder (`/addon_configs/xxx-postgres/`, next to the `database` folder) with one `setting = value` per line, then restart the add-on. It is read last, so it wins over the defaults of the add-on, and it is kept across updates and upgrades. A setting PostgreSQL does not accept prevents it from starting: check the log after a change.
+
+## Automatic updates and upgrades
+
+The add-on follows the upstream image (`ghcr.io/immich-app/postgres`) by itself: new PostgreSQL
+minor releases and new VectorChord / pgvector releases arrive as ordinary add-on updates.
+
+At every start, before PostgreSQL accepts connections, the add-on prepares the database:
+
+- **Extensions** are updated to the versions shipped by the add-on, and VectorChord indexes are
+  rebuilt in the same transaction when VectorChord itself changed. Running Immich add-ons are
+  restarted afterwards.
+
+**Take a backup of the add-on before updating it** (Home Assistant offers it in the update
+dialog). An extension update cannot be undone: going back to an older version of the add-on
+requires restoring that backup.
+
+Requirements for applications using this database:
+
+- Immich: version 2.5.0 or newer (VectorChord 1.x). pgvecto.rs (`vectors`) is no longer shipped;
+  Immich has not used it since its migration to VectorChord.
+
+This add-on stays on PostgreSQL 15. For automatic upgrades to newer PostgreSQL majors, use the
+"Postgres 17" add-on of this repository, which can take over a copy of this database.
 
 ## Installation
 
