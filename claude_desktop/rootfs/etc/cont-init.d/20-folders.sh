@@ -130,7 +130,7 @@ if [ "$LOCATION" != "$DEFAULT_LOCATION" ]; then
 fi
 
 # Re-derived on every boot rather than injected once behind a marker, for the same reason the
-# ~/.bashrc block below is: the run scripts live in the writable layer and survive a restart, so
+# .bashrc block below is: the run scripts live in the writable layer and survive a restart, so
 # a write-once injection pins whatever PUID and CUSTOM_WS_PORT were in force the first time.
 # Raising PUID would leave every service exporting a /run/user/<old-uid> the remapped abc user
 # cannot use, and clearing a custom CUSTOM_WS_PORT would leave Selkies on the old port while
@@ -163,14 +163,25 @@ printf "%s" "$XDG_RUNTIME_DIR" > "$S6_ENVDIR/XDG_RUNTIME_DIR"
 printf "%s" "$SELKIES_WS_PORT" > "$S6_ENVDIR/CUSTOM_WS_PORT"
 # Re-derived on every boot rather than gated on a "does it already say $LOCATION" grep: that
 # guard only ever recognized the CURRENT $LOCATION, so a user who changed data_location and
-# later changed it back left two stale HOME/FM_HOME exports in ~/.bashrc, with the last one
-# (not necessarily the correct one) winning for every interactive shell. The marker makes this
-# idempotent regardless of how many times $LOCATION has changed: strip any previously managed
-# block, then append one that reflects the current value.
+# later changed it back left two stale HOME/FM_HOME exports in the user's .bashrc, with the last
+# one (not necessarily the correct one) winning for every interactive shell. The marker makes
+# this idempotent regardless of how many times $LOCATION has changed: strip any previously
+# managed block, then append one that reflects the current value.
+# Written to "$LOCATION/.bashrc", not ~/.bashrc: this script still runs with the image's default
+# HOME, but abc's interactive shells read the .bashrc of the data location (its passwd home),
+# so the block in ~ was never seen and the one in $LOCATION went stale (wrong HOME broke gh).
+BASHRC="$LOCATION/.bashrc"
 BASHRC_HOME_BEGIN="# --- BEGIN ADDON HOME (managed) ---"
 BASHRC_HOME_END="# --- END ADDON HOME (managed) ---"
-if [ -f ~/.bashrc ]; then
-    sed -i "/^${BASHRC_HOME_BEGIN}\$/,/^${BASHRC_HOME_END}\$/d" ~/.bashrc
+mkdir -p "$LOCATION"
+if [ -f "$BASHRC" ]; then
+    sed -i "/^${BASHRC_HOME_BEGIN}\$/,/^${BASHRC_HOME_END}\$/d" "$BASHRC"
+fi
+# 00-global_var.sh wrote its ADDON ENV block into the startup HOME's .bashrc. When that is not
+# $LOCATION, the copy left in $LOCATION/.bashrc by an earlier boot is stale and, being sourced
+# after /etc/bash.bashrc, would override its current exports (an old github_token kept winning).
+if [ "$(readlink -f "$LOCATION")" != "$(readlink -f "$HOME")" ] && [ -f "$BASHRC" ]; then
+    sed -i "/^# --- BEGIN ADDON ENV (generated) ---\$/,/^# --- END ADDON ENV (generated) ---\$/d" "$BASHRC"
 fi
 {
     printf "%s\n" "$BASHRC_HOME_BEGIN"
@@ -178,7 +189,7 @@ fi
     printf "%s\n" "export FM_HOME=\"$LOCATION\""
     printf "%s\n" "export XDG_CACHE_HOME=\"/tmp/cache\""
     printf "%s\n" "$BASHRC_HOME_END"
-} >> ~/.bashrc
+} >> "$BASHRC"
 
 bashio::log.info "Creating $LOCATION"
 mkdir -p "$LOCATION" /tmp/cache "$XDG_RUNTIME_DIR"
