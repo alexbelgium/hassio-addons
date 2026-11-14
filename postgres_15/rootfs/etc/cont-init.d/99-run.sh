@@ -82,7 +82,7 @@ restart_immich_addons_if_flagged() {
     }
 
     if command -v jq > /dev/null; then
-        for slug in $(echo "$addons_json" | jq -r '.addons[] | select(.state=="started") | .slug'); do
+        for slug in $(echo "$addons_json" | jq -r '.data.addons[] | select(.state=="started") | .slug'); do
             if [[ "$slug" == *immich* ]]; then
                 bashio::log.info "Restarting addon $slug"
                 curl -fsSL -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" "http://supervisor/addons/$slug/restart"

@@ -3,6 +3,7 @@
 - The add-on now updates itself: it follows the upstream image, so PostgreSQL minor releases (now 15.18) and VectorChord / pgvector releases (now 1.1.1 / 0.8.5) arrive as add-on updates
 - BREAKING CHANGE: VectorChord 1.1.1 requires Immich 2.5.0 or newer. Update Immich first if yours is older
 - BREAKING CHANGE: pgvecto.rs (`vectors`) is no longer shipped, upstream stopped building it. It is dropped from databases where nothing uses it; a database that still stores data in its types keeps running but cannot read those columns
+- Fixed: the Immich add-ons were never actually restarted after an extension update, the list of add-ons was read from the wrong place
 - Extensions are now updated before PostgreSQL accepts connections, with the VectorChord indexes rebuilt in the same transaction, so an interrupted update can no longer leave an index unusable. The add-on no longer restarts itself after an extension update
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 
