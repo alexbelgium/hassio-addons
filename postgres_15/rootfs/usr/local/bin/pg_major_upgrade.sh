@@ -211,7 +211,7 @@ main() {
         exit 2
     fi
     if [ ! -x "$BIN/$old/bin/postgres" ]; then
-        log "The data in $PGDATA is from PostgreSQL $old. This add-on can only upgrade from: $(cd "$BIN" && ls -d -- */ | tr -d / | grep -vx "$NEW" | tr '\n' ' ')"
+        log "The data in $PGDATA is from PostgreSQL $old. This add-on can only upgrade from: $(find "$BIN" -mindepth 1 -maxdepth 1 -printf '%f\n' | grep -vx "$NEW" | sort | tr '\n' ' ')"
         exit 2
     fi
     if [ "$old" = "$NEW" ]; then

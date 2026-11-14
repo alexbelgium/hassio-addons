@@ -2,7 +2,7 @@ arch:
   - aarch64
   - amd64
 backup: cold
-description: Postgres 17 with VectorChord support, upgrades older databases automatically
+description: Postgres 17 with VectorChord, upgrades older databases
 environment:
   CONFIG_LOCATION: /config/postgresql.conf
   PGDATA: /config/database

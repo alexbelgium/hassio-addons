@@ -49,6 +49,7 @@ RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -e
 
 # Upgrade a cluster from every older major shipped above, with the script the add-on runs at
 # startup: an upstream image whose pieces do not fit together fails the build
+# hadolint ignore=DL3059
 RUN /usr/local/bin/pg_upgrade_selftest.sh
 
 # Uses /bin for compatibility purposes
