@@ -61,6 +61,10 @@ ENV PACKAGES=""
 COPY ha_autoapps.sh /ha_autoapps.sh
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
+# The Immich add-on of this repository refuses to start against a PostgreSQL or VectorChord
+# outside the range it declares: an image outside it fails here instead (needs curl, from above)
+RUN /usr/local/bin/pg_immich_gate.sh
+
 ################
 # 4 Entrypoint #
 ################

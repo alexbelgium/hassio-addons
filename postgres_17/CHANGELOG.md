@@ -5,6 +5,7 @@
 - BREAKING CHANGE: pgvecto.rs (`vectors`) is no longer shipped, upstream stopped building it. It is dropped from databases where nothing uses it; a database that still stores data in its types keeps running but cannot read those columns
 - Fixed: the Immich add-ons were never actually restarted after an extension update, the list of add-ons was read from the wrong place
 - PostgreSQL settings can be set in `postgresql.override.conf` in the add-on config folder, see the README
+- The build of the add-on now checks its PostgreSQL and VectorChord versions against the range declared by the Immich version of this repository, and fails rather than publish an image Immich would refuse
 - Extensions are now updated before PostgreSQL accepts connections, with the VectorChord indexes rebuilt in the same transaction, so an interrupted update can no longer leave an index unusable. The add-on no longer restarts itself after an extension update
 - Databases from an older PostgreSQL major are upgraded automatically, on a copy: the database is only replaced once the upgraded copy has been started and checked. If the upgrade fails, the database stays on its PostgreSQL major, the server of that previous major is started instead and a notification is shown in Home Assistant. The previous database is kept for at least 7 days after a successful upgrade. See the README
 - The PostgreSQL versions needed for an upgrade are part of the image: nothing is downloaded at startup anymore
