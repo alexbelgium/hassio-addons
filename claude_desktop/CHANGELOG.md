@@ -1,3 +1,7 @@
+ 
+## 20261114 (2026-11-14)
+- Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
+- Upstream tag : v3.3.16+claude5.11492.0
 ## 20261113 (2026-11-13)
 - **New version format.** The add-on version is now the build date as `YYYYMMDD` (e.g. `20261113`), with `.1`, `.2`… when it is bumped more than once the same day. It replaces the opaque `07308545.N` counter, which only came from an old upstream image tag.
 - Why not `2026.11.13`: Home Assistant compares versions section by section, so `2026` < `07308545` and every existing install would treat a dotted date as a downgrade and never be offered it (the reason `2026.10.01` and `2026.10.13` were reverted). `20261113` sorts above `07308545.30`, so this is a normal update.
