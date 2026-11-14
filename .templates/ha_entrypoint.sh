@@ -388,6 +388,14 @@ run_one_script() {
     sed -i "s/^[[:space:]]*chmod /true # chmod /g" "$script"
   fi
 
+  # A cont-init script (20-folders.sh in the webtop add-ons) publishes the user's data_location
+  # here; scripts launched via the /usr/bin/env bashio shebang never read the envdir, so without
+  # this every later script wrote into the image's default home instead.
+  if [ -s "$S6_CONTAINER_ENV/HOME" ] && [ -f "$S6_CONTAINER_ENV/HOME" ]; then
+    HOME="$(cat "$S6_CONTAINER_ENV/HOME")"
+    export HOME
+  fi
+
   sed -i "1s|^.*|#!$shebang|" "$script"
   chmod +x "$script"
 
