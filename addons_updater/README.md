@@ -96,6 +96,20 @@ linux image the tag publishes, and the addon is left alone when there is no labe
 against `ghcr.io`, which serves anonymous pull tokens from `https://ghcr.io/token`; a registry
 authenticating differently, such as Docker Hub, yields no version and the addon is skipped.
 
+A publisher with no moving tag at all, naming each release differently
+(`ghcr.io/immich-app/postgres:17-vectorchord1.1.1-pgvector0.8.5`), is followed by leaving the tag
+out of `upstream_repo` and giving a `~` regular expression as `github_tagfilter`: the newest tag
+matching it, in version order, is the image read. The expression is also where to hold back what
+must not arrive unattended, a new major for instance:
+
+```json
+{
+  "source": "container",
+  "upstream_repo": "ghcr.io/immich-app/postgres",
+  "github_tagfilter": "~^17-vectorchord1[.][0-9.]+-pgvector[0-9.]+$"
+}
+```
+
 The manifest digest is recorded next to the version, in `upstream_digest`, and the addon is
 rebuilt when either of the two moves. A publisher rebuilding the same version, for a base image
 security fix or a packaging revision, repoints the tag at new content under an unchanged label,

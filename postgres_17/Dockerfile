@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 #============================#
 #  ALEXBELGIUM'S DOCKERFILE  #
 #============================#
@@ -14,9 +15,15 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM $BUILD_FROM
+ARG BUILD_UPSTREAM="17-vectorchord1.1.1-pgvector0.8.5"
+
+# Older PostgreSQL majors, from the images of the same upstream release: the same VectorChord
+# and pgvector as the final image, which is what lets their clusters be upgraded, and served
+# as they are when an upgrade fails. The part of the tag after the major is shared
+FROM ghcr.io/immich-app/postgres:15-${BUILD_UPSTREAM#*-} AS pg15
+
+FROM ghcr.io/immich-app/postgres:${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #
@@ -28,19 +35,21 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 
-RUN \
-    # Correct for access
-    for file in /usr/share/postgresql/postgresql.conf.sample /usr/local/share/postgresql/postgresql.conf.sample; do \
-    if [ -f "$file" ]; then sed -i "s|.*listen_addresses(.*)|listen_addresses = '*'(1)|g" "$file" && \
-    sed -i "s|.*data_directory(.*)|data_directory = '/config/database'(1)|g" "$file"; fi; done
-
 ##################
 # 3 Install apps #
 ##################
 
+# Older PostgreSQL majors
+COPY --from=pg15 /usr/lib/postgresql/15 /usr/lib/postgresql/15
+COPY --from=pg15 /usr/share/postgresql/15 /usr/share/postgresql/15
+
 # Add rootfs
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
+
+# Upgrade a cluster from every older major shipped above, with the script the add-on runs at
+# startup: an upstream image whose pieces do not fit together fails the build
+RUN /usr/local/bin/pg_upgrade_selftest.sh
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005

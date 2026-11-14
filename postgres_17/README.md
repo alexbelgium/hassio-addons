@@ -61,6 +61,37 @@ This addon supports custom scripts and environment variables through the `app_co
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
+## Automatic updates and upgrades
+
+The add-on follows the upstream image (`ghcr.io/immich-app/postgres`) by itself: new PostgreSQL
+minor releases and new VectorChord / pgvector releases arrive as ordinary add-on updates.
+
+At every start, before PostgreSQL accepts connections, the add-on prepares the database:
+
+- **Extensions** are updated to the versions shipped by the add-on, and VectorChord indexes are
+  rebuilt in the same transaction when VectorChord itself changed. Running Immich add-ons are
+  restarted afterwards.
+- **A database from an older PostgreSQL major** (15) is upgraded with `pg_upgrade`. The upgrade
+  runs on a copy; your database is only replaced once the upgraded copy has been started and
+  checked. It needs as much free space as the database itself.
+  - On success, the previous database is kept in `database.pg<version>.bak` (next to `database`
+    in the add-on config folder) and removed automatically after 7 days. You can delete it earlier.
+  - On failure, your database is left as it was, PostgreSQL of the *previous* major is started
+    instead (the add-on ships it), and a notification is shown in Home Assistant. Logs are kept in
+    `database.upgrade_logs`. The upgrade is tried again with the next version of the add-on, or
+    at the next start if you delete the file `database.upgrade_failed`.
+  - Not handled automatically: tablespaces outside the database folder, and logical replication
+    slots when coming from PostgreSQL 15 (they do not survive `pg_upgrade`; resynchronise the
+    consumer, PowerSync for instance).
+
+Applications are disconnected for the duration of an upgrade (roughly the time needed to copy
+the database). Roles, passwords, access rules, port and hostname are unchanged afterwards.
+
+Requirements for applications using this database:
+
+- Immich: version 2.5.0 or newer (VectorChord 1.x). pgvecto.rs (`vectors`) is no longer shipped;
+  Immich has not used it since its migration to VectorChord.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
@@ -74,11 +105,11 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Use any Postgres client to connect, e.g. to `homeassistant.local:5432`
 
-Migration from postgres 15 :
+Migration from the Postgres 15 add-on:
 
-- stop the postgres 15 addon
-- use the Filebrowser addon to copy the database folder from /app_configs/xxx-postgres to /app_configs/xxx-postgres_latest
-- start the postgres 17 addon. Upgrade of the database should proceed. In case it doesn't, your data is anyway safe in the postgres 15 addon
+- stop the Postgres 15 add-on
+- use the Filebrowser add-on to copy the `database` folder from `/addon_configs/xxx-postgres` to `/addon_configs/xxx-postgres_latest`
+- start this add-on: the database is upgraded automatically as described above. Your data stays in the Postgres 15 add-on until you remove it
 
 ## Security
 

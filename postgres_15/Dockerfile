@@ -14,9 +14,9 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM $BUILD_FROM
+ARG BUILD_UPSTREAM="15-vectorchord1.1.1-pgvector0.8.5"
+FROM ghcr.io/immich-app/postgres:${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #
@@ -28,12 +28,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 
-RUN \
-    # Correct for access
-    for file in /usr/share/postgresql/postgresql.conf.sample /usr/local/share/postgresql/postgresql.conf.sample; do \
-    if [ -f "$file" ]; then sed -i "s|.*listen_addresses(.*)|listen_addresses = '*'(1)|g" "$file" && \
-    sed -i "s|.*data_directory(.*)|data_directory = '/config/database'(1)|g" "$file"; fi; done
-
 ##################
 # 3 Install apps #
 ##################
@@ -41,6 +35,10 @@ RUN \
 # Add rootfs
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
+
+# Upgrade a cluster from every older major shipped above, with the script the add-on runs at
+# startup: an upstream image whose pieces do not fit together fails the build
+RUN /usr/local/bin/pg_upgrade_selftest.sh
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005

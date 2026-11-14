@@ -1,3 +1,7 @@
+## 2026.11.1 (2026-11-14)
+
+- `source: container` can follow a publisher that has no moving tag: with a `~` regular expression as `github_tagfilter` and no tag in `upstream_repo`, the newest matching tag of the registry is the image whose version and digest are read. Used by the Postgres addons, whose upstream names each image after the versions inside it
+
 ## 2026.11 (2026-11-13)
 
 - Compact calendar versions (`YYYYMMDD`, optionally `YYYYMMDD.N`) now move to today's date when the addon is bumped for an upstream release that carries no usable version, then count up (`.1`, `.2`) on the same day, as dotted `YYYY.MM.DD` versions already did. Previously the number was simply incremented (`20261113` -> `20261114` on the 13th). Upstream tags that are themselves dates (birdnet-go) are unaffected

@@ -1,4 +1,11 @@
+## 15.18.0 (2026-11-14)
+
+- The add-on now updates itself: it follows the upstream image, so PostgreSQL minor releases (now 15.18) and VectorChord / pgvector releases (now 1.1.1 / 0.8.5) arrive as add-on updates
+- BREAKING CHANGE: VectorChord 1.1.1 requires Immich 2.5.0 or newer. Update Immich first if yours is older
+- BREAKING CHANGE: pgvecto.rs (`vectors`) is no longer shipped, upstream stopped building it. It is dropped from databases where nothing uses it; a database that still stores data in its types keeps running but cannot read those columns
+- Extensions are now updated before PostgreSQL accepts connections, with the VectorChord indexes rebuilt in the same transaction, so an interrupted update can no longer leave an index unusable. The add-on no longer restarts itself after an extension update
 - Migrate legacy add-on configuration map names to current app configuration terminology.
+
 ## 15.7.47 (2026-08-01)
 
 - Version renamed from `15.7-47`, which Home Assistant could not order and therefore could not reliably offer as an update: every number of the previous version is kept, as a section of its own. The addon itself and the upstream version it tracks are unchanged

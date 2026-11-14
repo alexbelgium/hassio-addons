@@ -69,6 +69,25 @@ This addon supports custom scripts and environment variables through the `app_co
 
 **Configuration File**: By default `postgresql.conf` is stored in `/config/postgresql.conf` accessible by other addons and Home Assistant. You can modify it using the File Editor addon. For better security, change `CONFIG_LOCATION` to `/data/orig/postgresql.conf` to make it accessible only to this addon.
 
+## Automatic updates and upgrades
+
+The add-on follows the upstream image (`ghcr.io/immich-app/postgres`) by itself: new PostgreSQL
+minor releases and new VectorChord / pgvector releases arrive as ordinary add-on updates.
+
+At every start, before PostgreSQL accepts connections, the add-on prepares the database:
+
+- **Extensions** are updated to the versions shipped by the add-on, and VectorChord indexes are
+  rebuilt in the same transaction when VectorChord itself changed. Running Immich add-ons are
+  restarted afterwards.
+
+Requirements for applications using this database:
+
+- Immich: version 2.5.0 or newer (VectorChord 1.x). pgvecto.rs (`vectors`) is no longer shipped;
+  Immich has not used it since its migration to VectorChord.
+
+This add-on stays on PostgreSQL 15. For automatic upgrades to newer PostgreSQL majors, use the
+"Postgres 17" add-on of this repository, which can take over a copy of this database.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
