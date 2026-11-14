@@ -80,6 +80,10 @@ At every start, before PostgreSQL accepts connections, the add-on prepares the d
   rebuilt in the same transaction when VectorChord itself changed. Running Immich add-ons are
   restarted afterwards.
 
+**Take a backup of the add-on before updating it** (Home Assistant offers it in the update
+dialog). An extension update cannot be undone: going back to an older version of the add-on
+requires restoring that backup.
+
 Requirements for applications using this database:
 
 - Immich: version 2.5.0 or newer (VectorChord 1.x). pgvecto.rs (`vectors`) is no longer shipped;

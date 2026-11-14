@@ -28,12 +28,13 @@ notify() {
 prepare_cluster() {
     local rc=0
     touch /run/postgres_upgrading
-    PGPASSWORD="$(bashio::config 'POSTGRES_PASSWORD')" /usr/local/bin/pg_major_upgrade.sh || rc=$?
+    PG_CHANGED_FLAG="$RESTART_FLAG_FILE" PGPASSWORD="$(bashio::config 'POSTGRES_PASSWORD')" /usr/local/bin/pg_major_upgrade.sh || rc=$?
     rm -f /run/postgres_upgrading
     case "$rc" in
         0) ;;
         10)
-            # Immich does not rebuild its indexes or reconnect cleanly by itself after this
+            # Immich is restarted after an upgrade, as it is after an extension update, which
+            # the helper flags itself
             touch "$RESTART_FLAG_FILE"
             ;;
         11)

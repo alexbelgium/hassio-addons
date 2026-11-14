@@ -82,12 +82,19 @@ At every start, before PostgreSQL accepts connections, the add-on prepares the d
     a notification is shown in Home Assistant. When `pg_upgrade` itself failed, its logs are kept
     in `database.upgrade_logs` and the upgrade is tried again with the next version of the
     add-on, or at the next start if you delete the file `database.upgrade_failed`.
+  - If the very last step fails (the upgraded database cannot be renamed into place), nothing is
+    started: your previous database is then in `database.pg<version>.bak` and the upgraded one
+    in `database.upgrade/new`; the next start finishes the step.
   - Not handled automatically: tablespaces outside the database folder, and logical replication
     slots when coming from PostgreSQL 15 (they do not survive `pg_upgrade`; resynchronise the
     consumer, PowerSync for instance).
 
 Applications are disconnected for the duration of an upgrade (roughly the time needed to copy
 the database). Roles, passwords, access rules, port and hostname are unchanged afterwards.
+
+**Take a backup of the add-on before updating it** (Home Assistant offers it in the update
+dialog). An extension update cannot be undone: going back to an older version of the add-on
+requires restoring that backup.
 
 Requirements for applications using this database:
 
@@ -112,6 +119,7 @@ Migration from the Postgres 15 add-on:
 - stop the Postgres 15 add-on
 - use the Filebrowser add-on to copy the `database` folder from `/addon_configs/xxx-postgres` to `/addon_configs/xxx-postgres_latest`
 - start this add-on: the database is upgraded automatically as described above. Your data stays in the Postgres 15 add-on until you remove it
+- point your applications to this add-on: the internal hostname changes from `db21ed7f-postgres` to `db21ed7f-postgres-latest` (nothing to change if they use `homeassistant.local:5432`)
 
 ## Security
 

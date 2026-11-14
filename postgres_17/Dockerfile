@@ -22,9 +22,9 @@ ARG BUILD_UPSTREAM="17-vectorchord1.1.1-pgvector0.8.5"
 # Older PostgreSQL majors, from the images of the same upstream release: the same VectorChord
 # and pgvector as the final image, which is what lets their clusters be upgraded, and served
 # as they are when an upgrade fails. The part of the tag after the major is shared
-FROM ${BUILD_FROM}15-${BUILD_UPSTREAM#*-} AS pg15
+FROM ${BUILD_FROM}:15-${BUILD_UPSTREAM#*-} AS pg15
 
-FROM ${BUILD_FROM}${BUILD_UPSTREAM}
+FROM ${BUILD_FROM}:${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #

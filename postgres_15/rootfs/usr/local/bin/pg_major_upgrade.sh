@@ -75,12 +75,12 @@ update_extensions() {
         q "$bindir" "$db" -c "SELECT format('ALTER EXTENSION %I UPDATE;', e.extname) FROM pg_extension e
             JOIN pg_available_extensions a ON a.name = e.extname
             WHERE EXISTS (SELECT FROM pg_extension_update_paths(e.extname) p
-                WHERE p.source = e.extversion AND p.target = a.default_version AND p.path IS NOT NULL)" > "$SOCK/extensions.sql" || rc=1
+                WHERE p.source = e.extversion AND p.target = a.default_version AND p.path IS NOT NULL)" > "$SOCK/extensions.sql" || { rc=1; continue; }
         # A VectorChord index cannot be read by a library of another version until it is rebuilt
         if grep -qx 'ALTER EXTENSION vchord UPDATE;' "$SOCK/extensions.sql"; then
             q "$bindir" "$db" -c "SELECT format('REINDEX INDEX %I.%I;', n.nspname, c.relname) FROM pg_class c
                 JOIN pg_am a ON a.oid = c.relam JOIN pg_namespace n ON n.oid = c.relnamespace
-                WHERE c.relkind = 'i' AND a.amname LIKE 'vchord%'" >> "$SOCK/extensions.sql" || rc=1
+                WHERE c.relkind = 'i' AND a.amname LIKE 'vchord%'" >> "$SOCK/extensions.sql" || { rc=1; continue; }
         fi
         if [ -s "$SOCK/extensions.sql" ]; then
             log "Database $db: $(tr '\n' ' ' < "$SOCK/extensions.sql")"
@@ -88,6 +88,8 @@ update_extensions() {
             # interrupts this
             if q "$bindir" "$db" -1 -f "$SOCK/extensions.sql" > "$SOCK/extensions.log" 2>&1; then
                 CHANGED=true
+                # Told to the caller apart from the exit code, which a later failure can replace
+                [ -z "${PG_CHANGED_FLAG:-}" ] || touch "$PG_CHANGED_FLAG"
             else
                 log "Database $db: the extensions could not be updated"
                 grep -v INFO: "$SOCK/extensions.log"
@@ -104,6 +106,7 @@ update_extensions() {
 finish_swap() {
     local old bak
     old="$(cat "$WORK/READY")"
+    [ -n "$old" ] || return 1
     bak="$PGDATA.pg$old.bak"
     if [ -d "$PGDATA" ] && [ "$(cat "$PGDATA/PG_VERSION")" = "$old" ]; then
         mv -T "$PGDATA" "$bak" || return 1
@@ -189,7 +192,7 @@ upgrade() {
     done < "$SOCK/databases"
     server "$nb" "$WORK/new" stop || return 1
 
-    echo "$old" > "$WORK/READY"
+    echo "$old" > "$WORK/READY" || return 1
     sync
     # From here on the work directory holds the cluster: a failure must not reach its clean-up
     finish_swap || { log "Could not put the upgraded cluster in place"; exit 2; }
