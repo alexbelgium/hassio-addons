@@ -1,3 +1,6 @@
+ 
+## 35.0.3 (2026-11-14)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 ## 35.0.2.2 (09-11-2026)
 - Startup: no longer runs the "Unknown error detected, auto-repair" sequence on every start when the Nextcloud name was customized in theming; any `<name> <version>` output of `occ -V` is now treated as installed (#3228).
 
