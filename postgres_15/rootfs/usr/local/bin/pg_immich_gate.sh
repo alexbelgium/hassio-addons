@@ -16,11 +16,15 @@ REPO="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master"
 # 0 inside, 1 outside, 2 not understood
 in_range() {
     local version="$1" bound
+    # Understood as a whole or not at all: half a range proves nothing
+    [ -n "$2" ] || return 2
+    for bound in $2; do
+        [[ "$bound" =~ ^(\>=|\<)[0-9][0-9.]*$ ]] || return 2
+    done
     for bound in $2; do
         case "$bound" in
             ">="*) [ "$(printf '%s\n' "${bound#>=}" "$version" | sort -V | head -n 1)" = "${bound#>=}" ] || return 1 ;;
-            "<"[0-9]*) [ "$(printf '%s\n' "${bound#<}" "$version" | sort -V | head -n 1)" != "${bound#<}" ] || return 1 ;;
-            *) return 2 ;;
+            *) [ "$(printf '%s\n' "${bound#<}" "$version" | sort -V | head -n 1)" != "${bound#<}" ] || return 1 ;;
         esac
     done
 }
@@ -46,7 +50,7 @@ while read -r name constant version; do
         *) echo "WARNING: range '$range' of Immich $immich for $name is not understood, NOT checked" ;;
     esac
 done << EOF
-PostgreSQL POSTGRES_VERSION_RANGE $PG_MAJOR.0.0
+PostgreSQL POSTGRES_VERSION_RANGE $(postgres -V | sed -n 's/^[^0-9]*\([0-9.]*\).*/\1/p')
 VectorChord VECTORCHORD_VERSION_RANGE $(sed -n "s/^default_version = '\(.*\)'/\1/p" "/usr/share/postgresql/$PG_MAJOR/extension/vchord.control")
 EOF
 exit "$status"
