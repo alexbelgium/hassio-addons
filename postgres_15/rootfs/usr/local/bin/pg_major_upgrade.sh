@@ -187,6 +187,8 @@ upgrade() {
     # Started with the configuration the add-on starts it with, pointed at the new cluster
     log "Starting PostgreSQL $NEW to check the upgraded cluster"
     sed "s@##PGDATA@$WORK/new@" "/var/postgresql-conf-tpl/postgresql.$(tr '[:upper:]' '[:lower:]' <<< "${DB_STORAGE_TYPE:-SSD}").conf" > "$SOCK/postgresql.conf" || return 1
+    # The template includes the override file that sits next to it
+    ln -s /etc/postgresql/postgresql.override.conf "$SOCK/postgresql.override.conf"
     SERVER_OPTS="-c config_file=$SOCK/postgresql.conf $SERVER_OPTS"
     server "$nb" "$WORK/new" start || return 1
     while IFS= read -r db; do

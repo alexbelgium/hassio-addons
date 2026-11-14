@@ -52,7 +52,7 @@ POSTGRES_HOST_AUTH_METHOD
 
 For more info check [base image docs](https://hub.docker.com/_/postgres).
 
-By default `postgresql.conf` is stored in volume accessible by other addons and Home Assistant, so you can conviniently modify it by e.g. File Editor addon. If you prefer better security change `CONFIG_LOCATION` to e.g. `/data/orig/postgresql.conf`, so it will be acessible only to this addon, but you will have to modify it by the [Hassio SSH](https://developers.home-assistant.io/docs/operating-system/debugging/).
+To change PostgreSQL settings, create a file named `postgresql.override.conf` in the add-on config folder (`/addon_configs/xxx-postgres_latest/`, next to the `database` folder) with one `setting = value` per line, then restart the add-on. It is read last, so it wins over the defaults of the add-on, and it is kept across updates and upgrades. A setting PostgreSQL does not accept prevents it from starting: check the log after a change.
 
 ### Custom Scripts and Environment Variables
 

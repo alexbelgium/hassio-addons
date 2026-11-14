@@ -140,6 +140,10 @@ show_db_extensions() {
 }
 
 main() {
+    # The image reads postgresql.override.conf next to its own configuration, in a directory
+    # that does not outlive the container: it is made to be the one of the add-on config folder
+    ln -sf "$CONFIG_HOME/postgresql.override.conf" /etc/postgresql/postgresql.override.conf
+
     bashio::log.info "Preparing the PostgreSQL cluster before server start…"
     prepare_cluster
 
