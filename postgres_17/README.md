@@ -75,11 +75,13 @@ At every start, before PostgreSQL accepts connections, the add-on prepares the d
   runs on a copy; your database is only replaced once the upgraded copy has been started and
   checked. It needs as much free space as the database itself.
   - On success, the previous database is kept in `database.pg<version>.bak` (next to `database`
-    in the add-on config folder) and removed automatically after 7 days. You can delete it earlier.
-  - On failure, your database is left as it was, PostgreSQL of the *previous* major is started
-    instead (the add-on ships it), and a notification is shown in Home Assistant. Logs are kept in
-    `database.upgrade_logs`. The upgrade is tried again with the next version of the add-on, or
-    at the next start if you delete the file `database.upgrade_failed`.
+    in the add-on config folder) and removed at the first start of the add-on 7 days or more
+    after the upgrade. You can delete it earlier.
+  - On failure, your database stays on its PostgreSQL major (only its extensions have been
+    updated), PostgreSQL of that *previous* major is started instead (the add-on ships it), and
+    a notification is shown in Home Assistant. When `pg_upgrade` itself failed, its logs are kept
+    in `database.upgrade_logs` and the upgrade is tried again with the next version of the
+    add-on, or at the next start if you delete the file `database.upgrade_failed`.
   - Not handled automatically: tablespaces outside the database folder, and logical replication
     slots when coming from PostgreSQL 15 (they do not survive `pg_upgrade`; resynchronise the
     consumer, PowerSync for instance).

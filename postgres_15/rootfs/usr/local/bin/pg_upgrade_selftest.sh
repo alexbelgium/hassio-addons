@@ -9,7 +9,8 @@ set -euo pipefail
 
 export PGDATA=/tmp/selftest/database BUILD_VERSION=selftest
 read -r -a AS_PG <<< "${PG_UPGRADE_RUNAS-gosu postgres}"
-SQL="SELECT count(*) FROM selftest WHERE e <-> '[1,2,3]' < 1"
+# Answered through the VectorChord index
+SQL="SELECT id FROM selftest ORDER BY e <-> '[1,2,3]' LIMIT 1"
 
 for bindir in /usr/lib/postgresql/*/bin; do
     old="$(basename "$(dirname "$bindir")")"
@@ -45,7 +46,8 @@ for bindir in /usr/lib/postgresql/*/bin; do
     "${AS_PG[@]}" pg_ctl -w -D "$PGDATA" -l /tmp/selftest/new.log start > /dev/null \
         -o "-c config_file=/tmp/selftest/postgresql.conf -c listen_addresses='' -c unix_socket_directories=/tmp/selftest" \
         || { cat /tmp/selftest/new.log; exit 1; }
-    [ "$("${AS_PG[@]}" psql -h /tmp/selftest -U postgres -AtqX -c "$SQL")" = 1 ]
+    "${AS_PG[@]}" psql -h /tmp/selftest -U postgres -AtqX -c "SET enable_seqscan = off" -c "EXPLAIN $SQL" | grep -q "Index Scan using selftest_e_idx"
+    [ "$("${AS_PG[@]}" psql -h /tmp/selftest -U postgres -AtqX -c "SET enable_seqscan = off" -c "$SQL")" = 1 ]
     "${AS_PG[@]}" pg_ctl -w -D "$PGDATA" stop > /dev/null
 done
 rm -rf /tmp/selftest

@@ -22,8 +22,9 @@ BIN="${PG_BINARIES_DIR:-/usr/lib/postgresql}"
 WORK="$PGDATA.upgrade"
 FAILED="$PGDATA.upgrade_failed"
 LOGS="$PGDATA.upgrade_logs"
-# Add-on version whose extensions the cluster was last brought to
-STAMP="$PGDATA.extensions"
+# Add-on version whose extensions the cluster was last brought to. Inside the cluster, so that
+# it is restored, copied and replaced together with it
+STAMP="$PGDATA/addon_extensions_version"
 KEEP_DAYS=7
 PORT=50432
 CHANGED=false
@@ -38,7 +39,8 @@ log() { echo "[pg_upgrade] $*"; }
 q() {
     local bindir="$1" db="$2"
     shift 2
-    "${AS_PG[@]}" "$bindir/psql" -h "$SOCK" -p "$PORT" -U "$SUPERUSER" -d "$db" -v ON_ERROR_STOP=1 -AtqX "$@"
+    # Through the environment: -d would read a name such as "a=b" as a connection string
+    PGDATABASE="$db" "${AS_PG[@]}" "$bindir/psql" -h "$SOCK" -p "$PORT" -U "$SUPERUSER" -v ON_ERROR_STOP=1 -AtqX "$@"
 }
 
 databases() {
@@ -122,17 +124,17 @@ expire_backups() {
     for bak in "$PGDATA".pg*.bak; do
         [ -d "$bak" ] || continue
         [ -f "$bak/.retired" ] || touch "$bak/.retired"
-        if [ -n "$(find "$bak/.retired" -mtime +"$KEEP_DAYS")" ]; then
+        if [ -n "$(find "$bak/.retired" -mmin +$((KEEP_DAYS * 1440)))" ]; then
             log "Removing $bak, the cluster from before the upgrade more than $KEEP_DAYS days ago"
             rm -rf "$bak"
         else
-            log "$bak ($(du -sh "$bak" | cut -f1)) is the cluster from before the upgrade. It is removed automatically $KEEP_DAYS days after the upgrade, or delete it now to free the space"
+            log "$bak ($(du -sh "$bak" | cut -f1)) is the cluster from before the upgrade. It is removed at the first start of the add-on $KEEP_DAYS days after the upgrade, or delete it now to free the space"
         fi
     done
 }
 
 upgrade() {
-    local old="$1" ob="$BIN/$1/bin" nb="$BIN/$NEW/bin" need avail datadir db after initdb_args file
+    local old="$1" ob="$BIN/$1/bin" nb="$BIN/$NEW/bin" need avail datadir db initdb_args file
 
     # cp keeps a symlink a symlink: a tablespace or a WAL directory outside the cluster would
     # be shared by the copy and the original
@@ -173,25 +175,24 @@ upgrade() {
 
     # The cluster keeps its own settings and access rules. They are in place before the new
     # server is tried, so that a setting the new major no longer knows fails here
-    for file in postgresql.conf postgresql.auto.conf pg_hba.conf pg_ident.conf; do
+    for file in postgresql.conf postgresql.auto.conf postgresql.override.conf pg_hba.conf pg_ident.conf; do
         [ ! -f "$WORK/old/$file" ] || cp -p "$WORK/old/$file" "$WORK/new/$file" || return 1
     done
 
+    # Started with the configuration the add-on starts it with, pointed at the new cluster
     log "Starting PostgreSQL $NEW to check the upgraded cluster"
+    sed "s@##PGDATA@$WORK/new@" "/var/postgresql-conf-tpl/postgresql.$(tr '[:upper:]' '[:lower:]' <<< "${DB_STORAGE_TYPE:-SSD}").conf" > "$SOCK/postgresql.conf" || return 1
+    SERVER_OPTS="-c config_file=$SOCK/postgresql.conf $SERVER_OPTS"
     server "$nb" "$WORK/new" start || return 1
-    after="$(databases "$nb")" || return 1
     while IFS= read -r db; do
         q "$nb" "$db" -c "SELECT 1" > /dev/null || return 1
-    done <<< "$after"
+    done < "$SOCK/databases"
     server "$nb" "$WORK/new" stop || return 1
-    if [ -z "$after" ] || [ "$after" != "$(cat "$SOCK/databases")" ]; then
-        log "The upgraded cluster does not hold the same databases as the old one"
-        return 1
-    fi
 
     echo "$old" > "$WORK/READY"
     sync
-    finish_swap
+    # From here on the work directory holds the cluster: a failure must not reach its clean-up
+    finish_swap || { log "Could not put the upgraded cluster in place"; exit 2; }
 }
 
 main() {
@@ -227,7 +228,11 @@ main() {
     fi
 
     SOCK="$(mktemp -d)"
-    chown "$(stat -c %u "$PGDATA")" "$SOCK"
+    if [ "$(id -u)" = 0 ]; then
+        # A cluster copied in with a file browser belongs to whoever copied it
+        find "$PGDATA" \! -user postgres -exec chown postgres '{}' +
+        chown postgres "$SOCK"
+    fi
     SERVER_OPTS="-c listen_addresses='' -c unix_socket_directories='$SOCK' -c port=$PORT"
     [ ! -f "$BIN/$NEW/lib/vchord.so" ] || SERVER_OPTS="$SERVER_OPTS -c shared_preload_libraries=vchord.so"
 
@@ -249,7 +254,7 @@ main() {
     fi
 
     log "The data in $PGDATA is from PostgreSQL $old, upgrading it to $NEW"
-    mkdir -p "$WORK" && chown "$(stat -c %u:%g "$PGDATA")" "$WORK" && chmod 700 "$WORK" || exit 1
+    mkdir -p "$WORK" && chown --reference="$PGDATA" "$WORK" && chmod 700 "$WORK" || exit 1
     if upgrade "$old"; then
         log "Upgrade to PostgreSQL $NEW completed and checked"
         exit 10

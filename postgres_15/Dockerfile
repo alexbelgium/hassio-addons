@@ -14,9 +14,10 @@
 # 1 Build Image #
 #################
 
+ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="15-vectorchord1.1.1-pgvector0.8.5"
-FROM ghcr.io/immich-app/postgres:${BUILD_UPSTREAM}
+FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #

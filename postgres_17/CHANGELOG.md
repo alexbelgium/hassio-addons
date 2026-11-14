@@ -4,7 +4,7 @@
 - BREAKING CHANGE: VectorChord 1.1.1 requires Immich 2.5.0 or newer. Update Immich first if yours is older
 - BREAKING CHANGE: pgvecto.rs (`vectors`) is no longer shipped, upstream stopped building it. It is dropped from databases where nothing uses it; a database that still stores data in its types keeps running but cannot read those columns
 - Extensions are now updated before PostgreSQL accepts connections, with the VectorChord indexes rebuilt in the same transaction, so an interrupted update can no longer leave an index unusable. The add-on no longer restarts itself after an extension update
-- Databases from an older PostgreSQL major are upgraded automatically, on a copy: the database is only replaced once the upgraded copy has been started and checked. If the upgrade fails, the database is left as it was, PostgreSQL of the previous major is started instead and a notification is shown in Home Assistant. The previous database is kept for 7 days after a successful upgrade. See the README
+- Databases from an older PostgreSQL major are upgraded automatically, on a copy: the database is only replaced once the upgraded copy has been started and checked. If the upgrade fails, the database stays on its PostgreSQL major, the server of that previous major is started instead and a notification is shown in Home Assistant. The previous database is kept for at least 7 days after a successful upgrade. See the README
 - The PostgreSQL versions needed for an upgrade are part of the image: nothing is downloaded at startup anymore
 - Fixed: a failed upgrade could start an empty database and then delete the backup of the old one
 - `/config/backups`, left by upgrades of older versions, is no longer deleted automatically
