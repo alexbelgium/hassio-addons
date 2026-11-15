@@ -20,7 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      statuses: write
 
     steps:
       - name: Checkout code
@@ -34,6 +33,8 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Findings stay in the job log: no per-linter commit status on the PR.
+          MULTI_STATUS: false
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_CHECKOV: false
           VALIDATE_PYTHON_PYLINT: false
@@ -57,7 +58,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      statuses: write
 
     steps:
       - name: Checkout repository
@@ -81,6 +81,8 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Findings stay in the job log: no per-linter commit status on the PR.
+          MULTI_STATUS: false
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_CHECKOV: false
           VALIDATE_PYTHON_PYLINT: false
