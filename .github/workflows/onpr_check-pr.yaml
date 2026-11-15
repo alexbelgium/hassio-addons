@@ -8,55 +8,62 @@ on:
     branches:
       - master
 
+# Fork PRs run untrusted code here (the Dockerfile itself): keep the token read-only.
+permissions:
+  contents: read
+
 jobs:
   # 1. Detect which add-on folders changed (by config.json|yaml|yml modification)
   check-addon-changes:
-    if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message, 'nobuild') }}
+    if: ${{ github.repository_owner == 'alexbelgium' }}
     runs-on: ubuntu-latest
     outputs:
       changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
       changedChangelogFiles: ${{ steps.changed-files.outputs.changelogs_files }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Need the merge commit's parents resolvable (HEAD^1 below): a depth-1 shallow
           # checkout truncates parent refs entirely at the boundary commit.
           fetch-depth: 2
+          persist-credentials: false
       - name: Find changed addon directories
         id: find_addons
+        env:
+          HEAD_SHA: ${{ github.sha }}
         run: |
+          set -euo pipefail
           # github.event.pull_request.base.sha is a snapshot from event-trigger time and can be
           # stale if master advances before checkout; HEAD^1 is the actual base this merge
           # commit was built against, so it's always correct.
           base_sha=$(git rev-parse HEAD^1)
           git fetch origin "$base_sha"
-          diff_files=$(git diff --name-only "$base_sha" "${{ github.sha }}")
+          diff_files=$(git diff --name-only "$base_sha" "$HEAD_SHA")
           changed_config_files=$(printf '%s\n' "$diff_files" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "Changed config files:"
           echo "$changed_config_files"
-          changed_addons=$(printf '%s' "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          # Directory names end up in a job matrix and in shell: accept plain names only.
+          changed_addons=$(printf '%s' "$changed_config_files" | awk -F/ '{print $1}' | sort -u \
+            | { grep -E '^[A-Za-z0-9._-]+$' || true; } | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "Changed addons: $changed_addons"
           echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
       - name: Find changelog
         id: changed-files
+        env:
+          HEAD_SHA: ${{ github.sha }}
         run: |
+          set -euo pipefail
           base_sha=$(git rev-parse HEAD^1)
-          git fetch origin "$base_sha"
-          diff_files=$(git diff --name-only "$base_sha" "${{ github.sha }}")
+          diff_files=$(git diff --name-only "$base_sha" "$HEAD_SHA")
           changed_changelog_files=$(printf '%s\n' "$diff_files" | grep -iE '^([^/]+/)?changelog\.(md|txt|ya?ml|json)$' || true)
           echo "$changed_changelog_files"
+          delimiter="EOF_$(openssl rand -hex 16)"
           {
-            echo "changelogs_files<<EOF_CHANGELOG_FILES"
+            echo "changelogs_files<<${delimiter}"
             echo "$changed_changelog_files"
-            echo "EOF_CHANGELOG_FILES"
+            echo "${delimiter}"
           } >> "$GITHUB_OUTPUT"
-          changed_config_files=$(printf '%s\n' "$diff_files" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
-          echo "$changed_config_files"
-          all_changed_files=$(echo -e "$changed_config_files\n$changed_changelog_files" | sort -u)
-          changed_addons=$(printf '%s' "$all_changed_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
-          echo "Changed addons: $changed_addons"
-          echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
 
   check-changed-changelog:
     name: Check if CHANGELOG.md changed
@@ -70,10 +77,12 @@ jobs:
     steps:
       - name: 🔎 Check for updated CHANGELOG.md
         shell: bash
+        env:
+          ADDON: ${{ matrix.addon }}
+          CHANGELOG_FILES: ${{ needs.check-addon-changes.outputs.changedChangelogFiles }}
         run: |
-          # shellcheck disable=SC2076,SC2059
-          if [[ ! "${{ needs.check-addon-changes.outputs.changedChangelogFiles }}" =~ "${{ matrix.addon }}/CHANGELOG.md" ]]; then
-            echo "::error::No new entries in ${{ matrix.addon }} CHANGELOG.md file!"
+          if ! grep -qxF -- "${ADDON}/CHANGELOG.md" <<<"$CHANGELOG_FILES"; then
+            echo "::error::No new entries in ${ADDON} CHANGELOG.md file!"
             exit 1
           fi
 
@@ -88,10 +97,12 @@ jobs:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
     steps:
       - name: ↩️ Checkout
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: 🔎 Run Home Assistant Add-on Lint
-        uses: frenck/action-addon-linter@v2
+        uses: frenck/action-addon-linter@d51677290aef26cdfc835271dd3c7343ce502809 # v2
         with:
           path: "./${{ matrix.addon }}"
 
@@ -106,7 +117,9 @@ jobs:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
     steps:
       - name: ↩️ Checkout
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Resolve symlinks in repository copy
         run: bash .github/scripts/resolve_symlinks.sh
@@ -128,159 +141,107 @@ jobs:
 
       - name: ℹ️ Gather addon info
         id: information
-        uses: frenck/action-addon-information@v1.4
+        uses: frenck/action-addon-information@ce1377e9851cf569c29329e65fb2c57e67ca0f69 # v1.4
         with:
           path: "./${{ matrix.addon }}/"
 
       - name: 🗄️ Cache docker layers
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: /tmp/buildx-cache
           key: ${{ runner.os }}-buildx-${{ matrix.addon }}-${{ hashFiles('**/Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-${{ matrix.addon }}-
 
-      - name: 🔖 Create addon image tags
-        id: tags
+      # Only the two architectures the production builder publishes (onpush_builder.yaml).
+      # Values read from the PR's config files go through the environment, never into the
+      # script text.
+      - name: 🔖 Create image tags, labels and build-args
+        id: meta
         shell: bash
+        env:
+          ADDON: ${{ matrix.addon }}
+          IMAGE_TEMPLATE: ${{ steps.information.outputs.image }}
+          VERSION: ${{ steps.information.outputs.version }}
+          NAME: ${{ steps.information.outputs.name }}
+          DESCRIPTION: ${{ steps.information.outputs.description }}
+          BUILD_FILE: ${{ steps.information.outputs.build }}
         run: |
-          imagetemplate="${{ steps.information.outputs.image }}"
-          version="${{ steps.information.outputs.version }}"
-          echo "Using imagetemplate '${imagetemplate}'"
-          {
-            echo "armhf=${imagetemplate/\{arch\}/armhf}:${version}"
-            echo "armv7=${imagetemplate/\{arch\}/armv7}:${version}"
-            echo "aarch64=${imagetemplate/\{arch\}/aarch64}:${version}"
-            echo "amd64=${imagetemplate/\{arch\}/amd64}:${version}"
-            echo "i386=${imagetemplate/\{arch\}/i386}:${version}"
-          } >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          # Labels are one per line: keep each value on a single line.
+          NAME=${NAME//[$'\r\n']/ }
+          DESCRIPTION=${DESCRIPTION//[$'\r\n']/ }
 
-      - name: 🏷️ Create addon labels
-        id: labels
-        shell: bash
-        run: |
-          labels="io.hass.version=${{ steps.information.outputs.version }}"
-          labels=$(printf '%s' "$labels\nio.hass.name=${{ steps.information.outputs.name }}")
-          labels=$(printf '%s' "$labels\nio.hass.description=${{ steps.information.outputs.description }}")
-          labels=$(printf '%s' "$labels\nio.hass.type=addon")
-          labels=$(printf '%s' "$labels\nio.hass.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.title=${{ steps.information.outputs.name }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.description=${{ steps.information.outputs.description }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.version=${{ steps.information.outputs.version }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.authors=Poeschl <Poeschl@users.noreply.github.com>")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.created=$(date -Is)")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.revision=${GITHUB_SHA}")
-          echo "Generic labels: $labels"
-          armhf_labels=$(printf '%s' "$labels\nio.hass.arch=armhf")
-          armv7_labels=$(printf '%s' "$labels\nio.hass.arch=armv7")
-          aarch64_labels=$(printf '%s' "$labels\nio.hass.arch=aarch64")
-          amd64_labels=$(printf '%s' "$labels\nio.hass.arch=amd64")
-          i386_labels=$(printf '%s' "$labels\nio.hass.arch=i386")
-          armhf_labels="${armhf_labels//$'\n'/'%0A'}"
-          armv7_labels="${armv7_labels//$'\n'/'%0A'}"
-          aarch64_labels="${aarch64_labels//$'\n'/'%0A'}"
-          amd64_labels="${amd64_labels//$'\n'/'%0A'}"
-          i386_labels="${i386_labels//$'\n'/'%0A'}"
-          {
-            echo "armhf=$armhf_labels"
-            echo "armv7=$armv7_labels"
-            echo "aarch64=$aarch64_labels"
-            echo "amd64=$amd64_labels"
-            echo "i386=$i386_labels"
-          } >> "$GITHUB_OUTPUT"
+          build_json='{}'
+          if [ -n "$BUILD_FILE" ] && [ -f "$BUILD_FILE" ]; then
+            case "$BUILD_FILE" in
+              *.yaml|*.yml) build_json="$(yq -o=json '.' "$BUILD_FILE")" ;;
+              *)            build_json="$(cat "$BUILD_FILE")" ;;
+            esac
+          fi
 
-      - name: 💽 Create addon build-args
-        id: build_args
-        run: |
-          build_file="${{ steps.information.outputs.build }}"
-          case "$build_file" in
-            *.yaml|*.yml) build_json="$(yq -o=json '.' "$build_file")" ;;
-            *)            build_json="$(cat "$build_file")" ;;
-          esac
-          for arch in armhf armv7 aarch64 amd64 i386; do
-            echo "${arch}=BUILD_FROM=$(printf '%s' "$build_json" | jq -r --arg a "$arch" '.build_from[$a] // empty')"
-          done >> "$GITHUB_OUTPUT"
+          delimiter="EOF_$(openssl rand -hex 16)"
+          for arch in aarch64 amd64; do
+            {
+              echo "${arch}_tags=${IMAGE_TEMPLATE/\{arch\}/$arch}:${VERSION}"
+              echo "${arch}_build_args=BUILD_FROM=$(jq -r --arg a "$arch" '.build_from[$a] // empty' <<<"$build_json")"
+              echo "${arch}_labels<<${delimiter}"
+              echo "io.hass.version=${VERSION}"
+              echo "io.hass.name=${NAME}"
+              echo "io.hass.description=${DESCRIPTION}"
+              echo "io.hass.type=addon"
+              echo "io.hass.arch=${arch}"
+              echo "io.hass.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${ADDON}"
+              echo "org.opencontainers.image.title=${NAME}"
+              echo "org.opencontainers.image.description=${DESCRIPTION}"
+              echo "org.opencontainers.image.version=${VERSION}"
+              echo "org.opencontainers.image.authors=alexbelgium (https://github.com/alexbelgium)"
+              echo "org.opencontainers.image.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}"
+              echo "org.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${ADDON}"
+              echo "org.opencontainers.image.created=$(date -Is)"
+              echo "org.opencontainers.image.revision=${GITHUB_SHA}"
+              echo "${delimiter}"
+            } >> "$GITHUB_OUTPUT"
+          done
 
       - name: 🏗️ Set up QEMU
-        uses: docker/setup-qemu-action@v4
+        uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4
 
       - name: 🏗️ Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
-
-      - name: 💿 Build Addon - armhf
-        if: ${{ steps.information.outputs.armhf == 'true' }}
-        uses: docker/build-push-action@v7
-        with:
-          context: ${{ matrix.addon }}
-          push: false
-          load: true
-          file: ${{ matrix.addon }}/Dockerfile
-          tags: ${{ steps.tags.outputs.armhf }}
-          labels: ${{ steps.labels.outputs.armhf }}
-          build-args: ${{ steps.build_args.outputs.armhf }}
-          cache-from: type=local,src=/tmp/buildx-cache/armhf
-          cache-to: type=local,dest=/tmp/buildx-cache-new/armhf
-
-      - name: 💿 Build Addon - armv7
-        if: ${{ steps.information.outputs.armv7 == 'true' }}
-        uses: docker/build-push-action@v7
-        with:
-          context: ${{ matrix.addon }}
-          push: false
-          load: true
-          file: ${{ matrix.addon }}/Dockerfile
-          tags: ${{ steps.tags.outputs.armv7 }}
-          labels: ${{ steps.labels.outputs.armv7 }}
-          build-args: ${{ steps.build_args.outputs.armv7 }}
-          cache-from: type=local,src=/tmp/buildx-cache/armv7
-          cache-to: type=local,dest=/tmp/buildx-cache-new/armv7
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4
 
       - name: 💿 Build Addon - aarch64
         if: ${{ steps.information.outputs.aarch64 == 'true' }}
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7
         with:
           context: ${{ matrix.addon }}
           platforms: linux/arm64
           push: false
           load: true
           file: ${{ matrix.addon }}/Dockerfile
-          tags: ${{ steps.tags.outputs.aarch64 }}
-          labels: ${{ steps.labels.outputs.aarch64 }}
-          build-args: ${{ steps.build_args.outputs.aarch64 }}
+          tags: ${{ steps.meta.outputs.aarch64_tags }}
+          labels: ${{ steps.meta.outputs.aarch64_labels }}
+          build-args: ${{ steps.meta.outputs.aarch64_build_args }}
           cache-from: type=local,src=/tmp/buildx-cache/aarch64
           cache-to: type=local,dest=/tmp/buildx-cache-new/aarch64
 
       - name: 💿 Build Addon - amd64
         if: ${{ steps.information.outputs.amd64 == 'true' }}
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7
         with:
           context: ${{ matrix.addon }}
           push: false
           load: true
           file: ${{ matrix.addon }}/Dockerfile
-          tags: ${{ steps.tags.outputs.amd64 }}
-          labels: ${{ steps.labels.outputs.amd64 }}
-          build-args: ${{ steps.build_args.outputs.amd64 }}
+          tags: ${{ steps.meta.outputs.amd64_tags }}
+          labels: ${{ steps.meta.outputs.amd64_labels }}
+          build-args: ${{ steps.meta.outputs.amd64_build_args }}
           cache-from: type=local,src=/tmp/buildx-cache/amd64
           cache-to: type=local,dest=/tmp/buildx-cache-new/amd64
-
-      - name: 💿 Build Addon - i386
-        if: ${{ steps.information.outputs.i386 == 'true' }}
-        uses: docker/build-push-action@v7
-        with:
-          context: ${{ matrix.addon }}
-          push: false
-          load: true
-          file: ${{ matrix.addon }}/Dockerfile
-          tags: ${{ steps.tags.outputs.i386 }}
-          labels: ${{ steps.labels.outputs.i386 }}
-          build-args: ${{ steps.build_args.outputs.i386 }}
-          cache-from: type=local,src=/tmp/buildx-cache/i386
-          cache-to: type=local,dest=/tmp/buildx-cache-new/i386
 
       - name: 🗄️ Update cache Folder
         run: |
           rm -rf /tmp/buildx-cache
-          mv /tmp/buildx-cache-new /tmp/buildx-cache
+          if [ -d /tmp/buildx-cache-new ]; then
+            mv /tmp/buildx-cache-new /tmp/buildx-cache
+          fi

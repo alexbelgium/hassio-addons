@@ -11,10 +11,11 @@ permissions:
 
 jobs:
   ping_submitter:
+    if: github.repository_owner == 'alexbelgium'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Ping mapped submitter when add-on is mentioned
         env:
