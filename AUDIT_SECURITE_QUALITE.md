@@ -214,7 +214,11 @@ Ports publiés et `PUID: 0` avec `SYS_ADMIN` (`browser_chromium/config.yaml:34-6
 
 **Réserve (Codex).** Sévérité moyenne en base, haute seulement si une frontière de privilège est franchie (conteneur à utilisateur non root, volume partagé).
 
-**Correction suggérée.** `umask 077` avant d'écrire `/.env` : le fichier est recréé par `mv` et hérite donc du masque. `/etc/environment` est écrit par `cp` (`:352`), qui conserve le mode d'un fichier existant : ajouter un `chmod 600 /etc/environment` explicite après la copie. Le module ne fixe aucun `umask` aujourd'hui. Ne pas injecter dans les `.bashrc` les clés reconnues comme secrètes. Ne jamais écrire le bloc dans un `HOME` situé sous `/share`. Liste explicite de clés sensibles en complément du motif.
+**Correction suggérée.**
+
+- `/.env` : créer le fichier temporaire avec `mktemp` (mode 600 dès la création) au lieu de `"$ENV_FILE.tmp"`. Une redirection vers un `/.env.tmp` laissé par une exécution interrompue réutilise son mode, que ni `umask 077` ni `mv` ne corrigent. Le module ne fixe aucun `umask` aujourd'hui.
+- `/etc/environment` est écrit par `cp` (`:352`), qui conserve le mode d'un fichier existant : ajouter un `chmod 600 /etc/environment` explicite après la copie.
+- Scripts injectés : la boucle de `:359` écrit le bloc complet dans les scripts `run` de `services.d` et de s6-overlay, les `cont-init.d/*.sh`, `/entrypoint.sh`, `/etc/bash.bashrc` et `$HOME/.bashrc`. `inject_block` réécrit chaque fichier avec `cat "$tmp" > "$f"`, qui garde son mode, souvent 755. Ni `umask` ni `chmod` sur les deux fichiers ci-dessus ne protègent ces copies. Ne plus injecter les clés reconnues comme secrètes dans ces fichiers et les fournir par un mécanisme limité au service qui en a besoin (fichier 600 lu au lancement, `s6-envdir` en 700). Retirer les blocs déjà écrits dans les fichiers qui persistent entre redémarrages, notamment les `.bashrc` situés dans un volume. Ne jamais écrire le bloc dans un `HOME` situé sous `/share`. Liste explicite de clés sensibles en complément du motif.
 
 ### M3 — Secrets écrits en clair dans les logs de l'add-on
 
@@ -322,7 +326,7 @@ Ports publiés et `PUID: 0` avec `SYS_ADMIN` (`browser_chromium/config.yaml:34-6
 - SQL interpolé : `immich/rootfs/etc/cont-init.d/99-run.sh:121`, `postgres_15/rootfs/etc/cont-init.d/99-run.sh:343`, `spotweb/rootfs/etc/cont-init.d/90-spotweb:111` (†), `zoneminder/rootfs/etc/cont-init.d/99-run.sh:120` (†).
 - Mots de passe en argument de commande, visibles dans la liste des processus : `.templates/00-smb_mounts.sh:324`, `:379`, `:448` ; `immich/.../99-run.sh:101` ; `postgres_15/.../99-run.sh:168` ; `fireflyiii/.../99-run.sh:145`.
 
-**Correction suggérée.** Pour l'écriture dans un script, utiliser `printf %q` ou le mécanisme `append_export` de `00-global_var.sh`. Pour le SQL, `printf %q` ne protège rien : passer les valeurs en paramètres (`psql -v nom="$val"` puis `:'nom'`) ou utiliser l'échappement propre à la base (`quote_literal`, `format('%L')`). Passer les identifiants par fichier ou variable (`PGPASSWORD`, `--defaults-extra-file`, `smbclient -A`).
+**Correction suggérée.** Pour l'écriture dans un script, ne pas faire passer la valeur par `sed` : `printf %q` échappe les espaces par une barre oblique que `sed -i "1a ..."` retire ensuite (cas de `scrutiny/rootfs/etc/cont-init.d/01-configuration.sh:41`). Écrire la ligne avec `printf 'export TZ=%q\n' "$TZ"` dans un fichier temporaire assemblé par `cat`, ou lire la valeur au lancement depuis un fichier au lieu de l'insérer dans le script. Pour le SQL, `printf %q` ne protège rien : passer les valeurs en paramètres (`psql -v nom="$val"` puis `:'nom'`) ou utiliser l'échappement propre à la base (`quote_literal`, `format('%L')`). Passer les identifiants par fichier ou variable (`PGPASSWORD`, `--defaults-extra-file`, `smbclient -A`).
 
 ### M13 — Montages SMB : repli automatique vers SMBv1 et NTLM
 
