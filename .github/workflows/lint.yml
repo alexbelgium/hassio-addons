@@ -9,48 +9,32 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
+# Read-only by default; only the autofix job, which opens a PR, gets write access.
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
+  # Informational: reports lint findings on the changed files. Nothing is committed.
   lint-changes:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-
-      - name: Set diff range
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "DIFF_RANGE=${{ github.event.pull_request.base.sha }}...${{ github.sha }}" >> $GITHUB_ENV
-          else
-            echo "DIFF_RANGE=${{ github.event.before }}...${{ github.sha }}" >> $GITHUB_ENV
-          fi
-
-      - name: Fix non-printable Unicode spaces in changed text files
-        run: |
-          set -euo pipefail
-          CHANGED_FILES=$(git diff --name-only "$DIFF_RANGE")
-          UNICODE_SPACES_REGEX='[\x{00A0}\x{2002}\x{2003}\x{2007}\x{2008}\x{2009}\x{202F}\x{205F}\x{3000}\x{200B}]'
-          for file in $CHANGED_FILES; do
-            if [ -f "$file" ]; then
-              MIME_TYPE=$(file --mime-type -b "$file")
-              if [[ "$MIME_TYPE" == text/* ]]; then
-                perl -CSD -pe "s/$UNICODE_SPACES_REGEX/ /g" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
-              fi
-            fi
-          done
+          persist-credentials: false
 
       - name: Run Super Linter
-        uses: super-linter/super-linter/slim@main
+        uses: super-linter/super-linter/slim@2da136927bd4a73596db63044b504547c62cb854 # v9.0.0
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Findings stay in the job log: no per-linter commit status on the PR.
+          MULTI_STATUS: false
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_CHECKOV: false
           VALIDATE_PYTHON_PYLINT: false
@@ -67,20 +51,17 @@ jobs:
           FIX_PYTHON_ISORT: false
           FIX_PYTHON_RUFF: false
 
-      - name: Restore executable permissions
-        run: |
-          find . -type f \( -name "*.sh" -o -name "run" \) -exec chmod +x {} \;
-
-      - name: Remove Super-Linter output (prevent checkout conflict)
-        run: sudo rm -rf super-linter-output/
-
+  # Manual only (workflow_dispatch): fixes the whole repository and opens a PR.
   lint-autofix:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
@@ -96,10 +77,12 @@ jobs:
           done
 
       - name: Run Super Linter
-        uses: super-linter/super-linter/slim@main
+        uses: super-linter/super-linter/slim@2da136927bd4a73596db63044b504547c62cb854 # v9.0.0
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Findings stay in the job log: no per-linter commit status on the PR.
+          MULTI_STATUS: false
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_CHECKOV: false
           VALIDATE_PYTHON_PYLINT: false
@@ -118,8 +101,10 @@ jobs:
 
       - name: Use 4 spaces in shell scripts
         run: |
-          curl -sSLo /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.12.0/shfmt_v3.12.0_linux_amd64
-          chmod +x /usr/local/bin/shfmt
+          set -euo pipefail
+          curl -fsSLo /tmp/shfmt https://github.com/mvdan/sh/releases/download/v3.12.0/shfmt_v3.12.0_linux_amd64
+          echo "d9fbb2a9c33d13f47e7618cf362a914d029d02a6df124064fff04fd688a745ea  /tmp/shfmt" | sha256sum -c -
+          sudo install -m 0755 /tmp/shfmt /usr/local/bin/shfmt
           find . -type f \( -name "*.sh" -o -name "run" \) -exec shfmt -w -i 4 -ci -bn -sr {} +
 
       - name: Restore executable permissions
@@ -140,7 +125,7 @@ jobs:
 
       - name: Create New Pull Request If Needed
         if: steps.changed.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@3ffccacd46053766916f087ce41d627c0b8cf2d1 # v8
         with:
           title: "Github bot: fix linting issues nobuild"
           commit-message: "fix: auto-fix linting issues"

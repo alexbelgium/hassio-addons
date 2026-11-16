@@ -5,14 +5,20 @@ on:
   schedule:               # weekly on Sunday 00:00 UTC
     - cron: '0 0 * * 0'
 
+permissions:
+  contents: read
+
 jobs:
   build:
+    if: github.repository_owner == 'alexbelgium'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: '3.11'
 
@@ -31,5 +37,18 @@ jobs:
           git config --global user.name  "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .github/stargazer_map.png .github/stargazer_countries.csv
-          git commit -m "Update stargazer map & cache" || echo "No changes"
-          git push --force
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Update stargazer map & cache"
+          # Never force-push master: rebase onto whatever landed meanwhile and retry.
+          for attempt in 1 2 3; do
+            if git push origin HEAD:master; then
+              exit 0
+            fi
+            echo "Push rejected, rebasing onto latest master (attempt ${attempt})"
+            git pull --rebase origin master
+          done
+          echo "Failed to push after retries" >&2
+          exit 1

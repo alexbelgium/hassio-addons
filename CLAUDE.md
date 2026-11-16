@@ -124,17 +124,16 @@ When an upstream version is bumped, update `version` in `config.yaml`. If the ad
 
 **On PR** (`onpr_check-pr.yaml`): Validates CHANGELOG.md was updated, runs HA addon-linter, and tests Docker build for all changed add-ons.
 
-**Weekly** (`lint.yml`): Runs Super-Linter across the repo, fixes shell formatting with shfmt (4-space indent), opens PRs for automated fixes.
+**Linting** (`lint.yml`): Runs Super-Linter on the changed files of every push and PR (informational, nothing is committed). Its `lint-autofix` job is manual (`workflow_dispatch`): it lints the whole repo, fixes shell formatting with shfmt (4-space indent) and opens a PR.
 
-**Weekly** (`weekly_addons_updater`): Runs the `addons_updater` container to bump add-on versions to match upstream.
+**Upstream updates**: the `addons_updater` add-on, run outside GitHub Actions, bumps add-on versions to match upstream and pushes `Updater bot :` commits.
 
 Other automation workflows:
 - `daily_README.yaml` – Regenerates the root `README.md` add-on table.
-- `weekly_crlftolf.yaml` – Finds and fixes CRLF line endings repo-wide.
 - `weekly_reduceimagesize.yml` – Compresses images and opens a PR with savings.
 - `weekly_stats.yaml` / `helper_stats_graphs.yaml` – Refresh the `Stats`/`Stats2` files and stat graphs.
 - `daily_stale.yml` – Warns and closes stale issues/PRs.
-- `on_issues.yml` / `on_issues_ping_submitter.yml` – Link issues to add-on READMEs and ping submitters.
+- `on_issues_ping_submitter.yml` – Pings the mapped submitter when an issue mentions their add-on.
 - `generate_stargazer_map.yml` – Regenerates the stargazer map image.
 
 Adding `[nobuild]` anywhere in a commit message skips the builder workflow.
@@ -170,8 +169,8 @@ The maintainer only merges or closes its PRs. One exception: a transient infra f
 
 <!-- /coderabbit-ai-generated:v1 -->
 `on_issues_ai_triage.yaml`, `daily_ai_fix.yaml`, `on_issue_approved.yaml`,
-`on_pr_coderabbit.yml` and `on_claude_mention.yml` are disabled in GitHub and
-kept only for reference.
+`on_pr_coderabbit.yml` and `on_claude_mention.yml` are kept only for reference in
+`.github/workflows-disabled/`, where GitHub does not load them.
 
 Control labels (`ai:*`) are automation-owned. Key ones: `ai:classified` (seen
 once), `ai:reviewed` (routine checked it and stayed silent), `ai:fixed`

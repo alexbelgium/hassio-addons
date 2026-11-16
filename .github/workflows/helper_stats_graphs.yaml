@@ -5,13 +5,18 @@ on:
   workflow_call:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   stats_graphs:
+    permissions:
+      contents: write
     if: github.repository_owner == 'alexbelgium'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Install apps
         run: |
           git pull --rebase origin master
@@ -237,7 +242,7 @@ jobs:
           # Get stars evolution
           wget -S -O .github/starsevol.svg "https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date" || true
       - name: Commit if needed
-        uses: EndBug/add-and-commit@v11.1.1
+        uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
         with:
           message: "GitHub bot : graphs updated"
           default_author: github_actions
