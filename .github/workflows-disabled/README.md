@@ -15,3 +15,7 @@ routine described in `.github/prompts/maintainer-routine.md`:
 
 To bring one back, move it into `.github/workflows/` in a reviewed pull request.
 They use the `AI_PR_TOKEN` and `CLAUDE_CODE_OAUTH_TOKEN` secrets.
+
+All of them also skip their jobs when the repository variable `AI_DISABLED`
+is `true` (the old kill switch). Check that variable, and clear it or set it to
+`false`, when you restore a workflow, or its jobs will stay skipped.

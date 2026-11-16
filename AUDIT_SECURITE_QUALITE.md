@@ -19,7 +19,7 @@ Le dépôt est globalement soigné sur ses parties récentes (builder CI à perm
 |---|---|---|
 | Critique | 2 | Gestionnaires de fichiers sans authentification ; fusion automatique de PR tierces au build |
 | Haute | 8 | Authentification désactivée par défaut, mot de passe Portainer par défaut, jeton GitHub exposé, panneaux visibles aux non-administrateurs, secrets par défaut partagés |
-| Moyenne | 13 | Ingress sans filtrage d'IP, secrets dans les logs et l'environnement, téléchargements non vérifiés, workflows CI |
+| Moyenne | 14 | Ingress sans filtrage d'IP, secrets dans les logs et l'environnement, téléchargements non vérifiés, workflows CI, perte de données Jellyfin |
 | Basse | 11 | Bugs de robustesse, code mort, duplication, dépendances obsolètes |
 
 **Les cinq actions les plus rentables**
@@ -214,7 +214,7 @@ Ports publiés et `PUID: 0` avec `SYS_ADMIN` (`browser_chromium/config.yaml:34-6
 
 **Réserve (Codex).** Sévérité moyenne en base, haute seulement si une frontière de privilège est franchie (conteneur à utilisateur non root, volume partagé).
 
-**Correction suggérée.** `umask 077` pour `/.env` et `/etc/environment`. Ne pas injecter dans les `.bashrc` les clés reconnues comme secrètes. Ne jamais écrire le bloc dans un `HOME` situé sous `/share`. Liste explicite de clés sensibles en complément du motif.
+**Correction suggérée.** `umask 077` avant d'écrire `/.env` : le fichier est recréé par `mv` et hérite donc du masque. `/etc/environment` est écrit par `cp` (`:352`), qui conserve le mode d'un fichier existant : ajouter un `chmod 600 /etc/environment` explicite après la copie. Le module ne fixe aucun `umask` aujourd'hui. Ne pas injecter dans les `.bashrc` les clés reconnues comme secrètes. Ne jamais écrire le bloc dans un `HOME` situé sous `/share`. Liste explicite de clés sensibles en complément du motif.
 
 ### M3 — Secrets écrits en clair dans les logs de l'add-on
 
@@ -322,7 +322,7 @@ Ports publiés et `PUID: 0` avec `SYS_ADMIN` (`browser_chromium/config.yaml:34-6
 - SQL interpolé : `immich/rootfs/etc/cont-init.d/99-run.sh:121`, `postgres_15/rootfs/etc/cont-init.d/99-run.sh:343`, `spotweb/rootfs/etc/cont-init.d/90-spotweb:111` (†), `zoneminder/rootfs/etc/cont-init.d/99-run.sh:120` (†).
 - Mots de passe en argument de commande, visibles dans la liste des processus : `.templates/00-smb_mounts.sh:324`, `:379`, `:448` ; `immich/.../99-run.sh:101` ; `postgres_15/.../99-run.sh:168` ; `fireflyiii/.../99-run.sh:145`.
 
-**Correction suggérée.** Utiliser `printf %q` ou le mécanisme `append_export` de `00-global_var.sh`. Passer les identifiants par fichier ou variable (`PGPASSWORD`, `--defaults-extra-file`, `smbclient -A`).
+**Correction suggérée.** Pour l'écriture dans un script, utiliser `printf %q` ou le mécanisme `append_export` de `00-global_var.sh`. Pour le SQL, `printf %q` ne protège rien : passer les valeurs en paramètres (`psql -v nom="$val"` puis `:'nom'`) ou utiliser l'échappement propre à la base (`quote_literal`, `format('%L')`). Passer les identifiants par fichier ou variable (`PGPASSWORD`, `--defaults-extra-file`, `smbclient -A`).
 
 ### M13 — Montages SMB : repli automatique vers SMBv1 et NTLM
 
@@ -331,6 +331,14 @@ Ports publiés et `PUID: 0` avec `SYS_ADMIN` (`browser_chromium/config.yaml:34-6
 **Risque.** Un attaquant sur le réseau local peut provoquer l'échec de la négociation pour forcer un protocole cassé et capturer les identifiants. Seul un avertissement signale SMBv1 après coup (`:429-433`). L'option `smbv1` existe au schéma mais le repli a lieu sans elle.
 
 **Correction suggérée.** Ne descendre sous SMB 2.1 que si `smbv1: true`.
+
+### M14 — Jellyfin : migration de dossiers qui supprime la source même si la copie échoue
+
+**Axe :** robustesse, intégrité des données. `jellyfin/rootfs/etc/cont-init.d/20-folders.sh:31-32`.
+
+**Risque.** Quand un vrai répertoire existe à l'emplacement du lien, le script copie son contenu avec `cp -a ... || true`, puis supprime la source avec `rm -r`. Un échec de copie (disque plein, permissions, volume réseau absent) est ignoré et la suppression a lieu quand même. Aucune sauvegarde n'est faite avant. La perte est irréversible et touche les données de l'utilisateur au démarrage de l'add-on.
+
+**Correction suggérée.** Supprimer la source seulement si la copie réussit : `cp -a "$link_path/." "$target_dir/" && rm -r "$link_path"`, sinon journaliser l'erreur et laisser le répertoire en place. À défaut, renommer la source en `.bak` au lieu de la supprimer.
 
 ---
 
@@ -368,7 +376,7 @@ Ports publiés et `PUID: 0` avec `SYS_ADMIN` (`browser_chromium/config.yaml:34-6
 - `arpspoof/rootfs/etc/cont-init.d/99-run.sh:9` : test inversé (`-n` au lieu de `-z`), l'autodétection ne joue jamais quand l'interface est vide. Le script lancé à la ligne 16 est absent du dépôt.
 - `immich/rootfs/etc/cont-init.d/01-migrate.sh:18` : faute `addons_autoscrips`, la migration ne s'exécute jamais.
 - `photoprism/rootfs/etc/cont-init.d/00-folders.sh:29-31` : la boucle crée des dossiers nommés littéralement `BACKUP_PATH` au lieu d'utiliser la valeur des variables.
-- `jellyfin/rootfs/etc/cont-init.d/20-folders.sh:31-32` : `cp ... || true` puis `rm -r` de la source, soit une perte de données si la copie échoue.
+- Perte de données Jellyfin : reclassée en sévérité moyenne, voir M14.
 - `lidarr/rootfs/etc/cont-init.d/20-folders.sh:26` : `rm -rf /config/addons_config` sans garde.
 - `calibre/rootfs/etc/cont-init.d/80-configuration.sh:49-54` : `passwd -d abc` précède la définition du mot de passe et le bloc finit par `|| true` : un échec laisse le compte sans mot de passe.
 - `linkwarden/rootfs/etc/cont-init.d/99-run.sh:81` : échec de l'initialisation de la base avalé par `|| true`.
