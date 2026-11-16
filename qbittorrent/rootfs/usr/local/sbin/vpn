@@ -550,6 +550,8 @@ _openpvn_postup() {
 }
 
 _openpvn_postdown() {
+    # Stop the VPN proxy (vpn_proxy_enabled) before DNS falls back to the non-VPN servers
+    pkill -x tinyproxy 2>/dev/null || true
     # Update resolv.conf to remove VPN DNS servers
     _resolvconf "reset" || true
     # Remove routing rules for VPN interface and DNS servers

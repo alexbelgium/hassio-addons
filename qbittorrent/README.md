@@ -100,7 +100,7 @@ Private trackers often require the search (Prowlarr, Sonarr, Radarr...) and the 
 
 Behaviour and limits:
 
-- The proxy only runs while the VPN is up. If the VPN is not connected, the proxy is not started and the log shows `VPN proxy NOT started: the VPN is not up`. The VPN is checked every 5 seconds: if it drops or reconnects with another address, the proxy stops, the log shows `VPN proxy STOPPED`, and it starts again once the VPN is back. While it is stopped, the other add-ons get a connection error; their requests are not sent from your real IP.
+- The proxy only runs while the VPN is up. If the VPN is not connected, the proxy is not started and the log shows `VPN proxy NOT started: the VPN is not up`. If the VPN drops or reconnects with another address (checked when OpenVPN goes down, and every 5 seconds), the proxy stops, the log shows `VPN proxy STOPPED`, and it starts again once the VPN is back. While it is stopped, the other add-ons get a connection error; their requests are not sent from your real IP.
 - If `vpn_proxy_enabled` is set without a VPN, the log shows a warning and no proxy is started.
 - The proxy has no password and is only reachable by other add-ons over the internal Home Assistant network; it is not exposed on your LAN.
 - IPv4 only.

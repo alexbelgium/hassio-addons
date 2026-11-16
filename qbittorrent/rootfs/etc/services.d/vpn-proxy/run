@@ -42,6 +42,7 @@ CONFEOF
 bashio::log.info "Starting VPN proxy on port ${VPN_PROXY_PORT}: outgoing traffic leaves through ${VPN_INTERFACE} (${VPN_IP})."
 s6-setuidgid abc tinyproxy -d -c "${CONF}" &
 PROXY_PID=$!
+trap 'kill "${PROXY_PID}" 2> /dev/null || true; exit 0' TERM INT
 
 # Stop the proxy as soon as the VPN goes down or reconnects with another address
 while kill -0 "${PROXY_PID}" 2> /dev/null; do
@@ -50,8 +51,9 @@ while kill -0 "${PROXY_PID}" 2> /dev/null; do
         kill "${PROXY_PID}" 2> /dev/null || true
         exit 1
     fi
-    sleep 5
+    sleep 5 & wait $!
 done
 
-bashio::log.error "VPN proxy exited unexpectedly; restarting."
+# Also reached when the OpenVPN down hook stops tinyproxy (sbin/vpn)
+bashio::log.error "VPN proxy STOPPED: tinyproxy exited (VPN going down?). Restarting once the VPN is up."
 exit 1
