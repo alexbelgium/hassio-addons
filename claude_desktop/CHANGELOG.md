@@ -1,3 +1,7 @@
+ 
+## 20261116 (2026-11-16)
+- Update to latest version from aaddrick/claude-desktop-debian (changelog : https://github.com/aaddrick/claude-desktop-debian/releases)
+- Upstream tag : v3.3.17+claude5.11492.5
 ## 20261114.1 (2026-11-14)
 - Fix: with a custom `data_location`, startup scripts wrote the Claude, MCP, git and gh settings into the image's default home instead of the chosen one, and shells read a stale `.bashrc` that set the wrong HOME and exported outdated option values
 

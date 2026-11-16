@@ -1,12 +1,10 @@
 {
-  "dockerhub_by_date": true,
-  "dockerhub_list_size": 2,
-  "github_tagfilter": "15",
-  "last_update": "11-11-2023",
-  "paused": true,
+  "github_tagfilter": "~^15-vectorchord1[.][0-9.]+-pgvector[0-9.]+$",
+  "last_update": "2026-11-14",
   "repository": "alexbelgium/hassio-addons",
-  "slug": "postgres",
-  "source": "github",
-  "upstream_repo": "tensorchord/pgvecto.rs",
-  "upstream_version": "15.5"
+  "slug": "postgres_15",
+  "source": "container",
+  "upstream_digest": "sha256:48b3fc04fe08766a7cc0e103567c0da80e1f3705f5353a70dcf24b93dadd3ad4",
+  "upstream_repo": "ghcr.io/immich-app/postgres",
+  "upstream_version": "15-vectorchord1.1.1-pgvector0.8.5"
 }
