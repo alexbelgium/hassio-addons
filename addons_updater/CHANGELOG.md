@@ -1,3 +1,5 @@
+## 2026.11.16 (16-11-2026)
+- Minor bugs fixed
 ## 2026.11.1 (2026-11-14)
 
 - `source: container` can follow a publisher that has no moving tag: with a `~` regular expression as `github_tagfilter` and no tag in `upstream_repo`, the newest matching tag of the registry is the image whose version and digest are read. Used by the Postgres addons, whose upstream names each image after the versions inside it
