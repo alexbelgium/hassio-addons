@@ -79,7 +79,7 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
 | `wireguard_enabled` | bool | `false` | Enable WireGuard tunnel |
 | `wireguard_config` | str | _(empty)_ | WireGuard config file name only (for example `ABC.conf`, stored in `/app_configs/db21ed7f_qbittorrent/wireguard/` inside the add-on) |
-| `vpn_proxy_enabled` | bool | `false` | Run an HTTP proxy on port `8118` whose traffic leaves through the VPN (see below) |
+| `vpn_proxy_enabled` | bool | `false` | Run an HTTP proxy on port `8118` for other add-ons, whose traffic leaves through the VPN. Needs OpenVPN or WireGuard (see [VPN proxy for other add-ons](#vpn-proxy-for-other-add-ons)) |
 | `qbit_manage` | bool | `false` | Enable qBit Manage integration |
 | `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
 | `silent` | bool | `false` | Suppress debug messages |
@@ -91,9 +91,20 @@ Set `wireguard_config` to the **file name only** (for example `ABC.conf`, not a 
 
 ### VPN proxy for other add-ons
 
-Private trackers often require the search (Prowlarr, Sonarr, Radarr...) and the download to come from the same IP. With a VPN enabled, set `vpn_proxy_enabled: true` to run an HTTP proxy inside this add-on whose outgoing connections go through the VPN tunnel. If the tunnel is down, requests fail instead of leaving through your real IP.
+Private trackers often require the search (Prowlarr, Sonarr, Radarr...) and the download to come from the same IP. This add-on can run an HTTP proxy whose traffic leaves through its VPN tunnel, so the other add-ons search from the same VPN IP as qBittorrent. It is disabled by default.
 
-In the other add-on (for example Prowlarr: `Settings > General > Proxy`), use type `HTTP`, hostname `db21ed7f-qbittorrent` and port `8118`. Add-ons reach it over the internal Home Assistant network, so no port mapping is needed. Map port `8118` only to use the proxy from another machine. When `whitelist` is set, only those clients are accepted (the default whitelist already includes the add-on network `172.30.0.0/16`).
+1. Set up OpenVPN (`openvpn_enabled`) or WireGuard (`wireguard_enabled`) in this add-on and check in the log that the VPN connects.
+2. Set `vpn_proxy_enabled: true` and restart the add-on. The log shows `Starting VPN proxy on port 8118: outgoing traffic leaves through <interface> (<VPN address>)`.
+3. In the other add-on, set an HTTP proxy with hostname `db21ed7f-qbittorrent` and port `8118`, with no username or password. In Prowlarr, Sonarr and Radarr this is `Settings > General > Proxy`, type `HTTP`. Leave "Bypass Proxy for Local Addresses" enabled so they still reach qBittorrent and each other directly.
+4. Check the result: in the other add-on's log, or with a test indexer, the IP seen by websites is the VPN IP.
+
+Behaviour and limits:
+
+- The proxy only runs while the VPN is up. If the VPN is not connected, the proxy is not started and the log shows `VPN proxy NOT started: the VPN is not up`. If the VPN drops later, proxied requests fail; they never fall back to your real IP.
+- If `vpn_proxy_enabled` is set without a VPN, the log shows a warning and no proxy is started.
+- Add-ons reach the proxy over the internal Home Assistant network, so no port mapping is needed. Map port `8118` in the Network section only to use the proxy from another machine.
+- When `whitelist` is set, only those clients are accepted. The default whitelist already includes the add-on network `172.30.0.0/16`; if you removed it, add it back or the other add-ons are refused.
+- IPv4 only.
 
 ### Example Configuration
 

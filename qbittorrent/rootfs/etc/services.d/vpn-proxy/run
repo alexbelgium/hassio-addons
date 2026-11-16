@@ -18,8 +18,9 @@ fi
 
 VPN_IP="$(ip -4 -o addr show dev "${VPN_INTERFACE:-none}" 2> /dev/null | awk '{print $4}' | cut -d/ -f1 | head -n1 || true)"
 if [[ -z "${VPN_IP}" ]]; then
-    # VPN not up yet: s6 restarts this service
-    sleep 5
+    # Never start the proxy without the tunnel: s6 restarts this service to retry
+    bashio::log.error "VPN proxy NOT started: the VPN is not up (interface '${VPN_INTERFACE:-unknown}' has no IPv4 address). Requests to port ${VPN_PROXY_PORT} will be refused. Check the OpenVPN/WireGuard messages above. Retrying in 30 s..."
+    sleep 30
     exit 1
 fi
 
@@ -41,5 +42,5 @@ if bashio::config.has_value 'whitelist'; then
     done
 fi
 
-bashio::log.info "Starting VPN proxy on port ${VPN_PROXY_PORT}, outgoing traffic bound to ${VPN_INTERFACE} (${VPN_IP})"
+bashio::log.info "Starting VPN proxy on port ${VPN_PROXY_PORT}: outgoing traffic leaves through ${VPN_INTERFACE} (${VPN_IP}). If the VPN drops, proxied requests fail instead of using your real IP."
 exec s6-setuidgid abc tinyproxy -d -c "${CONF}"
