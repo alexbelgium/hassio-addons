@@ -4,8 +4,8 @@ set -euo pipefail
 
 # HTTP proxy for other add-ons (Sonarr, Radarr, Prowlarr...) whose outgoing
 # connections are bound to the VPN address, so the VPN policy routing sends
-# them through the tunnel. If the tunnel is down, connections fail instead of
-# leaving through the real IP.
+# them through the tunnel. It only runs while the VPN address and its routing
+# rule exist; otherwise it stops and s6 restarts this script, which waits.
 
 VPN_PROXY_PORT=8118
 CONF=/etc/tinyproxy-vpn.conf
@@ -16,10 +16,18 @@ else
     VPN_INTERFACE="$(cat /var/run/wireguard/interface 2> /dev/null || true)"
 fi
 
-VPN_IP="$(ip -4 -o addr show dev "${VPN_INTERFACE:-none}" 2> /dev/null | awk '{print $4}' | cut -d/ -f1 | head -n1 || true)"
-if [[ -z "${VPN_IP}" ]]; then
-    # Never start the proxy without the tunnel: s6 restarts this service to retry
-    bashio::log.error "VPN proxy NOT started: the VPN is not up (interface '${VPN_INTERFACE:-unknown}' has no IPv4 address). Requests to port ${VPN_PROXY_PORT} will be refused. Check the OpenVPN/WireGuard messages above. Retrying in 30 s..."
+vpn_ip() {
+    ip -4 -o addr show dev "${VPN_INTERFACE:-none}" 2> /dev/null | awk '{print $4}' | cut -d/ -f1 | head -n1 || true
+}
+
+# The VPN is up when its address exists and the rule routing that address through the tunnel is in place
+vpn_up() {
+    [[ -n "$1" ]] && [[ "$(vpn_ip)" == "$1" ]] && ip -4 rule show 2> /dev/null | grep -qFw "from $1"
+}
+
+VPN_IP="$(vpn_ip)"
+if ! vpn_up "${VPN_IP}"; then
+    bashio::log.error "VPN proxy NOT started: the VPN is not up (interface '${VPN_INTERFACE:-unknown}' has no VPN address or routing). Requests to port ${VPN_PROXY_PORT} are refused. Check the OpenVPN/WireGuard messages above. Retrying in 30 s..."
     sleep 30
     exit 1
 fi
@@ -29,18 +37,21 @@ Port ${VPN_PROXY_PORT}
 Bind ${VPN_IP}
 Timeout 600
 LogLevel Notice
-MaxClients 100
-DisableViaHeader Yes
 CONFEOF
 
-# Only accept clients from the whitelist option, if set
-if bashio::config.has_value 'whitelist'; then
-    for client in $(bashio::config 'whitelist' | tr ',' ' '); do
-        # A name would make tinyproxy reverse-resolve every client
-        [[ "${client}" == localhost ]] && client=127.0.0.1
-        echo "Allow ${client}" >> "${CONF}"
-    done
-fi
+bashio::log.info "Starting VPN proxy on port ${VPN_PROXY_PORT}: outgoing traffic leaves through ${VPN_INTERFACE} (${VPN_IP})."
+s6-setuidgid abc tinyproxy -d -c "${CONF}" &
+PROXY_PID=$!
 
-bashio::log.info "Starting VPN proxy on port ${VPN_PROXY_PORT}: outgoing traffic leaves through ${VPN_INTERFACE} (${VPN_IP}). If the VPN drops, proxied requests fail instead of using your real IP."
-exec s6-setuidgid abc tinyproxy -d -c "${CONF}"
+# Stop the proxy as soon as the VPN goes down or reconnects with another address
+while kill -0 "${PROXY_PID}" 2> /dev/null; do
+    if ! vpn_up "${VPN_IP}"; then
+        bashio::log.error "VPN proxy STOPPED: the VPN went down or changed address. Requests to port ${VPN_PROXY_PORT} are refused until it is back."
+        kill "${PROXY_PID}" 2> /dev/null || true
+        exit 1
+    fi
+    sleep 5
+done
+
+bashio::log.error "VPN proxy exited unexpectedly; restarting."
+exit 1
