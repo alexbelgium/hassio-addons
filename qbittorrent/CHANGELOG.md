@@ -1,4 +1,7 @@
  
+## 5.3.0.2 (2026-11-16)
+- New option `vpn_proxy_enabled`: runs an HTTP proxy on port 8118 whose traffic goes through the OpenVPN or WireGuard tunnel, so Prowlarr, Sonarr, Radarr and other add-ons can search through the same VPN IP as qBittorrent (#3250)
+
 ## 5.3.0.1 (26-10-2026)
 - Fix : WebUI and Ingress returned "Unauthorized" after a restart on qBittorrent 5.3.0. qBittorrent 5.3 moved its WebUI settings from `[Preferences]` to a new `[WebUI]` section, so the add-on's settings (host header validation, CSRF/clickjacking protection, username, whitelist, SSL, alternative UI) were written where they are no longer read. They are now written to `[WebUI]`
 

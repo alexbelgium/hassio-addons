@@ -79,6 +79,7 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
 | `wireguard_enabled` | bool | `false` | Enable WireGuard tunnel |
 | `wireguard_config` | str | _(empty)_ | WireGuard config file name only (for example `ABC.conf`, stored in `/app_configs/db21ed7f_qbittorrent/wireguard/` inside the add-on) |
+| `vpn_proxy_enabled` | bool | `false` | Run an HTTP proxy on port `8118` whose traffic leaves through the VPN (see below) |
 | `qbit_manage` | bool | `false` | Enable qBit Manage integration |
 | `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
 | `silent` | bool | `false` | Suppress debug messages |
@@ -87,6 +88,12 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 
 WireGuard configuration files must be stored in `/config/wireguard` **inside the add-on container** (on Home Assistant OS this is the add-on config share, usually `/app_configs/<addon_slug>/wireguard/`, for example `/app_configs/db21ed7f_qbittorrent/wireguard/`).
 Set `wireguard_config` to the **file name only** (for example `ABC.conf`, not a full path). If several `.conf` files are present, set `wireguard_config` to the file name you want to use (for example `wg0.conf`). Expose UDP port `51820` in the add-on options and forward it from your router only when your tunnel expects inbound peers (for example, site-to-site setups). Outbound-only commercial VPN providers usually do not require a mapped port. The runtime configuration now preserves both IPv4 and IPv6 entries, so you can use dual-stack WireGuard peers when your endpoint supports them.
+
+### VPN proxy for other add-ons
+
+Private trackers often require the search (Prowlarr, Sonarr, Radarr...) and the download to come from the same IP. With a VPN enabled, set `vpn_proxy_enabled: true` to run an HTTP proxy inside this add-on whose outgoing connections go through the VPN tunnel. If the tunnel is down, requests fail instead of leaving through your real IP.
+
+In the other add-on (for example Prowlarr: `Settings > General > Proxy`), use type `HTTP`, hostname `db21ed7f-qbittorrent` and port `8118`. Add-ons reach it over the internal Home Assistant network, so no port mapping is needed. Map port `8118` only to use the proxy from another machine. When `whitelist` is set, only those clients are accepted (the default whitelist already includes the add-on network `172.30.0.0/16`).
 
 ### Example Configuration
 
