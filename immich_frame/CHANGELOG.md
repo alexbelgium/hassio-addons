@@ -1,4 +1,7 @@
  
+## 1.0.40.0 (2026-11-16)
+- Update to latest version from immichFrame/ImmichFrame (changelog : https://github.com/immichFrame/ImmichFrame/releases)
+ 
 ## 1.0.39.0 (2026-10-10)
 - Update to latest version from immichFrame/ImmichFrame (changelog : https://github.com/immichFrame/ImmichFrame/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
