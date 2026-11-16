@@ -16,7 +16,8 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM $BUILD_FROM
+ARG BUILD_UPSTREAM="15-vectorchord1.1.1-pgvector0.8.5"
+FROM ${BUILD_FROM}:${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #
@@ -28,12 +29,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 
-RUN \
-    # Correct for access
-    for file in /usr/share/postgresql/postgresql.conf.sample /usr/local/share/postgresql/postgresql.conf.sample; do \
-    if [ -f "$file" ]; then sed -i "s|.*listen_addresses(.*)|listen_addresses = '*'(1)|g" "$file" && \
-    sed -i "s|.*data_directory(.*)|data_directory = '/config/database'(1)|g" "$file"; fi; done
-
 ##################
 # 3 Install apps #
 ##################
@@ -41,6 +36,11 @@ RUN \
 # Add rootfs
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
+
+# Upgrade a cluster from every older major shipped above, with the script the add-on runs at
+# startup: an upstream image whose pieces do not fit together fails the build
+# hadolint ignore=DL3059
+RUN /usr/local/bin/pg_upgrade_selftest.sh
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
@@ -60,6 +60,10 @@ ENV PACKAGES=""
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+
+# The Immich add-on of this repository refuses to start against a PostgreSQL or VectorChord
+# outside the range it declares: an image outside it fails here instead (needs curl, from above)
+RUN /usr/local/bin/pg_immich_gate.sh
 
 ################
 # 4 Entrypoint #

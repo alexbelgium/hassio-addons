@@ -231,7 +231,15 @@ for f in */; do
             # The digest the tag resolves to is the one the registry answers
             # with, and it moves whenever anything behind the tag does
             TOKEN="$(curl -f -L -s "https://$REGISTRY/token?scope=repository:$IMAGEREPO:pull&service=$REGISTRY" | jq -r '.token // empty')" || true
-            MANIFEST="$(curl -f -L -s -D "$HEADERS" -H "Authorization: Bearer $TOKEN" -H "Accept: $ACCEPT" "$BASEURL/manifests/${IMAGE##*:}")" || true
+
+            # A publisher with no moving tag names every release differently:
+            # the newest tag matching a "~regex" github_tagfilter is then the
+            # image to follow, upstream_repo holding no tag of its own
+            IMAGETAG="${IMAGE##*:}"
+            if [ -n "$REGEX_TEXT" ] && [[ "$IMAGE" != *:* ]]; then
+                IMAGETAG="$(curl -f -L -s -H "Authorization: Bearer $TOKEN" "$BASEURL/tags/list?n=1000" | jq -r '.tags[]?' | regex_versions | sort -V | tail -n 1)" || true
+            fi
+            MANIFEST="$(curl -f -L -s -D "$HEADERS" -H "Authorization: Bearer $TOKEN" -H "Accept: $ACCEPT" "$BASEURL/manifests/$IMAGETAG")" || true
             LASTDIGEST="$(sed -n 's/^[Dd]ocker-[Cc]ontent-[Dd]igest:[[:space:]]*//p' "$HEADERS" | tr -d '\r')"
             rm -f "$HEADERS"
 
