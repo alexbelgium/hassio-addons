@@ -22,7 +22,7 @@ options:
 ports:
   5432/tcp: 5432
 ports_description:
-  5432/tcp: Postgres
+  5432/tcp: "Postgres"
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
