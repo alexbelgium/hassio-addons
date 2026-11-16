@@ -1,4 +1,7 @@
  
+## 28.4.0 (2026-11-16)
+- Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
+ 
 ## 28.3.0 (2026-11-06)
 - Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
  

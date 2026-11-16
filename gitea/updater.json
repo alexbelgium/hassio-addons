@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-11-06",
+  "last_update": "2026-11-16",
   "repository": "alexbelgium/hassio-addons",
   "slug": "gitea",
   "source": "github",
   "upstream_repo": "go-gitea/gitea",
-  "upstream_version": "28.3.0"
+  "upstream_version": "28.4.0"
 }
