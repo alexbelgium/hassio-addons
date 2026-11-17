@@ -7,7 +7,11 @@
 
 bashio::log.info "Exporting variables"
 for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
-    bashio::log.blue "$k"="$(bashio::config "$k")"
+    if [[ "${k,,}" =~ pass|token|secret|key ]]; then
+        bashio::log.blue "$k=******"
+    else
+        bashio::log.blue "$k=$(bashio::config "$k")"
+    fi
     export "$k"="$(bashio::config "$k")"
 done
 echo ""
@@ -174,7 +178,7 @@ if bashio::config.true 'auto_restart'; then
         set -o posix
         export -p
     ) > /env.sh
-    chmod 755 /env.sh
+    chmod 600 /env.sh
     chmod +x /usr/bin/restart_addon
     sed -i "1a . /env.sh; /usr/bin/restart_addon >/proc/1/fd/1 2>/proc/1/fd/2" /etc/openvpn/tunnelDown.sh
 

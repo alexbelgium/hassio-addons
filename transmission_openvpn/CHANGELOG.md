@@ -1,3 +1,6 @@
+## v5.5.2.1 (2026-11-17)
+- Startup log masks options whose name contains pass, token, secret or key; with auto_restart, /env.sh (which holds the environment including OPENVPN_PASSWORD) is now readable by root only (600 instead of 755)
+
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
  
 ## v5.5.2 (2026-08-22)

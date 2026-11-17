@@ -1,4 +1,6 @@
- 
+## 5.3.0.3 (2026-11-17)
+- VPN port forwarding: the WebUI password is no longer evaluated through eval nor written to the debug log, and the WebUI username is URL-encoded on login
+
 ## 5.3.0.2 (2026-11-16)
 - New option `vpn_proxy_enabled` (default `false`): runs an HTTP proxy on port 8118 whose traffic goes through the OpenVPN or WireGuard tunnel, so Prowlarr, Sonarr, Radarr and other add-ons can search from the same VPN IP as qBittorrent (#3250). To use it: enable a VPN, set `vpn_proxy_enabled: true`, restart, then in the other add-on set an HTTP proxy with hostname `db21ed7f-qbittorrent` and port `8118` (Prowlarr/Sonarr/Radarr: `Settings > General > Proxy`). The proxy only runs while the VPN is up; otherwise the log shows `VPN proxy NOT started` and requests are refused, never sent from your real IP. See the README for details
 

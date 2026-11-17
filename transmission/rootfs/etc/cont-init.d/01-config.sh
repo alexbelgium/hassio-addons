@@ -108,7 +108,7 @@ USER=$(bashio::config 'user')
 PASS=$(bashio::config 'pass')
 if bashio::config.has_value 'user'; then
     BOOLEAN=true
-    bashio::log.info "User & Pass set, authentification will be with user : $USER and pass : $PASS"
+    bashio::log.info "User & Pass set, authentification will be with user : $USER"
 else
     BOOLEAN=false
     bashio::log.warning "User & Pass not set, no authentification required"

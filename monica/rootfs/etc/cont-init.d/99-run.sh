@@ -60,7 +60,7 @@ case "$database" in
         DB_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "DB_PORT=$DB_PORT" && sed -i "1a export DB_PORT=$DB_PORT" /usr/local/bin/entrypoint.sh
         DB_DATABASE=monica && bashio::log.blue "DB_DATABASE=$DB_DATABASE" && sed -i "1a export DB_DATABASE=$DB_DATABASE" /usr/local/bin/entrypoint.sh
         DB_USERNAME=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USERNAME=$DB_USERNAME" && sed -i "1a export DB_USERNAME=$DB_USERNAME" /usr/local/bin/entrypoint.sh
-        DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD" && sed -i "1a export DB_PASSWORD=$DB_PASSWORD" /usr/local/bin/entrypoint.sh
+        DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=******" && sed -i "1a export DB_PASSWORD=$DB_PASSWORD" /usr/local/bin/entrypoint.sh
         export DB_HOST
         export DB_PORT
         export DB_DATABASE

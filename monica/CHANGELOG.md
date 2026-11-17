@@ -1,3 +1,6 @@
+## 5.0.0.5.5 (2026-11-17)
+- The MariaDB password is no longer printed in the startup log
+
 ## 5.0.0.5.4 (18-09-2026)
 
 - Fix contact search returning HTTP 500 ("first_name is not sortable") by backporting monicahq/monica#7806 so Meilisearch can sort contacts by name (#3067)

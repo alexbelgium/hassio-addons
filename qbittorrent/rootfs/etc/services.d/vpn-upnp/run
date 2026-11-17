@@ -64,7 +64,11 @@ _parse_config() {
     fi
 
     for key in "${!config[@]}"; do
-        bashio::log.debug "Config key: $key, value: ${config[$key]}"
+        if [ "$key" = "Pass" ]; then
+            bashio::log.debug "Config key: $key, value: ******"
+        else
+            bashio::log.debug "Config key: $key, value: ${config[$key]}"
+        fi
     done
 
     if [ -z "${config["Server"]}" ] || [ -z "${config["Port"]}" ] || [ -z "${config["User"]}" ] || [ -z "${config["Pass"]}" ] || [ -z "${config["Interface"]}" ]; then
@@ -152,7 +156,8 @@ _pnat_set_firewall() {
 # --- qBittorrent Specific Logic ---
 
 _qbt_login() {
-    config["SID"]=$(_cmd "curl -s -k -i --header \"Referer: ${config["Schema"]}://${config["Server"]}:${config["Port"]}\" --data \"username=${config["User"]}\" --data-urlencode \"password=${config["Pass"]}\" \"${config["Schema"]}://${config["Server"]}:${config["Port"]}/api/v2/auth/login\" | grep -oiP 'set-cookie:.*SID[^=]*=\K[^;]+'")
+    # Called directly, not through _cmd: its eval would execute and log the password
+    config["SID"]=$(curl -s -k -i --header "Referer: ${config["Schema"]}://${config["Server"]}:${config["Port"]}" --data-urlencode "username=${config["User"]}" --data-urlencode "password=${config["Pass"]}" "${config["Schema"]}://${config["Server"]}:${config["Port"]}/api/v2/auth/login" | grep -oiP 'set-cookie:.*SID[^=]*=\K[^;]+')
     return $?
 }
 
