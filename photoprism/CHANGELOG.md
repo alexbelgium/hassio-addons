@@ -1,5 +1,6 @@
 ## 2026.10.29.5 (2026-11-17)
 - Remove a startup loop that created stray folders literally named BACKUP_PATH, IMPORT_PATH, ORIGINALS_PATH and STORAGE_PATH; behaviour is otherwise unchanged
+- The database password is no longer printed in the startup log
 
 ## 2026.10.29.4 (04-11-2026)
 
