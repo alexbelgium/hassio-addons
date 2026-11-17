@@ -7,7 +7,11 @@
 
 bashio::log.info "Exporting variables"
 for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
-    bashio::log.blue "$k"="$(bashio::config "$k")"
+    if [[ "$k" == "env_vars" || "${k,,}" =~ pass|token|secret|key ]]; then
+        bashio::log.blue "$k=******"
+    else
+        bashio::log.blue "$k=$(bashio::config "$k")"
+    fi
     export "$k"="$(bashio::config "$k")"
 done
 echo ""
@@ -170,11 +174,12 @@ ip route add 172.30.0.0/16 via 172.30.32.1
 if bashio::config.true 'auto_restart'; then
 
     bashio::log.info "Auto restarting addon if openvpn down"
+    # Created private before the secrets are written into it
+    install -m 600 /dev/null /env.sh
     (
         set -o posix
         export -p
     ) > /env.sh
-    chmod 755 /env.sh
     chmod +x /usr/bin/restart_addon
     sed -i "1a . /env.sh; /usr/bin/restart_addon >/proc/1/fd/1 2>/proc/1/fd/2" /etc/openvpn/tunnelDown.sh
 

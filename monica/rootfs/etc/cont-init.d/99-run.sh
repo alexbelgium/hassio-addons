@@ -60,7 +60,7 @@ case "$database" in
         DB_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "DB_PORT=$DB_PORT" && sed -i "1a export DB_PORT=$DB_PORT" /usr/local/bin/entrypoint.sh
         DB_DATABASE=monica && bashio::log.blue "DB_DATABASE=$DB_DATABASE" && sed -i "1a export DB_DATABASE=$DB_DATABASE" /usr/local/bin/entrypoint.sh
         DB_USERNAME=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USERNAME=$DB_USERNAME" && sed -i "1a export DB_USERNAME=$DB_USERNAME" /usr/local/bin/entrypoint.sh
-        DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD" && sed -i "1a export DB_PASSWORD=$DB_PASSWORD" /usr/local/bin/entrypoint.sh
+        DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=******" && sed -i "1a export DB_PASSWORD=$DB_PASSWORD" /usr/local/bin/entrypoint.sh
         export DB_HOST
         export DB_PORT
         export DB_DATABASE
@@ -116,7 +116,7 @@ if [ -z "$APP_KEY" ] || [ ${#APP_KEY} -lt 32 ]; then
         openssl rand -base64 32
     )"
     bashio::app.option "APP_KEY" "${APP_KEY}"
-    bashio::log.warning "The APP_KEY set was invalid, generated a random one: ${APP_KEY}. Restarting to take it into account"
+    bashio::log.warning "The APP_KEY set was invalid, generated a random one (saved in the add-on options and /config/APP_KEY). Restarting to take it into account"
     echo "${APP_KEY}" >> /config/APP_KEY
     bashio::app.restart
 fi

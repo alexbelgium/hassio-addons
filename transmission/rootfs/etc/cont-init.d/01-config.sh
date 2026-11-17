@@ -108,14 +108,14 @@ USER=$(bashio::config 'user')
 PASS=$(bashio::config 'pass')
 if bashio::config.has_value 'user'; then
     BOOLEAN=true
-    bashio::log.info "User & Pass set, authentification will be with user : $USER and pass : $PASS"
+    bashio::log.info "User & Pass set, authentification will be with user : $USER"
 else
     BOOLEAN=false
     bashio::log.warning "User & Pass not set, no authentification required"
 fi
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-authentication-required\"=${BOOLEAN}")
-CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-username\"=\"${USER}\"")
-CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-password\"=\"${PASS}\"")
+# --arg: a quote in the password can neither break the filter nor print it in a jq error
+CONFIG=$(jq --arg u "${USER}" --arg p "${PASS}" '."rpc-username"=$u | ."rpc-password"=$p' <<< "${CONFIG}")
 echo "${CONFIG}" > "$CONFIGDIR"/settings.json \
     && jq . -S "$CONFIGDIR"/settings.json | cat > temp.json && mv temp.json "$CONFIGDIR"/settings.json
 

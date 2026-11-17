@@ -1,3 +1,6 @@
+## 0.13.4.1 (2026-11-17)
+
+- The MQTT password is no longer printed in the startup log
 
 ## 0.13.4 (2026-01-14)
 - Update to latest version from m4dm4rtig4n/myelectricaldata (changelog : https://github.com/m4dm4rtig4n/myelectricaldata/releases)

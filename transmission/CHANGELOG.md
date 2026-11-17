@@ -1,4 +1,7 @@
- 
+## 4.1.4.1 (2026-11-17)
+
+- The RPC password is no longer printed in the startup log, and a password containing a quote is now written correctly to settings.json
+
 ## 4.1.4 (2026-10-31)
 - Update to latest version from linuxserver/docker-transmission (changelog : https://github.com/linuxserver/docker-transmission/releases)
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
