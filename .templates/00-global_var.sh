@@ -61,7 +61,7 @@ shell_quote() {
 # holding URL credentials (postgres://user:pass@host, https://token@host) counts
 # whatever its name.
 is_secret() {
-    [[ "${1,,}" =~ pass|token|secret|private|pwd|key|gitapi || "$2" =~ ://[^/@]+@ ]]
+    [[ "${1,,}" =~ pass|token|secret|private|pwd|key|gitapi|credential || "$2" =~ ://[^/?#@[:space:]]+@ ]]
 }
 
 append_export() {
@@ -167,9 +167,12 @@ if [[ "${1:-}" == "--self-test" ]]; then
     append_export "SELFTEST_DB_PASSWORD" "hunter2"
     append_export "SELFTEST_GITAPI" "ghp_x"
     append_export "SELFTEST_DATABASE_URL" "postgres://u:p@db/x"
+    append_export "SELFTEST_CREDENTIALS" "alice:pw"
+    append_export "SELFTEST_QUERY_URL" "https://host/?email=a@b"
     append_export "SELFTEST_TZ" "Europe/Brussels"
-    if grep -q 'PASSWORD\|GITAPI\|DATABASE_URL' "$EXPORT_BODY_PUBLIC" || ! grep -q 'SELFTEST_TZ=' "$EXPORT_BODY_PUBLIC"; then
-        echo "FAIL (public block): secrets must be dropped and other variables kept"
+    if grep -q 'PASSWORD\|GITAPI\|DATABASE_URL\|CREDENTIALS' "$EXPORT_BODY_PUBLIC" ||
+        ! grep -q 'SELFTEST_TZ=' "$EXPORT_BODY_PUBLIC" || ! grep -q 'SELFTEST_QUERY_URL=' "$EXPORT_BODY_PUBLIC"; then
+        echo "FAIL (public block): secrets must be dropped and other variables (incl. a URL with @ in its query) kept"
         self_test_rc=1
     fi
 
