@@ -1,4 +1,5 @@
 ## 2026.11.17 (2026-11-17)
+
 - Security: TLS verification is no longer disabled for git, and the GitHub token is no longer written into the remote URL of /data/<repo>/.git/config (it is passed by a credential helper reading the environment; any token stored by older versions is removed at startup). The gitapi option is now a password field. Rotating the token used with previous versions is recommended.
 
 ## 2026.11.16 (16-11-2026)
