@@ -123,7 +123,7 @@ Migration from the Postgres 15 add-on:
 
 ## Security
 
-The `POSTGRES_PASSWORD` option ships with the default value `homeassistant`. With port `5432` published, anyone on your network who knows it gets a superuser, who can read or change every database and run commands in the container (for example with `COPY ... FROM PROGRAM`). On a new install, change it in the add-on options before the first start. On an existing database the option alone does not change the stored password: run `ALTER USER postgres PASSWORD '...';` first, then set the same value in the option and in the add-ons that connect to Postgres. The add-on prints a warning in its startup log while the default is still set.
+The `POSTGRES_PASSWORD` option ships with the default value `homeassistant`. With port `5432` published, anyone on your network who knows it gets a superuser, who can read or change every database and run commands in the container (for example with `COPY ... FROM PROGRAM`). On a new install, change it in the add-on options before the first start. On an existing database the option alone does not change the stored password: run `ALTER USER <superuser> PASSWORD '...';` first, where `<superuser>` is the role the cluster was created with (`POSTGRES_USER`, `postgres` by default; `\du` lists it), then set the same value in the option and in the add-ons that connect to Postgres. The add-on prints a warning in its startup log while the default is still set.
 
 By default, Postgres will be reachable on the local network of your host system. To improve security, you can disable this behavior and make Postgres available only to other Add-ons within Home Assistant.
 
