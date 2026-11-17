@@ -100,7 +100,7 @@ This addon supports mounting both local drives and remote SMB shares:
 
 ## Security
 
-With the default `connection_mode: ingress_noauth`, Sonarr runs without authentication and its direct port (8989) is published. Anyone on your network who can reach that port can use it without logging in and change its settings. The add-on logs a warning at startup while this is the case. To secure it, set `connection_mode` to `ingress_auth`, or disable the port in the add-on Network settings and use Ingress.
+With the default `connection_mode: ingress_noauth`, Sonarr runs without authentication and its direct port (8989) is published. Anyone on your network who can reach that port can use it without logging in and change its settings. The add-on logs a warning at startup while this is the case. To secure it, set `connection_mode` to `ingress_auth` and set a login in Sonarr (Settings > General > Security), or disable the port in the add-on Network settings and use Ingress.
 
 ## Support
 

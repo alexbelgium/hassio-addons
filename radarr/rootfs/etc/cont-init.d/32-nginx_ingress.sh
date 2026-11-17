@@ -37,7 +37,7 @@ if [ -f "$CONFIG_LOCATION" ]; then
             if bashio::var.has_value "$(bashio::app.port 7878)"; then
                 bashio::log.warning "SECURITY RISK: Radarr runs without authentication and port 7878 is published on host port $(bashio::app.port 7878)."
                 bashio::log.warning "Anyone on your network can use it without logging in, change its settings, including download clients and API keys, and delete media."
-                bashio::log.warning "Set connection_mode to ingress_auth, or disable the port in the add-on Network settings and use Ingress."
+                bashio::log.warning "Set connection_mode to ingress_auth and set a login in Radarr (Settings > General > Security), or disable the port in the add-on Network settings and use Ingress."
             fi
             # Define UrlBase
             sed -i "/UrlBase/d" "$CONFIG_LOCATION"
