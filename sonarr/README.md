@@ -74,8 +74,8 @@ Configurations can be done through the app webUI, except for the following optio
 ### Connection Modes
 
 - `ingress_noauth` - Default, disables authentication for seamless ingress integration
-- `noingress_auth` - Disables ingress for external URL, enables authentication
-- `ingress_auth` - Enables both ingress and authentication
+- `noingress_auth` - Disables ingress for external URL and removes the external (no-login) mode; set a login in the app itself (see Security)
+- `ingress_auth` - Enables ingress and removes the external (no-login) mode; set a login in the app itself (see Security)
 
 ### Example Configuration
 
