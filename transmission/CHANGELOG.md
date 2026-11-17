@@ -1,6 +1,6 @@
 ## 4.1.4.1 (2026-11-17)
 
-- The RPC password is no longer printed in the startup log
+- The RPC password is no longer printed in the startup log, and a password containing a quote is now written correctly to settings.json
 
 ## 4.1.4 (2026-10-31)
 - Update to latest version from linuxserver/docker-transmission (changelog : https://github.com/linuxserver/docker-transmission/releases)
