@@ -76,10 +76,10 @@ To secure it, set `auth_method` to `password`, or disable the port in the add-on
 
 1. Start the add-on and wait for it to initialize.
 1. Access the web interface through the Home Assistant sidebar or at `<your-ip>:8071`.
-1. Log in using the default credentials:
+1. With the default `auth_method: noauth` there is no login (see Security above). To require one, set `auth_method` to `password`, restart, and log in with the default credentials:
    - Username: `admin`
    - Password: `admin`
-1. **Important:** Immediately change the default password by clicking on "Settings" > "User Management".
+1. **Important:** then immediately change the default password by clicking on "Settings" > "User Management".
 1. Configure additional sources and authentication settings through the add-on options or the web interface.
 
 ### Mounting Drives
