@@ -1,10 +1,10 @@
 {
   "github_tagfilter": "~^17-vectorchord1[.][0-9.]+-pgvector[0-9.]+$",
-  "last_update": "2026-11-14",
+  "last_update": "2026-11-17",
   "repository": "alexbelgium/hassio-addons",
   "slug": "postgres_17",
   "source": "container",
-  "upstream_digest": "sha256:2e8f3609f634eed782f81eb9ed0736ca946a3f26138792a124a44d42996c80c9",
+  "upstream_digest": "sha256:02ff0ed1d6fdf982d411d28d9a6c9d693be1fe5ac5aebae4f761dc5d767a2063",
   "upstream_repo": "ghcr.io/immich-app/postgres",
   "upstream_version": "17-vectorchord1.1.1-pgvector0.8.5"
 }
