@@ -109,8 +109,8 @@ ADMIN_EMAIL_VAL="$(bashio::config 'SEAFILE_ADMIN_EMAIL')"
 ADMIN_PASSWORD_VAL="$(bashio::config 'SEAFILE_ADMIN_PASSWORD')"
 
 if [ "$ADMIN_PASSWORD_VAL" = "a_very_secret_password" ]; then
-    bashio::log.warning "SECURITY RISK: the Seafile admin password is still the default (a_very_secret_password)."
-    bashio::log.warning "Anyone who can reach ports 8000 or 8082 can log in as admin and read all stored files."
+    bashio::log.warning "SECURITY RISK: the SEAFILE_ADMIN_PASSWORD option is still the default (a_very_secret_password), which Seafile uses for the admin account it creates."
+    bashio::log.warning "Unless you changed it in the Seafile web interface, anyone who can reach ports 8000 or 8082 can log in as admin and read all stored files."
     bashio::log.warning "Change the admin password in the Seafile web interface; SEAFILE_ADMIN_PASSWORD is only used when the admin account is first created."
 fi
 
