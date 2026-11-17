@@ -1,4 +1,5 @@
 ## 4.1.4.1 (2026-11-17)
+
 - The RPC password is no longer printed in the startup log
 
 ## 4.1.4 (2026-10-31)

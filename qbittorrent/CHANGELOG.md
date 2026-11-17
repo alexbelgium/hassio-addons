@@ -1,4 +1,5 @@
 ## 5.3.0.3 (2026-11-17)
+
 - VPN port forwarding: the WebUI password is no longer evaluated through eval nor written to the debug log, and the WebUI username is URL-encoded on login
 
 ## 5.3.0.2 (2026-11-16)
