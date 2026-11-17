@@ -42,7 +42,7 @@ Webui can be found at `<your-ip>:port`.
 
 ## Security
 
-`OPENPROJECT_SECRET_KEY_BASE` ships with the default value `addon_secret`. This key signs session cookies and tokens, so anyone who knows it can forge a login session. Change it in the add-on options. The add-on prints a warning in its startup log while the default is still set.
+`OPENPROJECT_SECRET_KEY_BASE` ships with the default value `addon_secret`. This key signs session cookies and tokens, so anyone who knows it can forge a login session. Change it in the add-on options (a `SECRET_KEY_BASE` set through `env_vars` takes precedence). The add-on prints a warning in its startup log while the default is still set.
 
 ## Installation
 
