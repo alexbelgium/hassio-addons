@@ -48,9 +48,9 @@ comparison to installing any other Home Assistant add-on.
 
 The web UI can be found at `<your-ip>:8071` or through the Home Assistant sidebar when using Ingress. Direct access redirects to the add-on's configured base path, so the address bar will show a longer URL than the one you typed.
 
-**Default credentials:**
+**Default credentials** (only used with `auth_method: password`):
 - Username: `admin`
-- Password: `admin`
+- Password: `admin` on older releases. Recent upstream releases generate a random initial password on a fresh install and print it once in the add-on log, so check the log first.
 
 **Important:** Change the default credentials immediately after first login for security.
 
@@ -58,7 +58,7 @@ The web UI can be found at `<your-ip>:8071` or through the Home Assistant sideba
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `auth_method` | list | `password` | Authentication method (`password`, `noauth`, `proxy`, `oidc`) |
+| `auth_method` | list | `noauth` | Authentication method (`password`, `noauth`, `proxy`, `oidc`) |
 | `default_user_scope` | str | `/` | The root filesystem path used as the FileBrowser source and as the default scope for all users. Must be an existing absolute directory path (e.g. `/share`, `/media`). |
 | `localdisks` | str | _(optional)_ | Local drives to mount (e.g., `sda1,sdb1,MYNAS`). Add a folder after the drive to mount only that folder, e.g. `MYNAS/public` mounts only that folder, at `/mnt/MYNAS/public`. Folder mounts need an add-on version released after 2026-09-19. |
 | `networkdisks` | str | _(optional)_ | SMB shares to mount (e.g., `//SERVER/SHARE`) |
@@ -66,14 +66,18 @@ The web UI can be found at `<your-ip>:8071` or through the Home Assistant sideba
 | `cifspassword` | str | _(optional)_ | SMB password for network shares |
 | `cifsdomain` | str | _(optional)_ | SMB domain for network shares |
 
+## Security
+
+By default FileBrowser Quantum (`auth_method: noauth`) runs without authentication, and its direct port (8071) is published. Anyone on your network who can reach that port can read, modify and delete every folder mapped into the add-on, including your Home Assistant configuration and backups. The add-on logs a warning at startup while this is the case.
+
+To secure it, set `auth_method` to `password`, or disable the port in the add-on Network settings and use Ingress.
+
 ## Setup
 
 1. Start the add-on and wait for it to initialize.
 1. Access the web interface through the Home Assistant sidebar or at `<your-ip>:8071`.
-1. Log in using the default credentials:
-   - Username: `admin`
-   - Password: `admin`
-1. **Important:** Immediately change the default password by clicking on "Settings" > "User Management".
+1. With the default `auth_method: noauth` there is no login (see Security above). To require one, set `auth_method` to `password`, restart, and log in as `admin` with the default credentials above (`admin`, or the generated password printed once in the add-on log on recent releases).
+1. **Important:** then immediately change the default password by clicking on "Settings" > "User Management".
 1. Configure additional sources and authentication settings through the add-on options or the web interface.
 
 ### Mounting Drives

@@ -59,6 +59,10 @@ cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
 ```
 
+## Security
+
+Without a `PASSWORD`, Brave has no authentication, and a published web port gives full control of the browser to anyone on your network, including its sessions and the mapped media and share folders. To secure it, set the `PASSWORD` option, or disable the ports in the add-on Network settings and use Ingress. The DevTools port 9221 (disabled by default) has no authentication even with `PASSWORD` set: publish it only on a trusted network. The add-on logs a warning at startup in both cases.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.

@@ -42,8 +42,15 @@ if bashio::config.has_value 'PASSWORD'; then
     PASSWORD=$(bashio::config 'PASSWORD')
     passwd -d abc
     echo -e "$PASSWORD\n$PASSWORD" | passwd abc
-elif ! bashio::config.has_value 'PASSWORD' && [[ -n "$(bashio::app.port "3000")" ]] && [[ -n $(bashio::app.port "3001") ]]; then
-    bashio::log.warning "SEVERE RISK IDENTIFIED"
-    bashio::log.warning "You are opening an external port but your password is not defined"
-    bashio::log.warning "You risk being hacked ! Please disable the external ports, or use a password"
+elif bashio::var.has_value "$(bashio::app.port 3000)" || bashio::var.has_value "$(bashio::app.port 3001)"; then
+    bashio::log.warning "SECURITY RISK: the browser runs without a password and its web port is published (3000 or 3001)."
+    bashio::log.warning "Anyone on your network can control this browser, see its sessions, and read and write the mapped media and share folders."
+    bashio::log.warning "Set the PASSWORD option, or disable the ports in the add-on Network settings."
+fi
+
+# The DevTools proxy on 9221 has no authentication, PASSWORD does not protect it
+if bashio::var.has_value "$(bashio::app.port 9221)"; then
+    bashio::log.warning "SECURITY RISK: the DevTools port 9221 is published on host port $(bashio::app.port 9221) and has no authentication, even with PASSWORD set."
+    bashio::log.warning "Anyone on your network can drive this browser and read its sessions through it."
+    bashio::log.warning "Disable port 9221 in the add-on Network settings unless you need remote debugging on a trusted network."
 fi

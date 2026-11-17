@@ -77,6 +77,12 @@ This addon supports custom scripts and environment variables:
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
+## Security
+
+By default Cloud Commander runs without authentication, and its direct port (8000) is published. Anyone on your network who can reach that port can read, modify and delete every folder mapped into the add-on, including your Home Assistant configuration and backups. The add-on logs a warning at startup while this is the case.
+
+To secure it, add `--auth --username <user> --password <password>` to `CUSTOM_OPTIONS`, or disable the port in the add-on Network settings and use Ingress.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in

@@ -34,7 +34,11 @@ if [ -f "$CONFIG_LOCATION" ]; then
         # Ingress mode, authentification is disabled
         ingress_noauth)
             bashio::log.green "Ingress is enabled, authentification is disabled"
-            bashio::log.yellow "WARNING : Make sure that the port is not exposed externally by your router to avoid a security risk !"
+            if bashio::var.has_value "$(bashio::app.port 9696)"; then
+                bashio::log.warning "SECURITY RISK: Prowlarr runs without authentication and port 9696 is published on host port $(bashio::app.port 9696)."
+                bashio::log.warning "Anyone on your network can use it without logging in, change its settings, including indexers, download clients and API keys."
+                bashio::log.warning "Set connection_mode to ingress_auth and set a login in Prowlarr (Settings > General > Security, with Authentication Required set to Enabled, not disabled for local addresses), or disable the port in the add-on Network settings and use Ingress."
+            fi
             # Define UrlBase
             sed -i "/UrlBase/d" "$CONFIG_LOCATION"
             sed -i "2a <UrlBase>$slug<\/UrlBase>" "$CONFIG_LOCATION"

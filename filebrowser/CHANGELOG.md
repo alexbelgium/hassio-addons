@@ -1,3 +1,7 @@
+## 2.63.23.1 (2026-11-17)
+
+- Security: warn in the startup log and README when `NoAuth` is enabled while port 8071 is published. No default changed.
+
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Breaking change : only appears in ingress for admins
 - Migrate legacy add-on configuration map names to current app configuration terminology.

@@ -1,3 +1,7 @@
+## 19.23.2.1 (2026-11-17)
+
+- Security: warn in the startup log and README when Cloud Commander is started without `--auth` while port 8000 is published. No default changed.
+
  
 ## 19.23.2 (2026-11-16)
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)

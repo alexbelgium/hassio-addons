@@ -142,6 +142,11 @@ yq e -i ".http.baseURL = \"${BASE_URL}\"" "$FILEBROWSER_CONFIG"
 # --- Auth method ---
 AUTH_METHOD=$(bashio::config 'auth_method' 'password')
 bashio::log.info "... authentication method set to $AUTH_METHOD"
+if [[ "$AUTH_METHOD" == "noauth" ]] && bashio::var.has_value "$(bashio::app.port 8072)"; then
+    bashio::log.warning "SECURITY RISK: FileBrowser Quantum runs without authentication and port 8072 is published on host port $(bashio::app.port 8072)."
+    bashio::log.warning "Anyone on your network can read, modify and delete every mapped folder, including your Home Assistant configuration and backups."
+    bashio::log.warning "Set auth_method to password, or disable the port in the add-on Network settings and use Ingress."
+fi
 case "$AUTH_METHOD" in
     noauth)
         yq e -i ".auth.methods.noauth = true"            "$FILEBROWSER_CONFIG"

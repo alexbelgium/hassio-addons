@@ -1,3 +1,7 @@
+## 2.0.2.2 (2026-11-17)
+
+- Security: warn in the startup log and README when `auth_method` is `noauth` while port 8071 is published. No default changed.
+
  
 ## 2.0.2.1 (06-11-2026)
 - Re-enable the sidebar panel for non-admin Home Assistant users (panel_admin set back to false, see issue #3200)

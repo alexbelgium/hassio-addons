@@ -74,8 +74,8 @@ Configurations can be done through the app webUI, except for the following optio
 ### Connection Modes
 
 - `ingress_noauth` - Default, disables authentication for seamless ingress integration
-- `noingress_auth` - Disables ingress for external URL, enables authentication
-- `ingress_auth` - Enables both ingress and authentication
+- `noingress_auth` - Disables ingress for external URL and removes the external (no-login) mode; set a login in the app itself (see Security)
+- `ingress_auth` - Enables ingress and removes the external (no-login) mode; set a login in the app itself (see Security)
 
 ### Example Configuration
 
@@ -97,6 +97,10 @@ This addon supports mounting both local drives and remote SMB shares:
 
 - **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
 - **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+## Security
+
+With the default `connection_mode: ingress_noauth`, Sonarr runs without authentication and its direct port (8989) is published. Anyone on your network who can reach that port can use it without logging in and change its settings. The add-on logs a warning at startup while this is the case. To secure it, set `connection_mode` to `ingress_auth` and set a login in Sonarr (Settings > General > Security, with Authentication Required set to Enabled, not disabled for local addresses), or disable the port in the add-on Network settings and use Ingress.
 
 ## Support
 
