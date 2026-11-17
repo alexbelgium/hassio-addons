@@ -53,9 +53,11 @@ function regex_versions() {
 LOGINFO="... github authentification" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
 GITUSER=$(bashio::config 'gituser')
+export GITUSER
 GITMAIL=$(bashio::config 'gitmail')
-git config --system http.sslVerify false
-git config --system credential.helper 'cache --timeout 7200'
+# The token stays in the environment: never in a URL, .git/config or the process list
+# shellcheck disable=SC2016
+git config --system credential.https://github.com.helper '!f() { test "$1" = get && echo "username=${GITUSER}" && echo "password=${GITHUB_API_TOKEN}"; }; f'
 git config --system user.name "${GITUSER}"
 if [[ "$GITMAIL" != "null" ]]; then git config --system user.email "${GITMAIL}"; fi
 
@@ -76,6 +78,8 @@ if [ ! -d "/data/$BASENAME" ]; then
 else
     LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
     cd "/data/$BASENAME" || exit
+    # Remove the token that older versions stored in the remote URL
+    git remote set-url origin "https://github.com/${REPOSITORY}"
     DEFAULT_BRANCH=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
     git pull --rebase origin > /dev/null || git reset --hard "origin/${DEFAULT_BRANCH}" > /dev/null
     git pull --rebase origin > /dev/null || (rm -r "/data/$BASENAME" && git clone "https://github.com/${REPOSITORY}")
@@ -515,8 +519,6 @@ for f in */; do
             git commit -m "Updater bot : $SLUG updated to ${ADDONVERSION} (upstream ${LASTVERSION})" > /dev/null
 
             LOGINFO="... $SLUG : push to github" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-
-            git remote set-url origin "https://${GITUSER}:${GITHUB_API_TOKEN}@github.com/${REPOSITORY}" &> /dev/null
 
             # Push
             if ! bashio::config.true "dry_run"; then

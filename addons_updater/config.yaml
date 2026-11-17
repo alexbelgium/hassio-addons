@@ -22,7 +22,7 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
   dry_run: bool?
-  gitapi: str
+  gitapi: password
   gitmail: str?
   gituser: str
   repository: str
@@ -30,4 +30,4 @@ schema:
 slug: updater
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater
-version: "2026.11.16"
+version: "2026.11.17"
