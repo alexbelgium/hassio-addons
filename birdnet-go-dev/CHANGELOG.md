@@ -1,6 +1,3 @@
-## 20261117 (17-11-2026)
-- Rebuild against the latest upstream BirdNET-Go main. Fork PRs #57, #62, #63, #71, #79 and #82 refreshed against main; #62's Reanalyze button moved into the new recording card. All 16 open fork PRs merge onto main (combined tree not compiled locally)
-
 ## 20261110 (10-11-2026)
 - Rebuild against the latest upstream BirdNET-Go main. All 16 open fork PRs still merge onto main and the combined tree compiles
 
