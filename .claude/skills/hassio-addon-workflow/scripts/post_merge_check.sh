@@ -21,6 +21,7 @@ PR="${1:-}"; MINUTES="${2:-60}"
 read -r STATE SHA < <(gh pr view "$PR" -R "$REPO" --json state,mergeCommit --jq '"\(.state) \(.mergeCommit.oid // "")"')
 [ "$STATE" != "MERGED" ] && { echo "#$PR is $STATE, not merged"; exit 1; }
 mapfile -t FILES < <(gh pr view "$PR" -R "$REPO" --json files --jq '.files[].path')
+[ "${#FILES[@]}" -eq 0 ] && { echo "could not list #$PR's files"; exit 2; }
 echo "#$PR merged as ${SHA:0:9}; ${#FILES[@]} file(s)"
 
 # The Builder only runs on pushes touching a top-level */config.* file
@@ -36,21 +37,24 @@ if printf '%s\n' "${FILES[@]}" | grep -qE '^[^/]+/config\.[a-z]+$'; then
         sleep 60
     done
     [ "${status:-}" != "completed" ] && { echo "BUILD: run ${run:-none} still ${status:-pending} after ${MINUTES} min"; exit 2; }
-    if [ "$conclusion" != "success" ]; then
+    if [ "$conclusion" = "skipped" ]; then
+        echo "BUILD: run $run skipped ([nobuild])"
+    elif [ "$conclusion" != "success" ]; then
         echo "BUILD FAILED: run $run ($conclusion) https://github.com/$REPO/actions/runs/$run"
         # The run's last job opens one issue per failed add-on (or comments on its open one) with
         # the error excerpt and the revert result: read that, not the raw log. Matched by SHA.
         gh issue list -R "$REPO" --state all --search "$SHA \"Image build failed\" in:title,body,comments" \
             --json title,url --jq '.[] | "  read: \(.title) \(.url)"'
         exit 1
+    else
+        echo "BUILD: run $run succeeded"
     fi
-    echo "BUILD: run $run succeeded"
 else
     echo "BUILD: not triggered (no top-level config.* changed)"
 fi
 
 # Fetch after the build: a revert lands at the end of the failing run
-git fetch -q origin master
+git fetch -q origin master || { echo "git fetch failed: cannot check master"; exit 2; }
 if git diff --quiet "$SHA" origin/master -- "${FILES[@]}"; then
     echo "MASTER: #$PR's files match the merge commit — done"
     exit 0
