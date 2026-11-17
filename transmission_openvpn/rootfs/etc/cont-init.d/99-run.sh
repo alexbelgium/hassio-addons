@@ -7,7 +7,7 @@
 
 bashio::log.info "Exporting variables"
 for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
-    if [[ "${k,,}" =~ pass|token|secret|key ]]; then
+    if [[ "$k" == "env_vars" || "${k,,}" =~ pass|token|secret|key ]]; then
         bashio::log.blue "$k=******"
     else
         bashio::log.blue "$k=$(bashio::config "$k")"
