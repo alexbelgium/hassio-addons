@@ -246,12 +246,16 @@ Write the body to a file, `gh pr create --body-file`: state what was measured, w
 ## 8. Resolve review comments
 
 `scripts/pr_review.sh list|status|watch <PR>` to read, `reply <PR> <COMMENT_ID> <text|@file>` and
-`resolve <PR> <THREAD_ID…|--all>` to answer; run it with no arguments for the full usage. For every
+`resolve <PR> <THREAD_ID…|--all --yes>` to answer; run it with no arguments for the full usage. For every
 comment, **reproduce the
 claim before agreeing or disagreeing** — reviewers are frequently right and occasionally
 confidently wrong; a reproduction takes a minute and decides it either way. Reply with the
-evidence, then resolve. **Push back when you're right**, on the thread — a resolved-but-wrong
-thread is worse than an open one.
+evidence, then resolve. **Push back when you're right**, on the thread, with the reproduction.
+**Always resolve the thread once it is handled** — fixed, or declined with a reasoned reply: the
+reply records the disagreement, and open threads only clutter the maintainer's merge queue. A bot
+reply posted inside an existing thread belongs to that thread; find it by any of its comment ids,
+not only the first. Judging the comments stays with the main model — a cheaper model tends to
+accept every objection, which is how a diff ratchets up (step 6).
 
 ## 9. Verify before declaring done
 
@@ -267,6 +271,14 @@ survived the merge: `git fetch origin master` first (the tracking ref is stale o
 `git diff origin/master -- <the paths you touched>` must come back empty. Ancestry is not the
 check, and the builder reverts merges for reasons unrelated to your diff — both explained in
 `references/traps.md#ci-and-review-bots`.
+
+After every merge, run `scripts/post_merge_check.sh <PR>` **backgrounded** — a script, not an
+agent: it waits for the Builder run of the merge commit, then does the diff check above, for no
+tokens. Exit 0 is done. Exit 1 on a failed build prints the `[<addon>] Image build failed` issue
+the builder opens at the end of the run — it already carries the error excerpt per arch and the
+revert result, so read it rather than the raw run log, then fix on a new branch. Exit 1 with a master mismatch lists the commits that changed your paths
+(usually the builder's revert). Exit 2 means no run appeared or it timed out — look before
+re-running.
 
 ## 10. Calibrate and report
 
