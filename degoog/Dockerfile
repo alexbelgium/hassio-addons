@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="1.1.1"
+ARG BUILD_UPSTREAM="1.2.0"
 FROM ghcr.io/degoog-org/degoog:${BUILD_UPSTREAM}
 
 ##################

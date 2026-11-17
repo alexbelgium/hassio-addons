@@ -54,7 +54,7 @@ case $(bashio::config 'DB_TYPE') in
         export PHOTOPRISM_DATABASE_USER \
             && bashio::log.blue "PHOTOPRISM_DATABASE_USER=$PHOTOPRISM_DATABASE_USER"
         export PHOTOPRISM_DATABASE_PASSWORD \
-            && bashio::log.blue "PHOTOPRISM_DATABASE_PASSWORD=$PHOTOPRISM_DATABASE_PASSWORD"
+            && bashio::log.blue "PHOTOPRISM_DATABASE_PASSWORD=******"
 
         {
             echo "export PHOTOPRISM_DATABASE_DRIVER=\"${PHOTOPRISM_DATABASE_DRIVER}\""

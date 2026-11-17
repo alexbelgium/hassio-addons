@@ -1,4 +1,7 @@
  
+## 1.2.0 (2026-11-17)
+- Update to latest version from degoog-org/degoog (changelog : https://github.com/degoog-org/degoog/releases)
+ 
 ## 1.1.1 (2026-10-27)
 - Update to latest version from degoog-org/degoog (changelog : https://github.com/degoog-org/degoog/releases)
 ## 1.1.0 (2026-10-13)

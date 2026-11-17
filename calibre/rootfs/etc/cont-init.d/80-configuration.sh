@@ -49,6 +49,5 @@ fi || true
 if bashio::config.has_value 'PASSWORD'; then
     bashio::log.info "Setting password to the value defined in options"
     PASSWORD=$(bashio::config 'PASSWORD')
-    passwd -d abc
     echo -e "$PASSWORD\n$PASSWORD" | passwd abc
 fi || true
