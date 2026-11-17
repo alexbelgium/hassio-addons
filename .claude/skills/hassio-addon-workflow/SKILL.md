@@ -274,9 +274,9 @@ check, and the builder reverts merges for reasons unrelated to your diff — bot
 
 After every merge, run `scripts/post_merge_check.sh <PR>` **backgrounded** — a script, not an
 agent: it waits for the Builder run of the merge commit, then does the diff check above, for no
-tokens. Exit 0 is done. Exit 1 on a failed build saves the failed-job log (often 10k+ lines) and
-prints its path: hand that file to a `scout` (Haiku) to digest to the decisive lines, then fix it
-yourself on a new branch. Exit 1 with a master mismatch lists the commits that changed your paths
+tokens. Exit 0 is done. Exit 1 on a failed build prints the `[<addon>] Image build failed` issue
+the builder opens at the end of the run — it already carries the error excerpt per arch and the
+revert result, so read it rather than the raw run log, then fix on a new branch. Exit 1 with a master mismatch lists the commits that changed your paths
 (usually the builder's revert). Exit 2 means no run appeared or it timed out — look before
 re-running.
 

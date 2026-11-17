@@ -6,9 +6,9 @@
 #   post_merge_check.sh <PR> [minutes]     default 60; run it backgrounded
 #
 # Exit 0: built (or no build needed) and the change is on master.
-# Exit 1: build failed, or master no longer matches the merge commit. On a build failure the
-#         failed-job log is saved and its path printed: hand that file to a `scout` (Haiku) to
-#         digest, never read it whole, then fix on a new branch.
+# Exit 1: build failed, or master no longer matches the merge commit. On a build failure it
+#         prints the open "[<addon>] Image build failed" issue(s) the builder opened: read those
+#         (error excerpt + revert result), then fix on a new branch.
 # Exit 2: ran out of minutes, or no Builder run appeared for a PR that changed a config.* file.
 set -uo pipefail
 
@@ -37,11 +37,11 @@ if printf '%s\n' "${FILES[@]}" | grep -qE '^[^/]+/config\.[a-z]+$'; then
     done
     [ "${status:-}" != "completed" ] && { echo "BUILD: run ${run:-none} still ${status:-pending} after ${MINUTES} min"; exit 2; }
     if [ "$conclusion" != "success" ]; then
-        log="${TMPDIR:-/tmp}/builder-${PR}-${run}.log"
-        gh run view "$run" -R "$REPO" --log-failed > "$log" 2>&1
         echo "BUILD FAILED: run $run ($conclusion) https://github.com/$REPO/actions/runs/$run"
-        gh run view "$run" -R "$REPO" --json jobs --jq '.jobs[] | select(.conclusion == "failure") | "  failed job: \(.name)"'
-        echo "  log: $log ($(wc -l < "$log") lines) — digest with a scout, do not read whole"
+        # The run's last job opens one issue per failed add-on (or comments on its open one) with
+        # the error excerpt and the revert result: read that, not the raw log. Matched by SHA.
+        gh issue list -R "$REPO" --state all --search "$SHA \"Image build failed\" in:title,body,comments" \
+            --json title,url --jq '.[] | "  read: \(.title) \(.url)"'
         exit 1
     fi
     echo "BUILD: run $run succeeded"
