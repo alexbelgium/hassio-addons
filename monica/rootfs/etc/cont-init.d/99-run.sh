@@ -116,7 +116,7 @@ if [ -z "$APP_KEY" ] || [ ${#APP_KEY} -lt 32 ]; then
         openssl rand -base64 32
     )"
     bashio::app.option "APP_KEY" "${APP_KEY}"
-    bashio::log.warning "The APP_KEY set was invalid, generated a random one: ${APP_KEY}. Restarting to take it into account"
+    bashio::log.warning "The APP_KEY set was invalid, generated a random one (saved in the add-on options and /config/APP_KEY). Restarting to take it into account"
     echo "${APP_KEY}" >> /config/APP_KEY
     bashio::app.restart
 fi

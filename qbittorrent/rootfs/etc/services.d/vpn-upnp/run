@@ -64,11 +64,8 @@ _parse_config() {
     fi
 
     for key in "${!config[@]}"; do
-        if [ "$key" = "Pass" ]; then
-            bashio::log.debug "Config key: $key, value: ******"
-        else
-            bashio::log.debug "Config key: $key, value: ${config[$key]}"
-        fi
+        [ "$key" = "Pass" ] && continue
+        bashio::log.debug "Config key: $key, value: ${config[$key]}"
     done
 
     if [ -z "${config["Server"]}" ] || [ -z "${config["Port"]}" ] || [ -z "${config["User"]}" ] || [ -z "${config["Pass"]}" ] || [ -z "${config["Interface"]}" ]; then

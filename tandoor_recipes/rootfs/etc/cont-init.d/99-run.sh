@@ -64,7 +64,7 @@ case $(bashio::config 'DB_TYPE') in
         #        export POSTGRES_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
         #        export POSTGRES_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
         #        export POSTGRES_USER=$(bashio::services "mysql" "username") && bashio::log.blue "POSTGRES_USER=$POSTGRES_USER"
-        #        export POSTGRES_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "POSTGRES_PASSWORD=******"
+        #        export POSTGRES_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
         #        export POSTGRES_DB="tandoor" && bashio::log.blue "POSTGRES_DB=tandoor"
 
         # Use values
@@ -72,7 +72,7 @@ case $(bashio::config 'DB_TYPE') in
         #        sed -i "1a export POSTGRES_HOST=$(bashio::services "mysql" "host")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
         #        sed -i "1a export POSTGRES_PORT=$(bashio::services "mysql" "port")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
         #        sed -i "1a export POSTGRES_USER=$(bashio::services "mysql" "username")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_USER=$POSTGRES_USER"
-        #        sed -i "1a export POSTGRES_PASSWORD=$(bashio::services "mysql" "password")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_PASSWORD=******"
+        #        sed -i "1a export POSTGRES_PASSWORD=$(bashio::services "mysql" "password")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
         #        sed -i "1a export POSTGRES_DB=tandoor" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_DB=tandoor"
 
         #        bashio::log.warning "This addon is using the Maria DB addon"
