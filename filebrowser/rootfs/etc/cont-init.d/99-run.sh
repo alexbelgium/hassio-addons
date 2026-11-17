@@ -88,7 +88,7 @@ if bashio::config.true 'NoAuth'; then
     if bashio::var.has_value "$(bashio::app.port 8080)"; then
         bashio::log.warning "SECURITY RISK: Filebrowser runs without authentication and port 8080 is published on host port $(bashio::app.port 8080)."
         bashio::log.warning "Anyone on your network can read, modify and delete every mapped folder, including your Home Assistant configuration and backups."
-        bashio::log.warning "Disable the NoAuth option and change the default admin/admin password, or disable the port in the add-on Network settings and use Ingress."
+        bashio::log.warning "Disable the NoAuth option and change the admin password, or disable the port in the add-on Network settings and use Ingress."
     fi
 else
     if ! bashio::fs.file_exists "/data/auth"; then

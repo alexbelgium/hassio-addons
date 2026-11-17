@@ -23,6 +23,13 @@ sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
 slug=readarr
 CONFIG_LOCATION=/config/config.xml
 
+# Before the config.xml guard: a fresh Readarr also starts without authentication
+if [ "$(bashio::config "connection_mode")" = "ingress_noauth" ] && bashio::var.has_value "$(bashio::app.port 8787)"; then
+    bashio::log.warning "SECURITY RISK: Readarr runs without authentication and port 8787 is published on host port $(bashio::app.port 8787)."
+    bashio::log.warning "Anyone on your network can use it without logging in, change its settings, including download clients and API keys, and delete books."
+    bashio::log.warning "Set connection_mode to ingress_auth and set a login in Readarr (Settings > General > Security, with Authentication Required set to Enabled, not disabled for local addresses), or disable the port in the add-on Network settings and use Ingress."
+fi
+
 if [ -f "$CONFIG_LOCATION" ]; then
 
     # Define addon mode
@@ -34,11 +41,6 @@ if [ -f "$CONFIG_LOCATION" ]; then
         # Ingress mode, authentification is disabled
         ingress_noauth)
             bashio::log.green "Ingress is enabled, authentification is disabled"
-            if bashio::var.has_value "$(bashio::app.port 8787)"; then
-                bashio::log.warning "SECURITY RISK: Readarr runs without authentication and port 8787 is published on host port $(bashio::app.port 8787)."
-                bashio::log.warning "Anyone on your network can use it without logging in, change its settings, including download clients and API keys, and delete books."
-                bashio::log.warning "Set connection_mode to ingress_auth and set a login in Readarr (Settings > General > Security, with Authentication Required set to Enabled, not disabled for local addresses), or disable the port in the add-on Network settings and use Ingress."
-            fi
             # Define UrlBase
             sed -i "/UrlBase/d" "$CONFIG_LOCATION"
             sed -i "2a <UrlBase>$slug<\/UrlBase>" "$CONFIG_LOCATION"

@@ -86,7 +86,7 @@ else
 fi
 
 # Cloud Commander is launched without --auth unless the user adds it
-if [[ "$CUSTOMOPTIONS" != *--auth* ]] && bashio::var.has_value "$(bashio::app.port 8000)"; then
+if [[ ! " $CUSTOMOPTIONS " =~ [[:space:]](--auth|-a)[[:space:]] ]] && bashio::var.has_value "$(bashio::app.port 8000)"; then
     bashio::log.warning "SECURITY RISK: Cloud Commander runs without authentication and port 8000 is published on host port $(bashio::app.port 8000)."
     bashio::log.warning "Anyone on your network can read, modify and delete every mapped folder, including your Home Assistant configuration and backups."
     bashio::log.warning "Add --auth --username <user> --password <password> to CUSTOM_OPTIONS, or disable the port in the add-on Network settings and use Ingress."
