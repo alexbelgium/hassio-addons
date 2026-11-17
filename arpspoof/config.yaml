@@ -87,5 +87,5 @@ schema:
 slug: arpspoof
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/arpspoof
-version: 1.0.0-2
+version: "1.0.0.3"
 webui: "[PROTO:ssl]://[HOST]:[PORT:7022]"

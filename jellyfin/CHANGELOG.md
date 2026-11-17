@@ -1,4 +1,6 @@
- 
+## 12.4.1 (2026-11-17)
+- Folder migration: the old folder is deleted only after its content was copied successfully; on a copy failure it is left in place and an error is logged (previously it was deleted even when the copy failed)
+
 ## 12.4 (2026-10-27)
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
  

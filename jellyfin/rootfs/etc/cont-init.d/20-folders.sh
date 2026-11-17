@@ -28,7 +28,11 @@ create_link() {
     if [ -L "$link_path" ]; then
         rm "$link_path"
     elif [ -d "$link_path" ]; then
-        cp -a "$link_path/." "$target_dir/" || true
+        # Remove the source only once its content is safely copied
+        if ! cp -a "$link_path/." "$target_dir/"; then
+            bashio::log.error "Could not copy $link_path to $target_dir, it is left in place"
+            return
+        fi
         rm -r "$link_path"
     elif [ -e "$link_path" ]; then
         rm "$link_path"

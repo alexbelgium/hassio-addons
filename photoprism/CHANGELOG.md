@@ -1,3 +1,6 @@
+## 2026.10.29.5 (2026-11-17)
+- Remove a startup loop that created stray folders literally named BACKUP_PATH, IMPORT_PATH, ORIGINALS_PATH and STORAGE_PATH; behaviour is otherwise unchanged
+
 ## 2026.10.29.4 (04-11-2026)
 
 - Fix crash loop after 2026.10.29.3 ("exec: usage", exit code 100): the upstream image's own `photoprism` s6 service, whose shebang the add-on rewrote, is now removed (#3198)
