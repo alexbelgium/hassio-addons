@@ -2,12 +2,12 @@
 
 bashio::log.info "Starting OpenProject"
 
-# The default is set in config.yaml "environment", not in the options
-# SECRET_KEY_BASE (e.g. set through env_vars) takes precedence when present
-if [ "${SECRET_KEY_BASE:-${OPENPROJECT_SECRET_KEY_BASE:-}}" = "addon_secret" ]; then
-    bashio::log.warning "SECURITY RISK: OPENPROJECT_SECRET_KEY_BASE is still the default (addon_secret)."
+# Shipped defaults: addon_secret (config.yaml "environment") and OVERWRITE_ME
+# (SECRET_KEY_BASE in the upstream image)
+if [[ "${OPENPROJECT_SECRET_KEY_BASE:-}" == addon_secret || "${SECRET_KEY_BASE:-}" =~ ^(addon_secret|OVERWRITE_ME)$ ]]; then
+    bashio::log.warning "SECURITY RISK: the OpenProject secret key base is still a shipped default."
     bashio::log.warning "This key signs session cookies and tokens, so anyone who knows it can forge a login session."
-    bashio::log.warning "Set a new secret in the add-on options."
+    bashio::log.warning "Set a long random value in the OPENPROJECT_SECRET_KEY_BASE option and as SECRET_KEY_BASE in env_vars."
 fi
 
 # Ensure persistence for PGDATA and asset folders
