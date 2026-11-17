@@ -1,3 +1,7 @@
+## 0.4.18.3 (2026-11-17)
+
+- Security: warn in the startup log and README when `connection_mode` is `ingress_noauth` while port 8787 is published. No default changed.
+
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 0.4.18-2 (2026-01-08)

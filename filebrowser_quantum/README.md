@@ -66,6 +66,12 @@ The web UI can be found at `<your-ip>:8071` or through the Home Assistant sideba
 | `cifspassword` | str | _(optional)_ | SMB password for network shares |
 | `cifsdomain` | str | _(optional)_ | SMB domain for network shares |
 
+## Security
+
+By default FileBrowser Quantum (`auth_method: noauth`) runs without authentication, and its direct port (8071) is published. Anyone on your network who can reach that port can read, modify and delete every folder mapped into the add-on, including your Home Assistant configuration and backups. The add-on logs a warning at startup while this is the case.
+
+To secure it, set `auth_method` to `password`, or disable the port in the add-on Network settings and use Ingress.
+
 ## Setup
 
 1. Start the add-on and wait for it to initialize.

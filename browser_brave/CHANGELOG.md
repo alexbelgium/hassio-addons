@@ -1,3 +1,7 @@
+## 1.99.57-ls146.1 (2026-11-17)
+
+- Security: warn in the startup log and README when `PASSWORD` is empty while port 3001 or 9221 is published. No default changed.
+
  
 ## 1.99.57-ls146 (2026-11-14)
 - Update to latest version from linuxserver/docker-brave (changelog : https://github.com/linuxserver/docker-brave/releases)

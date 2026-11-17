@@ -1,3 +1,7 @@
+## 7.0.3.10918.1 (2026-11-17)
+
+- Security: warn in the startup log and README when `connection_mode` is `ingress_noauth` while port 7878 is published. No default changed.
+
  
 ## 7.0.3.10918 (2026-11-16)
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)

@@ -1,3 +1,7 @@
+## 3.0.2.5777.283.1 (2026-11-17)
+
+- Security: warn in the startup log and README when `connection_mode` is `ingress_noauth` while port 9696 is published. No default changed.
+
  
 ## 3.0.2.5777.283 (2026-11-16)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)

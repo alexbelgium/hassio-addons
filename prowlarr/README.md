@@ -99,6 +99,10 @@ This addon supports mounting both local drives and remote SMB shares:
 - **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
 - **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
 
+## Security
+
+With the default `connection_mode: ingress_noauth`, Prowlarr runs without authentication and its direct port (9696) is published. Anyone on your network who can reach that port can use it without logging in and change its settings. The add-on logs a warning at startup while this is the case. To secure it, set `connection_mode` to `ingress_auth`, or disable the port in the add-on Network settings and use Ingress.
+
 ## Support
 
 Create an issue on github

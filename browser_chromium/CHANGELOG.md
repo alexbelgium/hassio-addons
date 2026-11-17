@@ -1,3 +1,7 @@
+## 2026.11.16.1 (2026-11-17)
+
+- Security: warn in the startup log and README when `PASSWORD` is empty while port 3000, 3001 or 9221 is published. No default changed.
+
  
 ## 2026.11.16 (2026-11-16)
 - Update to latest version from linuxserver/docker-chromium (changelog : https://github.com/linuxserver/docker-chromium/releases)

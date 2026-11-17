@@ -59,6 +59,10 @@ cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
 ```
 
+## Security
+
+Without a `PASSWORD`, Brave has no authentication, and any published port (3000, 3001, 9221) gives full control of the browser to anyone on your network, including its sessions and the mapped media and share folders. The add-on logs a warning at startup while this is the case. To secure it, set the `PASSWORD` option, or disable the ports in the add-on Network settings and use Ingress.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
