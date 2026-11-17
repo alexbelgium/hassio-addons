@@ -1,4 +1,5 @@
 ## 1.0.0.3 (2026-11-17)
+
 - Fix the network interface autodetection, which ran only when interface_name was already set instead of when it was empty
 - Remove the empty `map` list rejected by the current add-on linter
 

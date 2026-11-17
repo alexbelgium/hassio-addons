@@ -1,4 +1,5 @@
 ## 12.4.1 (2026-11-17)
+
 - Folder migration: the old folder is deleted only after its content was copied successfully; on a copy failure it is left in place and an error is logged (previously it was deleted even when the copy failed)
 
 ## 12.4 (2026-10-27)
