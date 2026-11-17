@@ -56,6 +56,12 @@ shell_quote() {
     printf "'%s'" "${s//\'/\'\\\'\'}"
 }
 
+# Names treated as secrets: masked in the log and kept out of a $HOME/.bashrc
+# that sits on a persistent, possibly shared volume (/config, /share)
+is_secret_key() {
+    [[ "${1,,}" =~ pass|token|secret|private|pwd|key|gitapi ]]
+}
+
 append_export() {
     # Plain append, deliberately not awk: "awk -v q=$value" runs the value
     # through awk's escape processing, which turns \t into a tab, \b into a
@@ -63,13 +69,15 @@ append_export() {
     # shell_quote doubling every backslash, so the two bugs hid each other --
     # fixing only one of them corrupts the value.
     printf 'export %s=%s\n' "$1" "$(shell_quote "$2")" >> "$EXPORT_BODY"
+    is_secret_key "$1" || printf 'export %s=%s\n' "$1" "$(shell_quote "$2")" >> "$EXPORT_BODY_PUBLIC"
 }
 
 compose_export_block() {
+    # $1: body file (default: every variable)
     {
         echo "$BLOCK_BEGIN"
         echo "# Generated from $JSONSOURCE"
-        cat "$EXPORT_BODY"
+        cat "${1:-$EXPORT_BODY}"
         echo "$BLOCK_END"
     } > "$EXPORT_BLOCK"
 }
@@ -108,9 +116,10 @@ if [[ "${1:-}" == "--self-test" ]]; then
 
     JSONSOURCE="self-test"
     EXPORT_BODY="$(mktemp_safe)"
+    EXPORT_BODY_PUBLIC="$(mktemp_safe)"
     EXPORT_BLOCK="$(mktemp_safe)"
     self_test_env="$(mktemp_safe)"
-    trap 'rm -f "$EXPORT_BODY" "$EXPORT_BLOCK" "$self_test_env"' EXIT
+    trap 'rm -f "$EXPORT_BODY" "$EXPORT_BODY_PUBLIC" "$EXPORT_BLOCK" "$self_test_env"' EXIT
     self_test_rc=0
 
     self_test_check() {
@@ -152,8 +161,17 @@ if [[ "${1:-}" == "--self-test" ]]; then
         done
     fi
 
+    # 3. The $HOME/.bashrc block keeps ordinary variables and drops secrets
+    append_export "SELFTEST_DB_PASSWORD" "hunter2"
+    append_export "SELFTEST_GITAPI" "ghp_x"
+    append_export "SELFTEST_TZ" "Europe/Brussels"
+    if grep -q 'PASSWORD\|GITAPI' "$EXPORT_BODY_PUBLIC" || ! grep -q 'SELFTEST_TZ=' "$EXPORT_BODY_PUBLIC"; then
+        echo "FAIL (public block): secrets must be dropped and other variables kept"
+        self_test_rc=1
+    fi
+
     [[ "$self_test_rc" -eq 0 ]] &&
-        echo "${#self_test_values[@]} values round-tripped unchanged (export block + dotenv)"
+        echo "${#self_test_values[@]} values round-tripped unchanged (export block + dotenv), secrets kept out of the public block"
     exit "$self_test_rc"
 fi
 
@@ -218,8 +236,9 @@ resolve_secret() {
 ################################################################################
 EXPORT_BLOCK="$(mktemp_safe)"
 EXPORT_BODY="$(mktemp_safe)"
+EXPORT_BODY_PUBLIC="$(mktemp_safe)"
 KV_FILE="$(mktemp_safe)"
-trap 'rm -f "$EXPORT_BLOCK" "$EXPORT_BODY" "$KV_FILE"' EXIT
+trap 'rm -f "$EXPORT_BLOCK" "$EXPORT_BODY" "$EXPORT_BODY_PUBLIC" "$KV_FILE"' EXIT
 
 inject_block() {
     local f="$1" tmp
@@ -261,8 +280,11 @@ export_var() {
 
     v="$(resolve_secret "$v")"
 
-    if [[ "${k,,}" =~ pass|token|secret|apikey|api_key|private|pwd|key ]]; then
+    if is_secret_key "$k"; then
         bashio::log.blue "$k=******"
+    elif [[ "$v" =~ ://[^/@]+@ ]]; then
+        # URL with credentials, e.g. postgres://user:pass@host/db or https://token@host
+        bashio::log.blue "$k=${v%%://*}://******@${v#*@}"
     else
         bashio::log.blue "$k=$v"
     fi
@@ -343,13 +365,17 @@ done < <(
 # - /.env is commonly used by apps expecting dotenv format
 # - /etc/environment is read by PAM/system tooling; KEY="value" is acceptable
 ################################################################################
+# Both hold every secret: root-only. mktemp creates the file 600, a fixed
+# "$ENV_FILE.tmp" would reuse the mode of a leftover file; cp would keep the
+# image's 644 on /etc/environment.
+ENV_TMP="$(mktemp "$ENV_FILE.XXXXXX")"
 {
     echo "$BLOCK_BEGIN"
     cat "$KV_FILE"
     echo "$BLOCK_END"
-} > "$ENV_FILE.tmp"
-mv "$ENV_FILE.tmp" "$ENV_FILE"
-cp "$ENV_FILE" "$ETC_ENV_FILE"
+} > "$ENV_TMP"
+mv "$ENV_TMP" "$ENV_FILE"
+install -m 600 "$ENV_FILE" "$ETC_ENV_FILE"
 
 ################################################################################
 # Inject into scripts and shells (best-effort)
@@ -361,6 +387,15 @@ for f in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run /etc/cont-init.d/*.
 done
 
 if [[ -n "${HOME:-}" ]]; then
+    # A HOME on a mapped volume persists and may be shared: write it without the
+    # secrets (this also replaces the full block older versions left there). An
+    # in-image HOME such as /root keeps the full block, which transmission's
+    # healthcheck sources for its RPC password.
+    case "$HOME" in
+        /config* | /share* | /data* | /media* | /homeassistant* | /addon_configs*)
+            compose_export_block "$EXPORT_BODY_PUBLIC"
+            ;;
+    esac
     mkdir -p "$HOME"
     touch "$HOME/.bashrc"
     inject_block "$HOME/.bashrc"
