@@ -57,7 +57,7 @@ export GITUSER
 GITMAIL=$(bashio::config 'gitmail')
 # The token stays in the environment: never in a URL, .git/config or the process list
 # shellcheck disable=SC2016
-git config --system credential.helper '!f() { test "$1" = get && echo "username=${GITUSER}" && echo "password=${GITHUB_API_TOKEN}"; }; f'
+git config --system credential.https://github.com.helper '!f() { test "$1" = get && echo "username=${GITUSER}" && echo "password=${GITHUB_API_TOKEN}"; }; f'
 git config --system user.name "${GITUSER}"
 if [[ "$GITMAIL" != "null" ]]; then git config --system user.email "${GITMAIL}"; fi
 
