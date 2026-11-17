@@ -29,8 +29,9 @@ create_link() {
         rm "$link_path"
     elif [ -d "$link_path" ]; then
         # Remove the source only once its content is safely copied
-        # -n: a retry after a failed copy never overwrites files Jellyfin wrote since
-        if ! cp -an "$link_path/." "$target_dir/"; then
+        # --update=none: a retry never overwrites files Jellyfin wrote since (unlike -n,
+        # it exits 0 when it skips a file on coreutils 9.2-9.4, e.g. Ubuntu noble)
+        if ! cp -a --update=none "$link_path/." "$target_dir/"; then
             bashio::log.error "Could not copy $link_path to $target_dir, it is left in place"
             return
         fi
