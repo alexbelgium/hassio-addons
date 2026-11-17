@@ -92,7 +92,7 @@ cifsdomain: "workgroup"
 
 By default Filebrowser (`NoAuth` is enabled) runs without authentication, and its direct port (8071) is published. Anyone on your network who can reach that port can read, modify and delete every folder mapped into the add-on, including your Home Assistant configuration and backups. The add-on logs a warning at startup while this is the case.
 
-To secure it, disable the `NoAuth` option, or disable the port in the add-on Network settings and use Ingress.
+To secure it, disable the `NoAuth` option and change the default `admin`/`admin` password, or disable the port in the add-on Network settings and use Ingress.
 
 ## Setup
 

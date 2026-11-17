@@ -1,6 +1,6 @@
 ## 2026.11.16.1 (2026-11-17)
 
-- Security: warn in the startup log and README when `PASSWORD` is empty while port 3000, 3001 or 9221 is published. No default changed.
+- Security: warn in the startup log and README when `PASSWORD` is empty while port 3000 or 3001 is published, and whenever the DevTools port 9221 is published (it has no authentication even with `PASSWORD` set). No default changed.
 
  
 ## 2026.11.16 (2026-11-16)
