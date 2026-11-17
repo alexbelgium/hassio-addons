@@ -5,7 +5,8 @@
 #   pr_review.sh list    <PR>                  every inline comment, grouped
 #   pr_review.sh status  <PR>                  checks + unresolved thread count
 #   pr_review.sh reply   <PR> <COMMENT_ID> <text|@file>
-#   pr_review.sh resolve <PR> <THREAD_ID...|--all>   --all = every unresolved, asks first
+#   pr_review.sh resolve <PR> <THREAD_ID...|--all [--yes]>   --all = every unresolved; asks
+#                                              first, or --yes when not on a terminal (agents)
 #   pr_review.sh watch   <PR> [minutes]        poll checks (run this backgrounded)
 #
 # watch exits 0 when every blocking check passed *or was skipped* — a PR touching no add-on
@@ -17,7 +18,7 @@
 #
 # Verify every claim before agreeing. Bots are frequently right and occasionally confidently
 # wrong; a reproduction takes a minute and decides it either way. Push back with evidence when
-# you are right — a resolved-but-wrong thread is worse than an open one.
+# you are right, then resolve: every handled thread is resolved, fixed or declined.
 set -uo pipefail
 
 REPO="${HASSIO_REPO:-}"
@@ -64,16 +65,19 @@ reply)
 resolve)
     shift 2
     ids="$*"
-    if [ "${ids:-}" = "--all" ]; then
-        echo "About to resolve EVERY unresolved thread. Only do this if you have read and"
-        echo "answered each one — a resolved-but-wrong thread is worse than an open one."
+    if [ "${ids:-}" = "--all" ] || [ "${ids:-}" = "--all --yes" ]; then
+        echo "About to resolve EVERY unresolved thread. Only do this once you have replied to each one."
         gh api graphql -f query="{repository(owner:\"${REPO%%/*}\",name:\"${REPO##*/}\"){pullRequest(number:$PR){reviewThreads(first:100){nodes{isResolved path comments(first:1){nodes{author{login} body}}}}}}}" \
             --jq '.data.repository.pullRequest.reviewThreads.nodes[] | select(.isResolved==false) | "  - \(.comments.nodes[0].author.login) \(.path): \(.comments.nodes[0].body[0:90])"'
-        printf 'Type "yes" to resolve all: '; read -r ok
-        [ "$ok" = "yes" ] || { echo "aborted"; exit 1; }
+        if [ "$ids" != "--all --yes" ]; then
+            # Without a terminal (an agent's shell) read would wait forever
+            [ -t 0 ] || { echo "not a terminal: re-run with --all --yes" >&2; exit 1; }
+            printf 'Type "yes" to resolve all: '; read -r ok
+            [ "$ok" = "yes" ] || { echo "aborted"; exit 1; }
+        fi
         ids=""
     elif [ -z "$ids" ]; then
-        echo "usage: pr_review.sh resolve <PR> <THREAD_ID...>   (or --all, with confirmation)" >&2
+        echo "usage: pr_review.sh resolve <PR> <THREAD_ID...>   (or --all [--yes])" >&2
         echo "resolve each thread as you answer it; get ids from: pr_review.sh status $PR" >&2
         exit 1
     fi
