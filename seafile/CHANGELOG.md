@@ -1,3 +1,7 @@
+## 12.0.18.5 (2026-11-17)
+
+- Security: warn in the startup log and README while `SEAFILE_ADMIN_PASSWORD` is still the shipped default. No default changed.
+
 - Local disks: `localdisks` can now mount a single folder of a disk with `disk/folder` (e.g. `sda1/public` or `NAS/public`, mounted at `/mnt/<disk>/<folder>`). Existing values are unchanged.
 
 ## 12.0.18-4 (2026-05-10)

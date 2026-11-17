@@ -1,3 +1,7 @@
+## 3.0.1.1 (2026-11-17)
+
+- Security: warn in the startup log and README while `password` is still the shipped default. No default changed.
+
  
 ## 3.0.1 (2026-11-06)
 - Update to latest version from portainer/portainer-ee

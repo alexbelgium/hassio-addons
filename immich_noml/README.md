@@ -132,6 +132,10 @@ This addon supports custom scripts and environment variables through the `app_co
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
+## Security
+
+The `DB_PASSWORD` option ships with `homeassistant`, which gives access to your Immich database if it is reachable from your network. Change it on your Postgres server, then set the same value in the add-on options. The add-on prints a warning in its startup log while the default is still set.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in

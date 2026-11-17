@@ -97,6 +97,8 @@ Elasticsearch settings can be set through variables named `ES_SETTING_<SETTING_W
 
 To preserve the plain-HTTP behavior of previous versions (and compatibility with the Home Assistant Elasticsearch integration), `xpack.security.enabled` defaults to `false`. To enable Elasticsearch security, add `ES_SETTING_XPACK_SECURITY_ENABLED` with value `true` in `env_vars`.
 
+Because the add-on uses the host network, with security disabled Elasticsearch is reachable without authentication on every network interface of the host: anyone on your network can read, change and delete all indexed data. Restrict access with your firewall, or enable security as above. The add-on prints a warning in its startup log while security is left disabled.
+
 ## Upgrading from 7.x
 
 The upgrade to Elasticsearch 8.x is automatic and **one-way**:

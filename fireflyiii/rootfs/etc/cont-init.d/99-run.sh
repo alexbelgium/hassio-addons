@@ -9,6 +9,11 @@ set -e
 
 # APP_KEY
 APP_KEY="$(bashio::config 'APP_KEY')"
+if [ "$APP_KEY" = "CHANGEME_32_CHARS_EuC5dfn3LAPzeO" ]; then
+    bashio::log.warning "SECURITY RISK: APP_KEY is still the default (CHANGEME_32_CHARS_EuC5dfn3LAPzeO)."
+    bashio::log.warning "This key encrypts sensitive data and signs sessions, and the default is public."
+    bashio::log.warning "Set a new 32-character APP_KEY in the add-on options before storing real data (changing it later makes existing encrypted data unreadable)."
+fi
 
 # If not base64
 if [[ ! "$APP_KEY" == *"base64"* ]]; then

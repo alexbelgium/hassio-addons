@@ -181,6 +181,12 @@ check_vchord_extension() {
 
 export_options
 validate_config
+
+if [ "$(bashio::config 'DB_PASSWORD')" = "homeassistant" ]; then
+    bashio::log.warning "SECURITY RISK: the Immich database password is still the default (homeassistant)."
+    bashio::log.warning "If the database is reachable from your network, anyone can read or change your Immich data."
+    bashio::log.warning "Set a new DB_PASSWORD in the add-on options (it must match your Postgres server)."
+fi
 # Always reload DB config from options (to ensure up-to-date values after export)
 export DB_USERNAME="$(bashio::config 'DB_USERNAME')"
 export DB_PASSWORD="$(bashio::config 'DB_PASSWORD')"
