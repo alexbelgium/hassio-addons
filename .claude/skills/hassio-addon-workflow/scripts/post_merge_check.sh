@@ -53,7 +53,9 @@ else
     echo "BUILD: not triggered (no top-level config.* changed)"
 fi
 
-# Fetch after the build: a revert lands at the end of the failing run
+# Fetch after the build: a revert lands at the end of the failing run. PR paths are
+# repo-relative, so compare from the repo root whatever directory this was run from
+cd "$(git rev-parse --show-toplevel)" || { echo "not in a git checkout"; exit 2; }
 git fetch -q origin master || { echo "git fetch failed: cannot check master"; exit 2; }
 if git diff --quiet "$SHA" origin/master -- "${FILES[@]}"; then
     echo "MASTER: #$PR's files match the merge commit — done"

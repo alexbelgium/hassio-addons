@@ -83,7 +83,8 @@ resolve)
     fi
     if [ -z "$ids" ]; then
         ids=$(gh api graphql -f query="{repository(owner:\"${REPO%%/*}\",name:\"${REPO##*/}\"){pullRequest(number:$PR){reviewThreads(first:100){nodes{id isResolved}}}}}" \
-            --jq '.data.repository.pullRequest.reviewThreads.nodes[] | select(.isResolved==false) | .id')
+            --jq '.data.repository.pullRequest.reviewThreads.nodes[] | select(.isResolved==false) | .id') \
+            || { echo "could not list review threads" >&2; exit 1; }
     fi
     [ -z "$ids" ] && { echo "nothing unresolved"; exit 0; }
     rfail=0
