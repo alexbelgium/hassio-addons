@@ -100,7 +100,7 @@ This addon supports custom scripts and environment variables through the `app_co
 
 ## Security
 
-The `password` option ships with the default value `homeassistant`. Portainer controls the Docker daemon, so anyone who can reach port 9000 with that password gets control of every container and, through them, the whole host. Change it in the add-on options before exposing the add-on. The add-on prints a warning in its startup log while the default is still set.
+The `password` option ships with the default value `homeassistant`. Portainer controls the Docker daemon, so anyone who can reach port 9000 with that password gets control of every container and, through them, the whole host. On a new install, change it in the add-on options before the first start. On an existing install, change the admin password inside Portainer: changing the option there resets Portainer (the old database is moved to `/share`). The add-on prints a warning in its startup log while the default is still set.
 
 ## Support
 

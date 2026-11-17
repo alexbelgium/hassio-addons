@@ -118,7 +118,7 @@ This addon supports mounting both local drives and remote SMB shares:
 
 ## Security
 
-The `SEAFILE_ADMIN_PASSWORD` option ships with the default value `a_very_secret_password`. Anyone who can reach ports 8000 or 8082 and knows it can log in as admin and read every stored file. Change it in the add-on options. The add-on prints a warning in its startup log while the default is still set.
+The `SEAFILE_ADMIN_PASSWORD` option ships with the default value `a_very_secret_password`. Anyone who can reach ports 8000 or 8082 and knows it can log in as admin and read every stored file. The option is only used when the admin account is first created, so on an existing install change the admin password in the Seafile web interface. The add-on prints a warning in its startup log while the default is still set.
 
 ## Support
 

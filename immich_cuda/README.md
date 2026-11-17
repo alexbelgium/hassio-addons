@@ -130,7 +130,7 @@ This addon supports custom scripts and environment variables through the `app_co
 
 ## Security
 
-The `JWT_SECRET` option ships with a fixed default value and `DB_PASSWORD` ships with `homeassistant`. Anyone who knows the default `JWT_SECRET` can forge login tokens for any Immich user, and the default `DB_PASSWORD` gives access to your Immich database if it is reachable from your network. Change both in the add-on options (`DB_PASSWORD` must match your Postgres server). The add-on prints a warning in its startup log while either default is still set.
+The `DB_PASSWORD` option ships with `homeassistant`, which gives access to your Immich database if it is reachable from your network. Change it on your Postgres server, then set the same value in the add-on options. The add-on prints a warning in its startup log while the default is still set.
 
 ## Installation
 

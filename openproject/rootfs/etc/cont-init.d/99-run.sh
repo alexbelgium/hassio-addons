@@ -2,7 +2,8 @@
 
 bashio::log.info "Starting OpenProject"
 
-if [ "$(bashio::config 'OPENPROJECT_SECRET_KEY_BASE')" = "addon_secret" ]; then
+# The default is set in config.yaml "environment", not in the options
+if [ "${OPENPROJECT_SECRET_KEY_BASE:-}" = "addon_secret" ]; then
     bashio::log.warning "SECURITY RISK: OPENPROJECT_SECRET_KEY_BASE is still the default (addon_secret)."
     bashio::log.warning "This key signs session cookies and tokens, so anyone who knows it can forge a login session."
     bashio::log.warning "Set a new secret in the add-on options."

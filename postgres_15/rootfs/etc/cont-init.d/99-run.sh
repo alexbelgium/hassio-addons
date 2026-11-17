@@ -110,7 +110,7 @@ DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
 if [ "$DB_PASSWORD" = "homeassistant" ]; then
     bashio::log.warning "SECURITY RISK: the Postgres superuser password is still the default (homeassistant)."
     bashio::log.warning "Anyone who can reach port 5432 can read and change every database, and a superuser can run commands in the container."
-    bashio::log.warning "Set a new POSTGRES_PASSWORD in the add-on options, and update the add-ons that connect to it."
+    bashio::log.warning "On an existing database, first run ALTER USER postgres PASSWORD '...'; then set the same value in POSTGRES_PASSWORD and in the add-ons that connect to it (the option alone does not change a stored password)."
 fi
 DB_PASSWORD="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
 

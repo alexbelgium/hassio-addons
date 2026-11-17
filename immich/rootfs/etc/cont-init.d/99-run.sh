@@ -182,11 +182,6 @@ check_vchord_extension() {
 export_options
 validate_config
 
-if [ "$(bashio::config 'JWT_SECRET')" = "jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=" ]; then
-    bashio::log.warning "SECURITY RISK: JWT_SECRET is still the default shipped with the add-on (public)."
-    bashio::log.warning "Anyone who knows it can forge login tokens for any Immich user."
-    bashio::log.warning "Set a new JWT_SECRET in the add-on options."
-fi
 if [ "$(bashio::config 'DB_PASSWORD')" = "homeassistant" ]; then
     bashio::log.warning "SECURITY RISK: the Immich database password is still the default (homeassistant)."
     bashio::log.warning "If the database is reachable from your network, anyone can read or change your Immich data."

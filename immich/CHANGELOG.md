@@ -1,6 +1,6 @@
 ## 3.4.1.1 (2026-11-17)
 
-- Security: warn in the startup log and README while `JWT_SECRET` or `DB_PASSWORD` is still the shipped default. No default changed.
+- Security: warn in the startup log and README while `DB_PASSWORD` is still the shipped default. No default changed.
 
  
 ## 3.4.1 (2026-11-14)
