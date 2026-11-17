@@ -40,6 +40,10 @@ For additional options, use the config.yaml system : https://github.com/alexbelg
 
 Webui can be found at `<your-ip>:port`.
 
+## Security
+
+The `OPENPROJECT_SECRET_KEY_BASE` option ships with the default value `addon_secret`. This key signs session cookies and tokens, so anyone who knows it can forge a login session. Change it in the add-on options. The add-on prints a warning in its startup log while the default is still set.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in

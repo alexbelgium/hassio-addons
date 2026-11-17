@@ -1,3 +1,7 @@
+## 8.19.25.1 (2026-11-17)
+
+- Security: warn in the startup log and README while `xpack.security` (authentication disabled by default) is still the shipped default. No default changed.
+
  
 ## 8.19.25 (2026-11-11)
 - Update to latest version from elastic/elasticsearch (changelog : https://github.com/elastic/elasticsearch/releases)

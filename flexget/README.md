@@ -104,6 +104,10 @@ tasks:
 
 For complete configuration documentation, see: https://flexget.com/Configuration
 
+## Security
+
+The `WebuiPass` option ships with the default value `homeassistant123`. Anyone who can reach port 5050 and knows it can log in to the web interface and change tasks, which can run commands. Change it in the add-on options. The add-on prints a warning in its startup log while the default is still set.
+
 ## Support
 
 If you have an issue with your installation, please be sure to checkout github.

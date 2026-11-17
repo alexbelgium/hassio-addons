@@ -1,3 +1,7 @@
+## 3.4.1.1 (2026-11-17)
+
+- Security: warn in the startup log and README while `JWT_SECRET` or `DB_PASSWORD` is still the shipped default. No default changed.
+
  
 ## 3.4.1 (2026-11-14)
 - Update to latest version from ghcr.io/imagegenius/immich:3-cuda

@@ -108,6 +108,12 @@ sed -i "s|/shared|$DATA_LOCATION|g" /home/seafile/*.sh
 ADMIN_EMAIL_VAL="$(bashio::config 'SEAFILE_ADMIN_EMAIL')"
 ADMIN_PASSWORD_VAL="$(bashio::config 'SEAFILE_ADMIN_PASSWORD')"
 
+if [ "$ADMIN_PASSWORD_VAL" = "a_very_secret_password" ]; then
+    bashio::log.warning "SECURITY RISK: the Seafile admin password is still the default (a_very_secret_password)."
+    bashio::log.warning "Anyone who can reach ports 8000 or 8082 can log in as admin and read all stored files."
+    bashio::log.warning "Set a new SEAFILE_ADMIN_PASSWORD in the add-on options."
+fi
+
 if [[ -n "${ADMIN_EMAIL_VAL}" && "${ADMIN_EMAIL_VAL}" != "null" \
     && -n "${ADMIN_PASSWORD_VAL}" && "${ADMIN_PASSWORD_VAL}" != "null" ]]; then
     bashio::log.info "Seeding admin credentials"

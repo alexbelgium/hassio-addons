@@ -1,3 +1,7 @@
+## 15.18.0.1 (2026-11-17)
+
+- Security: warn in the startup log and README while `POSTGRES_PASSWORD` is still the shipped default. No default changed.
+
 ## 15.18.0 (2026-11-14)
 
 - The add-on now updates itself: it follows the upstream image, so PostgreSQL minor releases (now 15.18) and VectorChord / pgvector releases (now 1.1.1 / 0.8.5) arrive as add-on updates

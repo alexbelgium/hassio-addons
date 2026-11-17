@@ -53,6 +53,12 @@ else
     PASSWORD="$(bashio::config 'password')"
 fi
 
+if [ "$PASSWORD" = "homeassistant" ]; then
+    bashio::log.warning "SECURITY RISK: the Portainer admin password is still the default (homeassistant)."
+    bashio::log.warning "Anyone who can reach port 9000 can log in and control Docker, which means the whole host."
+    bashio::log.warning "Set a new password in the add-on options."
+fi
+
 # Check current password
 CURRENTPASSWORD=""
 touch "$PASSWORD_FILE"

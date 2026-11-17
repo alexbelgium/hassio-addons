@@ -116,6 +116,10 @@ This addon supports mounting both local drives and remote SMB shares:
 
 **Important**: If storing database on mounted drive, ensure SQLite database is also hosted there to prevent data loss during mount issues.
 
+## Security
+
+The `SEAFILE_ADMIN_PASSWORD` option ships with the default value `a_very_secret_password`. Anyone who can reach ports 8000 or 8082 and knows it can log in as admin and read every stored file. Change it in the add-on options. The add-on prints a warning in its startup log while the default is still set.
+
 ## Support
 
 Create an issue on github

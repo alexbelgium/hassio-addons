@@ -78,6 +78,10 @@ Additional environment variables can be configured using the config.yaml file. S
 - [Add Environment Variables Guide](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 - [Complete Firefly III environment variables](https://raw.githubusercontent.com/firefly-iii/firefly-iii/main/.env.example)
 
+## Security
+
+The `APP_KEY` option ships with the default value `CHANGEME_32_CHARS_EuC5dfn3LAPzeO`. This key encrypts sensitive data and signs sessions, and the default is public. Set your own 32-character key before storing real data, because changing it later makes already encrypted data unreadable. The add-on prints a warning in its startup log while the default is still set.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.

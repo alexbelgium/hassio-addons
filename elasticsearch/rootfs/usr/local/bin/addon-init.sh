@@ -70,6 +70,9 @@ fi
 if ! env | grep -qiE '^(xpack\.security\.|ES_SETTING_XPACK_SECURITY_)'; then
     export ES_SETTING_XPACK_SECURITY_ENABLED=false
     echo "Security: xpack.security.enabled=false (default; override by setting ES_SETTING_XPACK_SECURITY_ENABLED in env_vars)"
+    echo "WARNING: SECURITY RISK: Elasticsearch authentication is disabled and the add-on uses the host network."
+    echo "WARNING: Anyone who can reach this host on its network interfaces can read, change and delete all data."
+    echo "WARNING: Restrict access with your firewall, or enable xpack.security through the env_vars option."
 fi
 
 ############################

@@ -107,6 +107,11 @@ restart_immich_addons_if_flagged() {
 DB_PORT=5432
 DB_HOSTNAME=localhost
 DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
+if [ "$DB_PASSWORD" = "homeassistant" ]; then
+    bashio::log.warning "SECURITY RISK: the Postgres superuser password is still the default (homeassistant)."
+    bashio::log.warning "Anyone who can reach port 5432 can read and change every database, and a superuser can run commands in the container."
+    bashio::log.warning "Set a new POSTGRES_PASSWORD in the add-on options, and update the add-ons that connect to it."
+fi
 DB_PASSWORD="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
 
 if bashio::config.has_value "POSTGRES_USER"; then
