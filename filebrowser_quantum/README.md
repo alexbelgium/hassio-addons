@@ -48,9 +48,9 @@ comparison to installing any other Home Assistant add-on.
 
 The web UI can be found at `<your-ip>:8071` or through the Home Assistant sidebar when using Ingress. Direct access redirects to the add-on's configured base path, so the address bar will show a longer URL than the one you typed.
 
-**Default credentials:**
+**Default credentials** (only used with `auth_method: password`):
 - Username: `admin`
-- Password: `admin`
+- Password: `admin` up to upstream 2.0.8. From 2.0.9 a fresh install generates a random initial password and prints it once in the add-on log.
 
 **Important:** Change the default credentials immediately after first login for security.
 
@@ -76,9 +76,7 @@ To secure it, set `auth_method` to `password`, or disable the port in the add-on
 
 1. Start the add-on and wait for it to initialize.
 1. Access the web interface through the Home Assistant sidebar or at `<your-ip>:8071`.
-1. With the default `auth_method: noauth` there is no login (see Security above). To require one, set `auth_method` to `password`, restart, and log in with the default credentials:
-   - Username: `admin`
-   - Password: `admin`
+1. With the default `auth_method: noauth` there is no login (see Security above). To require one, set `auth_method` to `password`, restart, and log in as `admin` with the default credentials above (`admin`, or on 2.0.9 and later the generated password printed once in the add-on log).
 1. **Important:** then immediately change the default password by clicking on "Settings" > "User Management".
 1. Configure additional sources and authentication settings through the add-on options or the web interface.
 
