@@ -1,4 +1,4 @@
-## 12.0.18-5 (2026-11-17)
+## 12.0.18.5 (2026-11-17)
 
 - Security: warn in the startup log and README while `SEAFILE_ADMIN_PASSWORD` is still the shipped default. No default changed.
 
