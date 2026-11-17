@@ -6,7 +6,7 @@ set -e
 set +u
 
 # Autodefine if not defined
-if [ -z "$INTERFACE_NAME" ]; then
+if [ -n "$INTERFACE_NAME" ]; then
     # shellcheck disable=SC2155
     export INTERFACE_NAME="$(ip route get 8.8.8.8 | sed -nr 's/.*dev ([^\ ]+).*/\1/p')"
     bashio::log.blue "Autodetection : INTERFACE_NAME=$INTERFACE_NAME"

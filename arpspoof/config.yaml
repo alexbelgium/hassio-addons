@@ -66,6 +66,7 @@ devices:
   - /dev/nvme2
 host_network: true
 image: ghcr.io/alexbelgium/arpspoof-{arch}
+map: []
 name: Arpspoof
 options:
   env_vars: []
@@ -86,5 +87,5 @@ schema:
 slug: arpspoof
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/arpspoof
-version: "1.0.0.3"
+version: 1.0.0-2
 webui: "[PROTO:ssl]://[HOST]:[PORT:7022]"
