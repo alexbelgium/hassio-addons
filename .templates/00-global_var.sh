@@ -56,10 +56,12 @@ shell_quote() {
     printf "'%s'" "${s//\'/\'\\\'\'}"
 }
 
-# Names treated as secrets: masked in the log and kept out of a $HOME/.bashrc
-# that sits on a persistent, possibly shared volume (/config, /share)
-is_secret_key() {
-    [[ "${1,,}" =~ pass|token|secret|private|pwd|key|gitapi ]]
+# Secrets ($1 name, $2 value): masked in the log and kept out of a $HOME/.bashrc
+# that sits on a persistent, possibly shared volume (/config, /share). A value
+# holding URL credentials (postgres://user:pass@host, https://token@host) counts
+# whatever its name.
+is_secret() {
+    [[ "${1,,}" =~ pass|token|secret|private|pwd|key|gitapi || "$2" =~ ://[^/@]+@ ]]
 }
 
 append_export() {
@@ -69,7 +71,7 @@ append_export() {
     # shell_quote doubling every backslash, so the two bugs hid each other --
     # fixing only one of them corrupts the value.
     printf 'export %s=%s\n' "$1" "$(shell_quote "$2")" >> "$EXPORT_BODY"
-    is_secret_key "$1" || printf 'export %s=%s\n' "$1" "$(shell_quote "$2")" >> "$EXPORT_BODY_PUBLIC"
+    is_secret "$1" "$2" || printf 'export %s=%s\n' "$1" "$(shell_quote "$2")" >> "$EXPORT_BODY_PUBLIC"
 }
 
 compose_export_block() {
@@ -164,8 +166,9 @@ if [[ "${1:-}" == "--self-test" ]]; then
     # 3. The $HOME/.bashrc block keeps ordinary variables and drops secrets
     append_export "SELFTEST_DB_PASSWORD" "hunter2"
     append_export "SELFTEST_GITAPI" "ghp_x"
+    append_export "SELFTEST_DATABASE_URL" "postgres://u:p@db/x"
     append_export "SELFTEST_TZ" "Europe/Brussels"
-    if grep -q 'PASSWORD\|GITAPI' "$EXPORT_BODY_PUBLIC" || ! grep -q 'SELFTEST_TZ=' "$EXPORT_BODY_PUBLIC"; then
+    if grep -q 'PASSWORD\|GITAPI\|DATABASE_URL' "$EXPORT_BODY_PUBLIC" || ! grep -q 'SELFTEST_TZ=' "$EXPORT_BODY_PUBLIC"; then
         echo "FAIL (public block): secrets must be dropped and other variables kept"
         self_test_rc=1
     fi
@@ -280,11 +283,8 @@ export_var() {
 
     v="$(resolve_secret "$v")"
 
-    if is_secret_key "$k"; then
+    if is_secret "$k" "$v"; then
         bashio::log.blue "$k=******"
-    elif [[ "$v" =~ ://[^/@]+@ ]]; then
-        # URL with credentials, e.g. postgres://user:pass@host/db or https://token@host
-        bashio::log.blue "$k=${v%%://*}://******@${v#*@}"
     else
         bashio::log.blue "$k=$v"
     fi
