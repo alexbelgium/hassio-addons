@@ -212,17 +212,31 @@ fetch_pr_json() {
         remaining="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="x-ratelimit-remaining"{print $2}' | tail -n1)"
         reset="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="x-ratelimit-reset"{print $2}' | tail -n1)"
         now="$(date +%s)"
-        if [[ "${retry_after}" =~ ^[0-9]{1,6}$ ]]; then
-            # Decimal per RFC 9110, so "08" is 8, not an octal error.
-            wait=$((10#${retry_after}))
-        elif [ "${remaining}" = "0" ] && [[ "${reset}" =~ ^[0-9]+$ ]] && [ "${reset}" -gt "${now}" ]; then
+        # Honor the later of Retry-After and the primary-limit reset when
+        # GitHub sends both. Retry-After is decimal per RFC 9110 ("08" is 8);
+        # leading zeros are dropped, and a value too long to fit the budget
+        # becomes the budget itself so the deadline check below gives up.
+        wait=0
+        if [[ "${retry_after}" =~ ^[0-9]+$ ]]; then
+            retry_after="${retry_after#"${retry_after%%[!0]*}"}"
+            if [ "${#retry_after}" -gt 6 ]; then
+                wait=900
+            else
+                wait=$((10#${retry_after:-0}))
+            fi
+        fi
+        if [ "${remaining}" = "0" ] && [[ "${reset}" =~ ^[0-9]{1,12}$ ]] && [ "${reset}" -gt "${now}" ] &&
+            [ $((reset - now + 5)) -gt "${wait}" ]; then
             wait=$((reset - now + 5))
-        elif [ "${status}" = "403" ] || [ "${status}" = "429" ]; then
-            # Secondary rate limit without timing headers: GitHub asks for at
-            # least a minute, longer on each repeat.
-            wait=$((60 * attempt))
-        else
-            wait=$((15 * attempt))
+        fi
+        if [ "${wait}" -eq 0 ]; then
+            if [ "${status}" = "403" ] || [ "${status}" = "429" ]; then
+                # Secondary rate limit without timing headers: GitHub asks for
+                # at least a minute, backing off exponentially on repeats.
+                wait=$((60 << (attempt - 1)))
+            else
+                wait=$((15 * attempt))
+            fi
         fi
         [ "${wait}" -lt 1 ] && wait=1
         # Give up rather than sleep into the deadline: no request ever starts
