@@ -183,10 +183,13 @@ fetch_pr_json() {
             -D "${hdr}" -o "${body}" -w '%{http_code}' \
             "${API_URL}")" || rc=$?
         [ -n "${status}" ] || status=000
-        # A transfer that failed after a redirect reports the 3xx; it is a
-        # transport failure like any other.
-        if [ "${rc}" -ne 0 ] && [[ "${status}" == 3?? ]]; then
-            status=000
+        # A transfer that broke after a redirect reports the 3xx. Retry it
+        # only for transient curl errors (connect, timeout, reset, partial),
+        # not e.g. 47 (redirect loop), which would fail the same way again.
+        if [[ "${status}" == 3?? ]]; then
+            case "${rc}" in
+                7 | 18 | 28 | 35 | 52 | 55 | 56) status=000 ;;
+            esac
         fi
         # A 200 whose transfer did not complete is retried, never parsed.
         if [ "${status}" = "200" ] && [ "${rc}" -eq 0 ]; then
