@@ -99,6 +99,7 @@ RUN apt-get update -q && apt-get install -q -y \
     git \
     sudo \
     zip \
+    unzip \
     gcc-aarch64-linux-gnu && \
     rm -rf /var/lib/apt/lists/*
 
@@ -138,24 +139,44 @@ RUN task frontend-build
 ##################
 
 FROM --platform=$BUILDPLATFORM buildenv AS build
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BUILD_VERSION
 ENV BUILD_VERSION=${BUILD_VERSION:-unknown}
 
 # Download ONNX Runtime for amd64 (x64). The version is read from upstream's own
 # Dockerfile in the merged source tree, so it always matches the onnxruntime_go
 # binding this source is compiled against (upstream moves both together).
-RUN ONNXRUNTIME_VERSION="$(sed -n 's/^ARG ONNXRUNTIME_VERSION=//p' Dockerfile)" && \
+# The GitHub release tarball is preferred. When it cannot be fetched (the
+# microsoft/onnxruntime repository returned 404 in November 2026), the same
+# official library is taken from Microsoft's PyPI wheel, checked against the
+# sha256 PyPI publishes, with the symlinks the tarball ships recreated.
+RUN set -eu; \
+    ONNXRUNTIME_VERSION="$(sed -n 's/^ARG ONNXRUNTIME_VERSION=//p' Dockerfile)"; \
     if [ -z "${ONNXRUNTIME_VERSION}" ]; then \
         echo "ERROR: ARG ONNXRUNTIME_VERSION not found in upstream Dockerfile" >&2; \
         exit 1; \
-    fi && \
-    echo "Downloading ONNX Runtime ${ONNXRUNTIME_VERSION} for x64" && \
-    curl -fsSL "https://github.com/microsoft/onnxruntime/releases/download/v${ONNXRUNTIME_VERSION}/onnxruntime-linux-x64-${ONNXRUNTIME_VERSION}.tgz" \
-        -o /tmp/onnxruntime.tgz && \
-    mkdir -p /tmp/onnxruntime && \
-    tar -xzf /tmp/onnxruntime.tgz -C /tmp/onnxruntime --strip-components=1 && \
-    cp /tmp/onnxruntime/lib/libonnxruntime*.so* /home/dev-user/lib/ && \
-    rm -rf /tmp/onnxruntime /tmp/onnxruntime.tgz
+    fi; \
+    echo "Downloading ONNX Runtime ${ONNXRUNTIME_VERSION} for x64"; \
+    mkdir -p /tmp/onnxruntime; \
+    dl="curl -fsSL --retry 2 --connect-timeout 30 --max-time 600"; \
+    if ${dl} "https://github.com/microsoft/onnxruntime/releases/download/v${ONNXRUNTIME_VERSION}/onnxruntime-linux-x64-${ONNXRUNTIME_VERSION}.tgz" \
+        -o /tmp/onnxruntime.tgz; then \
+        tar -xzf /tmp/onnxruntime.tgz -C /tmp/onnxruntime --strip-components=1; \
+        cp -a /tmp/onnxruntime/lib/libonnxruntime*.so* /home/dev-user/lib/; \
+    else \
+        echo "GitHub release unavailable; using the onnxruntime ${ONNXRUNTIME_VERSION} wheel from PyPI"; \
+        ${dl} "https://pypi.org/pypi/onnxruntime/${ONNXRUNTIME_VERSION}/json" -o /tmp/onnxruntime.json; \
+        whl="$(node -e 'const u=JSON.parse(require("fs").readFileSync(process.argv[1])).urls.find(f=>/-[^-]*manylinux_[0-9]+_[0-9]+_x86_64[^-]*\.whl$/.test(f.filename));if(!u)process.exit(1);console.log(u.url+" "+u.digests.sha256);' /tmp/onnxruntime.json)"; \
+        ${dl} "${whl% *}" -o /tmp/onnxruntime.whl; \
+        echo "${whl#* }  /tmp/onnxruntime.whl" | sha256sum -c -; \
+        unzip -q -j /tmp/onnxruntime.whl "onnxruntime/capi/libonnxruntime.so.${ONNXRUNTIME_VERSION}" \
+            onnxruntime/capi/libonnxruntime_providers_shared.so -d /tmp/onnxruntime; \
+        cp /tmp/onnxruntime/libonnxruntime*.so* /home/dev-user/lib/; \
+        ln -sf "libonnxruntime.so.${ONNXRUNTIME_VERSION}" /home/dev-user/lib/libonnxruntime.so.1; \
+        ln -sf libonnxruntime.so.1 /home/dev-user/lib/libonnxruntime.so; \
+    fi; \
+    ls -l /home/dev-user/lib/libonnxruntime*; \
+    rm -rf /tmp/onnxruntime /tmp/onnxruntime.tgz /tmp/onnxruntime.whl /tmp/onnxruntime.json
 
 # Build BirdNET-Go for amd64 with OpenVINO enabled.
 # OPENVINO=true compiles in the openvino build tag, enabling the OpenVINO

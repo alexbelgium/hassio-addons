@@ -150,10 +150,124 @@ if [ -n "${GH_TOKEN}" ]; then
     auth_header=(-H "Authorization: Bearer ${GH_TOKEN}")
 fi
 
-pr_json="$(curl -fsSL "${auth_header[@]}" \
-    -H "Accept: application/vnd.github+json" \
-    -H "X-GitHub-Api-Version: 2022-11-28" \
-    "${API_URL}")"
+# Unauthenticated calls share GitHub's 60 req/h per-IP budget with every other
+# job on the runner, so a 403/429 (rate limit) or 5xx is retried. The wait
+# follows Retry-After or X-RateLimit-Reset when GitHub sends them, in full;
+# one 15-minute budget bounds the whole call, and a wait that does not fit in
+# it fails at once instead of sending a request GitHub would refuse.
+fetch_pr_json() {
+    local attempt=1 max_attempts=6 deadline=$((SECONDS + 900)) secondary=0
+    local hdr body status rc wait timed reset remaining retry_after now left
+    hdr="$(mktemp)" || return 1
+    body="$(mktemp)" || {
+        rm -f "${hdr}"
+        return 1
+    }
+    while :; do
+        # A stalled request is cut off at the time left (at most 60s), and
+        # none starts once the budget is spent.
+        left=$((deadline - SECONDS))
+        if [ "${left}" -le 0 ]; then
+            echo "GitHub API: retry budget spent after $((attempt - 1)) attempt(s)" >&2
+            rm -f "${hdr}" "${body}"
+            return 1
+        fi
+        [ "${left}" -gt 60 ] && left=60
+        # curl prints 000 itself when no response arrived. Its exit code is
+        # kept apart so a known status (e.g. 404) survives a cut-off body.
+        rc=0
+        status="$(curl -sSL "${auth_header[@]}" \
+            --connect-timeout 15 --max-time "${left}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -D "${hdr}" -o "${body}" -w '%{http_code}' \
+            "${API_URL}")" || rc=$?
+        [ -n "${status}" ] || status=000
+        # A transfer that broke after a redirect reports the 3xx. Retry it
+        # only for transient curl errors (connect, timeout, reset, partial),
+        # not e.g. 47 (redirect loop), which would fail the same way again.
+        if [[ "${status}" == 3?? ]]; then
+            case "${rc}" in
+                7 | 18 | 28 | 35 | 52 | 55 | 56) status=000 ;;
+            esac
+        fi
+        # A 200 whose transfer did not complete is retried, never parsed.
+        if [ "${status}" = "200" ] && [ "${rc}" -eq 0 ]; then
+            if ! cat "${body}"; then
+                rm -f "${hdr}" "${body}"
+                return 1
+            fi
+            rm -f "${hdr}" "${body}"
+            return 0
+        fi
+        # A 403 for a token that needs SSO authorization is not a rate limit:
+        # waiting cannot fix it.
+        if [ "${status}" = "403" ] && grep -qi '^x-github-sso:' "${hdr}"; then
+            echo "GitHub API returned HTTP 403: the token needs SSO authorization for ${FORK}" >&2
+            rm -f "${hdr}" "${body}"
+            return 1
+        fi
+        case "${status}" in
+            200 | 403 | 429 | 5?? | 000) ;;
+            *)
+                echo "GitHub API returned HTTP ${status}:" >&2
+                head -c 500 "${body}" >&2 || true
+                rm -f "${hdr}" "${body}"
+                return 1
+                ;;
+        esac
+        retry_after="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="retry-after"{print $2}' | tail -n1)"
+        remaining="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="x-ratelimit-remaining"{print $2}' | tail -n1)"
+        reset="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="x-ratelimit-reset"{print $2}' | tail -n1)"
+        now="$(date +%s)"
+        # Honor the later of Retry-After and the primary-limit reset when
+        # GitHub sends both. Retry-After is decimal per RFC 9110 ("08" is 8);
+        # leading zeros are dropped, and a value too long to fit the budget
+        # becomes the budget itself so the deadline check below gives up.
+        wait=0
+        timed=0
+        if [[ "${retry_after}" =~ ^[0-9]+$ ]]; then
+            timed=1
+            retry_after="${retry_after#"${retry_after%%[!0]*}"}"
+            if [ "${#retry_after}" -gt 6 ]; then
+                wait=900
+            else
+                wait=$((10#${retry_after:-0}))
+            fi
+        fi
+        if [ "${remaining}" = "0" ] && [[ "${reset}" =~ ^[0-9]{1,12}$ ]]; then
+            # A primary limit, even one whose reset has just passed: its
+            # delay is never replaced by the secondary-limit fallback.
+            timed=1
+            reset=$((10#${reset}))
+            [ $((reset - now + 5)) -gt "${wait}" ] && wait=$((reset - now + 5))
+        fi
+        if [ "${timed}" -eq 0 ]; then
+            if [ "${status}" = "403" ] || [ "${status}" = "429" ]; then
+                # Secondary rate limit without timing headers: GitHub asks for
+                # at least a minute, doubling on each repeated secondary limit.
+                wait=$((60 << secondary))
+                secondary=$((secondary + 1))
+            else
+                wait=$((15 * attempt))
+            fi
+        fi
+        [ "${wait}" -lt 1 ] && wait=1
+        # Give up rather than sleep into the deadline: no request ever starts
+        # once the budget is spent.
+        if [ "${attempt}" -ge "${max_attempts}" ] || [ $((SECONDS + wait)) -ge "${deadline}" ]; then
+            echo "GitHub API still returned HTTP ${status} (curl exit ${rc}) after ${attempt} attempt(s):" >&2
+            head -c 500 "${body}" >&2 || true
+            rm -f "${hdr}" "${body}"
+            return 1
+        fi
+        log "GitHub API returned HTTP ${status} (rate limit remaining: ${remaining:-?}); retry ${attempt}/$((max_attempts - 1)) in ${wait}s" >&2
+        sleep "${wait}"
+        attempt=$((attempt + 1))
+    done
+}
+
+pr_json="$(fetch_pr_json)"
 
 # Open, non-draft PRs only ("in review"), oldest first for a stable merge order.
 mapfile -t prs < <(echo "${pr_json}" \
