@@ -158,15 +158,16 @@ RUN set -eu; \
     fi; \
     echo "Downloading ONNX Runtime ${ONNXRUNTIME_VERSION} for x64"; \
     mkdir -p /tmp/onnxruntime; \
-    if curl -fsSL --retry 3 "https://github.com/microsoft/onnxruntime/releases/download/v${ONNXRUNTIME_VERSION}/onnxruntime-linux-x64-${ONNXRUNTIME_VERSION}.tgz" \
+    dl="curl -fsSL --retry 2 --connect-timeout 30 --max-time 600"; \
+    if ${dl} "https://github.com/microsoft/onnxruntime/releases/download/v${ONNXRUNTIME_VERSION}/onnxruntime-linux-x64-${ONNXRUNTIME_VERSION}.tgz" \
         -o /tmp/onnxruntime.tgz; then \
         tar -xzf /tmp/onnxruntime.tgz -C /tmp/onnxruntime --strip-components=1; \
         cp -a /tmp/onnxruntime/lib/libonnxruntime*.so* /home/dev-user/lib/; \
     else \
         echo "GitHub release unavailable; using the onnxruntime ${ONNXRUNTIME_VERSION} wheel from PyPI"; \
-        whl="$(curl -fsSL --retry 3 "https://pypi.org/pypi/onnxruntime/${ONNXRUNTIME_VERSION}/json" | \
-            node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>{const u=JSON.parse(d).urls.find(f=>/-manylinux_[0-9_]+_x86_64\.whl$/.test(f.filename));if(!u)process.exit(1);console.log(u.url+" "+u.digests.sha256);});')"; \
-        curl -fsSL --retry 3 "${whl% *}" -o /tmp/onnxruntime.whl; \
+        ${dl} "https://pypi.org/pypi/onnxruntime/${ONNXRUNTIME_VERSION}/json" -o /tmp/onnxruntime.json; \
+        whl="$(node -e 'const u=JSON.parse(require("fs").readFileSync(process.argv[1])).urls.find(f=>/-[^-]*manylinux_[0-9]+_[0-9]+_x86_64[^-]*\.whl$/.test(f.filename));if(!u)process.exit(1);console.log(u.url+" "+u.digests.sha256);' /tmp/onnxruntime.json)"; \
+        ${dl} "${whl% *}" -o /tmp/onnxruntime.whl; \
         echo "${whl#* }  /tmp/onnxruntime.whl" | sha256sum -c -; \
         unzip -q -j /tmp/onnxruntime.whl "onnxruntime/capi/libonnxruntime.so.${ONNXRUNTIME_VERSION}" \
             onnxruntime/capi/libonnxruntime_providers_shared.so -d /tmp/onnxruntime; \
@@ -175,7 +176,7 @@ RUN set -eu; \
         ln -sf libonnxruntime.so.1 /home/dev-user/lib/libonnxruntime.so; \
     fi; \
     ls -l /home/dev-user/lib/libonnxruntime*; \
-    rm -rf /tmp/onnxruntime /tmp/onnxruntime.tgz /tmp/onnxruntime.whl
+    rm -rf /tmp/onnxruntime /tmp/onnxruntime.tgz /tmp/onnxruntime.whl /tmp/onnxruntime.json
 
 # Build BirdNET-Go for amd64 with OpenVINO enabled.
 # OPENVINO=true compiles in the openvino build tag, enabling the OpenVINO

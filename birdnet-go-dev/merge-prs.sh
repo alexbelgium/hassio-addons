@@ -183,6 +183,11 @@ fetch_pr_json() {
             -D "${hdr}" -o "${body}" -w '%{http_code}' \
             "${API_URL}")" || rc=$?
         [ -n "${status}" ] || status=000
+        # A transfer that failed after a redirect reports the 3xx; it is a
+        # transport failure like any other.
+        if [ "${rc}" -ne 0 ] && [[ "${status}" == 3?? ]]; then
+            status=000
+        fi
         # A 200 whose transfer did not complete is retried, never parsed.
         if [ "${status}" = "200" ] && [ "${rc}" -eq 0 ]; then
             if ! cat "${body}"; then
@@ -228,11 +233,11 @@ fetch_pr_json() {
             fi
         fi
         if [ "${remaining}" = "0" ] && [[ "${reset}" =~ ^[0-9]{1,12}$ ]]; then
+            # A primary limit, even one whose reset has just passed: its
+            # delay is never replaced by the secondary-limit fallback.
+            timed=1
             reset=$((10#${reset}))
-            if [ "${reset}" -gt "${now}" ]; then
-                timed=1
-                [ $((reset - now + 5)) -gt "${wait}" ] && wait=$((reset - now + 5))
-            fi
+            [ $((reset - now + 5)) -gt "${wait}" ] && wait=$((reset - now + 5))
         fi
         if [ "${timed}" -eq 0 ]; then
             if [ "${status}" = "403" ] || [ "${status}" = "429" ]; then
