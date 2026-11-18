@@ -47,7 +47,7 @@ Webui can be found at <http://homeassistant:8080> or through the sidebar using I
 Configurations can be done through the app webUI, except for the following options.
 It automatically mounts all local drives.
 
-**Note**: Enable full access only if encountering issues. SMART access to the disk Home Assistant OS boots from is blocked by the Supervisor while Protection mode is on (`smartctl` reports `Operation not permitted`); for that disk, use the Scrutiny (Full Access) app with Protection mode off.
+**Note**: Enable full access only if encountering issues. A SATA or USB disk that Home Assistant OS uses itself, such as its data disk after Settings → System → Storage → Move data disk, is blocked by the Supervisor while Protection mode is on (`smartctl` reports `Operation not permitted`); for such a disk, use the Scrutiny (Full Access) app with Protection mode off.
 
 ### Options
 
