@@ -156,8 +156,8 @@ fi
 # one 15-minute budget bounds the whole call, and a wait that does not fit in
 # it fails at once instead of sending a request GitHub would refuse.
 fetch_pr_json() {
-    local attempt=1 max_attempts=6 deadline=$((SECONDS + 900))
-    local hdr body status rc wait reset remaining retry_after now left
+    local attempt=1 max_attempts=6 deadline=$((SECONDS + 900)) secondary=0
+    local hdr body status rc wait timed reset remaining retry_after now left
     hdr="$(mktemp)" || return 1
     body="$(mktemp)" || {
         rm -f "${hdr}"
@@ -217,7 +217,9 @@ fetch_pr_json() {
         # leading zeros are dropped, and a value too long to fit the budget
         # becomes the budget itself so the deadline check below gives up.
         wait=0
+        timed=0
         if [[ "${retry_after}" =~ ^[0-9]+$ ]]; then
+            timed=1
             retry_after="${retry_after#"${retry_after%%[!0]*}"}"
             if [ "${#retry_after}" -gt 6 ]; then
                 wait=900
@@ -225,15 +227,19 @@ fetch_pr_json() {
                 wait=$((10#${retry_after:-0}))
             fi
         fi
-        if [ "${remaining}" = "0" ] && [[ "${reset}" =~ ^[0-9]{1,12}$ ]] && [ "${reset}" -gt "${now}" ] &&
-            [ $((reset - now + 5)) -gt "${wait}" ]; then
-            wait=$((reset - now + 5))
+        if [ "${remaining}" = "0" ] && [[ "${reset}" =~ ^[0-9]{1,12}$ ]]; then
+            reset=$((10#${reset}))
+            if [ "${reset}" -gt "${now}" ]; then
+                timed=1
+                [ $((reset - now + 5)) -gt "${wait}" ] && wait=$((reset - now + 5))
+            fi
         fi
-        if [ "${wait}" -eq 0 ]; then
+        if [ "${timed}" -eq 0 ]; then
             if [ "${status}" = "403" ] || [ "${status}" = "429" ]; then
                 # Secondary rate limit without timing headers: GitHub asks for
-                # at least a minute, backing off exponentially on repeats.
-                wait=$((60 << (attempt - 1)))
+                # at least a minute, doubling on each repeated secondary limit.
+                wait=$((60 << secondary))
+                secondary=$((secondary + 1))
             else
                 wait=$((15 * attempt))
             fi
