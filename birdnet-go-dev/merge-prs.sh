@@ -150,70 +150,10 @@ if [ -n "${GH_TOKEN}" ]; then
     auth_header=(-H "Authorization: Bearer ${GH_TOKEN}")
 fi
 
-# Unauthenticated calls share GitHub's 60 req/h per-IP budget with every other
-# job on the runner, so a 403/429 (rate limit) or 5xx is retried. The wait
-# follows Retry-After or X-RateLimit-Reset when GitHub sends them, capped per
-# attempt and in total so a build never hangs for the full hour.
-fetch_pr_json() {
-    local attempt=1 max_attempts=6 deadline=$((SECONDS + 900))
-    local hdr body status wait reset remaining retry_after now left
-    hdr="$(mktemp)"
-    body="$(mktemp)"
-    while :; do
-        # One wall-clock budget for the whole call: a stalled request is cut
-        # off at the time left (at most 60s) instead of hanging the build.
-        left=$((deadline - SECONDS))
-        [ "${left}" -gt 60 ] && left=60
-        [ "${left}" -lt 1 ] && left=1
-        # curl prints 000 itself on transport errors; set the fallback on the
-        # assignment so a failure never yields "000000".
-        status="$(curl -sSL "${auth_header[@]}" \
-            --connect-timeout 15 --max-time "${left}" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            -D "${hdr}" -o "${body}" -w '%{http_code}' \
-            "${API_URL}")" || status=000
-        if [ "${status}" = "200" ]; then
-            cat "${body}"
-            rm -f "${hdr}" "${body}"
-            return 0
-        fi
-        case "${status}" in
-            403 | 429 | 5?? | 000) ;;
-            *)
-                echo "GitHub API returned HTTP ${status}:" >&2
-                head -c 500 "${body}" >&2 || true
-                rm -f "${hdr}" "${body}"
-                return 1
-                ;;
-        esac
-        if [ "${attempt}" -ge "${max_attempts}" ] || [ "${SECONDS}" -ge "${deadline}" ]; then
-            echo "GitHub API still returned HTTP ${status} after ${attempt} attempt(s):" >&2
-            head -c 500 "${body}" >&2 || true
-            rm -f "${hdr}" "${body}"
-            return 1
-        fi
-        retry_after="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="retry-after"{print $2}' | tail -n1)"
-        remaining="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="x-ratelimit-remaining"{print $2}' | tail -n1)"
-        reset="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="x-ratelimit-reset"{print $2}' | tail -n1)"
-        now="$(date +%s)"
-        if [[ "${retry_after}" =~ ^[0-9]+$ ]]; then
-            wait="${retry_after}"
-        elif [ "${remaining}" = "0" ] && [[ "${reset}" =~ ^[0-9]+$ ]] && [ "${reset}" -gt "${now}" ]; then
-            wait=$((reset - now + 5))
-        else
-            wait=$((15 * attempt))
-        fi
-        [ "${wait}" -gt 300 ] && wait=300
-        [ "${wait}" -gt $((deadline - SECONDS)) ] && wait=$((deadline - SECONDS))
-        [ "${wait}" -lt 1 ] && wait=1
-        log "GitHub API returned HTTP ${status} (rate limit remaining: ${remaining:-?}); retry ${attempt}/$((max_attempts - 1)) in ${wait}s" >&2
-        sleep "${wait}"
-        attempt=$((attempt + 1))
-    done
-}
-
-pr_json="$(fetch_pr_json)"
+pr_json="$(curl -fsSL "${auth_header[@]}" \
+    -H "Accept: application/vnd.github+json" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "${API_URL}")"
 
 # Open, non-draft PRs only ("in review"), oldest first for a stable merge order.
 mapfile -t prs < <(echo "${pr_json}" \
