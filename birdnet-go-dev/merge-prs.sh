@@ -156,7 +156,7 @@ fi
 # attempt and in total so a build never hangs for the full hour.
 fetch_pr_json() {
     local attempt=1 max_attempts=6 deadline=$((SECONDS + 900))
-    local hdr body status wait reset remaining retry_after now left
+    local hdr body status rc wait reset remaining retry_after now left
     hdr="$(mktemp)"
     body="$(mktemp)"
     while :; do
@@ -165,21 +165,24 @@ fetch_pr_json() {
         left=$((deadline - SECONDS))
         [ "${left}" -gt 60 ] && left=60
         [ "${left}" -lt 1 ] && left=1
-        # curl prints 000 itself on transport errors; set the fallback on the
-        # assignment so a failure never yields "000000".
+        # curl prints 000 itself when no response arrived. Its exit code is
+        # kept apart so a known status (e.g. 404) survives a cut-off body.
+        rc=0
         status="$(curl -sSL "${auth_header[@]}" \
             --connect-timeout 15 --max-time "${left}" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -D "${hdr}" -o "${body}" -w '%{http_code}' \
-            "${API_URL}")" || status=000
-        if [ "${status}" = "200" ]; then
+            "${API_URL}")" || rc=$?
+        [ -n "${status}" ] || status=000
+        # A 200 whose transfer did not complete is retried, never parsed.
+        if [ "${status}" = "200" ] && [ "${rc}" -eq 0 ]; then
             cat "${body}"
             rm -f "${hdr}" "${body}"
             return 0
         fi
         case "${status}" in
-            403 | 429 | 5?? | 000) ;;
+            200 | 403 | 429 | 5?? | 000) ;;
             *)
                 echo "GitHub API returned HTTP ${status}:" >&2
                 head -c 500 "${body}" >&2 || true
@@ -187,12 +190,6 @@ fetch_pr_json() {
                 return 1
                 ;;
         esac
-        if [ "${attempt}" -ge "${max_attempts}" ] || [ "${SECONDS}" -ge "${deadline}" ]; then
-            echo "GitHub API still returned HTTP ${status} after ${attempt} attempt(s):" >&2
-            head -c 500 "${body}" >&2 || true
-            rm -f "${hdr}" "${body}"
-            return 1
-        fi
         retry_after="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="retry-after"{print $2}' | tail -n1)"
         remaining="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="x-ratelimit-remaining"{print $2}' | tail -n1)"
         reset="$(tr -d '\r' <"${hdr}" | awk -F': *' 'tolower($1)=="x-ratelimit-reset"{print $2}' | tail -n1)"
@@ -205,8 +202,15 @@ fetch_pr_json() {
             wait=$((15 * attempt))
         fi
         [ "${wait}" -gt 300 ] && wait=300
-        [ "${wait}" -gt $((deadline - SECONDS)) ] && wait=$((deadline - SECONDS))
         [ "${wait}" -lt 1 ] && wait=1
+        # Give up rather than sleep into the deadline: no request ever starts
+        # once the budget is spent.
+        if [ "${attempt}" -ge "${max_attempts}" ] || [ $((SECONDS + wait)) -ge "${deadline}" ]; then
+            echo "GitHub API still returned HTTP ${status} (curl exit ${rc}) after ${attempt} attempt(s):" >&2
+            head -c 500 "${body}" >&2 || true
+            rm -f "${hdr}" "${body}"
+            return 1
+        fi
         log "GitHub API returned HTTP ${status} (rate limit remaining: ${remaining:-?}); retry ${attempt}/$((max_attempts - 1)) in ${wait}s" >&2
         sleep "${wait}"
         attempt=$((attempt + 1))
