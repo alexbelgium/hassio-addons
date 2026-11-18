@@ -1,3 +1,7 @@
+## 20261118 (18-11-2026)
+- Rebuild against the latest upstream BirdNET-Go main. The species-workspace PR, which broke the 17-11 rebuild (`scientificNameLikeEscaper` was removed upstream), compiles again
+- Build: retry the GitHub API query for open fork PRs on HTTP 403/429/5xx, waiting for the rate-limit reset when GitHub gives one. The 18-11 build failed on an unauthenticated rate-limit 403 from the shared runner IP
+
 ## 20261110 (10-11-2026)
 - Rebuild against the latest upstream BirdNET-Go main. All 16 open fork PRs still merge onto main and the combined tree compiles
 
