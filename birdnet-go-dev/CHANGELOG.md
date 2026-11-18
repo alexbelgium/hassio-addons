@@ -1,3 +1,6 @@
+## 20261118 (18-11-2026)
+- Rebuild against the latest upstream BirdNET-Go main. The species-workspace PR, which broke the 17-11 rebuild (`scientificNameLikeEscaper` was removed upstream), compiles again
+
 ## 20261110 (10-11-2026)
 - Rebuild against the latest upstream BirdNET-Go main. All 16 open fork PRs still merge onto main and the combined tree compiles
 
