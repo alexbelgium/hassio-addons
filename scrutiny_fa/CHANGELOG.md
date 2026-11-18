@@ -1,5 +1,6 @@
  
 ## v1.80.2 (2026-11-14)
+- README: disks used by Home Assistant OS itself need the Full Access app with Protection mode off (#3261)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
  
 ## v1.80.1 (2026-11-07)
