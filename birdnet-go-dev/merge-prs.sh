@@ -155,16 +155,24 @@ fi
 # follows Retry-After or X-RateLimit-Reset when GitHub sends them, capped per
 # attempt and in total so a build never hangs for the full hour.
 fetch_pr_json() {
-    local attempt=1 max_attempts=6 waited=0 max_total_wait=900
-    local hdr body status wait reset remaining retry_after now
+    local attempt=1 max_attempts=6 deadline=$((SECONDS + 900))
+    local hdr body status wait reset remaining retry_after now left
     hdr="$(mktemp)"
     body="$(mktemp)"
     while :; do
+        # One wall-clock budget for the whole call: a stalled request is cut
+        # off at the time left (at most 60s) instead of hanging the build.
+        left=$((deadline - SECONDS))
+        [ "${left}" -gt 60 ] && left=60
+        [ "${left}" -lt 1 ] && left=1
+        # curl prints 000 itself on transport errors; set the fallback on the
+        # assignment so a failure never yields "000000".
         status="$(curl -sSL "${auth_header[@]}" \
+            --connect-timeout 15 --max-time "${left}" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -D "${hdr}" -o "${body}" -w '%{http_code}' \
-            "${API_URL}" || echo 000)"
+            "${API_URL}")" || status=000
         if [ "${status}" = "200" ]; then
             cat "${body}"
             rm -f "${hdr}" "${body}"
@@ -179,8 +187,8 @@ fetch_pr_json() {
                 return 1
                 ;;
         esac
-        if [ "${attempt}" -ge "${max_attempts}" ] || [ "${waited}" -ge "${max_total_wait}" ]; then
-            echo "GitHub API still returned HTTP ${status} after ${attempt} attempt(s) and ${waited}s of waiting:" >&2
+        if [ "${attempt}" -ge "${max_attempts}" ] || [ "${SECONDS}" -ge "${deadline}" ]; then
+            echo "GitHub API still returned HTTP ${status} after ${attempt} attempt(s):" >&2
             head -c 500 "${body}" >&2 || true
             rm -f "${hdr}" "${body}"
             return 1
@@ -197,11 +205,10 @@ fetch_pr_json() {
             wait=$((15 * attempt))
         fi
         [ "${wait}" -gt 300 ] && wait=300
-        [ $((waited + wait)) -gt "${max_total_wait}" ] && wait=$((max_total_wait - waited))
+        [ "${wait}" -gt $((deadline - SECONDS)) ] && wait=$((deadline - SECONDS))
         [ "${wait}" -lt 1 ] && wait=1
         log "GitHub API returned HTTP ${status} (rate limit remaining: ${remaining:-?}); retry ${attempt}/$((max_attempts - 1)) in ${wait}s" >&2
         sleep "${wait}"
-        waited=$((waited + wait))
         attempt=$((attempt + 1))
     done
 }
