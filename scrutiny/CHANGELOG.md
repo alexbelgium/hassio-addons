@@ -1,6 +1,6 @@
  
 ## v1.80.2 (2026-11-14)
-- README: document the Full Access workaround for SMART access to the Home Assistant OS boot disk (#3261)
+- README: document the Full Access workaround for SMART access to a disk Home Assistant OS uses itself, such as a moved data disk (#3261)
 - Update to latest version from Starosdev/scrutiny (changelog : https://github.com/Starosdev/scrutiny/releases)
  
 ## v1.80.1 (2026-11-07)
