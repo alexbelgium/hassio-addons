@@ -255,7 +255,8 @@ evidence, then resolve. **Push back when you're right**, on the thread, with the
 reply records the disagreement, and open threads only clutter the maintainer's merge queue. A bot
 reply posted inside an existing thread belongs to that thread; find it by any of its comment ids,
 not only the first. **Don't chase CHANGELOG nits**: act on a CHANGELOG comment only when a
-user-facing change has no entry at all. Format, wording, heading style or level of detail get a
+user-facing change has no entry at all, or the entry says something false (e.g. that settings are
+kept when they are not). Format, wording, heading style or level of detail get a
 one-line reply saying the entry stays as-is, then resolve — the churn annoys contributors more
 than the nit helps them. Judging the comments stays with the main model — a cheaper model tends to
 accept every objection, which is how a diff ratchets up (step 6).
