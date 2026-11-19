@@ -1,18 +1,30 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
+
 # Changelog
 
+## 2.17.1 (19-11-2026)
+
+- Update Nginx Proxy Manager to 2.17.1, includes nginx2root security backports (CVE-2026-123007 and related, <https://github.com/NginxProxyManager/nginx-proxy-manager/issues/6057>)
+- Fix SSL toggles resetting when requesting a new certificate on host creation
+- Re-add `forward_host` nginx variable
+- Warning: Certbot updated, DNS plugins may need dependency tweaks. Check DNS-challenge certificates after upgrading (<https://nginxproxymanager.com/certbot/>)
+
 ## 2.17.0 (12-11-2026)
+
 - Update Nginx Proxy Manager to 2.17.0
 - Pin the Nginx Proxy Manager base image to 2.17.0 instead of tracking :latest
 
 ## 2.14.1-1 (11-07-2026)
+
 - Persist Let's Encrypt certificates across restarts by symlinking /etc/letsencrypt to /data/letsencrypt (#2828) — thanks to @crazyrokr for reporting and suggesting the fix
 
 ## 2.14.1 (19-06-2026)
+
 - Fix startup failure on aarch64/HAos: "/usr/bin/env: 'bash': Permission denied" (#2777)
 - Add s6-overlay/env/with-contenv exec rules to AppArmor profile
 
 ## 2.14.0 (01-05-2026)
+
 - Initial release wrapping jc21/nginx-proxy-manager:latest
 - NPM Admin UI on port 81; HTTP on port 80; HTTPS on port 443
 - Configurable static file server via NPM's default_host nginx config
