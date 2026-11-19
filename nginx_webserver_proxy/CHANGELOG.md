@@ -1,6 +1,13 @@
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 # Changelog
 
+## 2.17.1 (19-11-2026)
+- Update Nginx Proxy Manager to 2.17.1
+- Includes upstream nginx2root security backports (CVE-2026-123007 and related) via the updated OpenResty base image (https://github.com/NginxProxyManager/nginx-proxy-manager/issues/6057)
+- Fix SSL toggles resetting to off when requesting a new certificate on host creation
+- Move nginx variables to their own include file and re-add the `forward_host` variable
+- Upstream release notes: https://github.com/NginxProxyManager/nginx-proxy-manager/releases/tag/v2.17.1
+
 ## 2.17.0 (12-11-2026)
 - Update Nginx Proxy Manager to 2.17.0
 - Pin the Nginx Proxy Manager base image to 2.17.0 instead of tracking :latest

@@ -1,4 +1,4 @@
-ARG BUILD_FROM=jc21/nginx-proxy-manager:2.17.0
+ARG BUILD_FROM=jc21/nginx-proxy-manager:2.17.1
 FROM ${BUILD_FROM}
 
 # NPM is Debian-based; install jq for options parsing + stub with-contenv if absent
