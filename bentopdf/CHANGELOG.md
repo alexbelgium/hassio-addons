@@ -1,4 +1,7 @@
  
+## 2.8.12 (2026-11-21)
+- Update to latest version from alam00000/bentopdf (changelog : https://github.com/alam00000/bentopdf/releases)
+ 
 ## 2.8.11 (2026-11-06)
 - Update to latest version from alam00000/bentopdf (changelog : https://github.com/alam00000/bentopdf/releases)
  
