@@ -1,3 +1,6 @@
+ 
+## 5.0.0.2997 (2026-11-21)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
 ## 5.0.0.2941.1 (2026-11-17)
 
 - Security: warn in the startup log and README when `connection_mode` is `ingress_noauth` while port 8989 is published. No default changed.
