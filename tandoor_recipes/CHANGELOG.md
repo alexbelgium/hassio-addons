@@ -1,3 +1,6 @@
+ 
+## 2.7.6 (2026-11-21)
+- Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 ## 2.7.3.1 (2026-11-17)
 
 - SECRET_KEY, AI_API_KEY and POSTGRES_PASSWORD are no longer printed in the startup log
