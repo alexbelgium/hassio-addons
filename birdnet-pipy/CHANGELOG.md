@@ -1,7 +1,4 @@
  
-## 0.8.13 (2026-11-21)
-- Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
- 
 ## 0.8.12 (2026-11-03)
 - Update to latest version from Suncuss/BirdNET-PiPy (changelog : https://github.com/Suncuss/BirdNET-PiPy/releases)
 - Fixes MQTT notifications (and recording) stopping after a few hundred MQTT messages
