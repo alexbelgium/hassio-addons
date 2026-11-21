@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="15-vectorchord1.1.1-pgvector0.8.5"
+ARG BUILD_UPSTREAM="15-vectorchord1.1.1-pgvector0.8.7"
 FROM ${BUILD_FROM}:${BUILD_UPSTREAM}
 
 ##################
