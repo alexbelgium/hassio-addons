@@ -1,4 +1,7 @@
  
+## 0.154.3 (2026-11-21)
+- Update to latest version from manyfold3d/manyfold (changelog : https://github.com/manyfold3d/manyfold/releases)
+ 
 ## 0.154.2 (2026-11-16)
 - Update to latest version from manyfold3d/manyfold (changelog : https://github.com/manyfold3d/manyfold/releases)
  
