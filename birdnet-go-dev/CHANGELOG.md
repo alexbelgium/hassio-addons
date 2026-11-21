@@ -1,3 +1,6 @@
+## 20261121 (21-11-2026)
+- Rebuild against the latest upstream BirdNET-Go main. The first-daily-bird consensus PR (#63) conflicted with main on the Filter settings page; it is now rebuilt as linear commits on top of main
+
 ## 20261118 (18-11-2026)
 - Rebuild against the latest upstream BirdNET-Go main. The species-workspace PR, which broke the 17-11 rebuild (`scientificNameLikeEscaper` was removed upstream), compiles again
 - Build: retry the GitHub API query for open fork PRs on HTTP 403/429/5xx, waiting for the rate-limit reset when GitHub gives one. The 18-11 build failed on an unauthenticated rate-limit 403 from the shared runner IP
