@@ -1,3 +1,6 @@
+ 
+## 17.9.8 (2026-11-21)
+- Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
 ## 17.9.7.1 (2026-11-17)
 
 - Security: warn in the startup log and README while `OPENPROJECT_SECRET_KEY_BASE` is still the shipped default. No default changed.
