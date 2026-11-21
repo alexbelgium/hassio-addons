@@ -10,7 +10,7 @@
 #               /`
 #=== Home Assistant Addon ===#
 
-ARG BUILD_UPSTREAM="3.8.53"
+ARG BUILD_UPSTREAM="3.8.54"
 
 #################
 # 1 Build Image #
