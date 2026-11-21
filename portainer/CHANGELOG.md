@@ -1,3 +1,6 @@
+ 
+## 2.45.4 (2026-11-21)
+- Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 ## 2.45.3.1 (2026-11-17)
 
 - Security: warn in the startup log and README while `password` is still the shipped default. No default changed.
