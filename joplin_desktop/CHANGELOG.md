@@ -1,4 +1,7 @@
  
+## 3.7.24 (2026-11-21)
+- Update to latest version from linuxserver/docker-joplin (changelog : https://github.com/linuxserver/docker-joplin/releases)
+ 
 ## 3.7.22 (2026-10-31)
 - Update to latest version from linuxserver/docker-joplin (changelog : https://github.com/linuxserver/docker-joplin/releases)
 
