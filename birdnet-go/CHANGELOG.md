@@ -1,4 +1,7 @@
  
+## 20261122 (2026-11-22)
+- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
+ 
 ## 20261031.3 (2026-11-07)
 - Re-apply the changes below: they were reverted because the birdnet-go-dev image build hit a merge conflict in the fork (BSG-BAT is now provided by upstream; fork PR #82 is BatDetect2-only)
 ## 20261031.2 (2026-11-07)
