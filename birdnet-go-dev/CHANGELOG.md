@@ -1,6 +1,3 @@
- 
-## 20261122 (2026-11-22)
-- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 ## 20261121 (21-11-2026)
 - Rebuild against the latest upstream BirdNET-Go main. The first-daily-bird consensus PR (#63) conflicted with main on the Filter settings page; it is now rebuilt as linear commits on top of main
 
