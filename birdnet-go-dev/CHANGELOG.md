@@ -1,3 +1,6 @@
+## 20261122 (22-11-2026)
+- Rebuild against the latest upstream BirdNET-Go main (30 new commits). Four fork PRs conflicted with main and were updated: #57 and #79 (dashboard summary), #62 (reanalyze button, which also needed a duplicate import removed) and #63 (first-daily consensus test imports). All open PRs merge and the combined tree compiles
+
 ## 20261121 (21-11-2026)
 - Rebuild against the latest upstream BirdNET-Go main. The first-daily-bird consensus PR (#63) conflicted with main on the Filter settings page; it is now rebuilt as linear commits on top of main
 
