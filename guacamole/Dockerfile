@@ -44,7 +44,7 @@ RUN \
     \
     # Allow syslog
     && mkdir -p /tmpsock \
-    && python3 -c "import socket as s; sock = s.socket(s.AF_UNIX); sock.bind('/tmpsock/syslog')" \
+    && perl -MSocket -e 'socket(S, AF_UNIX, SOCK_STREAM, 0) or die $!; bind(S, pack_sockaddr_un("/tmpsock/syslog")) or die $!' \
     && sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /tmpsock/syslog|g" /etc/s6-overlay/s6-rc.d/syslogd/run \
     \
     # Allow custom fonts
