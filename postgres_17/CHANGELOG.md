@@ -1,3 +1,7 @@
+ 
+## 17.10.1.2 (2026-11-22)
+- Update to latest version from ghcr.io/immich-app/postgres
+- Upstream tag : 17-vectorchord1.1.1-pgvector0.8.7
 ## 17.10.1.1 (2026-11-17)
 
 - Security: warn in the startup log and README while `POSTGRES_PASSWORD` is still the shipped default. No default changed.
