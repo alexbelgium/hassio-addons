@@ -6,15 +6,22 @@ OPTIONS=/data/options.json
 if [ -f "$OPTIONS" ]; then
     folder=$(node -e 'const o = require(process.argv[1]); process.stdout.write(o.download_folder || "")' "$OPTIONS")
     if [ -n "$folder" ]; then
-        export DOWNLOAD_FOLDER="$folder"
+        export LIBRARY_FOLDER="$folder"
     fi
 fi
 
-# Aurral reads WEEKLY_FLOW_FOLDER as a deprecated alias for DOWNLOAD_FOLDER that
-# takes precedence over it, so it must not be set. Flows go to a subfolder of
-# the download folder
-unset WEEKLY_FLOW_FOLDER
+# The add-on keeps its data in /config/data (AURRAL_DATA_DIR). Installs that
+# first started on the 3.0.1 add-on have their database in /config instead.
+# Keep using it there rather than starting with an empty database
+if [ -f /config/aurral.db ]; then
+    if [ -f "${AURRAL_DATA_DIR}/aurral.db" ]; then
+        echo "[warn] Found databases in both ${AURRAL_DATA_DIR} and /config. Using ${AURRAL_DATA_DIR}. Remove /config/aurral.db if you do not need it"
+    else
+        echo "[info] Using the database in /config"
+        export AURRAL_DATA_DIR=/config
+    fi
+fi
 
-mkdir -p /config/data
-mkdir -p "${DOWNLOAD_FOLDER}"
+mkdir -p "${AURRAL_DATA_DIR}"
+mkdir -p "${LIBRARY_FOLDER}"
 exec "$@"

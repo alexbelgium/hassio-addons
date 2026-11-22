@@ -14,9 +14,9 @@ profile aurral flags=(attach_disconnected,mediate_deleted) {
   /run/{s6,s6-rc*,fix-attrs.d}/** ix,
 
   /share/aurral/** rwk,
-  /media/** rk,
+  /media/** rwk,
   /app/** rwk,
-  /config/aurral/** rwk,
+  /config/** rwk,
 
   deny /proc/*/net/if_inet6 r,
   deny /proc/*/net/ipv6_route r,
