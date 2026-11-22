@@ -1,6 +1,6 @@
 # Aurral
 
-[Aurral](https://github.com/lklynet/aurral) is a self-hosted music discovery, request management, flows, and playlist importing app for Lidarr with library-aware recommendations.
+[Aurral](https://github.com/lklynet/aurral) finds new music, gets it, and plays it, all on your own server. It has library-aware recommendations, requests, flows, and playlist imports.
 This addon is based on the docker image <https://github.com/lklynet/aurral>
 
 ## Configuration
@@ -17,7 +17,7 @@ Read the [Aurral 3.0 release notes](https://github.com/lklynet/aurral/releases/t
 
 - Your data stays where it is.
 - On first start, Aurral saves copies of the database as `aurral.pre-job-queue.db` and, if Lidarr ran your library, `aurral.pre-lidarr-conversion.db`. They are only needed to roll back to 2.x. Delete them once 3.0 works for you, so that your backups stay small.
-- Lidarr mode and Last.fm are gone. Aurral takes over a Lidarr library on first start. Set up the Lidarr plugin in **Settings > Plugins** to download through Lidarr again.
+- Lidarr mode and Last.fm are gone. Aurral takes over a Lidarr library on first start. To download through Lidarr again, set up the Lidarr plugin in **Settings > Plugins**. It only downloads whole albums that you request. Single tracks, playlist tracks and flow tracks need another download source, such as the built-in yt-dlp or slskd. See [Lidarr](https://docs.aurral.org/integrations/lidarr/).
 
 ## Installation
 

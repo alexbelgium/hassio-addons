@@ -10,7 +10,7 @@ ARG BUILD_ARCH
 
 LABEL \
     io.hass.name="Aurral" \
-    io.hass.description="Self-hosted music discovery and request management for Lidarr" \
+    io.hass.description="Self-hosted music discovery, requests, and playback" \
     io.hass.arch="${BUILD_ARCH}" \
     io.hass.type="addon" \
     io.hass.version="${BUILD_VERSION}" \

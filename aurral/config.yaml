@@ -2,8 +2,8 @@ name: Aurral
 version: "3.0.1.1"
 slug: aurral
 description: >-
-  Self-hosted music discovery, request management, flows, and playlist
-  importing for Lidarr with library-aware recommendations.
+  Self-hosted music discovery, requests, flows, playlist imports, and
+  playback with library-aware recommendations.
 url: https://github.com/alexbelgium/hassio-addons/blob/master/aurral/README.md
 arch:
   - aarch64
