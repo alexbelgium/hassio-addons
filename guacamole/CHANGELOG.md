@@ -1,3 +1,6 @@
+## 1.6.0-bullseye-5 (2026-11-22)
+- Ingress: focus the add-on when its page loads in the sidebar panel, so keys go to the remote session instead of Home Assistant shortcuts (#3274)
+
 ## 1.6.0-bullseye-4 (24-09-2026)
 - Ingress: new `login_with_ha_user` option to sign in with your Home Assistant username instead of always `guacadmin` (#3087)
 - Startup log and README warn when the `auth-header` extension is enabled while port 8080 is published, since that port bypasses Ingress and lets anyone log in as any user
