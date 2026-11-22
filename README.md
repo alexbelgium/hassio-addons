@@ -90,7 +90,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003;  [Aurral](aurral/) : Self-hosted music discovery, request management, flows, and playlist importing for Lidarr with library-aware recommendations.
+&#10003;  [Aurral](aurral/) : Self-hosted music discovery, requests, flows, playlist imports, and playback with library-aware recommendations.
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faurral%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faurral%2Fupdater.json)
