@@ -8,7 +8,16 @@ This addon is based on the docker image <https://github.com/lklynet/aurral>
 | Option | Default | Description |
 |---|---|---|
 | `download_folder` | `/share/aurral/downloads` | Path where Aurral writes its downloads, including flows (in a subfolder). Can be under `/share` or `/media`. |
-| `weekly_flow_folder` | `weekly-flow` | No effect: Aurral keeps flows in its own subfolder of `download_folder`. Kept for compatibility. |
+
+Aurral's data is in `/addon_configs/xxxxxxxx_aurral/data`, or directly in `/addon_configs/xxxxxxxx_aurral` for installs that first started on 3.0.1. Set the Library folder, read-only folders and other paths under `/media` or `/share`.
+
+## Upgrading to 3.0
+
+Read the [Aurral 3.0 release notes](https://github.com/lklynet/aurral/releases/tag/v3.0.0) first. In short:
+
+- Your data stays where it is.
+- On first start, Aurral saves copies of the database as `aurral.pre-job-queue.db` and, if Lidarr ran your library, `aurral.pre-lidarr-conversion.db`. They are only needed to roll back to 2.x. Delete them once 3.0 works for you, so that your backups stay small.
+- Lidarr mode and Last.fm are gone. Aurral takes over a Lidarr library on first start. Set up the Lidarr plugin in **Settings > Plugins** to download through Lidarr again.
 
 ## Installation
 
@@ -19,6 +28,6 @@ This addon is based on the docker image <https://github.com/lklynet/aurral>
 2. Install this add-on.
 3. Click the `Save` button to store your configuration.
 4. Set the `download_folder` option to your preferred path.
-6. Start the add-on.
-7. Check the logs of the add-on to see if everything went well.
-8. Open the webUI and complete onboarding.
+5. Start the add-on.
+6. Check the logs of the add-on to see if everything went well.
+7. Open the webUI and complete onboarding.

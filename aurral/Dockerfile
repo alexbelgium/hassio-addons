@@ -16,21 +16,25 @@ LABEL \
     io.hass.version="${BUILD_VERSION}" \
     maintainer="petruknw"
 
-ENV DOWNLOAD_FOLDER=/share/aurral/downloads
+# Aurral 3 reads LIBRARY_FOLDER; DOWNLOAD_FOLDER is a deprecated alias.
+# The entrypoint replaces this default with the download_folder option
+ENV LIBRARY_FOLDER=/share/aurral/downloads
 
 # The add-on keeps its database in /config/data. Aurral 3 only looks in /config
 # unless told otherwise, and exits when it finds the database in the old
-# /app/backend/data path, so point it at /config/data explicitly
+# /app/backend/data path, so point it at /config/data explicitly. The entrypoint
+# keeps using /config when the database is already there
 ENV AURRAL_DATA_DIR=/config/data
 
-# Replace the upstream data/downloads dirs with symlinks into HA persistent storage.
-# Must be done at build time — the dirs are owned by a non-root user at runtime.
-RUN rm -rf /app/backend/data && ln -s /config/data /app/backend/data \
- && rm -rf /app/downloads && ln -s /share/aurral/downloads /app/downloads
+# Browse folders defaults to /data, which in an add-on is its private storage.
+# Offer the folders that hold music instead
+ENV FILE_BROWSE_ROOTS=/media,/share
 
 COPY rootfs /
 
 RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["node", "backend/server.ts"]
+# Same init and command as the upstream image. tini reaps the yt-dlp and ffmpeg
+# child processes and passes the stop signal on to node
+ENTRYPOINT ["tini", "-s", "--", "/usr/local/bin/docker-entrypoint.sh"]
+CMD ["node", "--max-semi-space-size=4", "backend/server.ts"]

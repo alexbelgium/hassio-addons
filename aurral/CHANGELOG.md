@@ -2,6 +2,13 @@
 ## 3.0.1.1 (2026-11-23)
 
 - Fix startup failure (`Aurral's database is in /app/backend/data, but Aurral 3 only reads /config`): set `AURRAL_DATA_DIR=/config/data`, where the add-on keeps its data. Existing data stays where it is
+- Set `LIBRARY_FOLDER` instead of `DOWNLOAD_FOLDER`, which Aurral 3 has deprecated
+- Start through `tini` with upstream's node flags, as the upstream image does
+- Remove the `weekly_flow_folder` option, which has had no effect since 2.10.0.1, and the unused `/app/backend/data` and `/app/downloads` symlinks
+- Keep using the database in `/config` for installs that first started on 3.0.1
+- Show `/media` and `/share` in **Browse folders** instead of the add-on's private `/data`
+- README: notes on upgrading to 3.0
+- AppArmor: allow writes to `/config` and `/media`, where the data and download folders live
 
 ## 3.0.1 (2026-11-21)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
