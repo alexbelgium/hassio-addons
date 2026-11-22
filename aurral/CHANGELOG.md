@@ -1,4 +1,8 @@
  
+## 3.0.1.1 (2026-11-23)
+
+- Fix startup failure (`Aurral's database is in /app/backend/data, but Aurral 3 only reads /config`): set `AURRAL_DATA_DIR=/config/data`, where the add-on keeps its data. Existing data stays where it is
+
 ## 3.0.1 (2026-11-21)
 - Update to latest version from lklynet/aurral (changelog : https://github.com/lklynet/aurral/releases)
  

@@ -18,6 +18,11 @@ LABEL \
 
 ENV DOWNLOAD_FOLDER=/share/aurral/downloads
 
+# The add-on keeps its database in /config/data. Aurral 3 only looks in /config
+# unless told otherwise, and exits when it finds the database in the old
+# /app/backend/data path, so point it at /config/data explicitly
+ENV AURRAL_DATA_DIR=/config/data
+
 # Replace the upstream data/downloads dirs with symlinks into HA persistent storage.
 # Must be done at build time — the dirs are owned by a non-root user at runtime.
 RUN rm -rf /app/backend/data && ln -s /config/data /app/backend/data \
