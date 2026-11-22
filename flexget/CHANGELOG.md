@@ -1,3 +1,6 @@
+ 
+## 3.22.13 (2026-11-22)
+- Update to latest version from wiserain/flexget
 ## 3.22.12.1 (2026-11-17)
 
 - Security: warn in the startup log and README while `WebuiPass` is still the shipped default. No default changed.
