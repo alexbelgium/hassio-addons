@@ -1,3 +1,6 @@
+ 
+## 9.19.0 (2026-11-22)
+- Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 ## 9.18.0.1 (2026-11-17)
 
 - PASSWORD: the abc account password is no longer deleted before being set, so a failure keeps the previous password instead of leaving the account without one
