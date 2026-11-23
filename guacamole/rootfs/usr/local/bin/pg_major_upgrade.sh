@@ -143,27 +143,23 @@ upgrade() {
     for file in "$WORK"/old/*.conf; do
         [ ! -f "$file" ] || cp -p "$file" "$WORK/new/" || return 1
     done
-    # Files the configuration names by their path in the old directory (an include, say) are read
-    # from there by the check below, but would be gone once that directory is renamed
-    while IFS= read -r file; do
-        if [ -f "$file" ] && [ ! -f "$WORK/new/${file#"$PGDATA/"}" ]; then
-            log "The cluster's configuration uses $file, which is not carried over by the upgrade: name it *.conf directly in $PGDATA, or keep it outside"
-            return 1
-        fi
-    done < <(grep -ho "'$PGDATA/[^']*'" "$WORK"/new/*.conf | tr -d "'")
-    # The check below runs with its own access rules, so those of the cluster are checked here:
-    # a file left in the old directory would be gone once it is renamed
-    for setting in hba_file ident_file; do
-        file="$("${AS_PG[@]}" "$nb/postgres" -D "$WORK/new" -C "$setting")" || return 1
-        # A file in $PGDATA must have been carried over, to where the same path finds it after the swap
-        if [ ! -f "$file" ] || { [[ "$file" == "$PGDATA/"* ]] && [ ! -f "$WORK/new/${file#"$PGDATA/"}" ]; }; then
-            log "The cluster's $setting ($file) would not be found after the upgrade: name it *.conf directly in $PGDATA, or keep it outside"
-            return 1
-        fi
-    done
 
     log "Starting PostgreSQL $NEW to check the upgraded cluster"
     server "$nb" "$WORK/new" start || return 1
+    # Every file the configuration uses must be where the same path finds it after the swap: in
+    # the upgraded cluster or outside the old directory, which is renamed. The server lists the
+    # files it read (includes resolved, comments ignored); it runs with its own access rules, so
+    # the cluster's are asked for separately
+    q "$nb" template1 -c "SELECT DISTINCT sourcefile FROM pg_file_settings WHERE sourcefile IS NOT NULL" > "$SOCK/files" || return 1
+    for setting in hba_file ident_file; do
+        "${AS_PG[@]}" "$nb/postgres" -D "$WORK/new" -C "$setting" >> "$SOCK/files" || return 1
+    done
+    while IFS= read -r file; do
+        if [ ! -f "$file" ] || { [[ "$file" == "$PGDATA/"* ]] && [ ! -f "$WORK/new/${file#"$PGDATA/"}" ]; }; then
+            log "The cluster's configuration uses $file, which would not be found after the upgrade: name it *.conf directly in $PGDATA, or keep it outside"
+            return 1
+        fi
+    done < "$SOCK/files"
     # Indexes on text are rebuilt in case the collation of the C library changed since they were
     # built, and the planner statistics, which pg_upgrade does not carry over, are collected
     "${AS_PG[@]}" "$nb/reindexdb" --all -h "$SOCK" -p "$PORT" -U "$SUPERUSER" -q > "$SOCK/reindex.log" 2>&1 || return 1
