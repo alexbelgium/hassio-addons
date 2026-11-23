@@ -143,6 +143,14 @@ upgrade() {
     for file in "$WORK"/old/*.conf; do
         [ ! -f "$file" ] || cp -p "$file" "$WORK/new/" || return 1
     done
+    # Files the configuration names by their path in the old directory (an include, say) are read
+    # from there by the check below, but would be gone once that directory is renamed
+    while IFS= read -r file; do
+        if [ -f "$file" ] && [ ! -f "$WORK/new/${file#"$PGDATA/"}" ]; then
+            log "The cluster's configuration uses $file, which is not carried over by the upgrade: name it *.conf directly in $PGDATA, or keep it outside"
+            return 1
+        fi
+    done < <(grep -ho "'$PGDATA/[^']*'" "$WORK"/new/*.conf | tr -d "'")
     # The check below runs with its own access rules, so those of the cluster are checked here:
     # a file left in the old directory would be gone once it is renamed
     for setting in hba_file ident_file; do
