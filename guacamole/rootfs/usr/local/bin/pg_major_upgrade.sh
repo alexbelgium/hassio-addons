@@ -156,6 +156,7 @@ upgrade() {
         "${AS_PG[@]}" "$nb/postgres" -D "$WORK/new" -C "$setting" >> "$SOCK/files" || return 1
     done
     while IFS= read -r file; do
+        [[ "$file" != /* ]] || file="$(realpath -m -- "$file")"
         if [[ "$file" == "$PGDATA/"* ]] && [ -e "$file" ] && [ ! -e "$WORK/new/${file#"$PGDATA/"}" ]; then
             log "The cluster's configuration uses $file, which would not be found after the upgrade: name it *.conf directly in $PGDATA, or keep it outside"
             return 1
