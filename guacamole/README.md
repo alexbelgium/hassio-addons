@@ -85,10 +85,11 @@ Notes:
 
 The addon automatically configures a PostgreSQL database for storing Guacamole configurations, users, and connections. The database files are stored in `/config/postgres` and are automatically created on first startup.
 
-The database uses PostgreSQL 17. A database from an earlier version of the add-on (PostgreSQL 13) is upgraded automatically at startup:
+The database uses PostgreSQL 18. A database from an earlier version of the add-on (PostgreSQL 13) is upgraded in place at the first start, by the upstream image ([details](https://github.com/abesnier/docker-guacamole/blob/master/UPGRADE.md)):
 
-- The upgrade runs on a copy. `/config/postgres` is only replaced once the upgraded copy has started and holds the same rows. The previous database is then kept as `/config/postgres.pg13.<date>.bak`; the startup log reminds you of it until you delete it.
-- If the upgrade fails, the add-on keeps running on the unchanged PostgreSQL 13 database, logs why (details in `/config/postgres.upgrade_logs`), and tries again at the next start.
+- The upgrade downloads the PostgreSQL 13 server for the duration of the upgrade, so the first start needs internet access and takes longer than usual. Do not stop the add-on while it runs.
+- The upgraded database replaces `/config/postgres` only once `pg_upgrade` and a full reindex have succeeded. The previous database is kept as `/config/postgres.pg13.bak`; delete it once everything works. Upgrade logs are in `/config/pg_upgrade_logs`.
+- If the upgrade fails, `/config/postgres` is left unchanged, but the add-on cannot use it until the upgrade succeeds: fix the cause shown in the log and restart the add-on.
 - Make a backup of the add-on before updating: an earlier version of the add-on cannot read the upgraded database, so going back means restoring that backup.
 
 ### Custom Scripts and Environment Variables
