@@ -16,7 +16,8 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+ARG BUILD_UPSTREAM="1.6.0"
+FROM ${BUILD_FROM}:${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #
@@ -39,8 +40,7 @@ RUN \
     && sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
     \
     # avoid error
-    && sed -i 's|(cat /config/\.database-version)|(cat /config/\.database-version \&>/dev/null)|g' /etc/cont-init.d/* \
-    && sed -i 's|(cat /config/\.database-version)|(cat /config/\.database-version \&>/dev/null)|g' /etc/services.d/*/run \
+    && sed -i 's|(cat /config/\.database-version)|(cat /config/\.database-version 2>/dev/null)|g' /etc/services.d/*/run \
     \
     # Allow syslog
     && mkdir -p /tmpsock \

@@ -1,3 +1,8 @@
+## 1.6.0.1 (2026-11-23)
+- Upstream image: build from the maintained `abesnier/guacamole:1.6.0` tag instead of the floating `latest`, and let the updater follow plain `X.Y.Z` releases instead of the discontinued `-bullseye` tags (#3278). The database is still PostgreSQL 13
+- Startup: remove dead code for a port 80/SSL server and a `SUBFOLDER` variable that this add-on and image never use
+- Fix the redirect meant to silence the `.database-version` read error: the upstream service scripts run under `sh` (dash), where `&>` does not redirect
+
 ## 1.6.0-bullseye-5 (2026-11-22)
 - Ingress: focus the add-on when its page loads in the sidebar panel, so keys go to the remote session instead of Home Assistant shortcuts (#3274)
 - Build: create the syslog socket with perl, since the upstream image (now Ubuntu 22.04) no longer ships python3
