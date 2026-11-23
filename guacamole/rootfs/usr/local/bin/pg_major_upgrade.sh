@@ -147,8 +147,9 @@ upgrade() {
     # a file left in the old directory would be gone once it is renamed
     for setting in hba_file ident_file; do
         file="$("${AS_PG[@]}" "$nb/postgres" -D "$WORK/new" -C "$setting")" || return 1
-        if [ ! -f "$file" ] || [[ "$file" == "$PGDATA/"*/* ]]; then
-            log "The cluster's $setting ($file) would not be found after the upgrade: keep it directly in $PGDATA, or outside it"
+        # A file in $PGDATA must have been carried over, to where the same path finds it after the swap
+        if [ ! -f "$file" ] || { [[ "$file" == "$PGDATA/"* ]] && [ ! -f "$WORK/new/${file#"$PGDATA/"}" ]; }; then
+            log "The cluster's $setting ($file) would not be found after the upgrade: name it *.conf directly in $PGDATA, or keep it outside"
             return 1
         fi
     done
@@ -161,7 +162,8 @@ upgrade() {
     "${AS_PG[@]}" "$nb/vacuumdb" --all --analyze-only -h "$SOCK" -p "$PORT" -U "$SUPERUSER" -q > "$SOCK/vacuum.log" 2>&1 || return 1
     snapshot "$nb" > "$SOCK/rows.after" || return 1
     server "$nb" "$WORK/new" stop || return 1
-    if ! diff <(LC_ALL=C sort "$SOCK/rows.before") <(LC_ALL=C sort "$SOCK/rows.after") > "$SOCK/rows.diff"; then
+    LC_ALL=C sort -o "$SOCK/rows.before" "$SOCK/rows.before" && LC_ALL=C sort -o "$SOCK/rows.after" "$SOCK/rows.after" || return 1
+    if ! diff "$SOCK/rows.before" "$SOCK/rows.after" > "$SOCK/rows.diff"; then
         log "The upgraded cluster does not hold the same rows as the original:"
         head -n 20 "$SOCK/rows.diff"
         return 1
