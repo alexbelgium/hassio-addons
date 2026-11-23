@@ -85,6 +85,12 @@ Notes:
 
 The addon automatically configures a PostgreSQL database for storing Guacamole configurations, users, and connections. The database files are stored in `/config/postgres` and are automatically created on first startup.
 
+The database uses PostgreSQL 17. A database from an earlier version of the add-on (PostgreSQL 13) is upgraded automatically at startup:
+
+- The upgrade runs on a copy. `/config/postgres` is only replaced once the upgraded copy has started and holds the same rows. The previous database is then kept as `/config/postgres.pg13.<date>.bak`; the startup log reminds you of it until you delete it.
+- If the upgrade fails, the add-on keeps running on the unchanged PostgreSQL 13 database, logs why (details in `/config/postgres.upgrade_logs`), and tries again at the next start.
+- Make a backup of the add-on before updating: an earlier version of the add-on cannot read the upgraded database, so going back means restoring that backup.
+
 ### Custom Scripts and Environment Variables
 
 This addon supports custom scripts and environment variables through the `app_config` mapping:

@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="1.6.0"
+ARG BUILD_UPSTREAM="1.6.0-pg17"
 FROM ${BUILD_FROM}:${BUILD_UPSTREAM}
 
 ##################
@@ -61,6 +61,16 @@ RUN \
 # Add rootfs
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
+
+# PostgreSQL 13, the version of earlier releases of this add-on: their databases are upgraded at
+# startup, and served as they are if that fails. The build then upgrades a test database with
+# the script the add-on runs, so packages that no longer fit together fail here
+# hadolint ignore=DL3008
+RUN sed -i 's/^#\?create_main_cluster.*/create_main_cluster = false/' /etc/postgresql-common/createcluster.conf \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends postgresql-13 \
+    && rm -rf /var/lib/apt/lists/* \
+    && /usr/local/bin/pg_upgrade_selftest.sh
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005

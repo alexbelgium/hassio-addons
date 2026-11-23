@@ -1,3 +1,7 @@
+## 1.6.0.2 (2026-11-23)
+- ⚠ PostgreSQL 13 -> 17: the database is upgraded automatically at the first start (#3278), as upstream stops updating its PostgreSQL 13 images in January 2027. The upgrade works on a copy, which only replaces `/config/postgres` once it holds the same rows; the PostgreSQL 13 database is kept next to it as `/config/postgres.pg13.<date>.bak` (delete it once everything is there). If the upgrade fails, nothing is changed, the add-on keeps running on PostgreSQL 13 and tries again at the next start. Making a backup of the add-on before updating is still recommended
+- Going back to an earlier version of the add-on after this one needs the backup taken before the update: earlier versions cannot read a PostgreSQL 17 database
+
 ## 1.6.0.1 (2026-11-23)
 - Upstream image: build from the maintained `abesnier/guacamole:1.6.0` tag instead of the floating `latest`, and let the updater follow plain `X.Y.Z` releases instead of the discontinued `-bullseye` tags (#3278). The database is still PostgreSQL 13
 - Startup: remove dead code for a port 80/SSL server and a `SUBFOLDER` variable that this add-on and image never use
