@@ -62,16 +62,6 @@ RUN \
 COPY rootfs/ /
 RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish" \) -print -exec chmod +x {} \;
 
-# PostgreSQL 13, the version of earlier releases of this add-on: their databases are upgraded at
-# startup, and served as they are if that fails. The build then upgrades a test database with
-# the script the add-on runs, so packages that no longer fit together fail here
-# hadolint ignore=DL3008
-RUN sed -i 's/^#\?create_main_cluster.*/create_main_cluster = false/' /etc/postgresql-common/createcluster.conf \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends postgresql-13 \
-    && rm -rf /var/lib/apt/lists/* \
-    && /usr/local/bin/pg_upgrade_selftest.sh
-
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
@@ -90,6 +80,16 @@ ENV PACKAGES="nginx"
 # Automatic apps & bashio
 COPY ha_autoapps.sh /ha_autoapps.sh
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+
+# PostgreSQL 13, the version of earlier releases of this add-on: their databases are upgraded at
+# startup, and served as they are if that fails. The build then upgrades a test database with
+# the script the add-on runs, so packages that no longer fit together fail here
+# hadolint ignore=DL3008
+RUN sed -i 's/^#\?create_main_cluster.*/create_main_cluster = false/' /etc/postgresql-common/createcluster.conf \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends postgresql-13 \
+    && rm -rf /var/lib/apt/lists/* \
+    && /usr/local/bin/pg_upgrade_selftest.sh
 
 ################
 # 4 Entrypoint #

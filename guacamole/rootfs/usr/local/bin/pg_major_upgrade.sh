@@ -54,13 +54,14 @@ snapshot() {
     while IFS= read -r db; do
         printf '%s\n' "SELECT format('SELECT %L, %L, count(*) FROM %I.%I', current_database(), n.nspname || '.' || c.relname, n.nspname, c.relname)
             FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
-            WHERE c.relkind IN ('r', 'm') AND n.nspname NOT IN ('pg_catalog', 'information_schema') AND n.nspname NOT LIKE 'pg_toast%'
+            WHERE c.relkind = 'r' AND n.nspname NOT IN ('pg_catalog', 'information_schema') AND n.nspname NOT LIKE 'pg_toast%'
             ORDER BY 1" '\gexec' | q "$1" "$db" -F '|' || return 1
     done < "$SOCK/databases"
 }
 
-sysid() {
-    "${AS_PG[@]}" "$BIN/$NEW/bin/pg_controldata" "$1" 2> /dev/null | sed -n 's/^Database system identifier: *//p'
+# control <major> <datadir> <field>: a field of pg_controldata, empty when it cannot be read
+control() {
+    "${AS_PG[@]}" "$BIN/$1/bin/pg_controldata" "$2" 2> /dev/null | sed -n "s/^$3: *//p"
 }
 
 # Put the upgraded cluster in place. Renames only, safe to run again after an interruption at
@@ -68,7 +69,7 @@ sysid() {
 # backup directory, and the work directory only goes once that very cluster is in $PGDATA.
 finish_swap() {
     local old id bak
-    read -r old id bak < "$WORK/READY" || return 1
+    read -r old id bak _ < "$WORK/READY" || return 1
     [ -n "$old" ] && [ -n "$id" ] && [ -n "$bak" ] || return 1
     if [ -d "$WORK/new" ] && [ -d "$PGDATA" ] && [ ! -e "$bak" ] && [ "$(cat "$PGDATA/PG_VERSION" 2> /dev/null)" = "$old" ]; then
         mv -T "$PGDATA" "$bak" || return 1
@@ -79,7 +80,7 @@ finish_swap() {
     fi
     # Anything else in $PGDATA (a cluster created meanwhile, the old one put back) stops here,
     # with both copies kept
-    if [ -e "$WORK/new" ] || [ "$(cat "$PGDATA/PG_VERSION" 2> /dev/null)" != "$NEW" ] || [ "$(sysid "$PGDATA")" != "$id" ]; then
+    if [ -e "$WORK/new" ] || [ "$(cat "$PGDATA/PG_VERSION" 2> /dev/null)" != "$NEW" ] || [ "$(control "$NEW" "$PGDATA" "Database system identifier")" != "$id" ]; then
         return 1
     fi
     sync
@@ -87,7 +88,7 @@ finish_swap() {
 }
 
 upgrade() {
-    local old="$1" ob="$BIN/$1/bin" nb="$BIN/$NEW/bin" need avail datadir file id
+    local old="$1" ob="$BIN/$1/bin" nb="$BIN/$NEW/bin" need avail datadir file id origin setting
     local -a initdb_args
 
     # cp keeps a symlink a symlink: a tablespace or a WAL directory outside the cluster would
@@ -103,6 +104,9 @@ upgrade() {
         return 1
     fi
 
+    # Which state of the cluster the copy is of: an interrupted upgrade is only finished while
+    # the cluster is still in that state
+    origin="$(control "$old" "$PGDATA" "Database system identifier") $(control "$old" "$PGDATA" "Latest checkpoint location")"
     log "Copying the cluster ($((need / 1024)) MB) to $WORK/old"
     cp -a --reflink=auto "$PGDATA" "$WORK/old" || return 1
     rm -f "$WORK/old/postmaster.pid"
@@ -121,27 +125,33 @@ upgrade() {
     # The old server on the copy: recovers it if it was not shut down cleanly, and counts its rows
     server "$ob" "$WORK/old" start || return 1
     snapshot "$ob" > "$SOCK/rows.before" || return 1
-    read -r -a initdb_args < <(q "$ob" template1 -F ' ' -c "SELECT '--encoding=' || pg_encoding_to_char(encoding), '--lc-collate=' || datcollate, '--lc-ctype=' || datctype FROM pg_database WHERE datname = 'template1'") || return 1
+    mapfile -t initdb_args < <(q "$ob" template1 -c "SELECT unnest(ARRAY['--encoding=' || pg_encoding_to_char(encoding), '--lc-collate=' || datcollate, '--lc-ctype=' || datctype]) FROM pg_database WHERE datname = 'template1'")
+    [ "${#initdb_args[@]}" = 3 ] || return 1
     server "$ob" "$WORK/old" stop || return 1
 
     initdb_args+=(-U "$SUPERUSER" -D "$WORK/new")
-    if [ "$("${AS_PG[@]}" "$ob/pg_controldata" "$WORK/old" | sed -n 's/^Data page checksum version: *//p')" != 0 ]; then
-        initdb_args+=(--data-checksums)
-    elif [ "$NEW" -ge 18 ]; then
-        initdb_args+=(--no-data-checksums)
-    fi
+    [ "$(control "$old" "$WORK/old" "Data page checksum version")" = 0 ] || initdb_args+=(--data-checksums)
     "${AS_PG[@]}" "$nb/initdb" "${initdb_args[@]}" > "$SOCK/initdb.log" 2>&1 || return 1
 
     log "Running pg_upgrade $old -> $NEW"
     set -- -b "$ob" -B "$nb" -d "$WORK/old" -D "$WORK/new" -U "$SUPERUSER" -p "$PORT" -P "$PORT" \
         --socketdir "$SOCK" -o "$SERVER_OPTS" -O "$SERVER_OPTS" --link
-    (cd "$WORK" && "${AS_PG[@]}" "$nb/pg_upgrade" "$@" --check && "${AS_PG[@]}" "$nb/pg_upgrade" "$@") > "$SOCK/pg_upgrade.log" 2>&1 || return 1
+    (cd "$WORK" && "${AS_PG[@]}" "$nb/pg_upgrade" "$@") > "$SOCK/pg_upgrade.log" 2>&1 || return 1
 
     # The cluster keeps its own settings, access rules and the files they include. They are in
     # place before the new server is tried, so that a setting the new major no longer knows
     # fails here and not after the swap
     for file in "$WORK"/old/*.conf; do
         [ ! -f "$file" ] || cp -p "$file" "$WORK/new/" || return 1
+    done
+    # The check below runs with its own access rules, so those of the cluster are checked here:
+    # a file left in the old directory would be gone once it is renamed
+    for setting in hba_file ident_file; do
+        file="$("${AS_PG[@]}" "$nb/postgres" -D "$WORK/new" -C "$setting")" || return 1
+        if [ ! -f "$file" ] || [[ "$file" == "$PGDATA/"* ]]; then
+            log "The cluster's $setting ($file) would not be found after the upgrade: keep it directly in $PGDATA, or outside it"
+            return 1
+        fi
     done
 
     log "Starting PostgreSQL $NEW to check the upgraded cluster"
@@ -159,23 +169,33 @@ upgrade() {
     fi
     log "Checked: $(wc -l < "$SOCK/rows.after") tables hold the same number of rows as before"
 
-    id="$(sysid "$WORK/new")"
+    id="$(control "$NEW" "$WORK/new" "Database system identifier")"
     [ -n "$id" ] || return 1
-    echo "$old $id $PGDATA.pg$old.$(date +%Y%m%d-%H%M%S).bak" > "$WORK/READY" || return 1
+    echo "$old $id $PGDATA.pg$old.$(date +%Y%m%d-%H%M%S).bak $origin" > "$WORK/READY" || return 1
     sync
     # From here on the work directory holds the cluster: a failure must not reach its clean-up
     finish_swap || { log "Could not put the upgraded cluster in place, both copies are kept in $PGDATA* directories"; exit 2; }
 }
 
 main() {
-    local old bak
+    local old bak sysid checkpoint
 
     if [ -f "$WORK/READY" ]; then
-        log "Finishing the upgrade that was interrupted"
-        finish_swap || { log "Could not put the upgraded cluster in place, both copies are kept in $PGDATA* directories"; exit 2; }
-        exit 10
+        read -r old _ bak sysid checkpoint < "$WORK/READY"
+        # The old cluster still in place, and started since its copy was upgraded (an earlier
+        # version of the add-on, say): the copy is out of date and only a copy, upgrade it again
+        if [ ! -e "$bak" ] && [ "$(cat "$PGDATA/PG_VERSION" 2> /dev/null)" = "$old" ] \
+            && [ "$(control "$old" "$PGDATA" "Database system identifier")" = "$sysid" ] \
+            && [ "$(control "$old" "$PGDATA" "Latest checkpoint location")" != "$checkpoint" ]; then
+            log "The PostgreSQL $old cluster changed after the upgrade was prepared, preparing it again"
+        else
+            log "Finishing the upgrade that was interrupted"
+            finish_swap || { log "Could not put the upgraded cluster in place, both copies are kept in $PGDATA* directories"; exit 2; }
+            exit 10
+        fi
     fi
-    # Without READY the work directory holds only copies: $PGDATA was not touched
+    # Without READY, or with an out-of-date one, the work directory holds only copies: $PGDATA
+    # was not touched
     rm -rf "$WORK"
 
     [ -s "$PGDATA/PG_VERSION" ] || exit 0
@@ -183,7 +203,7 @@ main() {
     if [ "$old" = "$NEW" ]; then
         for bak in "$PGDATA".pg*.bak; do
             [ -d "$bak" ] || continue
-            log "$bak ($(du -sh "$bak" | cut -f1)) is the database from before an upgrade of PostgreSQL. Delete it once you have checked that everything is there"
+            log "$bak is the database from before an upgrade of PostgreSQL. Delete it once you have checked that everything is there"
         done
         exit 0
     fi
@@ -198,7 +218,8 @@ main() {
 
     log "The data in $PGDATA is from PostgreSQL $old, upgrading it to $NEW"
     SOCK="$(mktemp -d)"
-    SERVER_OPTS="-c listen_addresses='' -c unix_socket_directories='$SOCK' -c port=$PORT -c hba_file='$SOCK/pg_hba.conf'"
+    # Nothing the cluster's own settings send elsewhere (logs, WAL archive) runs on a copy
+    SERVER_OPTS="-c listen_addresses='' -c unix_socket_directories='$SOCK' -c port=$PORT -c hba_file='$SOCK/pg_hba.conf' -c archive_mode=off -c logging_collector=off"
     echo "local all all trust" > "$SOCK/pg_hba.conf"
     mkdir -p "$WORK" && chmod 700 "$WORK" "$SOCK" || exit 1
     if [ "$(id -u)" = 0 ]; then
