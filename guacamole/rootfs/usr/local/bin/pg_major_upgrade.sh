@@ -69,7 +69,7 @@ control() {
 # backup directory, and the work directory only goes once that very cluster is in $PGDATA.
 finish_swap() {
     local old id bak
-    read -r old id bak _ < "$WORK/READY" || return 1
+    read -r old id bak < "$WORK/READY" || return 1
     [ -n "$old" ] && [ -n "$id" ] && [ -n "$bak" ] || return 1
     if [ -d "$WORK/new" ] && [ -d "$PGDATA" ] && [ ! -e "$bak" ] && [ "$(cat "$PGDATA/PG_VERSION" 2> /dev/null)" = "$old" ]; then
         mv -T "$PGDATA" "$bak" || return 1
@@ -88,7 +88,7 @@ finish_swap() {
 }
 
 upgrade() {
-    local old="$1" ob="$BIN/$1/bin" nb="$BIN/$NEW/bin" need avail datadir file id origin setting
+    local old="$1" ob="$BIN/$1/bin" nb="$BIN/$NEW/bin" need avail datadir file id setting old_opts="$SERVER_OPTS"
     local -a initdb_args
 
     # cp keeps a symlink a symlink: a tablespace or a WAL directory outside the cluster would
@@ -104,9 +104,6 @@ upgrade() {
         return 1
     fi
 
-    # Which state of the cluster the copy is of: an interrupted upgrade is only finished while
-    # the cluster is still in that state
-    origin="$(control "$old" "$PGDATA" "Database system identifier") $(control "$old" "$PGDATA" "Latest checkpoint location")"
     log "Copying the cluster ($((need / 1024)) MB) to $WORK/old"
     cp -a --reflink=auto "$PGDATA" "$WORK/old" || return 1
     rm -f "$WORK/old/postmaster.pid"
@@ -122,12 +119,14 @@ upgrade() {
         | sed -n 's/.*rolname = "\(.*\)".*/\1/p')"
     [ -n "$SUPERUSER" ] || { log "Could not read the superuser of the cluster"; return 1; }
 
+    # Up to PostgreSQL 14 the statistics files go wherever stats_temp_directory says
+    [ "$old" -gt 14 ] || old_opts="$old_opts -c stats_temp_directory=pg_stat_tmp"
     # The old server on the copy: recovers it if it was not shut down cleanly, and counts its rows
-    server "$ob" "$WORK/old" start || return 1
+    SERVER_OPTS="$old_opts" server "$ob" "$WORK/old" start || return 1
     snapshot "$ob" > "$SOCK/rows.before" || return 1
     mapfile -t initdb_args < <(q "$ob" template1 -c "SELECT unnest(ARRAY['--encoding=' || pg_encoding_to_char(encoding), '--lc-collate=' || datcollate, '--lc-ctype=' || datctype]) FROM pg_database WHERE datname = 'template1'")
     [ "${#initdb_args[@]}" = 3 ] || return 1
-    server "$ob" "$WORK/old" stop || return 1
+    SERVER_OPTS="$old_opts" server "$ob" "$WORK/old" stop || return 1
 
     initdb_args+=(-U "$SUPERUSER" -D "$WORK/new")
     [ "$(control "$old" "$WORK/old" "Data page checksum version")" = 0 ] || initdb_args+=(--data-checksums)
@@ -135,7 +134,7 @@ upgrade() {
 
     log "Running pg_upgrade $old -> $NEW"
     set -- -b "$ob" -B "$nb" -d "$WORK/old" -D "$WORK/new" -U "$SUPERUSER" -p "$PORT" -P "$PORT" \
-        --socketdir "$SOCK" -o "$SERVER_OPTS" -O "$SERVER_OPTS" --link
+        --socketdir "$SOCK" -o "$old_opts" -O "$SERVER_OPTS" --link
     (cd "$WORK" && "${AS_PG[@]}" "$nb/pg_upgrade" "$@") > "$SOCK/pg_upgrade.log" 2>&1 || return 1
 
     # The cluster keeps its own settings, access rules and the files they include. They are in
@@ -148,7 +147,7 @@ upgrade() {
     # a file left in the old directory would be gone once it is renamed
     for setting in hba_file ident_file; do
         file="$("${AS_PG[@]}" "$nb/postgres" -D "$WORK/new" -C "$setting")" || return 1
-        if [ ! -f "$file" ] || [[ "$file" == "$PGDATA/"* ]]; then
+        if [ ! -f "$file" ] || [[ "$file" == "$PGDATA/"*/* ]]; then
             log "The cluster's $setting ($file) would not be found after the upgrade: keep it directly in $PGDATA, or outside it"
             return 1
         fi
@@ -162,40 +161,30 @@ upgrade() {
     "${AS_PG[@]}" "$nb/vacuumdb" --all --analyze-only -h "$SOCK" -p "$PORT" -U "$SUPERUSER" -q > "$SOCK/vacuum.log" 2>&1 || return 1
     snapshot "$nb" > "$SOCK/rows.after" || return 1
     server "$nb" "$WORK/new" stop || return 1
-    if ! cmp -s "$SOCK/rows.before" "$SOCK/rows.after"; then
+    if ! diff <(LC_ALL=C sort "$SOCK/rows.before") <(LC_ALL=C sort "$SOCK/rows.after") > "$SOCK/rows.diff"; then
         log "The upgraded cluster does not hold the same rows as the original:"
-        diff "$SOCK/rows.before" "$SOCK/rows.after" | head -n 20
+        head -n 20 "$SOCK/rows.diff"
         return 1
     fi
     log "Checked: $(wc -l < "$SOCK/rows.after") tables hold the same number of rows as before"
 
     id="$(control "$NEW" "$WORK/new" "Database system identifier")"
     [ -n "$id" ] || return 1
-    echo "$old $id $PGDATA.pg$old.$(date +%Y%m%d-%H%M%S).bak $origin" > "$WORK/READY" || return 1
+    echo "$old $id $PGDATA.pg$old.$(date +%Y%m%d-%H%M%S).bak" > "$WORK/READY" || return 1
     sync
     # From here on the work directory holds the cluster: a failure must not reach its clean-up
     finish_swap || { log "Could not put the upgraded cluster in place, both copies are kept in $PGDATA* directories"; exit 2; }
 }
 
 main() {
-    local old bak sysid checkpoint
+    local old bak
 
     if [ -f "$WORK/READY" ]; then
-        read -r old _ bak sysid checkpoint < "$WORK/READY"
-        # The old cluster still in place, and started since its copy was upgraded (an earlier
-        # version of the add-on, say): the copy is out of date and only a copy, upgrade it again
-        if [ ! -e "$bak" ] && [ "$(cat "$PGDATA/PG_VERSION" 2> /dev/null)" = "$old" ] \
-            && [ "$(control "$old" "$PGDATA" "Database system identifier")" = "$sysid" ] \
-            && [ "$(control "$old" "$PGDATA" "Latest checkpoint location")" != "$checkpoint" ]; then
-            log "The PostgreSQL $old cluster changed after the upgrade was prepared, preparing it again"
-        else
-            log "Finishing the upgrade that was interrupted"
-            finish_swap || { log "Could not put the upgraded cluster in place, both copies are kept in $PGDATA* directories"; exit 2; }
-            exit 10
-        fi
+        log "Finishing the upgrade that was interrupted"
+        finish_swap || { log "Could not put the upgraded cluster in place, both copies are kept in $PGDATA* directories"; exit 2; }
+        exit 10
     fi
-    # Without READY, or with an out-of-date one, the work directory holds only copies: $PGDATA
-    # was not touched
+    # Without READY the work directory holds only copies: $PGDATA was not touched
     rm -rf "$WORK"
 
     [ -s "$PGDATA/PG_VERSION" ] || exit 0
@@ -219,7 +208,7 @@ main() {
     log "The data in $PGDATA is from PostgreSQL $old, upgrading it to $NEW"
     SOCK="$(mktemp -d)"
     # Nothing the cluster's own settings send elsewhere (logs, WAL archive) runs on a copy
-    SERVER_OPTS="-c listen_addresses='' -c unix_socket_directories='$SOCK' -c port=$PORT -c hba_file='$SOCK/pg_hba.conf' -c archive_mode=off -c logging_collector=off"
+    SERVER_OPTS="-c listen_addresses='' -c unix_socket_directories='$SOCK' -c port=$PORT -c hba_file='$SOCK/pg_hba.conf' -c archive_mode=off -c logging_collector=off -c external_pid_file=''"
     echo "local all all trust" > "$SOCK/pg_hba.conf"
     mkdir -p "$WORK" && chmod 700 "$WORK" "$SOCK" || exit 1
     if [ "$(id -u)" = 0 ]; then
