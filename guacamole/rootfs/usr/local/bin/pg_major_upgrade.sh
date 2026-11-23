@@ -146,16 +146,17 @@ upgrade() {
 
     log "Starting PostgreSQL $NEW to check the upgraded cluster"
     server "$nb" "$WORK/new" start || return 1
-    # Every file the configuration uses must be where the same path finds it after the swap: in
-    # the upgraded cluster or outside the old directory, which is renamed. The server lists the
-    # files it read (includes resolved, comments ignored); it runs with its own access rules, so
-    # the cluster's are asked for separately
+    # A file the configuration names by its path in the old directory is found there now, but no
+    # longer once that directory is renamed: it must exist at the same place in the upgraded
+    # cluster. The server lists the configuration files it read (includes resolved, comments
+    # ignored); the files settings point to are asked for one by one. Relative paths already
+    # resolve in the upgraded cluster
     q "$nb" template1 -c "SELECT DISTINCT sourcefile FROM pg_file_settings WHERE sourcefile IS NOT NULL" > "$SOCK/files" || return 1
-    for setting in hba_file ident_file; do
+    for setting in hba_file ident_file ssl_cert_file ssl_key_file ssl_ca_file ssl_crl_file ssl_dh_params_file; do
         "${AS_PG[@]}" "$nb/postgres" -D "$WORK/new" -C "$setting" >> "$SOCK/files" || return 1
     done
     while IFS= read -r file; do
-        if [ ! -f "$file" ] || { [[ "$file" == "$PGDATA/"* ]] && [ ! -f "$WORK/new/${file#"$PGDATA/"}" ]; }; then
+        if [[ "$file" == "$PGDATA/"* ]] && [ -e "$file" ] && [ ! -e "$WORK/new/${file#"$PGDATA/"}" ]; then
             log "The cluster's configuration uses $file, which would not be found after the upgrade: name it *.conf directly in $PGDATA, or keep it outside"
             return 1
         fi
