@@ -19,7 +19,7 @@ echo "== tools =="
 for c in gh git codex rtk headroom tokensave shellcheck hadolint yamllint python3 jq; do
     printf '  %-11s %s\n' "$c" "$(command -v "$c" > /dev/null 2>&1 && echo yes || echo MISSING)"
 done
-[ -x /data/codex/bin/codex-real ] && echo "  codex-real  yes (prefer: codex exec --model gpt-5.6-sol)"
+[ -x /data/codex/bin/codex-real ] && echo "  codex-real  yes (prefer: codex exec --model gpt-6.2-sol)"
 
 echo
 echo "== running add-on =="
