@@ -1,4 +1,7 @@
  
+## 20261122.1 (2026-11-24)
+- Fix the System page under Home Assistant Ingress: every sub-tab (Database, Terminal, Inference, Import/Export) showed Overview. The ingress nginx config rewrote every '/ui/...' string inside the JavaScript, including the '/ui/system/...' paths the page compares the current address with, so no tab ever matched. It also rewrote '/api/v...' strings. BirdNET-Go now adds the ingress prefix itself (tphakala/birdnet-go#5030), so these rewrites are removed. If a tab still shows Overview after the update, clear the browser cache for Home Assistant once: the old rewritten scripts are cached
+
 ## 20261122 (2026-11-22)
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
  
