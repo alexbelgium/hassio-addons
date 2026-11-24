@@ -1,3 +1,10 @@
+## 1.6.0.2 (2026-11-23)
+- ⚠️ **IMPORTANT: MAKE A BACKUP OF THE ADD-ON BEFORE UPDATING.** This version upgrades the database from PostgreSQL 13 to 18 in place. If anything goes wrong, or if you want to go back to an earlier version of the add-on, restoring that backup is the safe way back: earlier versions cannot read a PostgreSQL 18 database
+- ⚠ PostgreSQL 13 -> 18: build from `abesnier/guacamole:1.6.0-pg18`, as upstream stops updating its PostgreSQL 13 images in January 2027 (#3278). The upstream image upgrades the database in place at the first start: it downloads the PostgreSQL 13 server for the upgrade (internet access needed), and replaces `/config/postgres` only after `pg_upgrade` and a reindex succeed. The PostgreSQL 13 database is kept as `/config/postgres.pg13.bak` (delete it once everything works). If the upgrade fails, `/config/postgres` is unchanged and the add-on cannot start until the cause in the log is fixed
+- Upstream image: build from the maintained `abesnier/guacamole:1.6.0` tag instead of the floating `latest`, and let the updater follow plain `X.Y.Z` releases instead of the discontinued `-bullseye` tags (#3278). The database is still PostgreSQL 13
+- Startup: remove dead code for a port 80/SSL server and a `SUBFOLDER` variable that this add-on and image never use
+- Fix the redirect meant to silence the `.database-version` read error: the upstream service scripts run under `sh` (dash), where `&>` does not redirect
+
 ## 1.6.0-bullseye-5 (2026-11-22)
 - Ingress: focus the add-on when its page loads in the sidebar panel, so keys go to the remote session instead of Home Assistant shortcuts (#3274)
 - Build: create the syslog socket with perl, since the upstream image (now Ubuntu 22.04) no longer ships python3
