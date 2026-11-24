@@ -33,7 +33,7 @@ snap() { git status --porcelain; git diff HEAD
          git ls-files -z --others --exclude-standard | xargs -0 -r sha256sum; }
 before=$(snap | sha256sum)
 rm -f "$OUT/codex_answer.md"
-timeout 590 codex exec --model gpt-5.6-sol --sandbox danger-full-access --skip-git-repo-check \
+timeout 590 codex exec --model gpt-6.2-sol --sandbox danger-full-access --skip-git-repo-check \
     -c approval_policy='"never"' --output-last-message "$OUT/codex_answer.md" \
     - < "$OUT/prompt.md" > "$OUT/codex_out.txt" 2>&1
 echo "codex exit: $?"                  # 124 = timed out; any non-zero = no review
