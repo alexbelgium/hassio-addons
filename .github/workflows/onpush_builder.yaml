@@ -320,6 +320,23 @@ jobs:
       # by log text would silently stop reverting real breakage. It is also
       # cheap: the add-ons that fail deterministically on every push each fail
       # in 16-34 s.
+      # birdnet-go-dev merges the open PRs of its fork while the image builds.
+      # Listing them from inside the build is anonymous (the builder action
+      # cannot pass a secret), so on shared runner IPs it hits GitHub's
+      # 60 requests/hour limit. List them here with the job token instead and
+      # hand the JSON to the build context; no token reaches the image. If this
+      # fails, merge-prs.sh falls back to its own API call.
+      - name: List the open fork PRs for ${{ matrix.addon }}
+        if: matrix.addon == 'birdnet-go-dev' && steps.info.outputs.build_arch == 'true' && steps.info.outputs.has_dockerfile == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ADDON: ${{ matrix.addon }}
+        run: |
+          if ! gh api "repos/alexbelgium/birdnet-go/pulls?state=open&per_page=100" > "${ADDON}/open-prs.json"; then
+            rm -f "${ADDON}/open-prs.json"
+            echo "::warning::Could not list the open fork PRs; merge-prs.sh will query the API itself"
+          fi
+
       - name: Build ${{ matrix.addon }} add-on
         id: build
         if: steps.info.outputs.build_arch == 'true' && steps.info.outputs.has_dockerfile == 'true'

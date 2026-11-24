@@ -32,6 +32,9 @@
 #   BIRDNET_UPSTREAM   owner/repo of the upstream        (default tphakala/birdnet-go)
 #   GH_TOKEN / GITHUB_TOKEN  optional, lifts the 60 req/h unauthenticated
 #                            GitHub API rate limit; not required for public repos
+#   PR_LIST_FILE       optional JSON of the fork's open PRs, as returned by
+#                      GET /repos/<fork>/pulls?state=open; used instead of
+#                      calling the API when the file exists and is not empty
 #
 set -euo pipefail
 
@@ -267,7 +270,12 @@ fetch_pr_json() {
     done
 }
 
-pr_json="$(fetch_pr_json)"
+if [ -n "${PR_LIST_FILE:-}" ] && [ -s "${PR_LIST_FILE}" ]; then
+    log "Using the PR list from ${PR_LIST_FILE}"
+    pr_json="$(cat "${PR_LIST_FILE}")"
+else
+    pr_json="$(fetch_pr_json)"
+fi
 
 # Open, non-draft PRs only ("in review"), oldest first for a stable merge order.
 mapfile -t prs < <(echo "${pr_json}" \

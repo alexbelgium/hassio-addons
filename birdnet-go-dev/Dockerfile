@@ -39,11 +39,14 @@ ARG BIRDNET_UPSTREAM=tphakala/birdnet-go
 # re-cloned and the open PRs are re-merged "on the fly" on every build.
 ARG BUILD_DATE=unknown
 RUN apk add --no-cache bash curl jq
-COPY merge-prs.sh /usr/local/bin/merge-prs.sh
-RUN chmod +x /usr/local/bin/merge-prs.sh && \
+# open-prs.json is written by the Builder workflow (the PR list fetched with
+# its token); the glob keeps local builds without it working.
+COPY merge-prs.sh open-prs.json* /merge-prs/
+RUN chmod +x /merge-prs/merge-prs.sh && \
     echo "Build date marker: ${BUILD_DATE}" && \
     BIRDNET_FORK="${BIRDNET_FORK}" BIRDNET_UPSTREAM="${BIRDNET_UPSTREAM}" \
-    /usr/local/bin/merge-prs.sh /birdnet-src
+    PR_LIST_FILE=/merge-prs/open-prs.json \
+    /merge-prs/merge-prs.sh /birdnet-src
 
 ##########################################################
 # 0b Download OpenVINO runtime libraries for amd64       #
