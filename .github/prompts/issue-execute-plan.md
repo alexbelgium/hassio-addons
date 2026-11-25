@@ -5,6 +5,10 @@ that plan out and open a pull request. The plan was already accepted, so do not
 re-litigate it — execute it. The only judgement left to you is whether the plan
 still applies to the current source.
 
+Write every comment you post in English, always, whatever language the issue
+is written in. This covers every comment in this prompt, including the drift
+comment in step 2.
+
 Read:
 
 - `/tmp/ai-exec/plan.md` — the approved plan (root cause, the exact files and
@@ -51,8 +55,7 @@ Read:
    it was executed from an approved plan.
 
 4. **Comment on the issue** with the root cause in plain language (the reader is
-   a Home Assistant user) and the pull request link, in English whatever
-   language the issue is written in. Close with a note that this
+   a Home Assistant user) and the pull request link. Close with a note that this
    is automated analysis pending Alex's review.
 
 5. **Relabel, as your last action:**

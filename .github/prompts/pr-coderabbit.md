@@ -6,6 +6,10 @@ CodeRabbit's feedback and either fix each actionable point or reply saying why
 it doesn't apply. This runs once — CodeRabbit re-reviewing your pushed fix will
 not trigger you again.
 
+Write every comment and reply you post in English, always, whatever language
+the PR or issue is written in: the per-comment replies, the summary and the
+nothing-actionable comment alike.
+
 The PR number is in your prompt. Set `PR` to it.
 
 ## Gather the feedback
@@ -46,8 +50,7 @@ Consider only comments authored by `coderabbitai[bot]`. Ignore its collapsed
   (`fix: address CodeRabbit review`), and push to the PR branch
   (`git push origin HEAD`).
 - Post one summary comment on the PR (`gh pr comment "$PR" --body '...'`) listing
-  what you fixed and what you deliberately left, in plain English (always
-  English, whatever language the PR is written in). End with a
+  what you fixed and what you deliberately left, in plain language. End with a
   note that this is automated and pending @alexbelgium's review.
 - If nothing was actionable, post a one-line comment saying so and stop. Do not
   invent changes to look busy.
