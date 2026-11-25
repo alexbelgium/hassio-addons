@@ -1,3 +1,9 @@
+## 5.3.0.4 (2026-11-25)
+
+- Fix: OpenVPN exited right after connecting on IPv4-only tunnels (e.g. NordVPN) with `config["IPv6Enabled"]: unbound variable` in the `--up` script, so the external IP check failed and the add-on stopped. The IPv4/IPv6 flags are now initialised for OpenVPN as they already were for WireGuard (#3282)
+- Fix: with `vpn_upnp_enabled`, the UPnP firewall rules are now removed when the VPN goes down, so a reconnect no longer keeps stale rules
+- Fix: a custom script whose last line has no trailing newline is now detected and run (#3282)
+
 ## 5.3.0.3 (2026-11-17)
 
 - VPN port forwarding: the WebUI password is no longer evaluated through eval nor written to the debug log, and the WebUI username is URL-encoded on login

@@ -222,13 +222,14 @@ _firewall_add() {
 }
 
 _firewall_del() {
-    if [ "${config["IPv4Enabled"]}" = "true" ]; then
+    # Key off the chain, not the IPv4/IPv6 flags: postdown runs in a new process where both are "false"
+    if iptables -n -L pnat >/dev/null 2>&1; then
         _cmd "iptables -F INPUT" || true
         _cmd "iptables -F pnat" || true
         _cmd "iptables -X pnat" || true
     fi
 
-    if [ "${config["IPv6Enabled"]}" = "true" ]; then
+    if ip6tables -n -L pnat >/dev/null 2>&1; then
         _cmd "ip6tables -F INPUT" || true
         _cmd "ip6tables -F pnat" || true
         _cmd "ip6tables -X pnat" || true
@@ -593,6 +594,10 @@ openvpn() {
     config["Table"]="${config["Table"]:-1000}"
     config["PostUpScript"]="${OPENVPN_STATE_DIR}/up.sh"
     config["PostDownScript"]="${OPENVPN_STATE_DIR}/down.sh"
+    # Defaults for every mode (each of up/postup/down/postdown runs in its own process);
+    # _routing_add sets them to "true" per address family found on the tunnel (#3282)
+    config["IPv4Enabled"]="false"
+    config["IPv6Enabled"]="false"
 
     if [ "${mode}" = "up" ]; then
         # register up and down scripts

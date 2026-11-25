@@ -205,7 +205,7 @@ else
 fi
 
 # Check if there is actual commands
-while IFS= read -r line; do
+while IFS= read -r line || [[ -n "$line" ]]; do
   line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 
   if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
