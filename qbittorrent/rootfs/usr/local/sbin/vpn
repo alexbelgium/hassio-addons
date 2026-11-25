@@ -593,6 +593,10 @@ openvpn() {
     config["Table"]="${config["Table"]:-1000}"
     config["PostUpScript"]="${OPENVPN_STATE_DIR}/up.sh"
     config["PostDownScript"]="${OPENVPN_STATE_DIR}/down.sh"
+    # Defaults for every mode (each of up/postup/down/postdown runs in its own process);
+    # _routing_add sets them to "true" per address family found on the tunnel (#3282)
+    config["IPv4Enabled"]="false"
+    config["IPv6Enabled"]="false"
 
     if [ "${mode}" = "up" ]; then
         # register up and down scripts
