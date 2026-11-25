@@ -1,4 +1,5 @@
 ## 20261122.3 (25-11-2026)
+- Fork PR #82 (BatDetect2) is refreshed onto upstream main: it conflicted with upstream's OpenVINO GPU fault handling (tphakala/birdnet-go#5282), which failed the previous build and reverted this release
 - Fix "Proxy headers cannot be verified" in Settings > Security > Reverse proxy under Home Assistant ingress: the ingress nginx now overwrites X-Real-IP and X-Forwarded-For with the Supervisor's address and drops Forwarded, CF-Connecting-IP and True-Client-IP passed through from in front of Home Assistant, so BirdNET-Go can verify the client once 127.0.0.1 is a trusted proxy (`INGRESS_SKIP_AUTH` adds it, or use the "Trust 127.0.0.1" button). It also connects to BirdNET-Go on 127.0.0.1 instead of localhost
 - `INGRESS_SKIP_AUTH` now uses BirdNET-Go's own Bypass Authentication instead of fork PR alexbelgium/birdnet-go#80: it trusts the ingress proxy (127.0.0.1) and lets the Supervisor (172.30.32.2/32) bypass the login; `false` removes that entry and, if it was present, turns the bypass off. If you had the option on, it keeps working; see the README for what else the bypass covers
 
