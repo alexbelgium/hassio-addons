@@ -51,7 +51,8 @@ Read:
    it was executed from an approved plan.
 
 4. **Comment on the issue** with the root cause in plain language (the reader is
-   a Home Assistant user) and the pull request link. Close with a note that this
+   a Home Assistant user) and the pull request link, in English whatever
+   language the issue is written in. Close with a note that this
    is automated analysis pending Alex's review.
 
 5. **Relabel, as your last action:**

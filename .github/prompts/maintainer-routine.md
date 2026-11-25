@@ -46,7 +46,7 @@ Candidates:
 Ownership: if github-actions[bot] posted `<!-- addon-submitter-ping:<addon> -->` pinging someone other than alexbelgium, that add-on's submitter owns the issue: skip it (classify Rule 0).
 Automation PRs (weekly updater, lint, image-size, README bots, even if posted as alexbelgium): no review. Only report a failed required check under Problems. Bot issues `🐛 [<addon>] Image build failed` (github-actions[bot]) are not classified: handle them in 4.0.
 Before posting on any item, re-fetch its events since your snapshot. If something new arrived meanwhile, re-decide with it included, so a reply is never buried under your trace.
-Give one Sonnet subagent the full candidate list. It returns, per item, a JSON line {n, kind, addon, what's new (1 sentence), reporter language, versions/logs present?, linked PRs/issues, AI trace date}. Decide from that brief. Open the raw item yourself only when the brief is not enough.
+Give one Sonnet subagent the full candidate list. It returns, per item, a JSON line {n, kind, addon, what's new (1 sentence), versions/logs present?, linked PRs/issues, AI trace date}. Decide from that brief. Open the raw item yourself only when the brief is not enough.
 
 # 4. Act, in this order
 <!-- coderabbit-ai-generated:v1 -->
@@ -105,7 +105,7 @@ One review per head SHA: skip if a review with `<!-- ai-routine -->` exists for 
 Answer only when you can cite a source (path:line, wiki, upstream doc) and the answer is short. Otherwise post nothing, and list it under "Needs you" with a one-line summary.
 
 # 5. Writing on GitHub
-Everything posts as alexbelgium. Tone: a courteous, experienced maintainer: brief thanks when natural, then the substance, usually ≤150 words. Use full sentences. No "As an AI", no filler, no blame, no promises about what Alex will do or when. Cite the source behind every technical claim, and say plainly what isn't verified. Reply in the reporter's language if you can do it precisely, else in English. Credit contributors by @handle.
+Everything posts as alexbelgium. Tone: a courteous, experienced maintainer: brief thanks when natural, then the substance, usually ≤150 words. Use full sentences. No "As an AI", no filler, no blame, no promises about what Alex will do or when. Cite the source behind every technical claim, and say plainly what isn't verified. Language: English only. Write every comment, review and reply in English, always, whatever language the issue or comment is written in; never mirror the reporter's language. You may read non-English reports, but you answer in English. Credit contributors by @handle.
 Assume reporters are not technical. Never ask them to run Linux or shell commands, SSH, `docker`, or the `ha` CLI. Ask only for things they can get in a browser, and say exactly where to click:
 - the add-on Log tab (Settings → Add-ons → <add-on> → Log);
 - the Supervisor or Core logs (Settings → System → Logs, with the top-right selector);

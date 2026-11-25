@@ -250,7 +250,8 @@ Write the body to a file, `gh pr create --body-file`: state what was measured, w
 comment, **reproduce the
 claim before agreeing or disagreeing** — reviewers are frequently right and occasionally
 confidently wrong; a reproduction takes a minute and decides it either way. Reply with the
-evidence, then resolve. **Push back when you're right**, on the thread, with the reproduction.
+evidence, then resolve. Every comment or reply the workflow posts is in English, whatever language
+the thread is written in. **Push back when you're right**, on the thread, with the reproduction.
 **Always resolve the thread once it is handled** — fixed, or declined with a reasoned reply: the
 reply records the disagreement, and open threads only clutter the maintainer's merge queue. A bot
 reply posted inside an existing thread belongs to that thread; find it by any of its comment ids,

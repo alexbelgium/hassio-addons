@@ -46,7 +46,8 @@ Consider only comments authored by `coderabbitai[bot]`. Ignore its collapsed
   (`fix: address CodeRabbit review`), and push to the PR branch
   (`git push origin HEAD`).
 - Post one summary comment on the PR (`gh pr comment "$PR" --body '...'`) listing
-  what you fixed and what you deliberately left, in plain language. End with a
+  what you fixed and what you deliberately left, in plain English (always
+  English, whatever language the PR is written in). End with a
   note that this is automated and pending @alexbelgium's review.
 - If nothing was actionable, post a one-line comment saying so and stop. Do not
   invent changes to look busy.
