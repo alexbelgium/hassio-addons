@@ -106,6 +106,7 @@ With `INGRESS_SKIP_AUTH: true`, BirdNET-Go does not show its own login page when
 
 - every Home Assistant user who can open the add-on panel, including non-administrators, gets full access to BirdNET-Go, settings included;
 - the bypass also applies to any other subnet already listed under Bypass Authentication, and to the server's local network, which BirdNET-Go always trusts when the bypass is on. Inside the add-on this is normally the Home Assistant internal network `172.30.32.0/24`, but it depends on how BirdNET-Go detects the host address. Clients on your LAN that open port 8080 directly still need the login, unless their network is one of these.
+- keep **Trusted proxies** to each proxy's own address, never a range that also holds your own computers: any client inside a trusted range can claim to be `172.30.32.2` on port 8080 and skip the login. BirdNET-Go shows the same rule in that panel.
 
 ### MQTT and MariaDB auto-configuration (opt-in)
 
