@@ -100,7 +100,7 @@ Requires [alexbelgium/birdnet-go#63](https://github.com/alexbelgium/birdnet-go/p
 
 #### Skip login through ingress
 
-With `INGRESS_SKIP_AUTH: true`, BirdNET-Go does not show its own login page when you open it from the Home Assistant sidebar (ingress), because Home Assistant has already signed you in. It uses BirdNET-Go's own **Settings > Security > Bypass Authentication**: at each start (from the second start on a fresh install, once BirdNET-Go has created its `config.yaml`) the add-on adds `127.0.0.1` (the add-on's ingress proxy) to the trusted reverse proxies, adds the Home Assistant Supervisor's address `172.30.32.2/32` to the allowed subnets, and turns the bypass on. Entries you added yourself are kept. Setting the option back to `false` removes `172.30.32.2/32` and turns the bypass off, so the login is required again everywhere (this also turns off a bypass you had enabled yourself for other subnets). Changing the option requires an add-on restart.
+With `INGRESS_SKIP_AUTH: true`, BirdNET-Go does not show its own login page when you open it from the Home Assistant sidebar (ingress), because Home Assistant has already signed you in. It uses BirdNET-Go's own **Settings > Security > Bypass Authentication**: at each start the add-on adds `127.0.0.1` (the add-on's ingress proxy) to the trusted reverse proxies, adds the Home Assistant Supervisor's address `172.30.32.2/32` to the allowed subnets, and turns the bypass on. Entries you added yourself are kept. Setting the option back to `false` removes `172.30.32.2/32` and, if that entry was present, turns the bypass off (this also turns off a bypass you had enabled yourself for other subnets). Changing the option requires an add-on restart.
 
 **Off by default.** With the option on:
 
