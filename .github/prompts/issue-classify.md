@@ -82,6 +82,9 @@ are labelled silently and handled later.
   file path you took it from. If the bundle does not contain the answer, this
   is `needs-info`, not `question`. Never invent option names.
 
+Write the comment in English, always, whatever language the issue is written in.
+Never mirror the reporter's language.
+
 Never close an issue. Never promise a timeline. Never say a fix is coming.
 
 ## Output schema

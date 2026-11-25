@@ -6,6 +6,10 @@ CodeRabbit's feedback and either fix each actionable point or reply saying why
 it doesn't apply. This runs once — CodeRabbit re-reviewing your pushed fix will
 not trigger you again.
 
+Write every comment and reply you post in English, always, whatever language
+the PR or issue is written in: the per-comment replies, the summary and the
+nothing-actionable comment alike.
+
 The PR number is in your prompt. Set `PR` to it.
 
 ## Gather the feedback

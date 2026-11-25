@@ -5,6 +5,10 @@ that plan out and open a pull request. The plan was already accepted, so do not
 re-litigate it — execute it. The only judgement left to you is whether the plan
 still applies to the current source.
 
+Write every comment you post in English, always, whatever language the issue
+is written in. This covers every comment in this prompt, including the drift
+comment in step 2.
+
 Read:
 
 - `/tmp/ai-exec/plan.md` — the approved plan (root cause, the exact files and

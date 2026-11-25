@@ -155,7 +155,8 @@ further. No pull request, no plan.
 
 Every issue gets a comment: root cause, and for A the fix in a sentence or two
 plus the pull request link; for B the plan above; for C/D the analysis. Plain
-language — the reader is a Home Assistant user, not a Go developer. Close A/C/D
+language — the reader is a Home Assistant user, not a Go developer. Write it in
+English, always, whatever language the issue is written in. Close A/C/D
 comments with a note that this is automated analysis pending Alex's review.
 
 Then, as your **last action on the issue**, relabel it:
