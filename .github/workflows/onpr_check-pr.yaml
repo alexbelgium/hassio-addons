@@ -141,9 +141,40 @@ jobs:
 
       - name: ℹ️ Gather addon info
         id: information
-        uses: frenck/action-addon-information@ce1377e9851cf569c29329e65fb2c57e67ca0f69 # v1.4
-        with:
-          path: "./${{ matrix.addon }}/"
+        shell: bash
+        env:
+          ADDON: ${{ matrix.addon }}
+        run: |
+          set -euo pipefail
+          # Same rules as onpush_builder.yaml: the build file is optional, and the
+          # architectures are the build_from keys, else the config "arch" list.
+          first() { for n in "$@"; do [ -f "$ADDON/$n" ] && { echo "$ADDON/$n"; return; }; done; return 0; }
+          config_file="$(first config.json config.yaml config.yml)"
+          [ -n "$config_file" ] || { echo "No config file found in $ADDON" >&2; exit 1; }
+          build_file="$(first build.json build.yaml build.yml)"
+          config="$(yq -o=json '.' "$config_file")"
+          build='{}'
+          [ -z "$build_file" ] || build="$(yq -o=json '.' "$build_file")"
+          archs="$(jq -n --argjson c "$config" --argjson b "$build" \
+            '(($b.build_from // {}) | keys) as $k | if ($k | length) > 0 then $k else ($c.arch // []) end')"
+
+          # Fork-controlled values: keep single-line ones on one line.
+          image="$(jq -r '.image // ""' <<<"$config")"
+          version="$(jq -r '.version // "" | tostring' <<<"$config")"
+          delimiter="EOF_$(openssl rand -hex 16)"
+          {
+            echo "image=${image//[$'\r\n']/}"
+            echo "version=${version//[$'\r\n']/}"
+            echo "build=$build_file"
+            for arch in aarch64 amd64; do
+              echo "${arch}=$(jq -r --arg a "$arch" 'index($a) != null' <<<"$archs")"
+            done
+            for key in name description; do
+              echo "${key}<<${delimiter}"
+              jq -r --arg k "$key" '.[$k] // "" | tostring' <<<"$config"
+              echo "${delimiter}"
+            done
+          } >> "$GITHUB_OUTPUT"
 
       - name: 🗄️ Cache docker layers
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
