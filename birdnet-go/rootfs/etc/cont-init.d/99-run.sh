@@ -32,24 +32,6 @@ else
     bashio::log.info "homeassistant_microphone option is not set, keeping audio source configured via the UI"
 fi
 
-# Skip the BirdNET-Go login under ingress with its own "Bypass Authentication":
-# trust the ingress nginx (127.0.0.1) as a reverse proxy, so the verified client
-# is the Supervisor (172.30.32.2), and let that one address bypass the login.
-# Entries are merged, never overwritten; turning the option off removes the
-# Supervisor entry and disables the bypass.
-INGRESS_SUBNET="172.30.32.2/32"
-SUBNETS='((.security.allowsubnetbypass.subnet // "") | split(",") | map(gsub("^\\s+|\\s+$"; "")) | map(select(. != "")))'
-if bashio::config.true "INGRESS_SKIP_AUTH"; then
-    bashio::log.warning "INGRESS_SKIP_AUTH: Home Assistant ingress skips the BirdNET-Go login (Settings > Security > Bypass Authentication)"
-    yq -iy ".security.trustedproxies = ((.security.trustedproxies // []) | if index(\"127.0.0.1\") then . else . + [\"127.0.0.1\"] end)
-        | .security.allowsubnetbypass.subnet = ($SUBNETS | if index(\"$INGRESS_SUBNET\") then . else . + [\"$INGRESS_SUBNET\"] end | join(\",\"))
-        | .security.allowsubnetbypass.enabled = true" "$CONFIG_LOCATION"
-elif [ "$(yq -r "$SUBNETS | index(\"$INGRESS_SUBNET\") != null" "$CONFIG_LOCATION")" = true ]; then
-    bashio::log.info "INGRESS_SKIP_AUTH is off: removing $INGRESS_SUBNET and disabling Bypass Authentication"
-    yq -iy ".security.allowsubnetbypass.subnet = ($SUBNETS | map(select(. != \"$INGRESS_SUBNET\")) | join(\",\"))
-        | .security.allowsubnetbypass.enabled = false" "$CONFIG_LOCATION"
-fi
-
 ########################
 # CONFIGURE birdnet-go #
 ########################

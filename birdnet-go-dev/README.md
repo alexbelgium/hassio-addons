@@ -57,7 +57,7 @@ env_vars: [] # extra environment variables to pass to the container
 TZ: Etc/UTC # timezone, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 mqtt_auto_config: false # set true to auto-wire the Home Assistant MQTT addon into config.yaml
 mariadb_auto_config: false # set true to auto-wire the Home Assistant MariaDB addon into config.yaml (also disables SQLite)
-INGRESS_SKIP_AUTH: false # set true to skip the BirdNET-Go login when opened through the Home Assistant sidebar (ingress), using Settings > Security > Bypass Authentication
+INGRESS_SKIP_AUTH: false # set true to skip the BirdNET-Go login when opened through the Home Assistant sidebar (ingress)
 ```
 
 - Config.yaml
@@ -100,13 +100,11 @@ Requires [alexbelgium/birdnet-go#63](https://github.com/alexbelgium/birdnet-go/p
 
 #### Skip login through ingress
 
-With `INGRESS_SKIP_AUTH: true`, BirdNET-Go does not show its own login page when you open it from the Home Assistant sidebar (ingress), because Home Assistant has already signed you in. It uses BirdNET-Go's own **Settings > Security > Bypass Authentication**: at each start the add-on adds `127.0.0.1` (the add-on's ingress proxy) to the trusted reverse proxies, adds the Home Assistant Supervisor's address `172.30.32.2/32` to the allowed subnets, and turns the bypass on. Entries you added yourself are kept. Setting the option back to `false` removes `172.30.32.2/32` and, if that entry was present, turns the bypass off (this also turns off a bypass you had enabled yourself for other subnets). Changing the option requires an add-on restart.
+With `INGRESS_SKIP_AUTH: true`, BirdNET-Go does not show its own login page when you open it from the Home Assistant sidebar (ingress), because Home Assistant has already signed you in. Access on port 8080, and API access, still require the BirdNET-Go login as before.
 
-**Off by default.** With the option on:
+**Off by default.** Every Home Assistant user who can open the add-on panel, including non-administrators, then gets full access to BirdNET-Go, settings included. Changing the option requires an add-on restart.
 
-- every Home Assistant user who can open the add-on panel, including non-administrators, gets full access to BirdNET-Go, settings included;
-- the bypass also applies to any other subnet already listed under Bypass Authentication, and to the server's local network, which BirdNET-Go always trusts when the bypass is on. Inside the add-on this is normally the Home Assistant internal network `172.30.32.0/24`, but it depends on how BirdNET-Go detects the host address. Clients on your LAN that open port 8080 directly still need the login, unless their network is one of these.
-- keep **Trusted proxies** to each proxy's own address, never a range that also holds your own computers: any client inside a trusted range can claim to be `172.30.32.2` on port 8080 and skip the login. BirdNET-Go shows the same rule in that panel.
+Requires [alexbelgium/birdnet-go#80](https://github.com/alexbelgium/birdnet-go/pull/80).
 
 ### MQTT and MariaDB auto-configuration (opt-in)
 

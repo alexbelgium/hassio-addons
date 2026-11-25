@@ -1,7 +1,4 @@
-## 20261122.2 (2026-11-25)
-- Fix "Proxy headers cannot be verified" in Settings > Security > Reverse proxy under Home Assistant ingress: the ingress nginx now overwrites X-Real-IP and X-Forwarded-For with the Supervisor's address and drops Forwarded, CF-Connecting-IP and True-Client-IP passed through from in front of Home Assistant, so BirdNET-Go can verify the client once 127.0.0.1 is a trusted proxy (`INGRESS_SKIP_AUTH` adds it, or use the "Trust 127.0.0.1" button). It also connects to BirdNET-Go on 127.0.0.1 instead of localhost, and only accepts connections from the Supervisor's ingress proxy (172.30.32.2)
-- New `INGRESS_SKIP_AUTH` option (default `false`): when `true`, BirdNET-Go no longer asks for its login when opened from the Home Assistant sidebar. It turns on BirdNET-Go's own Bypass Authentication for the Supervisor (172.30.32.2/32) and trusts the ingress proxy (127.0.0.1); see the README for what else the bypass covers
-
+ 
 ## 20261122.1 (2026-11-24)
 - Fix the System page under Home Assistant Ingress: every sub-tab (Database, Terminal, Inference, Import/Export) showed Overview. The ingress nginx config rewrote every '/ui/...' string inside the JavaScript, including the '/ui/system/...' paths the page compares the current address with, so no tab ever matched. It also rewrote '/api/v...' strings. BirdNET-Go now adds the ingress prefix itself (tphakala/birdnet-go#5030), so these rewrites are removed. If a tab still shows Overview after the update, clear the browser cache for Home Assistant once: the old rewritten scripts are cached
 
