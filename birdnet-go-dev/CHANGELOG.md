@@ -1,3 +1,6 @@
+## 20261126 (26-11-2026)
+- Rebuild against the latest upstream BirdNET-Go main and the current open fork PRs. The BatDetect2 PR was refreshed onto upstream main again (OpenVINO compile retry, #5297) and the BatSpot PR is now stacked on it, since both register a new bat model at the same places
+
 ## 20261122.3 (25-11-2026)
 - Fork PR #82 (BatDetect2) is refreshed onto upstream main: it conflicted with upstream's OpenVINO GPU fault handling (tphakala/birdnet-go#5282), which failed the previous build and reverted this release
 - Fix "Proxy headers cannot be verified" in Settings > Security > Reverse proxy under Home Assistant ingress: the ingress nginx now overwrites X-Real-IP and X-Forwarded-For with the Supervisor's address and drops Forwarded, CF-Connecting-IP and True-Client-IP passed through from in front of Home Assistant, so BirdNET-Go can verify the client once 127.0.0.1 is a trusted proxy (`INGRESS_SKIP_AUTH` adds it, or use the "Trust 127.0.0.1" button). It also connects to BirdNET-Go on 127.0.0.1 instead of localhost
