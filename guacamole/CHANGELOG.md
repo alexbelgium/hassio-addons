@@ -1,3 +1,6 @@
+## 1.6.0.4 (2026-11-25)
+- Ingress: clicking inside the remote session now gives it keyboard focus in the Home Assistant sidebar. Guacamole blocks the browser's usual focus-on-click there, so keys kept going to Home Assistant, whose keyboard shortcuts could then open dialogs over the session (#3285)
+
 ## 1.6.0.3 (2026-11-25)
 - Ingress: focus the add-on again whenever Guacamole changes view, such as when a connection opens, and not only when the page first loads, so keys reach the remote session without pressing Tab first (#3285)
 
