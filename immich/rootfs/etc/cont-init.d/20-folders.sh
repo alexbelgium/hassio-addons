@@ -126,8 +126,7 @@ fi
 ##################
 
 echo "sed -i \"s=/config/redis=/data/redis=g\" /etc/s6*/s6*/*/run" >> /docker-mods
-echo "sed -i \"s=/config/log/redis=/data/log=g\" /etc/s6*/s6*/*/run" >> /docker-mods
+# Log Redis to stdout so its crashes and restarts appear in the add-on log
+echo "sed -i \"s=--logfile /config/log/redis/redis.log=--logfile ''=g\" /etc/s6*/s6*/*/run" >> /docker-mods
 mkdir -p /data/redis
-mkdir -p /data/log
 chmod 755 /data/redis
-chmod 755 /data/log

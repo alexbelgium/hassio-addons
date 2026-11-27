@@ -1,4 +1,7 @@
  
+## 3.4.2.2 (2026-11-27)
+- Redis now logs to the add-on log instead of an internal file, so Redis crashes and restarts are visible (#3297)
+
 ## 3.4.2 (2026-11-22)
 - Update to latest version from ghcr.io/imagegenius/immich:3-noml
 ## 3.4.1.1 (2026-11-17)
