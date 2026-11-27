@@ -1,5 +1,5 @@
  
-## 3.4.2-2 (2026-11-27)
+## 3.4.2.2 (2026-11-27)
 - Redis now logs to the add-on log instead of an internal file, so Redis crashes and restarts are visible (#3297)
 
 ## 3.4.2 (2026-11-22)
