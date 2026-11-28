@@ -1,3 +1,6 @@
+ 
+## 2.1.11 (2026-11-28)
+- Update to latest version from thomst08/requestrr (changelog : https://github.com/thomst08/requestrr/releases)
 - Migrate legacy add-on configuration map names to current app configuration terminology.
 ## 2.1.10 (2026-06-05)
 - Update to latest version from thomst08/requestrr (changelog : https://github.com/thomst08/requestrr/releases)

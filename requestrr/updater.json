@@ -1,9 +1,9 @@
 {
-  "last_update": "2026-06-05",
+  "last_update": "2026-11-28",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "requestrr",
   "source": "github",
   "upstream_repo": "thomst08/requestrr",
-  "upstream_version": "2.1.10"
+  "upstream_version": "2.1.11"
 }
