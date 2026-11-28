@@ -1,3 +1,6 @@
+ 
+## 2.1.0 (2026-11-28)
+- Update to latest version from gtsteffaniak/filebrowser (changelog : https://github.com/gtsteffaniak/filebrowser/releases)
 ## 2.0.2.2 (2026-11-17)
 
 - Security: warn in the startup log and README when `auth_method` is `noauth` while port 8071 is published. No default changed.
