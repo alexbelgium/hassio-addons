@@ -1,3 +1,6 @@
+ 
+## 6.7.12 (2026-11-28)
+- Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 ## 6.7.9.1 (2026-11-17)
 
 - Security: warn in the startup log and README while `APP_KEY` is still the shipped default. No default changed.
