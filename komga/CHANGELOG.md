@@ -1,4 +1,7 @@
  
+## 1.30.2 (2026-11-28)
+- Update to latest version from gotson/komga (changelog : https://github.com/gotson/komga/releases)
+ 
 ## 1.30.1 (2026-11-10)
 - Update to latest version from gotson/komga (changelog : https://github.com/gotson/komga/releases)
  
