@@ -1,7 +1,3 @@
- 
-## 20261128 (2026-11-28)
-- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
-- Upstream tag : 20261122
 ## 20261126 (26-11-2026)
 - Rebuild against the latest upstream BirdNET-Go main and the current open fork PRs. The BatDetect2 PR was refreshed onto upstream main again (OpenVINO compile retry, #5297) and the BatSpot PR is now stacked on it, since both register a new bat model at the same places
 
