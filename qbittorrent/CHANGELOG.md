@@ -1,3 +1,6 @@
+ 
+## 5.3.1 (2026-11-28)
+- Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 ## 5.3.0.4 (2026-11-25)
 
 - Fix: OpenVPN exited right after connecting on IPv4-only tunnels (e.g. NordVPN) with `config["IPv6Enabled"]: unbound variable` in the `--up` script, so the external IP check failed and the add-on stopped. The IPv4/IPv6 flags are now initialised for OpenVPN as they already were for WireGuard (#3282)
