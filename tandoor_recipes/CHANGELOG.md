@@ -1,4 +1,7 @@
  
+## 2.7.8 (2026-11-28)
+- Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
+ 
 ## 2.7.6 (2026-11-21)
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 ## 2.7.3.1 (2026-11-17)
